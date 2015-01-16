@@ -1,0 +1,13 @@
+Rename and modify these files to specify signing information.
+
+```
+cp example-signing.properties.template example-signing.properties
+cp library-maven-publish-signing.properties.template library-maven-publish-signing.properties
+cp library-bintray-private.properties.template library-bintray-private.properties
+```
+
+
+DO NOT ADD THESE FILES TO THE REPOSITORY
+
+- 'keystore' files
+- '*.properties' files which contain sensitive information

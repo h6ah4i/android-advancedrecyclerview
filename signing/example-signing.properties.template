@@ -1,0 +1,6 @@
+# This is a template file of "example-signing.properties"
+# These information are used to sign release APK file
+storeFile=absolute_path_of_keystore_file
+storePassword=password
+keyAlias=key_alias_name
+keyPassword=key_password

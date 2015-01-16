@@ -1,0 +1,5 @@
+# This is a template file of "library-maven-publish-signing.properties"
+# These information are used to sign library JAR and POM files
+keyId=ABCD1234
+password=PASSWORD
+secretKeyRingFile=path_to_gpg_file
