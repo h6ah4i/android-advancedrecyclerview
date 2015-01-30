@@ -149,83 +149,52 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     @Override
-    protected void onWrappedAdapterChanged() {
-        super.onWrappedAdapterChanged();
-
-        if (DEBUG_BYPASS_MOVE_OPERATION_MODE) {
-            notifyDataSetChanged();
-            return;
-        }
-
-        if (isDragging()) {
+    protected void onHandleWrappedAdapterChanged() {
+        if (shouldCancelDragOnDataUpdated()) {
             cancelDrag();
         } else {
-            notifyDataSetChanged();
+            super.onHandleWrappedAdapterChanged();
         }
     }
 
     @Override
-    protected void onWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
-        super.onWrappedAdapterItemRangeChanged(positionStart, itemCount);
-
-        if (DEBUG_BYPASS_MOVE_OPERATION_MODE) {
-            notifyItemRangeChanged(positionStart, itemCount);
-            return;
-        }
-
-        if (isDragging()) {
+    protected void onHandleWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
+        if (shouldCancelDragOnDataUpdated()) {
             cancelDrag();
         } else {
-            notifyItemRangeChanged(positionStart, itemCount);
+            super.onHandleWrappedAdapterItemRangeChanged(positionStart, itemCount);
         }
     }
 
     @Override
-    protected void onWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
-        super.onWrappedAdapterItemRangeInserted(positionStart, itemCount);
-
-        if (DEBUG_BYPASS_MOVE_OPERATION_MODE) {
-            notifyItemRangeInserted(positionStart, itemCount);
-            return;
-        }
-
-        if (isDragging()) {
+    protected void onHandleWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
+        if (shouldCancelDragOnDataUpdated()) {
             cancelDrag();
         } else {
-            notifyItemRangeInserted(positionStart, itemCount);
+            super.onHandleWrappedAdapterItemRangeInserted(positionStart, itemCount);
         }
     }
 
     @Override
-    protected void onWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
-        super.onWrappedAdapterItemRangeRemoved(positionStart, itemCount);
-
-        if (DEBUG_BYPASS_MOVE_OPERATION_MODE) {
-            notifyItemRangeRemoved(positionStart, itemCount);
-            return;
-        }
-
-        if (isDragging()) {
+    protected void onHandleWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
+        if (shouldCancelDragOnDataUpdated()) {
             cancelDrag();
         } else {
-            notifyItemRangeRemoved(positionStart, itemCount);
+            super.onHandleWrappedAdapterItemRangeRemoved(positionStart, itemCount);
         }
     }
 
     @Override
-    protected void onWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
-        super.onWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
-
-        if (DEBUG_BYPASS_MOVE_OPERATION_MODE) {
-            notifyItemMoved(fromPosition, toPosition);
-            return;
-        }
-
-        if (isDragging()) {
+    protected void onHandleWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
+        if (shouldCancelDragOnDataUpdated()) {
             cancelDrag();
         } else {
-            notifyItemMoved(fromPosition, toPosition);
+            super.onHandleWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
         }
+    }
+
+    private boolean shouldCancelDragOnDataUpdated() {
+        return !DEBUG_BYPASS_MOVE_OPERATION_MODE && isDragging();
     }
 
     private void cancelDrag() {

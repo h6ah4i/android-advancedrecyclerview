@@ -135,57 +135,47 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     @Override
-    protected void onWrappedAdapterChanged() {
-        super.onWrappedAdapterChanged();
-
+    protected void onHandleWrappedAdapterChanged() {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyDataSetChanged();
+            super.onHandleWrappedAdapterChanged();
         }
     }
 
     @Override
-    protected void onWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
-        super.onWrappedAdapterItemRangeChanged(positionStart, itemCount);
-
+    protected void onHandleWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyItemRangeChanged(positionStart, itemCount);
+            super.onHandleWrappedAdapterItemRangeChanged(positionStart, itemCount);
         }
     }
 
     @Override
-    protected void onWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
-        super.onWrappedAdapterItemRangeInserted(positionStart, itemCount);
-
+    protected void onHandleWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyItemRangeInserted(positionStart, itemCount);
+            super.onHandleWrappedAdapterItemRangeInserted(positionStart, itemCount);
         }
     }
 
     @Override
-    protected void onWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
-        super.onWrappedAdapterItemRangeRemoved(positionStart, itemCount);
-
+    protected void onHandleWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyItemRangeRemoved(positionStart, itemCount);
+            super.onHandleWrappedAdapterItemRangeRemoved(positionStart, itemCount);
         }
     }
 
     @Override
-    protected void onWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
-        super.onWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
-
+    protected void onHandleWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyItemMoved(fromPosition, toPosition);
+            super.onHandleWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
         }
     }
 
