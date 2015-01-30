@@ -16,7 +16,7 @@
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <color android:color="#ff2f8b2a"/>
+        <color android:color="@color/bg_swipe_group_item_right"/>
     </item>
     <item android:left="16dp">
         <bitmap

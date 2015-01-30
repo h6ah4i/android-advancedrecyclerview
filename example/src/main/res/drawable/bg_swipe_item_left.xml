@@ -14,11 +14,13 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true">
-        <color android:color="@color/bg_item_normal_pressed_state"/>
-    </item>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <color android:color="@color/bg_item_normal_state"/>
+        <color android:color="@color/bg_swipe_item_left"/>
     </item>
-</selector>
+    <item android:right="16dp">
+        <bitmap
+            android:src="@drawable/ic_item_swipe_left"
+            android:gravity="right|center_vertical"/>
+    </item>
+</layer-list>

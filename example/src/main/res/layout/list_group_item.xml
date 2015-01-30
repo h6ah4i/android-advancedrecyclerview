@@ -17,8 +17,9 @@
 <!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
-             android:layout_height="64dp"
-             android:background="@drawable/bg_swipe_item_neutral"
+             android:layout_height="96dp"
+             android:layout_marginTop="8dp"
+             android:background="#ffffff"
              android:translationZ="@dimen/list_item_translation_z">
 
     <RelativeLayout

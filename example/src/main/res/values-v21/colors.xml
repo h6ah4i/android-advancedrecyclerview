@@ -16,4 +16,6 @@
 -->
 <resources>
     <color name="ripple_item_normal_state">#80666666</color>
+    <color name="ripple_group_item_normal_state">#80006600</color>
+    <color name="ripple_group_item_expanded_state">#80006600</color>
 </resources>

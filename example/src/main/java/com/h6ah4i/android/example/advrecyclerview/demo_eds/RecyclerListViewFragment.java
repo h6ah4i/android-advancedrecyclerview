@@ -14,11 +14,12 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo.fragment;
+package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,24 +29,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.example.advrecyclerview.demo.MainActivity;
-import com.h6ah4i.android.example.advrecyclerview.demo.MyItemAdapter;
-import com.h6ah4i.android.example.advrecyclerview.demo.data.AbstractDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.BasicSwapTargetTranslationInterpolator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 public class RecyclerListViewFragment extends Fragment {
+    private static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
+
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.Adapter mWrappedAdapter;
+    private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
     private RecyclerViewDragDropManager mRecyclerViewDragDropManager;
     private RecyclerViewSwipeManager mRecyclerViewSwipeManager;
     private RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
@@ -66,6 +69,9 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
 
+        final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
+        mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
+
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
         mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
@@ -81,16 +87,28 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 
         //adapter
-        final MyItemAdapter myItemAdapter = new MyItemAdapter(getDataProvider());
-        myItemAdapter.setEventListener(new MyItemAdapter.EventListener() {
+        getDataProvider();
+        final MyExpandableDraggableSwipeableItemAdapter myItemAdapter = new MyExpandableDraggableSwipeableItemAdapter(getDataProvider());
+
+        myItemAdapter.setEventListener(new MyExpandableDraggableSwipeableItemAdapter.EventListener() {
             @Override
-            public void onItemRemoved(int position) {
-                ((MainActivity) getActivity()).onItemRemoved(position);
+            public void onGroupItemRemoved(int groupPosition) {
+                ((ExpandableDraggableSwipeableExampleActivity) getActivity()).onGroupItemRemoved(groupPosition);
             }
 
             @Override
-            public void onItemPinned(int position) {
-                ((MainActivity) getActivity()).onItemPinned(position);
+            public void onChildItemRemoved(int groupPosition, int childPosition) {
+                ((ExpandableDraggableSwipeableExampleActivity) getActivity()).onChildItemRemoved(groupPosition, childPosition);
+            }
+
+            @Override
+            public void onGroupItemPinned(int groupPosition) {
+                ((ExpandableDraggableSwipeableExampleActivity) getActivity()).onGroupItemPinned(groupPosition);
+            }
+
+            @Override
+            public void onChildItemPinned(int groupPosition, int childPosition) {
+                ((ExpandableDraggableSwipeableExampleActivity) getActivity()).onChildItemPinned(groupPosition, childPosition);
             }
 
             @Override
@@ -101,7 +119,8 @@ public class RecyclerListViewFragment extends Fragment {
 
         mAdapter = myItemAdapter;
 
-        mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(myItemAdapter);      // wrap for dragging
+        mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(myItemAdapter);       // wrap for expanding
+        mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(mWrappedAdapter);           // wrap for dragging
         mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);      // wrap for swiping
 
         final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
@@ -109,6 +128,7 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
         mRecyclerView.setItemAnimator(animator);
+        mRecyclerView.setHasFixedSize(false);
 
         // additional decorations
         if (supportsViewElevation()) {
@@ -118,20 +138,15 @@ public class RecyclerListViewFragment extends Fragment {
         }
         mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(getResources().getDrawable(R.drawable.list_divider), true));
 
+
         // NOTE:
         // The initialization order is very important! This order determines the priority of touch event handling.
         //
-        // priority: TouchActionGuard > Swipe > DragAndDrop
+        // priority: TouchActionGuard > Swipe > DragAndDrop > ExpandableItem
         mRecyclerViewTouchActionGuardManager.attachRecyclerView(mRecyclerView);
         mRecyclerViewSwipeManager.attachRecyclerView(mRecyclerView);
         mRecyclerViewDragDropManager.attachRecyclerView(mRecyclerView);
-
-        // for debugging
-//        animator.setDebug(true);
-//        animator.setMoveDuration(2000);
-//        animator.setRemoveDuration(2000);
-//        mRecyclerViewSwipeManager.setMoveToOutsideWindowAnimationDuration(2000);
-//        mRecyclerViewSwipeManager.setReturnToDefaultPositionAnimationDuration(2000);
+        mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
     }
 
     @Override
@@ -141,8 +156,19 @@ public class RecyclerListViewFragment extends Fragment {
 
     @Override
     public void onPause() {
-        mRecyclerViewDragDropManager.cancelDrag();
         super.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // save current state to support screen rotation, etc...
+        if (mRecyclerViewExpandableItemManager != null) {
+            outState.putParcelable(
+                    SAVED_STATE_EXPANDABLE_ITEM_MANAGER,
+                    mRecyclerViewExpandableItemManager.getSavedState());
+        }
     }
 
     @Override
@@ -162,6 +188,11 @@ public class RecyclerListViewFragment extends Fragment {
             mRecyclerViewTouchActionGuardManager = null;
         }
 
+        if (mRecyclerViewExpandableItemManager != null) {
+            mRecyclerViewExpandableItemManager.release();
+            mRecyclerViewExpandableItemManager = null;
+        }
+
         if (mRecyclerView != null) {
             mRecyclerView.setItemAnimator(null);
             mRecyclerView.setAdapter(null);
@@ -179,9 +210,20 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     private void onItemViewClick(View v) {
-        int position = mRecyclerView.getChildPosition(v);
-        if (position != RecyclerView.NO_POSITION) {
-            ((MainActivity) getActivity()).onItemClicked(position);
+        final int flatPosition = mRecyclerView.getChildPosition(v);
+
+        if (flatPosition == RecyclerView.NO_POSITION) {
+            return;
+        }
+
+        final long expandablePosition = mRecyclerViewExpandableItemManager.getExpandablePosition(flatPosition);
+        final int groupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(expandablePosition);
+        final int childPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(expandablePosition);
+
+        if (childPosition == RecyclerView.NO_POSITION) {
+            ((ExpandableDraggableSwipeableExampleActivity) getActivity()).onGroupItemClicked(groupPosition);
+        } else {
+            ((ExpandableDraggableSwipeableExampleActivity) getActivity()).onChildItemClicked(groupPosition, childPosition);
         }
     }
 
@@ -189,16 +231,37 @@ public class RecyclerListViewFragment extends Fragment {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
 
-    public AbstractDataProvider getDataProvider() {
-        return ((MainActivity) getActivity()).getDataProvider();
+    public AbstractExpandableDataProvider getDataProvider() {
+        return ((ExpandableDraggableSwipeableExampleActivity) getActivity()).getDataProvider();
     }
 
-    public void notifyItemChanged(int position) {
-        mAdapter.notifyItemChanged(position);
+    public void notifyGroupItemRestored(int groupPosition) {
+        mAdapter.notifyDataSetChanged();
+
+        final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
+        final int flatPosition = mRecyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
+        mRecyclerView.scrollToPosition(flatPosition);
     }
 
-    public void notifyItemInserted(int position) {
-        mAdapter.notifyItemInserted(position);
-        mRecyclerView.scrollToPosition(position);
+    public void notifyChildItemRestored(int groupPosition, int childPosition) {
+        mAdapter.notifyDataSetChanged();
+
+        final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, childPosition);
+        final int flatPosition = mRecyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
+        mRecyclerView.scrollToPosition(flatPosition);
+    }
+
+    public void notifyGroupItemChanged(int groupPosition) {
+        final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
+        final int flatPosition = mRecyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
+
+        mAdapter.notifyItemChanged(flatPosition);
+    }
+
+    public void notifyChildItemChanged(int groupPosition, int childPosition) {
+        final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, childPosition);
+        final int flatPosition = mRecyclerViewExpandableItemManager.getFlatPosition(expandablePosition);
+
+        mAdapter.notifyItemChanged(flatPosition);
     }
 }

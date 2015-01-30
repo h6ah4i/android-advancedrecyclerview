@@ -292,7 +292,7 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
 
         if (origFromPosition != mDraggingItemInitialPosition) {
             throw new IllegalStateException(
-                    "onMoveItem() - may be a bug  --- " +
+                    "onMoveItem() - may be a bug or has duplicate IDs  --- " +
                             "mDraggingItemInitialPosition = " + mDraggingItemInitialPosition + ", " +
                             "mDraggingItemCurrentPosition = " + mDraggingItemCurrentPosition + ", " +
                             "origFromPosition = " + origFromPosition + ", " +

@@ -14,6 +14,13 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<color
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="#ffffffff"/>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@color/bg_swipe_item_right"/>
+    </item>
+    <item android:left="16dp">
+        <bitmap
+            android:src="@drawable/ic_item_swipe_right"
+            android:gravity="left|center_vertical"/>
+    </item>
+</layer-list>

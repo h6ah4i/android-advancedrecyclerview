@@ -14,11 +14,8 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true">
-        <color android:color="@color/bg_item_normal_pressed_state"/>
-    </item>
-    <item>
-        <color android:color="@color/bg_item_normal_state"/>
-    </item>
-</selector>
+<ripple
+    android:color="@color/ripple_group_item_expanded_state"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/bg_group_item_expanded_state"/>
+</ripple>

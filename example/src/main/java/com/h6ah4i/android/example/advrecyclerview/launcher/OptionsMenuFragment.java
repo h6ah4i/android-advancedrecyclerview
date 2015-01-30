@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo.fragment;
+package com.h6ah4i.android.example.advrecyclerview.launcher;
 
 
 import android.content.Intent;

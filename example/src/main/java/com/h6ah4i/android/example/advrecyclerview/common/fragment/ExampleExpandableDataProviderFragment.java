@@ -14,27 +14,27 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo.fragment;
+package com.h6ah4i.android.example.advrecyclerview.common.fragment;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.h6ah4i.android.example.advrecyclerview.demo.data.AbstractDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.demo.data.ExampleDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.data.ExampleExpandableDataProvider;
 
-public class DataProviderFragment extends Fragment {
-    private ExampleDataProvider mDataProvider;
+public class ExampleExpandableDataProviderFragment extends Fragment {
+    private ExampleExpandableDataProvider mDataProvider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);  // keep the mDataProvider instance
-        mDataProvider = new ExampleDataProvider(true); // true: example test data
+        mDataProvider = new ExampleExpandableDataProvider();
     }
 
-    public AbstractDataProvider getDataProvider() {
+    public AbstractExpandableDataProvider getDataProvider() {
         return mDataProvider;
     }
 }

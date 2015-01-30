@@ -25,14 +25,21 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".demo.MainActivity"
-            android:label="@string/activity_title_demo">
+            android:name=".launcher.MainActivity"
+            android:label="@string/activity_title_launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".demo_ds.DraggableSwipeableExampleActivity"
+            android:label="@string/activity_title_demo_ds" />
+
+        <activity
+            android:name=".demo_eds.ExpandableDraggableSwipeableExampleActivity"
+            android:label="@string/activity_title_demo_eds" />
 
         <activity
             android:name=".about.AboutActivity"

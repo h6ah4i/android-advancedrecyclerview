@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo;
+package com.h6ah4i.android.example.advrecyclerview.demo_ds;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -22,34 +22,28 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.example.advrecyclerview.demo.data.AbstractDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.demo.fragment.DataProviderFragment;
-import com.h6ah4i.android.example.advrecyclerview.demo.fragment.ItemPinnedMessageDialogFragment;
-import com.h6ah4i.android.example.advrecyclerview.demo.fragment.OptionsMenuFragment;
-import com.h6ah4i.android.example.advrecyclerview.demo.fragment.RecyclerListViewFragment;
+import com.h6ah4i.android.example.advrecyclerview.common.fragment.ItemPinnedMessageDialogFragment;
+import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataProviderFragment;
 import com.nispok.snackbar.Snackbar;
 import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.enums.SnackbarType;
 import com.nispok.snackbar.listeners.ActionClickListener;
 
 
-public class MainActivity extends ActionBarActivity {
+public class DraggableSwipeableExampleActivity extends ActionBarActivity implements ItemPinnedMessageDialogFragment.EventListener {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     private static final String FRAGMENT_LIST_VIEW = "list view";
-    private static final String FRAGMENT_TAG_OPTIONS_MENU = "options menu";
     private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_demo);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(new OptionsMenuFragment(), FRAGMENT_TAG_OPTIONS_MENU)
-                    .commit();
-            getSupportFragmentManager().beginTransaction()
-                    .add(new DataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
+                    .add(new ExampleDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new RecyclerListViewFragment(), FRAGMENT_LIST_VIEW)
@@ -58,7 +52,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * This method will be called when list item is removed
+     * This method will be called when a list item is removed
      *
      * @param position
      */
@@ -81,7 +75,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * This method will be called when list item is pinned
+     * This method will be called when a list item is pinned
      *
      * @param position
      */
@@ -95,7 +89,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     /**
-     * This method will be called when list item is clicked
+     * This method will be called when a list item is clicked
      *
      * @param position
      */
@@ -118,6 +112,8 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    // implements ItemPinnedMessageDialogFragment.EventListener
+    @Override
     public void onNotifyItemPinnedDialogDismissed(int itemPosition, boolean ok) {
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
 
@@ -127,6 +123,6 @@ public class MainActivity extends ActionBarActivity {
 
     public AbstractDataProvider getDataProvider() {
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
-        return ((DataProviderFragment) fragment).getDataProvider();
+        return ((ExampleDataProviderFragment) fragment).getDataProvider();
     }
 }

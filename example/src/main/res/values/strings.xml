@@ -18,14 +18,24 @@
 
     <string name="app_name">Advanced RecyclerView Example</string>
 
-    <string name="activity_title_demo">Advanced RecyclerView Example</string>
+
+    <string name="activity_title_launcher">Advanced RecyclerView Example</string>
     <string name="activity_title_about">Advanced RecyclerView About</string>
 
+    <string name="activity_title_demo_ds">Draggable + Swipeable</string>
+    <string name="activity_title_demo_eds">Expandable + Draggable + Swipeable</string>
+
+    <string name="button_text_launch_demo_ds">@string/activity_title_demo_ds</string>
+    <string name="button_text_launch_demo_eds">@string/activity_title_demo_eds</string>
+
     <string name="snack_bar_text_item_removed">1 item removed</string>
+    <string name="snack_bar_text_group_item_removed">1 group item removed</string>
+    <string name="snack_bar_text_child_item_removed">1 child item removed</string>
     <string name="snack_bar_action_undo">UNDO</string>
 
-    <string name="dialog_message_item_pinned">Item pinned! (position = %d)</string>
+    <string name="dialog_message_item_pinned">Item pinned! (position = %1$d)</string>
+    <string name="dialog_message_group_item_pinned">Group item pinned! (group = %1$d)</string>
+    <string name="dialog_message_child_item_pinned">Child item pinned! (group = %1$d, child = %2$d)</string>
 
     <string name="menu_item_about">About</string>
-
 </resources>

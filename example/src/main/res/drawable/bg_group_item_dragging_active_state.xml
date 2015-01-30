@@ -16,11 +16,6 @@
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <color android:color="#fff9930d"/>
-    </item>
-    <item android:right="16dp">
-        <bitmap
-            android:src="@drawable/ic_item_swipe_left"
-            android:gravity="right|center_vertical"/>
+        <color android:color="@color/bg_group_item_dragging_active_state"/>
     </item>
 </layer-list>

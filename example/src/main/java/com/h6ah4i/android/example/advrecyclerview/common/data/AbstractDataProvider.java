@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo.data;
+package com.h6ah4i.android.example.advrecyclerview.common.data;
 
 public abstract class AbstractDataProvider {
 

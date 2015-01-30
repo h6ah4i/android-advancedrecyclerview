@@ -14,10 +14,9 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo.data;
+package com.h6ah4i.android.example.advrecyclerview.common.data;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemViewHolder;
 
 import java.util.LinkedList;
 import java.util.List;

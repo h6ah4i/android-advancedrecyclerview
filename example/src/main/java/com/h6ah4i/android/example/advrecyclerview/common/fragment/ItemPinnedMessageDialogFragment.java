@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo.fragment;
+package com.h6ah4i.android.example.advrecyclerview.common.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -23,10 +23,13 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.example.advrecyclerview.demo.MainActivity;
 
 public class ItemPinnedMessageDialogFragment extends DialogFragment {
     private static final String KEY_ITEM_POSITION = "position";
+
+    public interface EventListener {
+        void onNotifyItemPinnedDialogDismissed(int position, boolean ok);
+    }
 
     public static ItemPinnedMessageDialogFragment newInstance(int position) {
         final ItemPinnedMessageDialogFragment frag = new ItemPinnedMessageDialogFragment();
@@ -46,7 +49,7 @@ public class ItemPinnedMessageDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        final int itemPosition = getArguments().getInt(KEY_ITEM_POSITION);
+        final int itemPosition = getArguments().getInt(KEY_ITEM_POSITION, Integer.MIN_VALUE);
 
         builder.setMessage(getString(R.string.dialog_message_item_pinned, itemPosition));
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -73,7 +76,7 @@ public class ItemPinnedMessageDialogFragment extends DialogFragment {
 
     private void notifyItemPinnedDialogDismissed(boolean ok) {
         final int position = getArguments().getInt(KEY_ITEM_POSITION);
-        ((MainActivity) getActivity()).onNotifyItemPinnedDialogDismissed(position, ok);
+        ((EventListener) getActivity()).onNotifyItemPinnedDialogDismissed(position, ok);
     }
 
 }

@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo;
+package com.h6ah4i.android.example.advrecyclerview.demo_ds;
 
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -25,18 +25,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.example.advrecyclerview.demo.data.AbstractDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 
-public class MyItemAdapter
-        extends RecyclerView.Adapter<MyItemAdapter.MyViewHolder>
-        implements DraggableItemAdapter<MyItemAdapter.MyViewHolder>,
-        SwipeableItemAdapter<MyItemAdapter.MyViewHolder> {
-    private static final String TAG = "MyItemAdapter";
+public class MyDraggableSwipeableItemAdapter
+        extends RecyclerView.Adapter<MyDraggableSwipeableItemAdapter.MyViewHolder>
+        implements DraggableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder>,
+        SwipeableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder> {
+    private static final String TAG = "MyDraggableSwipeableItemAdapter";
 
     private AbstractDataProvider mProvider;
     private EventListener mEventListener;
@@ -68,7 +69,7 @@ public class MyItemAdapter
         }
     }
 
-    public MyItemAdapter(AbstractDataProvider dataProvider) {
+    public MyDraggableSwipeableItemAdapter(AbstractDataProvider dataProvider) {
         mProvider = dataProvider;
         mItemViewOnClickListener = new View.OnClickListener() {
             @Override
@@ -167,7 +168,7 @@ public class MyItemAdapter
         final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
         final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
 
-        return hitTest(dragHandleView, x - offsetX, y - offsetY);
+        return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
 
     @Override
@@ -184,13 +185,13 @@ public class MyItemAdapter
         int bgRes = 0;
         switch (type) {
             case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
-                bgRes = R.drawable.swipe_neutral_item_background;
+                bgRes = R.drawable.bg_swipe_item_neutral;
                 break;
             case RecyclerViewSwipeManager.DRAWABLE_SWIPE_LEFT_BACKGROUND:
-                bgRes = R.drawable.swipe_left_item_background;
+                bgRes = R.drawable.bg_swipe_item_left;
                 break;
             case RecyclerViewSwipeManager.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
-                bgRes = R.drawable.swipe_right_item_background;
+                bgRes = R.drawable.bg_swipe_item_right;
                 break;
         }
 
@@ -247,16 +248,5 @@ public class MyItemAdapter
 
     public void setEventListener(EventListener eventListener) {
         mEventListener = eventListener;
-    }
-
-    private static boolean hitTest(View v, int x, int y) {
-        final int tx = (int) (ViewCompat.getTranslationX(v) + 0.5f);
-        final int ty = (int) (ViewCompat.getTranslationY(v) + 0.5f);
-        final int left = v.getLeft() + tx;
-        final int right = v.getRight() + tx;
-        final int top = v.getTop() + ty;
-        final int bottom = v.getBottom() + ty;
-
-        return (x >= left) && (x <= right) && (y >= top) && (y <= bottom);
     }
 }
