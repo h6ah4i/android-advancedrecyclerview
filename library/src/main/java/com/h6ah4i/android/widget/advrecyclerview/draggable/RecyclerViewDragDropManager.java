@@ -40,6 +40,10 @@ public class RecyclerViewDragDropManager {
     public static final int STATE_FLAG_IS_ACTIVE = (1 << 1);
     public static final int STATE_FLAG_IS_UPDATED = (1 << 31);
 
+    private static final int SCROLL_DIR_NONE = 0;
+    private static final int SCROLL_DIR_UP = (1 << 0);
+    private static final int SCROLL_DIR_DOWN = (1 << 1);
+
 
     private static final boolean LOCAL_LOGV = false;
     private static final boolean LOCAL_LOGD = false;
@@ -47,6 +51,7 @@ public class RecyclerViewDragDropManager {
     private static final float SCROLL_THRESHOLD = 0.3f; // 0.0f < X < 0.5f
     private static final float SCROLL_AMOUNT_COEFF = 25;
     private static final float EDGE_EFFECT_THRESHOLD = 0.5f; // <= 1.0f
+    private static final float SCROLL_TOUCH_SLOP_MULTIPLY = 1.5f;
 
     private RecyclerView mRecyclerView;
     private Interpolator mSwapTargetTranslationInterpolator;
@@ -61,6 +66,7 @@ public class RecyclerViewDragDropManager {
 
     private float mDisplayDensity;
     private int mTouchSlop;
+    private int mScrollTouchSlop;
     private int mInitialTouchY;
     private long mInitialTouchItemId = RecyclerView.NO_ID;
 
@@ -77,6 +83,10 @@ public class RecyclerViewDragDropManager {
     private DraggingItemDecorator mDraggingItemDecorator;
     private SwapTargetItemOperator mSwapTargetItemOperator;
     private int mLastTouchY;
+    private int mDragStartTouchY;
+    private int mDragMinTouchY;
+    private int mDragMaxTouchY;
+    private int mScrollDirMask = SCROLL_DIR_NONE;
     private int mGrabbedPositionY;
     private int mGrabbedItemHeight;
     private int mOrigOverScrollMode;
@@ -146,6 +156,7 @@ public class RecyclerViewDragDropManager {
         mRecyclerView.setOnScrollListener(mInternalUseOnScrollListener);
         mDisplayDensity = mRecyclerView.getResources().getDisplayMetrics().density;
         mTouchSlop = ViewConfiguration.get(mRecyclerView.getContext()).getScaledTouchSlop();
+        mScrollTouchSlop = (int) (mTouchSlop * SCROLL_TOUCH_SLOP_MULTIPLY + 0.5f);
 
         if (supportsEdgeEffect()) {
             // edge effect is available on ICS or later
@@ -317,6 +328,10 @@ public class RecyclerViewDragDropManager {
 
         mLastTouchY = (int) (e.getY() + 0.5f);
 
+        // disable auto scrolling until user moves the item
+        mDragStartTouchY = mDragMinTouchY = mDragMaxTouchY = mLastTouchY;
+        mScrollDirMask = SCROLL_DIR_NONE;
+
         // calculate the view-local offset from the touched point
         mGrabbedPositionY = mLastTouchY - itemView.getTop();
 
@@ -401,6 +416,9 @@ public class RecyclerViewDragDropManager {
         mDraggingItemId = RecyclerView.NO_ID;
 
         mLastTouchY = 0;
+        mDragStartTouchY = 0;
+        mDragMinTouchY = 0;
+        mDragMaxTouchY = 0;
         mGrabbedPositionY = 0;
         mGrabbedItemHeight = 0;
 
@@ -419,6 +437,9 @@ public class RecyclerViewDragDropManager {
 
         mInitialTouchY = 0;
         mLastTouchY = 0;
+        mDragStartTouchY = 0;
+        mDragMinTouchY = 0;
+        mDragMaxTouchY = 0;
         mInitialTouchItemId = RecyclerView.NO_ID;
 
         if (isDragging()) {
@@ -480,6 +501,18 @@ public class RecyclerViewDragDropManager {
 
     private void handleActionMoveWhileDragging(RecyclerView rv, MotionEvent e) {
         mLastTouchY = (int) (e.getY() + 0.5f);
+        mDragMinTouchY = Math.min(mDragMinTouchY, mLastTouchY);
+        mDragMaxTouchY = Math.max(mDragMaxTouchY, mLastTouchY);
+
+        // update drag direction mask
+        if (((mDragStartTouchY - mDragMinTouchY) > mScrollTouchSlop) ||
+            ((mDragMaxTouchY - mLastTouchY) > mScrollTouchSlop)) {
+            mScrollDirMask |= SCROLL_DIR_UP;
+        }
+        if (((mDragMaxTouchY - mDragStartTouchY) > mScrollTouchSlop) ||
+            ((mLastTouchY - mDragMinTouchY) > mScrollTouchSlop)) {
+            mScrollDirMask |= SCROLL_DIR_DOWN;
+        }
 
         // update decorators
         mDraggingItemDecorator.update(e);
@@ -516,8 +549,19 @@ public class RecyclerViewDragDropManager {
         final float centerOffset = y - 0.5f;
         final float absCenterOffset = Math.abs(centerOffset);
         final float acceleration = Math.max(0.0f, threshold - (0.5f - absCenterOffset)) * invThreshold;
-        final int scrollAmount = (int) Math.signum(centerOffset) * (int) (SCROLL_AMOUNT_COEFF * mDisplayDensity * acceleration + 0.5f);
+        int scrollAmount = (int) Math.signum(centerOffset) * (int) (SCROLL_AMOUNT_COEFF * mDisplayDensity * acceleration + 0.5f);
         int actualScrolledAmount = 0;
+
+        // apply mask
+        if (scrollAmount > 0) {
+            if ((mScrollDirMask & SCROLL_DIR_DOWN) == 0) {
+                scrollAmount = 0;
+            }
+        } else if (scrollAmount < 0) {
+            if ((mScrollDirMask & SCROLL_DIR_UP) == 0) {
+                scrollAmount = 0;
+            }
+        }
 
         mDraggingItemDecorator.setIsScrolling(scrollAmount != 0);
 
