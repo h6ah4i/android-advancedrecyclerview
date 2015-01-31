@@ -68,8 +68,6 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
 
         if (holder instanceof DraggableItemViewHolder) {
             ((DraggableItemViewHolder) holder).setDragStateFlags(STATE_FLAG_INITIAL_VALUE);
-        } else {
-            return holder;
         }
 
         return holder;

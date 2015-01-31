@@ -85,8 +85,6 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
 
         if (holder instanceof SwipeableItemViewHolder) {
             ((SwipeableItemViewHolder) holder).setSwipeStateFlags(STATE_FLAG_INITIAL_VALUE);
-        } else {
-            return holder;
         }
 
         return holder;
