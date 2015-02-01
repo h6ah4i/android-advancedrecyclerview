@@ -506,8 +506,8 @@ public class RecyclerViewSwipeManager {
 
         final int reqBackgroundType;
 
-        if (amount == +0.0f || amount == -0.0f) {
-            if (prevAmount == +0.0f || prevAmount == -0.0f) {
+        if (amount == 0.0f) {
+            if (prevAmount == 0.0f) {
                 reqBackgroundType = DRAWABLE_SWIPE_NEUTRAL_BACKGROUND;
             } else {
                 reqBackgroundType = (prevAmount < 0)
