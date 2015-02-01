@@ -40,6 +40,11 @@
             android:text="@string/button_text_launch_demo_s" />
 
         <Button
+            android:id="@+id/button_launch_demo_e"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_e" />
+
+        <Button
             android:id="@+id/button_launch_demo_ds"
             style="@style/exampleLauncherButtonStyle"
             android:text="@string/button_text_launch_demo_ds" />

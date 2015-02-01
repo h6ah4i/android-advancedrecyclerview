@@ -42,6 +42,10 @@
             android:label="@string/activity_title_demo_s" />
 
         <activity
+            android:name=".demo_e.ExpandableExampleActivity"
+            android:label="@string/activity_title_demo_e" />
+
+        <activity
             android:name=".demo_ds.DraggableSwipeableExampleActivity"
             android:label="@string/activity_title_demo_ds" />
 
