@@ -22,9 +22,11 @@
     <string name="activity_title_launcher">Advanced RecyclerView Example</string>
     <string name="activity_title_about">Advanced RecyclerView About</string>
 
+    <string name="activity_title_demo_d">Draggable</string>
     <string name="activity_title_demo_ds">Draggable + Swipeable</string>
     <string name="activity_title_demo_eds">Expandable + Draggable + Swipeable</string>
 
+    <string name="button_text_launch_demo_d">@string/activity_title_demo_d</string>
     <string name="button_text_launch_demo_ds">@string/activity_title_demo_ds</string>
     <string name="button_text_launch_demo_eds">@string/activity_title_demo_eds</string>
 

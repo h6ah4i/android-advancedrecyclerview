@@ -34,6 +34,10 @@
         </activity>
 
         <activity
+            android:name=".demo_d.DraggableExampleActivity"
+            android:label="@string/activity_title_demo_d" />
+
+        <activity
             android:name=".demo_ds.DraggableSwipeableExampleActivity"
             android:label="@string/activity_title_demo_ds" />
 

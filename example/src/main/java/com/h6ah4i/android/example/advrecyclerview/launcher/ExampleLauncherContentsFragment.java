@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.demo_d.DraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ds.DraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_eds.ExpandableDraggableSwipeableExampleActivity;
 
@@ -38,6 +39,7 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        view.findViewById(R.id.button_launch_demo_d).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_ds).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_eds).setOnClickListener(this);
     }
@@ -45,6 +47,9 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.button_launch_demo_d:
+                launchExampleActivity(DraggableExampleActivity.class);
+                break;
             case R.id.button_launch_demo_ds:
                 launchExampleActivity(DraggableSwipeableExampleActivity.class);
                 break;
