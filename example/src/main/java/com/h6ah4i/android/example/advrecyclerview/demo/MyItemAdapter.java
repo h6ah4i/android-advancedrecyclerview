@@ -16,9 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,12 +26,10 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.demo.data.AbstractDataProvider;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 
 public class MyItemAdapter
@@ -46,7 +41,6 @@ public class MyItemAdapter
     private AbstractDataProvider mProvider;
     private EventListener mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
-    private Drawable[] mSwipeBackgroundDrawables;
 
     public interface EventListener {
         void onItemRemoved(int position);
@@ -186,9 +180,21 @@ public class MyItemAdapter
     }
 
     @Override
-    public Drawable onGetSwipeBackgroundDrawable(MyViewHolder holder, int type) {
-        final Drawable[] drawables = getSwipeBackgroundDrawables(holder.itemView.getContext());
-        return drawables[type];
+    public void onSetSwipeBackground(MyViewHolder holder, int type) {
+        int bgRes = 0;
+        switch (type) {
+            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
+                bgRes = R.drawable.swipe_neutral_item_background;
+                break;
+            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_LEFT_BACKGROUND:
+                bgRes = R.drawable.swipe_left_item_background;
+                break;
+            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
+                bgRes = R.drawable.swipe_right_item_background;
+                break;
+        }
+
+        holder.itemView.setBackgroundResource(bgRes);
     }
 
     @Override
@@ -242,27 +248,6 @@ public class MyItemAdapter
     public void setEventListener(EventListener eventListener) {
         mEventListener = eventListener;
     }
-
-    private Drawable[] getSwipeBackgroundDrawables(Context context) {
-        if (mSwipeBackgroundDrawables == null) {
-            final Resources res = context.getResources();
-            final Drawable[] drawables = new Drawable[3];
-
-            drawables[RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND] =
-                    res.getDrawable(R.drawable.swipe_neutral_item_background);
-
-            drawables[RecyclerViewSwipeManager.DRAWABLE_SWIPE_LEFT_BACKGROUND] =
-                    res.getDrawable(R.drawable.swipe_left_item_background);
-
-            drawables[RecyclerViewSwipeManager.DRAWABLE_SWIPE_RIGHT_BACKGROUND] =
-                    res.getDrawable(R.drawable.swipe_right_item_background);
-
-            mSwipeBackgroundDrawables = drawables;
-        }
-
-        return mSwipeBackgroundDrawables;
-    }
-
 
     private static boolean hitTest(View v, int x, int y) {
         final int tx = (int) (ViewCompat.getTranslationX(v) + 0.5f);

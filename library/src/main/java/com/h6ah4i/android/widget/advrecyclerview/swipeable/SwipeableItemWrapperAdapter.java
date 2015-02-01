@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -193,12 +192,12 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ Drawable getSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int type) {
+    /*package*/ void setSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int type) {
         if (LOCAL_LOGV) {
-            Log.v(TAG, "getSwipeBackgroundDrawable(holder = " + holder + ", type = " + type + ")");
+            Log.v(TAG, "setSwipeBackgroundDrawable(holder = " + holder + ", type = " + type + ")");
         }
 
-        return mSwipeableItemAdapter.onGetSwipeBackgroundDrawable(holder, type);
+        mSwipeableItemAdapter.onSetSwipeBackground(holder, type);
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
