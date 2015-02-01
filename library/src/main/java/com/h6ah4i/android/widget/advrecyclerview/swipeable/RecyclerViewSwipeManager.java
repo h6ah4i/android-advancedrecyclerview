@@ -362,7 +362,7 @@ public class RecyclerViewSwipeManager {
         mLastTouchX = (int) (e.getX() + 0.5f);
         mVelocityTracker.addMovement(e);
 
-        final int swipeDistance = mLastTouchX - (mTouchedItemOffsetX + mSwipingItemMargins.left);
+        final int swipeDistance = mLastTouchX - mTouchedItemOffsetX;
 
         mSwipingItemOperator.update(swipeDistance);
     }
@@ -370,7 +370,7 @@ public class RecyclerViewSwipeManager {
     private void startSwiping(RecyclerView rv, MotionEvent e, RecyclerView.ViewHolder holder) {
         mSwipingItem = holder;
         mLastTouchX = (int) (e.getX() + 0.5f);
-        mTouchedItemOffsetX = mLastTouchX - holder.itemView.getLeft();
+        mTouchedItemOffsetX = mLastTouchX;
         CustomRecyclerViewUtils.getLayoutMargins(holder.itemView, mSwipingItemMargins);
 
         mSwipingItemOperator = new SwipingItemOperator(this, mSwipingItem, mSwipingItemReactionType);
