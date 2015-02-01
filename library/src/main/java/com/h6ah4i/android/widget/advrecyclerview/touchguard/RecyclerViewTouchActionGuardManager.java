@@ -23,7 +23,7 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 public class RecyclerViewTouchActionGuardManager {
-    private static final String TAG = "RecyclerViewScrollGuardManager";
+    private static final String TAG = "RecyclerViewTouchActionGuardManager";
 
     private static final boolean LOCAL_LOGV = false;
     private static final boolean LOCAL_LOGD = false;
