@@ -18,6 +18,7 @@ package com.h6ah4i.android.example.advrecyclerview.about;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.IOException;
@@ -39,6 +40,7 @@ public class AssetFileLibraryLicenseDataCollector {
         public String mLibraryName;
         public String mLicenseText;
         public String mNoticeText;
+        public Uri mLink;
     }
 
     public AssetFileLibraryLicenseDataCollector(Context context, String baseAssetDir) {
@@ -93,6 +95,7 @@ public class AssetFileLibraryLicenseDataCollector {
         String name = loadTextFile(assets, dirname + "/NAME");
         String license = loadTextFile(assets, dirname + "/LICENSE");
         String notice = loadTextFile(assets, dirname + "/NOTICE");
+        Uri link = safeParseLinkUri(loadTextFile(assets, dirname + "/LINK"));
 
         if (name != null && (license != null || notice != null)) {
             LibraryInfo info = new LibraryInfo();
@@ -100,12 +103,28 @@ public class AssetFileLibraryLicenseDataCollector {
             info.mLibraryName = name;
             info.mLicenseText = license;
             info.mNoticeText = notice;
+            info.mLink = link;
 
             return info;
         } else {
             Log.w(TAG, "Failed to load " + dirname);
             return null;
         }
+    }
+
+    private static Uri safeParseLinkUri(String s) {
+        if (s == null) {
+            return null;
+        }
+
+        final String[] lines = s.split("\n");
+
+        if (lines == null || lines.length == 0) {
+            return null;
+        }
+
+
+        return Uri.parse(lines[0]);
     }
 
     // http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string
