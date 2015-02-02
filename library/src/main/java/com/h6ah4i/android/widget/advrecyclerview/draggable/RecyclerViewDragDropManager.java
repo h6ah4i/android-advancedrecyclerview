@@ -338,6 +338,8 @@ public class RecyclerViewDragDropManager {
         mGrabbedItemHeight = itemView.getHeight();
         CustomRecyclerViewUtils.getLayoutMargins(itemView, mDraggingItemMargins);
 
+        mRecyclerView.getParent().requestDisallowInterceptTouchEvent(true);
+
         startScrollOnDraggingProcess();
 
         // raise onDragItemStarted() event
@@ -409,6 +411,10 @@ public class RecyclerViewDragDropManager {
         }
 
         stopScrollOnDraggingProcess();
+
+        if (mRecyclerView != null && mRecyclerView.getParent() != null) {
+            mRecyclerView.getParent().requestDisallowInterceptTouchEvent(false);
+        }
 
         mDraggingItemDecorator = null;
         mSwapTargetItemOperator = null;
