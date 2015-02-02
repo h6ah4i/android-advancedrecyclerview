@@ -122,38 +122,68 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
         super.unregisterAdapterDataObserver(observer);
     }
 
-    protected void onWrappedAdapterChanged() {
+    protected void onHandleWrappedAdapterChanged() {
+        notifyDataSetChanged();
+    }
+
+    protected void onHandleWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
+        notifyItemRangeChanged(positionStart, itemCount);
+    }
+
+    protected void onHandleWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
+        notifyItemRangeInserted(positionStart, itemCount);
+    }
+
+    protected void onHandleWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
+        notifyItemRangeRemoved(positionStart, itemCount);
+    }
+
+    protected void onHandleWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
+        if (itemCount != 1) {
+            throw new IllegalStateException("itemCount should be always 1  (actual: " + itemCount + ")");
+        }
+
+        notifyItemMoved(fromPosition, toPosition);
+    }
+
+    /*package*/ final void onWrappedAdapterChanged() {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onWrappedAdapterChanged");
         }
+
+        onHandleWrappedAdapterChanged();
     }
 
-    protected void onWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
+    /*package*/ final void onWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onWrappedAdapterItemRangeChanged(positionStart = " + positionStart + ", itemCount = " + itemCount + ")");
         }
+
+        onHandleWrappedAdapterItemRangeChanged(positionStart, itemCount);
     }
 
-    protected void onWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
+    /*package*/ final void onWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onWrappedAdapterItemRangeInserted(positionStart = " + positionStart + ", itemCount = " + itemCount + ")");
         }
+
+        onHandleWrappedAdapterItemRangeInserted(positionStart, itemCount);
     }
 
-    protected void onWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
+    /*package*/ final void onWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onWrappedAdapterItemRangeRemoved(positionStart = " + positionStart + ", itemCount = " + itemCount + ")");
         }
+
+        onHandleWrappedAdapterItemRangeRemoved(positionStart, itemCount);
     }
 
-    protected void onWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
+    /*package*/ final void onWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onWrappedAdapterRangeMoved(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ", itemCount = " + itemCount + ")");
         }
 
-        if (itemCount != 1) {
-            throw new IllegalStateException("itemCount should be always 1  (actual: " + itemCount + ")");
-        }
+        onHandleWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
     }
 
     private static final class BridgeObserver<VH extends RecyclerView.ViewHolder> extends RecyclerView.AdapterDataObserver {

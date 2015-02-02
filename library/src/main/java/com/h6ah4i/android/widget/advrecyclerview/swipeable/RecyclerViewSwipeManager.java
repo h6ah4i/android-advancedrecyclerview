@@ -17,7 +17,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
@@ -30,7 +29,6 @@ import android.view.ViewConfiguration;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
-import com.h6ah4i.android.widget.advrecyclerview.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 public class RecyclerViewSwipeManager {
@@ -364,7 +362,7 @@ public class RecyclerViewSwipeManager {
         mLastTouchX = (int) (e.getX() + 0.5f);
         mVelocityTracker.addMovement(e);
 
-        final int swipeDistance = mLastTouchX - (mTouchedItemOffsetX + mSwipingItemMargins.left);
+        final int swipeDistance = mLastTouchX - mTouchedItemOffsetX;
 
         mSwipingItemOperator.update(swipeDistance);
     }
@@ -372,7 +370,7 @@ public class RecyclerViewSwipeManager {
     private void startSwiping(RecyclerView rv, MotionEvent e, RecyclerView.ViewHolder holder) {
         mSwipingItem = holder;
         mLastTouchX = (int) (e.getX() + 0.5f);
-        mTouchedItemOffsetX = mLastTouchX - holder.itemView.getLeft();
+        mTouchedItemOffsetX = mLastTouchX;
         CustomRecyclerViewUtils.getLayoutMargins(holder.itemView, mSwipingItemMargins);
 
         mSwipingItemOperator = new SwipingItemOperator(this, mSwipingItem, mSwipingItemReactionType);
@@ -500,7 +498,6 @@ public class RecyclerViewSwipeManager {
 
     /*package*/ void applySlideItem(RecyclerView.ViewHolder holder, float prevAmount, float amount, boolean shouldAnimate) {
         final SwipeableItemViewHolder holder2 = (SwipeableItemViewHolder) holder;
-        final View itemView = holder.itemView;
         final View containerView = holder2.getSwipeableContainerView();
 
         if (containerView == null) {
@@ -509,8 +506,8 @@ public class RecyclerViewSwipeManager {
 
         final int reqBackgroundType;
 
-        if (amount == +0.0f || amount == -0.0f) {
-            if (prevAmount == +0.0f || prevAmount == -0.0f) {
+        if (amount == 0.0f) {
+            if (prevAmount == 0.0f) {
                 reqBackgroundType = DRAWABLE_SWIPE_NEUTRAL_BACKGROUND;
             } else {
                 reqBackgroundType = (prevAmount < 0)
@@ -523,13 +520,11 @@ public class RecyclerViewSwipeManager {
                     : DRAWABLE_SWIPE_RIGHT_BACKGROUND;
         }
 
-        final Drawable background = mAdapter.getSwipeBackgroundDrawable(holder, reqBackgroundType);
-
         if (amount == 0.0f) {
             slideItem(holder, amount, shouldAnimate);
-            ViewUtils.setBackground(itemView, background);
+            mAdapter.setSwipeBackgroundDrawable(holder, reqBackgroundType);
         } else {
-            ViewUtils.setBackground(itemView, background);
+            mAdapter.setSwipeBackgroundDrawable(holder, reqBackgroundType);
             slideItem(holder, amount, shouldAnimate);
         }
     }

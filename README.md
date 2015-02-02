@@ -1,7 +1,7 @@
 Advanced RecyclerView
 ===============
 
-This RecyclerView extension library provides Google's Inbox app like swiping and Play Music app like drag and drop sorting features. Works on API level 9 or later.
+This RecyclerView extension library provides Google's Inbox app like swiping, Play Music app like drag-andr-drop sorting and expandable item features. Works on API level 9 or later.
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Advanced%20RecyclerView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1432)
 
@@ -34,7 +34,7 @@ Target platforms
 Latest version
 ---
 
-- Version 0.5.0  (January 25, 2015)
+- Version 0.6.0  (February 2, 2015)
 
 Getting started
 ---
@@ -43,15 +43,18 @@ This library is published on jCenter. Just add these lines to `build.gradle`.
 
 ```groovy
 dependencies {
-    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.5.0'
+    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.6.0'
 }
 ```
 
 Usage
 ---
 
-Please check the [`RecyclerListViewFragment`](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo/fragment/RecyclerListViewFragment.java) and the
-[`MyItemAdapter`](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo/MyItemAdapter.java)  classes in the example code.
+Please check the implementation of the simple examples.
+
+- [Drag & Drop example](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d/)
+- [Swipe example](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s/)
+- [Expandable item example](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e/)
 
 
 Primary classes/interfaces
@@ -61,36 +64,50 @@ Primary classes/interfaces
 
 | Class/Interface name                  | Description                                              |
 |---------------------------------------|----------------------------------------------------------|
-| `RecyclerViewDragDropManager`         | Provides Drag & Drop sort operation                      |
-| `DraggableItemAdapter<T>`             | Implement this interface on your RecyclerView.Adapter    |
-| `DraggableItemViewHolder`             | Implement this interface on your RecyclerView.ViewHolder |
+| [`RecyclerViewDragDropManager`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/RecyclerViewDragDropManager.java)         | Provides Drag & Drop sort operation                      |
+| [`DraggableItemAdapter<T>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.java)             | Implement this interface on your RecyclerView.Adapter    |
+| [`DraggableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.java)             | Implement this interface on your RecyclerView.ViewHolder |
 
 
 ### Swiping related classes/interfaces
 
 | Class/Interface name                  | Description                                              |
 |---------------------------------------|----------------------------------------------------------|
-| `RecyclerViewSwipeManager`            | Provides Swipe operation                             　  |
-| `SwipeableItemAdapter<T>`             | Implement this interface on your RecyclerView.Adapter    |
-| `SwipeableItemViewHolder`             | Implement this interface on your RecyclerView.ViewHolder |
+| [`RecyclerViewSwipeManager`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/RecyclerViewSwipeManager.java)            | Provides Swipe operation                             　  |
+| [`SwipeableItemAdapter<T>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemAdapter.java)             | Implement this interface on your RecyclerView.Adapter    |
+| [`SwipeableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemViewHolder.java)             | Implement this interface on your RecyclerView.ViewHolder |
+
+
+### Expandable item related classes/interfaces
+
+| Class/Interface name                  | Description                                              |
+|---------------------------------------|----------------------------------------------------------|
+| [`RecyclerViewExpandableItemManager`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.java)   | Provides Expandable item function                    　  |
+| [`ExpandableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemViewHolder.java)            | Implement this interface on your RecyclerView.ViewHolder |
+| [`ExpandableItemAdapter<GVH, CVH>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemAdapter.java)     | Implement this interface on your RecyclerView.Adapter    |
+| [`ExpandableDraggableItemAdapter<GVH, CVH>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.java) | (optional) Implement this interface on your RecyclerView.Adapter to support Drag & Drop sort operation |
+| [`ExpandableSwipeableItemAdapter<GVH, CVH>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableSwipeableItemAdapter.java) | (optional) Implement this interface on your RecyclerView.Adapter to support Swipe operation |
+
 
 
 ### RecyclerView decorations
 
 | Class/Interface name                  | Description                                              |
 |---------------------------------------|----------------------------------------------------------|
-| `ItemShadowDecorator`                 | Drop shadow decoration for pre-Lollipop devices          |
-| `SimpleListDividerDecorator`          | Simple list divider decoration                           |
+| [`ItemShadowDecorator`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/decoration/ItemShadowDecorator.java)                 | Drop shadow decoration for pre-Lollipop devices          |
+| [`SimpleListDividerDecorator`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/decoration/SimpleListDividerDecorator.java)          | Simple list divider decoration                           |
 
 
 ### Misc.
 
 | Class name                                 | Description                                              |
 |--------------------------------------------|----------------------------------------------------------|
-| `RecyclerViewTouchActionGuardManager`      | Suppress scrolling while item animations are running     |
-| `AbstractDraggableItemViewHolder`          | ViewHolder class which implements boilerplate code of `DraggableItemViewHolder` interface      |
-| `AbstractSwipeableItemViewHolder`          | ViewHolder class which implements boilerplate code of `SwipeableItemViewHolder` interface      |
-| `AbstractDraggableSwipeableItemViewHolder` | ViewHolder class which implements boilerplate code of `DraggableItemViewHolder` and `SwipeableItemViewHolder` interfaces      |
+| [`RecyclerViewTouchActionGuardManager`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/touchguard/RecyclerViewTouchActionGuardManager.java)      | Suppress scrolling while item animations are running     |
+| [`AbstractDraggableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractDraggableItemViewHolder.java)          | ViewHolder class which implements boilerplate code of the  `DraggableItemViewHolder` interface      |
+| [`AbstractSwipeableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java)          | ViewHolder class which implements boilerplate code of the  `SwipeableItemViewHolder` interface      |
+| [`AbstractExpandableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractExpandableItemViewHolder.java)            | ViewHolder class which implements boilerplate code of the  `ExpandableItemViewHolder` interface      |
+| [`AbstractDraggableSwipeableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractDraggableSwipeableItemViewHolder.java) | ViewHolder class which implements boilerplate code of the `DraggableItemViewHolder` and the `SwipeableItemViewHolder` interfaces      |
+| [`AbstractExpandableItemAdapter<GVH, CVH>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractExpandableItemAdapter.java)  | Adapter class which implements boilerplate code of the `ExpandableItemAdapter` interface |
 
 
 License

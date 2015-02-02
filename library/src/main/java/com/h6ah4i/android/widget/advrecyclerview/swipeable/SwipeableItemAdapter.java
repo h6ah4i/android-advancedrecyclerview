@@ -39,17 +39,15 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
     int onGetSwipeReactionType(T holder, int x, int y);
 
     /**
-     * Gets background drawable of swiping item.
+     * Called when sets background of the swiping item.
      *
      * @param holder The ViewHolder which is associated to the swiping item.
      * @param type Background type. One of the
      *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_NEUTRAL_BACKGROUND},
      *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_LEFT_BACKGROUND} or
      *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_RIGHT_BACKGROUND}.
-     *
-     * @return Background drawable
      */
-    Drawable onGetSwipeBackgroundDrawable(T holder, int type);
+    void onSetSwipeBackground(T holder, int type);
 
     /**
      * Called when item is swiped.

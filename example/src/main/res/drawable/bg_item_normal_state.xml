@@ -16,7 +16,7 @@
 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
-        <color android:color="@color/bg_item_normal_state_pressed"/>
+        <color android:color="@color/bg_item_normal_pressed_state"/>
     </item>
     <item>
         <color android:color="@color/bg_item_normal_state"/>

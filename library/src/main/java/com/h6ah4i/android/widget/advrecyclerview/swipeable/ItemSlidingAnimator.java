@@ -91,12 +91,13 @@ public class ItemSlidingAnimator {
         final int left = containerView.getLeft();
         final int right = containerView.getRight();
         final int width = right - left;
+        final boolean parentIsShown = parent.isShown();
 
         parent.getWindowVisibleDisplayFrame(mTmpRect);
 
         final int translateX;
-        if (width == 0) {
-            // not measured yet
+        if ((width == 0) || !parentIsShown) {
+            // not measured yet or not shown
             translateX = (toLeft) ? (-mTmpRect.width()) : (mTmpRect.width());
             shouldAnimate = false;
         } else {

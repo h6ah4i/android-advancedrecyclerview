@@ -20,6 +20,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,7 +106,12 @@ public class AboutActivity extends ActionBarActivity {
                 v = convertView;
             }
 
-            vh.mName.setText(info.mLibraryName);
+            if (info.mLink == null) {
+                vh.mName.setText(info.mLibraryName);
+            } else {
+                vh.mName.setMovementMethod(LinkMovementMethod.getInstance());
+                vh.mName.setText(Html.fromHtml("<a href=\"" + info.mLink.toString() + "\">" + info.mLibraryName + "</a>"));
+            }
 
             if (info.mNoticeText != null) {
                 vh.mLicenseNotice.setText(info.mNoticeText);

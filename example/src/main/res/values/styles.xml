@@ -18,6 +18,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:textViewStyle">@style/FixedTextViewStyle</item>
+    </style>
+
+    <style name="FixedTextViewStyle" parent="android:Widget.TextView">
+        <!-- Override the textColor attribute explicitly to avoid unexpected text color issue on HTC devices -->
+        <item name="android:textColor">@color/abc_primary_text_material_light</item>
     </style>
 
     <style name="myRecyclerViewStyle">
@@ -30,6 +36,14 @@
         <item name="android:paddingTop">@dimen/activity_vertical_margin</item>
         <item name="android:scrollbarStyle">outsideOverlay</item>
         <item name="android:scrollbars">vertical</item>
+    </style>
+
+    <style name="exampleLauncherButtonStyle">
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingBottom">24dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

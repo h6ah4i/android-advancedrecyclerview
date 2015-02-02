@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -85,8 +84,6 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
 
         if (holder instanceof SwipeableItemViewHolder) {
             ((SwipeableItemViewHolder) holder).setSwipeStateFlags(STATE_FLAG_INITIAL_VALUE);
-        } else {
-            return holder;
         }
 
         return holder;
@@ -135,57 +132,47 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     @Override
-    protected void onWrappedAdapterChanged() {
-        super.onWrappedAdapterChanged();
-
+    protected void onHandleWrappedAdapterChanged() {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyDataSetChanged();
+            super.onHandleWrappedAdapterChanged();
         }
     }
 
     @Override
-    protected void onWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
-        super.onWrappedAdapterItemRangeChanged(positionStart, itemCount);
-
+    protected void onHandleWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyItemRangeChanged(positionStart, itemCount);
+            super.onHandleWrappedAdapterItemRangeChanged(positionStart, itemCount);
         }
     }
 
     @Override
-    protected void onWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
-        super.onWrappedAdapterItemRangeInserted(positionStart, itemCount);
-
+    protected void onHandleWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyItemRangeInserted(positionStart, itemCount);
+            super.onHandleWrappedAdapterItemRangeInserted(positionStart, itemCount);
         }
     }
 
     @Override
-    protected void onWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
-        super.onWrappedAdapterItemRangeRemoved(positionStart, itemCount);
-
+    protected void onHandleWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyItemRangeRemoved(positionStart, itemCount);
+            super.onHandleWrappedAdapterItemRangeRemoved(positionStart, itemCount);
         }
     }
 
     @Override
-    protected void onWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
-        super.onWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
-
+    protected void onHandleWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
         if (isSwiping()) {
             cancelSwipe();
         } else {
-            notifyItemMoved(fromPosition, toPosition);
+            super.onHandleWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
         }
     }
 
@@ -205,12 +192,12 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ Drawable getSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int type) {
+    /*package*/ void setSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int type) {
         if (LOCAL_LOGV) {
-            Log.v(TAG, "getSwipeBackgroundDrawable(holder = " + holder + ", type = " + type + ")");
+            Log.v(TAG, "setSwipeBackgroundDrawable(holder = " + holder + ", type = " + type + ")");
         }
 
-        return mSwipeableItemAdapter.onGetSwipeBackgroundDrawable(holder, type);
+        mSwipeableItemAdapter.onSetSwipeBackground(holder, type);
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
