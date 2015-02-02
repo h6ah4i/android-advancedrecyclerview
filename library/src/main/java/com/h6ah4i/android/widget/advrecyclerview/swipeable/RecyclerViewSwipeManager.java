@@ -379,6 +379,8 @@ public class RecyclerViewSwipeManager {
         mVelocityTracker.clear();
         mVelocityTracker.addMovement(e);
 
+        mRecyclerView.getParent().requestDisallowInterceptTouchEvent(true);
+
         // raise onSwipeItemStarted() event
         mAdapter.onSwipeItemStarted(this, holder);
     }
@@ -388,6 +390,10 @@ public class RecyclerViewSwipeManager {
 
         if (swipingItem == null) {
             return;
+        }
+
+        if (mRecyclerView != null && mRecyclerView.getParent() != null) {
+            mRecyclerView.getParent().requestDisallowInterceptTouchEvent(false);
         }
 
         mVelocityTracker.clear();
