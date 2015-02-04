@@ -1,7 +1,7 @@
 Advanced RecyclerView
 ===============
 
-This RecyclerView extension library provides Google's Inbox app like swiping, Play Music app like drag-andr-drop sorting and expandable item features. Works on API level 9 or later.
+This RecyclerView extension library provides Google's Inbox app like swiping, Play Music app like drag-and-drop sorting and expandable item features. Works on API level 9 or later.
 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Advanced%20RecyclerView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1432)
 
