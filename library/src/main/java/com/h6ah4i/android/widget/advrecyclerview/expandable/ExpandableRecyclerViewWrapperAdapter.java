@@ -276,9 +276,24 @@ public class ExpandableRecyclerViewWrapperAdapter
             mPositionTranslator.moveGroupItem(fromGroupPosition, toGroupPosition);
             actualToFlatPosition = toPosition;
         } else if (!fromIsGroup && !toIsGroup) {
-            adapter.onMoveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
-            mPositionTranslator.moveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
-            actualToFlatPosition = toPosition;
+            int modToChildPosition;
+
+            // correct child position
+            if (fromGroupPosition == toGroupPosition) {
+                modToChildPosition = toChildPosition;
+            } else {
+                if (fromPosition < toPosition) {
+                    modToChildPosition = toChildPosition + 1;
+                } else {
+                    modToChildPosition = toChildPosition;
+                }
+            }
+
+            actualToFlatPosition = mPositionTranslator.getFlatPosition(
+                    ExpandableAdapterHelper.getPackedPositionForChild(fromGroupPosition, modToChildPosition));
+
+            adapter.onMoveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, modToChildPosition);
+            mPositionTranslator.moveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, modToChildPosition);
         } else if (!fromIsGroup && toIsGroup) {
             int modToGroupPosition;
             int modToChildPosition;
