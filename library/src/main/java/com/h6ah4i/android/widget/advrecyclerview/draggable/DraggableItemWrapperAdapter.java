@@ -44,7 +44,7 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
 
         mDraggableItemAdapter = getDraggableItemAdapter(adapter);
         if (getDraggableItemAdapter(adapter) == null) {
-            throw new IllegalArgumentException("adapter does not implement MovableItemAdapter");
+            throw new IllegalArgumentException("adapter does not implement DraggableItemAdapter");
         }
 
         if (manager == null) {
