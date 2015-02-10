@@ -711,6 +711,7 @@ public class RecyclerViewDragDropManager {
         return WrapperAdapterUtils.findWrappedAdapter(rv.getAdapter(), DraggableItemWrapperAdapter.class);
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean checkTouchedItemState(RecyclerView rv, RecyclerView.ViewHolder holder) {
         if (!(holder instanceof DraggableItemViewHolder)) {
             return false;
