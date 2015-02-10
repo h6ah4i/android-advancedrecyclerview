@@ -79,8 +79,8 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * Override {@link #onBindGroupViewHolder(RecyclerView.ViewHolder, int, int)} ()} and
      * {@link #onBindChildViewHolder(RecyclerView.ViewHolder, int, int, int)} instead.
      *
-     * @param holder
-     * @param position
+     * @param holder not used
+     * @param position not used
      */
     @Override
     public final void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {

@@ -54,7 +54,7 @@ public class SwipeableExampleActivity extends ActionBarActivity implements ItemP
     /**
      * This method will be called when a list item is removed
      *
-     * @param position
+     * @param position The position of the item within data set
      */
     public void onItemRemoved(int position) {
         SnackbarManager.show(
@@ -77,7 +77,7 @@ public class SwipeableExampleActivity extends ActionBarActivity implements ItemP
     /**
      * This method will be called when a list item is pinned
      *
-     * @param position
+     * @param position The position of the item within data set
      */
     public void onItemPinned(int position) {
         final DialogFragment dialog = ItemPinnedMessageDialogFragment.newInstance(position);
@@ -91,7 +91,7 @@ public class SwipeableExampleActivity extends ActionBarActivity implements ItemP
     /**
      * This method will be called when a list item is clicked
      *
-     * @param position
+     * @param position The position of the item within data set
      */
     public void onItemClicked(int position) {
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);

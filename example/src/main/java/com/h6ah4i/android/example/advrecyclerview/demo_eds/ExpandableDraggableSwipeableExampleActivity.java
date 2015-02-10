@@ -55,7 +55,7 @@ public class ExpandableDraggableSwipeableExampleActivity extends ActionBarActivi
     /**
      * This method will be called when a group item is removed
      *
-     * @param groupPosition
+     * @param groupPosition The position of the group item within data set
      */
     public void onGroupItemRemoved(int groupPosition) {
         SnackbarManager.show(
@@ -78,8 +78,8 @@ public class ExpandableDraggableSwipeableExampleActivity extends ActionBarActivi
     /**
      * This method will be called when a child item is removed
      *
-     * @param groupPosition
-     * @param childPosition
+     * @param groupPosition The group position of the child item within data set
+     * @param childPosition The position of the child item within the group
      */
     public void onChildItemRemoved(int groupPosition, int childPosition) {
         SnackbarManager.show(
@@ -102,7 +102,7 @@ public class ExpandableDraggableSwipeableExampleActivity extends ActionBarActivi
     /**
      * This method will be called when a group item is pinned
      *
-     * @param groupPosition
+     * @param groupPosition The position of the group item within data set
      */
     public void onGroupItemPinned(int groupPosition) {
         final DialogFragment dialog = ExpandableItemPinnedMessageDialogFragment.newInstance(groupPosition, RecyclerView.NO_POSITION);
@@ -116,8 +116,8 @@ public class ExpandableDraggableSwipeableExampleActivity extends ActionBarActivi
     /**
      * This method will be called when a child item is pinned
      *
-     * @param groupPosition
-     * @param childPosition
+     * @param groupPosition The group position of the child item within data set
+     * @param childPosition The position of the child item within the group
      */
     public void onChildItemPinned(int groupPosition, int childPosition) {
         final DialogFragment dialog = ExpandableItemPinnedMessageDialogFragment.newInstance(groupPosition, childPosition);
