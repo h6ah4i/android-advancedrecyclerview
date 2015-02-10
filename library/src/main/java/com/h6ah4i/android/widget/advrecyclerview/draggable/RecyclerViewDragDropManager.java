@@ -720,6 +720,7 @@ public class RecyclerViewDragDropManager {
             return false;
         }
 
+        //noinspection RedundantIfStatement
         if (holder.getItemId() != adapter.getItemId(itemPosition)) {
             return false;
         }

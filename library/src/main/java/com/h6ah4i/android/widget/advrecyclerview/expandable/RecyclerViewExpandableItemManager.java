@@ -189,25 +189,15 @@ public class RecyclerViewExpandableItemManager {
         final int viewX = touchX - (view.getLeft() + translateX);
         final int viewY = touchY - (view.getTop() + translateY);
 
-        if (!mAdapter.onTapItem(holder, viewX, viewY)) {
-            return false;
-        }
-
-        return true;
+        return mAdapter.onTapItem(holder, viewX, viewY);
     }
 
     public boolean expandGroup(int groupPosition) {
-        if (mAdapter == null) {
-            return false;
-        }
-        return mAdapter.expandGroup(groupPosition);
+        return (mAdapter != null) && mAdapter.expandGroup(groupPosition);
     }
 
     public boolean collapseGroup(int groupPosition) {
-        if (mAdapter == null) {
-            return false;
-        }
-        return mAdapter.collapseGroup(groupPosition);
+        return (mAdapter != null) && mAdapter.collapseGroup(groupPosition);
     }
 
     public long getExpandablePosition(int flatPosition) {

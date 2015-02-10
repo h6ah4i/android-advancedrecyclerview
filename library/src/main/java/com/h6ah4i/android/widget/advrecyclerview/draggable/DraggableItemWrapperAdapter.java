@@ -192,7 +192,10 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     private boolean shouldCancelDragOnDataUpdated() {
-        return !DEBUG_BYPASS_MOVE_OPERATION_MODE && isDragging();
+        if (DEBUG_BYPASS_MOVE_OPERATION_MODE) {
+            return false;
+        }
+        return isDragging();
     }
 
     private void cancelDrag() {
