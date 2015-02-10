@@ -22,7 +22,6 @@
         android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:divider="#00000000"
         android:dividerHeight="16dp"
         android:drawSelectorOnTop="false"
