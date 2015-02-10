@@ -66,6 +66,7 @@ class SwipingItemOperator {
         mLeftSwipeReactionType = REACTION_CAN_NOT_SWIPE;
         mRightSwipeReactionType = REACTION_CAN_NOT_SWIPE;
         mPrevTranslateAmount = 0;
+        mSwipingItemContainerView = null;
     }
 
     public void update(int swipeDistance) {

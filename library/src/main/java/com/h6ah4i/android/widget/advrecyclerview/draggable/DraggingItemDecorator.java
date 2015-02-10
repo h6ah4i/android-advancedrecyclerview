@@ -45,7 +45,6 @@ class DraggingItemDecorator extends RecyclerView.ItemDecoration {
     private NinePatchDrawable mShadowDrawable;
     private Rect mShadowPadding = new Rect();
     private Rect mDraggingItemMargins = new Rect();
-    private Rect mDraggingItemDecorationOffsets = new Rect();
     private boolean mStarted;
     private boolean mIsScrolling;
 
@@ -54,8 +53,6 @@ class DraggingItemDecorator extends RecyclerView.ItemDecoration {
         mDraggingItem = draggingItem;
 
         CustomRecyclerViewUtils.getLayoutMargins(mDraggingItem.itemView, mDraggingItemMargins);
-        CustomRecyclerViewUtils.getDecorationOffsets(
-                mRecyclerView.getLayoutManager(), mDraggingItem.itemView, mDraggingItemDecorationOffsets);
     }
 
     @Override

@@ -40,7 +40,6 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     private RecyclerView mRecyclerView;
     private RecyclerView.ViewHolder mSwipingItem;
     private long mSwipingItemId;
-    private Rect mSwipingItemMargins = new Rect();
     private Rect mSwipingItemBounds = new Rect();
     private int mInitialTranslationX;
     private int mTranslationY;
@@ -61,7 +60,6 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
         mMoveAnimationDuration = moveAnimationDuration;
         mInitialTranslationX = (int) (ViewCompat.getTranslationX(swipingItem.itemView) + 0.5f);
 
-        CustomRecyclerViewUtils.getLayoutMargins(mSwipingItem.itemView, mSwipingItemMargins);
         CustomRecyclerViewUtils.getViewBounds(mSwipingItem.itemView, mSwipingItemBounds);
     }
 
