@@ -133,7 +133,6 @@ public class AssetFileLibraryLicenseDataCollector {
     private static String loadTextFile(AssetManager assets, String path) {
         InputStream stream = null;
         try {
-            StringBuilder builder = new StringBuilder();
             stream = assets.open(path, AssetManager.ACCESS_STREAMING);
             java.util.Scanner s = new java.util.Scanner(stream).useDelimiter("\\A");
             return s.hasNext() ? s.next().trim() : "";

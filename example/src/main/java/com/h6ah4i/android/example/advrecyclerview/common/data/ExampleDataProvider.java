@@ -84,7 +84,7 @@ public class ExampleDataProvider extends AbstractDataProvider {
     @Override
     public int undoLastRemoval() {
         if (mLastRemovedData != null) {
-            int insertedPosition = mLastRemovedPosition;
+            int insertedPosition;
             if (mLastRemovedPosition >= 0 && mLastRemovedPosition < mData.size()) {
                 insertedPosition = mLastRemovedPosition;
             } else {

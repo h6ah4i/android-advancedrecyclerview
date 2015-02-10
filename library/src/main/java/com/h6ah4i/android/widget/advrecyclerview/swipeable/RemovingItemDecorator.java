@@ -144,9 +144,9 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     }
 
     private void postInvalidateOnAnimation() {
-        final Rect bounds = mSwipingItemBounds;
-        final int translationX = mInitialTranslationX;
-        final int translationY = mTranslationY;
+//        final Rect bounds = mSwipingItemBounds;
+//        final int translationX = mInitialTranslationX;
+//        final int translationY = mTranslationY;
 
 //        ViewCompat.postInvalidateOnAnimation(
 //                mRecyclerView,
