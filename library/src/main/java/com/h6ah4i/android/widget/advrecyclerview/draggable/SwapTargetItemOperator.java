@@ -25,12 +25,10 @@ import android.view.animation.Interpolator;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 
-class SwapTargetItemOperator extends RecyclerView.ItemDecoration {
+class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     @SuppressWarnings("unused")
     private static final String TAG = "SwapTargetItemOperator";
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.ViewHolder mDraggingItem;
     private RecyclerView.ViewHolder mSwapTargetItem;
     private Interpolator mSwapTargetTranslationInterpolator;
     private int mTranslationY;
@@ -45,8 +43,8 @@ class SwapTargetItemOperator extends RecyclerView.ItemDecoration {
     private long mDraggingItemId;
 
     public SwapTargetItemOperator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem) {
-        mRecyclerView = recyclerView;
-        mDraggingItem = draggingItem;
+        super(recyclerView, draggingItem);
+
         mDraggingItemId = mDraggingItem.getItemId();
 
         CustomRecyclerViewUtils.getLayoutMargins(mDraggingItem.itemView, mDraggingItemMargins);
@@ -164,7 +162,7 @@ class SwapTargetItemOperator extends RecyclerView.ItemDecoration {
         mStarted = true;
     }
 
-    public void finish() {
+    public void finish(boolean animate) {
         if (mStarted) {
             mRecyclerView.removeItemDecoration(this);
         }
@@ -176,10 +174,13 @@ class SwapTargetItemOperator extends RecyclerView.ItemDecoration {
         mRecyclerView.stopScroll();
 
         if (mSwapTargetItem != null) {
-            ViewCompat.setTranslationY(mSwapTargetItem.itemView, 0.0f);
+            // return to default position
+            updateSwapTargetTranslation(mDraggingItem, mSwapTargetItem, mCurTranslationPhase);
+            moveToDefaultPosition(mSwapTargetItem.itemView, animate);
             mSwapTargetItem = null;
         }
 
+        mDraggingItem = null;
         mTranslationY = 0;
         mDraggingItemHeight = 0;
         mCurTranslationPhase = 0.0f;
@@ -189,13 +190,5 @@ class SwapTargetItemOperator extends RecyclerView.ItemDecoration {
 
     public void update(int translationY) {
         mTranslationY = translationY;
-    }
-
-    private static void setItemTranslationY(RecyclerView rv, RecyclerView.ViewHolder holder, float y) {
-        final RecyclerView.ItemAnimator itemAnimator = rv.getItemAnimator();
-        if (itemAnimator != null) {
-            itemAnimator.endAnimation(holder);
-        }
-        ViewCompat.setTranslationY(holder.itemView, 0.0f);
     }
 }

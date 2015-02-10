@@ -26,6 +26,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
@@ -92,6 +93,8 @@ public class RecyclerViewDragDropManager {
     private int mGrabbedItemHeight;
     private int mOrigOverScrollMode;
     private Runnable mDeferredCancelProcess;
+    private int mItemSettleBackIntoPlaceAnimationDuration = 200;
+    private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = new DecelerateInterpolator();
 
     public RecyclerViewDragDropManager() {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
@@ -402,11 +405,15 @@ public class RecyclerViewDragDropManager {
         }
 
         if (mDraggingItemDecorator != null) {
-            mDraggingItemDecorator.finish();
+            mDraggingItemDecorator.setReturnToDefaultPositionAnimationDuration(mItemSettleBackIntoPlaceAnimationDuration);
+            mDraggingItemDecorator.setReturnToDefaultPositionAnimationInterpolator(mItemSettleBackIntoPlaceAnimationInterpolator);
+            mDraggingItemDecorator.finish(true);
         }
 
         if (mSwapTargetItemOperator != null) {
-            mSwapTargetItemOperator.finish();
+            mSwapTargetItemOperator.setReturnToDefaultPositionAnimationDuration(mItemSettleBackIntoPlaceAnimationDuration);
+            mDraggingItemDecorator.setReturnToDefaultPositionAnimationInterpolator(mItemSettleBackIntoPlaceAnimationInterpolator);
+            mSwapTargetItemOperator.finish(true);
         }
 
         if (mEdgeEffectDecorator != null) {
@@ -780,6 +787,22 @@ public class RecyclerViewDragDropManager {
         }
 
         return swapTargetHolder;
+    }
+
+    public void setItemSettleBackIntoPlaceAnimationDuration(int duration) {
+        mItemSettleBackIntoPlaceAnimationDuration = duration;
+    }
+
+    public int getItemSettleBackIntoPlaceAnimationDuration() {
+        return mItemSettleBackIntoPlaceAnimationDuration;
+    }
+
+    public Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
+        return mItemSettleBackIntoPlaceAnimationInterpolator;
+    }
+
+    public void setItemSettleBackIntoPlaceAnimationInterpolator(Interpolator interpolator) {
+        mItemSettleBackIntoPlaceAnimationInterpolator = interpolator;
     }
 
     private static class ScrollOnDraggingProcessRunnable implements Runnable {

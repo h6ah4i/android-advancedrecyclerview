@@ -27,13 +27,10 @@ import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 
-class DraggingItemDecorator extends RecyclerView.ItemDecoration {
+class DraggingItemDecorator extends BaseDraggableItemDecorator {
     @SuppressWarnings("unused")
     private static final String TAG = "DraggingItemDecorator";
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.ViewHolder mDraggingItem;
-    private RecyclerView.ViewHolder mSwapTargetItem;
     private int mGrabbedPositionY;
     private int mTranslationY;
     private int mRecyclerViewPaddingLeft;
@@ -49,9 +46,7 @@ class DraggingItemDecorator extends RecyclerView.ItemDecoration {
     private boolean mIsScrolling;
 
     public DraggingItemDecorator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem) {
-        mRecyclerView = recyclerView;
-        mDraggingItem = draggingItem;
-
+        super(recyclerView, draggingItem);
         CustomRecyclerViewUtils.getLayoutMargins(mDraggingItem.itemView, mDraggingItemMargins);
     }
 
@@ -94,7 +89,7 @@ class DraggingItemDecorator extends RecyclerView.ItemDecoration {
         mStarted = true;
     }
 
-    public void finish() {
+    public void finish(boolean animate) {
         if (mStarted) {
             mRecyclerView.removeItemDecoration(this);
         }
@@ -105,9 +100,9 @@ class DraggingItemDecorator extends RecyclerView.ItemDecoration {
         }
         mRecyclerView.stopScroll();
 
-        updateDraggingItemPosition(0);
-
-        ViewCompat.setTranslationY(mDraggingItem.itemView, 0.0f);
+        // return to default position
+        updateDraggingItemPosition(mTranslationY);
+        moveToDefaultPosition(mDraggingItem.itemView, animate);
 
         // show
         mDraggingItem.itemView.setVisibility(View.VISIBLE);
@@ -116,11 +111,6 @@ class DraggingItemDecorator extends RecyclerView.ItemDecoration {
         if (mDraggingItemImage != null) {
             mDraggingItemImage.recycle();
             mDraggingItemImage = null;
-        }
-
-        if (mSwapTargetItem != null) {
-            ViewCompat.setTranslationY(mSwapTargetItem.itemView, 0.0f);
-            mSwapTargetItem = null;
         }
 
         mGrabbedPositionY = 0;
@@ -200,14 +190,6 @@ class DraggingItemDecorator extends RecyclerView.ItemDecoration {
     private void updateDraggingItemPosition(int translationY) {
         // NOTE: Need to update the view position to make other decorations work properly while dragging
         setItemTranslationY(mRecyclerView, mDraggingItem, translationY - mDraggingItem.itemView.getTop());
-    }
-
-    private static void setItemTranslationY(RecyclerView rv, RecyclerView.ViewHolder holder, float y) {
-        final RecyclerView.ItemAnimator itemAnimator = rv.getItemAnimator();
-        if (itemAnimator != null) {
-            itemAnimator.endAnimation(holder);
-        }
-        ViewCompat.setTranslationY(holder.itemView, y);
     }
 
     public void setIsScrolling(boolean isScrolling) {
