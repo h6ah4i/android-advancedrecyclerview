@@ -45,6 +45,7 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
         mData = new LinkedList<>();
 
         for (int i = 0; i < groupItems.length(); i++) {
+            //noinspection UnnecessaryLocalVariable
             final long groupId = i;
             final String groupText = Character.toString(groupItems.charAt(i));
             final int groupSwipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;

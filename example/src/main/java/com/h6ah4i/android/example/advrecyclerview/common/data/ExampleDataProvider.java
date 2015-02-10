@@ -116,6 +116,7 @@ public class ExampleDataProvider extends AbstractDataProvider {
 
     @Override
     public void removeItem(int position) {
+        //noinspection UnnecessaryLocalVariable
         final ConcreteData removedItem = mData.remove(position);
 
         mLastRemovedData = removedItem;
