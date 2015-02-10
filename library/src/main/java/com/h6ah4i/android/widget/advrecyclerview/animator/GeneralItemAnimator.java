@@ -248,6 +248,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
         schedulePendingAnimationsByDefaultRule();
     }
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     protected void schedulePendingAnimationsByDefaultRule() {
         final boolean removalsPending = mRemoveAnimationManager.hasPending();
         final boolean movesPending = mMoveAnimationsManager.hasPending();

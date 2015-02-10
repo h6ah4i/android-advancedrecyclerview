@@ -652,6 +652,7 @@ public class RecyclerViewDragDropManager {
             final View v1 = draggingItem.itemView;
             final View v2 = swapTargetHolder.itemView;
             final Rect m1 = mDraggingItemMargins;
+            //noinspection UnnecessaryLocalVariable
             final Rect m2 = swapTargetMargins;
 
             final int top = Math.min(v1.getTop() - m1.top, v2.getTop() - m2.top);
@@ -694,6 +695,7 @@ public class RecyclerViewDragDropManager {
             mAdapter.moveItem(fromPosition, toPosition);
 
             if (fromPosition == prevTopItemPosition) {
+                //noinspection UnnecessaryLocalVariable
                 final Rect margins = swapTargetMargins;
                 final int curTopItemHeight = swapTargetHolder.itemView.getHeight() + margins.top + margins.bottom;
                 scrollByYAndGetScrolledAmount(-curTopItemHeight);
