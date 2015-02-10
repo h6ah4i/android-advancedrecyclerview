@@ -94,6 +94,7 @@ class ExpandablePositionTranslator {
 
         // find matched items & apply
         int index = 0;
+        //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < restoreGroupIds.length; i++) {
             final int id1 = restoreGroupIds[i];
 

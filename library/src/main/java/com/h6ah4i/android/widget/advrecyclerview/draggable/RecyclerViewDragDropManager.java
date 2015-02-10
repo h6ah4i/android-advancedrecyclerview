@@ -781,7 +781,7 @@ public class RecyclerViewDragDropManager {
         private boolean mStarted;
 
         public ScrollOnDraggingProcessRunnable(RecyclerViewDragDropManager holder) {
-            mHolderRef = new WeakReference<RecyclerViewDragDropManager>(holder);
+            mHolderRef = new WeakReference<>(holder);
         }
 
         public void start() {

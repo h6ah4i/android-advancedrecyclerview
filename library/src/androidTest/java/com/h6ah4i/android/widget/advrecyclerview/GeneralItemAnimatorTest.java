@@ -42,10 +42,10 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
     ViewGroup mDummyParent;
     CountDownLatch mExpectedItems;
 
-    Set<RecyclerView.ViewHolder> mRemoveFinished = new HashSet<RecyclerView.ViewHolder>();
-    Set<RecyclerView.ViewHolder> mAddFinished = new HashSet<RecyclerView.ViewHolder>();
-    Set<RecyclerView.ViewHolder> mMoveFinished = new HashSet<RecyclerView.ViewHolder>();
-    Set<RecyclerView.ViewHolder> mChangeFinished = new HashSet<RecyclerView.ViewHolder>();
+    Set<RecyclerView.ViewHolder> mRemoveFinished = new HashSet<>();
+    Set<RecyclerView.ViewHolder> mAddFinished = new HashSet<>();
+    Set<RecyclerView.ViewHolder> mMoveFinished = new HashSet<>();
+    Set<RecyclerView.ViewHolder> mChangeFinished = new HashSet<>();
 
     public GeneralItemAnimatorTest() {
         super(TestActivity.class);
@@ -211,7 +211,7 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         List<String> mItems;
 
         private Adapter(int count) {
-            mItems = new ArrayList<String>();
+            mItems = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 mItems.add("item-" + i);
             }
