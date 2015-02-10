@@ -232,10 +232,7 @@ public class RecyclerViewExpandableItemManager {
     }
 
     public boolean isGroupExpanded(int groupPosition) {
-        if (mAdapter == null) {
-            return false;
-        }
-        return mAdapter.isGroupExpanded(groupPosition);
+        return (mAdapter != null) && mAdapter.isGroupExpanded(groupPosition);
     }
 
     public static long getCombinedChildId(long groupId, long childId) {
