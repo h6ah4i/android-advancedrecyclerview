@@ -100,6 +100,7 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerView.setItemAnimator(animator);
 
         // additional decorations
+        //noinspection StatementWithEmptyBody
         if (supportsViewElevation()) {
             // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
         } else {

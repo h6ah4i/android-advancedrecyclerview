@@ -644,6 +644,7 @@ public class RecyclerViewDragDropManager {
             return;
         }
 
+        //noinspection StatementWithEmptyBody
         if (diffPosition == 0) {
         } else if (diffPosition == 1) {
             final View v1 = draggingItem.itemView;

@@ -82,6 +82,7 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerView.setHasFixedSize(false);
 
         // additional decorations
+        //noinspection StatementWithEmptyBody
         if (supportsViewElevation()) {
             // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
         } else {
