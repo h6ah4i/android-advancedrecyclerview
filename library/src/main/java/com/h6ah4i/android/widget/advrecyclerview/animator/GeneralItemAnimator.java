@@ -97,7 +97,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
             final String newId = (newHolder != null) ? Long.toString(newHolder.getItemId()) : "-";
             final String newPosition = (newHolder != null) ? Long.toString(newHolder.getPosition()) : "-";
 
-            Log.d(TAG, "animateMove(old.id = " + oldId + ", old.position = " + oldPosition + ", new.id = " + newId + ", new.position = " + newPosition
+            Log.d(TAG, "animateChange(old.id = " + oldId + ", old.position = " + oldPosition + ", new.id = " + newId + ", new.position = " + newPosition
                     + ", fromX = " + fromX + ", fromY = " + fromY + ", toX = " + toX + ", toY = " + toY + ")");
         }
 
@@ -186,7 +186,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
     @Override
     public boolean dispatchFinishedWhenDone() {
         if (mDebug && !isRunning()) {
-            Log.d(TAG, "dispatchAnimationsFinished()");
+            Log.d(TAG, "dispatchFinishedWhenDone()");
         }
 
         return super.dispatchFinishedWhenDone();
