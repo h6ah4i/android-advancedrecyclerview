@@ -141,7 +141,7 @@ public class AssetFileLibraryLicenseDataCollector {
             if (stream != null) {
                 try {
                     stream.close();
-                } catch (IOException e) {
+                } catch (IOException ignored) {
                 }
             }
         }
