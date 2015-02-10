@@ -17,6 +17,7 @@
           package="com.h6ah4i.android.widget.advrecyclerview">
 
     <application>
+        <!--suppress AndroidDomInspection -->
         <activity android:name=".TestActivity"/>
     </application>
 </manifest>
