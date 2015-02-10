@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
+import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
@@ -127,6 +128,7 @@ public class ItemSlidingAnimator {
         }
     }
 
+    @SuppressLint("RtlHardcoded")
     private boolean animateSlideInternalPreHoneycomb(RecyclerView.ViewHolder holder, int translationX) {
         if (!(holder instanceof SwipeableItemViewHolder)) {
             return false;
