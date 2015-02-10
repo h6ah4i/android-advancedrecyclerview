@@ -16,10 +16,10 @@
 -->
 <!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="64dp"
-             android:background="@drawable/bg_swipe_item_neutral"
-             android:translationZ="@dimen/list_item_translation_z">
+    style="@style/commonListItemStyle"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:background="@drawable/bg_swipe_item_neutral">
 
     <RelativeLayout
         android:id="@+id/container"
@@ -33,14 +33,14 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="#20000000"/>
+            android:background="#20000000" />
 
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/drag_handle"
-            android:gravity="center"/>
+            android:gravity="center" />
     </RelativeLayout>
 
 </FrameLayout>
