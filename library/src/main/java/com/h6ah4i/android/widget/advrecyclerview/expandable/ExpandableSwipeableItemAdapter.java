@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 
 public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder> {
