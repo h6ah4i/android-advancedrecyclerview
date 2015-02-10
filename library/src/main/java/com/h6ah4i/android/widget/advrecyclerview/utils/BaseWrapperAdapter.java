@@ -24,7 +24,7 @@ import java.lang.ref.WeakReference;
 
 public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> {
-    private static final String TAG = "BaseWrapperAdapter";
+    private static final String TAG = "ARVBaseWrapperAdapter";
     private static final boolean LOCAL_LOGD = false;
 
     private RecyclerView.Adapter<VH> mWrappedAdapter;

@@ -10,7 +10,8 @@
  *    Unless required by applicable law or agreed to in writing, software
  *    distributed under the License is distributed on an "AS IS" BASIS,
  *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
+ *    See the License for the specific langua
+ *   ge governing permissions and
  *    limitations under the License.
  */
 
@@ -26,7 +27,7 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.impl.ItemMoveAnimation
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.ItemRemoveAnimationManager;
 
 public abstract class GeneralItemAnimator extends BaseItemAnimator {
-    private static final String TAG = "GeneralItemAnimator";
+    private static final String TAG = "ARVGeneralItemAnimator";
 
     private boolean mDebug;
 

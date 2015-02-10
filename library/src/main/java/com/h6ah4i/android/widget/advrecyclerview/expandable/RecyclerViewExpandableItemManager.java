@@ -28,7 +28,7 @@ import android.view.ViewConfiguration;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 
 public class RecyclerViewExpandableItemManager {
-    private static final String TAG = "RecyclerViewExpandableListManager";
+    private static final String TAG = "ARVExpandableItemMgr";
 
     public static final long NO_EXPANDABLE_POSITION = ExpandableAdapterHelper.NO_EXPANDABLE_POSITION;
 

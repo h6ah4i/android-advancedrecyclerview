@@ -34,7 +34,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import java.lang.ref.WeakReference;
 
 public class RecyclerViewDragDropManager {
-    private static final String TAG = "RecyclerViewDragDropManager";
+    private static final String TAG = "ARVDragDropManager";
 
     public static final int STATE_FLAG_DRAGGING = (1 << 0);
     public static final int STATE_FLAG_IS_ACTIVE = (1 << 1);

@@ -22,7 +22,7 @@ import android.util.Log;
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
 
 public abstract class ItemAddAnimationManager extends BaseItemAnimationManager<AddAnimationInfo> {
-    private static final String TAG = "BaseItemAddAnimationManager";
+    private static final String TAG = "ARVItemAddAnimMgr";
 
     public ItemAddAnimationManager(BaseItemAnimator itemAnimator) {
         super(itemAnimator);

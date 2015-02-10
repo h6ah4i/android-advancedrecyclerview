@@ -37,7 +37,7 @@ public class MyDraggableSwipeableItemAdapter
         extends RecyclerView.Adapter<MyDraggableSwipeableItemAdapter.MyViewHolder>
         implements DraggableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder>,
         SwipeableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder> {
-    private static final String TAG = "MyDraggableSwipeableItemAdapter";
+    private static final String TAG = "MyDSItemAdapter";
 
     private AbstractDataProvider mProvider;
     private EventListener mEventListener;

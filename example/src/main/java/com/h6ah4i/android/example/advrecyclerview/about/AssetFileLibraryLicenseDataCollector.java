@@ -31,7 +31,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AssetFileLibraryLicenseDataCollector {
-    private static final String TAG = AssetFileLibraryLicenseDataCollector.class.getSimpleName();
+    private static final String TAG = "AssetLibLicenseCollect";
 
     private Context mContext;
     private String mBaseAssetDir;

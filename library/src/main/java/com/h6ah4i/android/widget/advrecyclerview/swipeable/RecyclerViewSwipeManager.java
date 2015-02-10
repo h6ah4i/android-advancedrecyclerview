@@ -32,7 +32,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 public class RecyclerViewSwipeManager {
-    private static final String TAG = "RecyclerViewSwipeManager";
+    private static final String TAG = "ARVSwipeManager";
 
 
     public static final int RESULT_NONE = 0;
