@@ -160,7 +160,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             mTranslationBottomLimit = mTranslationTopLimit;
         }
 
-        mTranslationY = mTouchPositionY + -mGrabbedPositionY;
+        mTranslationY = mTouchPositionY - mGrabbedPositionY;
         mTranslationY = Math.min(Math.max(mTranslationY, mTranslationTopLimit), mTranslationBottomLimit);
     }
 
@@ -194,5 +194,13 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     public void setIsScrolling(boolean isScrolling) {
         mIsScrolling = isScrolling;
+    }
+
+    public int getTranslatedItemPositionTop() {
+        return mTranslationY;
+    }
+
+    public int getTranslatedItemPositionBottom() {
+        return mTranslationY + mGrabbedItemHeight;
     }
 }

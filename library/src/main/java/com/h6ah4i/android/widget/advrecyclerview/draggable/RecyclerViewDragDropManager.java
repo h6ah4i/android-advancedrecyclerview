@@ -559,7 +559,8 @@ public class RecyclerViewDragDropManager {
             return;
         }
 
-        final float y = mLastTouchY * (1.0f / height);
+        final float invHeight = (1.0f / height);
+        final float y = mLastTouchY * invHeight;
         final float threshold = SCROLL_THRESHOLD;
         final float invThreshold = (1.0f / threshold);
         final float centerOffset = y - 0.5f;
@@ -579,8 +580,6 @@ public class RecyclerViewDragDropManager {
             }
         }
 
-        mDraggingItemDecorator.setIsScrolling(scrollAmount != 0);
-
         if (scrollAmount != 0) {
             safeEndAnimations(rv);
             actualScrolledAmount = scrollByYAndGetScrolledAmount(scrollAmount);
@@ -591,10 +590,23 @@ public class RecyclerViewDragDropManager {
             }
         }
 
+        final boolean actualIsScrolling = (actualScrolledAmount != 0);
+
+        mDraggingItemDecorator.setIsScrolling(actualIsScrolling);
+
         if (mEdgeEffectDecorator != null) {
-            if ((acceleration >= EDGE_EFFECT_THRESHOLD) && (scrollAmount != 0) && (actualScrolledAmount == 0)) {
+            final int draggingItemTop = mDraggingItemDecorator.getTranslatedItemPositionTop();
+            final int draggingItemBottom = mDraggingItemDecorator.getTranslatedItemPositionBottom();
+            final int draggingItemCenter = (draggingItemTop + draggingItemBottom) / 2;
+            final int nearEdgePosition = ((draggingItemCenter < (height / 2)) ? draggingItemTop : draggingItemBottom);
+
+            final float nearEdgeOffset = (nearEdgePosition * invHeight) - 0.5f;
+            final float absNearEdgeOffset = Math.abs(nearEdgeOffset);
+            final float edgeEffectAcceleration = Math.max(0.0f, threshold - (0.5f - absNearEdgeOffset)) * invThreshold;
+
+            if ((edgeEffectAcceleration >= EDGE_EFFECT_THRESHOLD) && (scrollAmount != 0) && !actualIsScrolling) {
                 // over scrolled
-                final float distance = acceleration * 0.025f;
+                final float distance = edgeEffectAcceleration * 0.02f;
 
                 if (scrollAmount < 0) {
                     // upward
