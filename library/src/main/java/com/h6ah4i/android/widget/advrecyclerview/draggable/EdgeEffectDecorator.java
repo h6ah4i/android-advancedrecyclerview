@@ -40,6 +40,7 @@ public class EdgeEffectDecorator extends RecyclerView.ItemDecoration {
             if (getClipToPadding(parent)) {
                 c.translate(parent.getPaddingLeft(), parent.getPaddingTop());
             }
+            //noinspection ConstantConditions
             needsInvalidate |= mTopGlow.draw(c);
             c.restoreToCount(restore);
         }
@@ -99,6 +100,7 @@ public class EdgeEffectDecorator extends RecyclerView.ItemDecoration {
         boolean needsInvalidate = false;
 
         if (mTopGlow != null) {
+            //noinspection ConstantConditions
             needsInvalidate |= mTopGlow.onRelease();
         }
 

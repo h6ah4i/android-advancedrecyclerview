@@ -38,7 +38,7 @@ public class ExampleDataProvider extends AbstractDataProvider {
                     final int viewType = 0;
                     final String text = Character.toString(atoz.charAt(j));
                     final int swipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;
-                    mData.add(new ConcreteData(id, viewType, text, swipeReaction, simple));
+                    mData.add(new ConcreteData(id, viewType, text, swipeReaction, true));
                 }
             }
         } else {
@@ -61,7 +61,7 @@ public class ExampleDataProvider extends AbstractDataProvider {
                     final int viewType = j % 2;
                     final String text = Character.toString(atoz.charAt(j));
                     final int swipeReaction = swipeReactionTable[j % swipeReactionTable.length];
-                    mData.add(new ConcreteData(id, viewType, text, swipeReaction, simple));
+                    mData.add(new ConcreteData(id, viewType, text, swipeReaction, false));
                 }
             }
         }

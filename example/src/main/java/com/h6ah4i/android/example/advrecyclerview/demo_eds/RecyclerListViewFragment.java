@@ -66,6 +66,7 @@ public class RecyclerListViewFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //noinspection ConstantConditions
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(getActivity());
 

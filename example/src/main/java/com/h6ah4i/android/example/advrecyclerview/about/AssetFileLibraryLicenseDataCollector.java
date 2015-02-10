@@ -119,7 +119,7 @@ public class AssetFileLibraryLicenseDataCollector {
 
         final String[] lines = s.split("\n");
 
-        if (lines == null || lines.length == 0) {
+        if (lines.length == 0) {
             return null;
         }
 

@@ -294,7 +294,7 @@ public class ExpandableRecyclerViewWrapperAdapter
 
             adapter.onMoveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, modToChildPosition);
             mPositionTranslator.moveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, modToChildPosition);
-        } else if (!fromIsGroup && toIsGroup) {
+        } else if (!fromIsGroup /*&& toIsGroup NOTE: toIsGroup is always true here*/) {
             int modToGroupPosition;
             int modToChildPosition;
 
