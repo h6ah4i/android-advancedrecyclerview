@@ -61,16 +61,18 @@ public class AssetFileLibraryLicenseDataCollector {
                     try {
                         Matcher m1 = p.matcher(s1);
                         Matcher m2 = p.matcher(s2);
-                        m1.find();
-                        m2.find();
-                        int n1 = Integer.parseInt(m1.group(1));
-                        int n2 = Integer.parseInt(m2.group(1));
+                        if (m1.find() && m2.find()) {
+                            int n1 = Integer.parseInt(m1.group(1));
+                            int n2 = Integer.parseInt(m2.group(1));
 
-                        if (n1 == n2) {
+                            if (n1 == n2) {
+                                return s1.compareTo(s2);
+                            }
+
+                            return n1 - n2;
+                        } else {
                             return s1.compareTo(s2);
                         }
-
-                        return n1 - n2;
                     } catch (RuntimeException e) {
                         return s1.compareTo(s2);
                     }
