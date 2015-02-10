@@ -42,6 +42,7 @@ public class ExampleDataProvider extends AbstractDataProvider {
                 }
             }
         } else {
+            @SuppressWarnings("PointlessBitwiseExpression")
             final int[] swipeReactionTable = {
                     RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT,
                     RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT,

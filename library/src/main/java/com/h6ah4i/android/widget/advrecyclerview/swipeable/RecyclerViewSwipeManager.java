@@ -31,6 +31,7 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimat
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
+@SuppressWarnings("PointlessBitwiseExpression")
 public class RecyclerViewSwipeManager {
     private static final String TAG = "ARVSwipeManager";
 
@@ -46,6 +47,14 @@ public class RecyclerViewSwipeManager {
     public static final int REACTION_CAN_NOT_SWIPE_RIGHT = (0 << 16);
     public static final int REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT = (1 << 16);
     public static final int REACTION_CAN_SWIPE_RIGHT = (2 << 16);
+
+    public static final int REACTION_CAN_NOT_SWIPE_BOTH =
+            REACTION_CAN_NOT_SWIPE_LEFT | REACTION_CAN_NOT_SWIPE_RIGHT;
+    public static final int REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT =
+            REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT |
+            REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT;
+    public static final int REACTION_CAN_SWIPE_BOTH =
+            REACTION_CAN_SWIPE_LEFT | REACTION_CAN_SWIPE_RIGHT;
 
     public static final int DRAWABLE_SWIPE_NEUTRAL_BACKGROUND = 0;
     public static final int DRAWABLE_SWIPE_LEFT_BACKGROUND = 1;

@@ -356,7 +356,7 @@ public class ExpandableRecyclerViewWrapperAdapter
     @Override
     public int onGetSwipeReactionType(RecyclerView.ViewHolder holder, int x, int y) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT;
+            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
         }
 
         final ExpandableSwipeableItemAdapter adapter = (ExpandableSwipeableItemAdapter) mExpandableItemAdapter;

@@ -174,7 +174,7 @@ public class MyDraggableSwipeableItemAdapter
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int x, int y) {
         if (onCheckCanStartDrag(holder, x, y)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT;
+            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
         } else {
             return mProvider.getItem(holder.getPosition()).getSwipeReactionType();
         }

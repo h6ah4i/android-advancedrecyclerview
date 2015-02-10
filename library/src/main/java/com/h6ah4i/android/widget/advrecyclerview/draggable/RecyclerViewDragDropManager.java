@@ -33,6 +33,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.lang.ref.WeakReference;
 
+@SuppressWarnings("PointlessBitwiseExpression")
 public class RecyclerViewDragDropManager {
     private static final String TAG = "ARVDragDropManager";
 

@@ -305,7 +305,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
     @Override
     public int onGetGroupItemSwipeReactionType(MyGroupViewHolder holder, int groupPosition, int x, int y) {
         if (onCheckGroupCanStartDrag(holder, groupPosition, x, y)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT;
+            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
         }
 
         return mProvider.getGroupItem(groupPosition).getSwipeReactionType();
@@ -314,7 +314,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
     @Override
     public int onGetChildItemSwipeReactionType(MyChildViewHolder holder, int groupPosition, int childPosition, int x, int y) {
         if (onCheckChildCanStartDrag(holder, groupPosition, childPosition, x, y)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT;
+            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
         }
 
         return mProvider.getChildItem(groupPosition, childPosition).getSwipeReactionType();

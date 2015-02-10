@@ -47,6 +47,7 @@ class ExpandableAdapterHelper {
     }
 
     public static long getCombinedGroupId(long groupId) {
+        //noinspection PointlessBitwiseExpression
         return ((groupId & LOWER_31BIT_MASK) << 32) | (RecyclerView.NO_ID & LOWER_32BIT_MASK);
     }
 

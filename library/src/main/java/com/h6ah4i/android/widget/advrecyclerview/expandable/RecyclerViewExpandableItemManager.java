@@ -32,6 +32,7 @@ public class RecyclerViewExpandableItemManager {
 
     public static final long NO_EXPANDABLE_POSITION = ExpandableAdapterHelper.NO_EXPANDABLE_POSITION;
 
+    @SuppressWarnings("PointlessBitwiseExpression")
     public static final int STATE_FLAG_IS_GROUP = (1 << 0);
     public static final int STATE_FLAG_IS_CHILD = (1 << 1);
     public static final int STATE_FLAG_IS_EXPANDED = (1 << 2);
