@@ -389,7 +389,7 @@ public class RecyclerViewDragDropManager {
                             }
                         }
                     };
-                    ViewCompat.postOnAnimation(mRecyclerView, mDeferredCancelProcess);
+                    mRecyclerView.post(mDeferredCancelProcess);
                 }
             }
         }
@@ -398,6 +398,12 @@ public class RecyclerViewDragDropManager {
 
     private void finishDragging(boolean result) {
         final RecyclerView.ViewHolder draggedItem = mDraggingItem;
+
+        // cancel deferred request
+        if (mDeferredCancelProcess != null) {
+            mRecyclerView.removeCallbacks(mDeferredCancelProcess);
+            mDeferredCancelProcess = null;
+        }
 
         // NOTE: setOverScrollMode() have to be called before calling removeItemDecoration()
         if (mRecyclerView != null && mDraggingItem != null) {
@@ -643,7 +649,9 @@ public class RecyclerViewDragDropManager {
     }
 
     private void stopScrollOnDraggingProcess() {
-        mScrollOnDraggingProcess.stop();
+        if (mScrollOnDraggingProcess != null) {
+            mScrollOnDraggingProcess.stop();
+        }
     }
 
     private void swapItems(RecyclerView rv, RecyclerView.ViewHolder draggingItem, RecyclerView.ViewHolder swapTargetHolder) {
