@@ -97,6 +97,7 @@ public class RecyclerViewExpandableItemManager {
         mSavedState = null;
     }
 
+    @SuppressWarnings("unchecked")
     public ExpandableRecyclerViewWrapperAdapter createWrappedAdapter(RecyclerView.Adapter adapter) {
         if (mAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");

@@ -92,7 +92,7 @@ public class RecyclerViewSwipeManager {
     private long mCheckingTouchSlop = RecyclerView.NO_ID;
 
     private ItemSlidingAnimator mItemSlideAnimator;
-    private SwipeableItemWrapperAdapter mAdapter;
+    private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
     private RecyclerView.ViewHolder mSwipingItem;
     private Rect mSwipingItemMargins = new Rect();
     private int mTouchedItemOffsetX;
@@ -117,6 +117,7 @@ public class RecyclerViewSwipeManager {
         mVelocityTracker = VelocityTracker.obtain();
     }
 
+    @SuppressWarnings("unchecked")
     public SwipeableItemWrapperAdapter createWrappedAdapter(RecyclerView.Adapter adapter) {
         if (mAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");

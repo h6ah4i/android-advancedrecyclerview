@@ -121,6 +121,7 @@ public class RecyclerViewDragDropManager {
         mScrollOnDraggingProcess = new ScrollOnDraggingProcessRunnable(this);
     }
 
+    @SuppressWarnings("unchecked")
     public RecyclerView.Adapter createWrappedAdapter(RecyclerView.Adapter adapter) {
         if (mAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");
@@ -310,6 +311,7 @@ public class RecyclerViewDragDropManager {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
     private void startDragging(RecyclerView rv, MotionEvent e, RecyclerView.ViewHolder holder) {
         safeEndAnimation(rv, holder);
 

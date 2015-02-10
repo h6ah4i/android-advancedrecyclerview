@@ -143,6 +143,7 @@ public class ExpandableRecyclerViewWrapperAdapter
 
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (mExpandableItemAdapter == null) {
@@ -226,6 +227,7 @@ public class ExpandableRecyclerViewWrapperAdapter
         super.onHandleWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean onCheckCanStartDrag(RecyclerView.ViewHolder holder, int x, int y) {
         if (!(mExpandableItemAdapter instanceof ExpandableDraggableItemAdapter)) {
@@ -353,6 +355,7 @@ public class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public int onGetSwipeReactionType(RecyclerView.ViewHolder holder, int x, int y) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
@@ -372,6 +375,7 @@ public class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onSetSwipeBackground(RecyclerView.ViewHolder holder, int type) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
@@ -391,6 +395,7 @@ public class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public int onSwipeItem(RecyclerView.ViewHolder holder, int result) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
@@ -410,6 +415,7 @@ public class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onPerformAfterSwipeReaction(RecyclerView.ViewHolder holder, int result, int reaction) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
@@ -429,7 +435,9 @@ public class ExpandableRecyclerViewWrapperAdapter
         }
     }
     // NOTE: This method is called from RecyclerViewExpandableItemManager
-    /*package*/ boolean onTapItem(RecyclerView.ViewHolder holder, int x, int y) {
+    /*package*/
+    @SuppressWarnings("unchecked")
+    boolean onTapItem(RecyclerView.ViewHolder holder, int x, int y) {
         if (mExpandableItemAdapter == null) {
             return false;
         }

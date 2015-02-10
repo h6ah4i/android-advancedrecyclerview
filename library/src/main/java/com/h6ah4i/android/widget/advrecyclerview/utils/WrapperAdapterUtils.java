@@ -25,7 +25,7 @@ public class WrapperAdapterUtils {
 
     public static <T> T findWrappedAdapter(RecyclerView.Adapter adapter, Class<T> clazz) {
         if (clazz.isInstance(adapter)) {
-            return (T) adapter;
+            return clazz.cast(adapter);
         } else if (adapter instanceof BaseWrapperAdapter) {
             final RecyclerView.Adapter wrappedAdapter = ((BaseWrapperAdapter) adapter).getWrappedAdapter();
             return findWrappedAdapter(wrappedAdapter, clazz);

@@ -204,11 +204,13 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
             mAnimator = animator;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public void onAnimationStart(View view) {
             mManager.dispatchStarting(mAnimationInfo, mHolder);
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public void onAnimationEnd(View view) {
             final BaseItemAnimationManager manager = mManager;
@@ -228,6 +230,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
             manager.dispatchFinishedWhenDone();
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public void onAnimationCancel(View view) {
             mManager.onAnimationCancel(mAnimationInfo, mHolder);

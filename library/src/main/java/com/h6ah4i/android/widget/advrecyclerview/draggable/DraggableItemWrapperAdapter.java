@@ -273,7 +273,9 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ boolean canStartDrag(RecyclerView.ViewHolder holder, int x, int y) {
+    /*package*/
+    @SuppressWarnings("unchecked")
+    boolean canStartDrag(RecyclerView.ViewHolder holder, int x, int y) {
         if (LOCAL_LOGV) {
             Log.v(TAG, "canStartDrag(holder = " + holder + ", x = " + x + ", y = " + y + ")");
         }

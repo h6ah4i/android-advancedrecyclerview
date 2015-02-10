@@ -183,7 +183,9 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ int getSwipeReactionType(RecyclerView.ViewHolder holder, int x, int y) {
+    /*package*/
+    @SuppressWarnings("unchecked")
+    int getSwipeReactionType(RecyclerView.ViewHolder holder, int x, int y) {
         if (LOCAL_LOGV) {
             Log.v(TAG, "getSwipeReactionType(holder = " + holder + ", x = " + x + ", y = " + y + ")");
         }
@@ -192,7 +194,9 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ void setSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int type) {
+    /*package*/
+    @SuppressWarnings("unchecked")
+    void setSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int type) {
         if (LOCAL_LOGV) {
             Log.v(TAG, "setSwipeBackgroundDrawable(holder = " + holder + ", type = " + type + ")");
         }
@@ -212,7 +216,9 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ int onSwipeItemFinished(RecyclerView.ViewHolder holder, int result) {
+    /*package*/
+    @SuppressWarnings("unchecked")
+    int onSwipeItemFinished(RecyclerView.ViewHolder holder, int result) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onSwipeItemFinished(holder = " + holder + ", result = " + result + ")");
         }
@@ -222,7 +228,9 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
         return mSwipeableItemAdapter.onSwipeItem(holder, result);
     }
 
-    /*package*/ void onSwipeItemFinished2(RecyclerView.ViewHolder holder, int result, int afterReaction) {
+    /*package*/
+    @SuppressWarnings("unchecked")
+    void onSwipeItemFinished2(RecyclerView.ViewHolder holder, int result, int afterReaction) {
 
         ((SwipeableItemViewHolder) holder).setSwipeResult(result);
         ((SwipeableItemViewHolder) holder).setAfterSwipeReaction(afterReaction);

@@ -32,7 +32,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
 
     public BaseWrapperAdapter(RecyclerView.Adapter<VH> adapter) {
         mWrappedAdapter = adapter;
-        mBridgeObserver = new BridgeObserver(this);
+        mBridgeObserver = new BridgeObserver<>(this);
         mWrappedAdapter.registerAdapterDataObserver(mBridgeObserver);
         super.setHasStableIds(mWrappedAdapter.hasStableIds());
     }
