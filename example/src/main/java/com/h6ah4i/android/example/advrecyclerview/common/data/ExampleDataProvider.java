@@ -140,7 +140,8 @@ public class ExampleDataProvider extends AbstractDataProvider {
         private static String makeText(long id, String text, int swipeReaction, boolean simplified) {
             final StringBuilder sb = new StringBuilder();
 
-            sb.append(id + " - ");
+            sb.append(id);
+            sb.append(" - ");
             sb.append(text);
 
             if (!simplified) {
