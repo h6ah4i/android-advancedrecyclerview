@@ -82,6 +82,9 @@ public class MySwipeableItemAdapter
                 onSwipeableViewContainerClick(v);
             }
         };
+
+        // SwipeableItemAdapter requires stable ID, and also
+        // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
     }
 

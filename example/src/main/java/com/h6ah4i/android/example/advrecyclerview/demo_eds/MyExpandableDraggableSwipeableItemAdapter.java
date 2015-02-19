@@ -116,6 +116,9 @@ public class MyExpandableDraggableSwipeableItemAdapter
                 onSwipeableViewContainerClick(v);
             }
         };
+
+        // ExpandableItemAdapter, ExpandableDraggableItemAdapter and ExpandableSwipeableItemAdapter
+        // require stable ID, and also have to implement the getItemId() method appropriately.
         setHasStableIds(true);
     }
 

@@ -85,6 +85,9 @@ public class MyDraggableSwipeableItemAdapter
                 onSwipeableViewContainerClick(v);
             }
         };
+
+        // DraggableItemAdapter and SwipeableItemAdapter require stable ID, and also
+        // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
     }
 

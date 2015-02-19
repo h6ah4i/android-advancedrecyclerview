@@ -53,6 +53,9 @@ public class MyDraggableItemAdapter
 
     public MyDraggableItemAdapter(AbstractDataProvider dataProvider) {
         mProvider = dataProvider;
+
+        // DraggableItemAdapter requires stable ID, and also
+        // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
     }
 
