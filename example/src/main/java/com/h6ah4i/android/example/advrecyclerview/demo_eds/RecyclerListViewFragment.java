@@ -113,8 +113,8 @@ public class RecyclerListViewFragment extends Fragment {
             }
 
             @Override
-            public void onItemViewClicked(View v) {
-                onItemViewClick(v);
+            public void onItemViewClicked(View v, boolean pinned) {
+                onItemViewClick(v, pinned);
             }
         });
 
@@ -211,7 +211,7 @@ public class RecyclerListViewFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private void onItemViewClick(View v) {
+    private void onItemViewClick(View v, boolean pinned) {
         final int flatPosition = mRecyclerView.getChildPosition(v);
 
         if (flatPosition == RecyclerView.NO_POSITION) {

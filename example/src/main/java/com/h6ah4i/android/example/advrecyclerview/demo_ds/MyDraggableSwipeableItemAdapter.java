@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.utils.AdapterUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
@@ -42,13 +43,14 @@ public class MyDraggableSwipeableItemAdapter
     private AbstractDataProvider mProvider;
     private EventListener mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
+    private View.OnClickListener mSwipeableViewContainerOnClickListener;
 
     public interface EventListener {
         void onItemRemoved(int position);
 
         void onItemPinned(int position);
 
-        void onItemViewClicked(View v);
+        void onItemViewClicked(View v, boolean pinned);
     }
 
     public static class MyViewHolder extends AbstractDraggableSwipeableItemViewHolder {
@@ -77,12 +79,24 @@ public class MyDraggableSwipeableItemAdapter
                 onItemViewClick(v);
             }
         };
+        mSwipeableViewContainerOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSwipeableViewContainerClick(v);
+            }
+        };
         setHasStableIds(true);
     }
 
     private void onItemViewClick(View v) {
         if (mEventListener != null) {
-            mEventListener.onItemViewClicked(v);
+            mEventListener.onItemViewClicked(v, true); // true --- pinned
+        }
+    }
+
+    private void onSwipeableViewContainerClick(View v) {
+        if (mEventListener != null) {
+            mEventListener.onItemViewClicked(AdapterUtils.findParentViewHolderItemView(v), false);  // false --- not pinned
         }
     }
 
@@ -108,7 +122,10 @@ public class MyDraggableSwipeableItemAdapter
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         // set listeners
+        // (if the item is *not pinned*, click event comes to the itemView)
         holder.itemView.setOnClickListener(mItemViewOnClickListener);
+        // (if the item is *pinned*, click event comes to the mContainer)
+        holder.mContainer.setOnClickListener(mSwipeableViewContainerOnClickListener);
 
         // set text
         holder.mTextView.setText(item.getText());

@@ -17,14 +17,17 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.utils.AdapterUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
@@ -44,6 +47,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
     private AbstractExpandableDataProvider mProvider;
     private EventListener mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
+    private View.OnClickListener mSwipeableViewContainerOnClickListener;
 
     public interface EventListener {
         void onGroupItemRemoved(int groupPosition);
@@ -54,7 +58,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
 
         void onChildItemPinned(int groupPosition, int childPosition);
 
-        void onItemViewClicked(View v);
+        void onItemViewClicked(View v, boolean pinned);
     }
 
     public static abstract class MyBaseViewHolder extends AbstractDraggableSwipeableItemViewHolder implements ExpandableItemViewHolder {
@@ -106,12 +110,24 @@ public class MyExpandableDraggableSwipeableItemAdapter
                 onItemViewClick(v);
             }
         };
+        mSwipeableViewContainerOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSwipeableViewContainerClick(v);
+            }
+        };
         setHasStableIds(true);
     }
 
     private void onItemViewClick(View v) {
         if (mEventListener != null) {
-            mEventListener.onItemViewClicked(v);
+            mEventListener.onItemViewClicked(v, true);  // true --- pinned
+        }
+    }
+
+    private void onSwipeableViewContainerClick(View v) {
+        if (mEventListener != null) {
+            mEventListener.onItemViewClicked(AdapterUtils.findParentViewHolderItemView(v), false);  // false --- not pinned
         }
     }
 
@@ -170,9 +186,6 @@ public class MyExpandableDraggableSwipeableItemAdapter
         // set text
         holder.mTextView.setText(item.getText());
 
-        // mark as clickable
-        holder.itemView.setClickable(true);
-
         // set background resource (target view ID: container)
         final int dragState = holder.getDragStateFlags();
         final int expandState = holder.getExpandStateFlags();
@@ -211,13 +224,13 @@ public class MyExpandableDraggableSwipeableItemAdapter
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
         // set listeners
+        // (if the item is *not pinned*, click event comes to the itemView)
         holder.itemView.setOnClickListener(mItemViewOnClickListener);
+        // (if the item is *pinned*, click event comes to the mContainer)
+        holder.mContainer.setOnClickListener(mSwipeableViewContainerOnClickListener);
 
         // set text
         holder.mTextView.setText(item.getText());
-
-        // mark as clickable
-        holder.itemView.setClickable(true);
 
         final int dragState = holder.getDragStateFlags();
         final int swipeState = holder.getSwipeStateFlags();
