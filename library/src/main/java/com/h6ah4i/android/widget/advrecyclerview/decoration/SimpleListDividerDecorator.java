@@ -23,11 +23,20 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+/**
+ * Item decoration which draws item divider between each items.
+ */
 public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
     private final Drawable mDividerDrawable;
     private final int mDividerHeight;
     private boolean mOverlap;
 
+    /**
+     * Constructor.
+     *
+     * @param divider divider drawable
+     * @param overlap whether the divider is drawn overlapped on bottom of the item.
+     */
     public SimpleListDividerDecorator(Drawable divider, boolean overlap) {
         mDividerDrawable = divider;
         mDividerHeight = mDividerDrawable.getIntrinsicHeight();

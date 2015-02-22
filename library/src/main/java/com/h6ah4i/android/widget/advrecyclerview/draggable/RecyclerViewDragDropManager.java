@@ -34,18 +34,36 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.lang.ref.WeakReference;
 
+/**
+ * Provides item drag & drop operation for {@link android.support.v7.widget.RecyclerView}
+ */
 @SuppressWarnings("PointlessBitwiseExpression")
 public class RecyclerViewDragDropManager {
     private static final String TAG = "ARVDragDropManager";
 
+    /**
+     * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
+     * Indicates that currently performing dragging.
+     */
     public static final int STATE_FLAG_DRAGGING = (1 << 0);
+
+    /**
+     * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
+     * Indicates that this item is being dragged.
+     */
     public static final int STATE_FLAG_IS_ACTIVE = (1 << 1);
+
+    /**
+     * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
+     * If this flag is set, some other flags are changed and require to apply.
+     */
     public static final int STATE_FLAG_IS_UPDATED = (1 << 31);
+
+    // ---
 
     private static final int SCROLL_DIR_NONE = 0;
     private static final int SCROLL_DIR_UP = (1 << 0);
     private static final int SCROLL_DIR_DOWN = (1 << 1);
-
 
     private static final boolean LOCAL_LOGV = false;
     private static final boolean LOCAL_LOGD = false;
@@ -96,6 +114,9 @@ public class RecyclerViewDragDropManager {
     private int mItemSettleBackIntoPlaceAnimationDuration = 200;
     private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = new DecelerateInterpolator();
 
+    /**
+     * Constructor.
+     */
     public RecyclerViewDragDropManager() {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
             @Override
@@ -124,6 +145,13 @@ public class RecyclerViewDragDropManager {
         mScrollOnDraggingProcess = new ScrollOnDraggingProcessRunnable(this);
     }
 
+    /**
+     * Create wrapped adapter.
+     *
+     * @param adapter The target adapter.
+     *
+     * @return Wrapped adapter which is associated to this {@link RecyclerViewDragDropManager} instance.
+     */
     @SuppressWarnings("unchecked")
     public RecyclerView.Adapter createWrappedAdapter(RecyclerView.Adapter adapter) {
         if (mAdapter != null) {
@@ -135,10 +163,24 @@ public class RecyclerViewDragDropManager {
         return mAdapter;
     }
 
+    /**
+     * Indicates this manager instance has released or not.
+     *
+     * @return True if this manager instance has released
+     */
     public boolean isReleased() {
         return (mInternalUseOnItemTouchListener == null);
     }
 
+    /**
+     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
+     *
+     * Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
+     * the wrapped adapter instance which is returned by the
+     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
+     *
+     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     */
     public void attachRecyclerView(RecyclerView rv) {
         if (rv == null) {
             throw new IllegalArgumentException("RecyclerView cannot be null");
@@ -170,6 +212,11 @@ public class RecyclerViewDragDropManager {
         }
     }
 
+    /**
+     * Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.
+     *
+     * This method should be called in order to avoid memory leaks.
+     */
     public void release() {
         cancelDrag();
 
@@ -198,22 +245,50 @@ public class RecyclerViewDragDropManager {
         mSwapTargetTranslationInterpolator = null;
     }
 
+    /**
+     * Indicates whether currently performing item dragging.
+     *
+     * @return True if currently performing item dragging
+     */
     public boolean isDragging() {
         return (mDraggingItem != null) && (mDeferredCancelProcess == null);
     }
 
+    /**
+     * Sets 9-patch image which is used for the actively dragging item
+     *
+     * @param drawable The 9-patch drawable
+     */
     public void setDraggingItemShadowDrawable(NinePatchDrawable drawable) {
         mShadowDrawable = drawable;
     }
 
+    /**
+     * Set a listener that will be notified of any changes in scroll state or position.
+     *
+     * If the application requires scroll event, please use this method.
+     * This class uses the {@link android.support.v7.widget.RecyclerView#setOnScrollListener(android.support.v7.widget.RecyclerView.OnScrollListener)} internally.
+     *
+     * @param listener Listener to set or null to clear
+     */
     public void setOnScrollListener(RecyclerView.OnScrollListener listener) {
         mUserOnScrollListener = listener;
     }
 
+    /**
+     * Sets the interpolator which is used for determining the position of the swapping item.
+     *
+     * @param interpolator Interpolator to set or null to clear
+     */
     public void setSwapTargetTranslationInterpolator(Interpolator interpolator) {
         mSwapTargetTranslationInterpolator = interpolator;
     }
 
+    /**
+     * Gets the interpolator which ise used for determining the position of the swapping item.
+     *
+     * @return Interpolator which is used for determining the position of the swapping item
+     */
     public Interpolator setSwapTargetTranslationInterpolator() {
         return mSwapTargetTranslationInterpolator;
     }
@@ -370,6 +445,9 @@ public class RecyclerViewDragDropManager {
         }
     }
 
+    /**
+     * Cancel dragging.
+     */
     public void cancelDrag() {
         cancelDrag(false);
     }
@@ -809,20 +887,40 @@ public class RecyclerViewDragDropManager {
         return swapTargetHolder;
     }
 
+    /**
+     * Sets the duration of "settle back into place" animation.
+     *
+     * @param duration Specify the animation duration in milliseconds
+     */
     public void setItemSettleBackIntoPlaceAnimationDuration(int duration) {
         mItemSettleBackIntoPlaceAnimationDuration = duration;
     }
 
+    /**
+     * Gets the duration of "settle back into place" animation.
+     *
+     * @return The duration of "settle back into place" animation in milliseconds
+     */
     public int getItemSettleBackIntoPlaceAnimationDuration() {
         return mItemSettleBackIntoPlaceAnimationDuration;
     }
 
-    public Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
-        return mItemSettleBackIntoPlaceAnimationInterpolator;
-    }
-
+    /**
+     * Sets the interpolator which is used for "settle back into place" animation.
+     *
+     * @param interpolator Interpolator to set or null to clear
+     */
     public void setItemSettleBackIntoPlaceAnimationInterpolator(Interpolator interpolator) {
         mItemSettleBackIntoPlaceAnimationInterpolator = interpolator;
+    }
+
+    /**
+     * Gets the interpolator which ise used for "settle back into place" animation.
+     *
+     * @return Interpolator which is used for "settle back into place" animation
+     */
+    public Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
+        return mItemSettleBackIntoPlaceAnimationInterpolator;
     }
 
     private static class ScrollOnDraggingProcessRunnable implements Runnable {

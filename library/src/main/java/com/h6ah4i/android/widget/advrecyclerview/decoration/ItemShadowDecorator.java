@@ -23,10 +23,18 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+/**
+ * Item decoration which draws drop shadow of each item views.
+ */
 public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
     private final NinePatchDrawable mShadowDrawable;
     private final Rect mShadowPadding = new Rect();
 
+    /**
+     * Constructor.
+     *
+     * @param shadow 9-patch drawable used for drop shadow
+     */
     public ItemShadowDecorator(NinePatchDrawable shadow) {
         mShadowDrawable = shadow;
         mShadowDrawable.getPadding(mShadowPadding);
