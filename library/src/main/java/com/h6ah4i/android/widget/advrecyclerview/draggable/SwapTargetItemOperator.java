@@ -41,11 +41,13 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     private float mReqTranslationPhase;
     private float mCurTranslationPhase;
     private long mDraggingItemId;
+    private ItemDraggableRange mRange;
 
-    public SwapTargetItemOperator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem) {
+    public SwapTargetItemOperator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem, ItemDraggableRange range) {
         super(recyclerView, draggingItem);
 
         mDraggingItemId = mDraggingItem.getItemId();
+        mRange = range;
 
         CustomRecyclerViewUtils.getLayoutMargins(mDraggingItem.itemView, mDraggingItemMargins);
         CustomRecyclerViewUtils.getDecorationOffsets(
@@ -66,7 +68,7 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
 
         final RecyclerView.ViewHolder swapTargetItem =
                 RecyclerViewDragDropManager.findSwapTargetItem(
-                        mRecyclerView, draggingItem, mDraggingItemId, mTranslationY);
+                        mRecyclerView, draggingItem, mDraggingItemId, mTranslationY, mRange);
 
         // reset Y-translation if the swap target has changed
         if ((mSwapTargetItem != swapTargetItem) && (mSwapTargetItem != null)) {
@@ -180,6 +182,7 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
             mSwapTargetItem = null;
         }
 
+        mRange = null;
         mDraggingItem = null;
         mTranslationY = 0;
         mDraggingItemHeight = 0;

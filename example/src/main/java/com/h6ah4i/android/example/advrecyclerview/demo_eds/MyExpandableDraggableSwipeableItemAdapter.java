@@ -29,6 +29,7 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.AdapterUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
@@ -306,6 +307,18 @@ public class MyExpandableDraggableSwipeableItemAdapter
         final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
+    }
+
+    @Override
+    public ItemDraggableRange onGetGroupItemDraggableRange(MyGroupViewHolder holder, int groupPosition) {
+        // no drag-sortable range specified
+        return null;
+    }
+
+    @Override
+    public ItemDraggableRange onGetChildItemDraggableRange(MyChildViewHolder holder, int groupPosition, int childPosition) {
+        // no drag-sortable range specified
+        return null;
     }
 
     @Override

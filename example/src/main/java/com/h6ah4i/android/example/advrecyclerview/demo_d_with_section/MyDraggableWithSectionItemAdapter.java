@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_d;
+package com.h6ah4i.android.example.advrecyclerview.demo_d_with_section;
 
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -26,16 +26,20 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.data.ExampleSectionDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 
-public class MyDraggableItemAdapter
-        extends RecyclerView.Adapter<MyDraggableItemAdapter.MyViewHolder>
-        implements DraggableItemAdapter<MyDraggableItemAdapter.MyViewHolder> {
-    private static final String TAG = "MyDraggableItemAdapter";
+public class MyDraggableWithSectionItemAdapter
+        extends RecyclerView.Adapter<MyDraggableWithSectionItemAdapter.MyViewHolder>
+        implements DraggableItemAdapter<MyDraggableWithSectionItemAdapter.MyViewHolder> {
+    private static final String TAG = "MyDragSectionAdapter";
+
+    private static final int ITEM_VIEW_TYPE_SECTION_HEADER = ExampleSectionDataProvider.ITEM_VIEW_TYPE_SECTION_HEADER;
+    private static final int ITEM_VIEW_TYPE_SECTION_ITEM = ExampleSectionDataProvider.ITEM_VIEW_TYPE_SECTION_ITEM;
 
     private AbstractDataProvider mProvider;
 
@@ -52,7 +56,7 @@ public class MyDraggableItemAdapter
         }
     }
 
-    public MyDraggableItemAdapter(AbstractDataProvider dataProvider) {
+    public MyDraggableWithSectionItemAdapter(AbstractDataProvider dataProvider) {
         mProvider = dataProvider;
 
         // DraggableItemAdapter requires stable ID, and also
@@ -73,12 +77,42 @@ public class MyDraggableItemAdapter
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate((viewType == 0) ? R.layout.list_item : R.layout.list_item2, parent, false);
+
+        final View v;
+        switch (viewType) {
+            case ITEM_VIEW_TYPE_SECTION_HEADER:
+                v = inflater.inflate(R.layout.list_section_header, parent, false);
+                break;
+            case ITEM_VIEW_TYPE_SECTION_ITEM:
+                v = inflater.inflate(R.layout.list_item, parent, false);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected viewType (= " + viewType + ")");
+        }
+
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        switch (holder.getItemViewType()) {
+            case ITEM_VIEW_TYPE_SECTION_HEADER:
+                onBindSectionHeaderViewHolder(holder, position);
+                break;
+            case ITEM_VIEW_TYPE_SECTION_ITEM:
+                onBindSectionItemViewHolder(holder, position);
+                break;
+        }
+    }
+
+    private void onBindSectionHeaderViewHolder(MyViewHolder holder, int position) {
+        final AbstractDataProvider.Data item = mProvider.getItem(position);
+
+        // set text
+        holder.mTextView.setText(item.getText());
+    }
+
+    private void onBindSectionItemViewHolder(MyViewHolder holder, int position) {
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         // set text
@@ -92,7 +126,9 @@ public class MyDraggableItemAdapter
 
             if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_item_dragging_active_state;
-            } else if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) {
+            } else if (
+                    ((dragState & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) &&
+                    ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE) != 0)) {
                 bgResId = R.drawable.bg_item_dragging_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;
@@ -123,6 +159,12 @@ public class MyDraggableItemAdapter
     @Override
     public boolean onCheckCanStartDrag(MyViewHolder holder, int x, int y) {
         // x, y --- relative from the itemView's top-left
+
+        // return false if the item is a section header
+        if (holder.getItemViewType() != ITEM_VIEW_TYPE_SECTION_ITEM) {
+            return false;
+        }
+
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
@@ -134,7 +176,53 @@ public class MyDraggableItemAdapter
 
     @Override
     public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder) {
-        // no drag-sortable range specified
-        return null;
+        final int position = holder.getPosition();
+
+        final int start = findFirstSectionItem(position);
+        final int end = findLastSectionItem(position);
+
+        return new ItemDraggableRange(start, end);
+    }
+
+    private int findFirstSectionItem(int position) {
+        AbstractDataProvider.Data item = mProvider.getItem(position);
+
+        if (item.isSectionHeader()) {
+            throw new IllegalStateException("section item is expected");
+        }
+
+        while (position > 0) {
+            AbstractDataProvider.Data prevItem = mProvider.getItem(position - 1);
+
+            if (prevItem.isSectionHeader()) {
+                break;
+            }
+
+            position -= 1;
+        }
+
+        return position;
+    }
+
+    private int findLastSectionItem(int position) {
+        AbstractDataProvider.Data item = mProvider.getItem(position);
+
+        if (item.isSectionHeader()) {
+            throw new IllegalStateException("section item is expected");
+        }
+
+        final int lastIndex = getItemCount() - 1;
+
+        while (position < lastIndex) {
+            AbstractDataProvider.Data nextItem = mProvider.getItem(position + 1);
+
+            if (nextItem.isSectionHeader()) {
+                break;
+            }
+
+            position += 1;
+        }
+
+        return position;
     }
 }

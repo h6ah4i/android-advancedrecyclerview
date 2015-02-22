@@ -49,4 +49,10 @@
     <style name="commonListItemStyle">
     </style>
 
+    <style name="sectionHeaderItemStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Medium</item>
+        <item name="android:gravity">left|bottom</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
 </resources>

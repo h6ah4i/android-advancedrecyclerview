@@ -54,5 +54,15 @@
             style="@style/exampleLauncherButtonStyle"
             android:text="@string/button_text_launch_demo_eds" />
 
+        <Button
+            android:id="@+id/button_launch_demo_d_with_section"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_d_with_section" />
+
+        <Button
+            android:id="@+id/button_launch_demo_ed_with_section"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_ed_with_section" />
+
     </LinearLayout>
 </ScrollView>

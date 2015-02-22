@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ExampleExpandableDataProvider extends AbstractExpandableDataProvider {
+public class ExampleSectionExpandableDataProvider extends AbstractExpandableDataProvider {
     private List<Pair<GroupData, List<ChildData>>> mData;
 
     // for undo group item
@@ -38,26 +38,34 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
     private long mLastRemovedChildParentGroupId = -1;
     private int mLastRemovedChildPosition = -1;
 
-    public ExampleExpandableDataProvider() {
-        final String groupItems = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public ExampleSectionExpandableDataProvider() {
+        final String groupItems = "|ABC|DEF|GHI|JKL|MNO|PQR|STU|VWX|YZ";
         final String childItems = "abc";
 
         mData = new LinkedList<>();
 
+        int sectionCount = 1;
+
         for (int i = 0; i < groupItems.length(); i++) {
             //noinspection UnnecessaryLocalVariable
             final long groupId = i;
-            final String groupText = Character.toString(groupItems.charAt(i));
-            final int groupSwipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;
-            final ConcreteGroupData group = new ConcreteGroupData(groupId, groupText, groupSwipeReaction);
+            final boolean isSection = (groupItems.charAt(i) == '|');
+            final String groupText = isSection ? ("Section " + sectionCount) : Character.toString(groupItems.charAt(i));
+            final int groupSwipeReaction = isSection ? RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH : RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH;
+            final ConcreteGroupData group = new ConcreteGroupData(groupId, isSection, groupText, groupSwipeReaction);
             final List<ChildData> children = new ArrayList<>();
 
-            for (int j = 0; j < childItems.length(); j++) {
-                final long childId = group.generateNewChildId();
-                final String childText = Character.toString(childItems.charAt(j));
-                final int childSwipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;
+            if (isSection) {
+                sectionCount += 1;
+            } else {
+                // add child items
+                for (int j = 0; j < childItems.length(); j++) {
+                    final long childId = group.generateNewChildId();
+                    final String childText = Character.toString(childItems.charAt(j));
+                    final int childSwipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH;
 
-                children.add(new ConcreteChildData(childId, childText, childSwipeReaction));
+                    children.add(new ConcreteChildData(childId, childText, childSwipeReaction));
+                }
             }
 
             mData.add(new Pair<GroupData, List<ChildData>>(group, children));
@@ -116,6 +124,13 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
 
         final Pair<GroupData, List<ChildData>> fromGroup = mData.get(fromGroupPosition);
         final Pair<GroupData, List<ChildData>> toGroup = mData.get(toGroupPosition);
+
+        if (fromGroup.first.isSectionHeader()) {
+            throw new IllegalStateException("Source group is a section header!");
+        }
+        if (toGroup.first.isSectionHeader()) {
+            throw new IllegalStateException("Destination group is a section header!");
+        }
 
         final ConcreteChildData item = (ConcreteChildData) fromGroup.second.remove(fromChildPosition);
 
@@ -212,13 +227,15 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
     public static final class ConcreteGroupData extends GroupData {
 
         private final long mId;
+        private final boolean mIsSectionHeader;
         private final String mText;
         private final int mSwipeReaction;
         private boolean mPinnedToSwipeLeft;
         private long mNextChildId;
 
-        ConcreteGroupData(long id, String text, int swipeReaction) {
+        ConcreteGroupData(long id, boolean isSectionHeader, String text, int swipeReaction) {
             mId = id;
+            mIsSectionHeader = isSectionHeader;
             mText = text;
             mSwipeReaction = swipeReaction;
             mNextChildId = 0;
@@ -231,7 +248,7 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
 
         @Override
         public boolean isSectionHeader() {
-            return false;
+            return mIsSectionHeader;
         }
 
         @Override

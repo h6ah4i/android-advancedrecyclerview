@@ -20,6 +20,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
@@ -38,6 +41,7 @@ class ExpandableRecyclerViewWrapperAdapter
     private ExpandableItemAdapter mExpandableItemAdapter;
     private RecyclerViewExpandableItemManager mExpandableListManager;
     private ExpandablePositionTranslator mPositionTranslator;
+    private int mDraggingItemGroupPosition = RecyclerView.NO_POSITION;
 
     public ExpandableRecyclerViewWrapperAdapter(RecyclerViewExpandableItemManager manager, RecyclerView.Adapter<RecyclerView.ViewHolder> adapter, int[] expandedItemsSavedState) {
         super(adapter);
@@ -168,9 +172,11 @@ class ExpandableRecyclerViewWrapperAdapter
             flags |= RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED;
         }
 
-        safeUpdateFlags(holder, flags);
+        safeUpdateExpandStateFlags(holder, flags);
 
         if (childPosition == RecyclerView.NO_POSITION) {
+            correctGroupItemDragStateFlags(holder, groupPosition);
+
             mExpandableItemAdapter.onBindGroupViewHolder(holder, groupPosition, viewType);
         } else {
             mExpandableItemAdapter.onBindChildViewHolder(holder, groupPosition, childPosition, viewType);
@@ -241,10 +247,77 @@ class ExpandableRecyclerViewWrapperAdapter
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
         final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
 
+        boolean canStart;
         if (childPosition == RecyclerView.NO_POSITION) {
-            return adapter.onCheckGroupCanStartDrag(holder, groupPosition, x, y);
+            canStart = adapter.onCheckGroupCanStartDrag(holder, groupPosition, x, y);
         } else {
-            return adapter.onCheckChildCanStartDrag(holder, groupPosition, childPosition, x, y);
+            canStart = adapter.onCheckChildCanStartDrag(holder, groupPosition, childPosition, x, y);
+        }
+
+        mDraggingItemGroupPosition = (canStart) ? groupPosition : RecyclerView.NO_POSITION;
+
+        return canStart;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public ItemDraggableRange onGetItemDraggableRange(RecyclerView.ViewHolder holder) {
+        if (!(mExpandableItemAdapter instanceof ExpandableDraggableItemAdapter)) {
+            return null;
+        }
+
+        if (mExpandableItemAdapter.getGroupCount() < 1) {
+            return null;
+        }
+
+        final ExpandableDraggableItemAdapter adapter = (ExpandableDraggableItemAdapter) mExpandableItemAdapter;
+
+        final int flatPosition = holder.getPosition();
+        final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
+        final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
+        final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
+
+        if (childPosition == RecyclerView.NO_POSITION) {
+            // group
+            final ItemDraggableRange groupRange = adapter.onGetGroupItemDraggableRange(holder, groupPosition);
+
+            if (groupRange == null) {
+                final int lastGroup = Math.max(0, mExpandableItemAdapter.getGroupCount() - 1);
+                final int start = 0;
+                final int end = Math.max(start, mPositionTranslator.getItemCount() - mPositionTranslator.getVisibleChildCount(lastGroup) - 1);
+
+                return new ItemDraggableRange(start, end);
+            } else {
+                final long startPackedGroupPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupRange.getStart());
+                final long endPackedGroupPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupRange.getEnd());
+                final int start = mPositionTranslator.getFlatPosition(startPackedGroupPosition);
+                final int end = mPositionTranslator.getFlatPosition(endPackedGroupPosition);
+
+                return new ItemDraggableRange(start, end);
+            }
+        } else {
+            // child
+            final ItemDraggableRange groupRange = adapter.onGetChildItemDraggableRange(holder, groupPosition, childPosition);
+
+            // NOTE:
+            // This method returns actual drag-sortable range, but the visual drag-sortable range would be different.
+            // Thus appending the STATE_FLAG_IS_IN_RANGE flag at correctGroupItemDragStateFlags() to avoid visual corruption.
+            if (groupRange == null) {
+                final int start = 1;  // 1 --- to avoid swapping with the first group item
+
+                return new ItemDraggableRange(start, Math.max(start, mPositionTranslator.getItemCount() - 1));
+            } else {
+                final long startPackedGroupPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupRange.getStart());
+                final long endPackedGroupPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupRange.getEnd());
+                final int end = mPositionTranslator.getFlatPosition(endPackedGroupPosition)
+                        + mPositionTranslator.getVisibleChildCount(groupRange.getEnd());
+
+                int start = mPositionTranslator.getFlatPosition(startPackedGroupPosition) + 1;
+
+                start = Math.min(start, end);
+
+                return new ItemDraggableRange(start, end);
+            }
         }
     }
 
@@ -253,6 +326,8 @@ class ExpandableRecyclerViewWrapperAdapter
         if (!(mExpandableItemAdapter instanceof ExpandableDraggableItemAdapter)) {
             return;
         }
+
+        mDraggingItemGroupPosition = RecyclerView.NO_POSITION;
 
         if (fromPosition == toPosition) {
             return;
@@ -540,7 +615,7 @@ class ExpandableRecyclerViewWrapperAdapter
         return WrapperAdapterUtils.findWrappedAdapter(adapter, ExpandableItemAdapter.class);
     }
 
-    private static void safeUpdateFlags(RecyclerView.ViewHolder holder, int flags) {
+    private static void safeUpdateExpandStateFlags(RecyclerView.ViewHolder holder, int flags) {
         if (!(holder instanceof ExpandableItemViewHolder)) {
             return;
         }
@@ -555,6 +630,22 @@ class ExpandableRecyclerViewWrapperAdapter
             flags |= RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED;
         }
 
-        ((ExpandableItemViewHolder) holder).setExpandStateFlags(flags);
+        holder2.setExpandStateFlags(flags);
+    }
+
+    private void correctGroupItemDragStateFlags(RecyclerView.ViewHolder holder, int groupPosition) {
+        if (!(holder instanceof DraggableItemViewHolder)) {
+            return;
+        }
+
+        final DraggableItemViewHolder holder2 = (DraggableItemViewHolder) holder;
+
+        final int flags = holder2.getDragStateFlags();
+
+        if ((flags & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) {
+            if (mDraggingItemGroupPosition == groupPosition) {
+                holder2.setDragStateFlags(flags | RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE);
+            }
+        }
     }
 }

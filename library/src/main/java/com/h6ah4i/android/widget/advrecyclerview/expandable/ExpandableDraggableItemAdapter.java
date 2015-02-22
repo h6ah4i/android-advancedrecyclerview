@@ -47,6 +47,26 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
     boolean onCheckChildCanStartDrag(CVH holder, int groupPosition, int childPosition, int x, int y);
 
     /**
+     * Called after the {@link #onCheckGroupCanStartDrag(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method returned true.
+     *
+     * @param holder The ViewHolder which is associated to item user is attempt to start dragging.
+     *
+     * @return null: no constraints (= new ItemDraggableRange(0, getGroupCount() - 1)),
+     *         otherwise: the range specified item can be drag-sortable.
+     */
+    ItemDraggableRange onGetGroupItemDraggableRange(GVH holder, int groupPosition);
+
+    /**
+     * Called after the {@link #onCheckChildCanStartDrag(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int, int)} method returned true.
+     *
+     * @param holder The ViewHolder which is associated to item user is attempt to start dragging.
+     *
+     * @return null: no constraints (= new ItemDraggableRange(0, getGroupCount() - 1)),
+     *         otherwise: the range specified item can be drag-sortable.
+     */
+    ItemDraggableRange onGetChildItemDraggableRange(CVH holder, int groupPosition, int childPosition);
+
+    /**
      * Called when group item is moved. Should apply the move operation result to data set.
      *
      * @param fromGroupPosition Previous group position of the item.

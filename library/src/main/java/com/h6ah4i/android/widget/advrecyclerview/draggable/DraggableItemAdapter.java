@@ -32,6 +32,16 @@ public interface DraggableItemAdapter<T extends RecyclerView.ViewHolder> {
     boolean onCheckCanStartDrag(T holder, int x, int y);
 
     /**
+     * Called after the {@link #onCheckCanStartDrag(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method returned true.
+     *
+     * @param holder The ViewHolder which is associated to item user is attempt to start dragging.
+     *
+     * @return null: no constraints (= new ItemDraggableRange(0, getItemCount() - 1)),
+     *         otherwise: the range specified item can be drag-sortable.
+     */
+    ItemDraggableRange onGetItemDraggableRange(T holder);
+
+    /**
      * Called when item is moved. Should apply the move operation result to data set.
      *
      * @param fromPosition Previous position of the item.
