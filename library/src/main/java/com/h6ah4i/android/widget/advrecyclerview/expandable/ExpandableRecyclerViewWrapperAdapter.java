@@ -174,9 +174,9 @@ class ExpandableRecyclerViewWrapperAdapter
 
         safeUpdateExpandStateFlags(holder, flags);
 
-        if (childPosition == RecyclerView.NO_POSITION) {
-            correctGroupItemDragStateFlags(holder, groupPosition);
+        correctItemDragStateFlags(holder, groupPosition);
 
+        if (childPosition == RecyclerView.NO_POSITION) {
             mExpandableItemAdapter.onBindGroupViewHolder(holder, groupPosition, viewType);
         } else {
             mExpandableItemAdapter.onBindChildViewHolder(holder, groupPosition, childPosition, viewType);
@@ -291,7 +291,11 @@ class ExpandableRecyclerViewWrapperAdapter
                 final long startPackedGroupPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupRange.getStart());
                 final long endPackedGroupPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupRange.getEnd());
                 final int start = mPositionTranslator.getFlatPosition(startPackedGroupPosition);
-                final int end = mPositionTranslator.getFlatPosition(endPackedGroupPosition);
+                int end = mPositionTranslator.getFlatPosition(endPackedGroupPosition);
+
+                if (groupRange.getEnd() > groupPosition) {
+                    end += mPositionTranslator.getVisibleChildCount(groupRange.getEnd());
+                }
 
                 return new ItemDraggableRange(start, end);
             }
@@ -301,7 +305,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
             // NOTE:
             // This method returns actual drag-sortable range, but the visual drag-sortable range would be different.
-            // Thus appending the STATE_FLAG_IS_IN_RANGE flag at correctGroupItemDragStateFlags() to avoid visual corruption.
+            // Thus appending the STATE_FLAG_IS_IN_RANGE flag at correctItemDragStateFlags() to avoid visual corruption.
             if (groupRange == null) {
                 final int start = 1;  // 1 --- to avoid swapping with the first group item
 
@@ -633,7 +637,7 @@ class ExpandableRecyclerViewWrapperAdapter
         holder2.setExpandStateFlags(flags);
     }
 
-    private void correctGroupItemDragStateFlags(RecyclerView.ViewHolder holder, int groupPosition) {
+    private void correctItemDragStateFlags(RecyclerView.ViewHolder holder, int groupPosition) {
         if (!(holder instanceof DraggableItemViewHolder)) {
             return;
         }
@@ -642,9 +646,12 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final int flags = holder2.getDragStateFlags();
 
-        if ((flags & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) {
+        if (((flags & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) &&
+                ((flags & RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE) == 0)) {
             if (mDraggingItemGroupPosition == groupPosition) {
-                holder2.setDragStateFlags(flags | RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE);
+                holder2.setDragStateFlags(
+                        flags | RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE |
+                                RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED);
             }
         }
     }
