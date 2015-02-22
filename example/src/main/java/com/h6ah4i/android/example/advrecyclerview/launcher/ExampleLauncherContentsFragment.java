@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.demo_d.DraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_section.DraggableWithSectionExampleActivity;
-import com.h6ah4i.android.example.advrecyclerview.demo_d_with_section.MyDraggableWithSectionItemAdapter;
 import com.h6ah4i.android.example.advrecyclerview.demo_ds.DraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_e.ExpandableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity;

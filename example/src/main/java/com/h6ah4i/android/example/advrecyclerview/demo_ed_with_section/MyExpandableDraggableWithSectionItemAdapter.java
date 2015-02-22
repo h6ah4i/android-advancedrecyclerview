@@ -23,9 +23,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.data.ExampleSectionDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;

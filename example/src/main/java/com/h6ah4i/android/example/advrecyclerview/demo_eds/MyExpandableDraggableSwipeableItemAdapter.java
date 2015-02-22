@@ -17,12 +17,10 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
