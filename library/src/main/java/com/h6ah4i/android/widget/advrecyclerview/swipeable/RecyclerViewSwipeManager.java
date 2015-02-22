@@ -273,7 +273,7 @@ public class RecyclerViewSwipeManager {
      * @return Wrapped adapter which is associated to this {@link RecyclerViewSwipeManager} instance.
      */
     @SuppressWarnings("unchecked")
-    public SwipeableItemWrapperAdapter createWrappedAdapter(RecyclerView.Adapter adapter) {
+    public RecyclerView.Adapter createWrappedAdapter(RecyclerView.Adapter adapter) {
         if (mAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");
         }

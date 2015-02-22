@@ -157,7 +157,7 @@ public class RecyclerViewExpandableItemManager {
      * @return Wrapped adapter which is associated to this {@link RecyclerViewExpandableItemManager} instance.
      */
     @SuppressWarnings("unchecked")
-    public ExpandableRecyclerViewWrapperAdapter createWrappedAdapter(RecyclerView.Adapter adapter) {
+    public RecyclerView.Adapter createWrappedAdapter(RecyclerView.Adapter adapter) {
         if (mAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");
         }
