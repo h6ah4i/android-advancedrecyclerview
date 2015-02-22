@@ -480,11 +480,11 @@ public class RecyclerViewSwipeManager {
         finishSwiping(RESULT_CANCELED);
     }
 
-    public boolean isAnimationRunning(RecyclerView.ViewHolder item) {
+    /*package*/ boolean isAnimationRunning(RecyclerView.ViewHolder item) {
         return (mItemSlideAnimator != null) && (mItemSlideAnimator.isRunning(item));
     }
 
-    public void slideItem(RecyclerView.ViewHolder holder, float amount, boolean shouldAnimate) {
+    private void slideItem(RecyclerView.ViewHolder holder, float amount, boolean shouldAnimate) {
         if (amount == OUTSIDE_OF_THE_WINDOW_LEFT) {
             mItemSlideAnimator.slideToOutsideOfWindow(holder, true, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
         } else if (amount == OUTSIDE_OF_THE_WINDOW_RIGHT) {
