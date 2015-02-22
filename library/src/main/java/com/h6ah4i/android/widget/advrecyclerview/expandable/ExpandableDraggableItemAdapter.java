@@ -18,11 +18,13 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
+
 public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder> {
     /**
      * Called when user is attempt to drag the group item.
      *
-     * @param holder The ViewHolder which is associated to item user is attempt to start swiping.
+     * @param holder The group ViewHolder which is associated to item user is attempt to start dragging.
      * @param groupPosition Group position.
      * @param x Touched X position. Relative from the itemView's top-left.
      * @param y Touched Y position. Relative from the itemView's top-left.
@@ -34,7 +36,7 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
     /**
      * Called when user is attempt to drag the child item.
      *
-     * @param holder The ViewHolder which is associated to item user is attempt to start swiping.
+     * @param holder The child ViewHolder which is associated to item user is attempt to start dragging.
      * @param groupPosition Group position.
      * @param childPosition Child position.
      * @param x Touched X position. Relative from the itemView's top-left.

@@ -23,7 +23,7 @@ public interface DraggableItemAdapter<T extends RecyclerView.ViewHolder> {
     /**
      * Called when user is attempt to drag the item.
      *
-     * @param holder The ViewHolder which is associated to item user is attempt to start swiping.
+     * @param holder The ViewHolder which is associated to item user is attempt to start dragging.
      * @param x Touched X position. Relative from the itemView's top-left.
      * @param y Touched Y position. Relative from the itemView's top-left.
 

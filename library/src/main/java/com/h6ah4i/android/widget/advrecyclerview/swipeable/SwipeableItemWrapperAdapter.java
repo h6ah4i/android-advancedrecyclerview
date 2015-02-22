@@ -101,10 +101,10 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        float prevSwipeItemSlieAmount = 0;
+        float prevSwipeItemSlideAmount = 0;
 
         if (holder instanceof SwipeableItemViewHolder) {
-            prevSwipeItemSlieAmount = ((SwipeableItemViewHolder) holder).getSwipeItemSlideAmount();
+            prevSwipeItemSlideAmount = ((SwipeableItemViewHolder) holder).getSwipeItemSlideAmount();
         }
 
         if (isSwiping()) {
@@ -124,9 +124,9 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
         if (holder instanceof SwipeableItemViewHolder) {
             final float swipeItemSlideAmount = ((SwipeableItemViewHolder) holder).getSwipeItemSlideAmount();
 
-            if ((prevSwipeItemSlieAmount != swipeItemSlideAmount) ||
+            if ((prevSwipeItemSlideAmount != swipeItemSlideAmount) ||
                     !(mSwipeManager.isSwiping() || mSwipeManager.isAnimationRunning(holder))) {
-                mSwipeManager.applySlideItem(holder, prevSwipeItemSlieAmount, swipeItemSlideAmount, true);
+                mSwipeManager.applySlideItem(holder, prevSwipeItemSlideAmount, swipeItemSlideAmount, true);
             }
         }
     }

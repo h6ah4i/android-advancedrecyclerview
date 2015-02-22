@@ -67,7 +67,7 @@ public class MyExpandableItemAdapter
         mProvider = dataProvider;
 
         // ExpandableItemAdapter requires stable ID, and also
-        // have to implement the getItemId() method appropriately.
+        // have to implement the getGroupItemId()/getChildItemId() methods appropriately.
         setHasStableIds(true);
     }
 

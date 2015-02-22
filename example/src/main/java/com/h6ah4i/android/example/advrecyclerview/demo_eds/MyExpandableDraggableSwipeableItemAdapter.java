@@ -118,7 +118,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
         };
 
         // ExpandableItemAdapter, ExpandableDraggableItemAdapter and ExpandableSwipeableItemAdapter
-        // require stable ID, and also have to implement the getItemId() method appropriately.
+        // require stable ID, and also have to implement the getGroupItemId()/getChildItemId() methods appropriately.
         setHasStableIds(true);
     }
 
@@ -180,8 +180,8 @@ public class MyExpandableDraggableSwipeableItemAdapter
 
     @Override
     public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
-        // child item
-        final AbstractExpandableDataProvider.BaseData item = mProvider.getGroupItem(groupPosition);
+        // group item
+        final AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(groupPosition);
 
         // set listeners
         holder.itemView.setOnClickListener(mItemViewOnClickListener);
@@ -223,7 +223,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
 
     @Override
     public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
-        // group item
+        // child item
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
         // set listeners
