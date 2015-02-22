@@ -26,7 +26,7 @@ public class AdapterUtils {
         if (parent instanceof RecyclerView) {
             // returns the passed instance if the parent is RecyclerView
             return v;
-        } else if (v instanceof View) {
+        } else if (parent instanceof View) {
             // check the parent view recursively
             return findParentViewHolderItemView((View) parent);
         } else {
