@@ -53,6 +53,7 @@ class SwipingItemOperator {
         mInvSwipingItemWidth = (mSwipingItemWidth != 0) ? (1.0f / mSwipingItemWidth) : 0.0f;
     }
 
+    @SuppressWarnings("EmptyMethod")
     public void start() {
         // nothing to do here.
     }

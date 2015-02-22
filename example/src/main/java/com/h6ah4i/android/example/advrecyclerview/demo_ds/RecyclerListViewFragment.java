@@ -135,11 +135,6 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onPause() {
         mRecyclerViewDragDropManager.cancelDrag();
         super.onPause();

@@ -112,16 +112,6 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
         return mWrappedAdapter.getItemViewType(position);
     }
 
-    @Override
-    public void registerAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
-        super.registerAdapterDataObserver(observer);
-    }
-
-    @Override
-    public void unregisterAdapterDataObserver(RecyclerView.AdapterDataObserver observer) {
-        super.unregisterAdapterDataObserver(observer);
-    }
-
     protected void onHandleWrappedAdapterChanged() {
         notifyDataSetChanged();
     }
