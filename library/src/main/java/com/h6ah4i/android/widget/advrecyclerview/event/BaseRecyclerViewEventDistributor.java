@@ -94,7 +94,7 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
      * Add a {@link T} listener to the chain at the specified position.
      *
      * @param listener The {@link T} instance
-     * @param index Position in the listener chain to insert this listener at.  (< 0:  tail of the chain)
+     * @param index Position in the listener chain to insert this listener at.  (&lt; 0:  tail of the chain)
      *
      * @return True if the listener object successfully added, otherwise false. Also returns true if have already been added.
      */

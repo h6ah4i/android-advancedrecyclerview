@@ -36,7 +36,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import java.lang.ref.WeakReference;
 
 /**
- * Provides item drag & drop operation for {@link android.support.v7.widget.RecyclerView}
+ * Provides item drag &amp; drop operation for {@link android.support.v7.widget.RecyclerView}
  */
 @SuppressWarnings("PointlessBitwiseExpression")
 public class RecyclerViewDragDropManager {
@@ -215,6 +215,7 @@ public class RecyclerViewDragDropManager {
      * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
      *
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     * @param scrollEventDistributor The distributor for {@link android.support.v7.widget.RecyclerView.OnScrollListener} event
      */
     public void attachRecyclerView(RecyclerView rv, RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
         if (rv == null) {
