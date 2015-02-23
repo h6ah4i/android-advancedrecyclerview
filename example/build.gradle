@@ -25,8 +25,8 @@ android {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
         minSdkVersion 9
         targetSdkVersion 21
-        versionCode 3
-        versionName "0.6.1"
+        versionCode 4
+        versionName "0.6.2"
     }
 
     signingConfigs {
@@ -50,5 +50,5 @@ if (loadSigningConfigFromPropertiesFile(
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
-    compile 'com.nispok:snackbar:2.7.4'
+    compile 'com.nispok:snackbar:2.9.1'
 }
