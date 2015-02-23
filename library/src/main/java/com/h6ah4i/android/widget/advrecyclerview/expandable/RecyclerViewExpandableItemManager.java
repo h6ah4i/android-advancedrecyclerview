@@ -215,7 +215,7 @@ public class RecyclerViewExpandableItemManager {
         mInitialTouchX = (int) (e.getX() + 0.5f);
         mInitialTouchY = (int) (e.getY() + 0.5f);
 
-        if (holder != null) {
+        if (holder instanceof ExpandableItemViewHolder) {
             mTouchedItemId = holder.getItemId();
         } else {
             mTouchedItemId = RecyclerView.NO_ID;
