@@ -67,6 +67,19 @@ public class RecyclerViewDragDropManager {
 
     // ---
 
+    /**
+     * Default interpolator used for "swap target transition"
+     */
+    public static final Interpolator DEFAULT_SWAP_TARGET_TRANSITION_INTERPOLATOR = new BasicSwapTargetTranslationInterpolator();
+
+
+    /**
+     * Default interpolator used for "item settle back into place" animation
+     */
+    public static final Interpolator DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR = new DecelerateInterpolator();
+
+    // ---
+
     private static final int SCROLL_DIR_NONE = 0;
     private static final int SCROLL_DIR_UP = (1 << 0);
     private static final int SCROLL_DIR_DOWN = (1 << 1);
@@ -80,7 +93,7 @@ public class RecyclerViewDragDropManager {
     private static final float SCROLL_TOUCH_SLOP_MULTIPLY = 1.5f;
 
     private RecyclerView mRecyclerView;
-    private Interpolator mSwapTargetTranslationInterpolator;
+    private Interpolator mSwapTargetTranslationInterpolator = DEFAULT_SWAP_TARGET_TRANSITION_INTERPOLATOR;
     private ScrollOnDraggingProcessRunnable mScrollOnDraggingProcess;
 
     private RecyclerView.OnScrollListener mUserOnScrollListener;
@@ -103,7 +116,7 @@ public class RecyclerViewDragDropManager {
 
     private Runnable mDeferredCancelProcess;
     private int mItemSettleBackIntoPlaceAnimationDuration = 200;
-    private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = new DecelerateInterpolator();
+    private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR;
 
     // these fields are only valid while dragging
     private DraggableItemWrapperAdapter mAdapter;

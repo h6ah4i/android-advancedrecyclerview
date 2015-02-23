@@ -80,7 +80,6 @@ public class RecyclerListViewFragment extends Fragment {
 
         // drag & drop manager
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
-        mRecyclerViewDragDropManager.setSwapTargetTranslationInterpolator(new BasicSwapTargetTranslationInterpolator());
         mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
                 (NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
 
