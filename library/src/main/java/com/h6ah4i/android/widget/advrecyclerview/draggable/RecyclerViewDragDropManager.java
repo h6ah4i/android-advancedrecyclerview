@@ -29,6 +29,7 @@ import android.view.ViewConfiguration;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
+import com.h6ah4i.android.widget.advrecyclerview.event.RecyclerViewOnScrollEventDistributor;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -95,8 +96,8 @@ public class RecyclerViewDragDropManager {
     private RecyclerView mRecyclerView;
     private Interpolator mSwapTargetTranslationInterpolator = DEFAULT_SWAP_TARGET_TRANSITION_INTERPOLATOR;
     private ScrollOnDraggingProcessRunnable mScrollOnDraggingProcess;
+    private boolean mScrollEventRegisteredToDistributor;
 
-    private RecyclerView.OnScrollListener mUserOnScrollListener;
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
     private RecyclerView.OnScrollListener mInternalUseOnScrollListener;
 
@@ -203,6 +204,19 @@ public class RecyclerViewDragDropManager {
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
     public void attachRecyclerView(RecyclerView rv) {
+        attachRecyclerView(rv, null);
+    }
+
+    /**
+     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
+     *
+     * Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
+     * the wrapped adapter instance which is returned by the
+     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
+     *
+     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     */
+    public void attachRecyclerView(RecyclerView rv, RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
         if (rv == null) {
             throw new IllegalArgumentException("RecyclerView cannot be null");
         }
@@ -219,9 +233,26 @@ public class RecyclerViewDragDropManager {
             throw new IllegalStateException("adapter is not set properly");
         }
 
+        if (scrollEventDistributor != null) {
+            final RecyclerView rv2 = scrollEventDistributor.getRecyclerView();
+
+            if (rv2 != null && rv2 != rv) {
+                throw new IllegalArgumentException("The scroll event distributor attached to different RecyclerView instance");
+            }
+        }
+
         mRecyclerView = rv;
+
+        if (scrollEventDistributor != null) {
+            scrollEventDistributor.add(mInternalUseOnScrollListener);
+            mScrollEventRegisteredToDistributor = true;
+        } else {
+            mRecyclerView.setOnScrollListener(mInternalUseOnScrollListener);
+            mScrollEventRegisteredToDistributor = false;
+        }
+
         mRecyclerView.addOnItemTouchListener(mInternalUseOnItemTouchListener);
-        mRecyclerView.setOnScrollListener(mInternalUseOnScrollListener);
+
         mDisplayDensity = mRecyclerView.getResources().getDisplayMetrics().density;
         mTouchSlop = ViewConfiguration.get(mRecyclerView.getContext()).getScaledTouchSlop();
         mScrollTouchSlop = (int) (mTouchSlop * SCROLL_TOUCH_SLOP_MULTIPLY + 0.5f);
@@ -251,7 +282,7 @@ public class RecyclerViewDragDropManager {
         }
         mInternalUseOnItemTouchListener = null;
 
-        if (mRecyclerView != null && mInternalUseOnScrollListener != null) {
+        if (mRecyclerView != null && mInternalUseOnScrollListener != null && mScrollEventRegisteredToDistributor) {
             mRecyclerView.setOnScrollListener(null);
         }
         mInternalUseOnScrollListener = null;
@@ -260,10 +291,10 @@ public class RecyclerViewDragDropManager {
             mScrollOnDraggingProcess.release();
             mScrollOnDraggingProcess = null;
         }
-        mUserOnScrollListener = null;
         mAdapter = null;
         mRecyclerView = null;
         mSwapTargetTranslationInterpolator = null;
+        mScrollEventRegisteredToDistributor = false;
     }
 
     /**
@@ -282,18 +313,6 @@ public class RecyclerViewDragDropManager {
      */
     public void setDraggingItemShadowDrawable(NinePatchDrawable drawable) {
         mShadowDrawable = drawable;
-    }
-
-    /**
-     * Set a listener that will be notified of any changes in scroll state or position.
-     *
-     * If the application requires scroll event, please use this method.
-     * This class uses the {@link android.support.v7.widget.RecyclerView#setOnScrollListener(android.support.v7.widget.RecyclerView.OnScrollListener)} internally.
-     *
-     * @param listener Listener to set or null to clear
-     */
-    public void setOnScrollListener(RecyclerView.OnScrollListener listener) {
-        mUserOnScrollListener = listener;
     }
 
     /**
@@ -381,19 +400,11 @@ public class RecyclerViewDragDropManager {
         if (mInScrollByMethod) {
             mActualScrollByAmount = dy;
         }
-
-        if (mUserOnScrollListener != null) {
-            mUserOnScrollListener.onScrolled(recyclerView, dx, dy);
-        }
     }
 
     /*package*/ void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         if (LOCAL_LOGV) {
             Log.v(TAG, "onScrollStateChanged(newState = " + newState + ")");
-        }
-
-        if (mUserOnScrollListener != null) {
-            mUserOnScrollListener.onScrollStateChanged(recyclerView, newState);
         }
     }
 
