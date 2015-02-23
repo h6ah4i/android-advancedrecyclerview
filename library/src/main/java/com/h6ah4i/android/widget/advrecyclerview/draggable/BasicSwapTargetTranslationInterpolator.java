@@ -30,7 +30,7 @@ public class BasicSwapTargetTranslationInterpolator implements Interpolator {
 
     public BasicSwapTargetTranslationInterpolator(float threshold) {
         if (!(threshold >= 0 && threshold < 0.5f)) {
-            throw new IllegalArgumentException("Invalid threhold range: " + threshold);
+            throw new IllegalArgumentException("Invalid threshold range: " + threshold);
         }
         final float validRange = 1.0f - 2 * threshold;
 

@@ -54,6 +54,14 @@
             android:label="@string/activity_title_demo_eds" />
 
         <activity
+            android:name=".demo_d_with_section.DraggableWithSectionExampleActivity"
+            android:label="@string/activity_title_demo_d_with_section" />
+
+        <activity
+            android:name=".demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity"
+            android:label="@string/activity_title_demo_ed_with_section" />
+
+        <activity
             android:name=".about.AboutActivity"
             android:label="@string/activity_title_about"/>
     </application>

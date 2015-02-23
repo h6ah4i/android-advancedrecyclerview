@@ -44,9 +44,11 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private Rect mDraggingItemMargins = new Rect();
     private boolean mStarted;
     private boolean mIsScrolling;
+    private ItemDraggableRange mRange;
 
-    public DraggingItemDecorator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem) {
+    public DraggingItemDecorator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem, ItemDraggableRange range) {
         super(recyclerView, draggingItem);
+        mRange = range;
         CustomRecyclerViewUtils.getLayoutMargins(mDraggingItem.itemView, mDraggingItemMargins);
     }
 
@@ -113,6 +115,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             mDraggingItemImage = null;
         }
 
+        mRange = null;
         mGrabbedPositionY = 0;
         mTranslationY = 0;
         mTranslationTopLimit = 0;
@@ -150,19 +153,31 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private void updateTranslationOffset() {
         final int childCount = mRecyclerView.getChildCount();
         if (childCount > 0) {
+            mTranslationTopLimit = mRecyclerView.getPaddingTop();
             mTranslationBottomLimit = Math.max(0, (mRecyclerView.getHeight() - mRecyclerView.getPaddingBottom() - mGrabbedItemHeight));
 
             if (!mIsScrolling) {
-                final View lastChild = mRecyclerView.getChildAt(childCount - 1);
-                mTranslationBottomLimit = Math.min(mTranslationBottomLimit, lastChild.getTop());
+                final int firstVisiblePosition = CustomRecyclerViewUtils.findFirstVisibleItemPosition(mRecyclerView);
+                final int lastVisiblePosition = CustomRecyclerViewUtils.findLastVisibleItemPosition(mRecyclerView);
+                final View topChild = findRangeFirstItem(mRecyclerView, mRange, firstVisiblePosition, lastVisiblePosition);
+                final View bottomChild = findRangeLastItem(mRecyclerView, mRange, firstVisiblePosition, lastVisiblePosition);
+
+                if (topChild != null) {
+                    mTranslationTopLimit = Math.min(mTranslationBottomLimit, topChild.getTop());
+                }
+
+                if (bottomChild != null) {
+                    mTranslationBottomLimit = Math.min(mTranslationBottomLimit, bottomChild.getTop());
+                }
             }
         } else {
-            mTranslationBottomLimit = mTranslationTopLimit;
+            mTranslationBottomLimit = mTranslationTopLimit = mRecyclerView.getPaddingTop();
         }
 
         mTranslationY = mTouchPositionY - mGrabbedPositionY;
         mTranslationY = Math.min(Math.max(mTranslationY, mTranslationTopLimit), mTranslationBottomLimit);
     }
+
 
     private Bitmap createDraggingItemImage(View v, NinePatchDrawable shadow) {
         int width = v.getWidth() + mShadowPadding.left + mShadowPadding.right;
@@ -193,7 +208,12 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     }
 
     public void setIsScrolling(boolean isScrolling) {
+        if (mIsScrolling == isScrolling) {
+            return;
+        }
+
         mIsScrolling = isScrolling;
+
     }
 
     public int getTranslatedItemPositionTop() {
@@ -202,5 +222,61 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     public int getTranslatedItemPositionBottom() {
         return mTranslationY + mGrabbedItemHeight;
+    }
+
+
+    private static View findRangeFirstItem(RecyclerView rv, ItemDraggableRange range, int firstVisiblePosition, int lastVisiblePosition) {
+        if (firstVisiblePosition == RecyclerView.NO_POSITION || lastVisiblePosition == RecyclerView.NO_POSITION) {
+            return null;
+        }
+
+        View v = null;
+
+        final int childCount = rv.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View v2 = rv.getChildAt(i);
+            final RecyclerView.ViewHolder vh = rv.getChildViewHolder(v2);
+
+            if (vh != null) {
+                final int position = vh.getPosition();
+
+                if ((position >= firstVisiblePosition) &&
+                        (position <= lastVisiblePosition) &&
+                        range.checkInRange(position)) {
+                    v = v2;
+                    break;
+                }
+
+            }
+        }
+
+        return v;
+    }
+
+    private static View findRangeLastItem(RecyclerView rv, ItemDraggableRange range, int firstVisiblePosition, int lastVisiblePosition) {
+        if (firstVisiblePosition == RecyclerView.NO_POSITION || lastVisiblePosition == RecyclerView.NO_POSITION) {
+            return null;
+        }
+
+        View v = null;
+
+        final int childCount = rv.getChildCount();
+        for (int i = childCount - 1; i >= 0; i--) {
+            final View v2 = rv.getChildAt(i);
+            final RecyclerView.ViewHolder vh = rv.getChildViewHolder(v2);
+
+            if (vh != null) {
+                final int position = vh.getPosition();
+
+                if ((position >= firstVisiblePosition) &&
+                        (position <= lastVisiblePosition) &&
+                        range.checkInRange(position)) {
+                    v = v2;
+                    break;
+                }
+            }
+        }
+
+        return v;
     }
 }

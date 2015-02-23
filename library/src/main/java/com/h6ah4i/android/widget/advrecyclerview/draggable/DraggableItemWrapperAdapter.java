@@ -23,7 +23,7 @@ import android.view.ViewGroup;
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
-public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends BaseWrapperAdapter<VH> {
+class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends BaseWrapperAdapter<VH> {
     private static final String TAG = "ARVDraggableWrapper";
 
     private static final int STATE_FLAG_INITIAL_VALUE = -1;
@@ -35,6 +35,7 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     private RecyclerViewDragDropManager mDragDropManager;
     private DraggableItemAdapter mDraggableItemAdapter;
     private RecyclerView.ViewHolder mDraggingItem;
+    private ItemDraggableRange mDraggableRange;
     private long mDraggingItemId = RecyclerView.NO_ID;
     private int mDraggingItemInitialPosition = RecyclerView.NO_POSITION;
     private int mDraggingItemCurrentPosition = RecyclerView.NO_POSITION;
@@ -89,6 +90,9 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
 
             if (itemId == mDraggingItemId) {
                 flags |= RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE;
+            }
+            if (mDraggableRange.checkInRange(position)) {
+                flags |= RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE;
             }
 
             safeUpdateFlags(holder, flags);
@@ -206,7 +210,7 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ void onDragItemStarted(RecyclerView.ViewHolder holder) {
+    /*package*/ void onDragItemStarted(RecyclerView.ViewHolder holder, ItemDraggableRange range) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onDragItemStarted(holder = " + holder + ")");
         }
@@ -223,6 +227,7 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
         mDraggingItemCurrentPosition = mDraggingItemInitialPosition;
         mDraggingItem = holder;
         mDraggingItemId = holder.getItemId();
+        mDraggableRange = range;
 
         notifyDataSetChanged();
     }
@@ -249,6 +254,7 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
 
         mDraggingItemInitialPosition = RecyclerView.NO_POSITION;
         mDraggingItemCurrentPosition = RecyclerView.NO_POSITION;
+        mDraggableRange = null;
         mDraggingItemId = RecyclerView.NO_ID;
         mDraggingItem = null;
 
@@ -280,6 +286,16 @@ public class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
             Log.v(TAG, "canStartDrag(holder = " + holder + ", x = " + x + ", y = " + y + ")");
         }
         return mDraggableItemAdapter.onCheckCanStartDrag(holder, x, y);
+    }
+
+    // NOTE: This method is called from RecyclerViewDragDropManager
+    /*package*/
+    @SuppressWarnings("unchecked")
+    ItemDraggableRange getItemDraggableRange(RecyclerView.ViewHolder holder) {
+        if (LOCAL_LOGV) {
+            Log.v(TAG, "getItemDraggableRange(holder = " + holder + ")");
+        }
+        return mDraggableItemAdapter.onGetItemDraggableRange(holder);
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager

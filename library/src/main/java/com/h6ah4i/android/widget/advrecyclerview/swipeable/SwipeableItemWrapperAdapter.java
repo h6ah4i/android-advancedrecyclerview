@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
-public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends BaseWrapperAdapter<VH> {
+class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends BaseWrapperAdapter<VH> {
     private static final String TAG = "ARVSwipeableWrapper";
 
     private static final int STATE_FLAG_INITIAL_VALUE = -1;
@@ -90,21 +90,11 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
     }
 
     @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView);
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
-    @Override
     public void onBindViewHolder(VH holder, int position) {
-        float prevSwipeItemSlieAmount = 0;
+        float prevSwipeItemSlideAmount = 0;
 
         if (holder instanceof SwipeableItemViewHolder) {
-            prevSwipeItemSlieAmount = ((SwipeableItemViewHolder) holder).getSwipeItemSlideAmount();
+            prevSwipeItemSlideAmount = ((SwipeableItemViewHolder) holder).getSwipeItemSlideAmount();
         }
 
         if (isSwiping()) {
@@ -124,9 +114,9 @@ public class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> ext
         if (holder instanceof SwipeableItemViewHolder) {
             final float swipeItemSlideAmount = ((SwipeableItemViewHolder) holder).getSwipeItemSlideAmount();
 
-            if ((prevSwipeItemSlieAmount != swipeItemSlideAmount) ||
+            if ((prevSwipeItemSlideAmount != swipeItemSlideAmount) ||
                     !(mSwipeManager.isSwiping() || mSwipeManager.isAnimationRunning(holder))) {
-                mSwipeManager.applySlideItem(holder, prevSwipeItemSlieAmount, swipeItemSlideAmount, true);
+                mSwipeManager.applySlideItem(holder, prevSwipeItemSlideAmount, swipeItemSlideAmount, true);
             }
         }
     }

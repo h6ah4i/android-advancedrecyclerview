@@ -104,27 +104,35 @@ public abstract class BaseItemAnimator extends RecyclerView.ItemAnimator {
         }
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void onAddStartingImpl(RecyclerView.ViewHolder item) {
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void onAddFinishedImpl(RecyclerView.ViewHolder item) {
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void onChangeStartingItem(RecyclerView.ViewHolder item, boolean oldItem) {
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void onChangeFinishedImpl(RecyclerView.ViewHolder item, boolean oldItem) {
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void onMoveStartingImpl(RecyclerView.ViewHolder item) {
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void onMoveFinishedImpl(RecyclerView.ViewHolder item) {
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void onRemoveStartingImpl(RecyclerView.ViewHolder item) {
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void onRemoveFinishedImpl(RecyclerView.ViewHolder item) {
     }
 

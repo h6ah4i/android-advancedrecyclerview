@@ -27,12 +27,16 @@
     <string name="activity_title_demo_e">Expandable</string>
     <string name="activity_title_demo_ds">Draggable + Swipeable</string>
     <string name="activity_title_demo_eds">Expandable + Draggable + Swipeable</string>
+    <string name="activity_title_demo_d_with_section">Draggable with Section</string>
+    <string name="activity_title_demo_ed_with_section">Expandable + Draggable with Section</string>
 
     <string name="button_text_launch_demo_d">@string/activity_title_demo_d</string>
     <string name="button_text_launch_demo_s">@string/activity_title_demo_s</string>
     <string name="button_text_launch_demo_e">@string/activity_title_demo_e</string>
     <string name="button_text_launch_demo_ds">@string/activity_title_demo_ds</string>
     <string name="button_text_launch_demo_eds">@string/activity_title_demo_eds</string>
+    <string name="button_text_launch_demo_d_with_section">@string/activity_title_demo_d_with_section</string>
+    <string name="button_text_launch_demo_ed_with_section">@string/activity_title_demo_ed_with_section</string>
 
     <string name="snack_bar_text_item_removed">1 item removed</string>
     <string name="snack_bar_text_group_item_removed">1 group item removed</string>

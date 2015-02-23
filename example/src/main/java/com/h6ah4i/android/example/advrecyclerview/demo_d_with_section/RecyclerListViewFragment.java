@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_d;
+package com.h6ah4i.android.example.advrecyclerview.demo_d_with_section;
 
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
@@ -67,7 +67,7 @@ public class RecyclerListViewFragment extends Fragment {
                 (NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
 
         //adapter
-        final MyDraggableItemAdapter myItemAdapter = new MyDraggableItemAdapter(getDataProvider());
+        final MyDraggableWithSectionItemAdapter myItemAdapter = new MyDraggableWithSectionItemAdapter(getDataProvider());
         mAdapter = myItemAdapter;
 
         mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(myItemAdapter);      // wrap for dragging
@@ -128,6 +128,6 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     public AbstractDataProvider getDataProvider() {
-        return ((DraggableExampleActivity) getActivity()).getDataProvider();
+        return ((DraggableWithSectionExampleActivity) getActivity()).getDataProvider();
     }
 }

@@ -25,7 +25,9 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.utils.AdapterUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
@@ -44,6 +46,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
     private AbstractExpandableDataProvider mProvider;
     private EventListener mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
+    private View.OnClickListener mSwipeableViewContainerOnClickListener;
 
     public interface EventListener {
         void onGroupItemRemoved(int groupPosition);
@@ -54,7 +57,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
 
         void onChildItemPinned(int groupPosition, int childPosition);
 
-        void onItemViewClicked(View v);
+        void onItemViewClicked(View v, boolean pinned);
     }
 
     public static abstract class MyBaseViewHolder extends AbstractDraggableSwipeableItemViewHolder implements ExpandableItemViewHolder {
@@ -106,12 +109,27 @@ public class MyExpandableDraggableSwipeableItemAdapter
                 onItemViewClick(v);
             }
         };
+        mSwipeableViewContainerOnClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSwipeableViewContainerClick(v);
+            }
+        };
+
+        // ExpandableItemAdapter, ExpandableDraggableItemAdapter and ExpandableSwipeableItemAdapter
+        // require stable ID, and also have to implement the getGroupItemId()/getChildItemId() methods appropriately.
         setHasStableIds(true);
     }
 
     private void onItemViewClick(View v) {
         if (mEventListener != null) {
-            mEventListener.onItemViewClicked(v);
+            mEventListener.onItemViewClicked(v, true);  // true --- pinned
+        }
+    }
+
+    private void onSwipeableViewContainerClick(View v) {
+        if (mEventListener != null) {
+            mEventListener.onItemViewClicked(AdapterUtils.findParentViewHolderItemView(v), false);  // false --- not pinned
         }
     }
 
@@ -161,17 +179,14 @@ public class MyExpandableDraggableSwipeableItemAdapter
 
     @Override
     public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
-        // child item
-        final AbstractExpandableDataProvider.BaseData item = mProvider.getGroupItem(groupPosition);
+        // group item
+        final AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(groupPosition);
 
         // set listeners
         holder.itemView.setOnClickListener(mItemViewOnClickListener);
 
         // set text
         holder.mTextView.setText(item.getText());
-
-        // mark as clickable
-        holder.itemView.setClickable(true);
 
         // set background resource (target view ID: container)
         final int dragState = holder.getDragStateFlags();
@@ -207,17 +222,17 @@ public class MyExpandableDraggableSwipeableItemAdapter
 
     @Override
     public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
-        // group item
+        // child item
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
         // set listeners
+        // (if the item is *not pinned*, click event comes to the itemView)
         holder.itemView.setOnClickListener(mItemViewOnClickListener);
+        // (if the item is *pinned*, click event comes to the mContainer)
+        holder.mContainer.setOnClickListener(mSwipeableViewContainerOnClickListener);
 
         // set text
         holder.mTextView.setText(item.getText());
-
-        // mark as clickable
-        holder.itemView.setClickable(true);
 
         final int dragState = holder.getDragStateFlags();
         final int swipeState = holder.getSwipeStateFlags();
@@ -290,6 +305,18 @@ public class MyExpandableDraggableSwipeableItemAdapter
         final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
+    }
+
+    @Override
+    public ItemDraggableRange onGetGroupItemDraggableRange(MyGroupViewHolder holder, int groupPosition) {
+        // no drag-sortable range specified
+        return null;
+    }
+
+    @Override
+    public ItemDraggableRange onGetChildItemDraggableRange(MyChildViewHolder holder, int groupPosition, int childPosition) {
+        // no drag-sortable range specified
+        return null;
     }
 
     @Override

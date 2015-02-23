@@ -80,7 +80,6 @@ public class RecyclerListViewFragment extends Fragment {
 
         // drag & drop manager
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
-        mRecyclerViewDragDropManager.setSwapTargetTranslationInterpolator(new BasicSwapTargetTranslationInterpolator());
         mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
                 (NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
 
@@ -113,8 +112,8 @@ public class RecyclerListViewFragment extends Fragment {
             }
 
             @Override
-            public void onItemViewClicked(View v) {
-                onItemViewClick(v);
+            public void onItemViewClicked(View v, boolean pinned) {
+                onItemViewClick(v, pinned);
             }
         });
 
@@ -149,16 +148,6 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerViewSwipeManager.attachRecyclerView(mRecyclerView);
         mRecyclerViewDragDropManager.attachRecyclerView(mRecyclerView);
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 
     @Override
@@ -211,7 +200,7 @@ public class RecyclerListViewFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private void onItemViewClick(View v) {
+    private void onItemViewClick(View v, boolean pinned) {
         final int flatPosition = mRecyclerView.getChildPosition(v);
 
         if (flatPosition == RecyclerView.NO_POSITION) {

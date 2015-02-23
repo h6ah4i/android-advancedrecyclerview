@@ -29,6 +29,7 @@ public abstract class AbstractExpandableDataProvider {
     }
 
     public static abstract class GroupData extends BaseData {
+        public abstract boolean isSectionHeader();
         public abstract long getGroupId();
     }
 

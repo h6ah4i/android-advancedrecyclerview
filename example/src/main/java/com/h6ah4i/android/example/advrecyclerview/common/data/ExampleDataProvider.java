@@ -179,6 +179,11 @@ public class ExampleDataProvider extends AbstractDataProvider {
         }
 
         @Override
+        public boolean isSectionHeader() {
+            return false;
+        }
+
+        @Override
         public int getViewType() {
             return mViewType;
         }

@@ -17,6 +17,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
 import android.graphics.Rect;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,5 +76,46 @@ public class CustomRecyclerViewUtils {
         outBounds.top = v.getTop();
         outBounds.bottom = v.getBottom();
         return outBounds;
+    }
+
+
+    public static int findFirstVisibleItemPosition(RecyclerView rv) {
+        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
+
+        if (layoutManager instanceof LinearLayoutManager) {
+            return (((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition());
+        } else {
+            return RecyclerView.NO_POSITION;
+        }
+    }
+
+    public static int findLastVisibleItemPosition(RecyclerView rv) {
+        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
+
+        if (layoutManager instanceof LinearLayoutManager) {
+            return (((LinearLayoutManager) layoutManager).findLastVisibleItemPosition());
+        } else {
+            return RecyclerView.NO_POSITION;
+        }
+    }
+
+    public static int findFirstCompletelyVisibleItemPosition(RecyclerView rv) {
+        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
+
+        if (layoutManager instanceof LinearLayoutManager) {
+            return (((LinearLayoutManager) layoutManager).findFirstCompletelyVisibleItemPosition());
+        } else {
+            return RecyclerView.NO_POSITION;
+        }
+    }
+
+    public static int findLastCompletelyVisibleItemPosition(RecyclerView rv) {
+        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
+
+        if (layoutManager instanceof LinearLayoutManager) {
+            return (((LinearLayoutManager) layoutManager).findLastCompletelyVisibleItemPosition());
+        } else {
+            return RecyclerView.NO_POSITION;
+        }
     }
 }
