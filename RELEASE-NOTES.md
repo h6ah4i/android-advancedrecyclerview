@@ -1,4 +1,12 @@
 
+## 0.6.2
+
+- Added drag-sortable range configuration feature
+- Added new two examples which has sections headers in the list and using new APIs
+- Added RecyclerView's event distributor mechanism (no examples yet.)
+- Improved JavaDoc comments
+- Small bug fixes & improvements
+
 ## 0.6.1
 
 - Added "settle back into place" animation
