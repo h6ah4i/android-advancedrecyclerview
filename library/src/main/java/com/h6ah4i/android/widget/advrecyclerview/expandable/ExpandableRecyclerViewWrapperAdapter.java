@@ -64,7 +64,8 @@ class ExpandableRecyclerViewWrapperAdapter
         mPositionTranslator.build(mExpandableItemAdapter);
 
         if (expandedItemsSavedState != null) {
-            mPositionTranslator.restoreExpandedGroupItems(expandedItemsSavedState);
+            // NOTE: do not call hook routines and listener methods
+            mPositionTranslator.restoreExpandedGroupItems(expandedItemsSavedState, null, null, null);
         }
     }
 
@@ -192,7 +193,9 @@ class ExpandableRecyclerViewWrapperAdapter
         if (mPositionTranslator != null) {
             int [] savedState = mPositionTranslator.getSavedStateArray();
             mPositionTranslator.build(mExpandableItemAdapter);
-            mPositionTranslator.restoreExpandedGroupItems(savedState);
+
+            // NOTE: do not call hook routines and listener methods
+            mPositionTranslator.restoreExpandedGroupItems(savedState, null, null, null);
         }
     }
 
@@ -645,6 +648,14 @@ class ExpandableRecyclerViewWrapperAdapter
 
     /*package*/ void setOnGroupCollapseListener(RecyclerViewExpandableItemManager.OnGroupCollapseListener listener) {
         mOnGroupCollapseListener = listener;
+    }
+
+    /*package*/ void restoreState(int[] adapterSavedState, boolean callHook, boolean callListeners) {
+        mPositionTranslator.restoreExpandedGroupItems(
+                adapterSavedState,
+                (callHook ? mExpandableItemAdapter : null),
+                (callListeners ? mOnGroupExpandListener : null),
+                (callListeners ? mOnGroupCollapseListener : null));
     }
 
     private static ExpandableItemAdapter getExpandableItemAdapter(RecyclerView.Adapter adapter) {

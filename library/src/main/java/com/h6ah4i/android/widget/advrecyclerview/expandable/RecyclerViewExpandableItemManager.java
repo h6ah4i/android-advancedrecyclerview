@@ -505,6 +505,44 @@ public class RecyclerViewExpandableItemManager {
         }
     }
 
+    /**
+     * Restore saves state. See {@link #restoreState(android.os.Parcelable, boolean, boolean)}.
+     * (This method does not invoke any hook methods and listener events)
+     *
+     * @param savedState The saved state object
+     */
+    public void restoreState(Parcelable savedState) {
+        restoreState(savedState, false, false);
+    }
+
+    /**
+     * Restore saves state.
+     *
+     * This method is useful when the adapter can not be prepared (because data loading may takes time and processed asynchronously)
+     * before creating this manager instance.
+     *
+     * @param savedState The saved state object
+     * @param callHooks Whether to call hook routines
+     *                  ({@link ExpandableItemAdapter#onHookGroupExpand(int, boolean)},
+     *                  {@link ExpandableItemAdapter#onHookGroupCollapse(int, boolean)})
+     * @param callListeners Whether to invoke {@link OnGroupExpandListener} and/or {@link OnGroupCollapseListener} listener events
+     */
+    public void restoreState(Parcelable savedState, boolean callHooks, boolean callListeners) {
+        if (savedState == null) {
+            return; // do nothing
+        }
+
+        if (!(savedState instanceof SavedState)) {
+            throw new IllegalArgumentException("Illegal saved state object passed");
+        }
+
+        if (!((mAdapter != null) && (mRecyclerView != null))) {
+            throw new IllegalStateException("RecyclerView has not been attached");
+        }
+
+        mAdapter.restoreState(((SavedState) savedState).adapterSavedState, callHooks, callListeners);
+    }
+
     public static class SavedState implements Parcelable {
         final int [] adapterSavedState;
 

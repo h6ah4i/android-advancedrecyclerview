@@ -72,7 +72,11 @@ class ExpandablePositionTranslator {
         mEndOfCalculatedOffsetGroupPosition = Math.max(0, groupCount - 1);
     }
 
-    public void restoreExpandedGroupItems(int[] restoreGroupIds) {
+    public void restoreExpandedGroupItems(
+            int[] restoreGroupIds,
+            ExpandableItemAdapter adapter,
+            RecyclerViewExpandableItemManager.OnGroupExpandListener expandListener,
+            RecyclerViewExpandableItemManager.OnGroupCollapseListener collapseListener) {
         if (restoreGroupIds == null || restoreGroupIds.length == 0) {
             return;
         }
@@ -89,8 +93,9 @@ class ExpandablePositionTranslator {
         }
 
         // sort both arrays
-        Arrays.sort(restoreGroupIds);
         Arrays.sort(idAndPos);
+
+        final boolean fromUser = false;
 
         // find matched items & apply
         int index = 0;
@@ -100,17 +105,46 @@ class ExpandablePositionTranslator {
 
             for (int j = index; j < idAndPos.length; j++) {
                 final int id2 = (int) (idAndPos[j] >> 32);
+                final int position = (int) (idAndPos[j] & LOWER_31BIT_MASK);
 
                 if (id2 < id1) {
                     index = j;
+
+                    if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {
+                        if (collapseGroup(position)) {
+                            if (collapseListener != null) {
+                                collapseListener.onGroupCollapse(position, fromUser);
+                            }
+                        }
+                    }
                 } else if (id2 == id1) {
                     // matched
-                    final int position = (int) (idAndPos[j] & LOWER_31BIT_MASK);
                     index = j + 1;
-                    expandGroup(position);
-                    break;
+
+                    if (adapter == null || adapter.onHookGroupExpand(position, fromUser)) {
+                        if (expandGroup(position)) {
+                            if (expandListener != null) {
+                                expandListener.onGroupExpand(position, fromUser);
+                            }
+                        }
+                    }
                 } else { // id2 > id1
                     break;
+                }
+            }
+        }
+
+        if (adapter != null || collapseListener != null) {
+            for (int i = index; i < idAndPos.length; i++) {
+                final int id2 = (int) (idAndPos[i] >> 32);
+                final int position = (int) (idAndPos[i] & LOWER_31BIT_MASK);
+
+                if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {
+                    if (collapseGroup(position)) {
+                        if (collapseListener != null) {
+                            collapseListener.onGroupCollapse(position, fromUser);
+                        }
+                    }
                 }
             }
         }
@@ -131,6 +165,8 @@ class ExpandablePositionTranslator {
         if (index != mExpandedGroupCount) {
             throw new IllegalStateException("may be a bug  (index = " + index + ", mExpandedGroupCount = " + mExpandedGroupCount + ")");
         }
+
+        Arrays.sort(expandedGroups);
 
         return expandedGroups;
     }
@@ -165,14 +201,11 @@ class ExpandablePositionTranslator {
         mCachedGroupPosInfo[groupPosition] &= (~FLAG_EXPANDED);
         mExpandedGroupCount -= 1;
 
-        if (childCount > 0) {
-            mExpandedChildCount -= childCount;
-            mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
-            // requires notifyItemRangeRemoved()
-            return true;
-        } else {
-            return false;
-        }
+        mExpandedChildCount -= childCount;
+        mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
+
+        // requires notifyItemRangeRemoved()
+        return true;
     }
 
     public boolean expandGroup(int groupPosition) {
@@ -185,14 +218,11 @@ class ExpandablePositionTranslator {
         mCachedGroupPosInfo[groupPosition] |= FLAG_EXPANDED;
         mExpandedGroupCount += 1;
 
-        if (childCount > 0) {
-            mExpandedChildCount += childCount;
-            mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
-            // requires notifyItemRangeInserted()
-            return true;
-        } else {
-            return false;
-        }
+        mExpandedChildCount += childCount;
+        mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
+
+        // requires notifyItemRangeInserted()
+        return true;
     }
 
     public void moveGroupItem(int fromGroupPosition, int toGroupPosition) {
