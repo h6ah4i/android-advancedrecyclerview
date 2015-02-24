@@ -66,11 +66,41 @@ public class RecyclerViewExpandableItemManager {
 
     // ---
 
+    /**
+     * Used for being notified when a group is expanded
+     */
+    public interface OnGroupExpandListener {
+        /**
+         * Callback method to be invoked when a group in this expandable list has been expanded.
+         *
+         * @param groupPosition The group position that was expanded
+         * @param fromUser Whether the expand request is issued by a user operation
+         */
+        void onGroupExpand(int groupPosition, boolean fromUser);
+    }
+
+    /**
+     * Used for being notified when a group is collapsed
+     */
+    public interface OnGroupCollapseListener {
+        /**
+         * Callback method to be invoked when a group in this expandable list has been collapsed.
+         *
+         * @param groupPosition The group position that was collapsed
+         * @param fromUser Whether the collapse request is issued by a user operation
+         */
+        void onGroupCollapse(int groupPosition, boolean fromUser);
+    }
+
+    // ---
+
     private SavedState mSavedState;
 
     private RecyclerView mRecyclerView;
     private ExpandableRecyclerViewWrapperAdapter mAdapter;
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
+    private OnGroupExpandListener mOnGroupExpandListener;
+    private OnGroupCollapseListener mOnGroupCollapseListener;
 
     private long mTouchedItemId = RecyclerView.NO_ID;
     private int mTouchSlop;
@@ -145,6 +175,8 @@ public class RecyclerViewExpandableItemManager {
             mRecyclerView.removeOnItemTouchListener(mInternalUseOnItemTouchListener);
         }
         mInternalUseOnItemTouchListener = null;
+        mOnGroupExpandListener = null;
+        mOnGroupCollapseListener = null;
         mRecyclerView = null;
         mSavedState = null;
     }
@@ -166,6 +198,13 @@ public class RecyclerViewExpandableItemManager {
         mSavedState = null;
 
         mAdapter = new ExpandableRecyclerViewWrapperAdapter(this, adapter, adapterSavedState);
+
+        // move listeners to wrapper adapter
+        mAdapter.setOnGroupExpandListener(mOnGroupExpandListener);
+        mOnGroupExpandListener = null;
+
+        mAdapter.setOnGroupCollapseListener(mOnGroupCollapseListener);
+        mOnGroupCollapseListener = null;
 
         return mAdapter;
     }
@@ -268,7 +307,7 @@ public class RecyclerViewExpandableItemManager {
      * @return True if the group was expanded,false otherwise  (If the group was already expanded, this will return false)
      */
     public boolean expandGroup(int groupPosition) {
-        return (mAdapter != null) && mAdapter.expandGroup(groupPosition);
+        return (mAdapter != null) && mAdapter.expandGroup(groupPosition, false);
     }
 
     /**
@@ -279,7 +318,7 @@ public class RecyclerViewExpandableItemManager {
      * @return True if the group was collapsed,false otherwise  (If the group was already collapsed, this will return false)
      */
     public boolean collapseGroup(int groupPosition) {
-        return (mAdapter != null) && mAdapter.collapseGroup(groupPosition);
+        return (mAdapter != null) && mAdapter.collapseGroup(groupPosition, false);
     }
 
     /**
@@ -436,6 +475,34 @@ public class RecyclerViewExpandableItemManager {
      */
     public static int getChildViewType(int rawViewType) {
         return ExpandableAdapterHelper.getChildViewType(rawViewType);
+    }
+
+    /**
+     * Register a callback to be invoked when an group item has been expanded.
+     *
+     * @param listener The callback that will be invoked.
+     */
+    public void setOnGroupExpandListener(OnGroupExpandListener listener) {
+        if (mAdapter != null) {
+            mAdapter.setOnGroupExpandListener(listener);
+        } else {
+            // pending
+            mOnGroupExpandListener = listener;
+        }
+    }
+
+    /**
+     * Register a callback to be invoked when an group item has been collapsed.
+     *
+     * @param listener The callback that will be invoked.
+     */
+    public void setOnGroupCollapseListener(OnGroupCollapseListener listener) {
+        if (mAdapter != null) {
+            mAdapter.setOnGroupCollapseListener(listener);
+        } else {
+            // pending
+            mOnGroupCollapseListener = listener;
+        }
     }
 
     public static class SavedState implements Parcelable {

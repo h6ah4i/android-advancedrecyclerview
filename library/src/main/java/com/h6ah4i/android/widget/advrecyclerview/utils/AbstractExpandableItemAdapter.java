@@ -85,4 +85,22 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
     @Override
     public final void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     }
+
+    /**
+     * Override this method if need to customize the behavior.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onHookGroupExpand(int groupPosition, boolean fromUser) {
+        return true;
+    }
+
+    /**
+     * Override this method if need to customize the behavior.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean onHookGroupCollapse(int groupPosition, boolean fromUser) {
+        return true;
+    }
 }

@@ -43,6 +43,9 @@ class ExpandableRecyclerViewWrapperAdapter
     private ExpandablePositionTranslator mPositionTranslator;
     private int mDraggingItemGroupPosition = RecyclerView.NO_POSITION;
 
+    private RecyclerViewExpandableItemManager.OnGroupExpandListener mOnGroupExpandListener;
+    private RecyclerViewExpandableItemManager.OnGroupCollapseListener mOnGroupCollapseListener;
+
     public ExpandableRecyclerViewWrapperAdapter(RecyclerViewExpandableItemManager manager, RecyclerView.Adapter<RecyclerView.ViewHolder> adapter, int[] expandedItemsSavedState) {
         super(adapter);
 
@@ -71,6 +74,8 @@ class ExpandableRecyclerViewWrapperAdapter
 
         mExpandableItemAdapter = null;
         mExpandableListManager = null;
+        mOnGroupExpandListener = null;
+        mOnGroupCollapseListener = null;
     }
 
     @Override
@@ -539,16 +544,21 @@ class ExpandableRecyclerViewWrapperAdapter
         }
 
         if (expand) {
-            expandGroup(groupPosition);
+            expandGroup(groupPosition, true);
         } else {
-            collapseGroup(groupPosition);
+            collapseGroup(groupPosition, true);
         }
 
         return true;
     }
 
-    /*package*/ boolean collapseGroup(int groupPosition) {
+    /*package*/ boolean collapseGroup(int groupPosition, boolean fromUser) {
         if (!mPositionTranslator.isGroupExpanded(groupPosition)) {
+            return false;
+        }
+
+        // call hook method
+        if (!mExpandableItemAdapter.onHookGroupCollapse(groupPosition, fromUser)) {
             return false;
         }
 
@@ -568,14 +578,23 @@ class ExpandableRecyclerViewWrapperAdapter
             notifyItemChanged(flatPosition);
         }
 
+        // raise onGroupCollapse() event
+        if (mOnGroupCollapseListener != null) {
+            mOnGroupCollapseListener.onGroupCollapse(groupPosition, fromUser);
+        }
+
         return true;
     }
 
-    /*package*/ boolean expandGroup(int groupPosition) {
+    /*package*/ boolean expandGroup(int groupPosition, boolean fromUser) {
         if (mPositionTranslator.isGroupExpanded(groupPosition)) {
             return false;
         }
 
+        // call hook method
+        if (!mExpandableItemAdapter.onHookGroupExpand(groupPosition, fromUser)) {
+            return false;
+        }
 
         if (mPositionTranslator.expandGroup(groupPosition)) {
             final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
@@ -590,6 +609,11 @@ class ExpandableRecyclerViewWrapperAdapter
             final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
 
             notifyItemChanged(flatPosition);
+        }
+
+        // raise onGroupExpand() event
+        if (mOnGroupExpandListener != null) {
+            mOnGroupExpandListener.onGroupExpand(groupPosition, fromUser);
         }
 
         return true;
@@ -613,6 +637,14 @@ class ExpandableRecyclerViewWrapperAdapter
         } else {
             return null;
         }
+    }
+
+    /*package*/ void setOnGroupExpandListener(RecyclerViewExpandableItemManager.OnGroupExpandListener listener) {
+        mOnGroupExpandListener = listener;
+    }
+
+    /*package*/ void setOnGroupCollapseListener(RecyclerViewExpandableItemManager.OnGroupCollapseListener listener) {
+        mOnGroupCollapseListener = listener;
     }
 
     private static ExpandableItemAdapter getExpandableItemAdapter(RecyclerView.Adapter adapter) {
