@@ -304,7 +304,7 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param groupPosition The group position to be expanded
      *
-     * @return True if the group was expanded,false otherwise  (If the group was already expanded, this will return false)
+     * @return True if the group was expanded, false otherwise  (If the group was already expanded, this will return false)
      */
     public boolean expandGroup(int groupPosition) {
         return (mAdapter != null) && mAdapter.expandGroup(groupPosition, false);
@@ -315,7 +315,7 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param groupPosition The group position to be collapsed
      *
-     * @return True if the group was collapsed,false otherwise  (If the group was already collapsed, this will return false)
+     * @return True if the group was collapsed, false otherwise  (If the group was already collapsed, this will return false)
      */
     public boolean collapseGroup(int groupPosition) {
         return (mAdapter != null) && mAdapter.collapseGroup(groupPosition, false);
@@ -367,7 +367,7 @@ public class RecyclerViewExpandableItemManager {
      * Returns the packed position representation of a child position.
      *
      * In general, a packed position should be used in situations where the position given to/returned from
-     * {@link RecyclerViewExpandableItemManager} method can eirther be a child or group.
+     * {@link RecyclerViewExpandableItemManager} method can either be a child or group.
      * The two positions are packed into a single long which can be unpacked using {@link #getPackedPositionChild(long)} and
      * {@link #getPackedPositionGroup(long)}.
      *
