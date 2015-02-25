@@ -543,6 +543,92 @@ public class RecyclerViewExpandableItemManager {
         mAdapter.restoreState(((SavedState) savedState).adapterSavedState, callHooks, callListeners);
     }
 
+    /**
+     * Notify any registered observers that the group item at <code>groupPosition</code> has changed.
+     *
+     * <p>This is an group item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
+     * The item at <code>groupPosition</code> retains the same identity.</p>
+     *
+     * <p>This method does not notify for children that are contained in the specified group.
+     * If children have also changed, use {@link #notifyGroupAndChildrenItemsChanged(int)} instead.</p>
+     *
+     * @param groupPosition Position of the group item that has changed
+     *
+     * @see #notifyGroupAndChildrenItemsChanged(int)
+     */
+    public void notifyGroupItemChanged(int groupPosition) {
+        mAdapter.notifyGroupItemChanged(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the group and children items at <code>groupPosition</code> have changed.
+     *
+     * <p>This is an group item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
+     * The item at <code>groupPosition</code> retains the same identity.</p>
+     *
+     * @param groupPosition Position of the group item which contains changed children
+     *
+     * @see #notifyGroupItemChanged(int)
+     * @see #notifyChildrenOfGroupItemChanged(int)
+     */
+    public void notifyGroupAndChildrenItemsChanged(int groupPosition) {
+        mAdapter.notifyGroupAndChildrenItemsChanged(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the children items contained in the group item at <code>groupPosition</code> have changed.
+     *
+     * <p>This is an group item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
+     * The item at <code>groupPosition</code> retains the same identity.</p>
+     *
+     * <p>This method does not notify for the group item.
+     * If the group has also changed, use {@link #notifyGroupAndChildrenItemsChanged(int)} instead.</p>
+     *
+     * @param groupPosition Position of the group item which contains changed children
+     *
+     * @see #notifyGroupAndChildrenItemsChanged(int)
+     */
+    public void notifyChildrenOfGroupItemChanged(int groupPosition) {
+        mAdapter.notifyChildrenOfGroupItemChanged(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the child item at <code>{groupPosition, childPosition}</code> has changed.
+     *
+     * <p>This is an item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>{groupPosition, childPosition}</code> is out of date and should be updated.
+     * The item at <code>{groupPosition, childPosition}</code> retains the same identity.</p>
+     *
+     * @param groupPosition Position of the group item which contains the changed child
+     * @param childPosition Position of the child item in the group that has changed
+     *
+     * @see #notifyChildItemRangeChanged(int, int, int)
+     */
+    public void notifyChildItemChanged(int groupPosition, int childPosition) {
+        mAdapter.notifyChildItemChanged(groupPosition, childPosition);
+    }
+
+    /**
+     * Notify any registered observers that the <code>itemCount</code> child items starting at
+     * position <code>{groupPosition, childPosition}</code> have changed.
+     *
+     * <p>This is an item change event, not a structural change event. It indicates that
+     * any reflection of the data in the given position range is out of date and should
+     * be updated. The items in the given range retain the same identity.</p>
+     *
+     * @param groupPosition Position of the group item which contains the changed child
+     * @param childPositionStart Position of the first child item in the group that has changed
+     * @param itemCount Number of items that have changed
+     *
+     * @see #notifyChildItemChanged(int, int)
+     */
+    public void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount) {
+        mAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount);
+    }
+
     public static class SavedState implements Parcelable {
         final int [] adapterSavedState;
 

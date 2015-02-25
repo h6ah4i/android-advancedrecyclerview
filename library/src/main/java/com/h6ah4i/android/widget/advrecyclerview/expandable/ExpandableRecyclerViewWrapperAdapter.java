@@ -658,6 +658,60 @@ class ExpandableRecyclerViewWrapperAdapter
                 (callListeners ? mOnGroupCollapseListener : null));
     }
 
+    /*package*/ void notifyGroupItemChanged(int groupPosition) {
+        final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
+        final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+        if (flatPosition != RecyclerView.NO_POSITION) {
+            notifyItemChanged(flatPosition);
+        }
+    }
+
+    /*package*/ void notifyGroupAndChildrenItemsChanged(int groupPosition) {
+        final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
+        final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+        final int visibleChildCount = mPositionTranslator.getVisibleChildCount(groupPosition);
+
+        if (flatPosition != RecyclerView.NO_POSITION) {
+            notifyItemRangeChanged(flatPosition, 1 + visibleChildCount);
+        }
+    }
+
+    /*package*/ void notifyChildrenOfGroupItemChanged(int groupPosition) {
+        final int visibleChildCount = mPositionTranslator.getVisibleChildCount(groupPosition);
+
+        // notify if the group is expanded
+        if (visibleChildCount > 0) {
+            final long packedPosition = ExpandableAdapterHelper.getPackedPositionForChild(groupPosition, 0);
+            final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+            if (flatPosition != RecyclerView.NO_POSITION) {
+                notifyItemRangeChanged(flatPosition, visibleChildCount);
+            }
+        }
+    }
+
+    /*package*/ void notifyChildItemChanged(int groupPosition, int childPosition) {
+        notifyChildItemRangeChanged(groupPosition, childPosition, 1);
+    }
+
+    /*package*/ void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount) {
+        final int visibleChildCount = mPositionTranslator.getVisibleChildCount(groupPosition);
+
+        // notify if the group is expanded
+        if ((visibleChildCount > 0) && (childPositionStart < visibleChildCount)) {
+            final long packedPosition = ExpandableAdapterHelper.getPackedPositionForChild(groupPosition, 0);
+            final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+            if (flatPosition != RecyclerView.NO_POSITION) {
+                final int startPosition = flatPosition + childPositionStart;
+                final int count = Math.min(itemCount, (visibleChildCount - childPositionStart));
+
+                notifyItemRangeChanged(startPosition, count);
+            }
+        }
+    }
+
     private static ExpandableItemAdapter getExpandableItemAdapter(RecyclerView.Adapter adapter) {
         return WrapperAdapterUtils.findWrappedAdapter(adapter, ExpandableItemAdapter.class);
     }
