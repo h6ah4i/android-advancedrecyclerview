@@ -41,9 +41,13 @@ public class ItemDraggableRange {
         return ((position >= mStart) && (position <= mEnd));
     }
 
+    protected String getClassName() {
+        return "ItemDraggableRange";
+    }
+
     @Override
     public String toString() {
-        return "ItemDraggableRange{" +
+        return getClassName() + "{" +
                 "mStart=" + mStart +
                 ", mEnd=" + mEnd +
                 '}';
