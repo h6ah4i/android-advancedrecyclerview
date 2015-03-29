@@ -28,10 +28,12 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.demo_d.DraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_section.DraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ds.DraggableSwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_ds_selection.DraggableSwipeableSelectableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_e.ExpandableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_eds.ExpandableDraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s.SwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_selection.SelectableExampleActivity;
 
 public class ExampleLauncherContentsFragment extends Fragment implements View.OnClickListener {
     @Override
@@ -47,9 +49,11 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
         view.findViewById(R.id.button_launch_demo_s).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_e).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_ds).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_ds_selection).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_eds).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_d_with_section).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_ed_with_section).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_selection).setOnClickListener(this);
     }
 
     @Override
@@ -67,6 +71,9 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
             case R.id.button_launch_demo_ds:
                 launchExampleActivity(DraggableSwipeableExampleActivity.class);
                 break;
+            case R.id.button_launch_demo_ds_selection:
+                launchExampleActivity(DraggableSwipeableSelectableExampleActivity.class);
+                break;
             case R.id.button_launch_demo_eds:
                 launchExampleActivity(ExpandableDraggableSwipeableExampleActivity.class);
                 break;
@@ -75,6 +82,9 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
                 break;
             case R.id.button_launch_demo_ed_with_section:
                 launchExampleActivity(ExpandableDraggableWithSectionExampleActivity.class);
+                break;
+            case R.id.button_launch_demo_selection:
+                launchExampleActivity(SelectableExampleActivity.class);
                 break;
         }
     }

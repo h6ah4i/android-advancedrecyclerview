@@ -31,6 +31,8 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
     private final int mDividerHeight;
     private boolean mOverlap;
 
+    private float zPositionThreshold=1.0f;
+
     /**
      * Constructor.
      *
@@ -43,11 +45,27 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
         mOverlap = overlap;
     }
 
+    /**
+     * Returns the amount of pixel two children can be apart to still draw the divider.
+     * @return zPositionThreshold
+     */
+    public float getzPositionThreshold() {
+        return zPositionThreshold;
+    }
+
+    /**
+     * Set the amount of pixel two children can be apart to still draw the divider.<br/>
+     * In case of Selectableviewholder the selected item is elevated by 24px
+     * @param zPositionThreshold  in px
+     */
+    public void setzPositionThreshold(float zPositionThreshold) {
+        this.zPositionThreshold = zPositionThreshold;
+    }
+
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         final int childCount = parent.getChildCount();
         final float yPositionThreshold = (mOverlap) ? 1.0f : (mDividerHeight + 1.0f); // [px]
-        final float zPositionThreshold = 1.0f; // [px]
 
         if (childCount == 0) {
             return;

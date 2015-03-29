@@ -50,6 +50,10 @@
             android:text="@string/button_text_launch_demo_ds" />
 
         <Button
+            android:id="@+id/button_launch_demo_ds_selection"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_ds_selection" />
+        <Button
             android:id="@+id/button_launch_demo_eds"
             style="@style/exampleLauncherButtonStyle"
             android:text="@string/button_text_launch_demo_eds" />
@@ -64,5 +68,9 @@
             style="@style/exampleLauncherButtonStyle"
             android:text="@string/button_text_launch_demo_ed_with_section" />
 
+        <Button
+            android:id="@+id/button_launch_demo_selection"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_selection" />
     </LinearLayout>
 </ScrollView>

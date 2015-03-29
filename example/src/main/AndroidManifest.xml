@@ -50,6 +50,10 @@
             android:label="@string/activity_title_demo_ds" />
 
         <activity
+            android:name=".demo_ds_selection.DraggableSwipeableSelectableExampleActivity"
+            android:label="@string/activity_title_demo_ds_selection" />
+
+        <activity
             android:name=".demo_eds.ExpandableDraggableSwipeableExampleActivity"
             android:label="@string/activity_title_demo_eds" />
 
@@ -60,6 +64,11 @@
         <activity
             android:name=".demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity"
             android:label="@string/activity_title_demo_ed_with_section" />
+
+        <activity
+            android:name=".demo_selection.SelectableExampleActivity"
+            android:label="@string/activity_title_demo_selection" />
+
 
         <activity
             android:name=".about.AboutActivity"
