@@ -81,4 +81,10 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
      *              {@link RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_REMOVE_ITEM}.
      */
     void onPerformAfterSwipeReaction(T holder, int result, int reaction);
+
+    /**
+     * Returns whether the holder at the given position is pinned left.
+     * @return  True if pinned, false if not.
+     */
+    boolean isSwipeLeftPinned(int position);
 }
