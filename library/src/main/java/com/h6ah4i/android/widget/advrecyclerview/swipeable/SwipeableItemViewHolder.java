@@ -105,6 +105,34 @@ public interface SwipeableItemViewHolder {
     float getSwipeItemSlideAmount();
 
     /**
+     * Sets the maximum item right swipe amount.
+     *
+     * @param amount Item swipe amount. Generally the range is [-1.0 .. 1.0]
+     */
+    void setMaxLeftSwipeAmount(float amount);
+
+    /**
+     * Gets the maximum item left swipe amount.
+     *
+     * @return Item swipe amount. Generally the range is [-1.0 .. 1.0]
+     */
+    float getMaxLeftSwipeAmount();
+
+    /**
+     * Sets the maximum item right swipe amount.
+     *
+     * @param amount Item swipe amount. Generally the range is [-1.0 .. 1.0]
+     */
+    void setMaxRightSwipeAmount(float amount);
+
+    /**
+     * Gets the maximum item right swipe amount.
+     *
+     * @return Item swipe amount. Generally the range is [-1.0 .. 1.0]
+     */
+    float getMaxRightSwipeIAmount();
+
+    /**
      * Gets the container view for the swipeable area.
      *
      * @return The container view instance.

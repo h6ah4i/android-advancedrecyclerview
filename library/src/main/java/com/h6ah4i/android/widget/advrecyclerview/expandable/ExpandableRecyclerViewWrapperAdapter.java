@@ -570,6 +570,12 @@ class ExpandableRecyclerViewWrapperAdapter
             adapter.onPerformAfterSwipeChildReaction(holder, groupPosition, childPosition, result, reaction);
         }
     }
+
+    @Override
+    public boolean isSwipeLeftPinned(int position) {
+        return false;
+    }
+
     // NOTE: This method is called from RecyclerViewExpandableItemManager
     /*package*/
     @SuppressWarnings("unchecked")
