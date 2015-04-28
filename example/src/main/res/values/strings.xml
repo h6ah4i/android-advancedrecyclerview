@@ -23,6 +23,7 @@
     <string name="activity_title_about">Advanced RecyclerView About</string>
 
     <string name="activity_title_demo_d">Draggable</string>
+    <string name="activity_title_demo_d_with_longpress">Draggable On Long Press</string>
     <string name="activity_title_demo_s">Swipeable</string>
     <string name="activity_title_demo_us">Under Swipeable</string>
     <string name="activity_title_demo_e">Expandable</string>
@@ -32,6 +33,7 @@
     <string name="activity_title_demo_ed_with_section">Expandable + Draggable with Section</string>
 
     <string name="button_text_launch_demo_d">@string/activity_title_demo_d</string>
+    <string name="button_text_launch_demo_d_with_longpress">@string/activity_title_demo_d_with_longpress</string>
     <string name="button_text_launch_demo_s">@string/activity_title_demo_s</string>
     <string name="button_text_launch_demo_us">@string/activity_title_demo_us</string>
     <string name="button_text_launch_demo_e">@string/activity_title_demo_e</string>
