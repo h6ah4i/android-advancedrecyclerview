@@ -38,6 +38,10 @@
             android:label="@string/activity_title_demo_d" />
 
         <activity
+            android:name=".demo_d_with_longpress.DraggableWithLongPressExampleActivity"
+            android:label="@string/activity_title_demo_d" />
+
+        <activity
             android:name=".demo_s.SwipeableExampleActivity"
             android:label="@string/activity_title_demo_s" />
 
