@@ -270,6 +270,14 @@ public class RecyclerViewDragDropManager {
                 mInitialTouchY = mLastTouchY = (int) (e.getY() + 0.5f);
                 mInitialTouchItemId = holder.getItemId();
             }
+            @Override
+            public boolean onSingleTapUp(MotionEvent e) {
+                return true;
+            }
+            @Override
+            public boolean onDown(MotionEvent e) {
+                return true;
+            }
         });
         mGestureDetector.setIsLongpressEnabled(true);
 
@@ -372,6 +380,8 @@ public class RecyclerViewDragDropManager {
             Log.v(TAG, "onInterceptTouchEvent() action = " + action);
         }
 
+        mGestureDetector.onTouchEvent(e);
+
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -432,6 +442,10 @@ public class RecyclerViewDragDropManager {
         if (mInScrollByMethod) {
             mActualScrollByAmount = dy;
         }
+
+        if (!isDragging()) {
+            mLongPressed = false;
+        }
     }
 
     /*package*/ void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -448,7 +462,6 @@ public class RecyclerViewDragDropManager {
         }
 
         if (mInitiateOnLongPress && !mLongPressed) {
-            mGestureDetector.onTouchEvent(e);
             return false;
         }
 
@@ -629,6 +642,8 @@ public class RecyclerViewDragDropManager {
         final int touchY = (int) (e.getY() + 0.5f);
 
         mLastTouchY = touchY;
+
+        mLongPressed = false;
 
         if (mInitialTouchItemId == RecyclerView.NO_ID) {
             return false;
