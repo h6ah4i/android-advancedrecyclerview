@@ -40,6 +40,11 @@
             android:text="@string/button_text_launch_demo_s" />
 
         <Button
+            android:id="@+id/button_launch_demo_us"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_us" />
+
+        <Button
             android:id="@+id/button_launch_demo_e"
             style="@style/exampleLauncherButtonStyle"
             android:text="@string/button_text_launch_demo_e" />
@@ -58,6 +63,12 @@
             android:id="@+id/button_launch_demo_d_with_section"
             style="@style/exampleLauncherButtonStyle"
             android:text="@string/button_text_launch_demo_d_with_section" />
+
+        <Button
+            android:id="@+id/button_launch_demo_d_with_longpress"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_d_with_longpress" />
+
 
         <Button
             android:id="@+id/button_launch_demo_ed_with_section"
