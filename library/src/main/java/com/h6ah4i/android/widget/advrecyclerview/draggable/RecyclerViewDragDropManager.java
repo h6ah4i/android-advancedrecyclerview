@@ -421,6 +421,8 @@ public class RecyclerViewDragDropManager {
             return;
         }
 
+        mGestureDetector.onTouchEvent(e);
+
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -455,6 +457,9 @@ public class RecyclerViewDragDropManager {
     }
 
     private boolean handleActionDown(RecyclerView rv, MotionEvent e) {
+
+        mLongPressed = false;
+
         final RecyclerView.ViewHolder holder = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, e.getX(), e.getY());
 
         if (!checkTouchedItemState(rv, holder)) {
@@ -718,6 +723,9 @@ public class RecyclerViewDragDropManager {
     }
 
     private void handleActionMoveWhileDragging(RecyclerView rv, MotionEvent e) {
+
+        mLongPressed = false;
+
         mLastTouchY = (int) (e.getY() + 0.5f);
         mDragMinTouchY = Math.min(mDragMinTouchY, mLastTouchY);
         mDragMaxTouchY = Math.max(mDragMaxTouchY, mLastTouchY);
