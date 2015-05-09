@@ -248,7 +248,7 @@ public class RecyclerViewDragDropManager {
             scrollEventDistributor.add(mInternalUseOnScrollListener);
             mScrollEventRegisteredToDistributor = true;
         } else {
-            mRecyclerView.setOnScrollListener(mInternalUseOnScrollListener);
+            mRecyclerView.addOnScrollListener(mInternalUseOnScrollListener);
             mScrollEventRegisteredToDistributor = false;
         }
 
@@ -284,7 +284,7 @@ public class RecyclerViewDragDropManager {
         mInternalUseOnItemTouchListener = null;
 
         if (mRecyclerView != null && mInternalUseOnScrollListener != null && mScrollEventRegisteredToDistributor) {
-            mRecyclerView.setOnScrollListener(null);
+            mRecyclerView.removeOnScrollListener(mInternalUseOnScrollListener);
         }
         mInternalUseOnScrollListener = null;
 
