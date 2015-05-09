@@ -26,7 +26,6 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.utils.AdapterUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
@@ -99,14 +98,14 @@ public class MyUnderSwipeableItemAdapter
     private void onSwipeableViewContainerClick(View v) {
         if (mEventListener != null) {
             mEventListener.onItemViewClicked(
-                    AdapterUtils.findParentViewHolderItemView(v));
+                    RecyclerViewAdapterUtils.getParentViewHolderItemView(v));
         }
     }
 
     private void onUnderSwipeableViewButtonClick(View v) {
         if (mEventListener != null) {
             mEventListener.onUnderSwipeableViewButtonClicked(
-                    AdapterUtils.findParentViewHolderItemView(v));
+                    RecyclerViewAdapterUtils.getParentViewHolderItemView(v));
         }
     }
 
