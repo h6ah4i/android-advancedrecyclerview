@@ -105,11 +105,6 @@ public class MyDraggableSwipeableItemAdapter
     }
 
     @Override
-    public boolean isSwipeLeftPinned(int position) {
-        return mProvider.getItem(position).isPinnedToSwipeLeft();
-    }
-
-    @Override
     public long getItemId(int position) {
         return mProvider.getItem(position).getId();
     }

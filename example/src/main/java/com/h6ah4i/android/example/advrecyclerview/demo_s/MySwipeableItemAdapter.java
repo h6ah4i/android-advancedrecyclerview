@@ -224,11 +224,6 @@ public class MySwipeableItemAdapter
         }
     }
 
-    @Override
-    public boolean isSwipeLeftPinned(int position) {
-        return mProvider.getItem(position).isPinnedToSwipeLeft();
-    }
-
     public EventListener getEventListener() {
         return mEventListener;
     }

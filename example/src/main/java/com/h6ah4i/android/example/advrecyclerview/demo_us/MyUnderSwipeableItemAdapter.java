@@ -119,12 +119,6 @@ public class MyUnderSwipeableItemAdapter
     }
 
     @Override
-    public boolean isSwipeLeftPinned(int position) {
-        return mProvider.getItem(position).isPinnedToSwipeLeft();
-    }
-
-
-    @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
