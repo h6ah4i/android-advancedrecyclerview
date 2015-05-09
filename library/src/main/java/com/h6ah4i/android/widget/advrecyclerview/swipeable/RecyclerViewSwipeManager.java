@@ -755,6 +755,10 @@ public class RecyclerViewSwipeManager {
         }
     }
 
+    /*package*/ int getSwipeContainerViewTranslationX(RecyclerView.ViewHolder holder) {
+        return mItemSlideAnimator.getSwipeContainerViewTranslationX(holder);
+    }
+
     private static boolean supportsViewPropertyAnimator() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }

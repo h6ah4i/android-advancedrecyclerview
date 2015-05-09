@@ -184,6 +184,19 @@ public class ItemSlidingAnimator {
         return false;
     }
 
+    private static int getTranslationXPreHoneycomb(RecyclerView.ViewHolder holder) {
+        final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+
+        final ViewGroup.LayoutParams lp = containerView.getLayoutParams();
+        if (lp instanceof ViewGroup.MarginLayoutParams) {
+            final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
+            return mlp.leftMargin;
+        } else {
+            Log.w(TAG, "should use MarginLayoutParams supported view for compatibility on Android 2.3");
+            return 0;
+        }
+    }
+
     private static void slideInternal(final RecyclerView.ViewHolder holder, int translationX) {
         if (!(holder instanceof SwipeableItemViewHolder)) {
             return;
@@ -291,6 +304,15 @@ public class ItemSlidingAnimator {
 
     private static boolean supportsViewPropertyAnimator() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    public int getSwipeContainerViewTranslationX(RecyclerView.ViewHolder holder) {
+        if (supportsViewPropertyAnimator()) {
+            final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+            return (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
+        } else {
+            return getTranslationXPreHoneycomb(holder);
+        }
     }
 
     private static abstract class ViewHolderDeferredProcess implements Runnable {

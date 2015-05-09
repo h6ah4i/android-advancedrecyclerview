@@ -41,6 +41,7 @@ class SwipingItemOperator {
     private float mInvSwipingItemWidth;
     private int mSwipeDistance;
     private float mPrevTranslateAmount;
+    private int mInitialTranslateAmount;
 
     public SwipingItemOperator(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder swipingItem, int swipeReactionType) {
         mSwipeManager = manager;
@@ -53,9 +54,8 @@ class SwipingItemOperator {
         mInvSwipingItemWidth = (mSwipingItemWidth != 0) ? (1.0f / mSwipingItemWidth) : 0.0f;
     }
 
-    @SuppressWarnings("EmptyMethod")
     public void start() {
-        // nothing to do here.
+        mInitialTranslateAmount = mSwipeManager.getSwipeContainerViewTranslationX(mSwipingItem);
     }
 
     public void finish() {
@@ -67,6 +67,7 @@ class SwipingItemOperator {
         mLeftSwipeReactionType = REACTION_CAN_NOT_SWIPE;
         mRightSwipeReactionType = REACTION_CAN_NOT_SWIPE;
         mPrevTranslateAmount = 0;
+        mInitialTranslateAmount = 0;
         mSwipingItemContainerView = null;
     }
 
@@ -77,7 +78,9 @@ class SwipingItemOperator {
 
         mSwipeDistance = swipeDistance;
 
-        final int reactionType = (mSwipeDistance > 0) ? mRightSwipeReactionType : mLeftSwipeReactionType;
+        int distance = mSwipeDistance + mInitialTranslateAmount;
+
+        final int reactionType = (distance > 0) ? mRightSwipeReactionType : mLeftSwipeReactionType;
 
         float translateAmount = 0;
 
@@ -85,11 +88,11 @@ class SwipingItemOperator {
             case REACTION_CAN_NOT_SWIPE:
                 break;
             case REACTION_CAN_NOT_SWIPE_WITH_RUBBER_EFFECT:
-                float proportion = Math.min(Math.abs(mSwipeDistance), mSwipingItemWidth) * mInvSwipingItemWidth;
-                translateAmount = Math.signum(mSwipeDistance) * RUBBER_BAND_INTERPOLATOR.getInterpolation(proportion);
+                float proportion = Math.min(Math.abs(distance), mSwipingItemWidth) * mInvSwipingItemWidth;
+                translateAmount = Math.signum(distance) * RUBBER_BAND_INTERPOLATOR.getInterpolation(proportion);
                 break;
             case REACTION_CAN_SWIPE:
-                translateAmount = Math.min(Math.max((mSwipeDistance * mInvSwipingItemWidth), -1.0f), 1.0f);
+                translateAmount = Math.min(Math.max((distance * mInvSwipingItemWidth), -1.0f), 1.0f);
                 break;
         }
 
