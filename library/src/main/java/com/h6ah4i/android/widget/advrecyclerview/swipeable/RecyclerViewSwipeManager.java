@@ -739,9 +739,24 @@ public class RecyclerViewSwipeManager {
             slideItem(holder, amount, shouldAnimate);
             mAdapter.setSwipeBackgroundDrawable(holder, reqBackgroundType);
         } else {
+            float adjustedAmount = amount;
+
+            adjustedAmount = Math.max(adjustedAmount, holder2.getMaxLeftSwipeAmount());
+            adjustedAmount = Math.min(adjustedAmount, holder2.getMaxRightSwipeAmount());
+
             mAdapter.setSwipeBackgroundDrawable(holder, reqBackgroundType);
-            slideItem(holder, amount, shouldAnimate);
+            slideItem(holder, adjustedAmount, shouldAnimate);
         }
+    }
+
+    /*package*/ void cancelPendingAnimations(RecyclerView.ViewHolder holder) {
+        if (mItemSlideAnimator != null) {
+            mItemSlideAnimator.endAnimation(holder);
+        }
+    }
+
+    /*package*/ int getSwipeContainerViewTranslationX(RecyclerView.ViewHolder holder) {
+        return mItemSlideAnimator.getSwipeContainerViewTranslationX(holder);
     }
 
     private static boolean supportsViewPropertyAnimator() {

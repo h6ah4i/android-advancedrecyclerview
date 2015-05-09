@@ -32,6 +32,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,40 +42,62 @@ public class ItemSlidingAnimator {
     private Interpolator mSlideToDefaultPositionAnimationInterpolator = new AccelerateDecelerateInterpolator();
     private Interpolator mSlideToOutsideOfWindowAnimationInterpolator = new AccelerateInterpolator(0.8f);
     private List<RecyclerView.ViewHolder> mActive;
+    private List<WeakReference<ViewHolderDeferredProcess>> mDeferredProcesses;
     private int[] mTmpLocation = new int[2];
     private Rect mTmpRect = new Rect();
     private int mImmediatelySetTranslationThreshold;
 
     public ItemSlidingAnimator() {
         mActive = new ArrayList<>();
+        mDeferredProcesses = new ArrayList<>();
     }
 
     public void slideToDefaultPosition(RecyclerView.ViewHolder holder, boolean shouldAnimate, long duration) {
+        cancelDeferredProcess(holder);
         slideToSpecifiedPositionInternal(holder, 0, shouldAnimate, duration);
     }
 
     public void slideToOutsideOfWindow(RecyclerView.ViewHolder holder, boolean toLeft, boolean shouldAnimate, long duration) {
+        cancelDeferredProcess(holder);
         slideToOutsideOfWindowInternal(holder, toLeft, shouldAnimate, duration);
     }
 
     public void slideToSpecifiedPosition(RecyclerView.ViewHolder holder, float position) {
+        cancelDeferredProcess(holder);
         slideToSpecifiedPositionInternal(holder, position, false, 0);
     }
 
-    private boolean slideToSpecifiedPositionInternal(RecyclerView.ViewHolder holder, float position, boolean shouldAnimate, long duration) {
-        final int translationX;
+    private void cancelDeferredProcess(RecyclerView.ViewHolder holder) {
+        int n = mDeferredProcesses.size();
+        for (int i = n - 1; i >= 0; i--) {
+            ViewHolderDeferredProcess dp = mDeferredProcesses.get(i).get();
 
+            if (dp == null || dp.hasTargetViewHolderOrLostReference(holder)) {
+                mDeferredProcesses.remove(i);
+            }
+        }
+    }
+
+    private boolean slideToSpecifiedPositionInternal(final RecyclerView.ViewHolder holder, final float position, boolean shouldAnimate, long duration) {
         duration = (shouldAnimate) ? duration : 0;
 
         if (position != 0.0f) {
             final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+            final int width = containerView.getWidth();
 
-            translationX = (int) (containerView.getWidth() * position + 0.5f);
+            if (width != 0) {
+                final int translationX;
+                translationX = (int) (width * position + 0.5f);
+                return animateSlideInternalCompat(holder, translationX, duration, mSlideToDefaultPositionAnimationInterpolator);
+            } else {
+                final DeferredSlideProcess deferredProcess = new DeferredSlideProcess(holder, position);
+                mDeferredProcesses.add(new WeakReference<ViewHolderDeferredProcess>(deferredProcess));
+                containerView.post(deferredProcess);
+                return false;
+            }
         } else {
-            translationX = 0;
+            return animateSlideInternalCompat(holder, 0, duration, mSlideToDefaultPositionAnimationInterpolator);
         }
-
-        return animateSlideInternalCompat(holder, translationX, duration, mSlideToDefaultPositionAnimationInterpolator);
     }
 
     private boolean slideToOutsideOfWindowInternal(RecyclerView.ViewHolder holder, boolean toLeft, boolean shouldAnimate, long duration) {
@@ -124,12 +147,20 @@ public class ItemSlidingAnimator {
         if (supportsViewPropertyAnimator()) {
             return animateSlideInternal(holder, translationX, duration, interpolator);
         } else {
-            return animateSlideInternalPreHoneycomb(holder, translationX);
+            return slideInternalPreHoneycomb(holder, translationX);
+        }
+    }
+
+    static void slideInternalCompat(RecyclerView.ViewHolder holder, int translationX) {
+        if (supportsViewPropertyAnimator()) {
+            slideInternal(holder, translationX);
+        } else {
+            slideInternalPreHoneycomb(holder, translationX);
         }
     }
 
     @SuppressLint("RtlHardcoded")
-    private boolean animateSlideInternalPreHoneycomb(RecyclerView.ViewHolder holder, int translationX) {
+    private static boolean slideInternalPreHoneycomb(RecyclerView.ViewHolder holder, int translationX) {
         if (!(holder instanceof SwipeableItemViewHolder)) {
             return false;
         }
@@ -153,6 +184,29 @@ public class ItemSlidingAnimator {
         return false;
     }
 
+    private static int getTranslationXPreHoneycomb(RecyclerView.ViewHolder holder) {
+        final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+
+        final ViewGroup.LayoutParams lp = containerView.getLayoutParams();
+        if (lp instanceof ViewGroup.MarginLayoutParams) {
+            final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
+            return mlp.leftMargin;
+        } else {
+            Log.w(TAG, "should use MarginLayoutParams supported view for compatibility on Android 2.3");
+            return 0;
+        }
+    }
+
+    private static void slideInternal(final RecyclerView.ViewHolder holder, int translationX) {
+        if (!(holder instanceof SwipeableItemViewHolder)) {
+            return;
+        }
+
+        final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+        ViewCompat.animate(containerView).cancel();
+        ViewCompat.setTranslationX(containerView, translationX);
+    }
+
     private boolean animateSlideInternal(final RecyclerView.ViewHolder holder, int translationX, long duration, Interpolator interpolator) {
         if (!(holder instanceof SwipeableItemViewHolder)) {
             return false;
@@ -164,7 +218,12 @@ public class ItemSlidingAnimator {
 
         endAnimation(holder);
 
+        final int curTranslationX = (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
         final int toX = translationX;
+
+        if (curTranslationX == toX) {
+            return false;
+        }
 
         if (duration == 0 || Math.abs(toX - prevTranslationX) <= mImmediatelySetTranslationThreshold) {
             ViewCompat.setTranslationX(containerView, toX);
@@ -209,6 +268,8 @@ public class ItemSlidingAnimator {
             return;
         }
 
+        cancelDeferredProcess(holder);
+
         final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
 
         ViewCompat.animate(containerView).cancel();
@@ -243,5 +304,57 @@ public class ItemSlidingAnimator {
 
     private static boolean supportsViewPropertyAnimator() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    public int getSwipeContainerViewTranslationX(RecyclerView.ViewHolder holder) {
+        if (supportsViewPropertyAnimator()) {
+            final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+            return (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
+        } else {
+            return getTranslationXPreHoneycomb(holder);
+        }
+    }
+
+    private static abstract class ViewHolderDeferredProcess implements Runnable {
+        final WeakReference<RecyclerView.ViewHolder> mRefHolder;
+
+        public ViewHolderDeferredProcess(RecyclerView.ViewHolder holder) {
+            mRefHolder = new WeakReference<RecyclerView.ViewHolder>(holder);
+        }
+
+        @Override
+        public void run() {
+            RecyclerView.ViewHolder holder = mRefHolder.get();
+
+            if (holder != null) {
+                onProcess(holder);
+            }
+        }
+
+        public boolean hasTargetViewHolderOrLostReference(RecyclerView.ViewHolder holder) {
+            RecyclerView.ViewHolder holder2 = mRefHolder.get();
+            return ((holder2 == null) || (holder2 == holder));
+        }
+
+        protected abstract void onProcess(RecyclerView.ViewHolder holder);
+    }
+
+    private static final class DeferredSlideProcess extends ViewHolderDeferredProcess {
+        final float mPosition;
+
+        public DeferredSlideProcess(RecyclerView.ViewHolder holder, float position) {
+            super(holder);
+            mPosition = position;
+        }
+
+        @Override
+        protected void onProcess(RecyclerView.ViewHolder holder) {
+            final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+            final int width = containerView.getWidth();
+            final int translationX;
+
+            translationX = (int) (width * mPosition + 0.5f);
+            slideInternalCompat(holder, translationX);
+        }
     }
 }

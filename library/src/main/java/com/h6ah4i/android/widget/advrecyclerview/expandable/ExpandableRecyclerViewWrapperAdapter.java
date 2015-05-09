@@ -570,6 +570,7 @@ class ExpandableRecyclerViewWrapperAdapter
             adapter.onPerformAfterSwipeChildReaction(holder, groupPosition, childPosition, result, reaction);
         }
     }
+
     // NOTE: This method is called from RecyclerViewExpandableItemManager
     /*package*/
     @SuppressWarnings("unchecked")
