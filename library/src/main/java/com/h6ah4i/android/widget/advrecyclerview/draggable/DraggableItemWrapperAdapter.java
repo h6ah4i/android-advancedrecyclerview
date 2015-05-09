@@ -248,12 +248,9 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
         if (result && (mDraggingItemCurrentPosition != mDraggingItemInitialPosition)) {
             // apply to wrapped adapter
-            RecyclerView.Adapter adapter = getWrappedAdapter();
-            while(adapter instanceof BaseWrapperAdapter) {
-                adapter = ((BaseWrapperAdapter)adapter).getWrappedAdapter();
-            }
-            ((DraggableItemAdapter)adapter).onMoveItem(
-                    mDraggingItemInitialPosition, mDraggingItemCurrentPosition);
+            DraggableItemAdapter adapter = WrapperAdapterUtils.findWrappedAdapter(
+                    getWrappedAdapter(), DraggableItemAdapter.class);
+            adapter.onMoveItem(mDraggingItemInitialPosition, mDraggingItemCurrentPosition);
         }
 
         mDraggingItemInitialPosition = RecyclerView.NO_POSITION;
