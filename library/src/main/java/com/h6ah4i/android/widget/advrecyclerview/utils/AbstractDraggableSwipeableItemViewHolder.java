@@ -102,7 +102,7 @@ public abstract class AbstractDraggableSwipeableItemViewHolder extends RecyclerV
     }
 
     @Override
-    public float getMaxRightSwipeIAmount() {
+    public float getMaxRightSwipeAmount() {
         return mMaxRightSwipeAmount;
     }
 }

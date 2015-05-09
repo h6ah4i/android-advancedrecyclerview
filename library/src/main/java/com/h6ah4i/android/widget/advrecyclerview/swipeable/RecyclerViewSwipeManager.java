@@ -747,8 +747,8 @@ public class RecyclerViewSwipeManager {
             }
             if (adjustedAmount < holder2.getMaxLeftSwipeAmount()) {
                 adjustedAmount = holder2.getMaxLeftSwipeAmount();
-            } else if (adjustedAmount > holder2.getMaxRightSwipeIAmount()) {
-                adjustedAmount = holder2.getMaxRightSwipeIAmount();
+            } else if (adjustedAmount > holder2.getMaxRightSwipeAmount()) {
+                adjustedAmount = holder2.getMaxRightSwipeAmount();
             }
             mAdapter.setSwipeBackgroundDrawable(holder, reqBackgroundType);
             slideItem(holder, adjustedAmount, shouldAnimate);

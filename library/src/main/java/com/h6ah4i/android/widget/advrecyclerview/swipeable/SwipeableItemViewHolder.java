@@ -130,7 +130,7 @@ public interface SwipeableItemViewHolder {
      *
      * @return Item swipe amount. Generally the range is [-1.0 .. 1.0]
      */
-    float getMaxRightSwipeIAmount();
+    float getMaxRightSwipeAmount();
 
     /**
      * Gets the container view for the swipeable area.
