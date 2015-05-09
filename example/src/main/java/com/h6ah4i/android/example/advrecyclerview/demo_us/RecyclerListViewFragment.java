@@ -84,8 +84,13 @@ public class RecyclerListViewFragment extends Fragment {
             }
 
             @Override
-            public void onItemViewClicked(View v, boolean pinned) {
-                onItemViewClick(v, pinned);
+            public void onItemViewClicked(View v) {
+                handleOnItemViewClicked(v);
+            }
+
+            @Override
+            public void onUnderSwipeableViewButtonClicked(View v) {
+                handleOnUnderSwipeableViewButtonClicked(v);
             }
         });
 
@@ -155,10 +160,17 @@ public class RecyclerListViewFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private void onItemViewClick(View v, boolean pinned) {
+    private void handleOnItemViewClicked(View v) {
         int position = mRecyclerView.getChildPosition(v);
         if (position != RecyclerView.NO_POSITION) {
             ((UnderSwipeableExampleActivity) getActivity()).onItemClicked(position);
+        }
+    }
+
+    private void handleOnUnderSwipeableViewButtonClicked(View v) {
+        int position = mRecyclerView.getChildPosition(v);
+        if (position != RecyclerView.NO_POSITION) {
+            ((UnderSwipeableExampleActivity) getActivity()).onItemButtonClicked(position);
         }
     }
 

@@ -40,11 +40,10 @@
     <string name="button_text_launch_demo_d_with_section">@string/activity_title_demo_d_with_section</string>
     <string name="button_text_launch_demo_ed_with_section">@string/activity_title_demo_ed_with_section</string>
 
-    <string name="underswipe_content">Underswipe Content</string>
-
     <string name="snack_bar_text_item_removed">1 item removed</string>
     <string name="snack_bar_text_group_item_removed">1 group item removed</string>
     <string name="snack_bar_text_child_item_removed">1 child item removed</string>
+    <string name="snack_bar_text_button_clicked">Button clicked! (position = %1$d)</string>
     <string name="snack_bar_action_undo">UNDO</string>
 
     <string name="dialog_message_item_pinned">Item pinned! (position = %1$d)</string>

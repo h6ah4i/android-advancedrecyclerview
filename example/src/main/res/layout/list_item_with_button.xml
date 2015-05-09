@@ -15,19 +15,39 @@
        limitations under the License.
 -->
 <!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
     style="@style/commonListItemStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="64dp"
     android:background="@drawable/bg_swipe_item_neutral">
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#888888">
+
+        <Button
+            android:id="@android:id/button1"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:text="Button"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ffffff"
         android:clickable="true"
-        tools:ignore="UselessParent">
+        tools:ignore="UselessParent"
+        tools:visibility="invisible">
 
         <View
             android:id="@+id/drag_handle"
@@ -35,7 +55,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="#20000000" />
+            android:background="#20000000"/>
 
         <TextView
             android:id="@android:id/text1"
@@ -43,7 +63,7 @@
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/drag_handle"
             android:gravity="center"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"/>
     </RelativeLayout>
 
 </FrameLayout>
