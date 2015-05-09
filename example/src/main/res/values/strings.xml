@@ -24,7 +24,7 @@
 
     <string name="activity_title_demo_d">Draggable</string>
     <string name="activity_title_demo_s">Swipeable</string>
-    <string name="activity_title_demo_us">Under Swipeable</string>
+    <string name="activity_title_demo_us">Button under swipeable item</string>
     <string name="activity_title_demo_e">Expandable</string>
     <string name="activity_title_demo_ds">Draggable + Swipeable</string>
     <string name="activity_title_demo_eds">Expandable + Draggable + Swipeable</string>
