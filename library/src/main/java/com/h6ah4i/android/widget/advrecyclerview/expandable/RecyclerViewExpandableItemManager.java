@@ -290,13 +290,19 @@ public class RecyclerViewExpandableItemManager {
             return false;
         }
 
+        final int position = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
+
+        if (position == RecyclerView.NO_POSITION) {
+            return false;
+        }
+
         final View view = holder.itemView;
         final int translateX = (int) (ViewCompat.getTranslationX(view) + 0.5f);
         final int translateY = (int) (ViewCompat.getTranslationY(view) + 0.5f);
         final int viewX = touchX - (view.getLeft() + translateX);
         final int viewY = touchY - (view.getTop() + translateY);
 
-        return mAdapter.onTapItem(holder, viewX, viewY);
+        return mAdapter.onTapItem(holder, position, viewX, viewY);
     }
 
     /**

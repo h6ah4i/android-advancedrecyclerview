@@ -181,7 +181,7 @@ public class MyDraggableSwipeableItemAdapter
     }
 
     @Override
-    public boolean onCheckCanStartDrag(MyViewHolder holder, int x, int y) {
+    public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
         // x, y --- relative from the itemView's top-left
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
@@ -193,22 +193,22 @@ public class MyDraggableSwipeableItemAdapter
     }
 
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder) {
+    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
         // no drag-sortable range specified
         return null;
     }
 
     @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int x, int y) {
-        if (onCheckCanStartDrag(holder, x, y)) {
+    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
+        if (onCheckCanStartDrag(holder, position, x, y)) {
             return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
         } else {
-            return mProvider.getItem(holder.getPosition()).getSwipeReactionType();
+            return mProvider.getItem(position).getSwipeReactionType();
         }
     }
 
     @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int type) {
+    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
         int bgRes = 0;
         switch (type) {
             case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
@@ -226,13 +226,13 @@ public class MyDraggableSwipeableItemAdapter
     }
 
     @Override
-    public int onSwipeItem(MyViewHolder holder, int result) {
+    public int onSwipeItem(MyViewHolder holder, int position, int result) {
         Log.d(TAG, "onSwipeItem(result = " + result + ")");
 
         switch (result) {
             // swipe right
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                if (mProvider.getItem(holder.getPosition()).isPinnedToSwipeLeft()) {
+                if (mProvider.getItem(position).isPinnedToSwipeLeft()) {
                     // pinned --- back to default position
                     return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
                 } else {
@@ -250,10 +250,9 @@ public class MyDraggableSwipeableItemAdapter
     }
 
     @Override
-    public void onPerformAfterSwipeReaction(MyViewHolder holder, int result, int reaction) {
+    public void onPerformAfterSwipeReaction(MyViewHolder holder, int position, int result, int reaction) {
         Log.d(TAG, "onPerformAfterSwipeReaction(result = " + result + ", reaction = " + reaction + ")");
 
-        final int position = holder.getPosition();
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {

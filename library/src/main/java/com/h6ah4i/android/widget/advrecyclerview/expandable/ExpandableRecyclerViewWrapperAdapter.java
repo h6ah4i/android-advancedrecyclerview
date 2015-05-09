@@ -246,14 +246,14 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean onCheckCanStartDrag(RecyclerView.ViewHolder holder, int x, int y) {
+    public boolean onCheckCanStartDrag(RecyclerView.ViewHolder holder, int position, int x, int y) {
         if (!(mExpandableItemAdapter instanceof ExpandableDraggableItemAdapter)) {
             return false;
         }
 
         final ExpandableDraggableItemAdapter adapter = (ExpandableDraggableItemAdapter) mExpandableItemAdapter;
 
-        final int flatPosition = holder.getPosition();
+        final int flatPosition = position;
         final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
         final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
@@ -275,7 +275,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(RecyclerView.ViewHolder holder) {
+    public ItemDraggableRange onGetItemDraggableRange(RecyclerView.ViewHolder holder, int position) {
         if (!(mExpandableItemAdapter instanceof ExpandableDraggableItemAdapter)) {
             return null;
         }
@@ -286,7 +286,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final ExpandableDraggableItemAdapter adapter = (ExpandableDraggableItemAdapter) mExpandableItemAdapter;
 
-        final int flatPosition = holder.getPosition();
+        final int flatPosition = position;
         final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
         final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
@@ -493,14 +493,15 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public int onGetSwipeReactionType(RecyclerView.ViewHolder holder, int x, int y) {
+    public int onGetSwipeReactionType(RecyclerView.ViewHolder holder, int position, int x, int y) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
             return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
         }
 
         final ExpandableSwipeableItemAdapter adapter = (ExpandableSwipeableItemAdapter) mExpandableItemAdapter;
 
-        final long expandablePosition = mPositionTranslator.getExpandablePosition(holder.getPosition());
+        final int flatPosition = position;
+        final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
         final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
 
@@ -513,14 +514,15 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onSetSwipeBackground(RecyclerView.ViewHolder holder, int type) {
+    public void onSetSwipeBackground(RecyclerView.ViewHolder holder, int position, int type) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
             return;
         }
 
         final ExpandableSwipeableItemAdapter adapter = (ExpandableSwipeableItemAdapter) mExpandableItemAdapter;
 
-        final long expandablePosition = mPositionTranslator.getExpandablePosition(holder.getPosition());
+        final int flatPosition = position;
+        final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
         final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
 
@@ -533,14 +535,15 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public int onSwipeItem(RecyclerView.ViewHolder holder, int result) {
+    public int onSwipeItem(RecyclerView.ViewHolder holder, int position, int result) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
             return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
         }
 
         final ExpandableSwipeableItemAdapter adapter = (ExpandableSwipeableItemAdapter) mExpandableItemAdapter;
 
-        final long expandablePosition = mPositionTranslator.getExpandablePosition(holder.getPosition());
+        final int flatPosition = position;
+        final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
         final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
 
@@ -553,14 +556,15 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onPerformAfterSwipeReaction(RecyclerView.ViewHolder holder, int result, int reaction) {
+    public void onPerformAfterSwipeReaction(RecyclerView.ViewHolder holder, int position, int result, int reaction) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
             return;
         }
 
         final ExpandableSwipeableItemAdapter adapter = (ExpandableSwipeableItemAdapter) mExpandableItemAdapter;
 
-        final long expandablePosition = mPositionTranslator.getExpandablePosition(holder.getPosition());
+        final int flatPosition = position;
+        final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
         final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
 
@@ -574,13 +578,13 @@ class ExpandableRecyclerViewWrapperAdapter
     // NOTE: This method is called from RecyclerViewExpandableItemManager
     /*package*/
     @SuppressWarnings("unchecked")
-    boolean onTapItem(RecyclerView.ViewHolder holder, int x, int y) {
+    boolean onTapItem(RecyclerView.ViewHolder holder, int position, int x, int y) {
         if (mExpandableItemAdapter == null) {
             return false;
         }
 
-        final int position = holder.getPosition();
-        final long expandablePosition = mPositionTranslator.getExpandablePosition(position);
+        final int flatPosition = position;
+        final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
         final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
 

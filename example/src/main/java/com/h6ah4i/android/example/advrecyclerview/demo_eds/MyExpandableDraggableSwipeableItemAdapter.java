@@ -436,7 +436,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
         Log.d(TAG, "onPerformAfterSwipeGroupReaction(groupPosition = " + groupPosition + ", result = " + result + ", reaction = " + reaction + ")");
 
         final AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(groupPosition);
-        final int flatPosition = holder.getPosition();
+        final int flatPosition = holder.getAdapterPosition();
 
         if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
             mProvider.removeGroupItem(groupPosition);
@@ -463,7 +463,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
                 ", result = " + result + ", reaction = " + reaction + ")");
 
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
-        final int flatPosition = holder.getPosition();
+        final int flatPosition = holder.getAdapterPosition();
 
         if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
             mProvider.removeChildItem(groupPosition, childPosition);

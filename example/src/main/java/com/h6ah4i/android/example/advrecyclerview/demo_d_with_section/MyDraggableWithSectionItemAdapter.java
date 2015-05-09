@@ -157,7 +157,7 @@ public class MyDraggableWithSectionItemAdapter
     }
 
     @Override
-    public boolean onCheckCanStartDrag(MyViewHolder holder, int x, int y) {
+    public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
         // x, y --- relative from the itemView's top-left
 
         // return false if the item is a section header
@@ -175,9 +175,7 @@ public class MyDraggableWithSectionItemAdapter
     }
 
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder) {
-        final int position = holder.getPosition();
-
+    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
         final int start = findFirstSectionItem(position);
         final int end = findLastSectionItem(position);
 

@@ -158,12 +158,12 @@ public class MySwipeableItemAdapter
     }
 
     @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int x, int y) {
-        return mProvider.getItem(holder.getPosition()).getSwipeReactionType();
+    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
+        return mProvider.getItem(position).getSwipeReactionType();
     }
 
     @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int type) {
+    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
         int bgRes = 0;
         switch (type) {
             case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
@@ -181,13 +181,13 @@ public class MySwipeableItemAdapter
     }
 
     @Override
-    public int onSwipeItem(MyViewHolder holder, int result) {
-        Log.d(TAG, "onSwipeItem(result = " + result + ")");
+    public int onSwipeItem(MyViewHolder holder, int position, int result) {
+        Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
         switch (result) {
             // swipe right
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                if (mProvider.getItem(holder.getPosition()).isPinnedToSwipeLeft()) {
+                if (mProvider.getItem(position).isPinnedToSwipeLeft()) {
                     // pinned --- back to default position
                     return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
                 } else {
@@ -205,10 +205,9 @@ public class MySwipeableItemAdapter
     }
 
     @Override
-    public void onPerformAfterSwipeReaction(MyViewHolder holder, int result, int reaction) {
-        Log.d(TAG, "onPerformAfterSwipeReaction(result = " + result + ", reaction = " + reaction + ")");
+    public void onPerformAfterSwipeReaction(MyViewHolder holder, int position, int result, int reaction) {
+        Log.d(TAG, "onPerformAfterSwipeReaction(position = " + position + ", result = " + result + ", reaction = " + reaction + ")");
 
-        final int position = holder.getPosition();
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {

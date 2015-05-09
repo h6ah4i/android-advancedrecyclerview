@@ -35,6 +35,7 @@ class SwipingItemOperator {
 
     private RecyclerViewSwipeManager mSwipeManager;
     private RecyclerView.ViewHolder mSwipingItem;
+    private int mSwipingItemPosition;
     private View mSwipingItemContainerView;
     private int mLeftSwipeReactionType;
     private int mRightSwipeReactionType;
@@ -44,9 +45,10 @@ class SwipingItemOperator {
     private float mPrevTranslateAmount;
     private int mInitialTranslateAmount;
 
-    public SwipingItemOperator(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder swipingItem, int swipeReactionType) {
+    public SwipingItemOperator(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder swipingItem, int position, int swipeReactionType) {
         mSwipeManager = manager;
         mSwipingItem = swipingItem;
+        mSwipingItemPosition = position;
         mLeftSwipeReactionType = SwipeReactionUtils.extractLeftReaction(swipeReactionType);
         mRightSwipeReactionType = SwipeReactionUtils.extractRightReaction(swipeReactionType);
 
@@ -102,7 +104,7 @@ class SwipingItemOperator {
                 break;
         }
 
-        mSwipeManager.applySlideItem(mSwipingItem, mPrevTranslateAmount, translateAmount, false);
+        mSwipeManager.applySlideItem(mSwipingItem, mSwipingItemPosition, mPrevTranslateAmount, translateAmount, false);
 
         mPrevTranslateAmount = translateAmount;
     }

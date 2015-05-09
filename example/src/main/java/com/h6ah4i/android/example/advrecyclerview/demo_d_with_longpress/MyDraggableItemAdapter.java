@@ -121,7 +121,7 @@ public class MyDraggableItemAdapter
     }
 
     @Override
-    public boolean onCheckCanStartDrag(MyViewHolder holder, int x, int y) {
+    public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
         // x, y --- relative from the itemView's top-left
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
@@ -133,7 +133,7 @@ public class MyDraggableItemAdapter
     }
 
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder) {
+    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
         // no drag-sortable range specified
         return null;
     }
