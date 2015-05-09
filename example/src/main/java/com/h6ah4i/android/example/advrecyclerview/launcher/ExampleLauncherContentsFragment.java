@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.demo_d.DraggableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_d_with_longpress.DraggableWithLongPressExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_section.DraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ds.DraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_e.ExpandableExampleActivity;
@@ -45,6 +46,7 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
         super.onViewCreated(view, savedInstanceState);
 
         view.findViewById(R.id.button_launch_demo_d).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_d_with_longpress).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_s).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_us).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_e).setOnClickListener(this);
@@ -59,6 +61,9 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
         switch (v.getId()) {
             case R.id.button_launch_demo_d:
                 launchExampleActivity(DraggableExampleActivity.class);
+                break;
+            case R.id.button_launch_demo_d_with_longpress:
+                launchExampleActivity(DraggableWithLongPressExampleActivity.class);
                 break;
             case R.id.button_launch_demo_s:
                 launchExampleActivity(SwipeableExampleActivity.class);
