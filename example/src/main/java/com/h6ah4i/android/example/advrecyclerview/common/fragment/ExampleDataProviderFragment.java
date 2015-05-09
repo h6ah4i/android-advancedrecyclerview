@@ -21,17 +21,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.data.DebugDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.data.ExampleDataProvider;
 
 public class ExampleDataProviderFragment extends Fragment {
-    private ExampleDataProvider mDataProvider;
+    private AbstractDataProvider mDataProvider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);  // keep the mDataProvider instance
-        mDataProvider = new ExampleDataProvider(true); // true: example test data
+        mDataProvider = new ExampleDataProvider();
+//        mDataProvider = new DebugDataProvider();
     }
 
     public AbstractDataProvider getDataProvider() {
