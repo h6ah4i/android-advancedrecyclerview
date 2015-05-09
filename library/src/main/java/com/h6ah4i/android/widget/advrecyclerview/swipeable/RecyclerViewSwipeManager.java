@@ -740,18 +740,18 @@ public class RecyclerViewSwipeManager {
             mAdapter.setSwipeBackgroundDrawable(holder, reqBackgroundType);
         } else {
             float adjustedAmount = amount;
-            if (mAdapter.getWrappedAdapter() instanceof SwipeableItemAdapter) {
-                if (((SwipeableItemAdapter)mAdapter.getWrappedAdapter()).isSwipeLeftPinned(holder.getPosition())) {
-                    adjustedAmount = holder2.getMaxLeftSwipeAmount() + amount;
-                }
-            }
-            if (adjustedAmount < holder2.getMaxLeftSwipeAmount()) {
-                adjustedAmount = holder2.getMaxLeftSwipeAmount();
-            } else if (adjustedAmount > holder2.getMaxRightSwipeAmount()) {
-                adjustedAmount = holder2.getMaxRightSwipeAmount();
-            }
+
+            adjustedAmount = Math.max(adjustedAmount, holder2.getMaxLeftSwipeAmount());
+            adjustedAmount = Math.min(adjustedAmount, holder2.getMaxRightSwipeAmount());
+
             mAdapter.setSwipeBackgroundDrawable(holder, reqBackgroundType);
             slideItem(holder, adjustedAmount, shouldAnimate);
+        }
+    }
+
+    /*package*/ void cancelPendingAnimations(RecyclerView.ViewHolder holder) {
+        if (mItemSlideAnimator != null) {
+            mItemSlideAnimator.endAnimation(holder);
         }
     }
 
