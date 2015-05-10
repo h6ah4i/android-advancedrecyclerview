@@ -19,7 +19,7 @@ package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
@@ -32,7 +32,7 @@ import com.nispok.snackbar.SnackbarManager;
 import com.nispok.snackbar.enums.SnackbarType;
 import com.nispok.snackbar.listeners.ActionClickListener;
 
-public class ExpandableDraggableSwipeableExampleActivity extends ActionBarActivity implements ExpandableItemPinnedMessageDialogFragment.EventListener {
+public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivity implements ExpandableItemPinnedMessageDialogFragment.EventListener {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     private static final String FRAGMENT_LIST_VIEW = "list view";
     private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";

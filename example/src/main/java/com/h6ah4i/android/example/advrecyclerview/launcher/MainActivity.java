@@ -17,11 +17,11 @@
 package com.h6ah4i.android.example.advrecyclerview.launcher;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
     private static final String FRAGMENT_TAG_OPTIONS_MENU = "options menu";
     private static final String FRAGMENT_LAUNCHER_CONTENTS = "launcher contents";
 
