@@ -16,14 +16,14 @@
 -->
 <resources>
 
-    <string name="app_name">Advanced RecyclerView Example</string>
+    <string name="app_name">Advanced RecyclerView Examples</string>
 
 
-    <string name="activity_title_launcher">Advanced RecyclerView Example</string>
+    <string name="activity_title_launcher">Advanced RecyclerView Examples</string>
     <string name="activity_title_about">Advanced RecyclerView About</string>
 
     <string name="activity_title_demo_d">Draggable</string>
-    <string name="activity_title_demo_d_with_longpress">Draggable On Long Press</string>
+    <string name="activity_title_demo_d_with_longpress">Draggable with Long Press</string>
     <string name="activity_title_demo_s">Swipeable</string>
     <string name="activity_title_demo_us">Button under swipeable item</string>
     <string name="activity_title_demo_e">Expandable</string>
