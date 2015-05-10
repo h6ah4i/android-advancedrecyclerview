@@ -43,6 +43,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
         ExpandableSwipeableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyEDSItemAdapter";
 
+    private final RecyclerViewExpandableItemManager mExpandableItemManager;
     private AbstractExpandableDataProvider mProvider;
     private EventListener mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
@@ -101,7 +102,10 @@ public class MyExpandableDraggableSwipeableItemAdapter
         }
     }
 
-    public MyExpandableDraggableSwipeableItemAdapter(AbstractExpandableDataProvider dataProvider) {
+    public MyExpandableDraggableSwipeableItemAdapter(
+            RecyclerViewExpandableItemManager expandableItemManager,
+            AbstractExpandableDataProvider dataProvider) {
+        mExpandableItemManager = expandableItemManager;
         mProvider = dataProvider;
         mItemViewOnClickListener = new View.OnClickListener() {
             @Override
@@ -436,7 +440,8 @@ public class MyExpandableDraggableSwipeableItemAdapter
         Log.d(TAG, "onPerformAfterSwipeGroupReaction(groupPosition = " + groupPosition + ", result = " + result + ", reaction = " + reaction + ")");
 
         final AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(groupPosition);
-        final int flatPosition = holder.getAdapterPosition();
+        final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
+        final int flatPosition = mExpandableItemManager.getFlatPosition(expandablePosition);
 
         if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
             mProvider.removeGroupItem(groupPosition);
@@ -463,7 +468,8 @@ public class MyExpandableDraggableSwipeableItemAdapter
                 ", result = " + result + ", reaction = " + reaction + ")");
 
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
-        final int flatPosition = holder.getAdapterPosition();
+        final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, childPosition);
+        final int flatPosition = mExpandableItemManager.getFlatPosition(expandablePosition);
 
         if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
             mProvider.removeChildItem(groupPosition, childPosition);

@@ -87,8 +87,8 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 
         //adapter
-        getDataProvider();
-        final MyExpandableDraggableSwipeableItemAdapter myItemAdapter = new MyExpandableDraggableSwipeableItemAdapter(getDataProvider());
+        final MyExpandableDraggableSwipeableItemAdapter myItemAdapter =
+                new MyExpandableDraggableSwipeableItemAdapter(mRecyclerViewExpandableItemManager, getDataProvider());
 
         myItemAdapter.setEventListener(new MyExpandableDraggableSwipeableItemAdapter.EventListener() {
             @Override
