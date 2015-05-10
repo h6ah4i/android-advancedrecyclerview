@@ -25,8 +25,8 @@ android {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
         minSdkVersion 9
         targetSdkVersion 22
-        versionCode 4
-        versionName "0.6.2"
+        versionCode 5
+        versionName "0.7.0"
     }
 
     signingConfigs {
