@@ -91,7 +91,6 @@ public class RecyclerViewDragDropManager {
 
     private static final float SCROLL_THRESHOLD = 0.3f; // 0.0f < X < 0.5f
     private static final float SCROLL_AMOUNT_COEFF = 25;
-    private static final float EDGE_EFFECT_THRESHOLD = 0.5f; // <= 1.0f
     private static final float SCROLL_TOUCH_SLOP_MULTIPLY = 1.5f;
 
     private RecyclerView mRecyclerView;
@@ -174,7 +173,6 @@ public class RecyclerViewDragDropManager {
      * Create wrapped adapter.
      *
      * @param adapter The target adapter.
-     *
      * @return Wrapped adapter which is associated to this {@link RecyclerViewDragDropManager} instance.
      */
     @SuppressWarnings("unchecked")
@@ -199,7 +197,7 @@ public class RecyclerViewDragDropManager {
 
     /**
      * Attaches {@link android.support.v7.widget.RecyclerView} instance.
-     *
+     * <p/>
      * Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
      * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
@@ -212,12 +210,12 @@ public class RecyclerViewDragDropManager {
 
     /**
      * Attaches {@link android.support.v7.widget.RecyclerView} instance.
-     *
+     * <p/>
      * Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
      * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
      *
-     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     * @param rv                     The {@link android.support.v7.widget.RecyclerView} instance
      * @param scrollEventDistributor The distributor for {@link android.support.v7.widget.RecyclerView.OnScrollListener} event
      */
     public void attachRecyclerView(RecyclerView rv, RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
@@ -266,10 +264,12 @@ public class RecyclerViewDragDropManager {
             public void onLongPress(MotionEvent e) {
                 handleOnLongPress(e);
             }
+
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
+
             @Override
             public boolean onDown(MotionEvent e) {
                 return true;
@@ -286,7 +286,7 @@ public class RecyclerViewDragDropManager {
 
     /**
      * Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.
-     *
+     * <p/>
      * This method should be called in order to avoid memory leaks.
      */
     public void release() {
@@ -346,7 +346,8 @@ public class RecyclerViewDragDropManager {
 
     /**
      * Returns whether dragging will start after a long press or not.
-     * @return  True if dragging starts with a long press, false otherwise.
+     *
+     * @return True if dragging starts with a long press, false otherwise.
      */
     public boolean getInitiateOnLongPress() {
         return mInitiateOnLongPress;
@@ -354,7 +355,8 @@ public class RecyclerViewDragDropManager {
 
     /**
      * Sets whether dragging will start after a long press or immediately upon move motions.
-     * @param initiateOnLongPress   True to initiate dragging on long press.
+     *
+     * @param initiateOnLongPress True to initiate dragging on long press.
      */
     public void setInitiateOnLongPress(boolean initiateOnLongPress) {
         mInitiateOnLongPress = initiateOnLongPress;
@@ -727,7 +729,7 @@ public class RecyclerViewDragDropManager {
         if (!range.checkInRange(holder.getAdapterPosition())) {
             throw new IllegalStateException(
                     "Invalid range specified --- does not contain drag target item"
-                     + " (range = " + range + ", position = " + holder.getAdapterPosition() + ")");
+                            + " (range = " + range + ", position = " + holder.getAdapterPosition() + ")");
         }
     }
 
@@ -832,6 +834,7 @@ public class RecyclerViewDragDropManager {
             }
         }
 
+        // scroll
         if ((!reachedToTopHardLimit && (scrollAmount < 0)) ||
                 (!reachedToBottomHardLimit && (scrollAmount > 0))) {
             safeEndAnimations(rv);
@@ -855,6 +858,8 @@ public class RecyclerViewDragDropManager {
 
 
         if (mEdgeEffectDecorator != null) {
+            final float edgeEffectStrength = 0.005f;
+
             final int draggingItemTop = mDraggingItemDecorator.getTranslatedItemPositionTop();
             final int draggingItemBottom = mDraggingItemDecorator.getTranslatedItemPositionBottom();
             final int draggingItemCenter = (draggingItemTop + draggingItemBottom) / 2;
@@ -862,25 +867,40 @@ public class RecyclerViewDragDropManager {
 
             final float nearEdgeOffset = (nearEdgePosition * invHeight) - 0.5f;
             final float absNearEdgeOffset = Math.abs(nearEdgeOffset);
-            final float edgeEffectAcceleration = Math.max(0.0f, threshold - (0.5f - absNearEdgeOffset)) * invThreshold;
+            float edgeEffectPullDistance = 0;
 
-            if ((edgeEffectAcceleration >= EDGE_EFFECT_THRESHOLD) && (scrollAmount != 0) && !actualIsScrolling) {
-                // over scrolled
-                final float distance = edgeEffectAcceleration * 0.02f;
-
-                if (scrollAmount < 0) {
+            if ((absNearEdgeOffset > 0.4f) && (scrollAmount != 0) && !actualIsScrolling) {
+                if (nearEdgeOffset < 0) {
                     // upward
-                    mEdgeEffectDecorator.pullTopGlow(distance);
+                    if (mDraggingItemDecorator.isReachedToTopLimit()) {
+                        edgeEffectPullDistance = -mDisplayDensity * edgeEffectStrength;
+                    }
                 } else {
                     // downward
-                    mEdgeEffectDecorator.pullBottom(distance);
+                    if (mDraggingItemDecorator.isReachedToBottomLimit()) {
+                        edgeEffectPullDistance = mDisplayDensity * edgeEffectStrength;
+                    }
                 }
-            } else {
-                mEdgeEffectDecorator.releaseBothGlows();
             }
+
+            updateEdgeEffect(edgeEffectPullDistance);
         }
 
         ViewCompat.postOnAnimation(mRecyclerView, mCheckItemSwappingRunnable);
+    }
+
+    private void updateEdgeEffect(float distance) {
+        if (distance != 0.0f) {
+            if (distance < 0) {
+                // upward
+                mEdgeEffectDecorator.pullTopGlow(distance);
+            } else {
+                // downward
+                mEdgeEffectDecorator.pullBottom(distance);
+            }
+        } else {
+            mEdgeEffectDecorator.releaseBothGlows();
+        }
     }
 
     private Runnable mCheckItemSwappingRunnable = new Runnable() {

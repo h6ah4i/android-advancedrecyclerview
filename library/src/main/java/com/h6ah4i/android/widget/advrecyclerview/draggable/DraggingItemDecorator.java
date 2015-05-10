@@ -182,6 +182,13 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationY = Math.min(Math.max(mTranslationY, mTranslationTopLimit), mTranslationBottomLimit);
     }
 
+    public boolean isReachedToTopLimit() {
+        return (mTranslationY == mTranslationTopLimit);
+    }
+
+    public boolean isReachedToBottomLimit() {
+        return (mTranslationY == mTranslationBottomLimit);
+    }
 
     private Bitmap createDraggingItemImage(View v, NinePatchDrawable shadow) {
         int width = v.getWidth() + mShadowPadding.left + mShadowPadding.right;
