@@ -230,9 +230,15 @@ public class MyDraggableSwipeableItemAdapter
         Log.d(TAG, "onSwipeItem(result = " + result + ")");
 
         switch (result) {
-            // swipe right --- remove
+            // swipe right
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
+                if (mProvider.getItem(holder.getPosition()).isPinnedToSwipeLeft()) {
+                    // pinned --- back to default position
+                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
+                } else {
+                    // not pinned --- remove
+                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
+                }
             // swipe left -- pin
             case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;

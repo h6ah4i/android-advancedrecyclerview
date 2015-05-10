@@ -29,6 +29,7 @@ class SwipingItemOperator {
     private static final int REACTION_CAN_SWIPE = SwipeReactionUtils.REACTION_CAN_SWIPE;
 
     private static final float RUBBER_BAND_LIMIT = 0.15f;
+    private static final int MIN_GRABBING_AREA_WIDTH = 48;
 
     private static final Interpolator RUBBER_BAND_INTERPOLATOR = new RubberBandInterpolator(RUBBER_BAND_LIMIT);
 
@@ -55,7 +56,12 @@ class SwipingItemOperator {
     }
 
     public void start() {
+        float density = mSwipingItem.itemView.getResources().getDisplayMetrics().density;
+        int maxAmount = Math.max(0, mSwipingItemWidth - (int) (density * MIN_GRABBING_AREA_WIDTH));
+
         mInitialTranslateAmount = mSwipeManager.getSwipeContainerViewTranslationX(mSwipingItem);
+        mInitialTranslateAmount = Math.min(mInitialTranslateAmount, maxAmount);
+        mInitialTranslateAmount = Math.max(mInitialTranslateAmount, -maxAmount);
     }
 
     public void finish() {
