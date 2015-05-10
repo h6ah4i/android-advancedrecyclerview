@@ -14,12 +14,16 @@
  *    limitations under the License.
  */
 
-android {
-    compileSdkVersion 22
-    buildToolsVersion '22.0.1'
+package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
+
+public class ChildPositionItemDraggableRange extends ItemDraggableRange {
+    public ChildPositionItemDraggableRange(int start, int end) {
+        super(start, end);
+    }
+
+    protected String getClassName() {
+        return "ChildPositionItemDraggableRange";
     }
 }

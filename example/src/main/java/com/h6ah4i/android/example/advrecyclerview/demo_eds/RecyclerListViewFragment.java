@@ -87,8 +87,8 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 
         //adapter
-        getDataProvider();
-        final MyExpandableDraggableSwipeableItemAdapter myItemAdapter = new MyExpandableDraggableSwipeableItemAdapter(getDataProvider());
+        final MyExpandableDraggableSwipeableItemAdapter myItemAdapter =
+                new MyExpandableDraggableSwipeableItemAdapter(mRecyclerViewExpandableItemManager, getDataProvider());
 
         myItemAdapter.setEventListener(new MyExpandableDraggableSwipeableItemAdapter.EventListener() {
             @Override
@@ -124,6 +124,10 @@ public class RecyclerListViewFragment extends Fragment {
         mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);      // wrap for swiping
 
         final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
+
+        // Change animations are enabled by default since support-v7-recyclerview v22.
+        // Disable the change animation in order to make turning back animation of swiped item works properly.
+        animator.setSupportsChangeAnimations(false);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter

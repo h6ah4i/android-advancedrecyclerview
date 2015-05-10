@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_ds;
+package com.h6ah4i.android.example.advrecyclerview.demo_us;
 
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
@@ -33,8 +33,6 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.BasicSwapTargetTranslationInterpolator;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
@@ -44,7 +42,6 @@ public class RecyclerListViewFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.Adapter mWrappedAdapter;
-    private RecyclerViewDragDropManager mRecyclerViewDragDropManager;
     private RecyclerViewSwipeManager mRecyclerViewSwipeManager;
     private RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
 
@@ -70,37 +67,36 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
         mRecyclerViewTouchActionGuardManager.setEnabled(true);
 
-        // drag & drop manager
-        mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
-        mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
-                (NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
-
         // swipe manager
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 
         //adapter
-        final MyDraggableSwipeableItemAdapter myItemAdapter = new MyDraggableSwipeableItemAdapter(getDataProvider());
-        myItemAdapter.setEventListener(new MyDraggableSwipeableItemAdapter.EventListener() {
+        final MyUnderSwipeableItemAdapter myItemAdapter = new MyUnderSwipeableItemAdapter(getDataProvider());
+        myItemAdapter.setEventListener(new MyUnderSwipeableItemAdapter.EventListener() {
             @Override
             public void onItemRemoved(int position) {
-                ((DraggableSwipeableExampleActivity) getActivity()).onItemRemoved(position);
+                ((UnderSwipeableExampleActivity) getActivity()).onItemRemoved(position);
             }
 
             @Override
             public void onItemPinned(int position) {
-                ((DraggableSwipeableExampleActivity) getActivity()).onItemPinned(position);
+                ((UnderSwipeableExampleActivity) getActivity()).onItemPinned(position);
             }
 
             @Override
-            public void onItemViewClicked(View v, boolean pinned) {
-                onItemViewClick(v, pinned);
+            public void onItemViewClicked(View v) {
+                handleOnItemViewClicked(v);
+            }
+
+            @Override
+            public void onUnderSwipeableViewButtonClicked(View v) {
+                handleOnUnderSwipeableViewButtonClicked(v);
             }
         });
 
         mAdapter = myItemAdapter;
 
-        mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(myItemAdapter);      // wrap for dragging
-        mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);      // wrap for swiping
+        mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(myItemAdapter);      // wrap for swiping
 
         final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
 
@@ -127,7 +123,6 @@ public class RecyclerListViewFragment extends Fragment {
         // priority: TouchActionGuard > Swipe > DragAndDrop
         mRecyclerViewTouchActionGuardManager.attachRecyclerView(mRecyclerView);
         mRecyclerViewSwipeManager.attachRecyclerView(mRecyclerView);
-        mRecyclerViewDragDropManager.attachRecyclerView(mRecyclerView);
 
         // for debugging
 //        animator.setDebug(true);
@@ -138,18 +133,7 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     @Override
-    public void onPause() {
-        mRecyclerViewDragDropManager.cancelDrag();
-        super.onPause();
-    }
-
-    @Override
     public void onDestroyView() {
-        if (mRecyclerViewDragDropManager != null) {
-            mRecyclerViewDragDropManager.release();
-            mRecyclerViewDragDropManager = null;
-        }
-
         if (mRecyclerViewSwipeManager != null) {
             mRecyclerViewSwipeManager.release();
             mRecyclerViewSwipeManager = null;
@@ -176,10 +160,17 @@ public class RecyclerListViewFragment extends Fragment {
         super.onDestroyView();
     }
 
-    private void onItemViewClick(View v, boolean pinned) {
+    private void handleOnItemViewClicked(View v) {
         int position = mRecyclerView.getChildPosition(v);
         if (position != RecyclerView.NO_POSITION) {
-            ((DraggableSwipeableExampleActivity) getActivity()).onItemClicked(position);
+            ((UnderSwipeableExampleActivity) getActivity()).onItemClicked(position);
+        }
+    }
+
+    private void handleOnUnderSwipeableViewButtonClicked(View v) {
+        int position = mRecyclerView.getChildPosition(v);
+        if (position != RecyclerView.NO_POSITION) {
+            ((UnderSwipeableExampleActivity) getActivity()).onItemButtonClicked(position);
         }
     }
 
@@ -188,7 +179,7 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     public AbstractDataProvider getDataProvider() {
-        return ((DraggableSwipeableExampleActivity) getActivity()).getDataProvider();
+        return ((UnderSwipeableExampleActivity) getActivity()).getDataProvider();
     }
 
     public void notifyItemChanged(int position) {

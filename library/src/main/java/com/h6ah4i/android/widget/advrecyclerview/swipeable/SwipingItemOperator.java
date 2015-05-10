@@ -29,11 +29,13 @@ class SwipingItemOperator {
     private static final int REACTION_CAN_SWIPE = SwipeReactionUtils.REACTION_CAN_SWIPE;
 
     private static final float RUBBER_BAND_LIMIT = 0.15f;
+    private static final int MIN_GRABBING_AREA_WIDTH = 48;
 
     private static final Interpolator RUBBER_BAND_INTERPOLATOR = new RubberBandInterpolator(RUBBER_BAND_LIMIT);
 
     private RecyclerViewSwipeManager mSwipeManager;
     private RecyclerView.ViewHolder mSwipingItem;
+    private int mSwipingItemPosition;
     private View mSwipingItemContainerView;
     private int mLeftSwipeReactionType;
     private int mRightSwipeReactionType;
@@ -41,10 +43,12 @@ class SwipingItemOperator {
     private float mInvSwipingItemWidth;
     private int mSwipeDistance;
     private float mPrevTranslateAmount;
+    private int mInitialTranslateAmount;
 
-    public SwipingItemOperator(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder swipingItem, int swipeReactionType) {
+    public SwipingItemOperator(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder swipingItem, int position, int swipeReactionType) {
         mSwipeManager = manager;
         mSwipingItem = swipingItem;
+        mSwipingItemPosition = position;
         mLeftSwipeReactionType = SwipeReactionUtils.extractLeftReaction(swipeReactionType);
         mRightSwipeReactionType = SwipeReactionUtils.extractRightReaction(swipeReactionType);
 
@@ -53,9 +57,13 @@ class SwipingItemOperator {
         mInvSwipingItemWidth = (mSwipingItemWidth != 0) ? (1.0f / mSwipingItemWidth) : 0.0f;
     }
 
-    @SuppressWarnings("EmptyMethod")
     public void start() {
-        // nothing to do here.
+        float density = mSwipingItem.itemView.getResources().getDisplayMetrics().density;
+        int maxAmount = Math.max(0, mSwipingItemWidth - (int) (density * MIN_GRABBING_AREA_WIDTH));
+
+        mInitialTranslateAmount = mSwipeManager.getSwipeContainerViewTranslationX(mSwipingItem);
+        mInitialTranslateAmount = Math.min(mInitialTranslateAmount, maxAmount);
+        mInitialTranslateAmount = Math.max(mInitialTranslateAmount, -maxAmount);
     }
 
     public void finish() {
@@ -67,6 +75,7 @@ class SwipingItemOperator {
         mLeftSwipeReactionType = REACTION_CAN_NOT_SWIPE;
         mRightSwipeReactionType = REACTION_CAN_NOT_SWIPE;
         mPrevTranslateAmount = 0;
+        mInitialTranslateAmount = 0;
         mSwipingItemContainerView = null;
     }
 
@@ -77,7 +86,9 @@ class SwipingItemOperator {
 
         mSwipeDistance = swipeDistance;
 
-        final int reactionType = (mSwipeDistance > 0) ? mRightSwipeReactionType : mLeftSwipeReactionType;
+        int distance = mSwipeDistance + mInitialTranslateAmount;
+
+        final int reactionType = (distance > 0) ? mRightSwipeReactionType : mLeftSwipeReactionType;
 
         float translateAmount = 0;
 
@@ -85,15 +96,15 @@ class SwipingItemOperator {
             case REACTION_CAN_NOT_SWIPE:
                 break;
             case REACTION_CAN_NOT_SWIPE_WITH_RUBBER_EFFECT:
-                float proportion = Math.min(Math.abs(mSwipeDistance), mSwipingItemWidth) * mInvSwipingItemWidth;
-                translateAmount = Math.signum(mSwipeDistance) * RUBBER_BAND_INTERPOLATOR.getInterpolation(proportion);
+                float proportion = Math.min(Math.abs(distance), mSwipingItemWidth) * mInvSwipingItemWidth;
+                translateAmount = Math.signum(distance) * RUBBER_BAND_INTERPOLATOR.getInterpolation(proportion);
                 break;
             case REACTION_CAN_SWIPE:
-                translateAmount = Math.min(Math.max((mSwipeDistance * mInvSwipingItemWidth), -1.0f), 1.0f);
+                translateAmount = Math.min(Math.max((distance * mInvSwipingItemWidth), -1.0f), 1.0f);
                 break;
         }
 
-        mSwipeManager.applySlideItem(mSwipingItem, mPrevTranslateAmount, translateAmount, false);
+        mSwipeManager.applySlideItem(mSwipingItem, mSwipingItemPosition, mPrevTranslateAmount, translateAmount, false);
 
         mPrevTranslateAmount = translateAmount;
     }

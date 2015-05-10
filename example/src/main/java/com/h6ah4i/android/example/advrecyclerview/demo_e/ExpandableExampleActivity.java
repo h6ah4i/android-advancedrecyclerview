@@ -18,13 +18,13 @@ package com.h6ah4i.android.example.advrecyclerview.demo_e;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleExpandableDataProviderFragment;
 
-public class ExpandableExampleActivity extends ActionBarActivity {
+public class ExpandableExampleActivity extends AppCompatActivity {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     private static final String FRAGMENT_LIST_VIEW = "list view";
 

@@ -94,8 +94,8 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     private float calculateTranslationPhase(RecyclerView.ViewHolder draggingItem, RecyclerView.ViewHolder swapTargetItem) {
         final View swapItemView = swapTargetItem.itemView;
 
-        final int pos1 = draggingItem.getPosition();
-        final int pos2 = swapTargetItem.getPosition();
+        final int pos1 = draggingItem.getLayoutPosition();
+        final int pos2 = swapTargetItem.getLayoutPosition();
 
         CustomRecyclerViewUtils.getDecorationOffsets(
                 mRecyclerView.getLayoutManager(), swapItemView, mSwapTargetDecorationOffsets);
@@ -132,8 +132,8 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     private void updateSwapTargetTranslation(RecyclerView.ViewHolder draggingItem, RecyclerView.ViewHolder swapTargetItem, float translationPhase) {
         final View swapItemView = swapTargetItem.itemView;
 
-        final int pos1 = draggingItem.getPosition();
-        final int pos2 = swapTargetItem.getPosition();
+        final int pos1 = draggingItem.getLayoutPosition();
+        final int pos2 = swapTargetItem.getLayoutPosition();
 
         final Rect m1 = mDraggingItemMargins;
         final Rect d1 = mDraggingItemDecorationOffsets;

@@ -16,14 +16,16 @@
 -->
 <resources>
 
-    <string name="app_name">Advanced RecyclerView Example</string>
+    <string name="app_name">Advanced RecyclerView Examples</string>
 
 
-    <string name="activity_title_launcher">Advanced RecyclerView Example</string>
+    <string name="activity_title_launcher">Advanced RecyclerView Examples</string>
     <string name="activity_title_about">Advanced RecyclerView About</string>
 
     <string name="activity_title_demo_d">Draggable</string>
+    <string name="activity_title_demo_d_with_longpress">Draggable with Long Press</string>
     <string name="activity_title_demo_s">Swipeable</string>
+    <string name="activity_title_demo_us">Button under swipeable item</string>
     <string name="activity_title_demo_e">Expandable</string>
     <string name="activity_title_demo_ds">Draggable + Swipeable</string>
     <string name="activity_title_demo_eds">Expandable + Draggable + Swipeable</string>
@@ -31,7 +33,9 @@
     <string name="activity_title_demo_ed_with_section">Expandable + Draggable with Section</string>
 
     <string name="button_text_launch_demo_d">@string/activity_title_demo_d</string>
+    <string name="button_text_launch_demo_d_with_longpress">@string/activity_title_demo_d_with_longpress</string>
     <string name="button_text_launch_demo_s">@string/activity_title_demo_s</string>
+    <string name="button_text_launch_demo_us">@string/activity_title_demo_us</string>
     <string name="button_text_launch_demo_e">@string/activity_title_demo_e</string>
     <string name="button_text_launch_demo_ds">@string/activity_title_demo_ds</string>
     <string name="button_text_launch_demo_eds">@string/activity_title_demo_eds</string>
@@ -41,6 +45,7 @@
     <string name="snack_bar_text_item_removed">1 item removed</string>
     <string name="snack_bar_text_group_item_removed">1 group item removed</string>
     <string name="snack_bar_text_child_item_removed">1 child item removed</string>
+    <string name="snack_bar_text_button_clicked">Button clicked! (position = %1$d)</string>
     <string name="snack_bar_action_undo">UNDO</string>
 
     <string name="dialog_message_item_pinned">Item pinned! (position = %1$d)</string>

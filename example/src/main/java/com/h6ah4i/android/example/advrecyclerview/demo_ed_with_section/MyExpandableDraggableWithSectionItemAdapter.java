@@ -27,8 +27,10 @@ import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandable
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ChildPositionItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.GroupPositionItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
@@ -281,19 +283,25 @@ public class MyExpandableDraggableWithSectionItemAdapter
         final int start = findFirstSectionItem(groupPosition);
         final int end = findLastSectionItem(groupPosition);
 
-        return new ItemDraggableRange(start, end);
+        return new GroupPositionItemDraggableRange(start, end);
     }
 
     @Override
     public ItemDraggableRange onGetChildItemDraggableRange(MyChildViewHolder holder, int groupPosition, int childPosition) {
         // sort within the same group
-        return new ItemDraggableRange(groupPosition, groupPosition);
+        return new GroupPositionItemDraggableRange(groupPosition, groupPosition);
 
 //        // sort within the same section
 //        final int start = findFirstSectionItem(groupPosition);
 //        final int end = findLastSectionItem(groupPosition);
 //
-//        return new ItemDraggableRange(start, end);
+//        return new GroupPositionItemDraggableRange(start, end);
+
+//        // sort within the specified child range
+//        final int start = 0;
+//        final int end = 2;
+//
+//        return new ChildPositionItemDraggableRange(start, end);
     }
 
     @Override

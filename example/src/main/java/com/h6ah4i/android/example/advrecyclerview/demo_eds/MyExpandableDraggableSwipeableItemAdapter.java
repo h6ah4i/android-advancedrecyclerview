@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.utils.AdapterUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
@@ -36,6 +35,7 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandab
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
 public class MyExpandableDraggableSwipeableItemAdapter
         extends AbstractExpandableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder>
@@ -43,6 +43,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
         ExpandableSwipeableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyEDSItemAdapter";
 
+    private final RecyclerViewExpandableItemManager mExpandableItemManager;
     private AbstractExpandableDataProvider mProvider;
     private EventListener mEventListener;
     private View.OnClickListener mItemViewOnClickListener;
@@ -101,7 +102,10 @@ public class MyExpandableDraggableSwipeableItemAdapter
         }
     }
 
-    public MyExpandableDraggableSwipeableItemAdapter(AbstractExpandableDataProvider dataProvider) {
+    public MyExpandableDraggableSwipeableItemAdapter(
+            RecyclerViewExpandableItemManager expandableItemManager,
+            AbstractExpandableDataProvider dataProvider) {
+        mExpandableItemManager = expandableItemManager;
         mProvider = dataProvider;
         mItemViewOnClickListener = new View.OnClickListener() {
             @Override
@@ -129,7 +133,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
 
     private void onSwipeableViewContainerClick(View v) {
         if (mEventListener != null) {
-            mEventListener.onItemViewClicked(AdapterUtils.findParentViewHolderItemView(v), false);  // false --- not pinned
+            mEventListener.onItemViewClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v), false);  // false --- not pinned
         }
     }
 
@@ -388,9 +392,15 @@ public class MyExpandableDraggableSwipeableItemAdapter
         Log.d(TAG, "onSwipeGroupItem(groupPosition = " + groupPosition + ", result = " + result + ")");
 
         switch (result) {
-            // swipe right --- remove
+            // swipe right
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
+                if (mProvider.getGroupItem(groupPosition).isPinnedToSwipeLeft()) {
+                    // pinned --- back to default position
+                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
+                } else {
+                    // not pinned --- remove
+                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
+                }
             // swipe left -- pin
             case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
@@ -406,9 +416,15 @@ public class MyExpandableDraggableSwipeableItemAdapter
         Log.d(TAG, "onSwipeChildItem(groupPosition = " + groupPosition + ", childPosition = " + childPosition + ", result = " + result + ")");
 
         switch (result) {
-            // swipe right --- remove
+            // swipe right
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
+                if (mProvider.getChildItem(groupPosition, childPosition).isPinnedToSwipeLeft()) {
+                    // pinned --- back to default position
+                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
+                } else {
+                    // not pinned --- remove
+                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
+                }
             // swipe left -- pin
             case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
@@ -424,7 +440,8 @@ public class MyExpandableDraggableSwipeableItemAdapter
         Log.d(TAG, "onPerformAfterSwipeGroupReaction(groupPosition = " + groupPosition + ", result = " + result + ", reaction = " + reaction + ")");
 
         final AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(groupPosition);
-        final int flatPosition = holder.getPosition();
+        final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
+        final int flatPosition = mExpandableItemManager.getFlatPosition(expandablePosition);
 
         if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
             mProvider.removeGroupItem(groupPosition);
@@ -451,7 +468,8 @@ public class MyExpandableDraggableSwipeableItemAdapter
                 ", result = " + result + ", reaction = " + reaction + ")");
 
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
-        final int flatPosition = holder.getPosition();
+        final long expandablePosition = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, childPosition);
+        final int flatPosition = mExpandableItemManager.getFlatPosition(expandablePosition);
 
         if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
             mProvider.removeChildItem(groupPosition, childPosition);

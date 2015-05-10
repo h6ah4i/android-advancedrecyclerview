@@ -125,7 +125,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
     void onBindChildViewHolder(CVH holder, int groupPosition, int childPosition, int viewType);
 
     /**
-     * Called when the user attempt to expand/collapse the group item.
+     * Called when a user attempt to expand/collapse a group item by tapping.
      *
      * @param holder The ViewHolder which is associated to group item user is attempt to expand/collapse
      * @param groupPosition Group position
@@ -136,4 +136,26 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @return Whether to perform expand/collapse operation.
      */
     boolean onCheckCanExpandOrCollapseGroup(GVH holder, int groupPosition, int x, int y, boolean expand);
+
+    /**
+     * Called when a group attempt to expand by user operation or by
+     * {@link com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager#expandGroup(int)} method.
+     *
+     * @param groupPosition The position of the group item within the adapter's data set
+     * @param fromUser Whether the expand request is issued by a user operation
+     *
+     * @return Whether the group can be expanded. If returns false, the group keeps collapsed.
+     */
+    boolean onHookGroupExpand(int groupPosition, boolean fromUser);
+
+    /**
+     * Called when a group attempt to expand by user operation or by
+     * {@link com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager#collapseGroup(int)} method.
+     *
+     * @param groupPosition The position of the group item within the adapter's data set
+     * @param fromUser Whether the collapse request is issued by a user operation
+     *
+     * @return Whether the group can be collapsed. If returns false, the group keeps expanded.
+     */
+    boolean onHookGroupCollapse(int groupPosition, boolean fromUser);
 }

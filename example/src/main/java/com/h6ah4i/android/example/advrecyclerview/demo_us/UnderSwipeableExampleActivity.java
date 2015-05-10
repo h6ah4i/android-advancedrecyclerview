@@ -14,10 +14,9 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_s;
+package com.h6ah4i.android.example.advrecyclerview.demo_us;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
@@ -31,7 +30,7 @@ import com.nispok.snackbar.enums.SnackbarType;
 import com.nispok.snackbar.listeners.ActionClickListener;
 
 
-public class SwipeableExampleActivity extends AppCompatActivity implements ItemPinnedMessageDialogFragment.EventListener {
+public class UnderSwipeableExampleActivity extends AppCompatActivity implements ItemPinnedMessageDialogFragment.EventListener {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     private static final String FRAGMENT_LIST_VIEW = "list view";
     private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";
@@ -80,12 +79,6 @@ public class SwipeableExampleActivity extends AppCompatActivity implements ItemP
      * @param position The position of the item within data set
      */
     public void onItemPinned(int position) {
-        final DialogFragment dialog = ItemPinnedMessageDialogFragment.newInstance(position);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(dialog, FRAGMENT_TAG_ITEM_PINNED_DIALOG)
-                .commit();
     }
 
     /**
@@ -102,6 +95,21 @@ public class SwipeableExampleActivity extends AppCompatActivity implements ItemP
             data.setPinnedToSwipeLeft(false);
             ((RecyclerListViewFragment) fragment).notifyItemChanged(position);
         }
+    }
+    /**
+     * This method will be called when a "button placed under the swipeable view" is clicked
+     *
+     * @param position The position of the item within data set
+     */
+    public void onItemButtonClicked(int position) {
+        String text = getString(R.string.snack_bar_text_button_clicked, position);
+
+        SnackbarManager.show(
+                Snackbar.with(getApplicationContext())
+                        .text(text)
+                        .type(SnackbarType.SINGLE_LINE)
+                        .swipeToDismiss(true)
+                , this);
     }
 
     private void onItemUndoActionClicked() {

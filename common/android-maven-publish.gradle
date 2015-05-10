@@ -32,7 +32,6 @@ task cleanDocsOutDir(type: Delete) {
 
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     excludes += '**/BuildConfig.java'
     excludes += '**/R.java'
     options.encoding "utf-8"
@@ -49,6 +48,7 @@ task androidSourcesJar(type: Jar) {
 }
 
 afterEvaluate {
+    androidJavadocs.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     androidJavadocs.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
 }
 

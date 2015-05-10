@@ -67,6 +67,8 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
         // reset SwipeableItemViewHolder state
         if (holder instanceof SwipeableItemViewHolder) {
+            mSwipeManager.cancelPendingAnimations(holder);
+
             ((SwipeableItemViewHolder) holder).setSwipeItemSlideAmount(0.0f);
 
             View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
@@ -116,7 +118,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
             if ((prevSwipeItemSlideAmount != swipeItemSlideAmount) ||
                     !(mSwipeManager.isSwiping() || mSwipeManager.isAnimationRunning(holder))) {
-                mSwipeManager.applySlideItem(holder, prevSwipeItemSlideAmount, swipeItemSlideAmount, true);
+                mSwipeManager.applySlideItem(holder, position, prevSwipeItemSlideAmount, swipeItemSlideAmount, true);
             }
         }
     }
@@ -175,32 +177,32 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     // NOTE: This method is called from RecyclerViewDragDropManager
     /*package*/
     @SuppressWarnings("unchecked")
-    int getSwipeReactionType(RecyclerView.ViewHolder holder, int x, int y) {
+    int getSwipeReactionType(RecyclerView.ViewHolder holder, int position, int x, int y) {
         if (LOCAL_LOGV) {
-            Log.v(TAG, "getSwipeReactionType(holder = " + holder + ", x = " + x + ", y = " + y + ")");
+            Log.v(TAG, "getSwipeReactionType(holder = " + holder + ", position = " + position + ", x = " + x + ", y = " + y + ")");
         }
 
-        return mSwipeableItemAdapter.onGetSwipeReactionType(holder, x, y);
+        return mSwipeableItemAdapter.onGetSwipeReactionType(holder, position, x, y);
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
     /*package*/
     @SuppressWarnings("unchecked")
-    void setSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int type) {
+    void setSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int position, int type) {
         if (LOCAL_LOGV) {
-            Log.v(TAG, "setSwipeBackgroundDrawable(holder = " + holder + ", type = " + type + ")");
+            Log.v(TAG, "setSwipeBackgroundDrawable(holder = " + holder + ", position = " + position + ", type = " + type + ")");
         }
 
-        mSwipeableItemAdapter.onSetSwipeBackground(holder, type);
+        mSwipeableItemAdapter.onSetSwipeBackground(holder, position, type);
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ void onSwipeItemStarted(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder holder) {
+    /*package*/ void onSwipeItemStarted(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder holder, int position) {
         if (LOCAL_LOGD) {
-            Log.d(TAG, "onSwipeItemStarted(holder = " + holder + ")");
+            Log.d(TAG, "onSwipeItemStarted(holder = " + holder + ", position = " + position + ")");
         }
 
-        mSwipingItemPosition = holder.getPosition();
+        mSwipingItemPosition = position;
 
         notifyDataSetChanged();
     }
@@ -208,25 +210,25 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     // NOTE: This method is called from RecyclerViewDragDropManager
     /*package*/
     @SuppressWarnings("unchecked")
-    int onSwipeItemFinished(RecyclerView.ViewHolder holder, int result) {
+    int onSwipeItemFinished(RecyclerView.ViewHolder holder, int position, int result) {
         if (LOCAL_LOGD) {
-            Log.d(TAG, "onSwipeItemFinished(holder = " + holder + ", result = " + result + ")");
+            Log.d(TAG, "onSwipeItemFinished(holder = " + holder + ", position = " + position + ", result = " + result + ")");
         }
 
         mSwipingItemPosition = RecyclerView.NO_POSITION;
 
-        return mSwipeableItemAdapter.onSwipeItem(holder, result);
+        return mSwipeableItemAdapter.onSwipeItem(holder, position, result);
     }
 
     /*package*/
     @SuppressWarnings("unchecked")
-    void onSwipeItemFinished2(RecyclerView.ViewHolder holder, int result, int afterReaction) {
+    void onSwipeItemFinished2(RecyclerView.ViewHolder holder, int position, int result, int afterReaction) {
 
         ((SwipeableItemViewHolder) holder).setSwipeResult(result);
         ((SwipeableItemViewHolder) holder).setAfterSwipeReaction(afterReaction);
         ((SwipeableItemViewHolder) holder).setSwipeItemSlideAmount(getSwipeAmountFromAfterReaction(result, afterReaction));
 
-        mSwipeableItemAdapter.onPerformAfterSwipeReaction(holder, result, afterReaction);
+        mSwipeableItemAdapter.onPerformAfterSwipeReaction(holder, position, result, afterReaction);
         notifyDataSetChanged();
     }
 
