@@ -1,8 +1,8 @@
 ## 0.7.0
 
 [Breaking changes]
-- Changed method signitures of SwipeableItemAdapter (commit: `56e0084342f6e86ae26078f7c329368e2a59b92b`)
-- Changed method of DraggableItemAnimator (commit: `56e0084342f6e86ae26078f7c329368e2a59b92b`)
+- Changed method signatures of SwipeableItemAdapter (commit: `56e0084342f6e86ae26078f7c329368e2a59b92b`)
+- Changed method signatures of DraggableItemAdapter (commit: `56e0084342f6e86ae26078f7c329368e2a59b92b`)
 
 [Improvements]
 - Upgraded support library to v22.1.1
