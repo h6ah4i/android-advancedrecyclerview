@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.common.compat.MorphButtonCompat;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
@@ -34,6 +35,7 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.GroupPositionItemDra
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
+import com.wnafee.vector.MorphButton;
 
 public class MyExpandableDraggableWithSectionItemAdapter
         extends AbstractExpandableItemAdapter<MyExpandableDraggableWithSectionItemAdapter.MyGroupViewHolder, MyExpandableDraggableWithSectionItemAdapter.MyChildViewHolder>
@@ -70,8 +72,11 @@ public class MyExpandableDraggableWithSectionItemAdapter
     }
 
     public static class MyGroupViewHolder extends MyBaseViewHolder {
+        public MorphButtonCompat mMorphButton;
+
         public MyGroupViewHolder(View v) {
             super(v);
+            mMorphButton = new MorphButtonCompat(v.findViewById(R.id.indicator));
         }
     }
 
@@ -185,6 +190,7 @@ public class MyExpandableDraggableWithSectionItemAdapter
         if (((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED) != 0) ||
                 ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
+            MorphButton.MorphState indicatorState;
 
             if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_group_item_dragging_active_state;
@@ -197,7 +203,17 @@ public class MyExpandableDraggableWithSectionItemAdapter
                 bgResId = R.drawable.bg_group_item_normal_state;
             }
 
+            if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
+                indicatorState = MorphButton.MorphState.END;
+            } else {
+                indicatorState = MorphButton.MorphState.START;
+            }
+
             holder.mContainer.setBackgroundResource(bgResId);
+
+            if (holder.mMorphButton.getState() != indicatorState) {
+                holder.mMorphButton.setState(indicatorState, true);
+            }
         }
     }
 

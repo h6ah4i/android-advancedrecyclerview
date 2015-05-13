@@ -44,9 +44,24 @@
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="56dp"
             android:layout_toRightOf="@id/drag_handle"
             android:layout_toLeftOf="@+id/indicator"
             android:gravity="center" />
+
+        <com.wnafee.vector.MorphButton
+            android:id="@+id/indicator"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@null"
+            android:enabled="false"
+            app:vc_foregroundTint="#666666"
+            app:vc_startDrawable="@drawable/ic_expand_less_to_expand_more"
+            app:vc_endDrawable="@drawable/ic_expand_more_to_expand_less"/>
 
     </RelativeLayout>
 
