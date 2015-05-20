@@ -1,3 +1,8 @@
+## 0.7.1
+
+- Removed TestActivity from manifest file
+- Added expanded/collapsed status indicators to demo app
+
 ## 0.7.0
 
 [Breaking changes]
