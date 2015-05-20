@@ -127,7 +127,9 @@ public class RecyclerListViewFragment extends Fragment {
 
         // Change animations are enabled by default since support-v7-recyclerview v22.
         // Disable the change animation in order to make turning back animation of swiped item works properly.
+        // Also need to disable them when using animation indicator.
         animator.setSupportsChangeAnimations(false);
+
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
