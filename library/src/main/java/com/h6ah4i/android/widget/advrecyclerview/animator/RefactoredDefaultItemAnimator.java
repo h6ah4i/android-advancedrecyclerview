@@ -48,7 +48,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
     /**
      * Item Animation manager for ADD operation  (Same behavior as DefaultItemAnimator class)
      */
-    private static class DefaultItemAddAnimationManager extends ItemAddAnimationManager {
+    protected static class DefaultItemAddAnimationManager extends ItemAddAnimationManager {
 
         public DefaultItemAddAnimationManager(BaseItemAnimator itemAnimator) {
             super(itemAnimator);
@@ -93,7 +93,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
     /**
      * Item Animation manager for REMOVE operation  (Same behavior as DefaultItemAnimator class)
      */
-    private static class DefaultItemRemoveAnimationManager extends ItemRemoveAnimationManager {
+    protected static class DefaultItemRemoveAnimationManager extends ItemRemoveAnimationManager {
 
         public DefaultItemRemoveAnimationManager(BaseItemAnimator itemAnimator) {
             super(itemAnimator);
@@ -137,7 +137,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
     /**
      * Item Animation manager for CHANGE operation  (Same behavior as DefaultItemAnimator class)
      */
-    private static class DefaultItemChangeAnimationManager extends ItemChangeAnimationManager {
+    protected static class DefaultItemChangeAnimationManager extends ItemChangeAnimationManager {
         public DefaultItemChangeAnimationManager(BaseItemAnimator itemAnimator) {
             super(itemAnimator);
         }
@@ -220,7 +220,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
     /**
      * Item Animation manager for MOVE operation  (Same behavior as DefaultItemAnimator class)
      */
-    private static class DefaultItemMoveAnimationManager extends ItemMoveAnimationManager {
+    protected static class DefaultItemMoveAnimationManager extends ItemMoveAnimationManager {
 
         public DefaultItemMoveAnimationManager(BaseItemAnimator itemAnimator) {
             super(itemAnimator);

@@ -36,7 +36,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
     private ItemChangeAnimationManager mChangeAnimationsManager;
     private ItemMoveAnimationManager mMoveAnimationsManager;
 
-    GeneralItemAnimator() {
+    protected GeneralItemAnimator() {
         setup();
     }
 
