@@ -122,6 +122,10 @@ public class RecyclerViewExpandableItemManager {
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
             }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+            }
         };
 
         if (savedState instanceof SavedState) {

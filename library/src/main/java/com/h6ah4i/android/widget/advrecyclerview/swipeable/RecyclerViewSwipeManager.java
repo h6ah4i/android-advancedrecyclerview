@@ -261,6 +261,10 @@ public class RecyclerViewSwipeManager {
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
                 RecyclerViewSwipeManager.this.onTouchEvent(rv, e);
             }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+            }
         };
         mItemSlideAnimator = new ItemSlidingAnimator();
         mVelocityTracker = VelocityTracker.obtain();
