@@ -78,8 +78,6 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
         }
 
         c.restoreToCount(savedCount);
-
-        ViewCompat.postInvalidateOnAnimation(parent);
     }
 
     private static boolean shouldDrawDropShadow(View child) {
