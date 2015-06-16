@@ -15,21 +15,22 @@
        limitations under the License.
 -->
 <!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    style="@style/commonListItemStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/commonListItemStyle"
     android:layout_width="match_parent"
     android:layout_height="96dp"
     android:layout_marginTop="8dp"
     android:background="#ffffff">
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        tools:ignore="UselessParent">
+        android:foreground="?attr/selectableItemBackground">
 
         <View
             android:id="@+id/drag_handle"
@@ -38,31 +39,28 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:background="#20000000"
-            tools:ignore="RtlHardcoded" />
+            tools:ignore="RtlHardcoded"/>
 
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="56dp"
-            android:layout_toRightOf="@id/drag_handle"
-            android:layout_toLeftOf="@+id/indicator"
-            android:gravity="center" />
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"/>
 
         <com.wnafee.vector.MorphButton
             android:id="@+id/indicator"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
+            android:layout_gravity="right|center_vertical"
             android:layout_marginRight="16dp"
             android:background="@null"
             android:enabled="false"
+            app:vc_endDrawable="@drawable/ic_expand_more_to_expand_less"
             app:vc_foregroundTint="#666666"
-            app:vc_startDrawable="@drawable/ic_expand_less_to_expand_more"
-            app:vc_endDrawable="@drawable/ic_expand_more_to_expand_less"/>
+            app:vc_startDrawable="@drawable/ic_expand_less_to_expand_more"/>
 
-    </RelativeLayout>
+    </FrameLayout>
 
 </FrameLayout>

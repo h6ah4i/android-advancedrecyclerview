@@ -40,13 +40,14 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+
+    <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
         android:clickable="true"
-        tools:ignore="UselessParent"
+        android:foreground="?attr/selectableItemBackground"
         tools:visibility="invisible">
 
         <View
@@ -61,9 +62,10 @@
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/drag_handle"
+            android:layout_marginLeft="32dp"
             android:gravity="center"
             tools:ignore="RtlHardcoded"/>
-    </RelativeLayout>
+
+    </FrameLayout>
 
 </FrameLayout>

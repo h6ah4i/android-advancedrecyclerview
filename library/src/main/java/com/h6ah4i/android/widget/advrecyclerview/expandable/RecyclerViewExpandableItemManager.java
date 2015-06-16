@@ -244,7 +244,8 @@ public class RecyclerViewExpandableItemManager {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 if (handleActionUpOrCancel(rv, e)) {
-                    return true;
+                    // NOTE: it requires to return false to work click effect properly (issue #44)
+                    return false;
                 }
                 break;
         }
