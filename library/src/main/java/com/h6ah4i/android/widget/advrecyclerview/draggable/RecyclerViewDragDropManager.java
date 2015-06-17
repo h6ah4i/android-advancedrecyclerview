@@ -599,6 +599,10 @@ public class RecyclerViewDragDropManager {
             mRecyclerView.getParent().requestDisallowInterceptTouchEvent(false);
         }
 
+        if (mRecyclerView != null) {
+            mRecyclerView.invalidate();
+        }
+
         mDraggableRange = null;
         mDraggingItemDecorator = null;
         mSwapTargetItemOperator = null;
