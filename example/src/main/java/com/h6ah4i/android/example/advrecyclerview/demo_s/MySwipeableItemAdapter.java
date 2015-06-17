@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
@@ -49,13 +50,13 @@ public class MySwipeableItemAdapter
     }
 
     public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
-        public ViewGroup mContainer;
+        public FrameLayout mContainer;
         public View mDragHandle;
         public TextView mTextView;
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (ViewGroup) v.findViewById(R.id.container);
+            mContainer = (FrameLayout) v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
 

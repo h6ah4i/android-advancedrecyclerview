@@ -98,6 +98,10 @@ public class RecyclerListViewFragment extends Fragment {
 
         final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
 
+        // Change animations are enabled by default since support-v7-recyclerview v22.
+        // Need to disable them when using animation indicator.
+        animator.setSupportsChangeAnimations(false);
+
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
         mRecyclerView.setItemAnimator(animator);

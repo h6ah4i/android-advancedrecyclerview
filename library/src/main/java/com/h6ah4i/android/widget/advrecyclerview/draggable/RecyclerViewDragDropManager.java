@@ -152,6 +152,10 @@ public class RecyclerViewDragDropManager {
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
                 RecyclerViewDragDropManager.this.onTouchEvent(rv, e);
             }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+            }
         };
 
         mInternalUseOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -593,6 +597,10 @@ public class RecyclerViewDragDropManager {
 
         if (mRecyclerView != null && mRecyclerView.getParent() != null) {
             mRecyclerView.getParent().requestDisallowInterceptTouchEvent(false);
+        }
+
+        if (mRecyclerView != null) {
+            mRecyclerView.invalidate();
         }
 
         mDraggableRange = null;

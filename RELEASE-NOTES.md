@@ -1,3 +1,14 @@
+## 0.7.2
+- [Important] Updated support-v7-recyclerview v22.2.0
+- Fixed issue #44 (Click effect on GroupView)
+- Fixed issue #50 (PU usage 30-40% while Idle)
+- Merged pull request #55 (Makes ItemAnimators more easily extensible.)
+
+## 0.7.1
+
+- Removed TestActivity from manifest file
+- Added expanded/collapsed status indicators to demo app
+
 ## 0.7.0
 
 [Breaking changes]

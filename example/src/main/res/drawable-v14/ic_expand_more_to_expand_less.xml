@@ -14,8 +14,11 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<ripple
-    android:color="@color/ripple_group_item_expanded_state"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/bg_group_item_expanded_state"/>
-</ripple>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_expand_less_vector">
+
+    <target
+        android:name="rotationGroup"
+        android:animation="@anim/expand_more_to_expand_less_rotation" />
+
+</animated-vector>

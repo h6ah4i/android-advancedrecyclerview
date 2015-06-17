@@ -20,14 +20,17 @@ import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.common.compat.MorphButtonCompat;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
+import com.wnafee.vector.MorphButton;
 
 public class MyExpandableItemAdapter
         extends AbstractExpandableItemAdapter<MyExpandableItemAdapter.MyGroupViewHolder, MyExpandableItemAdapter.MyChildViewHolder> {
@@ -36,13 +39,13 @@ public class MyExpandableItemAdapter
     private AbstractExpandableDataProvider mProvider;
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
-        public ViewGroup mContainer;
+        public FrameLayout mContainer;
         public View mDragHandle;
         public TextView mTextView;
 
         public MyBaseViewHolder(View v) {
             super(v);
-            mContainer = (ViewGroup) v.findViewById(R.id.container);
+            mContainer = (FrameLayout) v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
 
@@ -52,8 +55,11 @@ public class MyExpandableItemAdapter
     }
 
     public static class MyGroupViewHolder extends MyBaseViewHolder {
+        public MorphButtonCompat mMorphButton;
+
         public MyGroupViewHolder(View v) {
             super(v);
+            mMorphButton = new MorphButtonCompat(v.findViewById(R.id.indicator));
         }
     }
 
@@ -131,14 +137,21 @@ public class MyExpandableItemAdapter
 
         if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
+            MorphButton.MorphState indicatorState;
 
             if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
+                indicatorState = MorphButton.MorphState.END;
             } else {
                 bgResId = R.drawable.bg_group_item_normal_state;
+                indicatorState = MorphButton.MorphState.START;
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
+
+            if (holder.mMorphButton.getState() != indicatorState) {
+                holder.mMorphButton.setState(indicatorState, true);
+            }
         }
     }
 

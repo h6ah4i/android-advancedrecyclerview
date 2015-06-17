@@ -122,6 +122,10 @@ public class RecyclerViewExpandableItemManager {
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
             }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+            }
         };
 
         if (savedState instanceof SavedState) {
@@ -240,7 +244,8 @@ public class RecyclerViewExpandableItemManager {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 if (handleActionUpOrCancel(rv, e)) {
-                    return true;
+                    // NOTE: it requires to return false to work click effect properly (issue #44)
+                    return false;
                 }
                 break;
         }

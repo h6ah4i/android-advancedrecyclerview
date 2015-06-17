@@ -14,8 +14,8 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<ripple
-    android:color="@color/ripple_group_item_normal_state"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/bg_group_item_normal_state"/>
-</ripple>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="@integer/anim_duration"
+    android:propertyName="rotation"
+    android:valueFrom="-180"
+    android:valueTo="0"/>

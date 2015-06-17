@@ -14,24 +14,24 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<!-- should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
+<FrameLayout
     style="@style/commonListItemStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="96dp"
-    android:layout_marginBottom="20dp"
-    android:layout_marginLeft="30dp"
-    android:layout_marginRight="40dp"
-    android:layout_marginTop="10dp"
-    tools:ignore="RtlHardcoded">
+    android:layout_marginTop="8dp"
+    android:background="#ffffff">
 
-    <RelativeLayout
+
+    <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        tools:ignore="UselessParent">
+        android:foreground="?attr/selectableItemBackground">
 
         <View
             android:id="@+id/drag_handle"
@@ -39,14 +39,16 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="#20000000" />
+            android:background="#20000000"
+            tools:ignore="RtlHardcoded"/>
 
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/drag_handle"
-            android:gravity="center" />
-    </RelativeLayout>
+            android:layout_marginLeft="32dp"
+            android:gravity="center"/>
 
-</RelativeLayout>
+    </FrameLayout>
+
+</FrameLayout>
