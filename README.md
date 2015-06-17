@@ -34,7 +34,7 @@ Target platforms
 Latest version
 ---
 
-- Version 0.7.1  (May 20, 2015)
+- Version 0.7.2  (June 18, 2015)
 
 Getting started
 ---
