@@ -43,7 +43,7 @@ This library is published on jCenter. Just add these lines to `build.gradle`.
 
 ```groovy
 dependencies {
-    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.7.1'
+    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.7.2'
 }
 ```
 
