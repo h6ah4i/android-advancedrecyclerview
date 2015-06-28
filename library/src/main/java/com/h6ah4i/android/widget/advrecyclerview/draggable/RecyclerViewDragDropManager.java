@@ -236,6 +236,7 @@ public class RecyclerViewDragDropManager {
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
     public void attachRecyclerView(RecyclerView rv) {
+        //noinspection deprecation
         attachRecyclerView(rv, null);
     }
 
@@ -249,7 +250,8 @@ public class RecyclerViewDragDropManager {
      * @param rv                     The {@link android.support.v7.widget.RecyclerView} instance
      * @param scrollEventDistributor The distributor for {@link android.support.v7.widget.RecyclerView.OnScrollListener} event
      */
-    public void attachRecyclerView(RecyclerView rv, RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
+    @Deprecated
+    public void attachRecyclerView(RecyclerView rv, @SuppressWarnings("deprecation") RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
         if (rv == null) {
             throw new IllegalArgumentException("RecyclerView cannot be null");
         }
