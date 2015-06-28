@@ -83,6 +83,29 @@ public class RecyclerViewDragDropManager {
 
     // ---
 
+    /**
+     * Used for listening item drag events
+     */
+    public interface OnItemDragEventListener {
+        /**
+         * Callback method to be invoked when dragging is started.
+         *
+         * @param position The position of the item.
+         */
+        void onDraggingStarted(int position);
+
+        /**
+         * Callback method to be invoked when dragging is finished.
+         *
+         * @param fromPosition Previous position of the item.
+         * @param toPosition New position of the item.
+         * @param result Indicates whether the dragging operation was succeeded.
+         */
+        void onDraggingFinished(int fromPosition, int toPosition, boolean result);
+    }
+
+    // --
+
     private static final int SCROLL_DIR_NONE = 0;
     private static final int SCROLL_DIR_UP = (1 << 0);
     private static final int SCROLL_DIR_DOWN = (1 << 1);
@@ -139,6 +162,7 @@ public class RecyclerViewDragDropManager {
     private int mOrigOverScrollMode;
     private ItemDraggableRange mDraggableRange;
     private InternalHandler mHandler;
+    private OnItemDragEventListener mItemDragEventListener;
 
     /**
      * Constructor.
@@ -384,6 +408,19 @@ public class RecyclerViewDragDropManager {
         return mSwapTargetTranslationInterpolator;
     }
 
+    public OnItemDragEventListener getOnItemDragEventListener() {
+        return mItemDragEventListener;
+    }
+
+    /**
+     * Sets OnItemDragEventListener listener
+     *
+     * @param listener
+     */
+    public void setOnItemDragEventListener(OnItemDragEventListener listener) {
+        mItemDragEventListener = listener;
+    }
+
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         final int action = MotionEventCompat.getActionMasked(e);
 
@@ -545,6 +582,10 @@ public class RecyclerViewDragDropManager {
         if (mEdgeEffectDecorator != null) {
             mEdgeEffectDecorator.reorderToTop();
         }
+
+        if (mItemDragEventListener != null) {
+            mItemDragEventListener.onDraggingStarted(mAdapter.getDraggingItemInitialPosition());
+        }
     }
 
     /**
@@ -633,14 +674,26 @@ public class RecyclerViewDragDropManager {
         mGrabbedItemHeight = 0;
 
 
+        int draggingItemInitialPosition = RecyclerView.NO_POSITION;
+        int draggingItemCurrentPosition = RecyclerView.NO_POSITION;
+
         // raise onDragItemFinished() event
         if (mAdapter != null) {
+            draggingItemInitialPosition = mAdapter.getDraggingItemInitialPosition();
+            draggingItemCurrentPosition = mAdapter.getDraggingItemCurrentPosition();
             mAdapter.onDragItemFinished(draggedItem, result);
         }
 
 //        if (draggedItem != null) {
 //            draggedItem.setIsRecyclable(true);
 //        }
+
+        if (mItemDragEventListener != null) {
+            mItemDragEventListener.onDraggingFinished(
+                    draggingItemInitialPosition,
+                    draggingItemCurrentPosition,
+                    result);
+        }
     }
 
     private boolean handleActionUpOrCancel(RecyclerView rv, MotionEvent e) {

@@ -345,6 +345,14 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         return mDragDropManager.isDragging();
     }
 
+    /*package*/ int getDraggingItemInitialPosition() {
+        return mDraggingItemInitialPosition;
+    }
+
+    /*package*/ int getDraggingItemCurrentPosition() {
+        return mDraggingItemCurrentPosition;
+    }
+
     private static void safeUpdateFlags(RecyclerView.ViewHolder holder, int flags) {
         if (!(holder instanceof DraggableItemViewHolder)) {
             return;
