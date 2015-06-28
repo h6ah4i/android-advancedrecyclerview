@@ -111,6 +111,7 @@ public class RecyclerViewDragDropManager {
     private int mInitialTouchY;
     private long mInitialTouchItemId = RecyclerView.NO_ID;
     private boolean mInitiateOnLongPress;
+    private boolean mInitiateOnMove = true;
 
     private boolean mInScrollByMethod;
     private int mActualScrollByAmount;
@@ -349,21 +350,39 @@ public class RecyclerViewDragDropManager {
     }
 
     /**
-     * Returns whether dragging will start after a long press or not.
+     * Returns whether dragging starts on a long press or not.
      *
-     * @return True if dragging starts with a long press, false otherwise.
+     * @return True if dragging starts on a long press, false otherwise.
      */
     public boolean getInitiateOnLongPress() {
         return mInitiateOnLongPress;
     }
 
     /**
-     * Sets whether dragging will start after a long press or immediately upon move motions.
+     * Sets whether dragging starts on a long press. (default: false)
      *
      * @param initiateOnLongPress True to initiate dragging on long press.
      */
     public void setInitiateOnLongPress(boolean initiateOnLongPress) {
         mInitiateOnLongPress = initiateOnLongPress;
+    }
+
+    /**
+     * Returns whether dragging starts on move motions.
+     *
+     * @return True if dragging starts on move motions, false otherwise.
+     */
+    public boolean getInitiateOnMove() {
+        return mInitiateOnMove;
+    }
+
+    /**
+     * Sets whether dragging starts on move motions. (default: true)
+     *
+     * @param initiateOnMove True to initiate dragging on move motions.
+     */
+    public void setInitiateOnMove(boolean initiateOnMove) {
+        mInitiateOnMove = initiateOnMove;
     }
 
     /**
@@ -649,7 +668,7 @@ public class RecyclerViewDragDropManager {
     }
 
     private boolean handleActionMoveWhileNotDragging(RecyclerView rv, MotionEvent e) {
-        if (!mInitiateOnLongPress) {
+        if (mInitiateOnMove) {
             return checkConditionAndStartDragging(rv, e, true);
         } else {
             return false;
