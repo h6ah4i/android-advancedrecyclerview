@@ -354,7 +354,7 @@ public class RecyclerViewDragDropManager {
      *
      * @return True if dragging starts on a long press, false otherwise.
      */
-    public boolean getInitiateOnLongPress() {
+    public boolean isInitiateOnLongPressEnabled() {
         return mInitiateOnLongPress;
     }
 
@@ -372,7 +372,7 @@ public class RecyclerViewDragDropManager {
      *
      * @return True if dragging starts on move motions, false otherwise.
      */
-    public boolean getInitiateOnMove() {
+    public boolean isInitiateOnMoveEnabled() {
         return mInitiateOnMove;
     }
 
