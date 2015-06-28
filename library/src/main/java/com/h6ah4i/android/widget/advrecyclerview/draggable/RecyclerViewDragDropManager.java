@@ -871,7 +871,14 @@ public class RecyclerViewDragDropManager {
             final int draggingItemTop = mDraggingItemDecorator.getTranslatedItemPositionTop();
             final int draggingItemBottom = mDraggingItemDecorator.getTranslatedItemPositionBottom();
             final int draggingItemCenter = (draggingItemTop + draggingItemBottom) / 2;
-            final int nearEdgePosition = ((draggingItemCenter < (height / 2)) ? draggingItemTop : draggingItemBottom);
+            final int nearEdgePosition;
+
+            if (firstVisibleChild == 0 && lastVisibleChild == 0) {
+                // has only 1 item
+                nearEdgePosition = (scrollAmount < 0) ? draggingItemTop : draggingItemBottom;
+            } else {
+                nearEdgePosition = (draggingItemCenter < (height / 2)) ? draggingItemTop : draggingItemBottom;
+            }
 
             final float nearEdgeOffset = (nearEdgePosition * invHeight) - 0.5f;
             final float absNearEdgeOffset = Math.abs(nearEdgeOffset);
