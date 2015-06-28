@@ -533,6 +533,8 @@ public class RecyclerViewDragDropManager {
     private void startDragging(RecyclerView rv, MotionEvent e, RecyclerView.ViewHolder holder, ItemDraggableRange range) {
         safeEndAnimation(rv, holder);
 
+        mHandler.cancelLongPressDetection();
+
         mDraggingItem = holder;
 
         // XXX if setIsRecyclable() is used, another view holder objects will be created
@@ -730,6 +732,10 @@ public class RecyclerViewDragDropManager {
     }
 
     private boolean checkConditionAndStartDragging(RecyclerView rv, MotionEvent e, boolean checkTouchSlop) {
+        if (mDraggingItem != null) {
+            return false;
+        }
+
         final int touchX = (int) (e.getX() + 0.5f);
         final int touchY = (int) (e.getY() + 0.5f);
 
@@ -747,13 +753,10 @@ public class RecyclerViewDragDropManager {
 
         final RecyclerView.ViewHolder holder = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, e.getX(), e.getY());
 
-        if (!checkTouchedItemState(rv, holder)) {
+        if (!checkTouchedItemState(rv, holder) || holder.getItemId() != mInitialTouchItemId) {
             mInitialTouchItemId = RecyclerView.NO_ID;
-            return false;
-        }
+            mHandler.cancelLongPressDetection();
 
-        if (holder.getItemId() != mInitialTouchItemId) {
-            mInitialTouchItemId = RecyclerView.NO_ID;
             return false;
         }
 
