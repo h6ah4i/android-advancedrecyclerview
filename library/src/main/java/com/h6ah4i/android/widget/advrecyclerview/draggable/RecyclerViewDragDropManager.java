@@ -19,11 +19,12 @@ package com.h6ah4i.android.widget.advrecyclerview.draggable;
 import android.graphics.Rect;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -100,7 +101,6 @@ public class RecyclerViewDragDropManager {
 
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
     private RecyclerView.OnScrollListener mInternalUseOnScrollListener;
-    private GestureDetector mGestureDetector;
 
     private EdgeEffectDecorator mEdgeEffectDecorator;
     private NinePatchDrawable mShadowDrawable;
@@ -138,6 +138,7 @@ public class RecyclerViewDragDropManager {
     private int mGrabbedItemHeight;
     private int mOrigOverScrollMode;
     private ItemDraggableRange mDraggableRange;
+    private InternalHandler mHandler;
 
     /**
      * Constructor.
@@ -156,6 +157,7 @@ public class RecyclerViewDragDropManager {
 
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+                RecyclerViewDragDropManager.this.onRequestDisallowInterceptTouchEvent(disallowIntercept);
             }
         };
 
@@ -263,24 +265,7 @@ public class RecyclerViewDragDropManager {
         mDisplayDensity = mRecyclerView.getResources().getDisplayMetrics().density;
         mTouchSlop = ViewConfiguration.get(mRecyclerView.getContext()).getScaledTouchSlop();
         mScrollTouchSlop = (int) (mTouchSlop * SCROLL_TOUCH_SLOP_MULTIPLY + 0.5f);
-
-        mGestureDetector = new GestureDetector(mRecyclerView.getContext(), new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public void onLongPress(MotionEvent e) {
-                handleOnLongPress(e);
-            }
-
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                return true;
-            }
-
-            @Override
-            public boolean onDown(MotionEvent e) {
-                return true;
-            }
-        });
-        mGestureDetector.setIsLongpressEnabled(true);
+        mHandler = new InternalHandler(this);
 
         if (supportsEdgeEffect()) {
             // edge effect is available on ICS or later
@@ -296,6 +281,11 @@ public class RecyclerViewDragDropManager {
      */
     public void release() {
         cancelDrag();
+
+        if (mHandler != null) {
+            mHandler.release();
+            mHandler = null;
+        }
 
         if (mEdgeEffectDecorator != null) {
             mEdgeEffectDecorator.finish();
@@ -401,8 +391,6 @@ public class RecyclerViewDragDropManager {
             Log.v(TAG, "onInterceptTouchEvent() action = " + action);
         }
 
-        mGestureDetector.onTouchEvent(e);
-
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -442,8 +430,6 @@ public class RecyclerViewDragDropManager {
             return;
         }
 
-        mGestureDetector.onTouchEvent(e);
-
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -456,6 +442,13 @@ public class RecyclerViewDragDropManager {
 
         }
     }
+
+    /*package */ void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        if (disallowIntercept) {
+            cancelDrag(true);
+        }
+    }
+
 
     /*package*/ void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         if (LOCAL_LOGV) {
@@ -483,6 +476,10 @@ public class RecyclerViewDragDropManager {
 
         mInitialTouchY = mLastTouchY = (int) (e.getY() + 0.5f);
         mInitialTouchItemId = holder.getItemId();
+
+        if (mInitiateOnLongPress) {
+            mHandler.startLongPressDetection(e);
+        }
 
         return true;
     }
@@ -648,6 +645,8 @@ public class RecyclerViewDragDropManager {
 
     private boolean handleActionUpOrCancel(RecyclerView rv, MotionEvent e) {
         final boolean result = (MotionEventCompat.getActionMasked(e) == MotionEvent.ACTION_UP);
+
+        mHandler.cancelLongPressDetection();
 
         mInitialTouchY = 0;
         mLastTouchY = 0;
@@ -1245,6 +1244,46 @@ public class RecyclerViewDragDropManager {
                 ViewCompat.postOnAnimation(rv, this);
             } else {
                 mStarted = false;
+            }
+        }
+    }
+
+    private static class InternalHandler extends Handler {
+        private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();// + ViewConfiguration.getTapTimeout();
+        private static final int MSG_LONGPRESS = 1;
+
+        private RecyclerViewDragDropManager mHolder;
+        private MotionEvent mDownMotionEvent;
+
+        public InternalHandler(RecyclerViewDragDropManager holder) {
+            mHolder = holder;
+        }
+
+        public void release() {
+            removeCallbacks(null);
+            mHolder = null;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_LONGPRESS:
+                    mHolder.handleOnLongPress(mDownMotionEvent);
+                    break;
+            }
+        }
+
+        public void startLongPressDetection(MotionEvent e) {
+            cancelLongPressDetection();
+            mDownMotionEvent = MotionEvent.obtain(e);
+            sendEmptyMessageAtTime(MSG_LONGPRESS, e.getDownTime() + LONGPRESS_TIMEOUT);
+        }
+
+        public void cancelLongPressDetection() {
+            removeMessages(MSG_LONGPRESS);
+            if (mDownMotionEvent != null) {
+                mDownMotionEvent.recycle();
+                mDownMotionEvent = null;
             }
         }
     }
