@@ -444,6 +444,8 @@ class ExpandablePositionTranslator {
             mCachedGroupPosInfo[i] = mCachedGroupPosInfo[i + 1];
             mCachedGroupId[i] = mCachedGroupId[i + 1];
         }
+
+        mEndOfCalculatedOffsetGroupPosition = (mGroupCount == 0) ? RecyclerView.NO_POSITION : Math.max(0, groupPosition - 1);
     }
 
     public void removeChildItem(int groupPosition, int childPosition) {
