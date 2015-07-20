@@ -123,7 +123,7 @@ public class MyUnderSwipeableItemAdapter
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.list_item_with_button, parent, false);
+        final View v = inflater.inflate(R.layout.list_item_with_leave_behind_button, parent, false);
         return new MyViewHolder(v);
     }
 

@@ -73,6 +73,10 @@
             android:label="@string/activity_title_demo_ed_with_section" />
 
         <activity
+            android:name=".demo_e_add_remove.AddRemoveExpandableExampleActivity"
+            android:label="@string/activity_title_demo_e_add_remove" />
+
+        <activity
             android:name=".about.AboutActivity"
             android:label="@string/activity_title_about"/>
     </application>
