@@ -37,8 +37,7 @@
             android:id="@+id/drag_handle"
             android:layout_width="32dp"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_gravity="top|left"
             android:background="#20000000"
             tools:ignore="RtlHardcoded"/>
 
@@ -46,6 +45,7 @@
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="top|left"
             android:layout_marginLeft="32dp"
             android:gravity="center"/>
 

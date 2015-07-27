@@ -25,10 +25,10 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.example.advrecyclerview.common.compat.MorphButtonCompat;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
+import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
@@ -39,7 +39,6 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeMana
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
-import com.wnafee.vector.MorphButton;
 
 public class MyExpandableDraggableSwipeableItemAdapter
         extends AbstractExpandableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder>
@@ -95,11 +94,11 @@ public class MyExpandableDraggableSwipeableItemAdapter
     }
 
     public static class MyGroupViewHolder extends MyBaseViewHolder {
-        public MorphButtonCompat mMorphButton;
+        public ExpandableItemIndicator mIndicator;
 
         public MyGroupViewHolder(View v) {
             super(v);
-            mMorphButton = new MorphButtonCompat(v.findViewById(R.id.indicator));
+            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
         }
     }
 
@@ -177,7 +176,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
     @Override
     public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.list_group_item, parent, false);
+        final View v = inflater.inflate(R.layout.list_group_item_draggable, parent, false);
         return new MyGroupViewHolder(v);
     }
 
@@ -208,7 +207,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
                 ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0) ||
                 ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
-            MorphButton.MorphState indicatorState;
+            boolean isExpanded;
 
             if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_group_item_dragging_active_state;
@@ -228,16 +227,13 @@ public class MyExpandableDraggableSwipeableItemAdapter
             }
 
             if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
-                indicatorState = MorphButton.MorphState.END;
+                isExpanded = true;
             } else {
-                indicatorState = MorphButton.MorphState.START;
+                isExpanded = false;
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
-
-            if (holder.mMorphButton.getState() != indicatorState) {
-                holder.mMorphButton.setState(indicatorState, true);
-            }
+            holder.mIndicator.setExpandedState(isExpanded, true);
         }
 
         // set swiping properties
