@@ -57,5 +57,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.1'
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+}
+
 // NOTE: this line should be place at end of the file
 apply from: '../common/android-maven-publish.gradle'

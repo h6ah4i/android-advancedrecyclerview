@@ -390,6 +390,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     //
     // SwipeableItemAdapter implementations
     //
+    @SuppressWarnings("unchecked")
     @Override
     public int onGetSwipeReactionType(VH holder, int position, int x, int y) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
@@ -403,6 +404,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         return swipeableItemAdapter.onGetSwipeReactionType(holder, correctedPosition, x, y);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onSetSwipeBackground(VH holder, int position, int type) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
@@ -416,6 +418,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         swipeableItemAdapter.onSetSwipeBackground(holder, correctedPosition, type);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public int onSwipeItem(VH holder, int position, int result) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
@@ -429,6 +432,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         return swipeableItemAdapter.onSwipeItem(holder, correctedPosition, result);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onPerformAfterSwipeReaction(VH holder, int position, int result, int reaction) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
