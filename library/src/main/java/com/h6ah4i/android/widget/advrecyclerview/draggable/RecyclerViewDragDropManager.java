@@ -92,7 +92,7 @@ public class RecyclerViewDragDropManager {
          *
          * @param position The position of the item.
          */
-        void onDraggingStarted(int position);
+        void onItemDragStarted(int position);
 
         /**
          * Callback method to be invoked when dragging is finished.
@@ -101,7 +101,7 @@ public class RecyclerViewDragDropManager {
          * @param toPosition New position of the item.
          * @param result Indicates whether the dragging operation was succeeded.
          */
-        void onDraggingFinished(int fromPosition, int toPosition, boolean result);
+        void onItemDragFinished(int fromPosition, int toPosition, boolean result);
     }
 
     // --
@@ -410,6 +410,10 @@ public class RecyclerViewDragDropManager {
         return mSwapTargetTranslationInterpolator;
     }
 
+    /**
+     * Gets OnItemDragEventListener listener
+     * @return The listener object
+     */
     public OnItemDragEventListener getOnItemDragEventListener() {
         return mItemDragEventListener;
     }
@@ -417,7 +421,7 @@ public class RecyclerViewDragDropManager {
     /**
      * Sets OnItemDragEventListener listener
      *
-     * @param listener
+     * @param listener The listener object
      */
     public void setOnItemDragEventListener(OnItemDragEventListener listener) {
         mItemDragEventListener = listener;
@@ -588,7 +592,7 @@ public class RecyclerViewDragDropManager {
         }
 
         if (mItemDragEventListener != null) {
-            mItemDragEventListener.onDraggingStarted(mAdapter.getDraggingItemInitialPosition());
+            mItemDragEventListener.onItemDragStarted(mAdapter.getDraggingItemInitialPosition());
         }
     }
 
@@ -693,7 +697,7 @@ public class RecyclerViewDragDropManager {
 //        }
 
         if (mItemDragEventListener != null) {
-            mItemDragEventListener.onDraggingFinished(
+            mItemDragEventListener.onItemDragFinished(
                     draggingItemInitialPosition,
                     draggingItemCurrentPosition,
                     result);
