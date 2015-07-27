@@ -64,6 +64,7 @@ public class RecyclerViewExpandableItemManager {
      */
     public static final int STATE_FLAG_IS_UPDATED = (1 << 31);
 
+
     // ---
 
     /**
@@ -638,6 +639,151 @@ public class RecyclerViewExpandableItemManager {
      */
     public void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount) {
         mAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount);
+    }
+
+    /**
+     * Notify any registered observers that the group item reflected at <code>groupPosition</code>
+     * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
+     * position <code>groupPosition + 1</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their
+     * positions may be altered.</p>
+     *
+     * @param groupPosition Position of the newly inserted group item in the data set
+     *
+     * @see #notifyGroupItemRangeInserted(int, int)
+     */
+    public void notifyGroupItemInserted(int groupPosition) {
+        mAdapter.notifyGroupItemInserted(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the currently reflected <code>itemCount</code>
+     * group items starting at <code>groupPositionStart</code> have been newly inserted. The group items
+     * previously located at <code>groupPositionStart</code> and beyond can now be found starting
+     * at position <code>groupPositionStart + itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPositionStart Position of the first group item that was inserted
+     * @param itemCount Number of group items inserted
+     *
+     * @see #notifyGroupItemInserted(int)
+     */
+    public void notifyGroupItemRangeInserted(int groupPositionStart, int itemCount) {
+        mAdapter.notifyGroupItemRangeInserted(groupPositionStart, itemCount);
+    }
+
+
+    /**
+     * Notify any registered observers that the group item reflected at <code>groupPosition</code>
+     * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
+     * position <code>groupPosition + 1</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their
+     * positions may be altered.</p>
+     *
+     * @param groupPosition Position of the group item which contains the inserted child
+     * @param childPosition Position of the newly inserted child item in the data set
+     *
+     * @see #notifyChildItemRangeInserted(int, int, int)
+     */
+    public void notifyChildItemInserted(int groupPosition, int childPosition) {
+        mAdapter.notifyChildItemInserted(groupPosition, childPosition);
+    }
+
+    /**
+     * Notify any registered observers that the currently reflected <code>itemCount</code>
+     * child items starting at <code>childPositionStart</code> have been newly inserted. The child items
+     * previously located at <code>childPositionStart</code> and beyond can now be found starting
+     * at position <code>childPositionStart + itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPosition Position of the group item which contains the inserted child
+     * @param childPositionStart Position of the first child item that was inserted
+     * @param itemCount Number of child items inserted
+     *
+     * @see #notifyChildItemInserted(int, int)
+     */
+    public void notifyChildItemRangeInserted(int groupPosition, int childPositionStart, int itemCount) {
+        mAdapter.notifyChildItemRangeInserted(groupPosition, childPositionStart, itemCount);
+    }
+
+    /**
+     * Notify any registered observers that the group item previously located at <code>groupPosition</code>
+     * has been removed from the data set. The group items previously located at and after
+     * <code>groupPosition</code> may now be found at <code>oldGroupPosition - 1</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPosition Position of the group item that has now been removed
+     *
+     * @see #notifyGroupItemRangeRemoved(int, int)
+     */
+    public void notifyGroupItemRemoved(int groupPosition) {
+        mAdapter.notifyGroupItemRemoved(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the <code>itemCount</code> group items previously
+     * located at <code>groupPositionStart</code> have been removed from the data set. The group items
+     * previously located at and after <code>groupPositionStart + itemCount</code> may now be found
+     * at <code>oldPosition - itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the data
+     * set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPositionStart Previous position of the first group item that was removed
+     * @param itemCount Number of group items removed from the data set
+     */
+    public void notifyGroupItemRangeRemoved(int groupPositionStart, int itemCount) {
+        mAdapter.notifyGroupItemRangeRemoved(groupPositionStart, itemCount);
+    }
+
+    /**
+     * Notify any registered observers that the child item previously located at <code>childPosition</code>
+     * has been removed from the data set. The child items previously located at and after
+     * <code>childPosition</code> may now be found at <code>oldGroupPosition - 1</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPosition Position of the group item which was the parent of the child item that was removed
+     * @param childPosition Position of the child item that has now been removed
+     *
+     * @see #notifyGroupItemRangeRemoved(int, int)
+     */
+    public void notifyChildItemRemoved(int groupPosition, int childPosition) {
+        mAdapter.notifyChildItemRemoved(groupPosition, childPosition);
+    }
+
+    /**
+     * Notify any registered observers that the <code>itemCount</code> child items previously
+     * located at <code>childPositionStart</code> have been removed from the data set. The child items
+     * previously located at and after <code>childPositionStart + itemCount</code> may now be found
+     * at <code>oldPosition - itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the data
+     * set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPosition Position of the group item which was the parent of the child item that was removed
+     * @param childPositionStart Previous position of the first child item that was removed
+     * @param itemCount Number of child items removed from the data set
+     */
+    public void notifyChildItemRangeRemoved(int groupPosition, int childPositionStart, int itemCount) {
+        mAdapter.notifyChildItemRangeRemoved(groupPosition, childPositionStart, itemCount);
     }
 
     public static class SavedState implements Parcelable {

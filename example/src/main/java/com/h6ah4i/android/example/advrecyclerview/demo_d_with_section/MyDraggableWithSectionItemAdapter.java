@@ -86,7 +86,7 @@ public class MyDraggableWithSectionItemAdapter
                 v = inflater.inflate(R.layout.list_section_header, parent, false);
                 break;
             case ITEM_VIEW_TYPE_SECTION_ITEM:
-                v = inflater.inflate(R.layout.list_item, parent, false);
+                v = inflater.inflate(R.layout.list_item_draggable, parent, false);
                 break;
             default:
                 throw new IllegalStateException("Unexpected viewType (= " + viewType + ")");

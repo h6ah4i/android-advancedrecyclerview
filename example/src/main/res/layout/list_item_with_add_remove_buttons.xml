@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+       Copyright (C) 2015 Haruki Hasegawa
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+           http://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+-->
+<!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
+<FrameLayout
+    style="@style/commonListItemStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:background="@drawable/bg_swipe_item_neutral">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top|left"
+            android:layout_marginRight="216dp"
+            android:gravity="center"
+            tools:ignore="RtlHardcoded"/>
+
+        <Button
+            android:id="@+id/button_add_child_above"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="144dp"
+            android:padding="0dp"
+            android:text="+Child\nAbove"
+            android:textSize="12dp"
+            tools:ignore="SpUsage"/>
+
+        <Button
+            android:id="@+id/button_add_child_below"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical|right"
+            android:layout_marginRight="72dp"
+            android:padding="0dp"
+            android:text="+Child\nbelow"
+            android:textSize="12dp"
+            tools:ignore="SpUsage"/>
+
+
+        <Button
+            android:id="@+id/button_remove_child"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:layout_gravity="center_vertical|right"
+            android:padding="0dp"
+            android:text="Remove"
+            android:textSize="12dp"
+            tools:ignore="SpUsage"/>
+
+    </FrameLayout>
+
+</FrameLayout>

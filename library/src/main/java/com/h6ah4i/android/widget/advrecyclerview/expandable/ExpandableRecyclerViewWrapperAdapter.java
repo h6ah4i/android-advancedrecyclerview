@@ -766,6 +766,91 @@ class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
+    /*package*/ void notifyChildItemInserted(int groupPosition, int childPosition) {
+        mPositionTranslator.insertChildItem(groupPosition, childPosition);
+
+        final long packedPosition = ExpandableAdapterHelper.getPackedPositionForChild(groupPosition, childPosition);
+        final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+        if (flatPosition != RecyclerView.NO_POSITION) {
+            notifyItemInserted(flatPosition);
+        }
+    }
+
+    /*package*/ void notifyChildItemRangeInserted(int groupPosition, int childPositionStart, int itemCount) {
+        mPositionTranslator.insertChildItems(groupPosition, childPositionStart, itemCount);
+
+        final long packedPosition = ExpandableAdapterHelper.getPackedPositionForChild(groupPosition, childPositionStart);
+        final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+        if (flatPosition != RecyclerView.NO_POSITION) {
+            notifyItemRangeInserted(flatPosition, itemCount);
+        }
+    }
+
+    /*package*/ void notifyChildItemRemoved(int groupPosition, int childPosition) {
+        final long packedPosition = ExpandableAdapterHelper.getPackedPositionForChild(groupPosition, childPosition);
+        final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+        mPositionTranslator.removeChildItem(groupPosition, childPosition);
+
+        if (flatPosition != RecyclerView.NO_POSITION) {
+            notifyItemRemoved(flatPosition);
+        }
+    }
+
+    /*package*/ void notifyChildItemRangeRemoved(int groupPosition, int childPositionStart, int itemCount) {
+        final long packedPosition = ExpandableAdapterHelper.getPackedPositionForChild(groupPosition, childPositionStart);
+        final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+        mPositionTranslator.removeChildItems(groupPosition, childPositionStart, itemCount);
+
+        if (flatPosition != RecyclerView.NO_POSITION) {
+            notifyItemRangeRemoved(flatPosition, itemCount);
+        }
+    }
+
+    /*package*/ void notifyGroupItemInserted(int groupPosition) {
+        int insertedCount = mPositionTranslator.insertGroupItem(groupPosition);
+        if (insertedCount > 0) {
+            final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
+            final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+            notifyItemInserted(flatPosition);
+        }
+    }
+
+    /*package*/ void notifyGroupItemRangeInserted(int groupPositionStart, int count) {
+        int insertedCount = mPositionTranslator.insertGroupItems(groupPositionStart, count);
+        if (insertedCount > 0) {
+            final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPositionStart);
+            final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+            notifyItemRangeInserted(flatPosition, insertedCount);
+        }
+    }
+
+    /*package*/ void notifyGroupItemRemoved(int groupPosition) {
+        final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
+        final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+        int removedCount = mPositionTranslator.removeGroupItem(groupPosition);
+        if (removedCount > 0) {
+            notifyItemRemoved(flatPosition);
+        }
+    }
+
+    /*package*/ void notifyGroupItemRangeRemoved(int groupPositionStart, int count) {
+        final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPositionStart);
+        final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
+
+        int removedCount = mPositionTranslator.removeGroupItems(groupPositionStart, count);
+        if (removedCount > 0) {
+            notifyItemRangeRemoved(flatPosition, removedCount);
+        }
+    }
+
+
     private static ExpandableItemAdapter getExpandableItemAdapter(RecyclerView.Adapter adapter) {
         return WrapperAdapterUtils.findWrappedAdapter(adapter, ExpandableItemAdapter.class);
     }

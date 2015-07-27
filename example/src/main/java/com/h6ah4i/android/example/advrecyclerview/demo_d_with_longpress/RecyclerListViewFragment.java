@@ -64,7 +64,9 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
         mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
                 (NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z3));
-        mRecyclerViewDragDropManager.setInitiateOnLongPress(true); // Start dragging after long press
+        // Start dragging after long press
+        mRecyclerViewDragDropManager.setInitiateOnLongPress(true);
+        mRecyclerViewDragDropManager.setInitiateOnMove(false);
 
         //adapter
         final MyDraggableItemAdapter myItemAdapter = new MyDraggableItemAdapter(getDataProvider());

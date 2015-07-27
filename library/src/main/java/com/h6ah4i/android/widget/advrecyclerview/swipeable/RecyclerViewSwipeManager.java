@@ -217,6 +217,29 @@ public class RecyclerViewSwipeManager {
 
     // ---
 
+    /**
+     * Used for listening item swipe events
+     */
+    public interface OnItemSwipeEventListener {
+        /**
+         * Callback method to be invoked when swiping is started.
+         *
+         * @param position The position of the item.
+         */
+        void onItemSwipeStarted(int position);
+
+        /**
+         * Callback method to be invoked when swiping is finished.
+         *
+         * @param position The position of the item.
+         * @param result The result code of the swipe operation.
+         * @param afterSwipeReaction The reaction type to the swipe operation.
+         */
+        void onItemSwipeFinished(int position, int result, int afterSwipeReaction);
+    }
+
+    // ---
+
     private static final int MIN_DISTANCE_TOUCH_SLOP_MUL = 10;
     private static final int SLIDE_ITEM_IMMEDIATELY_SET_TRANSLATION_THRESHOLD_DP = 8;
 
@@ -246,6 +269,7 @@ public class RecyclerViewSwipeManager {
     private int mSwipingItemReactionType;
     private VelocityTracker mVelocityTracker;
     private SwipingItemOperator mSwipingItemOperator;
+    private OnItemSwipeEventListener mItemSwipeEventListener;
 
     /**
      * Constructor.
@@ -582,6 +606,11 @@ public class RecyclerViewSwipeManager {
 
         mRecyclerView.getParent().requestDisallowInterceptTouchEvent(true);
 
+        // raise onItemSwipeStarted() event
+        if (mItemSwipeEventListener != null) {
+            mItemSwipeEventListener.onItemSwipeStarted(itemPosition);
+        }
+
         // raise onSwipeItemStarted() event
         mAdapter.onSwipeItemStarted(this, holder, itemPosition);
     }
@@ -657,6 +686,11 @@ public class RecyclerViewSwipeManager {
         if (mAdapter != null) {
             mAdapter.onSwipeItemFinished2(swipingItem, itemPosition, result, afterReaction);
         }
+
+        // raise onItemSwipeFinished() event
+        if (mItemSwipeEventListener != null) {
+            mItemSwipeEventListener.onItemSwipeFinished(itemPosition, result, afterReaction);
+        }
     }
 
     private static int correctAfterReaction(int result, int afterReaction) {
@@ -724,6 +758,23 @@ public class RecyclerViewSwipeManager {
      */
     public void setMoveToOutsideWindowAnimationDuration(long duration) {
         mMoveToOutsideWindowAnimationDuration = duration;
+    }
+
+    /**
+     * Gets OnItemSwipeEventListener listener
+     * @return The listener object
+     */
+    public OnItemSwipeEventListener getOnItemSwipeEventListener() {
+        return mItemSwipeEventListener;
+    }
+
+    /**
+     * Sets OnItemSwipeEventListener listener
+     *
+     * @param listener The listener object
+     */
+    public void setOnItemSwipeEventListener(OnItemSwipeEventListener listener) {
+        mItemSwipeEventListener = listener;
     }
 
     /*package*/ void applySlideItem(RecyclerView.ViewHolder holder, int itemPosition, float prevAmount, float amount, boolean shouldAnimate) {

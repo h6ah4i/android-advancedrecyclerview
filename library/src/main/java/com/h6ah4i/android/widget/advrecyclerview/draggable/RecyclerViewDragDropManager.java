@@ -19,11 +19,12 @@ package com.h6ah4i.android.widget.advrecyclerview.draggable;
 import android.graphics.Rect;
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -82,6 +83,29 @@ public class RecyclerViewDragDropManager {
 
     // ---
 
+    /**
+     * Used for listening item drag events
+     */
+    public interface OnItemDragEventListener {
+        /**
+         * Callback method to be invoked when dragging is started.
+         *
+         * @param position The position of the item.
+         */
+        void onItemDragStarted(int position);
+
+        /**
+         * Callback method to be invoked when dragging is finished.
+         *
+         * @param fromPosition Previous position of the item.
+         * @param toPosition New position of the item.
+         * @param result Indicates whether the dragging operation was succeeded.
+         */
+        void onItemDragFinished(int fromPosition, int toPosition, boolean result);
+    }
+
+    // --
+
     private static final int SCROLL_DIR_NONE = 0;
     private static final int SCROLL_DIR_UP = (1 << 0);
     private static final int SCROLL_DIR_DOWN = (1 << 1);
@@ -100,7 +124,6 @@ public class RecyclerViewDragDropManager {
 
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
     private RecyclerView.OnScrollListener mInternalUseOnScrollListener;
-    private GestureDetector mGestureDetector;
 
     private EdgeEffectDecorator mEdgeEffectDecorator;
     private NinePatchDrawable mShadowDrawable;
@@ -111,6 +134,7 @@ public class RecyclerViewDragDropManager {
     private int mInitialTouchY;
     private long mInitialTouchItemId = RecyclerView.NO_ID;
     private boolean mInitiateOnLongPress;
+    private boolean mInitiateOnMove = true;
 
     private boolean mInScrollByMethod;
     private int mActualScrollByAmount;
@@ -137,6 +161,8 @@ public class RecyclerViewDragDropManager {
     private int mGrabbedItemHeight;
     private int mOrigOverScrollMode;
     private ItemDraggableRange mDraggableRange;
+    private InternalHandler mHandler;
+    private OnItemDragEventListener mItemDragEventListener;
 
     /**
      * Constructor.
@@ -155,6 +181,7 @@ public class RecyclerViewDragDropManager {
 
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+                RecyclerViewDragDropManager.this.onRequestDisallowInterceptTouchEvent(disallowIntercept);
             }
         };
 
@@ -209,6 +236,7 @@ public class RecyclerViewDragDropManager {
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
     public void attachRecyclerView(RecyclerView rv) {
+        //noinspection deprecation
         attachRecyclerView(rv, null);
     }
 
@@ -222,7 +250,8 @@ public class RecyclerViewDragDropManager {
      * @param rv                     The {@link android.support.v7.widget.RecyclerView} instance
      * @param scrollEventDistributor The distributor for {@link android.support.v7.widget.RecyclerView.OnScrollListener} event
      */
-    public void attachRecyclerView(RecyclerView rv, RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
+    @Deprecated
+    public void attachRecyclerView(RecyclerView rv, @SuppressWarnings("deprecation") RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
         if (rv == null) {
             throw new IllegalArgumentException("RecyclerView cannot be null");
         }
@@ -262,24 +291,7 @@ public class RecyclerViewDragDropManager {
         mDisplayDensity = mRecyclerView.getResources().getDisplayMetrics().density;
         mTouchSlop = ViewConfiguration.get(mRecyclerView.getContext()).getScaledTouchSlop();
         mScrollTouchSlop = (int) (mTouchSlop * SCROLL_TOUCH_SLOP_MULTIPLY + 0.5f);
-
-        mGestureDetector = new GestureDetector(mRecyclerView.getContext(), new GestureDetector.SimpleOnGestureListener() {
-            @Override
-            public void onLongPress(MotionEvent e) {
-                handleOnLongPress(e);
-            }
-
-            @Override
-            public boolean onSingleTapUp(MotionEvent e) {
-                return true;
-            }
-
-            @Override
-            public boolean onDown(MotionEvent e) {
-                return true;
-            }
-        });
-        mGestureDetector.setIsLongpressEnabled(true);
+        mHandler = new InternalHandler(this);
 
         if (supportsEdgeEffect()) {
             // edge effect is available on ICS or later
@@ -295,6 +307,11 @@ public class RecyclerViewDragDropManager {
      */
     public void release() {
         cancelDrag();
+
+        if (mHandler != null) {
+            mHandler.release();
+            mHandler = null;
+        }
 
         if (mEdgeEffectDecorator != null) {
             mEdgeEffectDecorator.finish();
@@ -349,21 +366,39 @@ public class RecyclerViewDragDropManager {
     }
 
     /**
-     * Returns whether dragging will start after a long press or not.
+     * Returns whether dragging starts on a long press or not.
      *
-     * @return True if dragging starts with a long press, false otherwise.
+     * @return True if dragging starts on a long press, false otherwise.
      */
-    public boolean getInitiateOnLongPress() {
+    public boolean isInitiateOnLongPressEnabled() {
         return mInitiateOnLongPress;
     }
 
     /**
-     * Sets whether dragging will start after a long press or immediately upon move motions.
+     * Sets whether dragging starts on a long press. (default: false)
      *
      * @param initiateOnLongPress True to initiate dragging on long press.
      */
     public void setInitiateOnLongPress(boolean initiateOnLongPress) {
         mInitiateOnLongPress = initiateOnLongPress;
+    }
+
+    /**
+     * Returns whether dragging starts on move motions.
+     *
+     * @return True if dragging starts on move motions, false otherwise.
+     */
+    public boolean isInitiateOnMoveEnabled() {
+        return mInitiateOnMove;
+    }
+
+    /**
+     * Sets whether dragging starts on move motions. (default: true)
+     *
+     * @param initiateOnMove True to initiate dragging on move motions.
+     */
+    public void setInitiateOnMove(boolean initiateOnMove) {
+        mInitiateOnMove = initiateOnMove;
     }
 
     /**
@@ -375,14 +410,29 @@ public class RecyclerViewDragDropManager {
         return mSwapTargetTranslationInterpolator;
     }
 
+    /**
+     * Gets OnItemDragEventListener listener
+     * @return The listener object
+     */
+    public OnItemDragEventListener getOnItemDragEventListener() {
+        return mItemDragEventListener;
+    }
+
+    /**
+     * Sets OnItemDragEventListener listener
+     *
+     * @param listener The listener object
+     */
+    public void setOnItemDragEventListener(OnItemDragEventListener listener) {
+        mItemDragEventListener = listener;
+    }
+
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         final int action = MotionEventCompat.getActionMasked(e);
 
         if (LOCAL_LOGV) {
             Log.v(TAG, "onInterceptTouchEvent() action = " + action);
         }
-
-        mGestureDetector.onTouchEvent(e);
 
         switch (action) {
             case MotionEvent.ACTION_UP:
@@ -423,8 +473,6 @@ public class RecyclerViewDragDropManager {
             return;
         }
 
-        mGestureDetector.onTouchEvent(e);
-
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -437,6 +485,13 @@ public class RecyclerViewDragDropManager {
 
         }
     }
+
+    /*package */ void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        if (disallowIntercept) {
+            cancelDrag(true);
+        }
+    }
+
 
     /*package*/ void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         if (LOCAL_LOGV) {
@@ -465,6 +520,10 @@ public class RecyclerViewDragDropManager {
         mInitialTouchY = mLastTouchY = (int) (e.getY() + 0.5f);
         mInitialTouchItemId = holder.getItemId();
 
+        if (mInitiateOnLongPress) {
+            mHandler.startLongPressDetection(e);
+        }
+
         return true;
     }
 
@@ -477,6 +536,8 @@ public class RecyclerViewDragDropManager {
     @SuppressWarnings("unchecked")
     private void startDragging(RecyclerView rv, MotionEvent e, RecyclerView.ViewHolder holder, ItemDraggableRange range) {
         safeEndAnimation(rv, holder);
+
+        mHandler.cancelLongPressDetection();
 
         mDraggingItem = holder;
 
@@ -528,6 +589,10 @@ public class RecyclerViewDragDropManager {
 
         if (mEdgeEffectDecorator != null) {
             mEdgeEffectDecorator.reorderToTop();
+        }
+
+        if (mItemDragEventListener != null) {
+            mItemDragEventListener.onItemDragStarted(mAdapter.getDraggingItemInitialPosition());
         }
     }
 
@@ -617,18 +682,32 @@ public class RecyclerViewDragDropManager {
         mGrabbedItemHeight = 0;
 
 
+        int draggingItemInitialPosition = RecyclerView.NO_POSITION;
+        int draggingItemCurrentPosition = RecyclerView.NO_POSITION;
+
         // raise onDragItemFinished() event
         if (mAdapter != null) {
+            draggingItemInitialPosition = mAdapter.getDraggingItemInitialPosition();
+            draggingItemCurrentPosition = mAdapter.getDraggingItemCurrentPosition();
             mAdapter.onDragItemFinished(draggedItem, result);
         }
 
 //        if (draggedItem != null) {
 //            draggedItem.setIsRecyclable(true);
 //        }
+
+        if (mItemDragEventListener != null) {
+            mItemDragEventListener.onItemDragFinished(
+                    draggingItemInitialPosition,
+                    draggingItemCurrentPosition,
+                    result);
+        }
     }
 
     private boolean handleActionUpOrCancel(RecyclerView rv, MotionEvent e) {
         final boolean result = (MotionEventCompat.getActionMasked(e) == MotionEvent.ACTION_UP);
+
+        mHandler.cancelLongPressDetection();
 
         mInitialTouchY = 0;
         mLastTouchY = 0;
@@ -649,7 +728,7 @@ public class RecyclerViewDragDropManager {
     }
 
     private boolean handleActionMoveWhileNotDragging(RecyclerView rv, MotionEvent e) {
-        if (!mInitiateOnLongPress) {
+        if (mInitiateOnMove) {
             return checkConditionAndStartDragging(rv, e, true);
         } else {
             return false;
@@ -657,6 +736,10 @@ public class RecyclerViewDragDropManager {
     }
 
     private boolean checkConditionAndStartDragging(RecyclerView rv, MotionEvent e, boolean checkTouchSlop) {
+        if (mDraggingItem != null) {
+            return false;
+        }
+
         final int touchX = (int) (e.getX() + 0.5f);
         final int touchY = (int) (e.getY() + 0.5f);
 
@@ -674,13 +757,10 @@ public class RecyclerViewDragDropManager {
 
         final RecyclerView.ViewHolder holder = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, e.getX(), e.getY());
 
-        if (!checkTouchedItemState(rv, holder)) {
+        if (!checkTouchedItemState(rv, holder) || holder.getItemId() != mInitialTouchItemId) {
             mInitialTouchItemId = RecyclerView.NO_ID;
-            return false;
-        }
+            mHandler.cancelLongPressDetection();
 
-        if (holder.getItemId() != mInitialTouchItemId) {
-            mInitialTouchItemId = RecyclerView.NO_ID;
             return false;
         }
 
@@ -871,7 +951,14 @@ public class RecyclerViewDragDropManager {
             final int draggingItemTop = mDraggingItemDecorator.getTranslatedItemPositionTop();
             final int draggingItemBottom = mDraggingItemDecorator.getTranslatedItemPositionBottom();
             final int draggingItemCenter = (draggingItemTop + draggingItemBottom) / 2;
-            final int nearEdgePosition = ((draggingItemCenter < (height / 2)) ? draggingItemTop : draggingItemBottom);
+            final int nearEdgePosition;
+
+            if (firstVisibleChild == 0 && lastVisibleChild == 0) {
+                // has only 1 item
+                nearEdgePosition = (scrollAmount < 0) ? draggingItemTop : draggingItemBottom;
+            } else {
+                nearEdgePosition = (draggingItemCenter < (height / 2)) ? draggingItemTop : draggingItemBottom;
+            }
 
             final float nearEdgeOffset = (nearEdgePosition * invHeight) - 0.5f;
             final float absNearEdgeOffset = Math.abs(nearEdgeOffset);
@@ -1219,6 +1306,46 @@ public class RecyclerViewDragDropManager {
                 ViewCompat.postOnAnimation(rv, this);
             } else {
                 mStarted = false;
+            }
+        }
+    }
+
+    private static class InternalHandler extends Handler {
+        private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();// + ViewConfiguration.getTapTimeout();
+        private static final int MSG_LONGPRESS = 1;
+
+        private RecyclerViewDragDropManager mHolder;
+        private MotionEvent mDownMotionEvent;
+
+        public InternalHandler(RecyclerViewDragDropManager holder) {
+            mHolder = holder;
+        }
+
+        public void release() {
+            removeCallbacks(null);
+            mHolder = null;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_LONGPRESS:
+                    mHolder.handleOnLongPress(mDownMotionEvent);
+                    break;
+            }
+        }
+
+        public void startLongPressDetection(MotionEvent e) {
+            cancelLongPressDetection();
+            mDownMotionEvent = MotionEvent.obtain(e);
+            sendEmptyMessageAtTime(MSG_LONGPRESS, e.getDownTime() + LONGPRESS_TIMEOUT);
+        }
+
+        public void cancelLongPressDetection() {
+            removeMessages(MSG_LONGPRESS);
+            if (mDownMotionEvent != null) {
+                mDownMotionEvent.recycle();
+                mDownMotionEvent = null;
             }
         }
     }

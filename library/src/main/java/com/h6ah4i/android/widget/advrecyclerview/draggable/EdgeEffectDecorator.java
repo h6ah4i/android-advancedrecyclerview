@@ -82,16 +82,15 @@ public class EdgeEffectDecorator extends RecyclerView.ItemDecoration {
     public void pullTopGlow(float deltaDistance) {
         ensureTopGlow(mRecyclerView);
 
-        if (mTopGlow.onPull(deltaDistance)) {
+        if (mTopGlow.onPull(deltaDistance, 0.5f)) {
             ViewCompat.postInvalidateOnAnimation(mRecyclerView);
         }
     }
 
     public void pullBottom(float deltaDistance) {
         ensureBottomGlow(mRecyclerView);
-        mBottomGlow.onPull(deltaDistance);
 
-        if (mBottomGlow.onPull(deltaDistance)) {
+        if (mBottomGlow.onPull(deltaDistance, 0.5f)) {
             ViewCompat.postInvalidateOnAnimation(mRecyclerView);
         }
     }
@@ -114,31 +113,33 @@ public class EdgeEffectDecorator extends RecyclerView.ItemDecoration {
     }
 
     private void ensureTopGlow(RecyclerView rv) {
-        if (mTopGlow != null) {
-            return;
+        if (mTopGlow == null) {
+            mTopGlow = new EdgeEffectCompat(rv.getContext());
         }
-        mTopGlow = new EdgeEffectCompat(rv.getContext());
-        if (getClipToPadding(rv)) {
-            mTopGlow.setSize(
-                    rv.getMeasuredWidth() - rv.getPaddingLeft() - rv.getPaddingRight(),
-                    rv.getMeasuredHeight() - rv.getPaddingTop() - rv.getPaddingBottom());
-        } else {
-            mTopGlow.setSize(rv.getMeasuredWidth(), rv.getMeasuredHeight());
-        }
+
+        updateGlowSize(rv, mTopGlow);
     }
 
     private void ensureBottomGlow(RecyclerView rv) {
-        if (mBottomGlow != null) {
-            return;
+        if (mBottomGlow == null) {
+            mBottomGlow = new EdgeEffectCompat(rv.getContext());
         }
-        mBottomGlow = new EdgeEffectCompat(rv.getContext());
+        updateGlowSize(rv, mBottomGlow);
+    }
+
+    private static void updateGlowSize(RecyclerView rv, EdgeEffectCompat topGlow) {
+        int width = rv.getMeasuredWidth();
+        int height = rv.getMeasuredHeight();
+
         if (getClipToPadding(rv)) {
-            mBottomGlow.setSize(
-                    rv.getMeasuredWidth() - rv.getPaddingLeft() - rv.getPaddingRight(),
-                    rv.getMeasuredHeight() - rv.getPaddingTop() - rv.getPaddingBottom());
-        } else {
-            mBottomGlow.setSize(rv.getMeasuredWidth(), rv.getMeasuredHeight());
+            width -= rv.getPaddingLeft() - rv.getPaddingRight();
+            height -= rv.getPaddingTop() - rv.getPaddingBottom();
         }
+
+        width = Math.max(0, width);
+        height = Math.max(0, height);
+
+        topGlow.setSize(width, height);
     }
 
     private static boolean getClipToPadding(RecyclerView rv) {

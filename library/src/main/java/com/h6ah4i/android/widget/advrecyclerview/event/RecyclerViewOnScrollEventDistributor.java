@@ -76,6 +76,7 @@ public class RecyclerViewOnScrollEventDistributor extends BaseRecyclerViewEventD
         }
     }
 
+    @SuppressWarnings("deprecation")
     private static class InternalOnScrollListener extends RecyclerView.OnScrollListener {
         private WeakReference<RecyclerViewOnScrollEventDistributor> mRefDistributor;
 
