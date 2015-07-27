@@ -40,17 +40,12 @@ public class MyExpandableItemAdapter
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
         public FrameLayout mContainer;
-        public View mDragHandle;
         public TextView mTextView;
 
         public MyBaseViewHolder(View v) {
             super(v);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mDragHandle = v.findViewById(R.id.drag_handle);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
-
-            // hide the drag handle
-            mDragHandle.setVisibility(View.GONE);
         }
     }
 
@@ -182,12 +177,6 @@ public class MyExpandableItemAdapter
             return false;
         }
 
-        final View containerView = holder.mContainer;
-        final View dragHandleView = holder.mDragHandle;
-
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
-
-        return !ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
+        return true;
     }
 }

@@ -184,7 +184,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
     @Override
     public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.list_item, parent, false);
+        final View v = inflater.inflate(R.layout.list_item_draggable, parent, false);
         return new MyChildViewHolder(v);
     }
 

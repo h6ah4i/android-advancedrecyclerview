@@ -55,18 +55,14 @@ public class MyUnderSwipeableItemAdapter
 
     public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
         public FrameLayout mContainer;
-        public View mDragHandle;
         public TextView mTextView;
         public Button mButton;
 
         public MyViewHolder(View v) {
             super(v);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mDragHandle = v.findViewById(R.id.drag_handle);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
             mButton = (Button) v.findViewById(android.R.id.button1);
-
-            mDragHandle.setVisibility(View.GONE);  // hide the drag handle
         }
 
         @Override

@@ -18,11 +18,13 @@
 <FrameLayout
     style="@style/commonListItemStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="96dp"
     android:layout_marginTop="8dp"
     android:background="#ffffff">
+
 
     <FrameLayout
         android:id="@+id/container"
@@ -31,10 +33,20 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground">
 
+        <View
+            android:id="@+id/drag_handle"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="#20000000"
+            tools:ignore="RtlHardcoded"/>
+
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="32dp"
             android:gravity="center"/>
 
     </FrameLayout>
