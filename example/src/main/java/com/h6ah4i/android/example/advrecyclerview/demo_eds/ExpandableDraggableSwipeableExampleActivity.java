@@ -17,20 +17,18 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleExpandableDataProviderFragment;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExpandableItemPinnedMessageDialogFragment;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
-import com.nispok.snackbar.enums.SnackbarType;
-import com.nispok.snackbar.listeners.ActionClickListener;
 
 public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivity implements ExpandableItemPinnedMessageDialogFragment.EventListener {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
@@ -58,21 +56,19 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
      * @param groupPosition The position of the group item within data set
      */
     public void onGroupItemRemoved(int groupPosition) {
-        SnackbarManager.show(
-                Snackbar.with(getApplicationContext())
-                        .text(R.string.snack_bar_text_group_item_removed)
-                        .actionLabel(R.string.snack_bar_action_undo)
-                        .actionListener(new ActionClickListener() {
-                            @Override
-                            public void onActionClicked(Snackbar snackbar) {
-                                onItemUndoActionClicked();
-                            }
-                        })
-                        .actionColorResource(R.color.snackbar_action_color_done)
-                        .duration(5000)
-                        .type(SnackbarType.SINGLE_LINE)
-                        .swipeToDismiss(false)
-                , this);
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.container),
+                R.string.snack_bar_text_group_item_removed,
+                Snackbar.LENGTH_LONG);
+
+        snackbar.setAction(R.string.snack_bar_action_undo, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemUndoActionClicked();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.snackbar_action_color_done));
+        snackbar.show();
     }
 
     /**
@@ -82,21 +78,19 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
      * @param childPosition The position of the child item within the group
      */
     public void onChildItemRemoved(int groupPosition, int childPosition) {
-        SnackbarManager.show(
-                Snackbar.with(getApplicationContext())
-                        .text(R.string.snack_bar_text_child_item_removed)
-                        .actionLabel(R.string.snack_bar_action_undo)
-                        .actionListener(new ActionClickListener() {
-                            @Override
-                            public void onActionClicked(Snackbar snackbar) {
-                                onItemUndoActionClicked();
-                            }
-                        })
-                        .actionColorResource(R.color.snackbar_action_color_done)
-                        .duration(5000)
-                        .type(SnackbarType.SINGLE_LINE)
-                        .swipeToDismiss(false)
-                , this);
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.container),
+                R.string.snack_bar_text_child_item_removed,
+                Snackbar.LENGTH_LONG);
+
+        snackbar.setAction(R.string.snack_bar_action_undo, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemUndoActionClicked();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.snackbar_action_color_done));
+        snackbar.show();
     }
 
     /**
