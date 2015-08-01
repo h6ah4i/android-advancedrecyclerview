@@ -836,7 +836,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
         int removedCount = mPositionTranslator.removeGroupItem(groupPosition);
         if (removedCount > 0) {
-            notifyItemRemoved(flatPosition);
+            notifyItemRangeRemoved(flatPosition, removedCount);
         }
     }
 
