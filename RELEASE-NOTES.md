@@ -1,3 +1,6 @@
+## 0.7.4
+- Fixed issue #75 (Error In -->Expandable(Add/Remove Items))
+
 ## 0.7.3
 - Updated to support-v7-recyclerview v22.2.1
 - Added a new demo "Expandable (Add/Remove items)"
