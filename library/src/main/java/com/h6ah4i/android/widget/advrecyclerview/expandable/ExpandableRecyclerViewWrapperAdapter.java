@@ -850,6 +850,13 @@ class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
+    /*package*/ int getGroupCount() {
+        return mExpandableItemAdapter.getGroupCount();
+    }
+
+    /*package*/ int getChildCount(int groupPosition) {
+        return mExpandableItemAdapter.getChildCount(groupPosition);
+    }
 
     private static ExpandableItemAdapter getExpandableItemAdapter(RecyclerView.Adapter adapter) {
         return WrapperAdapterUtils.findWrappedAdapter(adapter, ExpandableItemAdapter.class);

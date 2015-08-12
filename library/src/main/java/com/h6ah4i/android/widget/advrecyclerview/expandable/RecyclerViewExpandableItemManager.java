@@ -786,6 +786,26 @@ public class RecyclerViewExpandableItemManager {
         mAdapter.notifyChildItemRangeRemoved(groupPosition, childPositionStart, itemCount);
     }
 
+    /**
+     * Gets the number of groups.
+     *
+     * @return the number of groups
+     */
+    public int getGroupCount() {
+        return mAdapter.getGroupCount();
+    }
+
+    /**
+     * Gets the number of children in a specified group.
+     *
+     * @param groupPosition the position of the group for which the children count should be returned
+     *
+     * @return the number of children
+     */
+    public int getChildCount(int groupPosition) {
+        return mAdapter.getChildCount(groupPosition);
+    }
+
     public static class SavedState implements Parcelable {
         final int [] adapterSavedState;
 
