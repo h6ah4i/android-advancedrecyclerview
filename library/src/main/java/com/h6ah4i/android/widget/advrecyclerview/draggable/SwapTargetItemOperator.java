@@ -68,11 +68,11 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
 
         final RecyclerView.ViewHolder swapTargetItem =
                 RecyclerViewDragDropManager.findSwapTargetItem(
-                        mRecyclerView, draggingItem, mDraggingItemId, mTranslationY, mRange);
+                        mRecyclerView, draggingItem, mDraggingItemId, 0, mTranslationY, mRange);
 
         // reset Y-translation if the swap target has changed
         if ((mSwapTargetItem != swapTargetItem) && (mSwapTargetItem != null)) {
-            setItemTranslationY(mRecyclerView, mSwapTargetItem, 0.0f);
+            setItemTranslation(mRecyclerView, mSwapTargetItem, 0.0f, 0.0f);
         }
 
         if (swapTargetItem != null) {
