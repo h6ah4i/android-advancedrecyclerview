@@ -54,19 +54,27 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
     }
 
     protected void moveToDefaultPosition(View targetView, boolean animate) {
+        final int curTranslationX = (int) (ViewCompat.getTranslationY(targetView));
         final int curTranslationY = (int) (ViewCompat.getTranslationY(targetView));
+        final int halfItemWidth = targetView.getWidth() / 2;
         final int halfItemHeight = targetView.getHeight() / 2;
-        final float translationProportion = (halfItemHeight > 0) ? Math.abs((float) curTranslationY / halfItemHeight) : 0;
-        final float t = 1.0f - Math.min(translationProportion, 1.0f);
-        final int animDuration = (int) (mReturnToDefaultPositionDuration * (1.0f - (t * t)) + 0.5f);
+        final float translationProportionX = (halfItemWidth > 0) ? Math.abs((float) curTranslationX / halfItemWidth) : 0;
+        final float translationProportionY = (halfItemHeight > 0) ? Math.abs((float) curTranslationY / halfItemHeight) : 0;
+        final float tx = 1.0f - Math.min(translationProportionX, 1.0f);
+        final float ty = 1.0f - Math.min(translationProportionY, 1.0f);
+        final int animDurationX = (int) (mReturnToDefaultPositionDuration * (1.0f - (tx * tx)) + 0.5f);
+        final int animDurationY = (int) (mReturnToDefaultPositionDuration * (1.0f - (ty * ty)) + 0.5f);
+        final int animDuration = Math.max(animDurationX, animDurationY);
+        final int maxAbsTranslation = Math.max(Math.abs(curTranslationX), Math.abs(curTranslationY));
 
         if (supportsViewPropertyAnimation() && animate &&
                 (animDuration > RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC) &&
-                (Math.abs(curTranslationY) > mReturnToDefaultPositionAnimateThreshold)) {
+                (maxAbsTranslation > mReturnToDefaultPositionAnimateThreshold)) {
             final ViewPropertyAnimatorCompat animator = ViewCompat.animate(targetView);
             animator.cancel();
             animator.setDuration(animDuration);
             animator.setInterpolator(mReturnToDefaultPositionInterpolator);
+            animator.translationX(0.0f);
             animator.translationY(0.0f);
             animator.setListener(new ViewPropertyAnimatorListener() {
                 @Override
@@ -76,6 +84,7 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
                 @Override
                 public void onAnimationEnd(View view) {
                     animator.setListener(null);
+                    ViewCompat.setTranslationX(view, 0);
                     ViewCompat.setTranslationY(view, 0);
 
                     // invalidate explicitly to refresh other decorations
@@ -90,15 +99,17 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
             });
             animator.start();
         } else {
+            ViewCompat.setTranslationX(targetView, 0);
             ViewCompat.setTranslationY(targetView, 0);
         }
     }
 
-    protected static void setItemTranslationY(RecyclerView rv, RecyclerView.ViewHolder holder, float y) {
+    protected static void setItemTranslation(RecyclerView rv, RecyclerView.ViewHolder holder, float x, float y) {
         final RecyclerView.ItemAnimator itemAnimator = rv.getItemAnimator();
         if (itemAnimator != null) {
             itemAnimator.endAnimation(holder);
         }
+        ViewCompat.setTranslationX(holder.itemView, x);
         ViewCompat.setTranslationY(holder.itemView, y);
     }
 
