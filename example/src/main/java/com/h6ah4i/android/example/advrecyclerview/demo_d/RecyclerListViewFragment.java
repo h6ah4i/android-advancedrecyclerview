@@ -34,7 +34,6 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.BasicSwapTargetTranslationInterpolator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -60,7 +59,7 @@ public class RecyclerListViewFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new GridLayoutManager(getActivity(), 4, GridLayoutManager.VERTICAL, false);
+        mLayoutManager = new GridLayoutManager(getActivity(), 2, LinearLayoutManager.HORIZONTAL, false);
 
         // drag & drop manager
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
