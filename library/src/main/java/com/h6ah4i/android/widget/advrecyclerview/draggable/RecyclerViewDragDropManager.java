@@ -44,92 +44,59 @@ import java.lang.ref.WeakReference;
  */
 @SuppressWarnings("PointlessBitwiseExpression")
 public class RecyclerViewDragDropManager {
-    private static final String TAG = "ARVDragDropManager";
-
     /**
      * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
      * Indicates that currently performing dragging.
      */
     public static final int STATE_FLAG_DRAGGING = (1 << 0);
-
     /**
      * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
      * Indicates that this item is being dragged.
      */
     public static final int STATE_FLAG_IS_ACTIVE = (1 << 1);
-
     /**
      * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
      * Indicates that this item is in the range of drag-sortable items
      */
     public static final int STATE_FLAG_IS_IN_RANGE = (1 << 2);
-
     /**
      * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
      * If this flag is set, some other flags are changed and require to apply.
      */
     public static final int STATE_FLAG_IS_UPDATED = (1 << 31);
-
-    // ---
-
     /**
      * Default interpolator used for "swap target transition"
      */
     public static final Interpolator DEFAULT_SWAP_TARGET_TRANSITION_INTERPOLATOR = new BasicSwapTargetTranslationInterpolator();
 
-
+    // ---
     /**
      * Default interpolator used for "item settle back into place" animation
      */
     public static final Interpolator DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR = new DecelerateInterpolator();
+    private static final String TAG = "ARVDragDropManager";
 
     // ---
-
-    /**
-     * Used for listening item drag events
-     */
-    public interface OnItemDragEventListener {
-        /**
-         * Callback method to be invoked when dragging is started.
-         *
-         * @param position The position of the item.
-         */
-        void onItemDragStarted(int position);
-
-        /**
-         * Callback method to be invoked when dragging is finished.
-         *
-         * @param fromPosition Previous position of the item.
-         * @param toPosition   New position of the item.
-         * @param result       Indicates whether the dragging operation was succeeded.
-         */
-        void onItemDragFinished(int fromPosition, int toPosition, boolean result);
-    }
+    private static final int SCROLL_DIR_NONE = 0;
 
     // --
-
-    private static final int SCROLL_DIR_NONE = 0;
     private static final int SCROLL_DIR_UP = (1 << 0);
     private static final int SCROLL_DIR_DOWN = (1 << 1);
-
+    private static final int SCROLL_DIR_LEFT = (1 << 2);
+    private static final int SCROLL_DIR_RIGHT = (1 << 3);
     private static final boolean LOCAL_LOGV = false;
     private static final boolean LOCAL_LOGD = false;
-
     private static final float SCROLL_THRESHOLD = 0.3f; // 0.0f < X < 0.5f
     private static final float SCROLL_AMOUNT_COEFF = 25;
     private static final float SCROLL_TOUCH_SLOP_MULTIPLY = 1.5f;
-
     private RecyclerView mRecyclerView;
     private Interpolator mSwapTargetTranslationInterpolator = DEFAULT_SWAP_TARGET_TRANSITION_INTERPOLATOR;
     private ScrollOnDraggingProcessRunnable mScrollOnDraggingProcess;
     private boolean mScrollEventRegisteredToDistributor;
-
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
     private RecyclerView.OnScrollListener mInternalUseOnScrollListener;
-
     private EdgeEffectDecorator mEdgeEffectDecorator;
     private NinePatchDrawable mShadowDrawable;
-
     private float mDisplayDensity;
     private int mTouchSlop;
     private int mScrollTouchSlop;
@@ -138,16 +105,12 @@ public class RecyclerViewDragDropManager {
     private long mInitialTouchItemId = RecyclerView.NO_ID;
     private boolean mInitiateOnLongPress;
     private boolean mInitiateOnMove = true;
-
     private boolean mInScrollByMethod;
     private int mActualScrollByAmount;
-
     private Rect mTmpRect1 = new Rect();
-
     private Runnable mDeferredCancelProcess;
     private int mItemSettleBackIntoPlaceAnimationDuration = 200;
     private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR;
-
     // these fields are only valid while dragging
     private DraggableItemWrapperAdapter mAdapter;
     private long mDraggingItemId = RecyclerView.NO_ID;
@@ -157,8 +120,11 @@ public class RecyclerViewDragDropManager {
     private SwapTargetItemOperator mSwapTargetItemOperator;
     private int mLastTouchX;
     private int mLastTouchY;
+    private int mDragStartTouchX;
     private int mDragStartTouchY;
+    private int mDragMinTouchX;
     private int mDragMinTouchY;
+    private int mDragMaxTouchX;
     private int mDragMaxTouchY;
     private int mScrollDirMask = SCROLL_DIR_NONE;
     private int mGrabbedPositionX;
@@ -171,6 +137,14 @@ public class RecyclerViewDragDropManager {
     private OnItemDragEventListener mItemDragEventListener;
     private boolean mCanDragH;
     private boolean mCanDragV;
+    private Runnable mCheckItemSwappingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (mDraggingItem != null) {
+                checkItemSwapping(mRecyclerView);
+            }
+        }
+    };
 
     /**
      * Constructor.
@@ -206,6 +180,104 @@ public class RecyclerViewDragDropManager {
         };
 
         mScrollOnDraggingProcess = new ScrollOnDraggingProcessRunnable(this);
+    }
+
+    private static DraggableItemWrapperAdapter getDraggableItemWrapperAdapter(RecyclerView rv) {
+        return WrapperAdapterUtils.findWrappedAdapter(rv.getAdapter(), DraggableItemWrapperAdapter.class);
+    }
+
+    private static boolean supportsEdgeEffect() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
+    }
+
+    private static boolean supportsViewTranslation() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    private static void safeEndAnimation(RecyclerView rv, RecyclerView.ViewHolder holder) {
+        final RecyclerView.ItemAnimator itemAnimator = (rv != null) ? rv.getItemAnimator() : null;
+        if (itemAnimator != null) {
+            itemAnimator.endAnimation(holder);
+        }
+    }
+
+    private static void safeEndAnimations(RecyclerView rv) {
+        final RecyclerView.ItemAnimator itemAnimator = (rv != null) ? rv.getItemAnimator() : null;
+        if (itemAnimator != null) {
+            itemAnimator.endAnimations();
+        }
+    }
+
+    /*package*/
+    static RecyclerView.ViewHolder findSwapTargetItem(
+            RecyclerView rv, RecyclerView.ViewHolder draggingItem,
+            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
+        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
+        if (layoutManager instanceof GridLayoutManager) {
+            return findSwapTargetItemForGridLayoutManager(rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range);
+        } else if (layoutManager instanceof LinearLayoutManager) {
+            return findSwapTargetItemForLinearLayoutManager(rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range);
+        } else {
+            return null;
+        }
+    }
+
+    private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManager(
+            RecyclerView rv, RecyclerView.ViewHolder draggingItem,
+            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
+        final int draggingItemPosition = draggingItem.getAdapterPosition();
+        RecyclerView.ViewHolder swapTargetHolder = null;
+
+        if (draggingItemPosition != RecyclerView.NO_POSITION &&
+                draggingItem.getItemId() == draggingItemId) {
+
+            int cx = overlayItemLeft + draggingItem.itemView.getWidth() / 2;
+            int cy = overlayItemTop + draggingItem.itemView.getHeight() / 2;
+
+            RecyclerView.ViewHolder vh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx, cy);
+            if (draggingItem != vh) {
+                swapTargetHolder = vh;
+            }
+        }
+        // check range
+        if (swapTargetHolder != null && range != null) {
+            if (!range.checkInRange(swapTargetHolder.getAdapterPosition())) {
+                swapTargetHolder = null;
+            }
+        }
+
+        return swapTargetHolder;
+    }
+
+    private static RecyclerView.ViewHolder findSwapTargetItemForLinearLayoutManager(
+            RecyclerView rv, RecyclerView.ViewHolder draggingItem,
+            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
+        final int draggingItemPosition = draggingItem.getAdapterPosition();
+        final int draggingViewTop = draggingItem.itemView.getTop();
+        RecyclerView.ViewHolder swapTargetHolder = null;
+
+        // determine the swap target view
+        if (draggingItemPosition != RecyclerView.NO_POSITION &&
+                draggingItem.getItemId() == draggingItemId) {
+            if (overlayItemTop < draggingViewTop) {
+                if (draggingItemPosition > 0) {
+                    swapTargetHolder = rv.findViewHolderForAdapterPosition(draggingItemPosition - 1);
+                }
+            } else if (overlayItemTop > draggingViewTop) {
+                if (draggingItemPosition < (rv.getAdapter().getItemCount() - 1)) {
+                    swapTargetHolder = rv.findViewHolderForAdapterPosition(draggingItemPosition + 1);
+                }
+            }
+        }
+
+        // check range
+        if (swapTargetHolder != null && range != null) {
+            if (!range.checkInRange(swapTargetHolder.getAdapterPosition())) {
+                swapTargetHolder = null;
+            }
+        }
+
+        return swapTargetHolder;
     }
 
     /**
@@ -501,7 +573,6 @@ public class RecyclerViewDragDropManager {
         }
     }
 
-
     /*package*/ void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         if (LOCAL_LOGV) {
             Log.v(TAG, "onScrolled(dx = " + dx + ", dy = " + dy + ")");
@@ -577,6 +648,7 @@ public class RecyclerViewDragDropManager {
 
         // disable auto scrolling until user moves the item
         mDragStartTouchY = mDragMinTouchY = mDragMaxTouchY = mLastTouchY;
+        mDragStartTouchX = mDragMinTouchX = mDragMaxTouchX = mLastTouchX;
         mScrollDirMask = SCROLL_DIR_NONE;
 
         // calculate the view-local offset from the touched point
@@ -605,7 +677,7 @@ public class RecyclerViewDragDropManager {
             mSwapTargetItemOperator = new SwapTargetItemOperator(mRecyclerView, mDraggingItem, mDraggableRange);
             mSwapTargetItemOperator.setSwapTargetTranslationInterpolator(mSwapTargetTranslationInterpolator);
             mSwapTargetItemOperator.start();
-            mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationY());
+            mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationX(), mDraggingItemDecorator.getDraggingItemTranslationY());
         }
 
         if (mEdgeEffectDecorator != null) {
@@ -697,9 +769,13 @@ public class RecyclerViewDragDropManager {
 
         mLastTouchX = 0;
         mLastTouchY = 0;
+        mDragStartTouchX = 0;
         mDragStartTouchY = 0;
+        mDragMinTouchX = 0;
         mDragMinTouchY = 0;
+        mDragMaxTouchX = 0;
         mDragMaxTouchY = 0;
+        mGrabbedPositionX = 0;
         mGrabbedPositionY = 0;
         mGrabbedItemWidth = 0;
         mGrabbedItemHeight = 0;
@@ -738,8 +814,11 @@ public class RecyclerViewDragDropManager {
         mInitialTouchY = 0;
         mLastTouchX = 0;
         mLastTouchY = 0;
+        mDragStartTouchX = 0;
         mDragStartTouchY = 0;
+        mDragMinTouchX = 0;
         mDragMinTouchY = 0;
+        mDragMaxTouchX = 0;
         mDragMaxTouchY = 0;
         mInitialTouchItemId = RecyclerView.NO_ID;
         mCanDragH = false;
@@ -857,7 +936,9 @@ public class RecyclerViewDragDropManager {
         mLastTouchX = (int) (e.getX() + 0.5f);
         mLastTouchY = (int) (e.getY() + 0.5f);
 
+        mDragMinTouchX = Math.min(mDragMinTouchX, mLastTouchX);
         mDragMinTouchY = Math.min(mDragMinTouchY, mLastTouchY);
+        mDragMaxTouchX = Math.max(mDragMaxTouchX, mLastTouchX);
         mDragMaxTouchY = Math.max(mDragMaxTouchY, mLastTouchY);
 
         // update drag direction mask
@@ -866,7 +947,7 @@ public class RecyclerViewDragDropManager {
         // update decorators
         mDraggingItemDecorator.update(e);
         if (mSwapTargetItemOperator != null) {
-            mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationY());
+            mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationX(), mDraggingItemDecorator.getDraggingItemTranslationY());
         }
 
         // check swapping
@@ -874,13 +955,24 @@ public class RecyclerViewDragDropManager {
     }
 
     private void updateDragDirectionMask() {
-        if (((mDragStartTouchY - mDragMinTouchY) > mScrollTouchSlop) ||
-                ((mDragMaxTouchY - mLastTouchY) > mScrollTouchSlop)) {
-            mScrollDirMask |= SCROLL_DIR_UP;
-        }
-        if (((mDragMaxTouchY - mDragStartTouchY) > mScrollTouchSlop) ||
-                ((mLastTouchY - mDragMinTouchY) > mScrollTouchSlop)) {
-            mScrollDirMask |= SCROLL_DIR_DOWN;
+        if (CustomRecyclerViewUtils.getOrientation(mRecyclerView) == CustomRecyclerViewUtils.ORIENTATION_VERTICAL) {
+            if (((mDragStartTouchY - mDragMinTouchY) > mScrollTouchSlop) ||
+                    ((mDragMaxTouchY - mLastTouchY) > mScrollTouchSlop)) {
+                mScrollDirMask |= SCROLL_DIR_UP;
+            }
+            if (((mDragMaxTouchY - mDragStartTouchY) > mScrollTouchSlop) ||
+                    ((mLastTouchY - mDragMinTouchY) > mScrollTouchSlop)) {
+                mScrollDirMask |= SCROLL_DIR_DOWN;
+            }
+        } else if (CustomRecyclerViewUtils.getOrientation(mRecyclerView) == CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL) {
+            if (((mDragStartTouchX - mDragMinTouchX) > mScrollTouchSlop) ||
+                    ((mDragMaxTouchX - mLastTouchX) > mScrollTouchSlop)) {
+                mScrollDirMask |= SCROLL_DIR_LEFT;
+            }
+            if (((mDragMaxTouchX - mDragStartTouchX) > mScrollTouchSlop) ||
+                    ((mLastTouchX - mDragMinTouchX) > mScrollTouchSlop)) {
+                mScrollDirMask |= SCROLL_DIR_RIGHT;
+            }
         }
     }
 
@@ -899,6 +991,132 @@ public class RecyclerViewDragDropManager {
 
     /*package*/ void handleScrollOnDragging() {
         final RecyclerView rv = mRecyclerView;
+        if (CustomRecyclerViewUtils.getOrientation(rv) == CustomRecyclerViewUtils.ORIENTATION_VERTICAL) {
+            handleVerticalScrollOnDragging(rv);
+        } else if (CustomRecyclerViewUtils.getOrientation(rv) == CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL) {
+            handleHorizontalScrollOnDragging(rv);
+        }
+    }
+
+    private void handleHorizontalScrollOnDragging(RecyclerView rv) {
+        final int width = rv.getWidth();
+
+        if (width == 0) {
+            return;
+        }
+
+        final float invWidth = (1.0f / width);
+        final float x = mLastTouchX * invWidth;
+        final float threshold = SCROLL_THRESHOLD;
+        final float invThreshold = (1.0f / threshold);
+        final float centerOffset = x - 0.5f;
+        final float absCenterOffset = Math.abs(centerOffset);
+        final float acceleration = Math.max(0.0f, threshold - (0.5f - absCenterOffset)) * invThreshold;
+        final int mask = mScrollDirMask;
+
+        int scrollAmount = (int) Math.signum(centerOffset) * (int) (SCROLL_AMOUNT_COEFF * mDisplayDensity * acceleration + 0.5f);
+        int actualScrolledAmount = 0;
+
+        final ItemDraggableRange range = mDraggableRange;
+
+        final int firstVisibleChild = CustomRecyclerViewUtils.findFirstCompletelyVisibleItemPosition(mRecyclerView);
+        final int lastVisibleChild = CustomRecyclerViewUtils.findLastCompletelyVisibleItemPosition(mRecyclerView);
+
+        boolean reachedToLeftHardLimit = false;
+        boolean reachedToLeftSoftLimit = false;
+        boolean reachedToRightHardLimit = false;
+        boolean reachedToRightSoftLimit = false;
+
+        if (firstVisibleChild != RecyclerView.NO_POSITION) {
+            if (firstVisibleChild <= range.getStart()) {
+                reachedToLeftSoftLimit = true;
+            }
+            if (firstVisibleChild <= (range.getStart() - 1)) {
+                reachedToLeftHardLimit = true;
+            }
+        }
+
+        if (lastVisibleChild != RecyclerView.NO_POSITION) {
+            if (lastVisibleChild >= range.getEnd()) {
+                reachedToRightSoftLimit = true;
+            }
+            if (lastVisibleChild >= (range.getEnd() + 1)) {
+                reachedToRightHardLimit = true;
+            }
+        }
+
+        // apply mask
+        if (scrollAmount > 0) {
+            if ((mask & SCROLL_DIR_RIGHT) == 0) {
+                scrollAmount = 0;
+            }
+        } else if (scrollAmount < 0) {
+            if ((mask & SCROLL_DIR_LEFT) == 0) {
+                scrollAmount = 0;
+            }
+        }
+
+        // scroll
+        if ((!reachedToLeftHardLimit && (scrollAmount < 0)) ||
+                (!reachedToRightHardLimit && (scrollAmount > 0))) {
+            safeEndAnimations(rv);
+            actualScrolledAmount = scrollByXAndGetScrolledAmount(scrollAmount);
+
+            if (scrollAmount < 0) {
+                mDraggingItemDecorator.setIsScrolling(!reachedToLeftSoftLimit);
+            } else {
+                mDraggingItemDecorator.setIsScrolling(!reachedToRightSoftLimit);
+            }
+
+            mDraggingItemDecorator.refresh();
+            if (mSwapTargetItemOperator != null) {
+                mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationX(), mDraggingItemDecorator.getDraggingItemTranslationY());
+            }
+        } else {
+            mDraggingItemDecorator.setIsScrolling(false);
+        }
+
+        final boolean actualIsScrolling = (actualScrolledAmount != 0);
+
+
+        if (mEdgeEffectDecorator != null) {
+            final float edgeEffectStrength = 0.005f;
+
+            final int draggingItemLeft = mDraggingItemDecorator.getTranslatedItemPositionLeft();
+            final int draggingItemRight = mDraggingItemDecorator.getTranslatedItemPositionRight();
+            final int draggingItemCenter = (draggingItemLeft + draggingItemRight) / 2;
+            final int nearEdgePosition;
+
+            if (firstVisibleChild == 0 && lastVisibleChild == 0) {
+                // has only 1 item
+                nearEdgePosition = (scrollAmount < 0) ? draggingItemLeft : draggingItemRight;
+            } else {
+                nearEdgePosition = (draggingItemCenter < (width / 2)) ? draggingItemLeft : draggingItemRight;
+            }
+
+            final float nearEdgeOffset = (nearEdgePosition * invWidth) - 0.5f;
+            final float absNearEdgeOffset = Math.abs(nearEdgeOffset);
+            float edgeEffectPullDistance = 0;
+
+            if ((absNearEdgeOffset > 0.4f) && (scrollAmount != 0) && !actualIsScrolling) {
+                if (nearEdgeOffset < 0) {
+                    if (mDraggingItemDecorator.isReachedToLeftLimit()) {
+                        edgeEffectPullDistance = -mDisplayDensity * edgeEffectStrength;
+                    }
+                } else {
+                    if (mDraggingItemDecorator.isReachedToRightLimit()) {
+                        edgeEffectPullDistance = mDisplayDensity * edgeEffectStrength;
+                    }
+                }
+            }
+
+            updateEdgeEffect(edgeEffectPullDistance);
+        }
+
+        ViewCompat.postOnAnimation(mRecyclerView, mCheckItemSwappingRunnable);
+    }
+
+    private void handleVerticalScrollOnDragging(RecyclerView rv){
         final int height = rv.getHeight();
 
         if (height == 0) {
@@ -970,7 +1188,7 @@ public class RecyclerViewDragDropManager {
 
             mDraggingItemDecorator.refresh();
             if (mSwapTargetItemOperator != null) {
-                mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationY());
+                mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationX(),mDraggingItemDecorator.getDraggingItemTranslationY());
             }
         } else {
             mDraggingItemDecorator.setIsScrolling(false);
@@ -1032,21 +1250,21 @@ public class RecyclerViewDragDropManager {
         }
     }
 
-    private Runnable mCheckItemSwappingRunnable = new Runnable() {
-        @Override
-        public void run() {
-            if (mDraggingItem != null) {
-                checkItemSwapping(mRecyclerView);
-            }
-        }
-    };
-
     private int scrollByYAndGetScrolledAmount(int ry) {
         // NOTE: mActualScrollByAmount --- Hackish! To detect over scrolling.
 
         mActualScrollByAmount = 0;
         mInScrollByMethod = true;
         mRecyclerView.scrollBy(0, ry);
+        mInScrollByMethod = false;
+
+        return mActualScrollByAmount;
+    }
+
+    private int scrollByXAndGetScrolledAmount(int rx) {
+        mActualScrollByAmount = 0;
+        mInScrollByMethod = true;
+        mRecyclerView.scrollBy(rx, 0);
         mInScrollByMethod = false;
 
         return mActualScrollByAmount;
@@ -1172,10 +1390,6 @@ public class RecyclerViewDragDropManager {
         }
     }
 
-    private static DraggableItemWrapperAdapter getDraggableItemWrapperAdapter(RecyclerView rv) {
-        return WrapperAdapterUtils.findWrappedAdapter(rv.getAdapter(), DraggableItemWrapperAdapter.class);
-    }
-
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean checkTouchedItemState(RecyclerView rv, RecyclerView.ViewHolder holder) {
         if (!(holder instanceof DraggableItemViewHolder)) {
@@ -1198,98 +1412,13 @@ public class RecyclerViewDragDropManager {
         return true;
     }
 
-    private static boolean supportsEdgeEffect() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
-    }
-
-    private static boolean supportsViewTranslation() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-
-    private static void safeEndAnimation(RecyclerView rv, RecyclerView.ViewHolder holder) {
-        final RecyclerView.ItemAnimator itemAnimator = (rv != null) ? rv.getItemAnimator() : null;
-        if (itemAnimator != null) {
-            itemAnimator.endAnimation(holder);
-        }
-    }
-
-    private static void safeEndAnimations(RecyclerView rv) {
-        final RecyclerView.ItemAnimator itemAnimator = (rv != null) ? rv.getItemAnimator() : null;
-        if (itemAnimator != null) {
-            itemAnimator.endAnimations();
-        }
-    }
-
-    /*package*/
-    static RecyclerView.ViewHolder findSwapTargetItem(
-            RecyclerView rv, RecyclerView.ViewHolder draggingItem,
-            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
-        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
-        if (layoutManager instanceof GridLayoutManager) {
-            return findSwapTargetItemForGridLayoutManager(rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range);
-        } else if (layoutManager instanceof LinearLayoutManager) {
-            return findSwapTargetItemForLinearLayoutManager(rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range);
-        } else {
-            return null;
-        }
-    }
-
-    private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManager(
-            RecyclerView rv, RecyclerView.ViewHolder draggingItem,
-            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
-        final int draggingItemPosition = draggingItem.getAdapterPosition();
-        RecyclerView.ViewHolder swapTargetHolder = null;
-
-        if (draggingItemPosition != RecyclerView.NO_POSITION &&
-                draggingItem.getItemId() == draggingItemId) {
-
-            int cx = overlayItemLeft + draggingItem.itemView.getWidth() / 2;
-            int cy = overlayItemTop + draggingItem.itemView.getHeight() / 2;
-
-            RecyclerView.ViewHolder vh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx, cy);
-            if (draggingItem != vh) {
-                swapTargetHolder = vh;
-            }
-        }
-        // check range
-        if (swapTargetHolder != null && range != null) {
-            if (!range.checkInRange(swapTargetHolder.getAdapterPosition())) {
-                swapTargetHolder = null;
-            }
-        }
-
-        return swapTargetHolder;
-    }
-
-    private static RecyclerView.ViewHolder findSwapTargetItemForLinearLayoutManager(
-            RecyclerView rv, RecyclerView.ViewHolder draggingItem,
-            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
-        final int draggingItemPosition = draggingItem.getAdapterPosition();
-        final int draggingViewTop = draggingItem.itemView.getTop();
-        RecyclerView.ViewHolder swapTargetHolder = null;
-
-        // determine the swap target view
-        if (draggingItemPosition != RecyclerView.NO_POSITION &&
-                draggingItem.getItemId() == draggingItemId) {
-            if (overlayItemTop < draggingViewTop) {
-                if (draggingItemPosition > 0) {
-                    swapTargetHolder = rv.findViewHolderForAdapterPosition(draggingItemPosition - 1);
-                }
-            } else if (overlayItemTop > draggingViewTop) {
-                if (draggingItemPosition < (rv.getAdapter().getItemCount() - 1)) {
-                    swapTargetHolder = rv.findViewHolderForAdapterPosition(draggingItemPosition + 1);
-                }
-            }
-        }
-
-        // check range
-        if (swapTargetHolder != null && range != null) {
-            if (!range.checkInRange(swapTargetHolder.getAdapterPosition())) {
-                swapTargetHolder = null;
-            }
-        }
-
-        return swapTargetHolder;
+    /**
+     * Gets the duration of "settle back into place" animation.
+     *
+     * @return The duration of "settle back into place" animation in milliseconds
+     */
+    public int getItemSettleBackIntoPlaceAnimationDuration() {
+        return mItemSettleBackIntoPlaceAnimationDuration;
     }
 
     /**
@@ -1302,12 +1431,12 @@ public class RecyclerViewDragDropManager {
     }
 
     /**
-     * Gets the duration of "settle back into place" animation.
+     * Gets the interpolator which ise used for "settle back into place" animation.
      *
-     * @return The duration of "settle back into place" animation in milliseconds
+     * @return Interpolator which is used for "settle back into place" animation
      */
-    public int getItemSettleBackIntoPlaceAnimationDuration() {
-        return mItemSettleBackIntoPlaceAnimationDuration;
+    public Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
+        return mItemSettleBackIntoPlaceAnimationInterpolator;
     }
 
     /**
@@ -1319,15 +1448,6 @@ public class RecyclerViewDragDropManager {
         mItemSettleBackIntoPlaceAnimationInterpolator = interpolator;
     }
 
-    /**
-     * Gets the interpolator which ise used for "settle back into place" animation.
-     *
-     * @return Interpolator which is used for "settle back into place" animation
-     */
-    public Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
-        return mItemSettleBackIntoPlaceAnimationInterpolator;
-    }
-
     /*package*/ void onDraggingItemViewRecycled() {
         mDraggingItemDecorator.invalidateDraggingItem();
     }
@@ -1335,6 +1455,27 @@ public class RecyclerViewDragDropManager {
     /*package*/ void onNewDraggingItemViewBinded(RecyclerView.ViewHolder holder) {
         mDraggingItem = holder;
         mDraggingItemDecorator.setDraggingItemViewHolder(holder);
+    }
+
+    /**
+     * Used for listening item drag events
+     */
+    public interface OnItemDragEventListener {
+        /**
+         * Callback method to be invoked when dragging is started.
+         *
+         * @param position The position of the item.
+         */
+        void onItemDragStarted(int position);
+
+        /**
+         * Callback method to be invoked when dragging is finished.
+         *
+         * @param fromPosition Previous position of the item.
+         * @param toPosition   New position of the item.
+         * @param result       Indicates whether the dragging operation was succeeded.
+         */
+        void onItemDragFinished(int fromPosition, int toPosition, boolean result);
     }
 
     private static class ScrollOnDraggingProcessRunnable implements Runnable {

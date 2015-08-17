@@ -58,6 +58,65 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         CustomRecyclerViewUtils.getLayoutMargins(mDraggingItem.itemView, mDraggingItemMargins);
     }
 
+    private static int clip(int value, int min, int max) {
+        return Math.min(Math.max(value, min), max);
+    }
+
+    private static View findRangeFirstItem(RecyclerView rv, ItemDraggableRange range, int firstVisiblePosition, int lastVisiblePosition) {
+        if (firstVisiblePosition == RecyclerView.NO_POSITION || lastVisiblePosition == RecyclerView.NO_POSITION) {
+            return null;
+        }
+
+        View v = null;
+
+        final int childCount = rv.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            final View v2 = rv.getChildAt(i);
+            final RecyclerView.ViewHolder vh = rv.getChildViewHolder(v2);
+
+            if (vh != null) {
+                final int position = vh.getLayoutPosition();
+
+                if ((position >= firstVisiblePosition) &&
+                        (position <= lastVisiblePosition) &&
+                        range.checkInRange(position)) {
+                    v = v2;
+                    break;
+                }
+
+            }
+        }
+
+        return v;
+    }
+
+    private static View findRangeLastItem(RecyclerView rv, ItemDraggableRange range, int firstVisiblePosition, int lastVisiblePosition) {
+        if (firstVisiblePosition == RecyclerView.NO_POSITION || lastVisiblePosition == RecyclerView.NO_POSITION) {
+            return null;
+        }
+
+        View v = null;
+
+        final int childCount = rv.getChildCount();
+        for (int i = childCount - 1; i >= 0; i--) {
+            final View v2 = rv.getChildAt(i);
+            final RecyclerView.ViewHolder vh = rv.getChildViewHolder(v2);
+
+            if (vh != null) {
+                final int position = vh.getLayoutPosition();
+
+                if ((position >= firstVisiblePosition) &&
+                        (position <= lastVisiblePosition) &&
+                        range.checkInRange(position)) {
+                    v = v2;
+                    break;
+                }
+            }
+        }
+
+        return v;
+    }
+
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         // NOTE:
@@ -81,7 +140,6 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mGrabbedPositionX = (int) (grabbedPositionX + 0.5f);
         mGrabbedPositionY = (int) (grabbedPositionY + 0.5f);
 
-        // draw the grabbed item on bitmap
         mDraggingItemImage = createDraggingItemImage(itemView, mShadowDrawable);
 
         mGrabbedItemWidth = itemView.getWidth();
@@ -170,6 +228,10 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         return mTranslationY;
     }
 
+    public int getDraggingItemTranslationX(){
+        return mTranslationX;
+    }
+
     private void updateTranslationOffset() {
         final RecyclerView rv = mRecyclerView;
         final int childCount = rv.getChildCount();
@@ -208,16 +270,20 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationY = clip(mTranslationY, mTranslationTopLimit, mTranslationBottomLimit);
     }
 
-    private static int clip(int value, int min, int max) {
-        return Math.min(Math.max(value, min), max);
-    }
-
     public boolean isReachedToTopLimit() {
         return (mTranslationY == mTranslationTopLimit);
     }
 
     public boolean isReachedToBottomLimit() {
         return (mTranslationY == mTranslationBottomLimit);
+    }
+
+    public boolean isReachedToLeftLimit() {
+        return (mTranslationX == mTranslationLeftLimit);
+    }
+
+    public boolean isReachedToRightLimit() {
+        return (mTranslationX == mTranslationRightLimit);
     }
 
     private Bitmap createDraggingItemImage(View v, NinePatchDrawable shadow) {
@@ -270,60 +336,12 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         return mTranslationY + mGrabbedItemHeight;
     }
 
-
-    private static View findRangeFirstItem(RecyclerView rv, ItemDraggableRange range, int firstVisiblePosition, int lastVisiblePosition) {
-        if (firstVisiblePosition == RecyclerView.NO_POSITION || lastVisiblePosition == RecyclerView.NO_POSITION) {
-            return null;
-        }
-
-        View v = null;
-
-        final int childCount = rv.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            final View v2 = rv.getChildAt(i);
-            final RecyclerView.ViewHolder vh = rv.getChildViewHolder(v2);
-
-            if (vh != null) {
-                final int position = vh.getLayoutPosition();
-
-                if ((position >= firstVisiblePosition) &&
-                        (position <= lastVisiblePosition) &&
-                        range.checkInRange(position)) {
-                    v = v2;
-                    break;
-                }
-
-            }
-        }
-
-        return v;
+    public int getTranslatedItemPositionLeft() {
+        return mTranslationX;
     }
 
-    private static View findRangeLastItem(RecyclerView rv, ItemDraggableRange range, int firstVisiblePosition, int lastVisiblePosition) {
-        if (firstVisiblePosition == RecyclerView.NO_POSITION || lastVisiblePosition == RecyclerView.NO_POSITION) {
-            return null;
-        }
-
-        View v = null;
-
-        final int childCount = rv.getChildCount();
-        for (int i = childCount - 1; i >= 0; i--) {
-            final View v2 = rv.getChildAt(i);
-            final RecyclerView.ViewHolder vh = rv.getChildViewHolder(v2);
-
-            if (vh != null) {
-                final int position = vh.getLayoutPosition();
-
-                if ((position >= firstVisiblePosition) &&
-                        (position <= lastVisiblePosition) &&
-                        range.checkInRange(position)) {
-                    v = v2;
-                    break;
-                }
-            }
-        }
-
-        return v;
+    public int getTranslatedItemPositionRight() {
+        return mTranslationX + mGrabbedItemWidth;
     }
 
     public void invalidateDraggingItem() {
