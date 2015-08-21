@@ -1360,30 +1360,43 @@ public class RecyclerViewDragDropManager {
                 Log.d(TAG, "item swap (from: " + fromPosition + ", to: " + toPosition + ")");
             }
 
-            RecyclerView.ViewHolder firstVisibleTopItem = null;
+            RecyclerView.ViewHolder firstVisibleItem = null;
 
             if (rv.getChildCount() > 0) {
                 View child = rv.getChildAt(0);
                 if (child != null) {
-                    firstVisibleTopItem = rv.getChildViewHolder(child);
+                    firstVisibleItem = rv.getChildViewHolder(child);
                 }
             }
-            final int prevTopItemPosition = (firstVisibleTopItem != null) ? firstVisibleTopItem.getAdapterPosition() : RecyclerView.NO_POSITION;
+            final int prevFirstItemPosition = (firstVisibleItem != null) ? firstVisibleItem.getAdapterPosition() : RecyclerView.NO_POSITION;
 
             // NOTE: This method invokes notifyItemMoved() method internally. Be careful!
             mAdapter.moveItem(fromPosition, toPosition);
 
             safeEndAnimations(rv);
 
-            if (fromPosition == prevTopItemPosition) {
-                //noinspection UnnecessaryLocalVariable
-                final Rect margins = swapTargetMargins;
-                final int curTopItemHeight = swapTargetHolder.itemView.getHeight() + margins.top + margins.bottom;
-                scrollByYAndGetScrolledAmount(-curTopItemHeight);
-            } else if (toPosition == prevTopItemPosition) {
-                final Rect margins = mDraggingItemMargins;
-                final int curTopItemHeight = mGrabbedItemHeight + margins.top + margins.bottom;
-                scrollByYAndGetScrolledAmount(-curTopItemHeight);
+            if (CustomRecyclerViewUtils.getOrientation(rv) == CustomRecyclerViewUtils.ORIENTATION_VERTICAL) {
+                if (fromPosition == prevFirstItemPosition) {
+                    //noinspection UnnecessaryLocalVariable
+                    final Rect margins = swapTargetMargins;
+                    final int curTopItemHeight = swapTargetHolder.itemView.getHeight() + margins.top + margins.bottom;
+                    scrollByYAndGetScrolledAmount(-curTopItemHeight);
+                } else if (toPosition == prevFirstItemPosition) {
+                    final Rect margins = mDraggingItemMargins;
+                    final int curTopItemHeight = mGrabbedItemHeight + margins.top + margins.bottom;
+                    scrollByYAndGetScrolledAmount(-curTopItemHeight);
+                }
+            } else if (CustomRecyclerViewUtils.getOrientation(rv) == CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL) {
+                if (fromPosition == prevFirstItemPosition) {
+                    //noinspection UnnecessaryLocalVariable
+                    final Rect margins = swapTargetMargins;
+                    final int curLeftItemHeight = swapTargetHolder.itemView.getWidth() + margins.left + margins.right;
+                    scrollByXAndGetScrolledAmount(-curLeftItemHeight);
+                } else if (toPosition == prevFirstItemPosition) {
+                    final Rect margins = mDraggingItemMargins;
+                    final int curLeftItemHeight = mGrabbedItemWidth + margins.left + margins.right;
+                    scrollByXAndGetScrolledAmount(-curLeftItemHeight);
+                }
             }
 
             safeEndAnimations(rv);
