@@ -28,11 +28,13 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
 
     private static final int RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_DP = 2;
     private static final int RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC = 20;
-    protected RecyclerView mRecyclerView;
-    protected RecyclerView.ViewHolder mDraggingItem;
+
     private int mReturnToDefaultPositionDuration = 200;
     private int mReturnToDefaultPositionAnimateThreshold;
     private Interpolator mReturnToDefaultPositionInterpolator;
+
+    protected RecyclerView mRecyclerView;
+    protected RecyclerView.ViewHolder mDraggingItem;
 
     public BaseDraggableItemDecorator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem) {
         mRecyclerView = recyclerView;
@@ -40,19 +42,6 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
 
         final float displayDensity = recyclerView.getResources().getDisplayMetrics().density;
         mReturnToDefaultPositionAnimateThreshold = (int) (RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_DP * displayDensity + 0.5f);
-    }
-
-    protected static void setItemTranslation(RecyclerView rv, RecyclerView.ViewHolder holder, float x, float y) {
-        final RecyclerView.ItemAnimator itemAnimator = rv.getItemAnimator();
-        if (itemAnimator != null) {
-            itemAnimator.endAnimation(holder);
-        }
-        ViewCompat.setTranslationX(holder.itemView, x);
-        ViewCompat.setTranslationY(holder.itemView, y);
-    }
-
-    private static boolean supportsViewPropertyAnimation() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
     public void setReturnToDefaultPositionAnimationDuration(int duration) {
@@ -112,5 +101,18 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
             ViewCompat.setTranslationX(targetView, 0);
             ViewCompat.setTranslationY(targetView, 0);
         }
+    }
+
+    protected static void setItemTranslation(RecyclerView rv, RecyclerView.ViewHolder holder, float x, float y) {
+        final RecyclerView.ItemAnimator itemAnimator = rv.getItemAnimator();
+        if (itemAnimator != null) {
+            itemAnimator.endAnimation(holder);
+        }
+        ViewCompat.setTranslationX(holder.itemView, x);
+        ViewCompat.setTranslationY(holder.itemView, y);
+    }
+
+    private static boolean supportsViewPropertyAnimation() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 }
