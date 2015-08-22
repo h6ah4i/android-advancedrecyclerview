@@ -605,7 +605,11 @@ public class RecyclerViewDragDropManager {
         mDraggingItemDecorator.setShadowDrawable(mShadowDrawable);
         mDraggingItemDecorator.start(e, mGrabbedPositionX, mGrabbedPositionY);
 
-        if (supportsViewTranslation()) {
+        int layoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
+
+        if (supportsViewTranslation() &&
+                (layoutType == CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_VERTICAL ||
+                        layoutType == CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_HORIZONTAL)) {
             mSwapTargetItemOperator = new SwapTargetItemOperator(mRecyclerView, mDraggingItem, mDraggableRange);
             mSwapTargetItemOperator.setSwapTargetTranslationInterpolator(mSwapTargetTranslationInterpolator);
             mSwapTargetItemOperator.start();
@@ -1048,7 +1052,7 @@ public class RecyclerViewDragDropManager {
         ViewCompat.postOnAnimation(mRecyclerView, mCheckItemSwappingRunnable);
     }
 
-    private void handleVerticalScrollOnDragging(RecyclerView rv){
+    private void handleVerticalScrollOnDragging(RecyclerView rv) {
         final int height = rv.getHeight();
 
         if (height == 0) {
@@ -1120,7 +1124,7 @@ public class RecyclerViewDragDropManager {
 
             mDraggingItemDecorator.refresh();
             if (mSwapTargetItemOperator != null) {
-                mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationX(),mDraggingItemDecorator.getDraggingItemTranslationY());
+                mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationX(), mDraggingItemDecorator.getDraggingItemTranslationY());
             }
         } else {
             mDraggingItemDecorator.setIsScrolling(false);

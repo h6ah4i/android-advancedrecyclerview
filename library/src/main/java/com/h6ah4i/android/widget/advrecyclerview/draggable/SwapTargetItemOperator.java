@@ -160,24 +160,26 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
             translationPhase = mSwapTargetTranslationInterpolator.getInterpolation(translationPhase);
         }
 
-        if (CustomRecyclerViewUtils.getOrientation(mRecyclerView) == CustomRecyclerViewUtils.ORIENTATION_VERTICAL) {
-            if (pos1 > pos2) {
-                // dragging item moving to upward
-                ViewCompat.setTranslationY(swapItemView, translationPhase * h1);
-            } else {
-                // dragging item moving to downward
-                ViewCompat.setTranslationY(swapItemView, (translationPhase - 1.0f) * h1);
-            }
-        } else if (CustomRecyclerViewUtils.getOrientation(mRecyclerView) == CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL) {
-            if (pos1 > pos2) {
-                // dragging item moving to upward
-                ViewCompat.setTranslationX(swapItemView, translationPhase * w1);
-            } else {
-                // dragging item moving to downward
-                ViewCompat.setTranslationX(swapItemView, (translationPhase - 1.0f) * w1);
-            }
+        switch (CustomRecyclerViewUtils.getOrientation(mRecyclerView)) {
+            case CustomRecyclerViewUtils.ORIENTATION_VERTICAL:
+                if (pos1 > pos2) {
+                    // dragging item moving to upward
+                    ViewCompat.setTranslationY(swapItemView, translationPhase * h1);
+                } else {
+                    // dragging item moving to downward
+                    ViewCompat.setTranslationY(swapItemView, (translationPhase - 1.0f) * h1);
+                }
+                break;
+            case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL:
+                if (pos1 > pos2) {
+                    // dragging item moving to upward
+                    ViewCompat.setTranslationX(swapItemView, translationPhase * w1);
+                } else {
+                    // dragging item moving to downward
+                    ViewCompat.setTranslationX(swapItemView, (translationPhase - 1.0f) * w1);
+                }
+                break;
         }
-
     }
 
     public void start() {
