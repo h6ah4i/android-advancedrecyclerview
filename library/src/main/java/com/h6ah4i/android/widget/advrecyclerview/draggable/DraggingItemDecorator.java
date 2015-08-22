@@ -51,6 +51,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private boolean mStarted;
     private boolean mIsScrolling;
     private ItemDraggableRange mRange;
+    private int mLayoutOrientation;
+    private int mSpanCount;
 
     public DraggingItemDecorator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem, ItemDraggableRange range) {
         super(recyclerView, draggingItem);
@@ -124,7 +126,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         // However, if the RecyclerView has any other decorations or RecyclerView is in scrolling state,
         // need to draw it to avoid visual corruptions.
         if (mDraggingItemImage != null) {
-            final float left = mTranslationX + /*mRecyclerViewPaddingLeft*/ + mDraggingItemMargins.left - mShadowPadding.left;
+            final float left = mTranslationX + /*mRecyclerViewPaddingLeft*/ +mDraggingItemMargins.left - mShadowPadding.left;
             final float top = /*mDraggingItemMargins.top +*/ mTranslationY - mShadowPadding.top;
             c.drawBitmap(mDraggingItemImage, left, top, null);
         }
@@ -147,6 +149,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationLeftLimit = mRecyclerView.getPaddingLeft();
         mTranslationTopLimit = mRecyclerView.getPaddingTop();
         mRecyclerViewPaddingLeft = mRecyclerView.getPaddingLeft();
+        mLayoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
+        mSpanCount = CustomRecyclerViewUtils.getSpanCount(mRecyclerView);
 
         // hide
         itemView.setVisibility(View.INVISIBLE);
@@ -228,7 +232,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         return mTranslationY;
     }
 
-    public int getDraggingItemTranslationX(){
+    public int getDraggingItemTranslationX() {
         return mTranslationX;
     }
 
@@ -245,18 +249,36 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             if (!mIsScrolling) {
                 final int firstVisiblePosition = CustomRecyclerViewUtils.findFirstVisibleItemPosition(rv);
                 final int lastVisiblePosition = CustomRecyclerViewUtils.findLastVisibleItemPosition(rv);
-                final View topChild = findRangeFirstItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
-                final View bottomChild = findRangeLastItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
 
-                if (topChild != null) {
-                    mTranslationTopLimit = Math.min(mTranslationBottomLimit, topChild.getTop());
+
+                switch (mLayoutOrientation) {
+                    case CustomRecyclerViewUtils.ORIENTATION_VERTICAL: {
+                        final View topChild = findRangeFirstItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
+                        final View bottomChild = findRangeLastItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
+
+                        if (topChild != null) {
+                            mTranslationTopLimit = Math.min(mTranslationBottomLimit, topChild.getTop());
+                        }
+
+                        if (bottomChild != null) {
+                            mTranslationBottomLimit = Math.min(mTranslationBottomLimit, bottomChild.getTop());
+                        }
+                        break;
+                    }
+                    case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL: {
+                        final View leftChild = findRangeFirstItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
+                        final View rightChild = findRangeLastItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
+
+                        if (leftChild != null) {
+                            mTranslationLeftLimit = Math.min(mTranslationLeftLimit, leftChild.getLeft());
+                        }
+
+                        if (rightChild != null) {
+                            mTranslationRightLimit = Math.min(mTranslationRightLimit, rightChild.getLeft());
+                        }
+                        break;
+                    }
                 }
-
-                if (bottomChild != null) {
-                    mTranslationBottomLimit = Math.min(mTranslationBottomLimit, bottomChild.getTop());
-                }
-
-                // XXX horizontal handling
             }
         } else {
             mTranslationRightLimit = mTranslationLeftLimit = rv.getPaddingLeft();
@@ -268,6 +290,13 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
         mTranslationX = clip(mTranslationX, mTranslationLeftLimit, mTranslationRightLimit);
         mTranslationY = clip(mTranslationY, mTranslationTopLimit, mTranslationBottomLimit);
+    }
+
+    private static int toSpanAlignedPosition(int position, int spanCount) {
+        if (position == RecyclerView.NO_POSITION) {
+            return RecyclerView.NO_POSITION;
+        }
+        return (position / spanCount) * spanCount;
     }
 
     public boolean isReachedToTopLimit() {

@@ -129,7 +129,7 @@ public class RecyclerViewDragDropManager {
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
     private RecyclerView.OnScrollListener mInternalUseOnScrollListener;
 
-    private EdgeEffectDecorator mEdgeEffectDecorator;
+    private BaseEdgeEffectDecorator mEdgeEffectDecorator;
     private NinePatchDrawable mShadowDrawable;
 
     private float mDisplayDensity;
@@ -142,7 +142,8 @@ public class RecyclerViewDragDropManager {
     private boolean mInitiateOnMove = true;
 
     private boolean mInScrollByMethod;
-    private int mActualScrollByAmount;
+    private int mActualScrollByXAmount;
+    private int mActualScrollByYAmount;
     private Rect mTmpRect1 = new Rect();
     private Runnable mDeferredCancelProcess;
     private int mItemSettleBackIntoPlaceAnimationDuration = 200;
@@ -306,8 +307,17 @@ public class RecyclerViewDragDropManager {
 
         if (supportsEdgeEffect()) {
             // edge effect is available on ICS or later
-            mEdgeEffectDecorator = new EdgeEffectDecorator(mRecyclerView);
-            mEdgeEffectDecorator.start();
+            switch (CustomRecyclerViewUtils.getOrientation(mRecyclerView)) {
+                case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL:
+                    mEdgeEffectDecorator = new LeftRightEdgeEffectDecorator(mRecyclerView);
+                    break;
+                case CustomRecyclerViewUtils.ORIENTATION_VERTICAL:
+                    mEdgeEffectDecorator = new TopBottomEdgeEffectDecorator(mRecyclerView);
+                    break;
+            }
+            if (mEdgeEffectDecorator != null) {
+                mEdgeEffectDecorator.start();
+            }
         }
     }
 
@@ -511,7 +521,8 @@ public class RecyclerViewDragDropManager {
         }
 
         if (mInScrollByMethod) {
-            mActualScrollByAmount = dy;
+            mActualScrollByXAmount = dx;
+            mActualScrollByYAmount = dy;
         }
     }
 
@@ -1176,10 +1187,10 @@ public class RecyclerViewDragDropManager {
         if (distance != 0.0f) {
             if (distance < 0) {
                 // upward
-                mEdgeEffectDecorator.pullTopGlow(distance);
+                mEdgeEffectDecorator.pullFirstEdge(distance);
             } else {
                 // downward
-                mEdgeEffectDecorator.pullBottom(distance);
+                mEdgeEffectDecorator.pullSecondEdge(distance);
             }
         } else {
             mEdgeEffectDecorator.releaseBothGlows();
@@ -1198,21 +1209,21 @@ public class RecyclerViewDragDropManager {
     private int scrollByYAndGetScrolledAmount(int ry) {
         // NOTE: mActualScrollByAmount --- Hackish! To detect over scrolling.
 
-        mActualScrollByAmount = 0;
+        mActualScrollByYAmount = 0;
         mInScrollByMethod = true;
         mRecyclerView.scrollBy(0, ry);
         mInScrollByMethod = false;
 
-        return mActualScrollByAmount;
+        return mActualScrollByYAmount;
     }
 
     private int scrollByXAndGetScrolledAmount(int rx) {
-        mActualScrollByAmount = 0;
+        mActualScrollByXAmount = 0;
         mInScrollByMethod = true;
         mRecyclerView.scrollBy(rx, 0);
         mInScrollByMethod = false;
 
-        return mActualScrollByAmount;
+        return mActualScrollByXAmount;
     }
 
     /*package*/ RecyclerView getRecyclerView() {
