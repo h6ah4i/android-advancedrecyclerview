@@ -40,7 +40,10 @@ import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDec
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
-public class RecyclerListViewFragment extends Fragment {
+public class RecyclerListViewFragment
+        extends Fragment
+        implements RecyclerViewExpandableItemManager.OnGroupCollapseListener,
+        RecyclerViewExpandableItemManager.OnGroupExpandListener {
     private static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
 
     private RecyclerView mRecyclerView;
@@ -69,6 +72,8 @@ public class RecyclerListViewFragment extends Fragment {
 
         final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
         mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
+        mRecyclerViewExpandableItemManager.setOnGroupExpandListener(this);
+        mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
 
         //adapter
         final MyAddRemoveExpandableItemAdapter myItemAdapter = new MyAddRemoveExpandableItemAdapter(mRecyclerViewExpandableItemManager, getDataProvider());
@@ -155,6 +160,25 @@ public class RecyclerListViewFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onGroupCollapse(int groupPosition, boolean fromUser) {
+    }
+
+    @Override
+    public void onGroupExpand(int groupPosition, boolean fromUser) {
+        // NOTE: fromUser is false because explicitly calling the
+        // RecyclerViewExpandableItemManager.expand() method in adapter
+        adjustScrollPositionOnGroupExpanded(groupPosition);
+    }
+
+    private void adjustScrollPositionOnGroupExpanded(int groupPosition) {
+        int childItemHeight = getActivity().getResources().getDimensionPixelSize(R.dimen.list_item_height);
+        int topMargin = (int) (getActivity().getResources().getDisplayMetrics().density * 16); // top-spacing: 16dp
+        int bottomMargin = topMargin; // bottom-spacing: 16dp
+
+        mRecyclerViewExpandableItemManager.scrollToGroup(groupPosition, childItemHeight, topMargin, bottomMargin);
     }
 
     private boolean supportsViewElevation() {

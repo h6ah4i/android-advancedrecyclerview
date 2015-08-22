@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
@@ -784,6 +785,99 @@ public class RecyclerViewExpandableItemManager {
      */
     public void notifyChildItemRangeRemoved(int groupPosition, int childPositionStart, int itemCount) {
         mAdapter.notifyChildItemRangeRemoved(groupPosition, childPositionStart, itemCount);
+    }
+
+    /**
+     * Gets the number of groups.
+     *
+     * @return the number of groups
+     */
+    public int getGroupCount() {
+        return mAdapter.getGroupCount();
+    }
+
+    /**
+     * Gets the number of children in a specified group.
+     *
+     * @param groupPosition the position of the group for which the children count should be returned
+     *
+     * @return the number of children
+     */
+    public int getChildCount(int groupPosition) {
+        return mAdapter.getChildCount(groupPosition);
+    }
+
+    /**
+     * Scroll to a group.
+     *
+     * @param groupPosition Position of the group item
+     * @param childItemHeight Height of each child item height
+     */
+    public void scrollToGroup(int groupPosition, int childItemHeight) {
+        scrollToGroup(groupPosition, childItemHeight, 0, 0);
+    }
+
+    /**
+     * Scroll to a group.
+     *
+     * @param groupPosition Position of the group item
+     * @param childItemHeight Height of each child item height
+     * @param topMargin Top margin
+     * @param bottomMargin Bottom margin
+     */
+    public void scrollToGroup(int groupPosition, int childItemHeight, int topMargin, int bottomMargin) {
+        int totalChildrenHeight = getChildCount(groupPosition) * childItemHeight;
+        scrollToGroupWithTotalChildrenHeight(groupPosition, totalChildrenHeight, topMargin, bottomMargin);
+    }
+
+    /**
+     * Scroll to a group with specifying total children height.
+     *
+     * @param groupPosition Position of the group item
+     * @param totalChildrenHeight Total height of children items
+     * @param topMargin Top margin
+     * @param bottomMargin Bottom margin
+     */
+    public void scrollToGroupWithTotalChildrenHeight(int groupPosition, int totalChildrenHeight, int topMargin, int bottomMargin) {
+        long packedPosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
+        int flatPosition = getFlatPosition(packedPosition);
+
+        RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForLayoutPosition(flatPosition);
+
+        if (vh == null) {
+            return;
+        }
+
+        if (!isGroupExpanded(groupPosition)) {
+            totalChildrenHeight = 0;
+        }
+
+        int groupItemTop = vh.itemView.getTop();
+        int groupItemBottom = vh.itemView.getBottom();
+
+        int parentHeight = mRecyclerView.getHeight();
+
+        int topRoom = groupItemTop;
+        int bottomRoom = parentHeight - groupItemBottom;
+
+        if (topRoom <= topMargin) {
+            // scroll down
+            // WTF! smoothScrollBy() does not work properly!
+            // smoothScrollToPosition() does not scroll smoothly BUT scrollToPosition(flatPosition) does!
+
+            int parentTopPadding = mRecyclerView.getPaddingTop();
+            int itemTopMargin = ((RecyclerView.LayoutParams) vh.itemView.getLayoutParams()).topMargin;
+            int offset = topMargin - parentTopPadding - itemTopMargin;
+
+            ((LinearLayoutManager) mRecyclerView.getLayoutManager()).scrollToPositionWithOffset(flatPosition, offset);
+        } else if (bottomRoom >= (totalChildrenHeight + bottomMargin)) {
+            // no need to scroll
+        } else {
+            // scroll up
+            int scrollAmount = Math.max(0, totalChildrenHeight + bottomMargin - bottomRoom);
+            scrollAmount = Math.min(topRoom - topMargin, scrollAmount);
+            mRecyclerView.smoothScrollBy(0, scrollAmount);
+        }
     }
 
     public static class SavedState implements Parcelable {
