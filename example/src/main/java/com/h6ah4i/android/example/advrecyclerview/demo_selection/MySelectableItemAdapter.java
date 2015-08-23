@@ -34,7 +34,7 @@ public class MySelectableItemAdapter
 
     private AbstractDataProvider mProvider;
 
-    private  EventListener eventListener;
+    private EventListener eventListener;
 
     public interface EventListener {
         void onItemSelected(int position, boolean value);

@@ -27,9 +27,12 @@ ext {
 apply from: '../common/android-set-common-properties.gradle'
 
 android {
+    compileSdkVersion 23
+
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 22
+        targetSdkVersion 23
+
 
 
         def dataProps = new Properties()
@@ -53,8 +56,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
 }
 
 tasks.withType(JavaCompile) {

@@ -41,6 +41,14 @@
             android:label="@string/activity_title_demo_d" />
 
         <activity
+            android:name=".demo_us.UnderSwipeableExampleActivity"
+            android:label="@string/activity_title_demo_us" />
+
+        <activity
+            android:name=".demo_d_with_longpress.DraggableWithLongPressExampleActivity"
+            android:label="@string/activity_title_demo_d_with_longpress" />
+
+        <activity
             android:name=".demo_s.SwipeableExampleActivity"
             android:label="@string/activity_title_demo_s" />
 
@@ -67,6 +75,10 @@
         <activity
             android:name=".demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity"
             android:label="@string/activity_title_demo_ed_with_section" />
+
+        <activity
+            android:name=".demo_e_add_remove.AddRemoveExpandableExampleActivity"
+            android:label="@string/activity_title_demo_e_add_remove" />
 
         <activity
             android:name=".demo_selection.SelectableExampleActivity"

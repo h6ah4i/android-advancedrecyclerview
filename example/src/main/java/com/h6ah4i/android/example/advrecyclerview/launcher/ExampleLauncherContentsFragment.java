@@ -99,7 +99,7 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
                 break;
             case R.id.button_launch_demo_selection:
                 launchExampleActivity(SelectableExampleActivity.class);
-		break;
+		        break;
             case R.id.button_launch_demo_e_add_remove:
                 launchExampleActivity(AddRemoveExpandableExampleActivity.class);
                 break;
