@@ -16,12 +16,14 @@
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:width="24dp"
         android:height="24dp"
         android:viewportHeight="24"
         android:viewportWidth="24"
         app:vc_viewportHeight="24"
         app:vc_viewportWidth="24"
+        tools:targetApi="21"
     >
 
     <group

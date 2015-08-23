@@ -61,6 +61,10 @@ public class RecyclerViewSelectionManager {
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
             }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+            }
         };
 
     }

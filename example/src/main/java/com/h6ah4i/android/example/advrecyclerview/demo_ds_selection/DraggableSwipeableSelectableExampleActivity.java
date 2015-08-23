@@ -17,18 +17,16 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_ds_selection;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.view.View;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataProviderFragment;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ItemPinnedMessageDialogFragment;
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
-import com.nispok.snackbar.enums.SnackbarType;
-import com.nispok.snackbar.listeners.ActionClickListener;
 
 
 public class DraggableSwipeableSelectableExampleActivity extends ActionBarActivity implements ItemPinnedMessageDialogFragment.EventListener {
@@ -57,21 +55,19 @@ public class DraggableSwipeableSelectableExampleActivity extends ActionBarActivi
      * @param position The position of the item within data set
      */
     public void onItemRemoved(int position) {
-        SnackbarManager.show(
-                Snackbar.with(getApplicationContext())
-                        .text(R.string.snack_bar_text_item_removed)
-                        .actionLabel(R.string.snack_bar_action_undo)
-                        .actionListener(new ActionClickListener() {
-                            @Override
-                            public void onActionClicked(Snackbar snackbar) {
-                                onItemUndoActionClicked();
-                            }
-                        })
-                        .actionColorResource(R.color.snackbar_action_color_done)
-                        .duration(5000)
-                        .type(SnackbarType.SINGLE_LINE)
-                        .swipeToDismiss(false)
-                , this);
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.container),
+                R.string.snack_bar_text_item_removed,
+                Snackbar.LENGTH_LONG);
+
+        snackbar.setAction(R.string.snack_bar_action_undo, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemUndoActionClicked();
+            }
+        });
+        snackbar.setActionTextColor(getResources().getColor(R.color.snackbar_action_color_done));
+        snackbar.show();
     }
 
     /**
@@ -94,13 +90,14 @@ public class DraggableSwipeableSelectableExampleActivity extends ActionBarActivi
      * @param position The position of the item within data set
      */
     public void onItemSelected(int position,boolean value) {
-        SnackbarManager.show(
-                Snackbar.with(getApplicationContext())
-                        .text(getString(R.string.snack_bar_text_item_selected,value))
-                        .duration(5000)
-                        .type(SnackbarType.SINGLE_LINE)
-                        .swipeToDismiss(false)
-                , this);
+
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.container),
+                getString(R.string.snack_bar_text_item_selected,value),
+                Snackbar.LENGTH_LONG);
+
+        snackbar.setActionTextColor(getResources().getColor(R.color.snackbar_action_color_done));
+        snackbar.show();
     }
 
     /**

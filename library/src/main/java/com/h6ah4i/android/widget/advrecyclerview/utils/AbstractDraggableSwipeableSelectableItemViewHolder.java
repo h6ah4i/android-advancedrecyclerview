@@ -32,6 +32,8 @@ public abstract class AbstractDraggableSwipeableSelectableItemViewHolder extends
     private int mAfterSwipeReaction = RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
     private float mSwipeAmount;
     private boolean mSelectable;
+    private float mMaxLeftSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT;
+    private float mMaxRightSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
 
     public AbstractDraggableSwipeableSelectableItemViewHolder(View itemView) {
         super(itemView);
@@ -85,6 +87,26 @@ public abstract class AbstractDraggableSwipeableSelectableItemViewHolder extends
     @Override
     public void setSwipeItemSlideAmount(float amount) {
         mSwipeAmount = amount;
+    }
+
+    @Override
+    public void setMaxLeftSwipeAmount(float amount) {
+        mMaxLeftSwipeAmount = amount;
+    }
+
+    @Override
+    public float getMaxLeftSwipeAmount() {
+        return mMaxLeftSwipeAmount;
+    }
+
+    @Override
+    public void setMaxRightSwipeAmount(float amount) {
+        mMaxRightSwipeAmount = amount;
+    }
+
+    @Override
+    public float getMaxRightSwipeAmount() {
+        return mMaxRightSwipeAmount;
     }
 
     @Override

@@ -17,18 +17,13 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_selection;
 
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataProviderFragment;
-import com.h6ah4i.android.example.advrecyclerview.common.fragment.ItemPinnedMessageDialogFragment;
-import com.nispok.snackbar.Snackbar;
-import com.nispok.snackbar.SnackbarManager;
-import com.nispok.snackbar.enums.SnackbarType;
-import com.nispok.snackbar.listeners.ActionClickListener;
 
 
 public class SelectableExampleActivity extends ActionBarActivity {
@@ -56,13 +51,13 @@ public class SelectableExampleActivity extends ActionBarActivity {
      * @param position The position of the item within data set
      */
     public void onItemSelected(int position, boolean value) {
-        SnackbarManager.show(
-                Snackbar.with(getApplicationContext())
-                        .text(getString(R.string.snack_bar_text_item_selected,value))
-                        .duration(5000)
-                        .type(SnackbarType.SINGLE_LINE)
-                        .swipeToDismiss(false)
-                , this);
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.container),
+                getString(R.string.snack_bar_text_item_selected,value),
+                Snackbar.LENGTH_LONG);
+
+        snackbar.setActionTextColor(getResources().getColor(R.color.snackbar_action_color_done));
+        snackbar.show();
     }
 
     public AbstractDataProvider getDataProvider() {

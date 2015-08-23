@@ -16,7 +16,10 @@
 -->
 <manifest
     package="com.h6ah4i.android.example.advrecyclerview"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-sdk tools:overrideLibrary="com.wnafee.vector"/>
 
     <application
         android:allowBackup="true"
@@ -68,7 +71,6 @@
         <activity
             android:name=".demo_selection.SelectableExampleActivity"
             android:label="@string/activity_title_demo_selection" />
-
 
         <activity
             android:name=".about.AboutActivity"
