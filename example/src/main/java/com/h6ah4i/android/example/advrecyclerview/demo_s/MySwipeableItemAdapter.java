@@ -21,14 +21,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.utils.AdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
+import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
 public class MySwipeableItemAdapter
         extends RecyclerView.Adapter<MySwipeableItemAdapter.MyViewHolder>
@@ -49,17 +50,13 @@ public class MySwipeableItemAdapter
     }
 
     public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
-        public ViewGroup mContainer;
-        public View mDragHandle;
+        public FrameLayout mContainer;
         public TextView mTextView;
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (ViewGroup) v.findViewById(R.id.container);
-            mDragHandle = v.findViewById(R.id.drag_handle);
+            mContainer = (FrameLayout) v.findViewById(R.id.container);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
-
-            mDragHandle.setVisibility(View.GONE);  // hide the drag handle
         }
 
         @Override
@@ -96,7 +93,7 @@ public class MySwipeableItemAdapter
 
     private void onSwipeableViewContainerClick(View v) {
         if (mEventListener != null) {
-            mEventListener.onItemViewClicked(AdapterUtils.findParentViewHolderItemView(v), false);  // false --- not pinned
+            mEventListener.onItemViewClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v), false);  // false --- not pinned
         }
     }
 
@@ -158,12 +155,12 @@ public class MySwipeableItemAdapter
     }
 
     @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int x, int y) {
-        return mProvider.getItem(holder.getPosition()).getSwipeReactionType();
+    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
+        return mProvider.getItem(position).getSwipeReactionType();
     }
 
     @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int type) {
+    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
         int bgRes = 0;
         switch (type) {
             case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
@@ -181,13 +178,19 @@ public class MySwipeableItemAdapter
     }
 
     @Override
-    public int onSwipeItem(MyViewHolder holder, int result) {
-        Log.d(TAG, "onSwipeItem(result = " + result + ")");
+    public int onSwipeItem(MyViewHolder holder, int position, int result) {
+        Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
         switch (result) {
-            // swipe right --- remove
+            // swipe right
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
+                if (mProvider.getItem(position).isPinnedToSwipeLeft()) {
+                    // pinned --- back to default position
+                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
+                } else {
+                    // not pinned --- remove
+                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
+                }
             // swipe left -- pin
             case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
@@ -199,10 +202,9 @@ public class MySwipeableItemAdapter
     }
 
     @Override
-    public void onPerformAfterSwipeReaction(MyViewHolder holder, int result, int reaction) {
-        Log.d(TAG, "onPerformAfterSwipeReaction(result = " + result + ", reaction = " + reaction + ")");
+    public void onPerformAfterSwipeReaction(MyViewHolder holder, int position, int result, int reaction) {
+        Log.d(TAG, "onPerformAfterSwipeReaction(position = " + position + ", result = " + result + ", reaction = " + reaction + ")");
 
-        final int position = holder.getPosition();
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {

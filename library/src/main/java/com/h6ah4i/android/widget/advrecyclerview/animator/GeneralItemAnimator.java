@@ -36,7 +36,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
     private ItemChangeAnimationManager mChangeAnimationsManager;
     private ItemMoveAnimationManager mMoveAnimationsManager;
 
-    GeneralItemAnimator() {
+    protected GeneralItemAnimator() {
         setup();
     }
 
@@ -65,7 +65,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
     @Override
     public boolean animateRemove(final RecyclerView.ViewHolder holder) {
         if (mDebug) {
-            Log.d(TAG, "animateRemove(id = " + holder.getItemId() + ", position = " + holder.getPosition() + ")");
+            Log.d(TAG, "animateRemove(id = " + holder.getItemId() + ", position = " + holder.getLayoutPosition() + ")");
         }
 
         return mRemoveAnimationManager.addPendingAnimation(holder);
@@ -74,7 +74,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
     @Override
     public boolean animateAdd(final RecyclerView.ViewHolder holder) {
         if (mDebug) {
-            Log.d(TAG, "animateAdd(id = " + holder.getItemId() + ", position = " + holder.getPosition() + ")");
+            Log.d(TAG, "animateAdd(id = " + holder.getItemId() + ", position = " + holder.getLayoutPosition() + ")");
         }
 
         return mAddAnimationsManager.addPendingAnimation(holder);
@@ -83,7 +83,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
     @Override
     public boolean animateMove(RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY) {
         if (mDebug) {
-            Log.d(TAG, "animateMove(id = " + holder.getItemId() + ", position = " + holder.getPosition() + ", fromX = " + fromX + ", fromY = " + fromY + ", toX = " + toX + ", toY = " + toY + ")");
+            Log.d(TAG, "animateMove(id = " + holder.getItemId() + ", position = " + holder.getLayoutPosition() + ", fromX = " + fromX + ", fromY = " + fromY + ", toX = " + toX + ", toY = " + toY + ")");
         }
 
         return mMoveAnimationsManager.addPendingAnimation(holder, fromX, fromY, toX, toY);
@@ -94,9 +94,9 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
             RecyclerView.ViewHolder oldHolder, RecyclerView.ViewHolder newHolder, int fromX, int fromY, int toX, int toY) {
         if (mDebug) {
             final String oldId = (oldHolder != null) ? Long.toString(oldHolder.getItemId()) : "-";
-            final String oldPosition = (oldHolder != null) ? Long.toString(oldHolder.getPosition()) : "-";
+            final String oldPosition = (oldHolder != null) ? Long.toString(oldHolder.getLayoutPosition()) : "-";
             final String newId = (newHolder != null) ? Long.toString(newHolder.getItemId()) : "-";
-            final String newPosition = (newHolder != null) ? Long.toString(newHolder.getPosition()) : "-";
+            final String newPosition = (newHolder != null) ? Long.toString(newHolder.getLayoutPosition()) : "-";
 
             Log.d(TAG, "animateChange(old.id = " + oldId + ", old.position = " + oldPosition + ", new.id = " + newId + ", new.position = " + newPosition
                     + ", fromX = " + fromX + ", fromY = " + fromY + ", toX = " + toX + ", toY = " + toY + ")");

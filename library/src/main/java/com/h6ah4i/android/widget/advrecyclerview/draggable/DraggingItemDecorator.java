@@ -104,10 +104,14 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
         // return to default position
         updateDraggingItemPosition(mTranslationY);
-        moveToDefaultPosition(mDraggingItem.itemView, animate);
+        if (mDraggingItem != null) {
+            moveToDefaultPosition(mDraggingItem.itemView, animate);
+        }
 
         // show
-        mDraggingItem.itemView.setVisibility(View.VISIBLE);
+        if (mDraggingItem != null) {
+            mDraggingItem.itemView.setVisibility(View.VISIBLE);
+        }
         mDraggingItem = null;
 
         if (mDraggingItemImage != null) {
@@ -178,6 +182,13 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationY = Math.min(Math.max(mTranslationY, mTranslationTopLimit), mTranslationBottomLimit);
     }
 
+    public boolean isReachedToTopLimit() {
+        return (mTranslationY == mTranslationTopLimit);
+    }
+
+    public boolean isReachedToBottomLimit() {
+        return (mTranslationY == mTranslationBottomLimit);
+    }
 
     private Bitmap createDraggingItemImage(View v, NinePatchDrawable shadow) {
         int width = v.getWidth() + mShadowPadding.left + mShadowPadding.right;
@@ -204,7 +215,9 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     private void updateDraggingItemPosition(int translationY) {
         // NOTE: Need to update the view position to make other decorations work properly while dragging
-        setItemTranslationY(mRecyclerView, mDraggingItem, translationY - mDraggingItem.itemView.getTop());
+        if (mDraggingItem != null) {
+            setItemTranslationY(mRecyclerView, mDraggingItem, translationY - mDraggingItem.itemView.getTop());
+        }
     }
 
     public void setIsScrolling(boolean isScrolling) {
@@ -238,7 +251,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             final RecyclerView.ViewHolder vh = rv.getChildViewHolder(v2);
 
             if (vh != null) {
-                final int position = vh.getPosition();
+                final int position = vh.getLayoutPosition();
 
                 if ((position >= firstVisiblePosition) &&
                         (position <= lastVisiblePosition) &&
@@ -266,7 +279,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             final RecyclerView.ViewHolder vh = rv.getChildViewHolder(v2);
 
             if (vh != null) {
-                final int position = vh.getPosition();
+                final int position = vh.getLayoutPosition();
 
                 if ((position >= firstVisiblePosition) &&
                         (position <= lastVisiblePosition) &&
@@ -278,5 +291,23 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         }
 
         return v;
+    }
+
+    public void invalidateDraggingItem() {
+        if (mDraggingItem != null) {
+            mDraggingItem.itemView.setVisibility(View.VISIBLE);
+        }
+
+        mDraggingItem = null;
+    }
+
+    public void setDraggingItemViewHolder(RecyclerView.ViewHolder holder) {
+        if (mDraggingItem != null) {
+            throw new IllegalStateException("A new view holder is attempt to be assigned before invalidating the older one");
+        }
+
+        mDraggingItem = holder;
+
+        holder.itemView.setVisibility(View.INVISIBLE);
     }
 }

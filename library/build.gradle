@@ -29,7 +29,7 @@ apply from: '../common/android-set-common-properties.gradle'
 android {
     defaultConfig {
         minSdkVersion 9
-        targetSdkVersion 21
+        targetSdkVersion 22
 
 
         def dataProps = new Properties()
@@ -53,8 +53,12 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
 }
 
 // NOTE: this line should be place at end of the file

@@ -15,36 +15,39 @@
        limitations under the License.
 -->
 <!-- NOTE: should use FrameLayout or RelativeLayout for parent of the "@id/container" view (for Android 2.3 compatibility) -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
     style="@style/commonListItemStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="96dp"
     android:layout_marginTop="8dp"
     android:background="#ffffff">
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        tools:ignore="UselessParent">
-
-        <View
-            android:id="@+id/drag_handle"
-            android:layout_width="32dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="#20000000"
-            tools:ignore="RtlHardcoded" />
+        android:foreground="?attr/selectableItemBackground">
 
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/drag_handle"
-            android:gravity="center" />
-    </RelativeLayout>
+            android:layout_gravity="top|left"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:gravity="center"/>
+
+        <com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator
+            android:id="@+id/indicator"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="16dp"/>
+
+    </FrameLayout>
 
 </FrameLayout>

@@ -20,6 +20,12 @@ import android.support.v7.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 
+/**
+ * Deprecated.
+ *
+ * Please use {@link RecyclerView#addOnScrollListener(RecyclerView.OnScrollListener)} and {@link RecyclerView#removeOnScrollListener(RecyclerView.OnScrollListener)} instead.
+ */
+@Deprecated
 public class RecyclerViewOnScrollEventDistributor extends BaseRecyclerViewEventDistributor<RecyclerView.OnScrollListener> {
 
     private InternalOnScrollListener mInternalOnScrollListener;
@@ -34,17 +40,20 @@ public class RecyclerViewOnScrollEventDistributor extends BaseRecyclerViewEventD
     protected void onRecyclerViewAttached(RecyclerView rv) {
         super.onRecyclerViewAttached(rv);
 
-        rv.setOnScrollListener(mInternalOnScrollListener);
+        rv.addOnScrollListener(mInternalOnScrollListener);
     }
 
     @Override
     protected void onRelease() {
-        super.onRelease();
-
         if (mInternalOnScrollListener != null) {
+            if (mRecyclerView != null) {
+                mRecyclerView.removeOnScrollListener(mInternalOnScrollListener);
+            }
             mInternalOnScrollListener.release();
             mInternalOnScrollListener = null;
         }
+
+        super.onRelease();
     }
 
     /*package*/ void handleOnScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -67,6 +76,7 @@ public class RecyclerViewOnScrollEventDistributor extends BaseRecyclerViewEventD
         }
     }
 
+    @SuppressWarnings("deprecation")
     private static class InternalOnScrollListener extends RecyclerView.OnScrollListener {
         private WeakReference<RecyclerViewOnScrollEventDistributor> mRefDistributor;
 

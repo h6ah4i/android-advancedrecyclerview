@@ -64,6 +64,35 @@ public class RecyclerViewExpandableItemManager {
      */
     public static final int STATE_FLAG_IS_UPDATED = (1 << 31);
 
+
+    // ---
+
+    /**
+     * Used for being notified when a group is expanded
+     */
+    public interface OnGroupExpandListener {
+        /**
+         * Callback method to be invoked when a group in this expandable list has been expanded.
+         *
+         * @param groupPosition The group position that was expanded
+         * @param fromUser Whether the expand request is issued by a user operation
+         */
+        void onGroupExpand(int groupPosition, boolean fromUser);
+    }
+
+    /**
+     * Used for being notified when a group is collapsed
+     */
+    public interface OnGroupCollapseListener {
+        /**
+         * Callback method to be invoked when a group in this expandable list has been collapsed.
+         *
+         * @param groupPosition The group position that was collapsed
+         * @param fromUser Whether the collapse request is issued by a user operation
+         */
+        void onGroupCollapse(int groupPosition, boolean fromUser);
+    }
+
     // ---
 
     private SavedState mSavedState;
@@ -71,6 +100,8 @@ public class RecyclerViewExpandableItemManager {
     private RecyclerView mRecyclerView;
     private ExpandableRecyclerViewWrapperAdapter mAdapter;
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
+    private OnGroupExpandListener mOnGroupExpandListener;
+    private OnGroupCollapseListener mOnGroupCollapseListener;
 
     private long mTouchedItemId = RecyclerView.NO_ID;
     private int mTouchSlop;
@@ -91,6 +122,10 @@ public class RecyclerViewExpandableItemManager {
 
             @Override
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
             }
         };
 
@@ -145,6 +180,8 @@ public class RecyclerViewExpandableItemManager {
             mRecyclerView.removeOnItemTouchListener(mInternalUseOnItemTouchListener);
         }
         mInternalUseOnItemTouchListener = null;
+        mOnGroupExpandListener = null;
+        mOnGroupCollapseListener = null;
         mRecyclerView = null;
         mSavedState = null;
     }
@@ -166,6 +203,13 @@ public class RecyclerViewExpandableItemManager {
         mSavedState = null;
 
         mAdapter = new ExpandableRecyclerViewWrapperAdapter(this, adapter, adapterSavedState);
+
+        // move listeners to wrapper adapter
+        mAdapter.setOnGroupExpandListener(mOnGroupExpandListener);
+        mOnGroupExpandListener = null;
+
+        mAdapter.setOnGroupCollapseListener(mOnGroupCollapseListener);
+        mOnGroupCollapseListener = null;
 
         return mAdapter;
     }
@@ -201,7 +245,8 @@ public class RecyclerViewExpandableItemManager {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 if (handleActionUpOrCancel(rv, e)) {
-                    return true;
+                    // NOTE: it requires to return false to work click effect properly (issue #44)
+                    return false;
                 }
                 break;
         }
@@ -215,7 +260,7 @@ public class RecyclerViewExpandableItemManager {
         mInitialTouchX = (int) (e.getX() + 0.5f);
         mInitialTouchY = (int) (e.getY() + 0.5f);
 
-        if (holder != null) {
+        if (holder instanceof ExpandableItemViewHolder) {
             mTouchedItemId = holder.getItemId();
         } else {
             mTouchedItemId = RecyclerView.NO_ID;
@@ -251,13 +296,19 @@ public class RecyclerViewExpandableItemManager {
             return false;
         }
 
+        final int position = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
+
+        if (position == RecyclerView.NO_POSITION) {
+            return false;
+        }
+
         final View view = holder.itemView;
         final int translateX = (int) (ViewCompat.getTranslationX(view) + 0.5f);
         final int translateY = (int) (ViewCompat.getTranslationY(view) + 0.5f);
         final int viewX = touchX - (view.getLeft() + translateX);
         final int viewY = touchY - (view.getTop() + translateY);
 
-        return mAdapter.onTapItem(holder, viewX, viewY);
+        return mAdapter.onTapItem(holder, position, viewX, viewY);
     }
 
     /**
@@ -265,10 +316,10 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param groupPosition The group position to be expanded
      *
-     * @return True if the group was expanded,false otherwise  (If the group was already expanded, this will return false)
+     * @return True if the group was expanded, false otherwise  (If the group was already expanded, this will return false)
      */
     public boolean expandGroup(int groupPosition) {
-        return (mAdapter != null) && mAdapter.expandGroup(groupPosition);
+        return (mAdapter != null) && mAdapter.expandGroup(groupPosition, false);
     }
 
     /**
@@ -276,10 +327,10 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param groupPosition The group position to be collapsed
      *
-     * @return True if the group was collapsed,false otherwise  (If the group was already collapsed, this will return false)
+     * @return True if the group was collapsed, false otherwise  (If the group was already collapsed, this will return false)
      */
     public boolean collapseGroup(int groupPosition) {
-        return (mAdapter != null) && mAdapter.collapseGroup(groupPosition);
+        return (mAdapter != null) && mAdapter.collapseGroup(groupPosition, false);
     }
 
     /**
@@ -328,7 +379,7 @@ public class RecyclerViewExpandableItemManager {
      * Returns the packed position representation of a child position.
      *
      * In general, a packed position should be used in situations where the position given to/returned from
-     * {@link RecyclerViewExpandableItemManager} method can eirther be a child or group.
+     * {@link RecyclerViewExpandableItemManager} method can either be a child or group.
      * The two positions are packed into a single long which can be unpacked using {@link #getPackedPositionChild(long)} and
      * {@link #getPackedPositionGroup(long)}.
      *
@@ -436,6 +487,303 @@ public class RecyclerViewExpandableItemManager {
      */
     public static int getChildViewType(int rawViewType) {
         return ExpandableAdapterHelper.getChildViewType(rawViewType);
+    }
+
+    /**
+     * Register a callback to be invoked when an group item has been expanded.
+     *
+     * @param listener The callback that will be invoked.
+     */
+    public void setOnGroupExpandListener(OnGroupExpandListener listener) {
+        if (mAdapter != null) {
+            mAdapter.setOnGroupExpandListener(listener);
+        } else {
+            // pending
+            mOnGroupExpandListener = listener;
+        }
+    }
+
+    /**
+     * Register a callback to be invoked when an group item has been collapsed.
+     *
+     * @param listener The callback that will be invoked.
+     */
+    public void setOnGroupCollapseListener(OnGroupCollapseListener listener) {
+        if (mAdapter != null) {
+            mAdapter.setOnGroupCollapseListener(listener);
+        } else {
+            // pending
+            mOnGroupCollapseListener = listener;
+        }
+    }
+
+    /**
+     * Restore saves state. See {@link #restoreState(android.os.Parcelable, boolean, boolean)}.
+     * (This method does not invoke any hook methods and listener events)
+     *
+     * @param savedState The saved state object
+     */
+    public void restoreState(Parcelable savedState) {
+        restoreState(savedState, false, false);
+    }
+
+    /**
+     * Restore saves state.
+     *
+     * This method is useful when the adapter can not be prepared (because data loading may takes time and processed asynchronously)
+     * before creating this manager instance.
+     *
+     * @param savedState The saved state object
+     * @param callHooks Whether to call hook routines
+     *                  ({@link ExpandableItemAdapter#onHookGroupExpand(int, boolean)},
+     *                  {@link ExpandableItemAdapter#onHookGroupCollapse(int, boolean)})
+     * @param callListeners Whether to invoke {@link OnGroupExpandListener} and/or {@link OnGroupCollapseListener} listener events
+     */
+    public void restoreState(Parcelable savedState, boolean callHooks, boolean callListeners) {
+        if (savedState == null) {
+            return; // do nothing
+        }
+
+        if (!(savedState instanceof SavedState)) {
+            throw new IllegalArgumentException("Illegal saved state object passed");
+        }
+
+        if (!((mAdapter != null) && (mRecyclerView != null))) {
+            throw new IllegalStateException("RecyclerView has not been attached");
+        }
+
+        mAdapter.restoreState(((SavedState) savedState).adapterSavedState, callHooks, callListeners);
+    }
+
+    /**
+     * Notify any registered observers that the group item at <code>groupPosition</code> has changed.
+     *
+     * <p>This is an group item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
+     * The item at <code>groupPosition</code> retains the same identity.</p>
+     *
+     * <p>This method does not notify for children that are contained in the specified group.
+     * If children have also changed, use {@link #notifyGroupAndChildrenItemsChanged(int)} instead.</p>
+     *
+     * @param groupPosition Position of the group item that has changed
+     *
+     * @see #notifyGroupAndChildrenItemsChanged(int)
+     */
+    public void notifyGroupItemChanged(int groupPosition) {
+        mAdapter.notifyGroupItemChanged(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the group and children items at <code>groupPosition</code> have changed.
+     *
+     * <p>This is an group item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
+     * The item at <code>groupPosition</code> retains the same identity.</p>
+     *
+     * @param groupPosition Position of the group item which contains changed children
+     *
+     * @see #notifyGroupItemChanged(int)
+     * @see #notifyChildrenOfGroupItemChanged(int)
+     */
+    public void notifyGroupAndChildrenItemsChanged(int groupPosition) {
+        mAdapter.notifyGroupAndChildrenItemsChanged(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the children items contained in the group item at <code>groupPosition</code> have changed.
+     *
+     * <p>This is an group item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
+     * The item at <code>groupPosition</code> retains the same identity.</p>
+     *
+     * <p>This method does not notify for the group item.
+     * If the group has also changed, use {@link #notifyGroupAndChildrenItemsChanged(int)} instead.</p>
+     *
+     * @param groupPosition Position of the group item which contains changed children
+     *
+     * @see #notifyGroupAndChildrenItemsChanged(int)
+     */
+    public void notifyChildrenOfGroupItemChanged(int groupPosition) {
+        mAdapter.notifyChildrenOfGroupItemChanged(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the child item at <code>{groupPosition, childPosition}</code> has changed.
+     *
+     * <p>This is an item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>{groupPosition, childPosition}</code> is out of date and should be updated.
+     * The item at <code>{groupPosition, childPosition}</code> retains the same identity.</p>
+     *
+     * @param groupPosition Position of the group item which contains the changed child
+     * @param childPosition Position of the child item in the group that has changed
+     *
+     * @see #notifyChildItemRangeChanged(int, int, int)
+     */
+    public void notifyChildItemChanged(int groupPosition, int childPosition) {
+        mAdapter.notifyChildItemChanged(groupPosition, childPosition);
+    }
+
+    /**
+     * Notify any registered observers that the <code>itemCount</code> child items starting at
+     * position <code>{groupPosition, childPosition}</code> have changed.
+     *
+     * <p>This is an item change event, not a structural change event. It indicates that
+     * any reflection of the data in the given position range is out of date and should
+     * be updated. The items in the given range retain the same identity.</p>
+     *
+     * @param groupPosition Position of the group item which contains the changed child
+     * @param childPositionStart Position of the first child item in the group that has changed
+     * @param itemCount Number of items that have changed
+     *
+     * @see #notifyChildItemChanged(int, int)
+     */
+    public void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount) {
+        mAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount);
+    }
+
+    /**
+     * Notify any registered observers that the group item reflected at <code>groupPosition</code>
+     * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
+     * position <code>groupPosition + 1</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their
+     * positions may be altered.</p>
+     *
+     * @param groupPosition Position of the newly inserted group item in the data set
+     *
+     * @see #notifyGroupItemRangeInserted(int, int)
+     */
+    public void notifyGroupItemInserted(int groupPosition) {
+        mAdapter.notifyGroupItemInserted(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the currently reflected <code>itemCount</code>
+     * group items starting at <code>groupPositionStart</code> have been newly inserted. The group items
+     * previously located at <code>groupPositionStart</code> and beyond can now be found starting
+     * at position <code>groupPositionStart + itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPositionStart Position of the first group item that was inserted
+     * @param itemCount Number of group items inserted
+     *
+     * @see #notifyGroupItemInserted(int)
+     */
+    public void notifyGroupItemRangeInserted(int groupPositionStart, int itemCount) {
+        mAdapter.notifyGroupItemRangeInserted(groupPositionStart, itemCount);
+    }
+
+
+    /**
+     * Notify any registered observers that the group item reflected at <code>groupPosition</code>
+     * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
+     * position <code>groupPosition + 1</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their
+     * positions may be altered.</p>
+     *
+     * @param groupPosition Position of the group item which contains the inserted child
+     * @param childPosition Position of the newly inserted child item in the data set
+     *
+     * @see #notifyChildItemRangeInserted(int, int, int)
+     */
+    public void notifyChildItemInserted(int groupPosition, int childPosition) {
+        mAdapter.notifyChildItemInserted(groupPosition, childPosition);
+    }
+
+    /**
+     * Notify any registered observers that the currently reflected <code>itemCount</code>
+     * child items starting at <code>childPositionStart</code> have been newly inserted. The child items
+     * previously located at <code>childPositionStart</code> and beyond can now be found starting
+     * at position <code>childPositionStart + itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPosition Position of the group item which contains the inserted child
+     * @param childPositionStart Position of the first child item that was inserted
+     * @param itemCount Number of child items inserted
+     *
+     * @see #notifyChildItemInserted(int, int)
+     */
+    public void notifyChildItemRangeInserted(int groupPosition, int childPositionStart, int itemCount) {
+        mAdapter.notifyChildItemRangeInserted(groupPosition, childPositionStart, itemCount);
+    }
+
+    /**
+     * Notify any registered observers that the group item previously located at <code>groupPosition</code>
+     * has been removed from the data set. The group items previously located at and after
+     * <code>groupPosition</code> may now be found at <code>oldGroupPosition - 1</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPosition Position of the group item that has now been removed
+     *
+     * @see #notifyGroupItemRangeRemoved(int, int)
+     */
+    public void notifyGroupItemRemoved(int groupPosition) {
+        mAdapter.notifyGroupItemRemoved(groupPosition);
+    }
+
+    /**
+     * Notify any registered observers that the <code>itemCount</code> group items previously
+     * located at <code>groupPositionStart</code> have been removed from the data set. The group items
+     * previously located at and after <code>groupPositionStart + itemCount</code> may now be found
+     * at <code>oldPosition - itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the data
+     * set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPositionStart Previous position of the first group item that was removed
+     * @param itemCount Number of group items removed from the data set
+     */
+    public void notifyGroupItemRangeRemoved(int groupPositionStart, int itemCount) {
+        mAdapter.notifyGroupItemRangeRemoved(groupPositionStart, itemCount);
+    }
+
+    /**
+     * Notify any registered observers that the child item previously located at <code>childPosition</code>
+     * has been removed from the data set. The child items previously located at and after
+     * <code>childPosition</code> may now be found at <code>oldGroupPosition - 1</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPosition Position of the group item which was the parent of the child item that was removed
+     * @param childPosition Position of the child item that has now been removed
+     *
+     * @see #notifyGroupItemRangeRemoved(int, int)
+     */
+    public void notifyChildItemRemoved(int groupPosition, int childPosition) {
+        mAdapter.notifyChildItemRemoved(groupPosition, childPosition);
+    }
+
+    /**
+     * Notify any registered observers that the <code>itemCount</code> child items previously
+     * located at <code>childPositionStart</code> have been removed from the data set. The child items
+     * previously located at and after <code>childPositionStart + itemCount</code> may now be found
+     * at <code>oldPosition - itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the data
+     * set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPosition Position of the group item which was the parent of the child item that was removed
+     * @param childPositionStart Previous position of the first child item that was removed
+     * @param itemCount Number of child items removed from the data set
+     */
+    public void notifyChildItemRangeRemoved(int groupPosition, int childPositionStart, int itemCount) {
+        mAdapter.notifyChildItemRangeRemoved(groupPosition, childPositionStart, itemCount);
     }
 
     public static class SavedState implements Parcelable {

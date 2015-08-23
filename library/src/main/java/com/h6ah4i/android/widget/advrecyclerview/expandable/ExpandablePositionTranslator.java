@@ -21,6 +21,8 @@ import android.support.v7.widget.RecyclerView;
 import java.util.Arrays;
 
 class ExpandablePositionTranslator {
+    private final int ALLOCATE_UNIT = 256;
+
     private final static long FLAG_EXPANDED = 0x0000000080000000l;
     private final static long LOWER_31BIT_MASK = 0x000000007fffffffl;
     private final static long LOWER_32BIT_MASK = 0x00000000ffffffffl;
@@ -42,6 +44,7 @@ class ExpandablePositionTranslator {
     private int mExpandedGroupCount;
     private int mExpandedChildCount;
     private int mEndOfCalculatedOffsetGroupPosition = RecyclerView.NO_POSITION;
+    private ExpandableItemAdapter mAdapter;
 
     public ExpandablePositionTranslator() {
     }
@@ -49,12 +52,7 @@ class ExpandablePositionTranslator {
     public void build(ExpandableItemAdapter adapter) {
         final int groupCount = adapter.getGroupCount();
 
-        if (mCachedGroupPosInfo == null || mCachedGroupPosInfo.length < groupCount) {
-            mCachedGroupPosInfo = new long[groupCount];
-        }
-        if (mCachedGroupId == null || mCachedGroupId.length < groupCount) {
-            mCachedGroupId = new int[groupCount];
-        }
+        enlargeArraysIfNeeded(groupCount, false);
 
         final long[] info = mCachedGroupPosInfo;
         final int[] ids = mCachedGroupId;
@@ -66,13 +64,18 @@ class ExpandablePositionTranslator {
             ids[i] = (int) (groupId & LOWER_32BIT_MASK);
         }
 
+        mAdapter = adapter;
         mGroupCount = groupCount;
         mExpandedGroupCount = 0;
         mExpandedChildCount = 0;
         mEndOfCalculatedOffsetGroupPosition = Math.max(0, groupCount - 1);
     }
 
-    public void restoreExpandedGroupItems(int[] restoreGroupIds) {
+    public void restoreExpandedGroupItems(
+            int[] restoreGroupIds,
+            ExpandableItemAdapter adapter,
+            RecyclerViewExpandableItemManager.OnGroupExpandListener expandListener,
+            RecyclerViewExpandableItemManager.OnGroupCollapseListener collapseListener) {
         if (restoreGroupIds == null || restoreGroupIds.length == 0) {
             return;
         }
@@ -82,15 +85,16 @@ class ExpandablePositionTranslator {
         }
 
         // make ID + position packed array
-        final long [] idAndPos = new long[mGroupCount];
+        final long[] idAndPos = new long[mGroupCount];
 
         for (int i = 0; i < mGroupCount; i++) {
             idAndPos[i] = ((long) mCachedGroupId[i] << 32) | i;
         }
 
         // sort both arrays
-        Arrays.sort(restoreGroupIds);
         Arrays.sort(idAndPos);
+
+        final boolean fromUser = false;
 
         // find matched items & apply
         int index = 0;
@@ -100,24 +104,53 @@ class ExpandablePositionTranslator {
 
             for (int j = index; j < idAndPos.length; j++) {
                 final int id2 = (int) (idAndPos[j] >> 32);
+                final int position = (int) (idAndPos[j] & LOWER_31BIT_MASK);
 
                 if (id2 < id1) {
                     index = j;
+
+                    if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {
+                        if (collapseGroup(position)) {
+                            if (collapseListener != null) {
+                                collapseListener.onGroupCollapse(position, fromUser);
+                            }
+                        }
+                    }
                 } else if (id2 == id1) {
                     // matched
-                    final int position = (int) (idAndPos[j] & LOWER_31BIT_MASK);
                     index = j + 1;
-                    expandGroup(position);
-                    break;
+
+                    if (adapter == null || adapter.onHookGroupExpand(position, fromUser)) {
+                        if (expandGroup(position)) {
+                            if (expandListener != null) {
+                                expandListener.onGroupExpand(position, fromUser);
+                            }
+                        }
+                    }
                 } else { // id2 > id1
                     break;
+                }
+            }
+        }
+
+        if (adapter != null || collapseListener != null) {
+            for (int i = index; i < idAndPos.length; i++) {
+                final int id2 = (int) (idAndPos[i] >> 32);
+                final int position = (int) (idAndPos[i] & LOWER_31BIT_MASK);
+
+                if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {
+                    if (collapseGroup(position)) {
+                        if (collapseListener != null) {
+                            collapseListener.onGroupCollapse(position, fromUser);
+                        }
+                    }
                 }
             }
         }
     }
 
     public int[] getSavedStateArray() {
-        int [] expandedGroups = new int[mExpandedGroupCount];
+        int[] expandedGroups = new int[mExpandedGroupCount];
 
         int index = 0;
         for (int i = 0; i < mGroupCount; i++) {
@@ -131,6 +164,8 @@ class ExpandablePositionTranslator {
         if (index != mExpandedGroupCount) {
             throw new IllegalStateException("may be a bug  (index = " + index + ", mExpandedGroupCount = " + mExpandedGroupCount + ")");
         }
+
+        Arrays.sort(expandedGroups);
 
         return expandedGroups;
     }
@@ -165,14 +200,11 @@ class ExpandablePositionTranslator {
         mCachedGroupPosInfo[groupPosition] &= (~FLAG_EXPANDED);
         mExpandedGroupCount -= 1;
 
-        if (childCount > 0) {
-            mExpandedChildCount -= childCount;
-            mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
-            // requires notifyItemRangeRemoved()
-            return true;
-        } else {
-            return false;
-        }
+        mExpandedChildCount -= childCount;
+        mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
+
+        // requires notifyItemRangeRemoved()
+        return true;
     }
 
     public boolean expandGroup(int groupPosition) {
@@ -185,14 +217,11 @@ class ExpandablePositionTranslator {
         mCachedGroupPosInfo[groupPosition] |= FLAG_EXPANDED;
         mExpandedGroupCount += 1;
 
-        if (childCount > 0) {
-            mExpandedChildCount += childCount;
-            mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
-            // requires notifyItemRangeInserted()
-            return true;
-        } else {
-            return false;
-        }
+        mExpandedChildCount += childCount;
+        mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
+
+        // requires notifyItemRangeInserted()
+        return true;
     }
 
     public void moveGroupItem(int fromGroupPosition, int toGroupPosition) {
@@ -223,7 +252,7 @@ class ExpandablePositionTranslator {
         final int minPosition = Math.min(fromGroupPosition, toGroupPosition);
 
         if (minPosition > 0) {
-            mEndOfCalculatedOffsetGroupPosition = minPosition - 1;
+            mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, minPosition - 1);
         } else {
             mEndOfCalculatedOffsetGroupPosition = RecyclerView.NO_POSITION;
         }
@@ -258,7 +287,7 @@ class ExpandablePositionTranslator {
         final int minPosition = Math.min(fromGroupPosition, toGroupPosition);
 
         if (minPosition > 0) {
-            mEndOfCalculatedOffsetGroupPosition = minPosition - 1;
+            mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, minPosition - 1);
         } else {
             mEndOfCalculatedOffsetGroupPosition = RecyclerView.NO_POSITION;
         }
@@ -330,7 +359,7 @@ class ExpandablePositionTranslator {
         }
 
         // final int startIndex = 0;
-        final int startIndex = Math.min(groupPosition, mEndOfCalculatedOffsetGroupPosition);
+        final int startIndex = Math.max(0, Math.min(groupPosition, mEndOfCalculatedOffsetGroupPosition));
         int endOfCalculatedOffsetGroupPosition = mEndOfCalculatedOffsetGroupPosition;
         int offset = (int) (mCachedGroupPosInfo[startIndex] >>> 32);
         int flatPosition = RecyclerView.NO_POSITION;
@@ -399,30 +428,155 @@ class ExpandablePositionTranslator {
         return lastS;
     }
 
-    public void removeGroupItem(int groupPosition) {
-        final long t = mCachedGroupPosInfo[groupPosition];
+    public void removeChildItem(int groupPosition, int childPosition) {
+        removeChildItems(groupPosition, childPosition, 1);
+    }
 
-        if ((t & FLAG_EXPANDED) != 0) {
-            mExpandedChildCount -= (int) (t & LOWER_31BIT_MASK);
-            mExpandedGroupCount -= 1;
+    public void removeChildItems(int groupPosition, int childPositionStart, int count) {
+        final long t = mCachedGroupPosInfo[groupPosition];
+        final int curCount = (int) (t & LOWER_31BIT_MASK);
+
+        if (!((childPositionStart >= 0) && ((childPositionStart + count) <= curCount))) {
+            throw new IllegalStateException(
+                    "Invalid child position " +
+                            "removeChildItems(groupPosition = " + groupPosition + ", childPosition = " + childPositionStart + ", count = " + count + ")");
         }
 
-        mGroupCount -= 1;
+        if ((t & FLAG_EXPANDED) != 0) {
+            mExpandedChildCount -= count;
+        }
+
+        mCachedGroupPosInfo[groupPosition] = (t & (UPPER_32BIT_MASK | FLAG_EXPANDED)) | (curCount - count);
+        mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition - 1);
+    }
+
+    public void insertChildItem(int groupPosition, int childPosition) {
+        insertChildItems(groupPosition, childPosition, 1);
+    }
+
+    public void insertChildItems(int groupPosition, int childPositionStart, int count) {
+        final long t = mCachedGroupPosInfo[groupPosition];
+        final int curCount = (int) (t & LOWER_31BIT_MASK);
+
+        if (!((childPositionStart >= 0) && (childPositionStart <= curCount))) {
+            throw new IllegalStateException(
+                    "Invalid child position " +
+                            "insertChildItems(groupPosition = " + groupPosition + ", childPositionStart = " + childPositionStart + ", count = " + count + ")");
+        }
+
+        if ((t & FLAG_EXPANDED) != 0) {
+            mExpandedChildCount += count;
+        }
+
+        mCachedGroupPosInfo[groupPosition] = (t & (UPPER_32BIT_MASK | FLAG_EXPANDED)) | (curCount + count);
+        mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
+    }
+
+    public int insertGroupItems(int groupPosition, int count) {
+        if (count <= 0) {
+            return 0;
+        }
+
+        final int n = count;
+
+        enlargeArraysIfNeeded(mGroupCount + n, true);
+
+        // shift to backward
+        final ExpandableItemAdapter adapter = mAdapter;
+        final long[] info = mCachedGroupPosInfo;
+        final int[] ids = mCachedGroupId;
+
+        int start = mGroupCount - 1 + n;
+        int end = groupPosition - 1 + n;
+        for (int i = start; i > end; i--) {
+            info[i] = info[i - n];
+            ids[i] = ids[i - n];
+        }
+
+        int end2 = groupPosition + n;
+        for (int i = groupPosition; i < end2; i++) {
+            final long groupId = adapter.getGroupId(i);
+            final int childCount = adapter.getChildCount(i);
+
+            info[i] = (((long) i << 32) | childCount);
+            ids[i] = (int) (groupId & LOWER_32BIT_MASK);
+        }
+
+        mGroupCount += n;
+
+        int calculatedOffset = (mGroupCount == 0) ? RecyclerView.NO_POSITION : (groupPosition - 1);
+        mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, calculatedOffset);
+
+        return n;
+    }
+
+    public int insertGroupItem(int groupPosition) {
+        return insertGroupItems(groupPosition, 1);
+    }
+
+    public int removeGroupItems(int groupPosition, int count) {
+        if (count <= 0) {
+            return 0;
+        }
+
+        final int n = count;
+        int removedVisibleItemCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            final long t = mCachedGroupPosInfo[groupPosition + i];
+
+            if ((t & FLAG_EXPANDED) != 0) {
+                int visibleChildCount = (int) (t & LOWER_31BIT_MASK);
+                removedVisibleItemCount += visibleChildCount;
+                mExpandedChildCount -= visibleChildCount;
+                mExpandedGroupCount -= 1;
+            }
+        }
+        removedVisibleItemCount += n;
+        mGroupCount -= n;
 
         // shift to forward
         for (int i = groupPosition; i < mGroupCount; i++) {
-            mCachedGroupPosInfo[i] = mCachedGroupPosInfo[i + 1];
-            mCachedGroupId[i] = mCachedGroupId[i + 1];
+            mCachedGroupPosInfo[i] = mCachedGroupPosInfo[i + n];
+            mCachedGroupId[i] = mCachedGroupId[i + n];
         }
+
+        int calculatedOffset = (mGroupCount == 0) ? RecyclerView.NO_POSITION : (groupPosition - 1);
+        mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, calculatedOffset);
+
+        return removedVisibleItemCount;
     }
 
-    public void removeChildItem(int groupPosition, int childPosition) {
-        final long t = mCachedGroupPosInfo[groupPosition];
+    public int removeGroupItem(int groupPosition) {
+        return removeGroupItems(groupPosition, 1);
+    }
 
-        if ((t & FLAG_EXPANDED) != 0) {
-            mExpandedChildCount -= 1;
+
+    private void enlargeArraysIfNeeded(int size, boolean preserveData) {
+        int allocSize = (size + (2 * ALLOCATE_UNIT - 1)) & ~(ALLOCATE_UNIT - 1);
+
+        long[] curInfo = mCachedGroupPosInfo;
+        int[] curId = mCachedGroupId;
+        long[] newInfo = curInfo;
+        int[] newId = curId;
+
+        if (curInfo == null || curInfo.length < size) {
+            newInfo = new long[allocSize];
+        }
+        if (curId == null || curId.length < size) {
+            newId = new int[allocSize];
         }
 
-        mCachedGroupPosInfo[groupPosition] = (t & (UPPER_32BIT_MASK | FLAG_EXPANDED)) | ((t & LOWER_31BIT_MASK) - 1);
+        if (preserveData) {
+            if (curInfo != null && curInfo != newInfo) {
+                System.arraycopy(curInfo, 0, newInfo, 0, curInfo.length);
+            }
+            if (curId != null && curId != newId) {
+                System.arraycopy(curId, 0, newId, 0, curId.length);
+            }
+        }
+
+        mCachedGroupPosInfo = newInfo;
+        mCachedGroupId = newId;
     }
 }

@@ -26,43 +26,18 @@ public class ExampleDataProvider extends AbstractDataProvider {
     private ConcreteData mLastRemovedData;
     private int mLastRemovedPosition = -1;
 
-    public ExampleDataProvider(boolean simple) {
+    public ExampleDataProvider() {
         final String atoz = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
         mData = new LinkedList<>();
 
-        if (simple) {
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < atoz.length(); j++) {
-                    final long id = mData.size();
-                    final int viewType = 0;
-                    final String text = Character.toString(atoz.charAt(j));
-                    final int swipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;
-                    mData.add(new ConcreteData(id, viewType, text, swipeReaction, true));
-                }
-            }
-        } else {
-            @SuppressWarnings("PointlessBitwiseExpression")
-            final int[] swipeReactionTable = {
-                    RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT,
-                    RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT,
-                    RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT,
-                    RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT,
-                    RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT,
-                    RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT,
-                    RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT,
-                    RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT,
-                    RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT,
-            };
-
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < atoz.length(); j++) {
-                    final long id = mData.size();
-                    final int viewType = j % 2;
-                    final String text = Character.toString(atoz.charAt(j));
-                    final int swipeReaction = swipeReactionTable[j % swipeReactionTable.length];
-                    mData.add(new ConcreteData(id, viewType, text, swipeReaction, false));
-                }
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < atoz.length(); j++) {
+                final long id = mData.size();
+                final int viewType = 0;
+                final String text = Character.toString(atoz.charAt(j));
+                final int swipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;
+                mData.add(new ConcreteData(id, viewType, text, swipeReaction));
             }
         }
     }
@@ -131,49 +106,19 @@ public class ExampleDataProvider extends AbstractDataProvider {
         private final int mSwipeReaction;
         private boolean mPinnedToSwipeLeft;
 
-        ConcreteData(long id, int viewType, String text, int swipeReaction, boolean simplified) {
+        ConcreteData(long id, int viewType, String text, int swipeReaction) {
             mId = id;
             mViewType = viewType;
-            mText = makeText(id, text, swipeReaction, simplified);
+            mText = makeText(id, text, swipeReaction);
             mSwipeReaction = swipeReaction;
         }
 
-        private static String makeText(long id, String text, int swipeReaction, boolean simplified) {
+        private static String makeText(long id, String text, int swipeReaction) {
             final StringBuilder sb = new StringBuilder();
 
             sb.append(id);
             sb.append(" - ");
             sb.append(text);
-
-            if (!simplified) {
-                sb.append("\n");
-
-                sb.append("(LEFT: ");
-                switch (swipeReaction & 0x03) {
-                    case RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT:
-                        sb.append("disabled");
-                        break;
-                    case RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT:
-                        sb.append("rubber band effect");
-                        break;
-                    case RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT:
-                        sb.append("enabled");
-                        break;
-                }
-                sb.append(", RIGHT: ");
-                switch (swipeReaction & (0x03 << 16)) {
-                    case RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT:
-                        sb.append("disabled");
-                        break;
-                    case RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT:
-                        sb.append("rubber band effect");
-                        break;
-                    case RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT:
-                        sb.append("enabled");
-                        break;
-                }
-                sb.append(")");
-            }
 
             return sb.toString();
         }

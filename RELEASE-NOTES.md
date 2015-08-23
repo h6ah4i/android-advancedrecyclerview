@@ -1,3 +1,43 @@
+## 0.7.4
+- Fixed issue #75 (Error In -->Expandable(Add/Remove Items))
+
+## 0.7.3
+- Updated to support-v7-recyclerview v22.2.1
+- Added a new demo "Expandable (Add/Remove items)"
+- Added the RecyclerViewDragDropManager.OnItemDragEventListener
+- Added the RecyclerViewSwipeManager.OnItemSwipeEventListener
+- Added methods of notify*Inserted() and notify*Remove() families to RecyclerViewExpandableItemManager
+- Renamed getInitiateOnLongPress()/getInitiateOnMove() methods to isInitiateOnLongPressEnabled()/isInitiateOnMoveEnabled()
+- Fixed issue #54 (ClassCastException, MyPlatformChildViewHolder cannot be MyPlatformGroupViewHolder)
+- Fixed issue #64 (After swipe/remove of a group crash in some cases)
+- Fixed issue #65 (Is there any way to detect drag start and drag end)
+- Fixed some other minor bugs
+
+## 0.7.2
+- [Important] Updated to support-v7-recyclerview v22.2.0
+- Fixed issue #44 (Click effect on GroupView)
+- Fixed issue #50 (CPU usage 30-40% while Idle)
+- Merged pull request #55 (Makes ItemAnimators more easily extensible.)
+
+## 0.7.1
+
+- Removed TestActivity from manifest file
+- Added expanded/collapsed status indicators to demo app
+
+## 0.7.0
+
+[Breaking changes]
+- Changed method signatures of SwipeableItemAdapter (commit: `56e0084342f6e86ae26078f7c329368e2a59b92b`)
+- Changed method signatures of DraggableItemAdapter (commit: `56e0084342f6e86ae26078f7c329368e2a59b92b`)
+
+[Improvements]
+- Upgraded support library to v22.1.1
+- Fixed issue #3 (ClassCastException bug)
+- Fixed issue #13 (Can't set child item draggable range in children group)
+- Fixed issue #23 (overscrolling effect)
+- Fixed issue #29 (Begin drag and drop using OnLongClick
+- Fixed issue #30 (Enhancement to Swiping)
+- Merged pull request from @jcamp1 (related to #29, #30)
 
 ## 0.6.2
 

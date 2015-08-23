@@ -22,6 +22,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
+/**
+ * Hooks touch events to avoid unexpected scrolling.
+ */
 public class RecyclerViewTouchActionGuardManager {
     private static final String TAG = "ARVTouchActionGuardMgr";
 
@@ -37,6 +40,9 @@ public class RecyclerViewTouchActionGuardManager {
     private boolean mEnabled;
     private boolean mInterceptScrollingWhileAnimationRunning;
 
+    /**
+     * Constructor.
+     */
     public RecyclerViewTouchActionGuardManager() {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
             @Override
@@ -48,13 +54,27 @@ public class RecyclerViewTouchActionGuardManager {
             public void onTouchEvent(RecyclerView rv, MotionEvent e) {
                 RecyclerViewTouchActionGuardManager.this.onTouchEvent(rv, e);
             }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+            }
         };
     }
 
+    /**
+     * Indicates this manager instance has released or not.
+     *
+     * @return True if this manager instance has released
+     */
     public boolean isReleased() {
         return (mInternalUseOnItemTouchListener == null);
     }
 
+    /**
+     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
+     *
+     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     */
     public void attachRecyclerView(RecyclerView rv) {
         if (rv == null) {
             throw new IllegalArgumentException("RecyclerView cannot be null");
@@ -74,6 +94,11 @@ public class RecyclerViewTouchActionGuardManager {
         mTouchSlop = ViewConfiguration.get(rv.getContext()).getScaledTouchSlop();
     }
 
+    /**
+     * Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.
+     *
+     * This method should be called in order to avoid memory leaks.
+     */
     public void release() {
         if (mRecyclerView != null && mInternalUseOnItemTouchListener != null) {
             mRecyclerView.removeOnItemTouchListener(mInternalUseOnItemTouchListener);
@@ -163,6 +188,11 @@ public class RecyclerViewTouchActionGuardManager {
         mGuarding = false;
     }
 
+    /**
+     * Sets whether to use touch guard feature. If set false, all touch event interceptions will be disabled.
+     *
+     * @param enabled enabled / disabled
+     */
     public void setEnabled(boolean enabled) {
         if (mEnabled == enabled) {
             return;
@@ -174,14 +204,29 @@ public class RecyclerViewTouchActionGuardManager {
         }
     }
 
+    /**
+     * Checks whether the touch guard feature is enabled.
+     *
+     * @return True for currently touch guard feature is enabled, otherwise false
+     */
     public boolean isEnabled() {
         return mEnabled;
     }
 
-    public void setInterceptVerticalScrollingWhileAnimationRunning(boolean value) {
-        mInterceptScrollingWhileAnimationRunning = value;
+    /**
+     * Sets whether to use interception of "vertical scroll while animation running".
+     *
+     * @param enabled enabled / disabled
+     */
+    public void setInterceptVerticalScrollingWhileAnimationRunning(boolean enabled) {
+        mInterceptScrollingWhileAnimationRunning = enabled;
     }
 
+    /**
+     * Checks whether the interception of "vertical scroll while animation running" is enabled.
+     *
+     * @return enabled / disabled
+     */
     public boolean isInterceptScrollingWhileAnimationRunning() {
         return mInterceptScrollingWhileAnimationRunning;
     }

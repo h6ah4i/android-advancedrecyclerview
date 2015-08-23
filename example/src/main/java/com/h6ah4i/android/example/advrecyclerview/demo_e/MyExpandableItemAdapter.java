@@ -16,15 +16,15 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_e;
 
-import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
+import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
@@ -36,24 +36,22 @@ public class MyExpandableItemAdapter
     private AbstractExpandableDataProvider mProvider;
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
-        public ViewGroup mContainer;
-        public View mDragHandle;
+        public FrameLayout mContainer;
         public TextView mTextView;
 
         public MyBaseViewHolder(View v) {
             super(v);
-            mContainer = (ViewGroup) v.findViewById(R.id.container);
-            mDragHandle = v.findViewById(R.id.drag_handle);
+            mContainer = (FrameLayout) v.findViewById(R.id.container);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
-
-            // hide the drag handle
-            mDragHandle.setVisibility(View.GONE);
         }
     }
 
     public static class MyGroupViewHolder extends MyBaseViewHolder {
+        public ExpandableItemIndicator mIndicator;
+
         public MyGroupViewHolder(View v) {
             super(v);
+            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
         }
     }
 
@@ -131,14 +129,18 @@ public class MyExpandableItemAdapter
 
         if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
+            boolean isExpanded;
 
             if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
+                isExpanded = true;
             } else {
                 bgResId = R.drawable.bg_group_item_normal_state;
+                isExpanded = false;
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
+            holder.mIndicator.setExpandedState(isExpanded, true);
         }
     }
 
@@ -169,12 +171,6 @@ public class MyExpandableItemAdapter
             return false;
         }
 
-        final View containerView = holder.mContainer;
-        final View dragHandleView = holder.mDragHandle;
-
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
-
-        return !ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
+        return true;
     }
 }

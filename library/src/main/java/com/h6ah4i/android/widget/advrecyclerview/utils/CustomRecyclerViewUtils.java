@@ -118,4 +118,15 @@ public class CustomRecyclerViewUtils {
             return RecyclerView.NO_POSITION;
         }
     }
+
+    public static int getSynchronizedPosition(RecyclerView.ViewHolder holder) {
+        int pos1 = holder.getLayoutPosition();
+        int pos2 = holder.getAdapterPosition();
+        if (pos1 == pos2) {
+            return pos1;
+        } else {
+            return RecyclerView.NO_POSITION;
+        }
+    }
+
 }

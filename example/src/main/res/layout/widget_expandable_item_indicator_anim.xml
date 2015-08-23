@@ -14,8 +14,20 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<ripple
-    android:color="@color/ripple_item_normal_state"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/bg_item_normal_state"/>
-</ripple>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <com.wnafee.vector.MorphButton
+        android:id="@+id/morph_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:enabled="false"
+        app:vc_endDrawable="@drawable/ic_expand_more_to_expand_less"
+        app:vc_foregroundTint="#42000000"
+        app:vc_startDrawable="@drawable/ic_expand_less_to_expand_more"/>
+
+</merge>
