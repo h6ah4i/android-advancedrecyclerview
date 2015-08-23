@@ -26,7 +26,6 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.ElevatingSelectableViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.SelectableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.selectable.SwappingSelectableViewHolder;
 
 public class MySelectableItemAdapter
         extends RecyclerView.Adapter<MySelectableItemAdapter.MyViewHolder>

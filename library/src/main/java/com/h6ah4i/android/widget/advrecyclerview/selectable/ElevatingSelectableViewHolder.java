@@ -38,6 +38,7 @@ public  class ElevatingSelectableViewHolder extends RecyclerView.ViewHolder impl
      *
      * @param itemView Item view for this ViewHolder
      */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public ElevatingSelectableViewHolder(View itemView) {
         super(itemView);
 
@@ -46,7 +47,7 @@ public  class ElevatingSelectableViewHolder extends RecyclerView.ViewHolder impl
             setDefaultModeStateListAnimator(itemView.getStateListAnimator());
         }
     }
-
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private static StateListAnimator getRaiseStateListAnimator(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return AnimatorInflater.loadStateListAnimator(context, R.anim.raise);
@@ -80,6 +81,7 @@ public  class ElevatingSelectableViewHolder extends RecyclerView.ViewHolder impl
      *
      * @param resId A state list animator resource id. Ignored prior to Lollipop.
      */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void setSelectionModeStateListAnimator(int resId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StateListAnimator animator =
@@ -106,6 +108,7 @@ public  class ElevatingSelectableViewHolder extends RecyclerView.ViewHolder impl
      *
      * @param resId A state list animator resource id. Ignored prior to Lollipop.
      */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void setDefaultModeStateListAnimator(int resId) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StateListAnimator animator =
@@ -147,6 +150,7 @@ public  class ElevatingSelectableViewHolder extends RecyclerView.ViewHolder impl
      *
      * @param isActivated True to activate the view.
      */
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void setActivated(boolean isActivated) {
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP && isActivated){
             Animation animation= AnimationUtils.loadAnimation(itemView.getContext(), R.anim.raise_prelollipop);
@@ -187,7 +191,7 @@ public  class ElevatingSelectableViewHolder extends RecyclerView.ViewHolder impl
         }
     }
 
-
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     protected void refreshChrome() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             StateListAnimator animator = mIsSelectable ? mSelectionModeStateListAnimator

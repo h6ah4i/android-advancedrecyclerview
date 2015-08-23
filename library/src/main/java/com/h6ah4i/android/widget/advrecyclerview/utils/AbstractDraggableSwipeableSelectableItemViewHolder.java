@@ -22,7 +22,6 @@ import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.selectable.SelectableItemViewHolder;
-import com.h6ah4i.android.widget.advrecyclerview.selectable.SwappingSelectableViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemViewHolder;
 
