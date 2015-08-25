@@ -14,9 +14,8 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_ds;
+package com.h6ah4i.android.example.advrecyclerview.demo_s_vertical;
 
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,21 +26,15 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
-import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
+import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
-public class MyDraggableSwipeableItemAdapter
-        extends RecyclerView.Adapter<MyDraggableSwipeableItemAdapter.MyViewHolder>
-        implements DraggableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder>,
-        SwipeableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder> {
-    private static final String TAG = "MyDSItemAdapter";
+public class MySwipeableItemAdapter
+        extends RecyclerView.Adapter<MySwipeableItemAdapter.MyViewHolder>
+        implements SwipeableItemAdapter<MySwipeableItemAdapter.MyViewHolder> {
+    private static final String TAG = "MySwipeableItemAdapter";
 
     private AbstractDataProvider mProvider;
     private EventListener mEventListener;
@@ -56,15 +49,13 @@ public class MyDraggableSwipeableItemAdapter
         void onItemViewClicked(View v, boolean pinned);
     }
 
-    public static class MyViewHolder extends AbstractDraggableSwipeableItemViewHolder {
+    public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
         public FrameLayout mContainer;
-        public View mDragHandle;
         public TextView mTextView;
 
         public MyViewHolder(View v) {
             super(v);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mDragHandle = v.findViewById(R.id.drag_handle);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
         }
 
@@ -74,7 +65,7 @@ public class MyDraggableSwipeableItemAdapter
         }
     }
 
-    public MyDraggableSwipeableItemAdapter(AbstractDataProvider dataProvider) {
+    public MySwipeableItemAdapter(AbstractDataProvider dataProvider) {
         mProvider = dataProvider;
         mItemViewOnClickListener = new View.OnClickListener() {
             @Override
@@ -89,7 +80,7 @@ public class MyDraggableSwipeableItemAdapter
             }
         };
 
-        // DraggableItemAdapter and SwipeableItemAdapter require stable ID, and also
+        // SwipeableItemAdapter requires stable ID, and also
         // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
     }
@@ -119,7 +110,7 @@ public class MyDraggableSwipeableItemAdapter
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate((viewType == 0) ? R.layout.list_item_draggable : R.layout.list_item2_draggable, parent, false);
+        final View v = inflater.inflate(R.layout.list_item_v, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -137,21 +128,12 @@ public class MyDraggableSwipeableItemAdapter
         holder.mTextView.setText(item.getText());
 
         // set background resource (target view ID: container)
-        final int dragState = holder.getDragStateFlags();
         final int swipeState = holder.getSwipeStateFlags();
 
-        if (((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED) != 0) ||
-                ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED) != 0)) {
+        if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
 
-            if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
-                bgResId = R.drawable.bg_item_dragging_active_state;
-
-                // need to clear drawable state here to get correct appearance of the dragging item.
-                DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) {
-                bgResId = R.drawable.bg_item_dragging_state;
-            } else if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_item_swiping_active_state;
             } else if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_SWIPING) != 0) {
                 bgResId = R.drawable.bg_item_swiping_state;
@@ -163,8 +145,8 @@ public class MyDraggableSwipeableItemAdapter
         }
 
         // set swiping properties
-        holder.setSwipeItemSlideAmount(
-                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+        holder.setSwipeItemVerticalSlideAmount(
+                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_UP : 0);
     }
 
     @Override
@@ -173,43 +155,8 @@ public class MyDraggableSwipeableItemAdapter
     }
 
     @Override
-    public void onMoveItem(int fromPosition, int toPosition) {
-        Log.d(TAG, "onMoveItem(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ")");
-
-        if (fromPosition == toPosition) {
-            return;
-        }
-
-        mProvider.moveItem(fromPosition, toPosition);
-
-        notifyItemMoved(fromPosition, toPosition);
-    }
-
-    @Override
-    public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
-        // x, y --- relative from the itemView's top-left
-        final View containerView = holder.mContainer;
-        final View dragHandleView = holder.mDragHandle;
-
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
-
-        return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
-    }
-
-    @Override
-    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
-        // no drag-sortable range specified
-        return null;
-    }
-
-    @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
-        if (onCheckCanStartDrag(holder, position, x, y)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH_H;
-        } else {
-            return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_H;
-        }
+        return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_V;
     }
 
     @Override
@@ -219,11 +166,11 @@ public class MyDraggableSwipeableItemAdapter
             case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_neutral;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_LEFT_BACKGROUND:
-                bgRes = R.drawable.bg_swipe_item_left;
+            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_UP_BACKGROUND:
+                bgRes = R.drawable.bg_swipe_item_up;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
-                bgRes = R.drawable.bg_swipe_item_right;
+            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_DOWN_BACKGROUND:
+                bgRes = R.drawable.bg_swipe_item_down;
                 break;
         }
 
@@ -232,11 +179,11 @@ public class MyDraggableSwipeableItemAdapter
 
     @Override
     public int onSwipeItem(MyViewHolder holder, int position, int result) {
-        Log.d(TAG, "onSwipeItem(result = " + result + ")");
+        Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
         switch (result) {
-            // swipe right
-            case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
+            // swipe down
+            case RecyclerViewSwipeManager.RESULT_SWIPED_DOWN:
                 if (mProvider.getItem(position).isPinned()) {
                     // pinned --- back to default position
                     return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
@@ -244,8 +191,8 @@ public class MyDraggableSwipeableItemAdapter
                     // not pinned --- remove
                     return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
                 }
-            // swipe left -- pin
-            case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
+                // swipe up -- pin
+            case RecyclerViewSwipeManager.RESULT_SWIPED_UP:
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
             // other --- do nothing
             case RecyclerViewSwipeManager.RESULT_CANCELED:
@@ -256,7 +203,7 @@ public class MyDraggableSwipeableItemAdapter
 
     @Override
     public void onPerformAfterSwipeReaction(MyViewHolder holder, int position, int result, int reaction) {
-        Log.d(TAG, "onPerformAfterSwipeReaction(result = " + result + ", reaction = " + reaction + ")");
+        Log.d(TAG, "onPerformAfterSwipeReaction(position = " + position + ", result = " + result + ", reaction = " + reaction + ")");
 
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 

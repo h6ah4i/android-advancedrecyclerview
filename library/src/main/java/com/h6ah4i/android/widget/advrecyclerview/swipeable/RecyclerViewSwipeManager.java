@@ -20,6 +20,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -38,10 +39,15 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 public class RecyclerViewSwipeManager {
     private static final String TAG = "ARVSwipeManager";
 
+    static final int BIT_SHIFT_AMOUNT_LEFT = 0;
+    static final int BIT_SHIFT_AMOUNT_UP = 8;
+    static final int BIT_SHIFT_AMOUNT_RIGHT = 16;
+    static final int BIT_SHIFT_AMOUNT_DOWN = 24;
+
     /**
      * Result code of swipe operation. Used for the second argument of the
      * {@link SwipeableItemAdapter#onPerformAfterSwipeReaction(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
      * None. (internal default value, this value is not used for the argument)
      */
     public static final int RESULT_NONE = 0;
@@ -49,7 +55,7 @@ public class RecyclerViewSwipeManager {
     /**
      * Result code of swipe operation. Used for the second argument of the
      * {@link SwipeableItemAdapter#onPerformAfterSwipeReaction(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
      * Canceled.
      */
     public static final int RESULT_CANCELED = 1;
@@ -57,7 +63,7 @@ public class RecyclerViewSwipeManager {
     /**
      * Result code of swipe operation. Used for the second argument of the
      * {@link SwipeableItemAdapter#onPerformAfterSwipeReaction(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
      * Swipe left performed.
      */
     public static final int RESULT_SWIPED_LEFT = 2;
@@ -65,84 +71,223 @@ public class RecyclerViewSwipeManager {
     /**
      * Result code of swipe operation. Used for the second argument of the
      * {@link SwipeableItemAdapter#onPerformAfterSwipeReaction(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
+     * Swipe up performed.
+     */
+    public static final int RESULT_SWIPED_UP = 3;
+
+    /**
+     * Result code of swipe operation. Used for the second argument of the
+     * {@link SwipeableItemAdapter#onPerformAfterSwipeReaction(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
      * Swipe right performed.
      */
-    public static final int RESULT_SWIPED_RIGHT = 3;
+    public static final int RESULT_SWIPED_RIGHT = 4;
+
+    /**
+     * Result code of swipe operation. Used for the second argument of the
+     * {@link SwipeableItemAdapter#onPerformAfterSwipeReaction(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * Swipe down performed.
+     */
+    public static final int RESULT_SWIPED_DOWN = 5;
 
     // ---
     /**
      * Reaction type to swipe operation. Used for the return value of the
      * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
      * Indicates "can not swipe left" (completely no reactions)
      */
-    public static final int REACTION_CAN_NOT_SWIPE_LEFT = (0 << 0);
+    public static final int REACTION_CAN_NOT_SWIPE_LEFT = (0 << BIT_SHIFT_AMOUNT_LEFT);
 
     /**
      * Reaction type to swipe operation. Used for the return value of the
      * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
      * Indicates "can not swipe left"  (not swipeable, but rubber-band effect applied)
      */
-    public static final int REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT = (1 << 0);
+    public static final int REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT = (1 << BIT_SHIFT_AMOUNT_LEFT);
 
     /**
      * Reaction type to swipe operation. Used for the return value of the
      * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
      * Indicates "can swipe left"
      */
-    public static final int REACTION_CAN_SWIPE_LEFT = (2 << 0);
+    public static final int REACTION_CAN_SWIPE_LEFT = (2 << BIT_SHIFT_AMOUNT_LEFT);
+
+    /**
+     * Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * If this flag is specified, swipe operation will not start even if user swipe an item to the LEFT direction.
+     * <p/>
+     */
+    public static final int REACTION_FLAG_MASK_START_SWIPE_LEFT = (128 << BIT_SHIFT_AMOUNT_LEFT);
 
     /**
      * Reaction type to swipe operation. Used for the return value of the
      * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
+     * Indicates "can not swipe up" (completely no reactions)
+     */
+    public static final int REACTION_CAN_NOT_SWIPE_UP = (0 << BIT_SHIFT_AMOUNT_UP);
+
+    /**
+     * Reaction type to swipe operation. Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * Indicates "can not swipe up"  (not swipeable, but rubber-band effect applied)
+     */
+    public static final int REACTION_CAN_NOT_SWIPE_UP_WITH_RUBBER_BAND_EFFECT = (1 << BIT_SHIFT_AMOUNT_UP);
+
+    /**
+     * Reaction type to swipe operation. Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * Indicates "can swipe up"
+     */
+    public static final int REACTION_CAN_SWIPE_UP = (2 << BIT_SHIFT_AMOUNT_UP);
+
+    /**
+     * Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * If this flag is specified, swipe operation will not start even if user swipe an item to the UP direction.
+     * <p/>
+     */
+    public static final int REACTION_FLAG_MASK_START_SWIPE_UP = (128 << BIT_SHIFT_AMOUNT_UP);
+
+    /**
+     * Reaction type to swipe operation. Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
      * Indicates "can not swipe right" (completely no reactions)
      */
-    public static final int REACTION_CAN_NOT_SWIPE_RIGHT = (0 << 16);
+    public static final int REACTION_CAN_NOT_SWIPE_RIGHT = (0 << BIT_SHIFT_AMOUNT_RIGHT);
 
     /**
      * Reaction type to swipe operation. Used for the return value of the
      * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
      * Indicates "can not swipe right"  (not swipeable, but rubber-band effect applied)
      */
-    public static final int REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT = (1 << 16);
+    public static final int REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT = (1 << BIT_SHIFT_AMOUNT_RIGHT);
 
     /**
      * Reaction type to swipe operation. Used for the return value of the
      * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     *
+     * <p/>
      * Indicates "can swipe right"
      */
-    public static final int REACTION_CAN_SWIPE_RIGHT = (2 << 16);
+    public static final int REACTION_CAN_SWIPE_RIGHT = (2 << BIT_SHIFT_AMOUNT_RIGHT);
+
+    /**
+     * Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * If this flag is specified, swipe operation will not start even if user swipe an item to the RIGHT direction.
+     * <p/>
+     */
+    public static final int REACTION_FLAG_MASK_START_SWIPE_RIGHT = (128 << BIT_SHIFT_AMOUNT_RIGHT);
+
+    /**
+     * Reaction type to swipe operation. Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * Indicates "can not swipe down" (completely no reactions)
+     */
+    public static final int REACTION_CAN_NOT_SWIPE_DOWN = (0 << BIT_SHIFT_AMOUNT_DOWN);
+
+    /**
+     * Reaction type to swipe operation. Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * Indicates "can not swipe down"  (not swipeable, but rubber-band effect applied)
+     */
+    public static final int REACTION_CAN_NOT_SWIPE_DOWN_WITH_RUBBER_BAND_EFFECT = (1 << BIT_SHIFT_AMOUNT_DOWN);
+
+    /**
+     * Reaction type to swipe operation. Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * Indicates "can swipe down"
+     */
+    public static final int REACTION_CAN_SWIPE_DOWN = (2 << BIT_SHIFT_AMOUNT_DOWN);
+
+    /**
+     * Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
+     * If this flag is specified, swipe operation will not start even if user swipe an item to the left direction.
+     * <p/>
+     */
+    public static final int REACTION_FLAG_MASK_START_SWIPE_DOWN = (128 << BIT_SHIFT_AMOUNT_DOWN);
+
+    // ---
 
     /**
      * Convenient constant value: Equals to {@link #REACTION_CAN_NOT_SWIPE_LEFT} | {@link #REACTION_CAN_NOT_SWIPE_RIGHT}
      */
-    public static final int REACTION_CAN_NOT_SWIPE_BOTH =
+    public static final int REACTION_CAN_NOT_SWIPE_BOTH_H =
             REACTION_CAN_NOT_SWIPE_LEFT | REACTION_CAN_NOT_SWIPE_RIGHT;
 
     /**
      * Convenient constant value: Equals to {@link #REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT} | {@link #REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT}
      */
-    public static final int REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT =
+    public static final int REACTION_CAN_NOT_SWIPE_BOTH_H_WITH_RUBBER_BAND_EFFECT =
             REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT |
-            REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT;
+                    REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT;
 
     /**
      * Convenient constant value: Equals to {@link #REACTION_CAN_SWIPE_LEFT} | {@link #REACTION_CAN_SWIPE_RIGHT}
      */
-    public static final int REACTION_CAN_SWIPE_BOTH =
+    public static final int REACTION_CAN_SWIPE_BOTH_H =
             REACTION_CAN_SWIPE_LEFT | REACTION_CAN_SWIPE_RIGHT;
 
+    /**
+     * Convenient constant value: Equals to {@link #REACTION_CAN_NOT_SWIPE_UP} | {@link #REACTION_CAN_NOT_SWIPE_DOWN}
+     */
+    public static final int REACTION_CAN_NOT_SWIPE_BOTH_V =
+            REACTION_CAN_NOT_SWIPE_UP | REACTION_CAN_NOT_SWIPE_DOWN;
+
+    /**
+     * Convenient constant value: Equals to {@link #REACTION_CAN_NOT_SWIPE_UP_WITH_RUBBER_BAND_EFFECT} | {@link #REACTION_CAN_NOT_SWIPE_DOWN_WITH_RUBBER_BAND_EFFECT}
+     */
+    public static final int REACTION_CAN_NOT_SWIPE_BOTH_V_WITH_RUBBER_BAND_EFFECT =
+            REACTION_CAN_NOT_SWIPE_UP_WITH_RUBBER_BAND_EFFECT |
+                    REACTION_CAN_NOT_SWIPE_DOWN_WITH_RUBBER_BAND_EFFECT;
+
+    /**
+     * Convenient constant value: Equals to {@link #REACTION_CAN_SWIPE_UP} | {@link #REACTION_CAN_SWIPE_DOWN}
+     */
+    public static final int REACTION_CAN_SWIPE_BOTH_V =
+            REACTION_CAN_SWIPE_UP | REACTION_CAN_SWIPE_DOWN;
+
     // ---
+
+    /**
+     * @deprecated Use {@link #REACTION_CAN_NOT_SWIPE_BOTH_H} directly.
+     */
+    public static final int REACTION_CAN_NOT_SWIPE_BOTH = REACTION_CAN_NOT_SWIPE_BOTH_H;
+
+    /**
+     * @deprecated Use {@link #REACTION_CAN_NOT_SWIPE_BOTH_H_WITH_RUBBER_BAND_EFFECT} directly.
+     */
+    public static final int REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT = REACTION_CAN_NOT_SWIPE_BOTH_H_WITH_RUBBER_BAND_EFFECT;
+
+    /**
+     * @deprecated Use {@link #REACTION_CAN_SWIPE_BOTH_H} directly.
+     */
+    public static final int REACTION_CAN_SWIPE_BOTH = REACTION_CAN_SWIPE_BOTH_H;
+
+    // ---
+
     /**
      * Background drawable type used for the second argument of the
      * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
-     *
+     * <p/>
      * Background image for the neutral (= not swiping) item.
      */
     public static final int DRAWABLE_SWIPE_NEUTRAL_BACKGROUND = 0;
@@ -150,7 +295,7 @@ public class RecyclerViewSwipeManager {
     /**
      * Background drawable type used for the second argument of the
      * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
-     *
+     * <p/>
      * Background image for the swiping-left item.
      */
     public static final int DRAWABLE_SWIPE_LEFT_BACKGROUND = 1;
@@ -158,12 +303,29 @@ public class RecyclerViewSwipeManager {
     /**
      * Background drawable type used for the second argument of the
      * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
-     *
+     * <p/>
+     * Background image for the swiping-up item.
+     */
+    public static final int DRAWABLE_SWIPE_UP_BACKGROUND = 2;
+
+    /**
+     * Background drawable type used for the second argument of the
+     * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
+     * <p/>
      * Background image for the swiping-right item.
      */
-    public static final int DRAWABLE_SWIPE_RIGHT_BACKGROUND = 2;
+    public static final int DRAWABLE_SWIPE_RIGHT_BACKGROUND = 3;
+
+    /**
+     * Background drawable type used for the second argument of the
+     * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
+     * <p/>
+     * Background image for the swiping-down item.
+     */
+    public static final int DRAWABLE_SWIPE_DOWN_BACKGROUND = 4;
 
     // ---
+
     /**
      * After-reaction type used for the {@link SwipeableItemViewHolder#setAfterSwipeReaction(int)} and {@link SwipeableItemViewHolder#getAfterSwipeReaction()} methods.
      * Represents perform nothing.
@@ -184,16 +346,32 @@ public class RecyclerViewSwipeManager {
 
     // ---
     /**
-     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemSlideAmount(float)} and {@link SwipeableItemViewHolder#getSwipeItemSlideAmount()} methods.
+     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemHorizontalSlideAmount(float)}
+     * and {@link SwipeableItemViewHolder#getSwipeItemHorizontalSlideAmount()} methods.
      * Indicates that this item is pinned to LEFT of the window.
      */
-    public static final float OUTSIDE_OF_THE_WINDOW_LEFT = -Float.MAX_VALUE;
+    public static final float OUTSIDE_OF_THE_WINDOW_LEFT = -((1 << 16) + 0);
 
     /**
-     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemSlideAmount(float)} and {@link SwipeableItemViewHolder#getSwipeItemSlideAmount()} methods.
+     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemVerticalSlideAmount(float)}
+     * and {@link SwipeableItemViewHolder#getSwipeItemVerticalSlideAmount()} methods.
+     * Indicates that this item is pinned to UP of the window.
+     */
+    public static final float OUTSIDE_OF_THE_WINDOW_UP = -((1 << 16) + 1);
+
+    /**
+     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemHorizontalSlideAmount(float)}
+     * and {@link SwipeableItemViewHolder#getSwipeItemHorizontalSlideAmount()} methods.
      * Indicates that this item is pinned to RIGHT the window.
      */
-    public static final float OUTSIDE_OF_THE_WINDOW_RIGHT = Float.MAX_VALUE;
+    public static final float OUTSIDE_OF_THE_WINDOW_RIGHT = ((1 << 16) + 0);
+
+    /**
+     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemVerticalSlideAmount(float)}
+     * and {@link SwipeableItemViewHolder#getSwipeItemVerticalSlideAmount()} methods.
+     * Indicates that this item is pinned to DOWN the window.
+     */
+    public static final float OUTSIDE_OF_THE_WINDOW_DOWN = ((1 << 16) + 1);
 
 
     // ---
@@ -231,8 +409,8 @@ public class RecyclerViewSwipeManager {
         /**
          * Callback method to be invoked when swiping is finished.
          *
-         * @param position The position of the item.
-         * @param result The result code of the swipe operation.
+         * @param position           The position of the item.
+         * @param result             The result code of the swipe operation.
          * @param afterSwipeReaction The reaction type to the swipe operation.
          */
         void onItemSwipeFinished(int position, int result, int afterSwipeReaction);
@@ -258,6 +436,7 @@ public class RecyclerViewSwipeManager {
     private int mInitialTouchX;
     private int mInitialTouchY;
     private long mCheckingTouchSlop = RecyclerView.NO_ID;
+    private boolean mSwipeHorizontal;
 
     private ItemSlidingAnimator mItemSlideAnimator;
     private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
@@ -265,7 +444,9 @@ public class RecyclerViewSwipeManager {
     private int mSwipingItemPosition = RecyclerView.NO_POSITION;
     private Rect mSwipingItemMargins = new Rect();
     private int mTouchedItemOffsetX;
+    private int mTouchedItemOffsetY;
     private int mLastTouchX;
+    private int mLastTouchY;
     private int mSwipingItemReactionType;
     private VelocityTracker mVelocityTracker;
     private SwipingItemOperator mSwipingItemOperator;
@@ -298,7 +479,6 @@ public class RecyclerViewSwipeManager {
      * Create wrapped adapter.
      *
      * @param adapter The target adapter.
-     *
      * @return Wrapped adapter which is associated to this {@link RecyclerViewSwipeManager} instance.
      */
     @SuppressWarnings("unchecked")
@@ -323,7 +503,7 @@ public class RecyclerViewSwipeManager {
 
     /**
      * Attaches {@link android.support.v7.widget.RecyclerView} instance.
-     *
+     * <p/>
      * Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
      * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
@@ -362,7 +542,7 @@ public class RecyclerViewSwipeManager {
 
     /**
      * Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.
-     *
+     * <p/>
      * This method should be called in order to avoid memory leaks.
      */
     public void release() {
@@ -491,10 +671,16 @@ public class RecyclerViewSwipeManager {
             return false;
         }
 
+        final int layoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
+        if (layoutOrientation == CustomRecyclerViewUtils.ORIENTATION_UNKNOWN) {
+            return false;
+        }
+
         mInitialTouchX = touchX;
         mInitialTouchY = touchY;
         mCheckingTouchSlop = holder.getItemId();
         mSwipingItemReactionType = reactionType;
+        mSwipeHorizontal = (layoutOrientation == CustomRecyclerViewUtils.ORIENTATION_VERTICAL);
 
         return true;
     }
@@ -510,28 +696,35 @@ public class RecyclerViewSwipeManager {
 
     private boolean handleActionUpOrCancelWhileSwiping(MotionEvent e) {
         mLastTouchX = (int) (e.getX() + 0.5f);
+        mLastTouchY = (int) (e.getY() + 0.5f);
 
         int result = RESULT_CANCELED;
 
         if (MotionEventCompat.getActionMasked(e) == MotionEvent.ACTION_UP) {
-            final int viewWidth = mSwipingItem.itemView.getWidth();
-            final float distance = mLastTouchX - mInitialTouchX;
+            final boolean horizontal = mSwipeHorizontal;
+            final View itemView = mSwipingItem.itemView;
+            final int viewSize = (horizontal) ? itemView.getWidth() : itemView.getHeight();
+            final float distance = (horizontal) ? (mLastTouchX - mInitialTouchX) : (mLastTouchY - mInitialTouchY);
             final float absDistance = Math.abs(distance);
 
             mVelocityTracker.computeCurrentVelocity(1000, mMaxFlingVelocity); // 1000: pixels per second
 
-            final float xVelocity = mVelocityTracker.getXVelocity();
-            final float absXVelocity = Math.abs(xVelocity);
+            final float velocity = (horizontal) ? mVelocityTracker.getXVelocity() : mVelocityTracker.getYVelocity();
+            final float absVelocity = Math.abs(velocity);
 
             if ((absDistance > (mTouchSlop * MIN_DISTANCE_TOUCH_SLOP_MUL)) &&
-                    ((distance * xVelocity) > 0.0f) &&
-                    (absXVelocity <= mMaxFlingVelocity) &&
-                    ((absDistance > (viewWidth / 2)) || (absXVelocity >= mMinFlingVelocity))) {
+                    ((distance * velocity) > 0.0f) &&
+                    (absVelocity <= mMaxFlingVelocity) &&
+                    ((absDistance > (viewSize / 2)) || (absVelocity >= mMinFlingVelocity))) {
 
-                if ((distance < 0) && SwipeReactionUtils.canSwipeLeft(mSwipingItemReactionType)) {
+                if (horizontal && (distance < 0) && SwipeReactionUtils.canSwipeLeft(mSwipingItemReactionType)) {
                     result = RESULT_SWIPED_LEFT;
-                } else if ((distance > 0) && SwipeReactionUtils.canSwipeRight(mSwipingItemReactionType)) {
+                } else if ((!horizontal) && (distance < 0) && SwipeReactionUtils.canSwipeUp(mSwipingItemReactionType)) {
+                    result = RESULT_SWIPED_UP;
+                } else if (horizontal && (distance > 0) && SwipeReactionUtils.canSwipeRight(mSwipingItemReactionType)) {
                     result = RESULT_SWIPED_RIGHT;
+                } else if ((!horizontal) && (distance > 0) && SwipeReactionUtils.canSwipeDown(mSwipingItemReactionType)) {
+                    result = RESULT_SWIPED_DOWN;
                 }
             }
         }
@@ -550,13 +743,49 @@ public class RecyclerViewSwipeManager {
             return false;
         }
 
-        if (Math.abs(e.getY() - mInitialTouchY) > mTouchSlop) {
+        final int dx = (int) (e.getX() + 0.5f) - mInitialTouchX;
+        final int dy = (int) (e.getY() + 0.5f) - mInitialTouchY;
+
+        final int scrollAxisDelta;
+        final int swipeAxisDelta;
+
+        if (mSwipeHorizontal) {
+            scrollAxisDelta = dy;
+            swipeAxisDelta = dx;
+        } else {
+            scrollAxisDelta = dx;
+            swipeAxisDelta = dy;
+        }
+
+        if (Math.abs(scrollAxisDelta) > mTouchSlop) {
             // scrolling occurred
             mCheckingTouchSlop = RecyclerView.NO_ID;
             return false;
         }
 
-        if (Math.abs(e.getX() - mInitialTouchX) <= mTouchSlop) {
+        if (Math.abs(swipeAxisDelta) <= mTouchSlop) {
+            return false;
+        }
+
+        // check swipeable direction mask
+        boolean dirMasked;
+        if (mSwipeHorizontal) {
+            if (swipeAxisDelta < 0) {
+                dirMasked = ((mSwipingItemReactionType & REACTION_FLAG_MASK_START_SWIPE_LEFT) != 0);
+            } else {
+                dirMasked = ((mSwipingItemReactionType & REACTION_FLAG_MASK_START_SWIPE_RIGHT) != 0);
+            }
+        } else {
+            if (swipeAxisDelta < 0) {
+                dirMasked = ((mSwipingItemReactionType & REACTION_FLAG_MASK_START_SWIPE_UP) != 0);
+            } else {
+                dirMasked = ((mSwipingItemReactionType & REACTION_FLAG_MASK_START_SWIPE_DOWN) != 0);
+            }
+        }
+
+        if (dirMasked) {
+            // masked
+            mCheckingTouchSlop = RecyclerView.NO_ID;
             return false;
         }
 
@@ -584,21 +813,25 @@ public class RecyclerViewSwipeManager {
 
     private void handleActionMoveWhileSwiping(MotionEvent e) {
         mLastTouchX = (int) (e.getX() + 0.5f);
+        mLastTouchY = (int) (e.getY() + 0.5f);
         mVelocityTracker.addMovement(e);
 
-        final int swipeDistance = mLastTouchX - mTouchedItemOffsetX;
+        final int swipeDistanceX = mLastTouchX - mTouchedItemOffsetX;
+        final int swipeDistanceY = mLastTouchY - mTouchedItemOffsetY;
 
-        mSwipingItemOperator.update(swipeDistance);
+        mSwipingItemOperator.update(swipeDistanceX, swipeDistanceY);
     }
 
     private void startSwiping(RecyclerView rv, MotionEvent e, RecyclerView.ViewHolder holder, int itemPosition) {
         mSwipingItem = holder;
         mSwipingItemPosition = itemPosition;
         mLastTouchX = (int) (e.getX() + 0.5f);
+        mLastTouchY = (int) (e.getY() + 0.5f);
         mTouchedItemOffsetX = mLastTouchX;
+        mTouchedItemOffsetY = mLastTouchY;
         CustomRecyclerViewUtils.getLayoutMargins(holder.itemView, mSwipingItemMargins);
 
-        mSwipingItemOperator = new SwipingItemOperator(this, mSwipingItem, mSwipingItemPosition, mSwipingItemReactionType);
+        mSwipingItemOperator = new SwipingItemOperator(this, mSwipingItem, mSwipingItemPosition, mSwipingItemReactionType, mSwipeHorizontal);
         mSwipingItemOperator.start();
 
         mVelocityTracker.clear();
@@ -633,8 +866,10 @@ public class RecyclerViewSwipeManager {
         mSwipingItem = null;
         mSwipingItemPosition = RecyclerView.NO_POSITION;
         mLastTouchX = 0;
+        mLastTouchY = 0;
         mInitialTouchX = 0;
         mTouchedItemOffsetX = 0;
+        mTouchedItemOffsetY = 0;
         mCheckingTouchSlop = RecyclerView.NO_ID;
         mSwipingItemReactionType = 0;
 
@@ -643,7 +878,7 @@ public class RecyclerViewSwipeManager {
             mSwipingItemOperator = null;
         }
 
-        final boolean toLeft = (result == RESULT_SWIPED_LEFT);
+        final int slideDir = resultCodeToSlideDirection(result);
         int afterReaction = AFTER_SWIPE_REACTION_DEFAULT;
 
         if (mAdapter != null) {
@@ -654,11 +889,11 @@ public class RecyclerViewSwipeManager {
 
         switch (afterReaction) {
             case AFTER_SWIPE_REACTION_DEFAULT:
-                mItemSlideAnimator.slideToDefaultPosition(swipingItem, true, mReturnToDefaultPositionAnimationDuration);
+                mItemSlideAnimator.slideToDefaultPosition(swipingItem, mSwipeHorizontal, true, mReturnToDefaultPositionAnimationDuration);
                 break;
             case AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION:
                 mItemSlideAnimator.slideToOutsideOfWindow(
-                        swipingItem, toLeft, true, mMoveToOutsideWindowAnimationDuration);
+                        swipingItem, slideDir, true, mMoveToOutsideWindowAnimationDuration);
                 break;
             case AFTER_SWIPE_REACTION_REMOVE_ITEM: {
                 final RecyclerView.ItemAnimator itemAnimator = mRecyclerView.getItemAnimator();
@@ -676,7 +911,7 @@ public class RecyclerViewSwipeManager {
                 }
 
                 mItemSlideAnimator.slideToOutsideOfWindow(
-                        swipingItem, toLeft, true, removeAnimationDuration);
+                        swipingItem, slideDir, true, removeAnimationDuration);
             }
             break;
             default:
@@ -696,12 +931,35 @@ public class RecyclerViewSwipeManager {
     private static int correctAfterReaction(int result, int afterReaction) {
         if ((afterReaction == AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) ||
                 (afterReaction == AFTER_SWIPE_REACTION_REMOVE_ITEM)) {
-            if (!((result == RESULT_SWIPED_LEFT) || (result == RESULT_SWIPED_RIGHT))) {
-                afterReaction = AFTER_SWIPE_REACTION_DEFAULT;
+            switch (result) {
+                case RESULT_SWIPED_LEFT:
+                case RESULT_SWIPED_UP:
+                case RESULT_SWIPED_RIGHT:
+                case RESULT_SWIPED_DOWN:
+                    break;
+                default:
+                    afterReaction = AFTER_SWIPE_REACTION_DEFAULT;
+                    break;
             }
         }
 
         return afterReaction;
+    }
+
+    private static int resultCodeToSlideDirection(int result) {
+        switch (result) {
+            case RESULT_SWIPED_LEFT:
+                return ItemSlidingAnimator.DIR_LEFT;
+            case RESULT_SWIPED_UP:
+                return ItemSlidingAnimator.DIR_UP;
+            case RESULT_SWIPED_RIGHT:
+                return ItemSlidingAnimator.DIR_RIGHT;
+            case RESULT_SWIPED_DOWN:
+                return ItemSlidingAnimator.DIR_DOWN;
+            default:
+                // NOTE: returned value should not be used.
+                return ItemSlidingAnimator.DIR_LEFT;
+        }
     }
 
     public void cancelSwipe() {
@@ -712,15 +970,19 @@ public class RecyclerViewSwipeManager {
         return (mItemSlideAnimator != null) && (mItemSlideAnimator.isRunning(item));
     }
 
-    private void slideItem(RecyclerView.ViewHolder holder, float amount, boolean shouldAnimate) {
+    private void slideItem(RecyclerView.ViewHolder holder, float amount, boolean horizontal, boolean shouldAnimate) {
         if (amount == OUTSIDE_OF_THE_WINDOW_LEFT) {
-            mItemSlideAnimator.slideToOutsideOfWindow(holder, true, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
+            mItemSlideAnimator.slideToOutsideOfWindow(holder, ItemSlidingAnimator.DIR_LEFT, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
+        } else if (amount == OUTSIDE_OF_THE_WINDOW_UP) {
+            mItemSlideAnimator.slideToOutsideOfWindow(holder, ItemSlidingAnimator.DIR_UP, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
         } else if (amount == OUTSIDE_OF_THE_WINDOW_RIGHT) {
-            mItemSlideAnimator.slideToOutsideOfWindow(holder, false, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
+            mItemSlideAnimator.slideToOutsideOfWindow(holder, ItemSlidingAnimator.DIR_RIGHT, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
+        } else if (amount == OUTSIDE_OF_THE_WINDOW_DOWN) {
+            mItemSlideAnimator.slideToOutsideOfWindow(holder, ItemSlidingAnimator.DIR_DOWN, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
         } else if (amount == 0.0f) {
-            mItemSlideAnimator.slideToDefaultPosition(holder, shouldAnimate, mReturnToDefaultPositionAnimationDuration);
+            mItemSlideAnimator.slideToDefaultPosition(holder, horizontal, shouldAnimate, mReturnToDefaultPositionAnimationDuration);
         } else {
-            mItemSlideAnimator.slideToSpecifiedPosition(holder, amount);
+            mItemSlideAnimator.slideToSpecifiedPosition(holder, amount, horizontal);
         }
     }
 
@@ -762,6 +1024,7 @@ public class RecyclerViewSwipeManager {
 
     /**
      * Gets OnItemSwipeEventListener listener
+     *
      * @return The listener object
      */
     public OnItemSwipeEventListener getOnItemSwipeEventListener() {
@@ -777,7 +1040,13 @@ public class RecyclerViewSwipeManager {
         mItemSwipeEventListener = listener;
     }
 
-    /*package*/ void applySlideItem(RecyclerView.ViewHolder holder, int itemPosition, float prevAmount, float amount, boolean shouldAnimate) {
+    /*package*/ boolean swipeHorizontal() {
+        return mSwipeHorizontal;
+    }
+
+    /*package*/ void applySlideItem(
+            RecyclerView.ViewHolder holder, int itemPosition,
+            float prevAmount, float amount, boolean horizontal, boolean shouldAnimate) {
         final SwipeableItemViewHolder holder2 = (SwipeableItemViewHolder) holder;
         final View containerView = holder2.getSwipeableContainerView();
 
@@ -791,27 +1060,37 @@ public class RecyclerViewSwipeManager {
             if (prevAmount == 0.0f) {
                 reqBackgroundType = DRAWABLE_SWIPE_NEUTRAL_BACKGROUND;
             } else {
-                reqBackgroundType = (prevAmount < 0)
-                        ? DRAWABLE_SWIPE_LEFT_BACKGROUND
-                        : DRAWABLE_SWIPE_RIGHT_BACKGROUND;
+                reqBackgroundType = determineBackgroundType(prevAmount, horizontal);
             }
         } else {
-            reqBackgroundType = (amount < 0)
-                    ? DRAWABLE_SWIPE_LEFT_BACKGROUND
-                    : DRAWABLE_SWIPE_RIGHT_BACKGROUND;
+            reqBackgroundType = determineBackgroundType(amount, horizontal);
         }
 
         if (amount == 0.0f) {
-            slideItem(holder, amount, shouldAnimate);
+            slideItem(holder, amount, horizontal, shouldAnimate);
             mAdapter.setSwipeBackgroundDrawable(holder, itemPosition, reqBackgroundType);
         } else {
             float adjustedAmount = amount;
+            float minLimit = horizontal ? holder2.getMaxLeftSwipeAmount() : holder2.getMaxUpSwipeAmount();
+            float maxLimit = horizontal ? holder2.getMaxRightSwipeAmount() : holder2.getMaxDownSwipeAmount();
 
-            adjustedAmount = Math.max(adjustedAmount, holder2.getMaxLeftSwipeAmount());
-            adjustedAmount = Math.min(adjustedAmount, holder2.getMaxRightSwipeAmount());
+            adjustedAmount = Math.max(adjustedAmount, minLimit);
+            adjustedAmount = Math.min(adjustedAmount, maxLimit);
 
             mAdapter.setSwipeBackgroundDrawable(holder, itemPosition, reqBackgroundType);
-            slideItem(holder, adjustedAmount, shouldAnimate);
+            slideItem(holder, adjustedAmount, horizontal, shouldAnimate);
+        }
+    }
+
+    private static int determineBackgroundType(float amount, boolean horizontal) {
+        if (horizontal) {
+            return (amount < 0)
+                    ? DRAWABLE_SWIPE_LEFT_BACKGROUND
+                    : DRAWABLE_SWIPE_RIGHT_BACKGROUND;
+        } else {
+            return (amount < 0)
+                    ? DRAWABLE_SWIPE_UP_BACKGROUND
+                    : DRAWABLE_SWIPE_DOWN_BACKGROUND;
         }
     }
 
@@ -823,6 +1102,10 @@ public class RecyclerViewSwipeManager {
 
     /*package*/ int getSwipeContainerViewTranslationX(RecyclerView.ViewHolder holder) {
         return mItemSlideAnimator.getSwipeContainerViewTranslationX(holder);
+    }
+
+    /*package*/ int getSwipeContainerViewTranslationY(RecyclerView.ViewHolder holder) {
+        return mItemSlideAnimator.getSwipeContainerViewTranslationY(holder);
     }
 
     private static boolean supportsViewPropertyAnimator() {

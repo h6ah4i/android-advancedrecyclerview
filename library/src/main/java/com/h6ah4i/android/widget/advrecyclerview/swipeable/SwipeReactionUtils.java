@@ -22,18 +22,34 @@ class SwipeReactionUtils {
     public static final int REACTION_CAN_SWIPE = 2;
 
     public static int extractLeftReaction(int type) {
-        return (type & 0x3);
+        return ((type >>> RecyclerViewSwipeManager.BIT_SHIFT_AMOUNT_LEFT) & 0x3);
+    }
+
+    public static int extractUpReaction(int type) {
+        return ((type >>> RecyclerViewSwipeManager.BIT_SHIFT_AMOUNT_UP) & 0x3);
     }
 
     public static int extractRightReaction(int type) {
-        return ((type >>> 16) & 0x3);
+        return ((type >>> RecyclerViewSwipeManager.BIT_SHIFT_AMOUNT_RIGHT) & 0x3);
+    }
+
+    public static int extractDownReaction(int type) {
+        return ((type >>> RecyclerViewSwipeManager.BIT_SHIFT_AMOUNT_DOWN) & 0x3);
     }
 
     public static boolean canSwipeLeft(int reactionType) {
         return (extractLeftReaction(reactionType) == REACTION_CAN_SWIPE);
     }
 
+    public static boolean canSwipeUp(int reactionType) {
+        return (extractUpReaction(reactionType) == REACTION_CAN_SWIPE);
+    }
+
     public static boolean canSwipeRight(int reactionType) {
         return (extractRightReaction(reactionType) == REACTION_CAN_SWIPE);
+    }
+
+    public static boolean canSwipeDown(int reactionType) {
+        return (extractDownReaction(reactionType) == REACTION_CAN_SWIPE);
     }
 }

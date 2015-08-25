@@ -69,7 +69,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         if (holder instanceof SwipeableItemViewHolder) {
             mSwipeManager.cancelPendingAnimations(holder);
 
-            ((SwipeableItemViewHolder) holder).setSwipeItemSlideAmount(0.0f);
+            setSwipeItemSlideAmount(((SwipeableItemViewHolder) holder), 0.0f, swipeHorizontal());
 
             View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
 
@@ -96,7 +96,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         float prevSwipeItemSlideAmount = 0;
 
         if (holder instanceof SwipeableItemViewHolder) {
-            prevSwipeItemSlideAmount = ((SwipeableItemViewHolder) holder).getSwipeItemSlideAmount();
+            prevSwipeItemSlideAmount = getSwipeItemSlideAmount(((SwipeableItemViewHolder) holder), swipeHorizontal());
         }
 
         if (isSwiping()) {
@@ -114,11 +114,11 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         }
 
         if (holder instanceof SwipeableItemViewHolder) {
-            final float swipeItemSlideAmount = ((SwipeableItemViewHolder) holder).getSwipeItemSlideAmount();
+            final float swipeItemSlideAmount = getSwipeItemSlideAmount(((SwipeableItemViewHolder) holder), swipeHorizontal());
 
             if ((prevSwipeItemSlideAmount != swipeItemSlideAmount) ||
                     !(mSwipeManager.isSwiping() || mSwipeManager.isAnimationRunning(holder))) {
-                mSwipeManager.applySlideItem(holder, position, prevSwipeItemSlideAmount, swipeItemSlideAmount, true);
+                mSwipeManager.applySlideItem(holder, position, prevSwipeItemSlideAmount, swipeItemSlideAmount, swipeHorizontal(), true);
             }
         }
     }
@@ -226,7 +226,11 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
         ((SwipeableItemViewHolder) holder).setSwipeResult(result);
         ((SwipeableItemViewHolder) holder).setAfterSwipeReaction(afterReaction);
-        ((SwipeableItemViewHolder) holder).setSwipeItemSlideAmount(getSwipeAmountFromAfterReaction(result, afterReaction));
+
+        setSwipeItemSlideAmount(
+                ((SwipeableItemViewHolder) holder),
+                getSwipeAmountFromAfterReaction(result, afterReaction),
+                swipeHorizontal());
 
         mSwipeableItemAdapter.onPerformAfterSwipeReaction(holder, position, result, afterReaction);
         notifyDataSetChanged();
@@ -234,6 +238,26 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
     protected boolean isSwiping() {
         return (mSwipingItemPosition != RecyclerView.NO_POSITION);
+    }
+
+    private boolean swipeHorizontal() {
+        return mSwipeManager.swipeHorizontal();
+    }
+
+    private static float getSwipeItemSlideAmount(SwipeableItemViewHolder holder, boolean horizontal) {
+        if (horizontal) {
+            return holder.getSwipeItemHorizontalSlideAmount();
+        } else {
+            return holder.getSwipeItemVerticalSlideAmount();
+        }
+    }
+
+    private static void setSwipeItemSlideAmount(SwipeableItemViewHolder holder, float amount, boolean horizontal) {
+        if (horizontal) {
+            holder.setSwipeItemHorizontalSlideAmount(amount);
+        } else {
+            holder.setSwipeItemVerticalSlideAmount(amount);
+        }
     }
 
     private static float getSwipeAmountFromAfterReaction(int result, int afterReaction) {

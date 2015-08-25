@@ -35,6 +35,7 @@ import com.h6ah4i.android.example.advrecyclerview.demo_e_already_expanded.Alread
 import com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_eds.ExpandableDraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s.SwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.VerticalSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_us.UnderSwipeableExampleActivity;
 
 public class ExampleLauncherContentsFragment extends Fragment implements View.OnClickListener {
@@ -58,6 +59,7 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
         view.findViewById(R.id.button_launch_demo_ed_with_section).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_e_add_remove).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_e_already_expanded).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_s_vertical).setOnClickListener(this);
     }
 
     @Override
@@ -95,6 +97,9 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
                 break;
             case R.id.button_launch_demo_e_already_expanded:
                 launchExampleActivity(AlreadyExpandedGroupsExpandableExampleActivity.class);
+                break;
+            case R.id.button_launch_demo_s_vertical:
+                launchExampleActivity(VerticalSwipeableExampleActivity.class);
                 break;
         }
     }

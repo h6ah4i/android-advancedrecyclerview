@@ -161,7 +161,7 @@ public class MyExpandableItemAdapter
     @Override
     public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
         // check the item is *not* pinned
-        if (mProvider.getGroupItem(groupPosition).isPinnedToSwipeLeft()) {
+        if (mProvider.getGroupItem(groupPosition).isPinned()) {
             // return false to raise View.OnClickListener#onClick() event
             return false;
         }

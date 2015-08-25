@@ -20,7 +20,6 @@ package com.h6ah4i.android.example.advrecyclerview.common.data;
 import android.support.v4.util.Pair;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -48,16 +47,14 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
             //noinspection UnnecessaryLocalVariable
             final long groupId = i;
             final String groupText = Character.toString(groupItems.charAt(i));
-            final int groupSwipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;
-            final ConcreteGroupData group = new ConcreteGroupData(groupId, groupText, groupSwipeReaction);
+            final ConcreteGroupData group = new ConcreteGroupData(groupId, groupText);
             final List<ChildData> children = new ArrayList<>();
 
             for (int j = 0; j < childItems.length(); j++) {
                 final long childId = group.generateNewChildId();
                 final String childText = Character.toString(childItems.charAt(j));
-                final int childSwipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;
 
-                children.add(new ConcreteChildData(childId, childText, childSwipeReaction));
+                children.add(new ConcreteChildData(childId, childText));
             }
 
             mData.add(new Pair<GroupData, List<ChildData>>(group, children));
@@ -213,14 +210,12 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
 
         private final long mId;
         private final String mText;
-        private final int mSwipeReaction;
-        private boolean mPinnedToSwipeLeft;
+        private boolean mPinned;
         private long mNextChildId;
 
-        ConcreteGroupData(long id, String text, int swipeReaction) {
+        ConcreteGroupData(long id, String text) {
             mId = id;
             mText = text;
-            mSwipeReaction = swipeReaction;
             mNextChildId = 0;
         }
 
@@ -235,23 +230,18 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
         }
 
         @Override
-        public int getSwipeReactionType() {
-            return mSwipeReaction;
-        }
-
-        @Override
         public String getText() {
             return mText;
         }
 
         @Override
-        public void setPinnedToSwipeLeft(boolean pinnedToSwipeLeft) {
-            mPinnedToSwipeLeft = pinnedToSwipeLeft;
+        public void setPinned(boolean pinnedToSwipeLeft) {
+            mPinned = pinnedToSwipeLeft;
         }
 
         @Override
-        public boolean isPinnedToSwipeLeft() {
-            return mPinnedToSwipeLeft;
+        public boolean isPinned() {
+            return mPinned;
         }
 
         public long generateNewChildId() {
@@ -265,13 +255,11 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
 
         private long mId;
         private final String mText;
-        private final int mSwipeReaction;
-        private boolean mPinnedToSwipeLeft;
+        private boolean mPinned;
 
-        ConcreteChildData(long id, String text, int swipeReaction) {
+        ConcreteChildData(long id, String text) {
             mId = id;
             mText = text;
-            mSwipeReaction = swipeReaction;
         }
 
         @Override
@@ -280,23 +268,18 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
         }
 
         @Override
-        public int getSwipeReactionType() {
-            return mSwipeReaction;
-        }
-
-        @Override
         public String getText() {
             return mText;
         }
 
         @Override
-        public void setPinnedToSwipeLeft(boolean pinnedToSwipeLeft) {
-            mPinnedToSwipeLeft = pinnedToSwipeLeft;
+        public void setPinned(boolean pinned) {
+            mPinned = pinned;
         }
 
         @Override
-        public boolean isPinnedToSwipeLeft() {
-            return mPinnedToSwipeLeft;
+        public boolean isPinned() {
+            return mPinned;
         }
 
         public void setChildId(long id) {

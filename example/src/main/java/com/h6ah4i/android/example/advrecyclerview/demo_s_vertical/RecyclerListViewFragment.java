@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_s;
+package com.h6ah4i.android.example.advrecyclerview.demo_s_vertical;
 
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
@@ -60,7 +60,7 @@ public class RecyclerListViewFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getActivity(),  LinearLayoutManager.VERTICAL, false);
+        mLayoutManager = new LinearLayoutManager(getActivity(),  LinearLayoutManager.HORIZONTAL, false);
 
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
@@ -75,12 +75,12 @@ public class RecyclerListViewFragment extends Fragment {
         myItemAdapter.setEventListener(new MySwipeableItemAdapter.EventListener() {
             @Override
             public void onItemRemoved(int position) {
-                ((SwipeableExampleActivity) getActivity()).onItemRemoved(position);
+                ((VerticalSwipeableExampleActivity) getActivity()).onItemRemoved(position);
             }
 
             @Override
             public void onItemPinned(int position) {
-                ((SwipeableExampleActivity) getActivity()).onItemPinned(position);
+                ((VerticalSwipeableExampleActivity) getActivity()).onItemPinned(position);
             }
 
             @Override
@@ -158,7 +158,7 @@ public class RecyclerListViewFragment extends Fragment {
     private void onItemViewClick(View v, boolean pinned) {
         int position = mRecyclerView.getChildPosition(v);
         if (position != RecyclerView.NO_POSITION) {
-            ((SwipeableExampleActivity) getActivity()).onItemClicked(position);
+            ((VerticalSwipeableExampleActivity) getActivity()).onItemClicked(position);
         }
     }
 
@@ -167,7 +167,7 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     public AbstractDataProvider getDataProvider() {
-        return ((SwipeableExampleActivity) getActivity()).getDataProvider();
+        return ((VerticalSwipeableExampleActivity) getActivity()).getDataProvider();
     }
 
     public void notifyItemChanged(int position) {

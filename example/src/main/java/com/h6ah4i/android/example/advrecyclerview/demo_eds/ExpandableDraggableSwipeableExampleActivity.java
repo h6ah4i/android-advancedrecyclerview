@@ -126,9 +126,9 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
         AbstractExpandableDataProvider.GroupData data = getDataProvider().getGroupItem(groupPosition);
 
-        if (data.isPinnedToSwipeLeft()) {
+        if (data.isPinned()) {
             // unpin if tapped the pinned item
-            data.setPinnedToSwipeLeft(false);
+            data.setPinned(false);
             ((RecyclerListViewFragment) fragment).notifyGroupItemChanged(groupPosition);
         }
     }
@@ -137,9 +137,9 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
         AbstractExpandableDataProvider.ChildData data = getDataProvider().getChildItem(groupPosition, childPosition);
 
-        if (data.isPinnedToSwipeLeft()) {
+        if (data.isPinned()) {
             // unpin if tapped the pinned item
-            data.setPinnedToSwipeLeft(false);
+            data.setPinned(false);
             ((RecyclerListViewFragment) fragment).notifyChildItemChanged(groupPosition, childPosition);
         }
     }
@@ -171,11 +171,11 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
 
         if (childPosition == RecyclerView.NO_POSITION) {
             // group item
-            getDataProvider().getGroupItem(groupPosition).setPinnedToSwipeLeft(ok);
+            getDataProvider().getGroupItem(groupPosition).setPinned(ok);
             ((RecyclerListViewFragment) fragment).notifyGroupItemChanged(groupPosition);
         } else {
             // child item
-            getDataProvider().getChildItem(groupPosition, childPosition).setPinnedToSwipeLeft(ok);
+            getDataProvider().getChildItem(groupPosition, childPosition).setPinned(ok);
             ((RecyclerListViewFragment) fragment).notifyChildItemChanged(groupPosition, childPosition);
         }
     }

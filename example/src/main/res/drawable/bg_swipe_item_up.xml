@@ -16,11 +16,11 @@
 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <color android:color="@color/bg_swipe_group_item_dismiss"/>
+        <color android:color="@color/bg_swipe_item_pinned"/>
     </item>
-    <item android:left="16dp">
+    <item android:bottom="16dp">
         <bitmap
-            android:src="@drawable/ic_item_swipe_dismiss"
-            android:gravity="left|center_vertical"/>
+            android:src="@drawable/ic_item_swipe_pinned"
+            android:gravity="bottom|center_horizontal"/>
     </item>
 </layer-list>

@@ -156,7 +156,7 @@ public class MyUnderSwipeableItemAdapter
         holder.setMaxLeftSwipeAmount(-0.5f);
         holder.setMaxRightSwipeAmount(0);
         holder.setSwipeItemSlideAmount(
-                item.isPinnedToSwipeLeft() ? -0.5f : 0);
+                item.isPinned() ? -0.5f : 0);
     }
 
     @Override
@@ -167,9 +167,9 @@ public class MyUnderSwipeableItemAdapter
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
         if (ViewUtils.hitTest(holder.getSwipeableContainerView(), x, y)) {
-            return mProvider.getItem(position).getSwipeReactionType();
+            return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_H;
         } else {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
+            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH_H;
         }
     }
 
@@ -223,14 +223,14 @@ public class MyUnderSwipeableItemAdapter
                 mEventListener.onItemRemoved(position);
             }
         } else if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) {
-            item.setPinnedToSwipeLeft(true);
+            item.setPinned(true);
             notifyItemChanged(position);
 
             if (mEventListener != null) {
                 mEventListener.onItemPinned(position);
             }
         } else {
-            item.setPinnedToSwipeLeft(false);
+            item.setPinned(false);
         }
     }
 
