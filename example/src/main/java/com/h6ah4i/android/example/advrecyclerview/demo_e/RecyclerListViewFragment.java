@@ -72,7 +72,6 @@ public class RecyclerListViewFragment
         mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
 
         //adapter
-        getDataProvider();
         final MyExpandableItemAdapter myItemAdapter = new MyExpandableItemAdapter(getDataProvider());
 
         mAdapter = myItemAdapter;
