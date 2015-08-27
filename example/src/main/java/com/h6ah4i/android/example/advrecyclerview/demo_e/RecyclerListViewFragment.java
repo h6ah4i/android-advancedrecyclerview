@@ -44,8 +44,7 @@ public class RecyclerListViewFragment
     private static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
 
     private RecyclerView mRecyclerView;
-    private LinearLayoutManager mLayoutManager;
-    private MyExpandableItemAdapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
 
@@ -72,10 +71,7 @@ public class RecyclerListViewFragment
         mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
 
         //adapter
-        getDataProvider();
         final MyExpandableItemAdapter myItemAdapter = new MyExpandableItemAdapter(getDataProvider());
-
-        mAdapter = myItemAdapter;
 
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(myItemAdapter);       // wrap for expanding
 
@@ -131,7 +127,6 @@ public class RecyclerListViewFragment
             WrapperAdapterUtils.releaseAll(mWrappedAdapter);
             mWrappedAdapter = null;
         }
-        mAdapter = null;
         mLayoutManager = null;
 
         super.onDestroyView();
