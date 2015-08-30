@@ -677,6 +677,29 @@ public class RecyclerViewExpandableItemManager {
         mAdapter.notifyGroupItemRangeInserted(groupPositionStart, itemCount);
     }
 
+    /**
+     * Notify any registered observers that the currently reflected <code>itemCount</code>
+     * group items starting at <code>groupPositionStart</code> have been newly inserted and may be <code>expanded</code>.
+     * The group items previously located at <code>groupPositionStart</code> and beyond can now be found starting
+     * at position <code>groupPositionStart + itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPositionStart Position of the first group item that was inserted
+     * @param itemCount Number of group items inserted
+     * @param expanded Whether the groups will be inserted already expanded
+     *
+     * @see #notifyGroupItemRangeInserted(int, int)
+     */
+    public void notifyGroupItemRangeInserted(int groupPositionStart, int itemCount, boolean expanded) {
+        if (!expanded) {
+            notifyGroupItemRangeInserted(groupPositionStart, itemCount);
+        } else {
+            mAdapter.notifyExpandedGroupItemRangeInserted(groupPositionStart, itemCount);
+        }
+    }
 
     /**
      * Notify any registered observers that the group item reflected at <code>groupPosition</code>
