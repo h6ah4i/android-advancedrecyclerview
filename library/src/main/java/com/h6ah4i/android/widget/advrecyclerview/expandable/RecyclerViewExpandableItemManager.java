@@ -679,8 +679,8 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Notify any registered observers that the currently reflected <code>itemCount</code>
-     * group items starting at <code>groupPositionStart</code> have been newly inserted. The group items
-     * previously located at <code>groupPositionStart</code> and beyond can now be found starting
+     * group items starting at <code>groupPositionStart</code> have been newly inserted and may be <code>expanded</code>.
+     * The group items previously located at <code>groupPositionStart</code> and beyond can now be found starting
      * at position <code>groupPositionStart + itemCount</code>.
      *
      * <p>This is a structural change event. Representations of other existing items in the
@@ -689,7 +689,7 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param groupPositionStart Position of the first group item that was inserted
      * @param itemCount Number of group items inserted
-     * @param expanded Wheter the groups will be inserted already expanded
+     * @param expanded Whether the groups will be inserted already expanded
      *
      * @see #notifyGroupItemRangeInserted(int, int)
      */
