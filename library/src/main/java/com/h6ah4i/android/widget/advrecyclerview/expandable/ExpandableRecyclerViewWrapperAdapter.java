@@ -830,6 +830,21 @@ class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
+    /*package*/ void notifyExpandedGroupItemRangeInserted(int groupPositionStart, int count) {
+        int totalChildsAndGroupsInserted = 0;
+
+        for (int i = 0; i < count; ++i) {
+            int groupPosition = groupPositionStart + i;
+            int childCount = mPositionTranslator.getChildCount(groupPosition);
+
+            mPositionTranslator.expandGroup(groupPosition);
+
+            totalChildsAndGroupsInserted += (childCount + 1);
+        }
+
+        notifyItemRangeInserted(groupPositionStart, totalChildsAndGroupsInserted);
+    }
+
     /*package*/ void notifyGroupItemRemoved(int groupPosition) {
         final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
         final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
