@@ -472,7 +472,7 @@ class ExpandablePositionTranslator {
         mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, groupPosition);
     }
 
-    public int insertGroupItems(int groupPosition, int count) {
+    public int insertGroupItems(int groupPosition, int count, boolean expanded) {
         if (count <= 0) {
             return 0;
         }
@@ -493,25 +493,34 @@ class ExpandablePositionTranslator {
             ids[i] = ids[i - n];
         }
 
+        // insert items
+        final long expandedFlag = (expanded) ? FLAG_EXPANDED : 0;
+        int insertedChildCount = 0;
         int end2 = groupPosition + n;
         for (int i = groupPosition; i < end2; i++) {
             final long groupId = adapter.getGroupId(i);
             final int childCount = adapter.getChildCount(i);
 
-            info[i] = (((long) i << 32) | childCount);
+            info[i] = (((long) i << 32) | childCount) | expandedFlag;
             ids[i] = (int) (groupId & LOWER_32BIT_MASK);
+
+            insertedChildCount += childCount;
         }
 
         mGroupCount += n;
+        if (expanded) {
+            mExpandedGroupCount += n;
+            mExpandedChildCount += insertedChildCount;
+        }
 
         int calculatedOffset = (mGroupCount == 0) ? RecyclerView.NO_POSITION : (groupPosition - 1);
         mEndOfCalculatedOffsetGroupPosition = Math.min(mEndOfCalculatedOffsetGroupPosition, calculatedOffset);
 
-        return n;
+        return (expanded) ? (n + insertedChildCount) : n;
     }
 
-    public int insertGroupItem(int groupPosition) {
-        return insertGroupItems(groupPosition, 1);
+    public int insertGroupItem(int groupPosition, boolean expanded) {
+        return insertGroupItems(groupPosition, 1, expanded);
     }
 
     public int removeGroupItems(int groupPosition, int count) {
