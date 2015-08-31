@@ -810,39 +810,37 @@ class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
-    /*package*/ void notifyGroupItemInserted(int groupPosition) {
-        int insertedCount = mPositionTranslator.insertGroupItem(groupPosition);
+    /*package*/ void notifyGroupItemInserted(int groupPosition, boolean expanded) {
+        int insertedCount = mPositionTranslator.insertGroupItem(groupPosition, expanded);
         if (insertedCount > 0) {
             final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
             final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
 
             notifyItemInserted(flatPosition);
+
+            // raise onGroupExpand() event
+            raiseOnGroupExpandedSequentially(groupPosition, 1, false);
         }
     }
 
-    /*package*/ void notifyGroupItemRangeInserted(int groupPositionStart, int count) {
-        int insertedCount = mPositionTranslator.insertGroupItems(groupPositionStart, count);
+    /*package*/ void notifyGroupItemRangeInserted(int groupPositionStart, int count, boolean expanded) {
+        int insertedCount = mPositionTranslator.insertGroupItems(groupPositionStart, count, expanded);
         if (insertedCount > 0) {
             final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPositionStart);
             final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
 
             notifyItemRangeInserted(flatPosition, insertedCount);
+
+            raiseOnGroupExpandedSequentially(groupPositionStart, count, false);
         }
     }
 
-    /*package*/ void notifyExpandedGroupItemRangeInserted(int groupPositionStart, int count) {
-        int totalChildsAndGroupsInserted = 0;
-
-        for (int i = 0; i < count; ++i) {
-            int groupPosition = groupPositionStart + i;
-            int childCount = mPositionTranslator.getChildCount(groupPosition);
-
-            mPositionTranslator.expandGroup(groupPosition);
-
-            totalChildsAndGroupsInserted += (childCount + 1);
+    private void raiseOnGroupExpandedSequentially(int groupPositionStart, int count, boolean fromUser) {
+        if (mOnGroupExpandListener != null) {
+            for (int i = 0; i < count; i++) {
+                mOnGroupExpandListener.onGroupExpand(groupPositionStart + i, fromUser);
+            }
         }
-
-        notifyItemRangeInserted(groupPositionStart, totalChildsAndGroupsInserted);
     }
 
     /*package*/ void notifyGroupItemRemoved(int groupPosition) {
