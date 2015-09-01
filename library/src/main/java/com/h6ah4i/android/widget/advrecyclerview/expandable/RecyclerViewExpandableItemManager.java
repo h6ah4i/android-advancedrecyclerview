@@ -652,10 +652,32 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param groupPosition Position of the newly inserted group item in the data set
      *
+     * @see #notifyGroupItemInserted(int, boolean)
      * @see #notifyGroupItemRangeInserted(int, int)
+     * @see #notifyGroupItemRangeInserted(int, int, boolean)
      */
     public void notifyGroupItemInserted(int groupPosition) {
-        mAdapter.notifyGroupItemInserted(groupPosition);
+        notifyGroupItemInserted(groupPosition, false);
+    }
+
+    /**
+     * Notify any registered observers that the group item reflected at <code>groupPosition</code>
+     * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
+     * position <code>groupPosition + 1</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their
+     * positions may be altered.</p>
+     *
+     * @param groupPosition Position of the newly inserted group item in the data set
+     * @param expanded Whether the groups will be inserted already expanded
+     *
+     * @see #notifyGroupItemInserted(int)
+     * @see #notifyGroupItemRangeInserted(int, int)
+     * @see #notifyGroupItemRangeInserted(int, int, boolean)
+     */
+    public void notifyGroupItemInserted(int groupPosition, boolean expanded) {
+        mAdapter.notifyGroupItemInserted(groupPosition, expanded);
     }
 
     /**
@@ -672,11 +694,34 @@ public class RecyclerViewExpandableItemManager {
      * @param itemCount Number of group items inserted
      *
      * @see #notifyGroupItemInserted(int)
+     * @see #notifyGroupItemInserted(int, boolean)
+     * @see #notifyGroupItemRangeInserted(int, int, boolean)
      */
     public void notifyGroupItemRangeInserted(int groupPositionStart, int itemCount) {
-        mAdapter.notifyGroupItemRangeInserted(groupPositionStart, itemCount);
+        notifyGroupItemRangeInserted(groupPositionStart, itemCount, false);
     }
 
+    /**
+     * Notify any registered observers that the currently reflected <code>itemCount</code>
+     * group items starting at <code>groupPositionStart</code> have been newly inserted and may be <code>expanded</code>.
+     * The group items previously located at <code>groupPositionStart</code> and beyond can now be found starting
+     * at position <code>groupPositionStart + itemCount</code>.
+     *
+     * <p>This is a structural change event. Representations of other existing items in the
+     * data set are still considered up to date and will not be rebound, though their positions
+     * may be altered.</p>
+     *
+     * @param groupPositionStart Position of the first group item that was inserted
+     * @param itemCount Number of group items inserted
+     * @param expanded Whether the groups will be inserted already expanded
+     *
+     * @see #notifyGroupItemInserted(int)
+     * @see #notifyGroupItemInserted(int, boolean)
+     * @see #notifyGroupItemRangeInserted(int, int)
+     */
+    public void notifyGroupItemRangeInserted(int groupPositionStart, int itemCount, boolean expanded) {
+        mAdapter.notifyGroupItemRangeInserted(groupPositionStart, itemCount, expanded);
+    }
 
     /**
      * Notify any registered observers that the group item reflected at <code>groupPosition</code>
