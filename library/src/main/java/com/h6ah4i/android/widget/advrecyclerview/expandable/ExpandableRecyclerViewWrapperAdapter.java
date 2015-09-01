@@ -64,7 +64,7 @@ class ExpandableRecyclerViewWrapperAdapter
         mExpandableListManager = manager;
 
         mPositionTranslator = new ExpandablePositionTranslator();
-        mPositionTranslator.build(mExpandableItemAdapter);
+        mPositionTranslator.build(mExpandableItemAdapter, false);
 
         if (expandedItemsSavedState != null) {
             // NOTE: do not call hook routines and listener methods
@@ -195,7 +195,7 @@ class ExpandableRecyclerViewWrapperAdapter
     private void rebuildPositionTranslator() {
         if (mPositionTranslator != null) {
             int [] savedState = mPositionTranslator.getSavedStateArray();
-            mPositionTranslator.build(mExpandableItemAdapter);
+            mPositionTranslator.build(mExpandableItemAdapter, false);
 
             // NOTE: do not call hook routines and listener methods
             mPositionTranslator.restoreExpandedGroupItems(savedState, null, null, null);
@@ -607,6 +607,20 @@ class ExpandableRecyclerViewWrapperAdapter
         }
 
         return true;
+    }
+
+    /*package*/ void expandAll() {
+        if (!mPositionTranslator.isAllExpanded()) {
+            mPositionTranslator.build(mExpandableItemAdapter, true);
+            notifyDataSetChanged();
+        }
+    }
+
+    /*package*/ void collapseAll() {
+        if (!mPositionTranslator.isAllCollapsed()) {
+            mPositionTranslator.build(mExpandableItemAdapter, false);
+            notifyDataSetChanged();
+        }
     }
 
     /*package*/ boolean collapseGroup(int groupPosition, boolean fromUser) {

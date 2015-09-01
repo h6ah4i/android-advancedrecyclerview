@@ -313,6 +313,28 @@ public class RecyclerViewExpandableItemManager {
     }
 
     /**
+     * Expand all groups.
+     *
+     * Note that this method does not invoke the {@link OnGroupExpandListener#onGroupExpand(int, boolean)} callback.
+     */
+    public void expandAll() {
+        if (mAdapter != null) {
+            mAdapter.expandAll();
+        }
+    }
+
+    /**
+     * Collapse all groups.
+     *
+     * Note that this method does not invoke the {@link OnGroupCollapseListener#onGroupCollapse(int, boolean)} callback.
+     */
+    public void collapseAll() {
+        if (mAdapter != null) {
+            mAdapter.collapseAll();
+        }
+    }
+
+    /**
      * Expand a group.
      *
      * @param groupPosition The group position to be expanded

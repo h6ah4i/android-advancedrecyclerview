@@ -24,6 +24,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
@@ -34,7 +35,8 @@ public class MyExpandableItemAdapter
         extends AbstractExpandableItemAdapter<MyExpandableItemAdapter.MyGroupViewHolder, MyExpandableItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyExpandableItemAdapter";
 
-    private AbstractExpandableDataProvider mProvider;
+    private AbstractAddRemoveExpandableDataProvider mProvider;
+    private RecyclerViewExpandableItemManager mExpandableItemManager;
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
         public FrameLayout mContainer;
@@ -62,7 +64,11 @@ public class MyExpandableItemAdapter
         }
     }
 
-    public MyExpandableItemAdapter(AbstractExpandableDataProvider dataProvider) {
+    public MyExpandableItemAdapter(
+            RecyclerViewExpandableItemManager expandableItemManager,
+            AbstractAddRemoveExpandableDataProvider dataProvider) {
+
+        mExpandableItemManager = expandableItemManager;
         mProvider = dataProvider;
 
         // ExpandableItemAdapter requires stable ID, and also
@@ -117,7 +123,7 @@ public class MyExpandableItemAdapter
     @Override
     public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
         // child item
-        final AbstractExpandableDataProvider.BaseData item = mProvider.getGroupItem(groupPosition);
+        final AbstractAddRemoveExpandableDataProvider.BaseData item = mProvider.getGroupItem(groupPosition);
 
         // set text
         holder.mTextView.setText(item.getText());
@@ -150,7 +156,7 @@ public class MyExpandableItemAdapter
     @Override
     public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
         // group item
-        final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
+        final AbstractAddRemoveExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
         // set text
         holder.mTextView.setText(item.getText());
@@ -163,17 +169,51 @@ public class MyExpandableItemAdapter
 
     @Override
     public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
-        // check the item is *not* pinned
-        if (mProvider.getGroupItem(groupPosition).isPinnedToSwipeLeft()) {
-            // return false to raise View.OnClickListener#onClick() event
-            return false;
-        }
-
         // check is enabled
         if (!(holder.itemView.isEnabled() && holder.itemView.isClickable())) {
             return false;
         }
 
         return true;
+    }
+
+    // NOTE: This method is called from Fragment
+    public void addGroupAndChildItemsBottom(int groupCount, int childCount) {
+        int groupPosition = mProvider.getGroupCount();
+
+        for (int i = 0; i < groupCount; i++) {
+            // add group
+            mProvider.addGroupItem(groupPosition + i);
+            // add children
+            for (int j = 0; j < childCount; j++) {
+                mProvider.addChildItem(groupPosition + i, j);
+            }
+        }
+
+        mExpandableItemManager.notifyGroupItemRangeInserted(groupPosition, groupCount, true);
+    }
+
+    // NOTE: This method is called from Fragment
+    public void removeGroupItemsBottom(int count) {
+        int groupCount = mProvider.getGroupCount();
+
+        count = Math.min(count, groupCount);
+
+        int groupPosition = groupCount - count;
+
+        for (int i = 0; i < count; i++) {
+            mProvider.removeGroupItem(groupPosition);
+        }
+
+        mExpandableItemManager.notifyGroupItemRangeRemoved(groupPosition, count);
+    }
+
+    // NOTE: This method is called from Fragment
+    public void clearGroupItems() {
+        int groupCount = mProvider.getGroupCount();
+
+        mProvider.clear();
+
+        mExpandableItemManager.notifyGroupItemRangeRemoved(0, groupCount);
     }
 }

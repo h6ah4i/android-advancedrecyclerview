@@ -49,25 +49,32 @@ class ExpandablePositionTranslator {
     public ExpandablePositionTranslator() {
     }
 
-    public void build(ExpandableItemAdapter adapter) {
+    public void build(ExpandableItemAdapter adapter, boolean allExpanded) {
         final int groupCount = adapter.getGroupCount();
 
         enlargeArraysIfNeeded(groupCount, false);
 
         final long[] info = mCachedGroupPosInfo;
         final int[] ids = mCachedGroupId;
+        int totalChildCount = 0;
         for (int i = 0; i < groupCount; i++) {
             final long groupId = adapter.getGroupId(i);
             final int childCount = adapter.getChildCount(i);
 
-            info[i] = (((long) i << 32) | childCount);
+            if (allExpanded) {
+                info[i] = (((long) (i + totalChildCount) << 32) | childCount) | FLAG_EXPANDED;
+            } else {
+                info[i] = (((long) i << 32) | childCount);
+            }
             ids[i] = (int) (groupId & LOWER_32BIT_MASK);
+
+            totalChildCount += childCount;
         }
 
         mAdapter = adapter;
         mGroupCount = groupCount;
-        mExpandedGroupCount = 0;
-        mExpandedChildCount = 0;
+        mExpandedGroupCount = (allExpanded) ? groupCount : 0;
+        mExpandedChildCount = (allExpanded) ? totalChildCount : 0;
         mEndOfCalculatedOffsetGroupPosition = Math.max(0, groupCount - 1);
     }
 
@@ -587,5 +594,13 @@ class ExpandablePositionTranslator {
 
         mCachedGroupPosInfo = newInfo;
         mCachedGroupId = newId;
+    }
+
+    public boolean isAllExpanded() {
+        return (mExpandedGroupCount == mGroupCount);
+    }
+
+    public boolean isAllCollapsed() {
+        return (mExpandedGroupCount == 0);
     }
 }

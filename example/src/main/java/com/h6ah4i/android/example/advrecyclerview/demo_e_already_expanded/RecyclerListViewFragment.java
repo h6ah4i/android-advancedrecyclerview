@@ -25,10 +25,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
@@ -42,12 +46,13 @@ public class RecyclerListViewFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private MyExpandableItemAdapter mAdapter;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
 
     public RecyclerListViewFragment() {
         super();
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -68,11 +73,18 @@ public class RecyclerListViewFragment extends Fragment {
 
         //adapter
         getDataProvider();
-        final MyExpandableItemAdapter myItemAdapter = new MyExpandableItemAdapter(getDataProvider());
+        final MyExpandableItemAdapter myItemAdapter = new MyExpandableItemAdapter(mRecyclerViewExpandableItemManager, getDataProvider());
 
         mAdapter = myItemAdapter;
 
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(myItemAdapter);       // wrap for expanding
+
+        // Expand all group items if no saved state exists.
+        // The expandAll() method should be called here (before attaching the RecyclerView instance),
+        // because it can reduce overheads of updating item views.
+        if (eimSavedState == null) {
+            mRecyclerViewExpandableItemManager.expandAll();
+        }
 
         final GeneralItemAnimator animator = new RefactoredDefaultItemAnimator();
 
@@ -95,7 +107,6 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(getResources().getDrawable(R.drawable.list_divider), true));
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
-        mRecyclerViewExpandableItemManager.notifyGroupItemRangeInserted(0, myItemAdapter.getGroupCount(), true);
     }
 
     @Override
@@ -132,12 +143,33 @@ public class RecyclerListViewFragment extends Fragment {
 
         super.onDestroyView();
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_e_add_remove, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add_group_bottom_2:
+                mAdapter.addGroupAndChildItemsBottom(2, 3);
+                return true;
+            case R.id.menu_remove_group_bottom_2:
+                mAdapter.removeGroupItemsBottom(2);
+                return true;
+            case R.id.menu_clear_groups:
+                mAdapter.clearGroupItems();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     private boolean supportsViewElevation() {
         return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP);
     }
 
-    public AbstractExpandableDataProvider getDataProvider() {
+    public AbstractAddRemoveExpandableDataProvider getDataProvider() {
         return ((AlreadyExpandedGroupsExpandableExampleActivity) getActivity()).getDataProvider();
     }
 }

@@ -21,7 +21,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.data.ExampleAddRemoveExpandableDataProvider;
+import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleAddRemoveExpandableDataProviderFragment;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleExpandableDataProviderFragment;
 
 public class AlreadyExpandedGroupsExpandableExampleActivity extends AppCompatActivity {
@@ -35,7 +38,7 @@ public class AlreadyExpandedGroupsExpandableExampleActivity extends AppCompatAct
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(new ExampleExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
+                    .add(new ExampleAddRemoveExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new RecyclerListViewFragment(), FRAGMENT_LIST_VIEW)
@@ -43,8 +46,8 @@ public class AlreadyExpandedGroupsExpandableExampleActivity extends AppCompatAct
         }
     }
 
-    public AbstractExpandableDataProvider getDataProvider() {
+    public AbstractAddRemoveExpandableDataProvider getDataProvider() {
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
-        return ((ExampleExpandableDataProviderFragment) fragment).getDataProvider();
+        return ((ExampleAddRemoveExpandableDataProviderFragment) fragment).getDataProvider();
     }
 }
