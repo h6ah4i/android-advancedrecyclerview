@@ -26,12 +26,12 @@ import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.demo_d.DraggableExampleActivity;
-import com.h6ah4i.android.example.advrecyclerview.demo_d_grid.DraggableGridExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_longpress.DraggableWithLongPressExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_section.DraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ds.DraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_e.ExpandableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_e_add_remove.AddRemoveExpandableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_e_already_expanded.AlreadyExpandedGroupsExpandableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_eds.ExpandableDraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s.SwipeableExampleActivity;
@@ -57,7 +57,7 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
         view.findViewById(R.id.button_launch_demo_d_with_section).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_ed_with_section).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_e_add_remove).setOnClickListener(this);
-        view.findViewById(R.id.button_launch_demo_d_grid).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_e_already_expanded).setOnClickListener(this);
     }
 
     @Override
@@ -93,8 +93,8 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
             case R.id.button_launch_demo_e_add_remove:
                 launchExampleActivity(AddRemoveExpandableExampleActivity.class);
                 break;
-            case R.id.button_launch_demo_d_grid:
-                launchExampleActivity(DraggableGridExampleActivity.class);
+            case R.id.button_launch_demo_e_already_expanded:
+                launchExampleActivity(AlreadyExpandedGroupsExpandableExampleActivity.class);
                 break;
         }
     }

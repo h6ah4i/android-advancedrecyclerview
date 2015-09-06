@@ -77,8 +77,8 @@
             android:label="@string/activity_title_demo_e_add_remove" />
 
         <activity
-            android:name=".demo_d_grid.DraggableGridExampleActivity"
-            android:label="@string/activity_title_demo_d_grid" />
+            android:name=".demo_e_already_expanded.AlreadyExpandedGroupsExpandableExampleActivity"
+            android:label="@string/activity_title_demo_e_already_expanded" />
 
         <activity
             android:name=".about.AboutActivity"
