@@ -92,9 +92,9 @@ public class DraggableSwipeableExampleActivity extends AppCompatActivity impleme
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
         AbstractDataProvider.Data data = getDataProvider().getItem(position);
 
-        if (data.isPinnedToSwipeLeft()) {
+        if (data.isPinned()) {
             // unpin if tapped the pinned item
-            data.setPinnedToSwipeLeft(false);
+            data.setPinned(false);
             ((RecyclerListViewFragment) fragment).notifyItemChanged(position);
         }
     }
@@ -112,7 +112,7 @@ public class DraggableSwipeableExampleActivity extends AppCompatActivity impleme
     public void onNotifyItemPinnedDialogDismissed(int itemPosition, boolean ok) {
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
 
-        getDataProvider().getItem(itemPosition).setPinnedToSwipeLeft(ok);
+        getDataProvider().getItem(itemPosition).setPinned(ok);
         ((RecyclerListViewFragment) fragment).notifyItemChanged(itemPosition);
     }
 

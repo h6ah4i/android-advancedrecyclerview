@@ -32,9 +32,15 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
      *         - {@link RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_LEFT}
      *         - {@link RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT}
      *         - {@link RecyclerViewSwipeManager#REACTION_CAN_SWIPE_LEFT}
+     *         - {@link RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_UP}
+     *         - {@link RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_UP_WITH_RUBBER_BAND_EFFECT}
+     *         - {@link RecyclerViewSwipeManager#REACTION_CAN_SWIPE_UP}
      *         - {@link RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_RIGHT}
      *         - {@link RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT}
      *         - {@link RecyclerViewSwipeManager#REACTION_CAN_SWIPE_RIGHT}
+     *         - {@link RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_DOWN}
+     *         - {@link RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_DOWN_WITH_RUBBER_BAND_EFFECT}
+     *         - {@link RecyclerViewSwipeManager#REACTION_CAN_SWIPE_DOWN}
      */
     int onGetSwipeReactionType(T holder, int position, int x, int y);
 
@@ -45,8 +51,10 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
      * @param position The position of the item within the adapter's data set.
      * @param type Background type. One of the
      *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_NEUTRAL_BACKGROUND},
-     *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_LEFT_BACKGROUND} or
-     *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_RIGHT_BACKGROUND}.
+     *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_LEFT_BACKGROUND},
+     *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_UP_BACKGROUND},
+     *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_RIGHT_BACKGROUND} or
+     *          {@link RecyclerViewSwipeManager#DRAWABLE_SWIPE_DOWN_BACKGROUND}.
      */
     void onSetSwipeBackground(T holder, int position, int type);
 
@@ -59,8 +67,10 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
      * @param position The position of the item within the adapter's data set.
      * @param result The result code of user's swipe operation.
      *              {@link RecyclerViewSwipeManager#RESULT_CANCELED},
-     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_LEFT} or
-     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT}
+     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_LEFT},
+     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_UP},
+     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT} or
+     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      *
      * @return Reaction type of after swiping.
      *          One of the {@link RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT},
@@ -78,8 +88,10 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
      * @param position The position of the item within the adapter's data set.
      * @param result The result code of user's swipe operation.
      *              {@link RecyclerViewSwipeManager#RESULT_CANCELED},
-     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_LEFT} or
-     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT}
+     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_LEFT},
+     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_UP},
+     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT} or
+     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      * @param reaction Reaction type. One of the {@link RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT},
      *              {@link RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION} or
      *              {@link RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_REMOVE_ITEM}.

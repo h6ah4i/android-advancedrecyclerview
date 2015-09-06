@@ -50,7 +50,9 @@ public interface SwipeableItemViewHolder {
      * @param result Result code. One of these values;
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_NONE}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_UP}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_CANCELED}
      */
     void setSwipeResult(int result);
@@ -61,7 +63,9 @@ public interface SwipeableItemViewHolder {
      * @return Result code. One of these values;
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_NONE}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_UP}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_CANCELED}
      */
     int getSwipeResult();
@@ -87,25 +91,43 @@ public interface SwipeableItemViewHolder {
     int getAfterSwipeReaction();
 
     /**
-     * Sets the item swipe amount.
+     * Sets the amount of horizontal swipe.
      *
      * @param amount Item swipe amount. Generally the range is [-1.0 .. 1.0], but these special values can be accepted;
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#OUTSIDE_OF_THE_WINDOW_LEFT}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#OUTSIDE_OF_THE_WINDOW_RIGHT}
      */
-    void setSwipeItemSlideAmount(float amount);
+    void setSwipeItemHorizontalSlideAmount(float amount);
 
     /**
-     * Gets the item swipe amount.
+     * Gets the amount of horizontal swipe.
      *
      * @return Item swipe amount. Generally the range is [-1.0 .. 1.0], but these special values may be returned;
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#OUTSIDE_OF_THE_WINDOW_LEFT}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#OUTSIDE_OF_THE_WINDOW_RIGHT}
      */
-    float getSwipeItemSlideAmount();
+    float getSwipeItemHorizontalSlideAmount();
 
     /**
-     * Sets the maximum item right swipe amount.
+     * Sets the amount of vertical swipe.
+     *
+     * @param amount Item swipe amount. Generally the range is [-1.0 .. 1.0], but these special values can be accepted;
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#OUTSIDE_OF_THE_WINDOW_UP}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#OUTSIDE_OF_THE_WINDOW_DOWN}
+     */
+    void setSwipeItemVerticalSlideAmount(float amount);
+
+    /**
+     * Gets the amount of vertical swipe.
+     *
+     * @return Item swipe amount. Generally the range is [-1.0 .. 1.0], but these special values may be returned;
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#OUTSIDE_OF_THE_WINDOW_UP}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#OUTSIDE_OF_THE_WINDOW_DOWN}
+     */
+    float getSwipeItemVerticalSlideAmount();
+
+    /**
+     * Sets the maximum item left swipe amount.
      *
      * @param amount Item swipe amount. Generally the range is [-1.0 .. 1.0]
      */
@@ -117,6 +139,20 @@ public interface SwipeableItemViewHolder {
      * @return Item swipe amount. Generally the range is [-1.0 .. 1.0]
      */
     float getMaxLeftSwipeAmount();
+
+    /**
+     * Sets the maximum item up swipe amount.
+     *
+     * @param amount Item swipe amount. Generally the range is [-1.0 .. 1.0]
+     */
+    void setMaxUpSwipeAmount(float amount);
+
+    /**
+     * Gets the maximum item up swipe amount.
+     *
+     * @return Item swipe amount. Generally the range is [-1.0 .. 1.0]
+     */
+    float getMaxUpSwipeAmount();
 
     /**
      * Sets the maximum item right swipe amount.
@@ -131,6 +167,20 @@ public interface SwipeableItemViewHolder {
      * @return Item swipe amount. Generally the range is [-1.0 .. 1.0]
      */
     float getMaxRightSwipeAmount();
+
+    /**
+     * Sets the maximum item down swipe amount.
+     *
+     * @param amount Item swipe amount. Generally the range is [-1.0 .. 1.0]
+     */
+    void setMaxDownSwipeAmount(float amount);
+
+    /**
+     * Gets the maximum item down swipe amount.
+     *
+     * @return Item swipe amount. Generally the range is [-1.0 .. 1.0]
+     */
+    float getMaxDownSwipeAmount();
 
     /**
      * Gets the container view for the swipeable area.

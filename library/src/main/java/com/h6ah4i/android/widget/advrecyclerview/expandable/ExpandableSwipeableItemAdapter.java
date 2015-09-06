@@ -31,9 +31,15 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_LEFT}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_SWIPE_LEFT}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_UP}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_UP_WITH_RUBBER_BAND_EFFECT}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_SWIPE_UP}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_RIGHT}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_SWIPE_RIGHT}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_DOWN}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_DOWN_WITH_RUBBER_BAND_EFFECT}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_SWIPE_DOWN}
      */
     int onGetGroupItemSwipeReactionType(GVH holder, int groupPosition, int x, int y);
 
@@ -50,9 +56,15 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_LEFT}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_SWIPE_LEFT}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_UP}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_UP_WITH_RUBBER_BAND_EFFECT}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_SWIPE_UP}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_RIGHT}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT}
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_SWIPE_RIGHT}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_DOWN}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_NOT_SWIPE_DOWN_WITH_RUBBER_BAND_EFFECT}
+     *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#REACTION_CAN_SWIPE_DOWN}
      */
     int onGetChildItemSwipeReactionType(CVH holder, int groupPosition, int childPosition, int x, int y);
 
@@ -63,8 +75,10 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      * @param groupPosition Group position.
      * @param type Background type. One of the
      *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_NEUTRAL_BACKGROUND},
-     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_LEFT_BACKGROUND} or
-     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_RIGHT_BACKGROUND}.
+     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_LEFT_BACKGROUND},
+     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_UP_BACKGROUND},
+     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_RIGHT_BACKGROUND} or
+     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_DOWN_BACKGROUND}.
      */
     void onSetGroupItemSwipeBackground(GVH holder, int groupPosition, int type);
 
@@ -77,8 +91,10 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      * @param childPosition Child position.
      * @param type Background type. One of the
      *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_NEUTRAL_BACKGROUND},
-     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_LEFT_BACKGROUND} or
-     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_RIGHT_BACKGROUND}.
+     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_LEFT_BACKGROUND},
+     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_UP_BACKGROUND},
+     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_RIGHT_BACKGROUND} or
+     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#DRAWABLE_SWIPE_DOWN_BACKGROUND}.
      */
     void onSetChildItemSwipeBackground(CVH holder, int groupPosition, int childPosition, int type);
 
@@ -91,8 +107,10 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      * @param groupPosition Group position.
      * @param result The result code of user's swipe operation.
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_CANCELED},
-     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT} or
-     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT}
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT},
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_UP},
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT} or
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      *
      * @return Reaction type of after swiping.
      *          One of the {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT},
@@ -111,8 +129,10 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      * @param childPosition Child position.
      * @param result The result code of user's swipe operation.
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_CANCELED},
-     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT} or
-     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT}
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT},
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_UP},
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT} or
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      *
      * @return Reaction type of after swiping.
      *          One of the {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT},
@@ -130,8 +150,10 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      * @param groupPosition Group position.
      * @param result The result code of user's swipe operation.
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_CANCELED},
-     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT} or
-     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT}
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT},
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_UP},
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT} or
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      * @param reaction Reaction type. One of the {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT},
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION} or
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_REMOVE_ITEM}.
@@ -149,8 +171,10 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      * @param childPosition Child position.
      * @param result The result code of user's swipe operation.
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_CANCELED},
-     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT} or
-     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT}
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_LEFT},
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_UP},
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT} or
+     *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      * @param reaction Reaction type. One of the {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT},
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION} or
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_REMOVE_ITEM}.

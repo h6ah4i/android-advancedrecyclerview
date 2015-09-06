@@ -14,10 +14,11 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_us;
+package com.h6ah4i.android.example.advrecyclerview.demo_s_vertical;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,10 +27,10 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataProviderFragment;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ItemPinnedMessageDialogFragment;
+import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.RecyclerListViewFragment;
 
 
-
-public class UnderSwipeableExampleActivity extends AppCompatActivity implements ItemPinnedMessageDialogFragment.EventListener {
+public class VerticalSwipeableExampleActivity extends AppCompatActivity implements ItemPinnedMessageDialogFragment.EventListener {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     private static final String FRAGMENT_LIST_VIEW = "list view";
     private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";
@@ -76,6 +77,12 @@ public class UnderSwipeableExampleActivity extends AppCompatActivity implements 
      * @param position The position of the item within data set
      */
     public void onItemPinned(int position) {
+        final DialogFragment dialog = ItemPinnedMessageDialogFragment.newInstance(position);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(dialog, FRAGMENT_TAG_ITEM_PINNED_DIALOG)
+                .commit();
     }
 
     /**
@@ -92,21 +99,6 @@ public class UnderSwipeableExampleActivity extends AppCompatActivity implements 
             data.setPinned(false);
             ((RecyclerListViewFragment) fragment).notifyItemChanged(position);
         }
-    }
-    /**
-     * This method will be called when a "button placed under the swipeable view" is clicked
-     *
-     * @param position The position of the item within data set
-     */
-    public void onItemButtonClicked(int position) {
-        String text = getString(R.string.snack_bar_text_button_clicked, position);
-
-        Snackbar snackbar = Snackbar.make(
-                findViewById(R.id.container),
-                text,
-                Snackbar.LENGTH_SHORT);
-
-        snackbar.show();
     }
 
     private void onItemUndoActionClicked() {

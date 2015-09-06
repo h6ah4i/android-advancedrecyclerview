@@ -238,7 +238,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
 
         // set swiping properties
         holder.setSwipeItemSlideAmount(
-                item.isPinnedToSwipeLeft() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
     }
 
     @Override
@@ -282,13 +282,13 @@ public class MyExpandableDraggableSwipeableItemAdapter
 
         // set swiping properties
         holder.setSwipeItemSlideAmount(
-                item.isPinnedToSwipeLeft() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
     }
 
     @Override
     public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
         // check the item is *not* pinned
-        if (mProvider.getGroupItem(groupPosition).isPinnedToSwipeLeft()) {
+        if (mProvider.getGroupItem(groupPosition).isPinned()) {
             // return false to raise View.OnClickListener#onClick() event
             return false;
         }
@@ -356,19 +356,19 @@ public class MyExpandableDraggableSwipeableItemAdapter
     @Override
     public int onGetGroupItemSwipeReactionType(MyGroupViewHolder holder, int groupPosition, int x, int y) {
         if (onCheckGroupCanStartDrag(holder, groupPosition, x, y)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
+            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH_H;
         }
 
-        return mProvider.getGroupItem(groupPosition).getSwipeReactionType();
+        return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_H;
     }
 
     @Override
     public int onGetChildItemSwipeReactionType(MyChildViewHolder holder, int groupPosition, int childPosition, int x, int y) {
         if (onCheckChildCanStartDrag(holder, groupPosition, childPosition, x, y)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
+            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH_H;
         }
 
-        return mProvider.getChildItem(groupPosition, childPosition).getSwipeReactionType();
+        return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_H;
     }
 
     @Override
@@ -414,7 +414,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
         switch (result) {
             // swipe right
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                if (mProvider.getGroupItem(groupPosition).isPinnedToSwipeLeft()) {
+                if (mProvider.getGroupItem(groupPosition).isPinned()) {
                     // pinned --- back to default position
                     return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
                 } else {
@@ -438,7 +438,7 @@ public class MyExpandableDraggableSwipeableItemAdapter
         switch (result) {
             // swipe right
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                if (mProvider.getChildItem(groupPosition, childPosition).isPinnedToSwipeLeft()) {
+                if (mProvider.getChildItem(groupPosition, childPosition).isPinned()) {
                     // pinned --- back to default position
                     return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
                 } else {
@@ -471,14 +471,14 @@ public class MyExpandableDraggableSwipeableItemAdapter
                 mEventListener.onGroupItemRemoved(groupPosition);
             }
         } else if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) {
-            item.setPinnedToSwipeLeft(true);
+            item.setPinned(true);
             notifyItemChanged(flatPosition);
 
             if (mEventListener != null) {
                 mEventListener.onGroupItemPinned(groupPosition);
             }
         } else {
-            item.setPinnedToSwipeLeft(false);
+            item.setPinned(false);
         }
     }
 
@@ -499,14 +499,14 @@ public class MyExpandableDraggableSwipeableItemAdapter
                 mEventListener.onChildItemRemoved(groupPosition, childPosition);
             }
         } else if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) {
-            item.setPinnedToSwipeLeft(true);
+            item.setPinned(true);
             notifyItemChanged(flatPosition);
 
             if (mEventListener != null) {
                 mEventListener.onChildItemPinned(groupPosition, childPosition);
             }
         } else {
-            item.setPinnedToSwipeLeft(false);
+            item.setPinned(false);
         }
     }
 
