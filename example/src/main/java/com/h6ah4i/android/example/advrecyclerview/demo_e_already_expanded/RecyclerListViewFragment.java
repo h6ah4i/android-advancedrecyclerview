@@ -72,7 +72,6 @@ public class RecyclerListViewFragment extends Fragment {
         mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
 
         //adapter
-        getDataProvider();
         final MyExpandableItemAdapter myItemAdapter = new MyExpandableItemAdapter(mRecyclerViewExpandableItemManager, getDataProvider());
 
         mAdapter = myItemAdapter;
