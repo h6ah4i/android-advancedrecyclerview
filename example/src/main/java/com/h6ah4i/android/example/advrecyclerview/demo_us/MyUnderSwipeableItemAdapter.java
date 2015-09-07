@@ -33,7 +33,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
-public class MyUnderSwipeableItemAdapter
+class MyUnderSwipeableItemAdapter
         extends RecyclerView.Adapter<MyUnderSwipeableItemAdapter.MyViewHolder>
         implements SwipeableItemAdapter<MyUnderSwipeableItemAdapter.MyViewHolder> {
     private static final String TAG = "MySwipeableItemAdapter";

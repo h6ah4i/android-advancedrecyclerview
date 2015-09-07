@@ -37,7 +37,7 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandab
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 
-public class MyExpandableDraggableWithSectionItemAdapter
+class MyExpandableDraggableWithSectionItemAdapter
         extends AbstractExpandableItemAdapter<MyExpandableDraggableWithSectionItemAdapter.MyGroupViewHolder, MyExpandableDraggableWithSectionItemAdapter.MyChildViewHolder>
         implements ExpandableDraggableItemAdapter<MyExpandableDraggableWithSectionItemAdapter.MyGroupViewHolder, MyExpandableDraggableWithSectionItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyEDWithSectionAdapter";

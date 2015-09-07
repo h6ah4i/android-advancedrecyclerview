@@ -31,7 +31,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
-public class MySwipeableItemAdapter
+class MySwipeableItemAdapter
         extends RecyclerView.Adapter<MySwipeableItemAdapter.MyViewHolder>
         implements SwipeableItemAdapter<MySwipeableItemAdapter.MyViewHolder> {
     private static final String TAG = "MySwipeableItemAdapter";

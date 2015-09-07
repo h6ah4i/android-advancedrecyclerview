@@ -31,7 +31,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAda
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
-public class MyAddRemoveExpandableItemAdapter
+class MyAddRemoveExpandableItemAdapter
         extends AbstractExpandableItemAdapter<MyAddRemoveExpandableItemAdapter.MyGroupViewHolder, MyAddRemoveExpandableItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyExpandableItemAdapter";
 

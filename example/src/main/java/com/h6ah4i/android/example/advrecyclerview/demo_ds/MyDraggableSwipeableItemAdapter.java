@@ -37,7 +37,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
-public class MyDraggableSwipeableItemAdapter
+class MyDraggableSwipeableItemAdapter
         extends RecyclerView.Adapter<MyDraggableSwipeableItemAdapter.MyViewHolder>
         implements DraggableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder>,
         SwipeableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder> {

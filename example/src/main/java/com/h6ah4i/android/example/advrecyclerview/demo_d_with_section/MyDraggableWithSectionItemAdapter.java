@@ -35,7 +35,7 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 
-public class MyDraggableWithSectionItemAdapter
+class MyDraggableWithSectionItemAdapter
         extends RecyclerView.Adapter<MyDraggableWithSectionItemAdapter.MyViewHolder>
         implements DraggableItemAdapter<MyDraggableWithSectionItemAdapter.MyViewHolder> {
     private static final String TAG = "MyDragSectionAdapter";
