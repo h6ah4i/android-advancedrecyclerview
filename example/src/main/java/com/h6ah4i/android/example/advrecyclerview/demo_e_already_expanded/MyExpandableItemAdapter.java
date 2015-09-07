@@ -137,6 +137,7 @@ class MyExpandableItemAdapter
         if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
             boolean isExpanded;
+            boolean animateIndicator = ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
 
             if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
@@ -147,7 +148,7 @@ class MyExpandableItemAdapter
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
-            holder.mIndicator.setExpandedState(isExpanded, true);
+            holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
         } else {
             Log.d("TAG", "teste");
         }

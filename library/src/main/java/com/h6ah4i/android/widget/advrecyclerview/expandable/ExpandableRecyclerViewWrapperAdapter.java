@@ -194,12 +194,21 @@ class ExpandableRecyclerViewWrapperAdapter
 
     private void rebuildPositionTranslator() {
         if (mPositionTranslator != null) {
-            int [] savedState = mPositionTranslator.getSavedStateArray();
+            int[] savedState = mPositionTranslator.getSavedStateArray();
             mPositionTranslator.build(mExpandableItemAdapter, false);
 
             // NOTE: do not call hook routines and listener methods
             mPositionTranslator.restoreExpandedGroupItems(savedState, null, null, null);
         }
+    }
+
+    @Override
+    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        if (holder instanceof ExpandableItemViewHolder) {
+            ((ExpandableItemViewHolder) holder).setExpandStateFlags(STATE_FLAG_INITIAL_VALUE);
+        }
+
+        super.onViewRecycled(holder);
     }
 
     @Override
@@ -356,7 +365,7 @@ class ExpandableRecyclerViewWrapperAdapter
                 mDraggingItemChildRangeEnd = childEnd;
 
                 return new ItemDraggableRange(start, end);
-            }  else {
+            } else {
                 throw new IllegalStateException("Invalid range specified: " + range);
             }
         }
@@ -899,6 +908,11 @@ class ExpandableRecyclerViewWrapperAdapter
         final int curFlags = holder2.getExpandStateFlags();
         final int mask = ~RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED;
 
+        // append HAS_EXPANDED_STATE_CHANGED flag
+        if ((curFlags != STATE_FLAG_INITIAL_VALUE) && (((curFlags ^ flags) & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0)) {
+            flags |= RecyclerViewExpandableItemManager.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED;
+        }
+
         // append UPDATED flag
         if ((curFlags == STATE_FLAG_INITIAL_VALUE) || (((curFlags ^ flags) & mask) != 0)) {
             flags |= RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED;
@@ -916,16 +930,16 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final boolean groupRangeSpecified =
                 (mDraggingItemGroupRangeStart != RecyclerView.NO_POSITION) &&
-                (mDraggingItemGroupRangeEnd != RecyclerView.NO_POSITION);
+                        (mDraggingItemGroupRangeEnd != RecyclerView.NO_POSITION);
         final boolean childRangeSpecified =
                 (mDraggingItemChildRangeStart != RecyclerView.NO_POSITION) &&
-                (mDraggingItemChildRangeEnd != RecyclerView.NO_POSITION);
+                        (mDraggingItemChildRangeEnd != RecyclerView.NO_POSITION);
         final boolean isInGroupRange =
-                        (groupPosition >= mDraggingItemGroupRangeStart) &&
+                (groupPosition >= mDraggingItemGroupRangeStart) &&
                         (groupPosition <= mDraggingItemGroupRangeEnd);
         final boolean isInChildRange =
                 (groupPosition != RecyclerView.NO_POSITION) &&
-                (childPosition >= mDraggingItemChildRangeStart) &&
+                        (childPosition >= mDraggingItemChildRangeStart) &&
                         (childPosition <= mDraggingItemChildRangeEnd);
 
         final int flags = holder2.getDragStateFlags();

@@ -191,6 +191,7 @@ class MyExpandableDraggableWithSectionItemAdapter
                 ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
             boolean isExpanded;
+            boolean animateIndicator = ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
 
             if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_group_item_dragging_active_state;
@@ -213,7 +214,7 @@ class MyExpandableDraggableWithSectionItemAdapter
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
-            holder.mIndicator.setExpandedState(isExpanded, true);
+            holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
         }
     }
 

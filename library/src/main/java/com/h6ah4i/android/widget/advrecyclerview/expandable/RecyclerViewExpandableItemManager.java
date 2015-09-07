@@ -55,17 +55,21 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * State flag for the {@link ExpandableItemViewHolder#setExpandStateFlags(int)} and {@link ExpandableItemViewHolder#getExpandStateFlags()} methods.
-     * Indicates that this is a group item.
+     * Indicates that this is an expanded group item.
      */
     public static final int STATE_FLAG_IS_EXPANDED = (1 << 2);
+
+    /**
+     * State flag for the {@link ExpandableItemViewHolder#setExpandStateFlags(int)} and {@link ExpandableItemViewHolder#getExpandStateFlags()} methods.
+     * If this flag is set, the {@link #STATE_FLAG_IS_EXPANDED} flag has changed.
+     */
+    public static final int STATE_FLAG_HAS_EXPANDED_STATE_CHANGED = (1 << 3);
 
     /**
      * State flag for the {@link ExpandableItemViewHolder#setExpandStateFlags(int)} and {@link ExpandableItemViewHolder#getExpandStateFlags()} methods.
      * If this flag is set, some other flags are changed and require to apply.
      */
     public static final int STATE_FLAG_IS_UPDATED = (1 << 31);
-
-
     // ---
 
     /**
