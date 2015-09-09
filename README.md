@@ -43,7 +43,42 @@ This library is published on jCenter. Just add these lines to `build.gradle`.
 
 ```groovy
 dependencies {
-    compile 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.7.4'
+    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.7.4@aar'){
+        transitive=true
+    }
+}
+```
+
+---
+
+*This library is provided as the **AAR** format.
+The source jar file won't be downloaded automatically (due to the current Gradle and Anndroid Studio limitation), so javadoc comments are not displayed on IDE.*
+
+**Here is a workaround thanks to the superb [AARLinkSources](https://github.com/xujiaao/AARLinkSources) Gradle plugin !**
+
+```groovy
+buildscript {
+    repositories {
+        maven { url 'https://raw.github.com/xujiaao/mvn-repository/master/releases' }
+    }
+
+    dependencies {
+        classpath 'com.github.xujiaao:aarLinkSources:1.0.0'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'aar-link-sources'
+
+android {
+    ...
+}
+
+dependencies {
+    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.7.4@aar'){
+        transitive=true
+    }
+    aarLinkSources 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.7.4:sources@jar'
 }
 ```
 
