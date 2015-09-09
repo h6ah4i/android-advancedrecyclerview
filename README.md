@@ -51,7 +51,7 @@ dependencies {
 
 ---
 
-*This library is provided as the **AAR** format.
+*This library is provided as the AAR format.
 The source jar file won't be downloaded automatically (due to the current Gradle and Anndroid Studio limitation), so javadoc comments are not displayed on IDE.*
 
 **Here is a workaround thanks to the superb [AARLinkSources](https://github.com/xujiaao/AARLinkSources) Gradle plugin !**
