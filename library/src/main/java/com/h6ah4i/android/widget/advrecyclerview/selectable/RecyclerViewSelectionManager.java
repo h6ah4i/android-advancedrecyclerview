@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.selectable;
 
-import android.graphics.Rect;
 import android.os.Build;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
@@ -27,6 +26,8 @@ import android.view.ViewConfiguration;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
+
+import java.util.List;
 
 /**
  * Provides item selection operation for {@link android.support.v7.widget.RecyclerView}
@@ -215,7 +216,7 @@ public class RecyclerViewSelectionManager {
         final int viewX = touchX - (view.getLeft() + translateX);
         final int viewY = touchY - (view.getTop() + translateY);
 
-        mAdapter.tapSelection(holder);
+        mAdapter.toggleSelection(holder);
 
         return false;
     }
@@ -226,5 +227,74 @@ public class RecyclerViewSelectionManager {
 
     private static boolean supportsViewPropertyAnimator() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+
+    public int getChoiceMode() {
+        return getSelectableItemWrapperAdapter(mRecyclerView).getChoiceMode();
+    }
+
+    /**
+     * <p>Toggle whether this MultiSelector is in selection mode or not.
+     * {@link com.h6ah4i.android.widget.advrecyclerview.selectable.SelectableItemViewHolder#setSelectable(boolean)}
+     * will be called on any attached holders as well.</p>
+     *
+     * @param choiceMode
+     */
+    public void setChoiceMode(int choiceMode) {
+        getSelectableItemWrapperAdapter(mRecyclerView).setChoiceMode(choiceMode);
+    }
+
+    /**
+     *
+     * @param holder     Holder to set selection value for.
+     * @param isSelected Whether the item should be selected.
+     */
+    public void setSelected(RecyclerView.ViewHolder holder, boolean isSelected) {
+        getSelectableItemWrapperAdapter(mRecyclerView).setSelected(holder, isSelected);
+    }
+
+    public void setSelected(int position, boolean isSelected) {
+        getSelectableItemWrapperAdapter(mRecyclerView).setSelected(position, isSelected);
+    }
+
+    public boolean isSelected(RecyclerView.ViewHolder holder) {
+        return getSelectableItemWrapperAdapter(mRecyclerView).isSelected(holder);
+    }
+    public boolean isSelected(int position) {
+        return getSelectableItemWrapperAdapter(mRecyclerView).isSelected(position);
+    }
+
+    public void toggleSelection(int position) {
+        getSelectableItemWrapperAdapter(mRecyclerView).toggleSelection(position);
+    }
+
+    public void toggleSelection(RecyclerView.ViewHolder holder) {
+        getSelectableItemWrapperAdapter(mRecyclerView).toggleSelection(holder);
+    }
+
+    /**
+     * <p>Sets selected to false for all positions. Will refresh
+     * all bound holders.</p>
+     */
+    public void clearSelections() {
+        getSelectableItemWrapperAdapter(mRecyclerView).clearSelections();
+    }
+
+    /**
+     * <p>Return a list of selected positions.</p>
+     *
+     * @return A list of the currently selected positions.
+     */
+    public List<Integer> getSelectedPositions() {
+        return getSelectableItemWrapperAdapter(mRecyclerView).getSelectedPositions();
+    }
+    /**
+     * <p>Return a list of selected positions.</p>
+     *
+     * @return A list of the currently selected positions.
+     */
+    public List<Object> getSelectedItems() {
+        return getSelectableItemWrapperAdapter(mRecyclerView).getSelectedItems();
     }
 }

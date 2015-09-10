@@ -20,10 +20,12 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.ViewGroup;
+import android.widget.Checkable;
 import android.widget.ListView;
 
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.ArrayList;
@@ -47,18 +49,16 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
     private int mChoiceMode = ListView.CHOICE_MODE_SINGLE;
 
     public boolean isSelectable(int position) {
-
         VH holder = mTracker.getHolder(position);
+        return isSelectable(holder);
+    }
 
+    public boolean isSelectable(VH holder) {
         if (holder instanceof SelectableItemViewHolder) {
             return isSelectable() && ((SelectableItemViewHolder)holder).isSelectable();
         } else {
             return false;
         }
-    }
-
-    public boolean isSelectable(VH holder) {
-        return isSelectable(holder.getPosition());
     }
 
     public int getChoiceMode() {
@@ -80,11 +80,36 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
 
     /**
      *
+     * @param position
+     * @param isSelected Whether the item should be selected.
+     */
+    public void setSelected(int position, boolean isSelected) {
+        VH holder = mTracker.getHolder(position);
+        if (holder !=null) {
+            setSelected(holder, isSelected);
+        } else {
+            if (mChoiceMode == ListView.CHOICE_MODE_SINGLE) {
+                for (int i = 0; i < mSelections.size(); i++) {
+                    if (mSelections.valueAt(i)) {
+                        mSelections.put(i, false);
+                        notifyItemChanged(i);
+                    }
+                }
+                mSelections.clear();
+            }
+            mSelections.put(position,isSelected);
+
+            notifyItemChanged(position);
+        }
+
+    }
+
+    /**
+     *
      * @param holder     Holder to set selection value for.
      * @param isSelected Whether the item should be selected.
      */
     public void setSelected(VH holder, boolean isSelected) {
-
         if (mChoiceMode == ListView.CHOICE_MODE_SINGLE) {
             for (SelectableItemViewHolder selectedViewHolder : getSelectedViewHolders()) {
                 if (selectedViewHolder.getPosition() != holder.getPosition()) {
@@ -105,14 +130,15 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
         mSelectableItemAdapter.onItemSelected(holder, isSelected);
     }
 
+
+
     /**
      * <p>Returns whether a particular item is selected.</p>
      *
      * @param position The position to test selection for.
-     * @param id       Item id to select/unselect. Ignored in this implementation.
      * @return Whether the item is selected.
      */
-    public boolean isSelected(int position, long id) {
+    public boolean isSelected(int position) {
         return mSelections.get(position);
     }
 
@@ -123,7 +149,7 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
      * @return Whether the item is selected.
      */
     public boolean isSelected(VH holder) {
-        return isSelected(holder.getPosition(), holder.getItemId());
+        return isSelected(holder.getPosition());
     }
 
     /**
@@ -150,6 +176,23 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
         }
 
         return positions;
+    }
+
+    /**
+     * <p>Return a list of selected items.</p>
+     *
+     * @return A list of the currently selected items.
+     */
+    public List<Object> getSelectedItems() {
+        List<Object> items = new ArrayList<Object>();
+
+        for (int i = 0; i < mSelections.size(); i++) {
+            if (mSelections.valueAt(i)) {
+                items.add(mSelectableItemAdapter.getItem(mSelections.keyAt(i)));
+            }
+        }
+
+        return items;
     }
 
     /**
@@ -210,15 +253,27 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
      *
      * @return True if the item was toggled.
      */
-    public boolean tapSelection(VH holder) {
-
+    public boolean toggleSelection(VH holder) {
         if (isSelectable(holder)) {
             setSelected(holder, !isSelected(holder));
             return true;
         } else {
             return false;
         }
+    }
 
+    public boolean toggleSelection(int position) {
+        VH holder = mTracker.getHolder(position);
+        if (holder!=null) {
+            return toggleSelection(holder);
+        } else {
+            if (isSelectable(position)) {
+                setSelected(position, !isSelected(position));
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     private boolean isSelectable() {
@@ -238,15 +293,27 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
 
         if (holder instanceof  SelectableItemViewHolder) {
 
-            SelectableItemViewHolder holder1 = (SelectableItemViewHolder) holder;
-            holder1.setSelectable(isSelectable());
+            SelectableItemViewHolder selectableHolder = (SelectableItemViewHolder) holder;
+            selectableHolder.setSelectable(isSelectable());
+            if (selectableHolder.isSelectable()) {
+                boolean isActivated = mSelections.get(holder.getPosition());
+                if (isActivated != selectableHolder.isActivated()) {
+                    selectableHolder.setActivated(isActivated);
+                    mSelectableItemAdapter.onItemSelected(holder, selectableHolder.isActivated());
+                }
 
-            boolean isActivated = mSelections.get(holder.getPosition());
-            if (isActivated != holder1.isActivated()) {
-                holder1.setActivated(isActivated);
-                mSelectableItemAdapter.onItemSelected(holder, holder1.isActivated());
+            } else {
+                if (selectableHolder.isActivated()) {
+                    selectableHolder.setActivated(false);
+                    mSelectableItemAdapter.onItemSelected(holder, selectableHolder.isActivated());
+                }
+            }
+            if (holder.itemView instanceof Checkable) {
+                Checkable checkable = (Checkable) holder.itemView;
+                checkable.setChecked(selectableHolder.isActivated());
             }
         }
+
     }
 
 

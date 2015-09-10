@@ -6,4 +6,5 @@ public interface SelectableItemAdapter<T extends RecyclerView.ViewHolder> {
 
     public void onItemSelected(T holder, boolean selected);
 
+    public Object getItem(int position);
 }
