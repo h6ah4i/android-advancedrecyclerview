@@ -266,9 +266,18 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
                 return 0.0f;
             case RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION:
             case RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM:
-                return (result == RecyclerViewSwipeManager.RESULT_SWIPED_LEFT)
-                        ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT
-                        : RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
+                switch (result) {
+                    case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
+                        return RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT;
+                    case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
+                        return RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
+                    case RecyclerViewSwipeManager.RESULT_SWIPED_UP:
+                        return RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_UP;
+                    case RecyclerViewSwipeManager.RESULT_SWIPED_DOWN:
+                        return RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_DOWN;
+                    default:
+                        return 0.0f;
+                }
             default:
                 return 0.0f;
         }
