@@ -20,7 +20,6 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -357,7 +356,7 @@ public class RecyclerViewSwipeManager {
      * and {@link SwipeableItemViewHolder#getSwipeItemVerticalSlideAmount()} methods.
      * Indicates that this item is pinned to UP of the window.
      */
-    public static final float OUTSIDE_OF_THE_WINDOW_UP = -((1 << 16) + 1);
+    public static final float OUTSIDE_OF_THE_WINDOW_TOP = -((1 << 16) + 1);
 
     /**
      * Special value for the {@link SwipeableItemViewHolder#setSwipeItemHorizontalSlideAmount(float)}
@@ -371,7 +370,7 @@ public class RecyclerViewSwipeManager {
      * and {@link SwipeableItemViewHolder#getSwipeItemVerticalSlideAmount()} methods.
      * Indicates that this item is pinned to DOWN the window.
      */
-    public static final float OUTSIDE_OF_THE_WINDOW_DOWN = ((1 << 16) + 1);
+    public static final float OUTSIDE_OF_THE_WINDOW_BOTTOM = ((1 << 16) + 1);
 
 
     // ---
@@ -973,11 +972,11 @@ public class RecyclerViewSwipeManager {
     private void slideItem(RecyclerView.ViewHolder holder, float amount, boolean horizontal, boolean shouldAnimate) {
         if (amount == OUTSIDE_OF_THE_WINDOW_LEFT) {
             mItemSlideAnimator.slideToOutsideOfWindow(holder, ItemSlidingAnimator.DIR_LEFT, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
-        } else if (amount == OUTSIDE_OF_THE_WINDOW_UP) {
+        } else if (amount == OUTSIDE_OF_THE_WINDOW_TOP) {
             mItemSlideAnimator.slideToOutsideOfWindow(holder, ItemSlidingAnimator.DIR_UP, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
         } else if (amount == OUTSIDE_OF_THE_WINDOW_RIGHT) {
             mItemSlideAnimator.slideToOutsideOfWindow(holder, ItemSlidingAnimator.DIR_RIGHT, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
-        } else if (amount == OUTSIDE_OF_THE_WINDOW_DOWN) {
+        } else if (amount == OUTSIDE_OF_THE_WINDOW_BOTTOM) {
             mItemSlideAnimator.slideToOutsideOfWindow(holder, ItemSlidingAnimator.DIR_DOWN, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
         } else if (amount == 0.0f) {
             mItemSlideAnimator.slideToDefaultPosition(holder, horizontal, shouldAnimate, mReturnToDefaultPositionAnimationDuration);

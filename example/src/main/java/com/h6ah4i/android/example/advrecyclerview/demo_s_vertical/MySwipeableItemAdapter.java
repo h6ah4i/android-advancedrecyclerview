@@ -146,7 +146,7 @@ class MySwipeableItemAdapter
 
         // set swiping properties
         holder.setSwipeItemVerticalSlideAmount(
-                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_UP : 0);
+                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_TOP : 0);
     }
 
     @Override
