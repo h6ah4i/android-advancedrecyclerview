@@ -96,6 +96,14 @@ public class RecyclerViewSwipeManager {
      * Reaction type to swipe operation. Used for the return value of the
      * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
      * <p/>
+     * Indicates "can not swipe any direction"
+     */
+    public static final int REACTION_CAN_NOT_SWIPE_ANY = 0;
+
+    /**
+     * Reaction type to swipe operation. Used for the return value of the
+     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
+     * <p/>
      * Indicates "can not swipe left" (completely no reactions)
      */
     public static final int REACTION_CAN_NOT_SWIPE_LEFT = (0 << BIT_SHIFT_AMOUNT_LEFT);
@@ -267,9 +275,9 @@ public class RecyclerViewSwipeManager {
     // ---
 
     /**
-     * @deprecated Use {@link #REACTION_CAN_NOT_SWIPE_BOTH_H} directly.
+     * @deprecated Use {@link #REACTION_CAN_NOT_SWIPE_ANY} directly.
      */
-    public static final int REACTION_CAN_NOT_SWIPE_BOTH = REACTION_CAN_NOT_SWIPE_BOTH_H;
+    public static final int REACTION_CAN_NOT_SWIPE_BOTH = REACTION_CAN_NOT_SWIPE_ANY;
 
     /**
      * @deprecated Use {@link #REACTION_CAN_NOT_SWIPE_BOTH_H_WITH_RUBBER_BAND_EFFECT} directly.
@@ -470,7 +478,6 @@ public class RecyclerViewSwipeManager {
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
             }
         };
-        mItemSlideAnimator = new ItemSlidingAnimator();
         mVelocityTracker = VelocityTracker.obtain();
     }
 
@@ -535,6 +542,7 @@ public class RecyclerViewSwipeManager {
         mMinFlingVelocity = vc.getScaledMinimumFlingVelocity();
         mMaxFlingVelocity = vc.getScaledMaximumFlingVelocity();
 
+        mItemSlideAnimator = new ItemSlidingAnimator(mAdapter);
         mItemSlideAnimator.setImmediatelySetTranslationThreshold(
                 (int) (rv.getResources().getDisplayMetrics().density * SLIDE_ITEM_IMMEDIATELY_SET_TRANSLATION_THRESHOLD_DP + 0.5f));
     }
@@ -1045,7 +1053,7 @@ public class RecyclerViewSwipeManager {
 
     /*package*/ void applySlideItem(
             RecyclerView.ViewHolder holder, int itemPosition,
-            float prevAmount, float amount, boolean horizontal, boolean shouldAnimate) {
+            float prevAmount, float amount, boolean horizontal, boolean shouldAnimate, boolean isSwiping) {
         final SwipeableItemViewHolder holder2 = (SwipeableItemViewHolder) holder;
         final View containerView = holder2.getSwipeableContainerView();
 
@@ -1067,7 +1075,7 @@ public class RecyclerViewSwipeManager {
 
         if (amount == 0.0f) {
             slideItem(holder, amount, horizontal, shouldAnimate);
-            mAdapter.setSwipeBackgroundDrawable(holder, itemPosition, reqBackgroundType);
+            mAdapter.onUpdateSlideAmount(holder, itemPosition, amount, isSwiping, reqBackgroundType);
         } else {
             float adjustedAmount = amount;
             float minLimit = horizontal ? holder2.getMaxLeftSwipeAmount() : holder2.getMaxUpSwipeAmount();
@@ -1076,7 +1084,7 @@ public class RecyclerViewSwipeManager {
             adjustedAmount = Math.max(adjustedAmount, minLimit);
             adjustedAmount = Math.min(adjustedAmount, maxLimit);
 
-            mAdapter.setSwipeBackgroundDrawable(holder, itemPosition, reqBackgroundType);
+            mAdapter.onUpdateSlideAmount(holder, itemPosition, amount, isSwiping, reqBackgroundType);
             slideItem(holder, adjustedAmount, horizontal, shouldAnimate);
         }
     }

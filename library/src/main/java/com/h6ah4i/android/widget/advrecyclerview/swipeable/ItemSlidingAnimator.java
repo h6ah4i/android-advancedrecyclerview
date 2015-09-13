@@ -22,6 +22,7 @@ import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
+import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -44,6 +45,7 @@ public class ItemSlidingAnimator {
     public static final int DIR_RIGHT = 2;
     public static final int DIR_DOWN = 3;
 
+    private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
     private Interpolator mSlideToDefaultPositionAnimationInterpolator = new AccelerateDecelerateInterpolator();
     private Interpolator mSlideToOutsideOfWindowAnimationInterpolator = new AccelerateInterpolator(0.8f);
     private List<RecyclerView.ViewHolder> mActive;
@@ -52,7 +54,8 @@ public class ItemSlidingAnimator {
     private Rect mTmpRect = new Rect();
     private int mImmediatelySetTranslationThreshold;
 
-    public ItemSlidingAnimator() {
+    public ItemSlidingAnimator(SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> adapter) {
+        mAdapter = adapter;
         mActive = new ArrayList<>();
         mDeferredProcesses = new ArrayList<>();
     }
@@ -96,11 +99,11 @@ public class ItemSlidingAnimator {
             if (horizontal && width != 0) {
                 final int translationX;
                 translationX = (int) (width * position + 0.5f);
-                return animateSlideInternalCompat(holder, translationX, 0, duration, defaultInterpolator);
+                return animateSlideInternalCompat(holder, horizontal, translationX, 0, duration, defaultInterpolator);
             } else if (!horizontal && (height != 0)) {
                 final int translationY;
                 translationY = (int) (height * position + 0.5f);
-                return animateSlideInternalCompat(holder, 0, translationY, duration, defaultInterpolator);
+                return animateSlideInternalCompat(holder, horizontal, 0, translationY, duration, defaultInterpolator);
             } else {
                 final DeferredSlideProcess deferredProcess = new DeferredSlideProcess(holder, position, horizontal);
                 mDeferredProcesses.add(new WeakReference<ViewHolderDeferredProcess>(deferredProcess));
@@ -108,7 +111,7 @@ public class ItemSlidingAnimator {
                 return false;
             }
         } else {
-            return animateSlideInternalCompat(holder, 0, 0, duration, defaultInterpolator);
+            return animateSlideInternalCompat(holder, horizontal, 0, 0, duration, defaultInterpolator);
         }
     }
 
@@ -187,27 +190,28 @@ public class ItemSlidingAnimator {
 
         duration = (shouldAnimate) ? duration : 0;
 
-        return animateSlideInternalCompat(holder, translateX, translateY, duration, mSlideToOutsideOfWindowAnimationInterpolator);
+        boolean horizontal = (dir == DIR_LEFT || dir == DIR_RIGHT);
+        return animateSlideInternalCompat(holder, horizontal, translateX, translateY, duration, mSlideToOutsideOfWindowAnimationInterpolator);
     }
 
-    private boolean animateSlideInternalCompat(RecyclerView.ViewHolder holder, int translationX, int translationY, long duration, Interpolator interpolator) {
+    private boolean animateSlideInternalCompat(RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY, long duration, Interpolator interpolator) {
         if (supportsViewPropertyAnimator()) {
-            return animateSlideInternal(holder, translationX, translationY, duration, interpolator);
+            return animateSlideInternal(holder, horizontal, translationX, translationY, duration, interpolator);
         } else {
-            return slideInternalPreHoneycomb(holder, translationX, translationY);
+            return slideInternalPreHoneycomb(holder, horizontal, translationX, translationY);
         }
     }
 
-    static void slideInternalCompat(RecyclerView.ViewHolder holder, int translationX, int translationY) {
+    static void slideInternalCompat(RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY) {
         if (supportsViewPropertyAnimator()) {
-            slideInternal(holder, translationX, translationY);
+            slideInternal(holder, horizontal, translationX, translationY);
         } else {
-            slideInternalPreHoneycomb(holder, translationX, translationY);
+            slideInternalPreHoneycomb(holder, horizontal, translationX, translationY);
         }
     }
 
     @SuppressLint("RtlHardcoded")
-    private static boolean slideInternalPreHoneycomb(RecyclerView.ViewHolder holder, int translationX, int translationY) {
+    private static boolean slideInternalPreHoneycomb(RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY) {
         if (!(holder instanceof SwipeableItemViewHolder)) {
             return false;
         }
@@ -217,12 +221,16 @@ public class ItemSlidingAnimator {
         final ViewGroup.LayoutParams lp = containerView.getLayoutParams();
         if (lp instanceof ViewGroup.MarginLayoutParams) {
             final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
+
             mlp.leftMargin = translationX;
             mlp.rightMargin = -translationX;
+            mlp.topMargin = translationY;
+            mlp.bottomMargin = -translationY;
 
             if (lp instanceof FrameLayout.LayoutParams) {
                 ((FrameLayout.LayoutParams) lp).gravity = Gravity.TOP | Gravity.LEFT;
             }
+
             containerView.setLayoutParams(mlp);
         } else {
             Log.w(TAG, "should use MarginLayoutParams supported view for compatibility on Android 2.3");
@@ -257,7 +265,7 @@ public class ItemSlidingAnimator {
         }
     }
 
-    private static void slideInternal(final RecyclerView.ViewHolder holder, int translationX, int translationY) {
+    private static void slideInternal(final RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY) {
         if (!(holder instanceof SwipeableItemViewHolder)) {
             return;
         }
@@ -268,7 +276,9 @@ public class ItemSlidingAnimator {
         ViewCompat.setTranslationY(containerView, translationY);
     }
 
-    private boolean animateSlideInternal(final RecyclerView.ViewHolder holder, int translationX, int translationY, long duration, Interpolator interpolator) {
+    private boolean animateSlideInternal(
+            RecyclerView.ViewHolder holder, boolean horizontal,
+            int translationX, int translationY, long duration, Interpolator interpolator) {
         if (!(holder instanceof SwipeableItemViewHolder)) {
             return false;
         }
@@ -298,35 +308,10 @@ public class ItemSlidingAnimator {
         ViewCompat.setTranslationX(containerView, prevTranslationX);
         ViewCompat.setTranslationY(containerView, prevTranslationY);
 
-        final ViewPropertyAnimatorCompat animator = ViewCompat.animate(containerView);
+        SlidingAnimatorListenerObject listener = new SlidingAnimatorListenerObject(
+                mAdapter, mActive, holder, toX, toY, duration, horizontal, interpolator);
 
-        animator.setDuration(duration);
-        if (interpolator != null) {
-            animator.setInterpolator(interpolator);
-        }
-        animator.translationX(toX);
-        animator.translationY(toY);
-        animator.setListener(new ViewPropertyAnimatorListener() {
-            @Override
-            public void onAnimationStart(View view) {
-            }
-
-            @Override
-            public void onAnimationEnd(View view) {
-                animator.setListener(null);
-                mActive.remove(holder);
-                ViewCompat.setTranslationX(view, toX);
-                ViewCompat.setTranslationY(view, toY);
-            }
-
-            @Override
-            public void onAnimationCancel(View view) {
-            }
-        });
-
-        mActive.add(holder);
-
-        animator.start();
+        listener.start();
 
         return true;
     }
@@ -435,14 +420,99 @@ public class ItemSlidingAnimator {
                 final int translationX;
 
                 translationX = (int) (width * mPosition + 0.5f);
-                slideInternalCompat(holder, translationX, 0);
+                slideInternalCompat(holder, mHorizontal, translationX, 0);
             } else {
                 final int height = containerView.getHeight();
                 final int translationY;
 
                 translationY = (int) (height * mPosition + 0.5f);
-                slideInternalCompat(holder, 0, translationY);
+                slideInternalCompat(holder, mHorizontal, 0, translationY);
             }
+        }
+    }
+
+    private static class SlidingAnimatorListenerObject
+            implements ViewPropertyAnimatorListener,
+            ViewPropertyAnimatorUpdateListener {
+
+        private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
+        private List<RecyclerView.ViewHolder> mActive;
+        private RecyclerView.ViewHolder mViewHolder;
+        private ViewPropertyAnimatorCompat mAnimator;
+        private final int mToX;
+        private final int mToY;
+        private final long mDuration;
+        private final boolean mHorizontal;
+        private Interpolator mInterpolator;
+        private float mInvSize;
+
+        public SlidingAnimatorListenerObject(
+                SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> adapter,
+                List<RecyclerView.ViewHolder> activeViewHolders,
+                RecyclerView.ViewHolder holder, int toX, int toY, long duration, boolean horizontal, Interpolator interpolator) {
+            mAdapter = adapter;
+            mActive = activeViewHolders;
+            mViewHolder = holder;
+            mToX = toX;
+            mToY = toY;
+            mHorizontal = horizontal;
+            mDuration = duration;
+            mInterpolator = interpolator;
+        }
+
+        private void start() {
+            final View containerView = ((SwipeableItemViewHolder) mViewHolder).getSwipeableContainerView();
+
+            mInvSize = (1.0f / Math.max(1.0f, mHorizontal ? containerView.getWidth() : containerView.getHeight()));
+
+            // setup animator
+            mAnimator = ViewCompat.animate(containerView);
+            mAnimator.setDuration(mDuration);
+            mAnimator.translationX(mToX);
+            mAnimator.translationY(mToY);
+            if (mInterpolator != null) {
+                mAnimator.setInterpolator(mInterpolator);
+            }
+            mAnimator.setListener(this);
+            mAnimator.setUpdateListener(this);
+
+            // start
+            mActive.add(mViewHolder);
+            mAnimator.start();
+        }
+
+        @Override
+        public void onAnimationUpdate(View view) {
+            float translation = mHorizontal ? ViewCompat.getTranslationX(view) : ViewCompat.getTranslationY(view);
+            float amount = translation * mInvSize;
+
+            mAdapter.onUpdateSlideAmount(mViewHolder, mViewHolder.getLayoutPosition(), amount, false);
+        }
+
+        @Override
+        public void onAnimationStart(View view) {
+        }
+
+        @Override
+        public void onAnimationEnd(View view) {
+            mAnimator.setListener(null);
+            mAnimator.setUpdateListener(null);
+
+            ViewCompat.setTranslationX(view, mToX);
+            ViewCompat.setTranslationY(view, mToY);
+
+
+            // clean up
+            mActive.remove(mViewHolder);
+
+            mActive = null;
+            mAnimator = null;
+            mViewHolder = null;
+            mAdapter = null;
+        }
+
+        @Override
+        public void onAnimationCancel(View view) {
         }
     }
 }

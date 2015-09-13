@@ -116,9 +116,13 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         if (holder instanceof SwipeableItemViewHolder) {
             final float swipeItemSlideAmount = getSwipeItemSlideAmount(((SwipeableItemViewHolder) holder), swipeHorizontal());
 
-            if ((prevSwipeItemSlideAmount != swipeItemSlideAmount) ||
-                    !(mSwipeManager.isSwiping() || mSwipeManager.isAnimationRunning(holder))) {
-                mSwipeManager.applySlideItem(holder, position, prevSwipeItemSlideAmount, swipeItemSlideAmount, swipeHorizontal(), true);
+            boolean isSwiping = mSwipeManager.isSwiping();
+            boolean isAnimationRunning = mSwipeManager.isAnimationRunning(holder);
+            if ((prevSwipeItemSlideAmount != swipeItemSlideAmount) || !(isSwiping || isAnimationRunning)) {
+                mSwipeManager.applySlideItem(
+                        holder, position,
+                        prevSwipeItemSlideAmount, swipeItemSlideAmount, swipeHorizontal(),
+                        true, isSwiping);
             }
         }
     }
@@ -188,12 +192,24 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     // NOTE: This method is called from RecyclerViewDragDropManager
     /*package*/
     @SuppressWarnings("unchecked")
-    void setSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int position, int type) {
+    void onUpdateSlideAmount(RecyclerView.ViewHolder holder, int position, float amount, boolean isSwiping, int type) {
         if (LOCAL_LOGV) {
-            Log.v(TAG, "setSwipeBackgroundDrawable(holder = " + holder + ", position = " + position + ", type = " + type + ")");
+            Log.v(TAG, "onUpdateSlideAmount(holder = " + holder + ", position = " + position + ", amount = " + amount + ", isSwiping = " + isSwiping + ", type = " + type + ")");
         }
 
         mSwipeableItemAdapter.onSetSwipeBackground(holder, position, type);
+        mSwipeableItemAdapter.onSwipeSlideAmountUpdated(holder, position, amount, isSwiping);
+    }
+
+    // NOTE: This method is called from ItemSlidingAnimator
+    /*package*/
+    @SuppressWarnings("unchecked")
+    void onUpdateSlideAmount(RecyclerView.ViewHolder holder, int position, float amount, boolean isSwiping) {
+        if (LOCAL_LOGV) {
+            Log.v(TAG, "onUpdateSlideAmount(holder = " + holder + ", position = " + position + ", amount = " + amount + ", isSwiping = " + isSwiping + ")");
+        }
+
+        mSwipeableItemAdapter.onSwipeSlideAmountUpdated(holder, position, amount, isSwiping);
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager

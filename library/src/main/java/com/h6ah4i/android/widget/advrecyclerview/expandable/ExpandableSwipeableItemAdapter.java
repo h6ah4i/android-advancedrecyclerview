@@ -99,6 +99,27 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
     void onSetChildItemSwipeBackground(CVH holder, int groupPosition, int childPosition, int type);
 
     /**
+     * Called when sets background of the swiping group item.
+     *
+     * @param holder The ViewHolder which is associated to the swiping item.
+     * @param groupPosition Group position.
+     * @param amount Slide amount of the item view. (slide left or up: &lt; 0, slide right or down: 0 &gt;)
+     * @param isSwiping Indicates whether the user is swiping the item or not
+     */
+    void onGroupItemSwipeSlideAmountUpdated(GVH holder, int groupPosition, float amount, boolean isSwiping);
+
+    /**
+     * Called when sets background of the swiping child item.
+     *
+     * @param holder The ViewHolder which is associated to the swiping item.
+     * @param groupPosition Group position.
+     * @param childPosition Child position.
+     * @param amount Slide amount of the item view. (slide left or up: &lt; 0, slide right or down: 0 &gt;)
+     * @param isSwiping Indicates whether the user is swiping the item or not
+     */
+    void onChildItemSwipeSlideAmountUpdated(CVH holder, int groupPosition, int childPosition, float amount, boolean isSwiping);
+
+    /**
      * Called when group item is swiped.
      *
      * *Note that do not change data set and do not call notifyDataXXX() methods inside of this method.*

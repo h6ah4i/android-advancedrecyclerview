@@ -150,6 +150,10 @@ class MySwipeableItemAdapter
     }
 
     @Override
+    public void onSwipeSlideAmountUpdated(MyViewHolder holder, int position, float amount, boolean isSwiping) {
+    }
+
+    @Override
     public int getItemCount() {
         return mProvider.getCount();
     }

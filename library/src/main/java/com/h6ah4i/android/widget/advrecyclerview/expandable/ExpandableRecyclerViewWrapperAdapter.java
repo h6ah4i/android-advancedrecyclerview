@@ -504,7 +504,7 @@ class ExpandableRecyclerViewWrapperAdapter
     @Override
     public int onGetSwipeReactionType(RecyclerView.ViewHolder holder, int position, int x, int y) {
         if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
+            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_ANY;
         }
 
         final ExpandableSwipeableItemAdapter adapter = (ExpandableSwipeableItemAdapter) mExpandableItemAdapter;
@@ -539,6 +539,27 @@ class ExpandableRecyclerViewWrapperAdapter
             adapter.onSetGroupItemSwipeBackground(holder, groupPosition, type);
         } else {
             adapter.onSetChildItemSwipeBackground(holder, groupPosition, childPosition, type);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void onSwipeSlideAmountUpdated(RecyclerView.ViewHolder holder, int position, float amount, boolean isSwiping) {
+        if (!(mExpandableItemAdapter instanceof ExpandableSwipeableItemAdapter)) {
+            return;
+        }
+
+        final ExpandableSwipeableItemAdapter adapter = (ExpandableSwipeableItemAdapter) mExpandableItemAdapter;
+
+        final int flatPosition = position;
+        final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
+        final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
+        final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
+
+        if (childPosition == RecyclerView.NO_POSITION) {
+            adapter.onGroupItemSwipeSlideAmountUpdated(holder, groupPosition, amount, isSwiping);
+        } else {
+            adapter.onChildItemSwipeSlideAmountUpdated(holder, groupPosition, childPosition, amount, isSwiping);
         }
     }
 

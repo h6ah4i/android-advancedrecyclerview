@@ -420,6 +420,20 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
     @SuppressWarnings("unchecked")
     @Override
+    public void onSwipeSlideAmountUpdated(VH holder, int position, float amount, boolean isSwiping) {
+        RecyclerView.Adapter adapter = getWrappedAdapter();
+        if (!(adapter instanceof SwipeableItemAdapter)) {
+            return;
+        }
+
+        int correctedPosition = getOriginalPosition(position);
+
+        SwipeableItemAdapter<VH> swipeableItemAdapter = (SwipeableItemAdapter<VH>) adapter;
+        swipeableItemAdapter.onSwipeSlideAmountUpdated(holder, correctedPosition, amount, isSwiping);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public int onSwipeItem(VH holder, int position, int result) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
         if (!(adapter instanceof SwipeableItemAdapter)) {

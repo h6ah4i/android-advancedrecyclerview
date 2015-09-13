@@ -231,6 +231,10 @@ class MyDraggableSwipeableItemAdapter
     }
 
     @Override
+    public void onSwipeSlideAmountUpdated(MyViewHolder holder, int position, float amount, boolean isSwiping) {
+    }
+
+    @Override
     public int onSwipeItem(MyViewHolder holder, int position, int result) {
         Log.d(TAG, "onSwipeItem(result = " + result + ")");
 

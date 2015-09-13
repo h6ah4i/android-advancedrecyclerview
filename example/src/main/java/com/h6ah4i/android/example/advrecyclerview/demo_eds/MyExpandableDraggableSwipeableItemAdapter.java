@@ -409,6 +409,14 @@ class MyExpandableDraggableSwipeableItemAdapter
     }
 
     @Override
+    public void onGroupItemSwipeSlideAmountUpdated(MyGroupViewHolder holder, int groupPosition, float amount, boolean isSwiping) {
+    }
+
+    @Override
+    public void onChildItemSwipeSlideAmountUpdated(MyChildViewHolder holder, int groupPosition, int childPosition, float amount, boolean isSwiping) {
+    }
+
+    @Override
     public int onSwipeGroupItem(MyGroupViewHolder holder, int groupPosition, int result) {
         Log.d(TAG, "onSwipeGroupItem(groupPosition = " + groupPosition + ", result = " + result + ")");
 
