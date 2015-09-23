@@ -29,13 +29,17 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.LegacySwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionRemoveItem;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
 class MyUnderSwipeableItemAdapter
         extends RecyclerView.Adapter<MyUnderSwipeableItemAdapter.MyViewHolder>
-        implements LegacySwipeableItemAdapter<MyUnderSwipeableItemAdapter.MyViewHolder> {
+        implements SwipeableItemAdapter<MyUnderSwipeableItemAdapter.MyViewHolder> {
     private static final String TAG = "MySwipeableItemAdapter";
 
     private AbstractDataProvider mProvider;
@@ -190,38 +194,18 @@ class MyUnderSwipeableItemAdapter
     }
 
     @Override
-    public int onSwipeItem(MyViewHolder holder, int position, int result) {
+    public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, int result) {
         Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
         switch (result) {
-            // swipe right --- default
-            case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
             // swipe left --- pin
             case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
-                return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
+                return new SwipeLeftResultAction(this, position);
             // other --- do nothing
+            case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
             case RecyclerViewSwipeManager.RESULT_CANCELED:
             default:
-                return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
-        }
-    }
-
-    @Override
-    public void onPerformAfterSwipeReaction(MyViewHolder holder, int position, int result, int reaction) {
-        Log.d(TAG, "onPerformAfterSwipeReaction(position = " + position + ", result = " + result + ", reaction = " + reaction + ")");
-
-        final AbstractDataProvider.Data item = mProvider.getItem(position);
-
-        if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) {
-            item.setPinned(true);
-            notifyItemChanged(position);
-
-            if (mEventListener != null) {
-                mEventListener.onItemPinned(position);
-            }
-        } else {
-            item.setPinned(false);
+                return new UnpinResultAction(this, position);
         }
     }
 
@@ -231,5 +215,73 @@ class MyUnderSwipeableItemAdapter
 
     public void setEventListener(EventListener eventListener) {
         mEventListener = eventListener;
+    }
+
+    private static class SwipeLeftResultAction extends SwipeResultActionMoveToSwipedDirection {
+        private MyUnderSwipeableItemAdapter mAdapter;
+        private final int mPosition;
+        private boolean mSetPinned;
+
+        SwipeLeftResultAction(MyUnderSwipeableItemAdapter adapter, int position) {
+            mAdapter = adapter;
+            mPosition = position;
+        }
+
+        @Override
+        protected void onPerformAction() {
+            super.onPerformAction();
+
+            AbstractDataProvider.Data item = mAdapter.mProvider.getItem(mPosition);
+
+            if (!item.isPinned()) {
+                item.setPinned(true);
+                mAdapter.notifyItemChanged(mPosition);
+                mSetPinned = true;
+            }
+        }
+
+        @Override
+        protected void onSlideAnimationEnd() {
+            super.onSlideAnimationEnd();
+
+            if (mSetPinned && mAdapter.mEventListener != null) {
+                mAdapter.mEventListener.onItemPinned(mPosition);
+            }
+        }
+
+        @Override
+        protected void onCleanUp() {
+            super.onCleanUp();
+            // clear the references
+            mAdapter = null;
+        }
+    }
+
+    private static class UnpinResultAction extends SwipeResultActionDefault {
+        private MyUnderSwipeableItemAdapter mAdapter;
+        private final int mPosition;
+
+        UnpinResultAction(MyUnderSwipeableItemAdapter adapter, int position) {
+            mAdapter = adapter;
+            mPosition = position;
+        }
+
+        @Override
+        protected void onPerformAction() {
+            super.onPerformAction();
+
+            AbstractDataProvider.Data item = mAdapter.mProvider.getItem(mPosition);
+            if (item.isPinned()) {
+                item.setPinned(false);
+                mAdapter.notifyItemChanged(mPosition);
+            }
+        }
+
+        @Override
+        protected void onCleanUp() {
+            super.onCleanUp();
+            // clear the references
+            mAdapter = null;
+        }
     }
 }
