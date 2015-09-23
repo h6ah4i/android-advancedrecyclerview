@@ -33,7 +33,7 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
-import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableSwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.LegacyExpandableSwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
@@ -43,7 +43,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 class MyExpandableDraggableSwipeableItemAdapter
         extends AbstractExpandableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder>
         implements ExpandableDraggableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder>,
-        ExpandableSwipeableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder> {
+        LegacyExpandableSwipeableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyEDSItemAdapter";
 
     private final RecyclerViewExpandableItemManager mExpandableItemManager;
@@ -409,14 +409,6 @@ class MyExpandableDraggableSwipeableItemAdapter
     }
 
     @Override
-    public void onGroupItemSwipeSlideAmountUpdated(MyGroupViewHolder holder, int groupPosition, float amount, boolean isSwiping) {
-    }
-
-    @Override
-    public void onChildItemSwipeSlideAmountUpdated(MyChildViewHolder holder, int groupPosition, int childPosition, float amount, boolean isSwiping) {
-    }
-
-    @Override
     public int onSwipeGroupItem(MyGroupViewHolder holder, int groupPosition, int result) {
         Log.d(TAG, "onSwipeGroupItem(groupPosition = " + groupPosition + ", result = " + result + ")");
 
@@ -430,7 +422,7 @@ class MyExpandableDraggableSwipeableItemAdapter
                     // not pinned --- remove
                     return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
                 }
-            // swipe left -- pin
+                // swipe left -- pin
             case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
             // other --- do nothing
@@ -454,7 +446,7 @@ class MyExpandableDraggableSwipeableItemAdapter
                     // not pinned --- remove
                     return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
                 }
-            // swipe left -- pin
+                // swipe left -- pin
             case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
             // other --- do nothing

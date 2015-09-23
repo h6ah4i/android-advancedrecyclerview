@@ -149,4 +149,8 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     public float getMaxDownSwipeAmount() {
         return mMaxDownSwipeAmount;
     }
+
+    @Override
+    public void onSlideAmountUpdated(float horizontalAmount, float verticalAmount, boolean isSwiping) {
+    }
 }

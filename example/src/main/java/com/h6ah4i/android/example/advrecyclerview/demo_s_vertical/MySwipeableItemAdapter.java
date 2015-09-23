@@ -27,13 +27,13 @@ import android.widget.TextView;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.LegacySwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
 class MySwipeableItemAdapter
         extends RecyclerView.Adapter<MySwipeableItemAdapter.MyViewHolder>
-        implements SwipeableItemAdapter<MySwipeableItemAdapter.MyViewHolder> {
+        implements LegacySwipeableItemAdapter<MySwipeableItemAdapter.MyViewHolder> {
     private static final String TAG = "MySwipeableItemAdapter";
 
     private AbstractDataProvider mProvider;
@@ -147,10 +147,6 @@ class MySwipeableItemAdapter
         // set swiping properties
         holder.setSwipeItemVerticalSlideAmount(
                 item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_TOP : 0);
-    }
-
-    @Override
-    public void onSwipeSlideAmountUpdated(MyViewHolder holder, int position, float amount, boolean isSwiping) {
     }
 
     @Override

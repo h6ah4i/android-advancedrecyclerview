@@ -27,13 +27,14 @@ import android.widget.TextView;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.LegacySwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
 class MySwipeableItemAdapter
         extends RecyclerView.Adapter<MySwipeableItemAdapter.MyViewHolder>
-        implements SwipeableItemAdapter<MySwipeableItemAdapter.MyViewHolder> {
+        implements LegacySwipeableItemAdapter<MySwipeableItemAdapter.MyViewHolder>//,
+        /*SwipeableItemAdapter2<MySwipeableItemAdapter.MyViewHolder>*/ {
     private static final String TAG = "MySwipeableItemAdapter";
 
     private AbstractDataProvider mProvider;
@@ -178,10 +179,6 @@ class MySwipeableItemAdapter
     }
 
     @Override
-    public void onSwipeSlideAmountUpdated(MyViewHolder holder, int position, float amount, boolean isSwiping) {
-    }
-
-    @Override
     public int onSwipeItem(MyViewHolder holder, int position, int result) {
         Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
@@ -204,6 +201,11 @@ class MySwipeableItemAdapter
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
         }
     }
+
+//    @Override
+//    public SwipeResultAction onSwipeItem2(MyViewHolder holder, int position, int result) {
+//        return null;
+//    }
 
     @Override
     public void onPerformAfterSwipeReaction(MyViewHolder holder, int position, int result, int reaction) {

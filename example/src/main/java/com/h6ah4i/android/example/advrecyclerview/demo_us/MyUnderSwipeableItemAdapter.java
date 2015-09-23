@@ -29,13 +29,13 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.LegacySwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
 class MyUnderSwipeableItemAdapter
         extends RecyclerView.Adapter<MyUnderSwipeableItemAdapter.MyViewHolder>
-        implements SwipeableItemAdapter<MyUnderSwipeableItemAdapter.MyViewHolder> {
+        implements LegacySwipeableItemAdapter<MyUnderSwipeableItemAdapter.MyViewHolder> {
     private static final String TAG = "MySwipeableItemAdapter";
 
     private AbstractDataProvider mProvider;
@@ -44,8 +44,6 @@ class MyUnderSwipeableItemAdapter
     private View.OnClickListener mUnderSwipeableViewButtonOnClickListener;
 
     public interface EventListener {
-        void onItemRemoved(int position);
-
         void onItemPinned(int position);
 
         void onItemViewClicked(View v);
@@ -192,18 +190,14 @@ class MyUnderSwipeableItemAdapter
     }
 
     @Override
-    public void onSwipeSlideAmountUpdated(MyViewHolder holder, int position, float amount, boolean isSwiping) {
-    }
-
-    @Override
     public int onSwipeItem(MyViewHolder holder, int position, int result) {
         Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
         switch (result) {
-            // swipe right --- remove
+            // swipe right --- default
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
-            // swipe left -- pin
+            // swipe left --- pin
             case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
                 return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
             // other --- do nothing
@@ -219,14 +213,7 @@ class MyUnderSwipeableItemAdapter
 
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
-        if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
-            mProvider.removeItem(position);
-            notifyItemRemoved(position);
-
-            if (mEventListener != null) {
-                mEventListener.onItemRemoved(position);
-            }
-        } else if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) {
+        if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) {
             item.setPinned(true);
             notifyItemChanged(position);
 

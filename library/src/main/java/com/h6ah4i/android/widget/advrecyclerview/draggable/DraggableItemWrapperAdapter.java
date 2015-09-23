@@ -20,8 +20,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.BaseSwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemInternalUtils;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -394,13 +398,13 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     @Override
     public int onGetSwipeReactionType(VH holder, int position, int x, int y) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
-        if (!(adapter instanceof SwipeableItemAdapter)) {
+        if (!(adapter instanceof BaseSwipeableItemAdapter)) {
             return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
         }
 
         int correctedPosition = getOriginalPosition(position);
 
-        SwipeableItemAdapter<VH> swipeableItemAdapter = (SwipeableItemAdapter<VH>) adapter;
+        BaseSwipeableItemAdapter<VH> swipeableItemAdapter = (BaseSwipeableItemAdapter<VH>) adapter;
         return swipeableItemAdapter.onGetSwipeReactionType(holder, correctedPosition, x, y);
     }
 
@@ -408,55 +412,27 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     @Override
     public void onSetSwipeBackground(VH holder, int position, int type) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
-        if (!(adapter instanceof SwipeableItemAdapter)) {
+        if (!(adapter instanceof BaseSwipeableItemAdapter)) {
             return;
         }
 
         int correctedPosition = getOriginalPosition(position);
 
-        SwipeableItemAdapter<VH> swipeableItemAdapter = (SwipeableItemAdapter<VH>) adapter;
+        BaseSwipeableItemAdapter<VH> swipeableItemAdapter = (BaseSwipeableItemAdapter<VH>) adapter;
         swipeableItemAdapter.onSetSwipeBackground(holder, correctedPosition, type);
-    }
+    } 
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onSwipeSlideAmountUpdated(VH holder, int position, float amount, boolean isSwiping) {
+    public SwipeResultAction onSwipeItem(VH holder, int position, int result) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
-        if (!(adapter instanceof SwipeableItemAdapter)) {
-            return;
+        if (!(adapter instanceof BaseSwipeableItemAdapter)) {
+            return new SwipeResultActionDefault();
         }
 
         int correctedPosition = getOriginalPosition(position);
 
-        SwipeableItemAdapter<VH> swipeableItemAdapter = (SwipeableItemAdapter<VH>) adapter;
-        swipeableItemAdapter.onSwipeSlideAmountUpdated(holder, correctedPosition, amount, isSwiping);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public int onSwipeItem(VH holder, int position, int result) {
-        RecyclerView.Adapter adapter = getWrappedAdapter();
-        if (!(adapter instanceof SwipeableItemAdapter)) {
-            return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
-        }
-
-        int correctedPosition = getOriginalPosition(position);
-
-        SwipeableItemAdapter<VH> swipeableItemAdapter = (SwipeableItemAdapter<VH>) adapter;
-        return swipeableItemAdapter.onSwipeItem(holder, correctedPosition, result);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public void onPerformAfterSwipeReaction(VH holder, int position, int result, int reaction) {
-        RecyclerView.Adapter adapter = getWrappedAdapter();
-        if (!(adapter instanceof SwipeableItemAdapter)) {
-            return;
-        }
-
-        int correctedPosition = getOriginalPosition(position);
-
-        SwipeableItemAdapter<VH> swipeableItemAdapter = (SwipeableItemAdapter<VH>) adapter;
-        swipeableItemAdapter.onPerformAfterSwipeReaction(holder, correctedPosition, result, reaction);
+        return SwipeableItemInternalUtils.invokeOnSwipeItem(
+                (BaseSwipeableItemAdapter) adapter, holder, correctedPosition, result);
     }
 }

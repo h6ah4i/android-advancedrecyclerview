@@ -33,14 +33,14 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.LegacySwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
 class MyDraggableSwipeableItemAdapter
         extends RecyclerView.Adapter<MyDraggableSwipeableItemAdapter.MyViewHolder>
         implements DraggableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder>,
-        SwipeableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder> {
+        LegacySwipeableItemAdapter<MyDraggableSwipeableItemAdapter.MyViewHolder> {
     private static final String TAG = "MyDSItemAdapter";
 
     private AbstractDataProvider mProvider;
@@ -228,10 +228,6 @@ class MyDraggableSwipeableItemAdapter
         }
 
         holder.itemView.setBackgroundResource(bgRes);
-    }
-
-    @Override
-    public void onSwipeSlideAmountUpdated(MyViewHolder holder, int position, float amount, boolean isSwiping) {
     }
 
     @Override

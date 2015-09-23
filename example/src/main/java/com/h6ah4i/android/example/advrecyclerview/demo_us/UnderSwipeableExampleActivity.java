@@ -50,27 +50,6 @@ public class UnderSwipeableExampleActivity extends AppCompatActivity implements 
     }
 
     /**
-     * This method will be called when a list item is removed
-     *
-     * @param position The position of the item within data set
-     */
-    public void onItemRemoved(int position) {
-        Snackbar snackbar = Snackbar.make(
-                findViewById(R.id.container),
-                R.string.snack_bar_text_item_removed,
-                Snackbar.LENGTH_LONG);
-
-        snackbar.setAction(R.string.snack_bar_action_undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemUndoActionClicked();
-            }
-        });
-        snackbar.setActionTextColor(getResources().getColor(R.color.snackbar_action_color_done));
-        snackbar.show();
-    }
-
-    /**
      * This method will be called when a list item is pinned
      *
      * @param position The position of the item within data set
