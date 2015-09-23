@@ -94,6 +94,14 @@ public class RecyclerViewDragDropManager {
          */
         void onItemDragStarted(int position);
 
+	    /**
+	     * Callback method to be invoked when item position is changed during drag.
+	     *
+	     * @param fromPosition The old position of the item.
+	     * @param toPosition The new position of the item
+	     */
+	    void onItemDragPositionChanged(int fromPosition, int toPosition);
+
         /**
          * Callback method to be invoked when dragging is finished.
          *
@@ -1222,6 +1230,10 @@ public class RecyclerViewDragDropManager {
             if (LOCAL_LOGD) {
                 Log.d(TAG, "item swap (from: " + fromPosition + ", to: " + toPosition + ")");
             }
+
+	        if (mItemDragEventListener != null) {
+		        mItemDragEventListener.onItemDragPositionChanged(fromPosition, toPosition);
+	        }
 
             RecyclerView.ViewHolder firstVisibleItem = null;
 
