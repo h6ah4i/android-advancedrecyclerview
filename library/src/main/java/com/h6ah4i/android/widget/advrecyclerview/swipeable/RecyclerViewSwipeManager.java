@@ -923,7 +923,7 @@ public class RecyclerViewSwipeManager {
                     final long moveAnimationDuration = (itemAnimator != null) ? itemAnimator.getMoveDuration() : 0;
 
                     final RemovingItemDecorator decorator = new RemovingItemDecorator(
-                            mRecyclerView, swipingItem, removeAnimationDuration, moveAnimationDuration);
+                            mRecyclerView, swipingItem, result, removeAnimationDuration, moveAnimationDuration);
 
                     decorator.setMoveAnimationInterpolator(SwipeDismissItemAnimator.MOVE_INTERPOLATOR);
                     decorator.start();
