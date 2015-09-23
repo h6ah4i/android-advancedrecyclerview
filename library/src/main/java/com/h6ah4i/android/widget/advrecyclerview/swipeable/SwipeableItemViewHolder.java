@@ -188,4 +188,13 @@ public interface SwipeableItemViewHolder {
      * @return The container view instance.
      */
     View getSwipeableContainerView();
+
+    /**
+     * Called when sets background of the swiping item.
+     *
+     * @param horizontalAmount Horizontal slide amount of the item view. (slide left: &lt; 0, slide right: 0 &gt;)
+     * @param verticalAmount Vertical slide amount of the item view. (slide up: &lt; 0, slide down: 0 &gt;)
+     * @param isSwiping Indicates whether the user is swiping the item or not
+     */
+    void onSlideAmountUpdated(float horizontalAmount, float verticalAmount, boolean isSwiping);
 }

@@ -75,11 +75,6 @@ public class RecyclerListViewFragment extends Fragment {
         final MyUnderSwipeableItemAdapter myItemAdapter = new MyUnderSwipeableItemAdapter(getDataProvider());
         myItemAdapter.setEventListener(new MyUnderSwipeableItemAdapter.EventListener() {
             @Override
-            public void onItemRemoved(int position) {
-                ((UnderSwipeableExampleActivity) getActivity()).onItemRemoved(position);
-            }
-
-            @Override
             public void onItemPinned(int position) {
                 ((UnderSwipeableExampleActivity) getActivity()).onItemPinned(position);
             }
@@ -128,7 +123,6 @@ public class RecyclerListViewFragment extends Fragment {
         // for debugging
 //        animator.setDebug(true);
 //        animator.setMoveDuration(2000);
-//        animator.setRemoveDuration(2000);
 //        mRecyclerViewSwipeManager.setMoveToOutsideWindowAnimationDuration(2000);
 //        mRecyclerViewSwipeManager.setReturnToDefaultPositionAnimationDuration(2000);
     }

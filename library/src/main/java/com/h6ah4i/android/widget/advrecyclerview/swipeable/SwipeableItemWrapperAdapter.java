@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -33,7 +34,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     private static final boolean LOCAL_LOGV = false;
     private static final boolean LOCAL_LOGD = false;
 
-    private SwipeableItemAdapter mSwipeableItemAdapter;
+    private BaseSwipeableItemAdapter mSwipeableItemAdapter;
     private RecyclerViewSwipeManager mSwipeManager;
     private int mSwipingItemPosition = RecyclerView.NO_POSITION;
 
@@ -116,9 +117,13 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         if (holder instanceof SwipeableItemViewHolder) {
             final float swipeItemSlideAmount = getSwipeItemSlideAmount(((SwipeableItemViewHolder) holder), swipeHorizontal());
 
-            if ((prevSwipeItemSlideAmount != swipeItemSlideAmount) ||
-                    !(mSwipeManager.isSwiping() || mSwipeManager.isAnimationRunning(holder))) {
-                mSwipeManager.applySlideItem(holder, position, prevSwipeItemSlideAmount, swipeItemSlideAmount, swipeHorizontal(), true);
+            boolean isSwiping = mSwipeManager.isSwiping();
+            boolean isAnimationRunning = mSwipeManager.isAnimationRunning(holder);
+            if ((prevSwipeItemSlideAmount != swipeItemSlideAmount) || !(isSwiping || isAnimationRunning)) {
+                mSwipeManager.applySlideItem(
+                        holder, position,
+                        prevSwipeItemSlideAmount, swipeItemSlideAmount, swipeHorizontal(),
+                        true, isSwiping);
             }
         }
     }
@@ -188,12 +193,35 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     // NOTE: This method is called from RecyclerViewDragDropManager
     /*package*/
     @SuppressWarnings("unchecked")
-    void setSwipeBackgroundDrawable(RecyclerView.ViewHolder holder, int position, int type) {
+    void onUpdateSlideAmount(RecyclerView.ViewHolder holder, int position, boolean horizontal, float amount, boolean isSwiping, int type) {
         if (LOCAL_LOGV) {
-            Log.v(TAG, "setSwipeBackgroundDrawable(holder = " + holder + ", position = " + position + ", type = " + type + ")");
+            Log.v(TAG, "onUpdateSlideAmount(holder = " + holder +
+                    ", position = " + position +
+                    ", horizontal = " + horizontal +
+                    ", amount = " + amount +
+                    ", isSwiping = " + isSwiping +
+                    ", type = " + type + ")");
         }
 
         mSwipeableItemAdapter.onSetSwipeBackground(holder, position, type);
+        ((SwipeableItemViewHolder) holder).onSlideAmountUpdated(
+                (horizontal ? amount : 0.0f), (horizontal ? 0.0f : amount), isSwiping);
+    }
+
+    // NOTE: This method is called from ItemSlidingAnimator
+    /*package*/
+    @SuppressWarnings("unchecked")
+    void onUpdateSlideAmount(RecyclerView.ViewHolder holder, int position, boolean horizontal, float amount, boolean isSwiping) {
+        if (LOCAL_LOGV) {
+            Log.v(TAG, "onUpdateSlideAmount(holder = " + holder +
+                    ", position = " + position +
+                    ", horizontal = " + horizontal +
+                    ", amount = " + amount +
+                    ", isSwiping = " + isSwiping + ")");
+        }
+
+        ((SwipeableItemViewHolder) holder).onSlideAmountUpdated(
+                (horizontal ? amount : 0.0f), (horizontal ? 0.0f : amount), isSwiping);
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
@@ -210,19 +238,19 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     // NOTE: This method is called from RecyclerViewDragDropManager
     /*package*/
     @SuppressWarnings("unchecked")
-    int onSwipeItemFinished(RecyclerView.ViewHolder holder, int position, int result) {
+    SwipeResultAction onSwipeItemFinished(RecyclerView.ViewHolder holder, int position, int result) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onSwipeItemFinished(holder = " + holder + ", position = " + position + ", result = " + result + ")");
         }
 
         mSwipingItemPosition = RecyclerView.NO_POSITION;
 
-        return mSwipeableItemAdapter.onSwipeItem(holder, position, result);
+        return SwipeableItemInternalUtils.invokeOnSwipeItem(mSwipeableItemAdapter, holder, position, result);
     }
 
     /*package*/
     @SuppressWarnings("unchecked")
-    void onSwipeItemFinished2(RecyclerView.ViewHolder holder, int position, int result, int afterReaction) {
+    void onSwipeItemFinished2(RecyclerView.ViewHolder holder, int position, int result, int afterReaction, SwipeResultAction resultAction) {
 
         ((SwipeableItemViewHolder) holder).setSwipeResult(result);
         ((SwipeableItemViewHolder) holder).setAfterSwipeReaction(afterReaction);
@@ -232,7 +260,8 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
                 getSwipeAmountFromAfterReaction(result, afterReaction),
                 swipeHorizontal());
 
-        mSwipeableItemAdapter.onPerformAfterSwipeReaction(holder, position, result, afterReaction);
+        resultAction.performAction();
+
         notifyDataSetChanged();
     }
 
@@ -301,7 +330,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         ((SwipeableItemViewHolder) holder).setSwipeStateFlags(flags);
     }
 
-    private static SwipeableItemAdapter getSwipeableItemAdapter(RecyclerView.Adapter adapter) {
-        return WrapperAdapterUtils.findWrappedAdapter(adapter, SwipeableItemAdapter.class);
+    private static BaseSwipeableItemAdapter getSwipeableItemAdapter(RecyclerView.Adapter adapter) {
+        return WrapperAdapterUtils.findWrappedAdapter(adapter, BaseSwipeableItemAdapter.class);
     }
 }

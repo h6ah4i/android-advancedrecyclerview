@@ -138,7 +138,10 @@ class SwipingItemOperator {
                 break;
         }
 
-        mSwipeManager.applySlideItem(mSwipingItem, mSwipingItemPosition, mPrevTranslateAmount, translateAmount, mSwipeHorizontal, false);
+        mSwipeManager.applySlideItem(
+                mSwipingItem, mSwipingItemPosition,
+                mPrevTranslateAmount, translateAmount, mSwipeHorizontal,
+                false, true);
 
         mPrevTranslateAmount = translateAmount;
     }
