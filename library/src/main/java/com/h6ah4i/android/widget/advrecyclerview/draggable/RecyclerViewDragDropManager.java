@@ -173,6 +173,7 @@ public class RecyclerViewDragDropManager {
     private OnItemDragEventListener mItemDragEventListener;
     private boolean mCanDragH;
     private boolean mCanDragV;
+    private float mDragEdgeScrollSpeed = 1.0f;
 
     /**
      * Constructor.
@@ -445,6 +446,24 @@ public class RecyclerViewDragDropManager {
      */
     public void setOnItemDragEventListener(OnItemDragEventListener listener) {
         mItemDragEventListener = listener;
+    }
+
+    /**
+     * Sets drag edge scroll speed.
+     *
+     * @param speed The coefficient value of drag edge scrolling speed. (valid range: 0.0f .. 2.0)
+     */
+    public void setDragEdgeScrollSpeed(float speed) {
+        mDragEdgeScrollSpeed = Math.min(Math.max(speed, 0.0f), 2.0f);
+    }
+
+    /**
+     * Gets drag edge scroll speed.
+     *
+     * @return The coefficient value of drag edges scrolling speed.
+     */
+    public float getDragEdgeScrollSpeed() {
+        return mDragEdgeScrollSpeed;
     }
 
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -964,7 +983,7 @@ public class RecyclerViewDragDropManager {
         final int mask = mScrollDirMask;
         final DraggingItemDecorator decorator = mDraggingItemDecorator;
 
-        int scrollAmount = (int) Math.signum(centerOffset) * (int) (SCROLL_AMOUNT_COEFF * mDisplayDensity * acceleration + 0.5f);
+        int scrollAmount = (int) Math.signum(centerOffset) * (int) (SCROLL_AMOUNT_COEFF * mDragEdgeScrollSpeed * mDisplayDensity * acceleration + 0.5f);
         int actualScrolledAmount = 0;
 
         final ItemDraggableRange range = mDraggableRange;
