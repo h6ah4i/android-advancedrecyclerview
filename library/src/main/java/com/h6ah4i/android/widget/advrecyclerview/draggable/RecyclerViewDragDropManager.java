@@ -837,12 +837,9 @@ public class RecyclerViewDragDropManager {
             }
         }
 
-        final RecyclerView.ViewHolder holder = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, e.getX(), e.getY());
+        final RecyclerView.ViewHolder holder = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, mInitialTouchX, mInitialTouchY);
 
-        if (!checkTouchedItemState(rv, holder) || holder.getItemId() != mInitialTouchItemId) {
-            mInitialTouchItemId = RecyclerView.NO_ID;
-            mHandler.cancelLongPressDetection();
-
+        if (holder == null) {
             return false;
         }
 
