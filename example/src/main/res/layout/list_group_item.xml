@@ -18,9 +18,10 @@
 <FrameLayout
     style="@style/commonListItemStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="@dimen/list_group_item_height"
     android:layout_marginTop="8dp"
     android:background="#ffffff">
 
@@ -31,19 +32,21 @@
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground">
 
-        <View
-            android:id="@+id/drag_handle"
-            android:layout_width="32dp"
-            android:layout_height="match_parent"
-            android:background="#20000000"
-            tools:ignore="RtlHardcoded"/>
-
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="32dp"
+            android:layout_gravity="top|left"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             android:gravity="center"/>
+
+        <com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator
+            android:id="@+id/indicator"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="16dp"/>
 
     </FrameLayout>
 

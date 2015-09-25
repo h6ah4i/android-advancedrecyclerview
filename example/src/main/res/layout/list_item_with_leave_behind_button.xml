@@ -18,48 +18,45 @@
 <FrameLayout
     style="@style/commonListItemStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
-    android:layout_marginTop="8dp"
-    android:background="#ffffff">
+    android:layout_height="64dp"
+    android:background="@drawable/bg_swipe_item_neutral">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#888888">
+
+        <Button
+            android:id="@android:id/button1"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp"
+            android:text="Button"/>
+
+    </RelativeLayout>
+
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ffffff"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackground">
-
-        <View
-            android:id="@+id/drag_handle"
-            android:layout_width="32dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="#20000000"
-            tools:ignore="RtlHardcoded"/>
+        android:foreground="?attr/selectableItemBackground"
+        tools:visibility="invisible">
 
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="40dp"
-            android:gravity="center"/>
-
-        <com.wnafee.vector.MorphButton
-            android:id="@+id/indicator"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="16dp"
-            android:background="@null"
-            android:enabled="false"
-            app:vc_endDrawable="@drawable/ic_expand_more_to_expand_less"
-            app:vc_foregroundTint="#666666"
-            app:vc_startDrawable="@drawable/ic_expand_less_to_expand_more"/>
+            android:layout_gravity="top|left"
+            android:gravity="center"
+            tools:ignore="RtlHardcoded"/>
 
     </FrameLayout>
 

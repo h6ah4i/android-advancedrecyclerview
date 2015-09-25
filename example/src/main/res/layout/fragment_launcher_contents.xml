@@ -74,5 +74,20 @@
             style="@style/exampleLauncherButtonStyle"
             android:text="@string/button_text_launch_demo_ed_with_section" />
 
+        <Button
+            android:id="@+id/button_launch_demo_e_add_remove"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_e_add_remove" />
+
+        <Button
+            android:id="@+id/button_launch_demo_e_already_expanded"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_e_already_expanded" />
+
+        <Button
+            android:id="@+id/button_launch_demo_s_vertical"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_s_vertical" />
+
     </LinearLayout>
 </ScrollView>

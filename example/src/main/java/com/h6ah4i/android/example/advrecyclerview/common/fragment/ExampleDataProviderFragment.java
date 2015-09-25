@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.data.DebugDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.data.ExampleDataProvider;
 
 public class ExampleDataProviderFragment extends Fragment {
@@ -33,7 +32,6 @@ public class ExampleDataProviderFragment extends Fragment {
 
         setRetainInstance(true);  // keep the mDataProvider instance
         mDataProvider = new ExampleDataProvider();
-//        mDataProvider = new DebugDataProvider();
     }
 
     public AbstractDataProvider getDataProvider() {

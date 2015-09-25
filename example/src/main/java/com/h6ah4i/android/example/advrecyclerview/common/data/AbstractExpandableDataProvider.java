@@ -19,13 +19,11 @@ package com.h6ah4i.android.example.advrecyclerview.common.data;
 public abstract class AbstractExpandableDataProvider {
     public static abstract class BaseData {
 
-        public abstract int getSwipeReactionType();
-
         public abstract String getText();
 
-        public abstract void setPinnedToSwipeLeft(boolean pinned);
+        public abstract void setPinned(boolean pinned);
 
-        public abstract boolean isPinnedToSwipeLeft();
+        public abstract boolean isPinned();
     }
 
     public static abstract class GroupData extends BaseData {

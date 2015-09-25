@@ -24,22 +24,20 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.example.advrecyclerview.common.compat.MorphButtonCompat;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
+import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
-import com.h6ah4i.android.widget.advrecyclerview.expandable.ChildPositionItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.GroupPositionItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
-import com.wnafee.vector.MorphButton;
 
-public class MyExpandableDraggableWithSectionItemAdapter
+class MyExpandableDraggableWithSectionItemAdapter
         extends AbstractExpandableItemAdapter<MyExpandableDraggableWithSectionItemAdapter.MyGroupViewHolder, MyExpandableDraggableWithSectionItemAdapter.MyChildViewHolder>
         implements ExpandableDraggableItemAdapter<MyExpandableDraggableWithSectionItemAdapter.MyGroupViewHolder, MyExpandableDraggableWithSectionItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyEDWithSectionAdapter";
@@ -74,11 +72,11 @@ public class MyExpandableDraggableWithSectionItemAdapter
     }
 
     public static class MyGroupViewHolder extends MyBaseViewHolder {
-        public MorphButtonCompat mMorphButton;
+        public ExpandableItemIndicator mIndicator;
 
         public MyGroupViewHolder(View v) {
             super(v);
-            mMorphButton = new MorphButtonCompat(v.findViewById(R.id.indicator));
+            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
         }
     }
 
@@ -142,7 +140,7 @@ public class MyExpandableDraggableWithSectionItemAdapter
                 v = inflater.inflate(R.layout.list_section_header, parent, false);
                 break;
             case GROUP_ITEM_VIEW_TYPE_SECTION_ITEM:
-                v = inflater.inflate(R.layout.list_group_item, parent, false);
+                v = inflater.inflate(R.layout.list_group_item_draggable, parent, false);
                 break;
             default:
                 throw new IllegalStateException("Unexpected viewType (= " + viewType + ")");
@@ -154,7 +152,7 @@ public class MyExpandableDraggableWithSectionItemAdapter
     @Override
     public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.list_item, parent, false);
+        final View v = inflater.inflate(R.layout.list_item_draggable, parent, false);
         return new MyChildViewHolder(v);
     }
 
@@ -192,7 +190,8 @@ public class MyExpandableDraggableWithSectionItemAdapter
         if (((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED) != 0) ||
                 ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
-            MorphButton.MorphState indicatorState;
+            boolean isExpanded;
+            boolean animateIndicator = ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
 
             if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_group_item_dragging_active_state;
@@ -209,16 +208,13 @@ public class MyExpandableDraggableWithSectionItemAdapter
             }
 
             if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
-                indicatorState = MorphButton.MorphState.END;
+                isExpanded = true;
             } else {
-                indicatorState = MorphButton.MorphState.START;
+                isExpanded = false;
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
-
-            if (holder.mMorphButton.getState() != indicatorState) {
-                holder.mMorphButton.setState(indicatorState, true);
-            }
+            holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
         }
     }
 

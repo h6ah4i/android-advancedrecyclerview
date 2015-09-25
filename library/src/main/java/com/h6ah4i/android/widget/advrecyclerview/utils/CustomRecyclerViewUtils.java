@@ -17,15 +17,58 @@
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
 import android.graphics.Rect;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
 public class CustomRecyclerViewUtils {
+    public static final int ORIENTATION_UNKNOWN = -1;
+    public static final int ORIENTATION_HORIZONTAL = OrientationHelper.HORIZONTAL; // = 0
+    public static final int ORIENTATION_VERTICAL = OrientationHelper.VERTICAL; // = 1
+
+    public static final int LAYOUT_TYPE_UNKNOWN = -1;
+    public static final int LAYOUT_TYPE_LINEAR_HORIZONTAL = 0;
+    public static final int LAYOUT_TYPE_LINEAR_VERTICAL = 1;
+    public static final int LAYOUT_TYPE_GRID_HORIZONTAL = 2;
+    public static final int LAYOUT_TYPE_GRID_VERTICAL = 3;
+    public static final int LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL = 4;
+    public static final int LAYOUT_TYPE_STAGGERED_GRID_VERTICAL = 5;
+
     public static RecyclerView.ViewHolder findChildViewHolderUnderWithoutTranslation(RecyclerView rv, float x, float y) {
         final View child = findChildViewUnderWithoutTranslation(rv, x, y);
         return (child != null) ? rv.getChildViewHolder(child) : null;
+    }
+
+    public static int getLayoutType(RecyclerView rv) {
+        return getLayoutType(rv.getLayoutManager());
+    }
+
+    public static int getLayoutType(RecyclerView.LayoutManager layoutManager) {
+        if (layoutManager instanceof GridLayoutManager) {
+            if (((GridLayoutManager) layoutManager).getOrientation() == GridLayoutManager.HORIZONTAL) {
+                return LAYOUT_TYPE_GRID_HORIZONTAL;
+            } else {
+                return LAYOUT_TYPE_GRID_VERTICAL;
+            }
+        } else if (layoutManager instanceof LinearLayoutManager) {
+            if (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.HORIZONTAL) {
+                return LAYOUT_TYPE_LINEAR_HORIZONTAL;
+            } else {
+                return LAYOUT_TYPE_LINEAR_VERTICAL;
+            }
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            if (((StaggeredGridLayoutManager) layoutManager).getOrientation() == StaggeredGridLayoutManager.HORIZONTAL) {
+                return LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL;
+            } else {
+                return LAYOUT_TYPE_STAGGERED_GRID_VERTICAL;
+            }
+        } else {
+            return LAYOUT_TYPE_UNKNOWN;
+        }
     }
 
     private static View findChildViewUnderWithoutTranslation(ViewGroup parent, float x, float y) {
@@ -129,4 +172,29 @@ public class CustomRecyclerViewUtils {
         }
     }
 
+    public static int getSpanCount(RecyclerView rv) {
+        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
+
+        if (layoutManager instanceof GridLayoutManager) {
+            return ((GridLayoutManager) layoutManager).getSpanCount();
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            return ((StaggeredGridLayoutManager) layoutManager).getSpanCount();
+        } else {
+            return 1;
+        }
+    }
+
+    public static int getOrientation(RecyclerView rv) {
+        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
+
+        if (layoutManager instanceof GridLayoutManager) {
+            return ((GridLayoutManager) layoutManager).getOrientation();
+        } else if (layoutManager instanceof LinearLayoutManager) {
+            return ((LinearLayoutManager) layoutManager).getOrientation();
+        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+            return ((StaggeredGridLayoutManager) layoutManager).getOrientation();
+        } else {
+            return ORIENTATION_UNKNOWN;
+        }
+    }
 }

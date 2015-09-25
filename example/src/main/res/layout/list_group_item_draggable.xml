@@ -18,37 +18,19 @@
 <FrameLayout
     style="@style/commonListItemStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:background="@drawable/bg_swipe_item_neutral">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#888888">
-
-        <Button
-            android:id="@android:id/button1"
-            style="@style/Widget.AppCompat.Button.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:text="Button"/>
-
-    </RelativeLayout>
-
+    android:layout_height="@dimen/list_group_item_height"
+    android:layout_marginTop="8dp"
+    android:background="#ffffff">
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackground"
-        tools:visibility="invisible">
+        android:foreground="?attr/selectableItemBackground">
 
         <View
             android:id="@+id/drag_handle"
@@ -56,15 +38,25 @@
             android:layout_height="match_parent"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="#20000000"/>
+            android:layout_gravity="top|left"
+            android:background="#20000000"
+            tools:ignore="RtlHardcoded"/>
 
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="top|left"
             android:layout_marginLeft="32dp"
-            android:gravity="center"
-            tools:ignore="RtlHardcoded"/>
+            android:layout_marginRight="40dp"
+            android:gravity="center"/>
+
+        <com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator
+            android:id="@+id/indicator"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="16dp"/>
 
     </FrameLayout>
 

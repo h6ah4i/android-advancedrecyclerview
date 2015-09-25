@@ -35,13 +35,13 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     private static final int NOTIFY_REMOVAL_EFFECT_PHASE_1 = 0;
     private static final int NOTIFY_REMOVAL_EFFECT_END = 1;
 
-    private static final long ADDITIONAL_REMOVE_DURATION = 100;  // workaround: to avoid the gap between the below item
+    private static final long ADDITIONAL_REMOVE_DURATION = 0;  // workaround: to avoid the gap between the below item
 
     private RecyclerView mRecyclerView;
     private RecyclerView.ViewHolder mSwipingItem;
     private long mSwipingItemId;
     private Rect mSwipingItemBounds = new Rect();
-    private int mInitialTranslationX;
+    private int mTranslationX;
     private int mTranslationY;
     private long mStartTime;
     private long mRemoveAnimationDuration;
@@ -49,16 +49,19 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     private Interpolator mMoveAnimationInterpolator;
     private Drawable mSwipeBackgroundDrawable;
 
+    private boolean mHorizontal;
     private int mPendingNotificationMask = 0;
 
-    public RemovingItemDecorator(RecyclerView rv, RecyclerView.ViewHolder swipingItem, long removeAnimationDuration, long moveAnimationDuration) {
+    public RemovingItemDecorator(RecyclerView rv, RecyclerView.ViewHolder swipingItem, int result, long removeAnimationDuration, long moveAnimationDuration) {
         mRecyclerView = rv;
         mSwipingItem = swipingItem;
         mSwipingItemId = swipingItem.getItemId();
+        mHorizontal = (result == RecyclerViewSwipeManager.RESULT_SWIPED_LEFT || result == RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT);
 
         mRemoveAnimationDuration = removeAnimationDuration + ADDITIONAL_REMOVE_DURATION;
         mMoveAnimationDuration = moveAnimationDuration;
-        mInitialTranslationX = (int) (ViewCompat.getTranslationX(swipingItem.itemView) + 0.5f);
+        mTranslationX = (int) (ViewCompat.getTranslationX(swipingItem.itemView) + 0.5f);
+        mTranslationY = (int) (ViewCompat.getTranslationY(swipingItem.itemView) + 0.5f);
 
         CustomRecyclerViewUtils.getViewBounds(mSwipingItem.itemView, mSwipingItemBounds);
     }
@@ -71,15 +74,12 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         final long elapsedTime = getElapsedTime(mStartTime);
 
-        final Rect bounds = mSwipingItemBounds;
-        final float heightScale = determineBackgroundHeightScaleSwipeCompletedSuccessfully(elapsedTime);
+        final float scale = determineBackgroundScaleSwipeCompletedSuccessfully(elapsedTime);
 
-        final int origHeight = bounds.height();
-        final int actualHeight = (int) (heightScale * origHeight + 0.5f);
-
-        fillSwipingItemBackground(c, mSwipeBackgroundDrawable, actualHeight);
+        fillSwipingItemBackground(c, mSwipeBackgroundDrawable, scale);
 
         if (mSwipingItemId == mSwipingItem.getItemId()) {
+            mTranslationX = (int) (ViewCompat.getTranslationX(mSwipingItem.itemView) + 0.5f);
             mTranslationY = (int) (ViewCompat.getTranslationY(mSwipingItem.itemView) + 0.5f);
         }
 
@@ -93,7 +93,7 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
                 (elapsedTime < (mRemoveAnimationDuration + mMoveAnimationDuration));
     }
 
-    private float determineBackgroundHeightScaleSwipeCompletedSuccessfully(long elapsedTime) {
+    private float determineBackgroundScaleSwipeCompletedSuccessfully(long elapsedTime) {
         float heightScale = 0.0f;
 
         if (elapsedTime < mRemoveAnimationDuration) {
@@ -110,16 +110,17 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
         return heightScale;
     }
 
-    private void fillSwipingItemBackground(Canvas c, Drawable drawable, int height) {
+    private void fillSwipingItemBackground(Canvas c, Drawable drawable, float scale) {
         final Rect bounds = mSwipingItemBounds;
-        final int translationX = mInitialTranslationX;
+        final int translationX = mTranslationX;
         final int translationY = mTranslationY;
+        final float hScale = (mHorizontal) ? 1.0f : scale;
+        final float vScale = (mHorizontal) ? scale : 1.0f;
 
-        if (height < 0) {
-            height = bounds.height();
-        }
+        int width = (int) (hScale * bounds.width() + 0.5f);
+        int height = (int) (vScale * bounds.height() + 0.5f);
 
-        if ((height == 0) || (drawable == null)) {
+        if ((height == 0) || (width == 0) || (drawable == null)) {
             return;
         }
 
@@ -128,13 +129,13 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
         c.clipRect(
                 bounds.left + translationX,
                 bounds.top + translationY,
-                bounds.right + translationX,
+                bounds.left + translationX + width,
                 bounds.top + translationY + height);
 
         // c.drawColor(0xffff0000); // <-- debug
 
         c.translate(
-                bounds.left + translationX,
+                bounds.left + translationX - (bounds.width() - width) / 2,
                 bounds.top + translationY - (bounds.height() - height) / 2);
         drawable.setBounds(0, 0, bounds.width(), bounds.height());
 
@@ -144,16 +145,6 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     }
 
     private void postInvalidateOnAnimation() {
-//        final Rect bounds = mSwipingItemBounds;
-//        final int translationX = mInitialTranslationX;
-//        final int translationY = mTranslationY;
-
-//        ViewCompat.postInvalidateOnAnimation(
-//                mRecyclerView,
-//                bounds.left + translationX,
-//                bounds.top + translationY,
-//                bounds.right + translationX,
-//                bounds.bottom + translationY);
         ViewCompat.postInvalidateOnAnimation(mRecyclerView);
     }
 

@@ -1,5 +1,20 @@
+## 0.7.4
+- Fixed issue #75 (Error In -->Expandable(Add/Remove Items))
+
+## 0.7.3
+- Updated to support-v7-recyclerview v22.2.1
+- Added a new demo "Expandable (Add/Remove items)"
+- Added the RecyclerViewDragDropManager.OnItemDragEventListener
+- Added the RecyclerViewSwipeManager.OnItemSwipeEventListener
+- Added methods of notify*Inserted() and notify*Remove() families to RecyclerViewExpandableItemManager
+- Renamed getInitiateOnLongPress()/getInitiateOnMove() methods to isInitiateOnLongPressEnabled()/isInitiateOnMoveEnabled()
+- Fixed issue #54 (ClassCastException, MyPlatformChildViewHolder cannot be MyPlatformGroupViewHolder)
+- Fixed issue #64 (After swipe/remove of a group crash in some cases)
+- Fixed issue #65 (Is there any way to detect drag start and drag end)
+- Fixed some other minor bugs
+
 ## 0.7.2
-- [Important] Updated support-v7-recyclerview v22.2.0
+- [Important] Updated to support-v7-recyclerview v22.2.0
 - Fixed issue #44 (Click effect on GroupView)
 - Fixed issue #50 (CPU usage 30-40% while Idle)
 - Merged pull request #55 (Makes ItemAnimators more easily extensible.)

@@ -35,7 +35,7 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 
-public class MyDraggableWithSectionItemAdapter
+class MyDraggableWithSectionItemAdapter
         extends RecyclerView.Adapter<MyDraggableWithSectionItemAdapter.MyViewHolder>
         implements DraggableItemAdapter<MyDraggableWithSectionItemAdapter.MyViewHolder> {
     private static final String TAG = "MyDragSectionAdapter";
@@ -86,7 +86,7 @@ public class MyDraggableWithSectionItemAdapter
                 v = inflater.inflate(R.layout.list_section_header, parent, false);
                 break;
             case ITEM_VIEW_TYPE_SECTION_ITEM:
-                v = inflater.inflate(R.layout.list_item, parent, false);
+                v = inflater.inflate(R.layout.list_item_draggable, parent, false);
                 break;
             default:
                 throw new IllegalStateException("Unexpected viewType (= " + viewType + ")");

@@ -21,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -60,7 +61,7 @@ public class RecyclerListViewFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager = new LinearLayoutManager(getContext());
 
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
@@ -73,11 +74,6 @@ public class RecyclerListViewFragment extends Fragment {
         //adapter
         final MyUnderSwipeableItemAdapter myItemAdapter = new MyUnderSwipeableItemAdapter(getDataProvider());
         myItemAdapter.setEventListener(new MyUnderSwipeableItemAdapter.EventListener() {
-            @Override
-            public void onItemRemoved(int position) {
-                ((UnderSwipeableExampleActivity) getActivity()).onItemRemoved(position);
-            }
-
             @Override
             public void onItemPinned(int position) {
                 ((UnderSwipeableExampleActivity) getActivity()).onItemPinned(position);
@@ -113,9 +109,9 @@ public class RecyclerListViewFragment extends Fragment {
         if (supportsViewElevation()) {
             // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
         } else {
-            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) getResources().getDrawable(R.drawable.material_shadow_z1)));
+            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
         }
-        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(getResources().getDrawable(R.drawable.list_divider), true));
+        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(), R.drawable.list_divider), true));
 
         // NOTE:
         // The initialization order is very important! This order determines the priority of touch event handling.
@@ -127,7 +123,6 @@ public class RecyclerListViewFragment extends Fragment {
         // for debugging
 //        animator.setDebug(true);
 //        animator.setMoveDuration(2000);
-//        animator.setRemoveDuration(2000);
 //        mRecyclerViewSwipeManager.setMoveToOutsideWindowAnimationDuration(2000);
 //        mRecyclerViewSwipeManager.setReturnToDefaultPositionAnimationDuration(2000);
     }
