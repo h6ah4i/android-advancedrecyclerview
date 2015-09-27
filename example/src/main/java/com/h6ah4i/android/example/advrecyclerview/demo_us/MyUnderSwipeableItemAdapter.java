@@ -157,7 +157,7 @@ class MyUnderSwipeableItemAdapter
         // set swiping properties
         holder.setMaxLeftSwipeAmount(-0.5f);
         holder.setMaxRightSwipeAmount(0);
-        holder.setSwipeItemSlideAmount(
+        holder.setSwipeItemHorizontalSlideAmount(
                 item.isPinned() ? -0.5f : 0);
     }
 
