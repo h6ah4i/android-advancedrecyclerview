@@ -95,6 +95,11 @@
             android:text="@string/button_text_launch_demo_s_vertical" />
 
         <Button
+            android:id="@+id/button_launch_demo_s_viewpager"
+            style="@style/exampleLauncherButtonStyle"
+            android:text="@string/button_text_launch_demo_s_viewpager" />
+
+        <Button
             android:id="@+id/button_launch_demo_s_legacy"
             style="@style/exampleLauncherButtonStyle"
             android:text="@string/button_text_launch_demo_s_legacy" />

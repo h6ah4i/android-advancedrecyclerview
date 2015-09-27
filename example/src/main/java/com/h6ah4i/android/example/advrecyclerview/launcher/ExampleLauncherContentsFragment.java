@@ -38,6 +38,7 @@ import com.h6ah4i.android.example.advrecyclerview.demo_eds.ExpandableDraggableSw
 import com.h6ah4i.android.example.advrecyclerview.demo_s.SwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_legacy.LegacySwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.VerticalSwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager.ViewPagerSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_us.UnderSwipeableExampleActivity;
 
 public class ExampleLauncherContentsFragment extends Fragment implements View.OnClickListener {
@@ -63,6 +64,7 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
         view.findViewById(R.id.button_launch_demo_e_add_remove).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_e_already_expanded).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_s_vertical).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_s_viewpager).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_s_legacy).setOnClickListener(this);
     }
 
@@ -107,6 +109,9 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
                 break;
             case R.id.button_launch_demo_s_vertical:
                 launchExampleActivity(VerticalSwipeableExampleActivity.class);
+                break;
+            case R.id.button_launch_demo_s_viewpager:
+                launchExampleActivity(ViewPagerSwipeableExampleActivity.class);
                 break;
             case R.id.button_launch_demo_s_legacy:
                 launchExampleActivity(LegacySwipeableExampleActivity.class);
