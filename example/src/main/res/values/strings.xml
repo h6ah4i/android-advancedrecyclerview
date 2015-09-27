@@ -34,6 +34,7 @@
     <string name="activity_title_demo_e_add_remove">Expandable (Add/Remove items)</string>
     <string name="activity_title_demo_e_already_expanded">Expandable (Groups already expanded)</string>
     <string name="activity_title_demo_s_vertical">Swipeable (Vertical)</string>
+    <string name="activity_title_demo_s_legacy">Swipeable (Legacy)</string>
 
     <string name="button_text_launch_demo_d">@string/activity_title_demo_d</string>
     <string name="button_text_launch_demo_d_with_longpress">@string/activity_title_demo_d_with_longpress</string>
@@ -47,6 +48,7 @@
     <string name="button_text_launch_demo_e_add_remove">@string/activity_title_demo_e_add_remove</string>
     <string name="button_text_launch_demo_e_already_expanded">@string/activity_title_demo_e_already_expanded</string>
     <string name="button_text_launch_demo_s_vertical">@string/activity_title_demo_s_vertical</string>
+    <string name="button_text_launch_demo_s_legacy">@string/activity_title_demo_s_legacy</string>
 
     <string name="snack_bar_text_item_removed">1 item removed</string>
     <string name="snack_bar_text_group_item_removed">1 group item removed</string>
