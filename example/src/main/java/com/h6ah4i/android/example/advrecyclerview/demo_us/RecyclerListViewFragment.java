@@ -156,14 +156,14 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     private void handleOnItemViewClicked(View v) {
-        int position = mRecyclerView.getChildPosition(v);
+        int position = mRecyclerView.getChildAdapterPosition(v);
         if (position != RecyclerView.NO_POSITION) {
             ((UnderSwipeableExampleActivity) getActivity()).onItemClicked(position);
         }
     }
 
     private void handleOnUnderSwipeableViewButtonClicked(View v) {
-        int position = mRecyclerView.getChildPosition(v);
+        int position = mRecyclerView.getChildAdapterPosition(v);
         if (position != RecyclerView.NO_POSITION) {
             ((UnderSwipeableExampleActivity) getActivity()).onItemButtonClicked(position);
         }

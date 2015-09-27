@@ -231,7 +231,7 @@ public class RecyclerListViewFragment extends Fragment
     }
 
     private void onItemViewClick(View v, boolean pinned) {
-        final int flatPosition = mRecyclerView.getChildPosition(v);
+        final int flatPosition = mRecyclerView.getChildAdapterPosition(v);
 
         if (flatPosition == RecyclerView.NO_POSITION) {
             return;
