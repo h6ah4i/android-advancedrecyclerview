@@ -178,7 +178,7 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     private void onItemViewClick(View v, boolean pinned) {
-        int position = mRecyclerView.getChildPosition(v);
+        int position = mRecyclerView.getChildAdapterPosition(v);
         if (position != RecyclerView.NO_POSITION) {
             ((DraggableSwipeableExampleActivity) getActivity()).onItemClicked(position);
         }

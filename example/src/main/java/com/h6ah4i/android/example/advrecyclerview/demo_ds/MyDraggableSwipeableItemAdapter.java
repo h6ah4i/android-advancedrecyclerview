@@ -163,7 +163,7 @@ class MyDraggableSwipeableItemAdapter
         }
 
         // set swiping properties
-        holder.setSwipeItemSlideAmount(
+        holder.setSwipeItemHorizontalSlideAmount(
                 item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
     }
 

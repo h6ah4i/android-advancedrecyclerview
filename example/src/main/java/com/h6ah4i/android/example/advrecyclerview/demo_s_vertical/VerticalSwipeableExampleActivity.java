@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -67,7 +68,7 @@ public class VerticalSwipeableExampleActivity extends AppCompatActivity implemen
                 onItemUndoActionClicked();
             }
         });
-        snackbar.setActionTextColor(getResources().getColor(R.color.snackbar_action_color_done));
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color_done));
         snackbar.show();
     }
 
