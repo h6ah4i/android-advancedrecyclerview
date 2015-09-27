@@ -18,6 +18,8 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.graphics.Rect;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -36,372 +38,13 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
  * Provides item swipe operation for {@link android.support.v7.widget.RecyclerView}
  */
 @SuppressWarnings("PointlessBitwiseExpression")
-public class RecyclerViewSwipeManager {
+public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private static final String TAG = "ARVSwipeManager";
 
     static final int BIT_SHIFT_AMOUNT_LEFT = 0;
     static final int BIT_SHIFT_AMOUNT_UP = 8;
     static final int BIT_SHIFT_AMOUNT_RIGHT = 16;
     static final int BIT_SHIFT_AMOUNT_DOWN = 24;
-
-    /**
-     * Result code of swipe operation. Used for the third argument of the
-     * {@link SwipeableItemAdapter#onSwipeItem(RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * None. (internal default value, this value is not used for the argument)
-     */
-    public static final int RESULT_NONE = 0;
-
-    /**
-     * Result code of swipe operation. Used for the third argument of the
-     * {@link SwipeableItemAdapter#onSwipeItem(RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Canceled.
-     */
-    public static final int RESULT_CANCELED = 1;
-
-    /**
-     * Result code of swipe operation. Used for the third argument of the
-     * {@link SwipeableItemAdapter#onSwipeItem(RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Swipe left performed.
-     */
-    public static final int RESULT_SWIPED_LEFT = 2;
-
-    /**
-     * Result code of swipe operation. Used for the third argument of the
-     * {@link SwipeableItemAdapter#onSwipeItem(RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Swipe up performed.
-     */
-    public static final int RESULT_SWIPED_UP = 3;
-
-    /**
-     * Result code of swipe operation. Used for the third argument of the
-     * {@link SwipeableItemAdapter#onSwipeItem(RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Swipe right performed.
-     */
-    public static final int RESULT_SWIPED_RIGHT = 4;
-
-    /**
-     * Result code of swipe operation. Used for the third argument of the
-     * {@link SwipeableItemAdapter#onSwipeItem(RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Swipe down performed.
-     */
-    public static final int RESULT_SWIPED_DOWN = 5;
-
-    // ---
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can not swipe any direction"
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_ANY = 0;
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can not swipe left" (completely no reactions)
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_LEFT = (0 << BIT_SHIFT_AMOUNT_LEFT);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can not swipe left"  (not swipeable, but rubber-band effect applied)
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT = (1 << BIT_SHIFT_AMOUNT_LEFT);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can swipe left"
-     */
-    public static final int REACTION_CAN_SWIPE_LEFT = (2 << BIT_SHIFT_AMOUNT_LEFT);
-
-    /**
-     * Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * If this flag is specified, swipe operation will not start even if user swipe an item to the LEFT direction.
-     * <p/>
-     */
-    public static final int REACTION_FLAG_MASK_START_SWIPE_LEFT = (128 << BIT_SHIFT_AMOUNT_LEFT);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can not swipe up" (completely no reactions)
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_UP = (0 << BIT_SHIFT_AMOUNT_UP);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can not swipe up"  (not swipeable, but rubber-band effect applied)
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_UP_WITH_RUBBER_BAND_EFFECT = (1 << BIT_SHIFT_AMOUNT_UP);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can swipe up"
-     */
-    public static final int REACTION_CAN_SWIPE_UP = (2 << BIT_SHIFT_AMOUNT_UP);
-
-    /**
-     * Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * If this flag is specified, swipe operation will not start even if user swipe an item to the UP direction.
-     * <p/>
-     */
-    public static final int REACTION_FLAG_MASK_START_SWIPE_UP = (128 << BIT_SHIFT_AMOUNT_UP);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can not swipe right" (completely no reactions)
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_RIGHT = (0 << BIT_SHIFT_AMOUNT_RIGHT);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can not swipe right"  (not swipeable, but rubber-band effect applied)
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT = (1 << BIT_SHIFT_AMOUNT_RIGHT);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can swipe right"
-     */
-    public static final int REACTION_CAN_SWIPE_RIGHT = (2 << BIT_SHIFT_AMOUNT_RIGHT);
-
-    /**
-     * Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * If this flag is specified, swipe operation will not start even if user swipe an item to the RIGHT direction.
-     * <p/>
-     */
-    public static final int REACTION_FLAG_MASK_START_SWIPE_RIGHT = (128 << BIT_SHIFT_AMOUNT_RIGHT);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can not swipe down" (completely no reactions)
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_DOWN = (0 << BIT_SHIFT_AMOUNT_DOWN);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can not swipe down"  (not swipeable, but rubber-band effect applied)
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_DOWN_WITH_RUBBER_BAND_EFFECT = (1 << BIT_SHIFT_AMOUNT_DOWN);
-
-    /**
-     * Reaction type to swipe operation. Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * Indicates "can swipe down"
-     */
-    public static final int REACTION_CAN_SWIPE_DOWN = (2 << BIT_SHIFT_AMOUNT_DOWN);
-
-    /**
-     * Used for the return value of the
-     * {@link SwipeableItemAdapter#onGetSwipeReactionType(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)} method.
-     * <p/>
-     * If this flag is specified, swipe operation will not start even if user swipe an item to the left direction.
-     * <p/>
-     */
-    public static final int REACTION_FLAG_MASK_START_SWIPE_DOWN = (128 << BIT_SHIFT_AMOUNT_DOWN);
-
-    // ---
-
-    /**
-     * Convenient constant value: Equals to {@link #REACTION_CAN_NOT_SWIPE_LEFT} | {@link #REACTION_CAN_NOT_SWIPE_RIGHT}
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_BOTH_H =
-            REACTION_CAN_NOT_SWIPE_LEFT | REACTION_CAN_NOT_SWIPE_RIGHT;
-
-    /**
-     * Convenient constant value: Equals to {@link #REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT} | {@link #REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT}
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_BOTH_H_WITH_RUBBER_BAND_EFFECT =
-            REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT |
-                    REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT;
-
-    /**
-     * Convenient constant value: Equals to {@link #REACTION_CAN_SWIPE_LEFT} | {@link #REACTION_CAN_SWIPE_RIGHT}
-     */
-    public static final int REACTION_CAN_SWIPE_BOTH_H =
-            REACTION_CAN_SWIPE_LEFT | REACTION_CAN_SWIPE_RIGHT;
-
-    /**
-     * Convenient constant value: Equals to {@link #REACTION_CAN_NOT_SWIPE_UP} | {@link #REACTION_CAN_NOT_SWIPE_DOWN}
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_BOTH_V =
-            REACTION_CAN_NOT_SWIPE_UP | REACTION_CAN_NOT_SWIPE_DOWN;
-
-    /**
-     * Convenient constant value: Equals to {@link #REACTION_CAN_NOT_SWIPE_UP_WITH_RUBBER_BAND_EFFECT} | {@link #REACTION_CAN_NOT_SWIPE_DOWN_WITH_RUBBER_BAND_EFFECT}
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_BOTH_V_WITH_RUBBER_BAND_EFFECT =
-            REACTION_CAN_NOT_SWIPE_UP_WITH_RUBBER_BAND_EFFECT |
-                    REACTION_CAN_NOT_SWIPE_DOWN_WITH_RUBBER_BAND_EFFECT;
-
-    /**
-     * Convenient constant value: Equals to {@link #REACTION_CAN_SWIPE_UP} | {@link #REACTION_CAN_SWIPE_DOWN}
-     */
-    public static final int REACTION_CAN_SWIPE_BOTH_V =
-            REACTION_CAN_SWIPE_UP | REACTION_CAN_SWIPE_DOWN;
-
-    // ---
-
-    /**
-     * @deprecated Use {@link #REACTION_CAN_NOT_SWIPE_ANY} directly.
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_BOTH = REACTION_CAN_NOT_SWIPE_ANY;
-
-    /**
-     * @deprecated Use {@link #REACTION_CAN_NOT_SWIPE_BOTH_H_WITH_RUBBER_BAND_EFFECT} directly.
-     */
-    public static final int REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT = REACTION_CAN_NOT_SWIPE_BOTH_H_WITH_RUBBER_BAND_EFFECT;
-
-    /**
-     * @deprecated Use {@link #REACTION_CAN_SWIPE_BOTH_H} directly.
-     */
-    public static final int REACTION_CAN_SWIPE_BOTH = REACTION_CAN_SWIPE_BOTH_H;
-
-    // ---
-
-    /**
-     * Background drawable type used for the second argument of the
-     * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Background image for the neutral (= not swiping) item.
-     */
-    public static final int DRAWABLE_SWIPE_NEUTRAL_BACKGROUND = 0;
-
-    /**
-     * Background drawable type used for the second argument of the
-     * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Background image for the swiping-left item.
-     */
-    public static final int DRAWABLE_SWIPE_LEFT_BACKGROUND = 1;
-
-    /**
-     * Background drawable type used for the second argument of the
-     * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Background image for the swiping-up item.
-     */
-    public static final int DRAWABLE_SWIPE_UP_BACKGROUND = 2;
-
-    /**
-     * Background drawable type used for the second argument of the
-     * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Background image for the swiping-right item.
-     */
-    public static final int DRAWABLE_SWIPE_RIGHT_BACKGROUND = 3;
-
-    /**
-     * Background drawable type used for the second argument of the
-     * {@link SwipeableItemAdapter#onSetSwipeBackground(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * Background image for the swiping-down item.
-     */
-    public static final int DRAWABLE_SWIPE_DOWN_BACKGROUND = 4;
-
-    // ---
-
-    /**
-     * After-reaction type used for the {@link SwipeableItemViewHolder#setAfterSwipeReaction(int)} and {@link SwipeableItemViewHolder#getAfterSwipeReaction()} methods.
-     * Represents perform nothing.
-     */
-    public static final int AFTER_SWIPE_REACTION_DEFAULT = 0;
-
-    /**
-     * After-reaction type used for the {@link SwipeableItemViewHolder#setAfterSwipeReaction(int)} and {@link SwipeableItemViewHolder#getAfterSwipeReaction()} methods.
-     * Represents remove the swiped item.
-     */
-    public static final int AFTER_SWIPE_REACTION_REMOVE_ITEM = 1;
-
-    /**
-     * After-reaction type used for the {@link SwipeableItemViewHolder#setAfterSwipeReaction(int)} and {@link SwipeableItemViewHolder#getAfterSwipeReaction()} methods.
-     * Represents that the item moved to swiped direction.
-     */
-    public static final int AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION = 2;
-
-    // ---
-    /**
-     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemHorizontalSlideAmount(float)}
-     * and {@link SwipeableItemViewHolder#getSwipeItemHorizontalSlideAmount()} methods.
-     * Indicates that this item is pinned to LEFT of the window.
-     */
-    public static final float OUTSIDE_OF_THE_WINDOW_LEFT = -((1 << 16) + 0);
-
-    /**
-     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemVerticalSlideAmount(float)}
-     * and {@link SwipeableItemViewHolder#getSwipeItemVerticalSlideAmount()} methods.
-     * Indicates that this item is pinned to UP of the window.
-     */
-    public static final float OUTSIDE_OF_THE_WINDOW_TOP = -((1 << 16) + 1);
-
-    /**
-     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemHorizontalSlideAmount(float)}
-     * and {@link SwipeableItemViewHolder#getSwipeItemHorizontalSlideAmount()} methods.
-     * Indicates that this item is pinned to RIGHT the window.
-     */
-    public static final float OUTSIDE_OF_THE_WINDOW_RIGHT = ((1 << 16) + 0);
-
-    /**
-     * Special value for the {@link SwipeableItemViewHolder#setSwipeItemVerticalSlideAmount(float)}
-     * and {@link SwipeableItemViewHolder#getSwipeItemVerticalSlideAmount()} methods.
-     * Indicates that this item is pinned to DOWN the window.
-     */
-    public static final float OUTSIDE_OF_THE_WINDOW_BOTTOM = ((1 << 16) + 1);
-
-
-    // ---
-    /**
-     * State flag for the {@link SwipeableItemViewHolder#setSwipeStateFlags(int)} and {@link SwipeableItemViewHolder#getSwipeStateFlags()} methods.
-     * Indicates that currently performing swiping.
-     */
-    public static final int STATE_FLAG_SWIPING = (1 << 0);
-
-    /**
-     * State flag for the {@link SwipeableItemViewHolder#setSwipeStateFlags(int)} and {@link SwipeableItemViewHolder#getSwipeStateFlags()} methods.
-     * Indicates that this item is being swiped.
-     */
-    public static final int STATE_FLAG_IS_ACTIVE = (1 << 1);
-
-    /**
-     * State flag for the {@link SwipeableItemViewHolder#setSwipeStateFlags(int)} and {@link SwipeableItemViewHolder#getSwipeStateFlags()} methods.
-     * If this flag is set, some other flags are changed and require to apply.
-     */
-    public static final int STATE_FLAG_IS_UPDATED = (1 << 31);
-
-    // ---
 
     /**
      * Used for listening item swipe events
@@ -489,7 +132,7 @@ public class RecyclerViewSwipeManager {
      * @return Wrapped adapter which is associated to this {@link RecyclerViewSwipeManager} instance.
      */
     @SuppressWarnings("unchecked")
-    public RecyclerView.Adapter createWrappedAdapter(RecyclerView.Adapter adapter) {
+    public RecyclerView.Adapter createWrappedAdapter(@NonNull RecyclerView.Adapter adapter) {
         if (mAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");
         }
@@ -517,7 +160,7 @@ public class RecyclerViewSwipeManager {
      *
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
-    public void attachRecyclerView(RecyclerView rv) {
+    public void attachRecyclerView(@NonNull RecyclerView rv) {
         if (rv == null) {
             throw new IllegalArgumentException("RecyclerView cannot be null");
         }
@@ -1049,7 +692,7 @@ public class RecyclerViewSwipeManager {
      *
      * @return The listener object
      */
-    public OnItemSwipeEventListener getOnItemSwipeEventListener() {
+    public @Nullable OnItemSwipeEventListener getOnItemSwipeEventListener() {
         return mItemSwipeEventListener;
     }
 
@@ -1058,7 +701,7 @@ public class RecyclerViewSwipeManager {
      *
      * @param listener The listener object
      */
-    public void setOnItemSwipeEventListener(OnItemSwipeEventListener listener) {
+    public void setOnItemSwipeEventListener(@Nullable OnItemSwipeEventListener listener) {
         mItemSwipeEventListener = listener;
     }
 

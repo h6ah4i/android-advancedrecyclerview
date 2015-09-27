@@ -28,9 +28,9 @@ public interface SwipeableItemViewHolder {
      * Sets the state flags value for swiping item
      *
      * @param flags Bitwise OR of these flags;
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#STATE_FLAG_SWIPING}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#STATE_FLAG_IS_ACTIVE}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#STATE_FLAG_IS_UPDATED}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_SWIPING}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_IS_ACTIVE}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_IS_UPDATED}
      */
     void setSwipeStateFlags(int flags);
 
@@ -38,9 +38,9 @@ public interface SwipeableItemViewHolder {
      * Gets the state flags value for swiping item
      *
      * @return  Bitwise OR of these flags;
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#STATE_FLAG_SWIPING}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#STATE_FLAG_IS_ACTIVE}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#STATE_FLAG_IS_UPDATED}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_SWIPING}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_IS_ACTIVE}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_IS_UPDATED}
      */
     int getSwipeStateFlags();
 

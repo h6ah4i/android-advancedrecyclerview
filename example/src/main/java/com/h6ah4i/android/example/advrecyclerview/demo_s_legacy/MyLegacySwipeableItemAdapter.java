@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.LegacySwipeableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
@@ -41,6 +41,10 @@ class MyLegacySwipeableItemAdapter
         extends RecyclerView.Adapter<MyLegacySwipeableItemAdapter.MyViewHolder>
         implements LegacySwipeableItemAdapter<MyLegacySwipeableItemAdapter.MyViewHolder> {
     private static final String TAG = "MyLegacySwipeableItem";
+
+    // NOTE: Make accessible with short name
+    private interface Swipeable extends SwipeableItemConstants {
+    }
 
     private AbstractDataProvider mProvider;
     private EventListener mEventListener;
@@ -136,12 +140,12 @@ class MyLegacySwipeableItemAdapter
         // set background resource (target view ID: container)
         final int swipeState = holder.getSwipeStateFlags();
 
-        if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED) != 0) {
+        if ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
 
-            if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_item_swiping_active_state;
-            } else if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_SWIPING) != 0) {
+            } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
                 bgResId = R.drawable.bg_item_swiping_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;
@@ -152,7 +156,7 @@ class MyLegacySwipeableItemAdapter
 
         // set swiping properties
         holder.setSwipeItemHorizontalSlideAmount(
-                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+                item.isPinned() ? Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
     }
 
     @Override
@@ -162,20 +166,20 @@ class MyLegacySwipeableItemAdapter
 
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
-        return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_H;
+        return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
     }
 
     @Override
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
         int bgRes = 0;
         switch (type) {
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_neutral;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_LEFT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_left;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_right;
                 break;
         }
@@ -189,21 +193,21 @@ class MyLegacySwipeableItemAdapter
 
         switch (result) {
             // swipe right
-            case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
+            case Swipeable.RESULT_SWIPED_RIGHT:
                 if (mProvider.getItem(position).isPinned()) {
                     // pinned --- back to default position
-                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
+                    return Swipeable.AFTER_SWIPE_REACTION_DEFAULT;
                 } else {
                     // not pinned --- remove
-                    return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM;
+                    return Swipeable.AFTER_SWIPE_REACTION_REMOVE_ITEM;
                 }
                 // swipe left -- pin
-            case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
-                return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
+            case Swipeable.RESULT_SWIPED_LEFT:
+                return Swipeable.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION;
             // other --- do nothing
-            case RecyclerViewSwipeManager.RESULT_CANCELED:
+            case Swipeable.RESULT_CANCELED:
             default:
-                return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
+                return Swipeable.AFTER_SWIPE_REACTION_DEFAULT;
         }
     }
 
@@ -213,14 +217,14 @@ class MyLegacySwipeableItemAdapter
 
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
-        if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
+        if (reaction == Swipeable.AFTER_SWIPE_REACTION_REMOVE_ITEM) {
             mProvider.removeItem(position);
             notifyItemRemoved(position);
 
             if (mEventListener != null) {
                 mEventListener.onItemRemoved(position);
             }
-        } else if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) {
+        } else if (reaction == Swipeable.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) {
             item.setPinned(true);
             notifyItemChanged(position);
 

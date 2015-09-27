@@ -30,6 +30,7 @@ import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvid
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
@@ -40,6 +41,10 @@ class MyUnderSwipeableItemAdapter
         extends RecyclerView.Adapter<MyUnderSwipeableItemAdapter.MyViewHolder>
         implements SwipeableItemAdapter<MyUnderSwipeableItemAdapter.MyViewHolder> {
     private static final String TAG = "MySwipeableItemAdapter";
+
+    // NOTE: Make accessible with short name
+    private interface Swipeable extends SwipeableItemConstants {
+    }
 
     private AbstractDataProvider mProvider;
     private EventListener mEventListener;
@@ -139,12 +144,12 @@ class MyUnderSwipeableItemAdapter
         // set background resource (target view ID: container)
         final int swipeState = holder.getSwipeStateFlags();
 
-        if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED) != 0) {
+        if ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
 
-            if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_item_swiping_active_state;
-            } else if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_SWIPING) != 0) {
+            } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
                 bgResId = R.drawable.bg_item_swiping_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;
@@ -168,9 +173,9 @@ class MyUnderSwipeableItemAdapter
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
         if (ViewUtils.hitTest(holder.getSwipeableContainerView(), x, y)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_H;
+            return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
         } else {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH_H;
+            return Swipeable.REACTION_CAN_NOT_SWIPE_BOTH_H;
         }
     }
 
@@ -178,13 +183,13 @@ class MyUnderSwipeableItemAdapter
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
         int bgRes = 0;
         switch (type) {
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_neutral;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_LEFT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_left;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_right;
                 break;
         }
@@ -198,11 +203,11 @@ class MyUnderSwipeableItemAdapter
 
         switch (result) {
             // swipe left --- pin
-            case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
+            case Swipeable.RESULT_SWIPED_LEFT:
                 return new SwipeLeftResultAction(this, position);
             // other --- do nothing
-            case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-            case RecyclerViewSwipeManager.RESULT_CANCELED:
+            case Swipeable.RESULT_SWIPED_RIGHT:
+            case Swipeable.RESULT_CANCELED:
             default:
                 return new UnpinResultAction(this, position);
         }

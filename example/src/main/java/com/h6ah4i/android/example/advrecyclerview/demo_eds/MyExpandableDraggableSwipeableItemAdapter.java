@@ -29,13 +29,16 @@ import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandable
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableSwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
@@ -49,6 +52,14 @@ class MyExpandableDraggableSwipeableItemAdapter
         implements ExpandableDraggableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder>,
         ExpandableSwipeableItemAdapter<MyExpandableDraggableSwipeableItemAdapter.MyGroupViewHolder, MyExpandableDraggableSwipeableItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyEDSItemAdapter";
+
+    // NOTE: Make accessible with short name
+    private interface Expandable extends ExpandableItemConstants {
+    }
+    private interface Draggable extends DraggableItemConstants {
+    }
+    private interface Swipeable extends SwipeableItemConstants {
+    }
 
     private final RecyclerViewExpandableItemManager mExpandableItemManager;
     private AbstractExpandableDataProvider mProvider;
@@ -207,31 +218,31 @@ class MyExpandableDraggableSwipeableItemAdapter
         final int expandState = holder.getExpandStateFlags();
         final int swipeState = holder.getSwipeStateFlags();
 
-        if (((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED) != 0) ||
-                ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0) ||
-                ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0) ||
+                ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0) ||
+                ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
             boolean isExpanded;
-            boolean animateIndicator = ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
+            boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
 
-            if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_group_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) {
+            } else if ((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) {
                 bgResId = R.drawable.bg_group_item_dragging_state;
-            } else if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            } else if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_group_item_swiping_active_state;
-            } else if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_SWIPING) != 0) {
+            } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
                 bgResId = R.drawable.bg_group_item_swiping_state;
-            } else if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
+            } else if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
             } else {
                 bgResId = R.drawable.bg_group_item_normal_state;
             }
 
-            if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
+            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
                 isExpanded = true;
             } else {
                 isExpanded = false;
@@ -243,7 +254,7 @@ class MyExpandableDraggableSwipeableItemAdapter
 
         // set swiping properties
         holder.setSwipeItemHorizontalSlideAmount(
-                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+                item.isPinned() ? Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
     }
 
     @Override
@@ -263,20 +274,20 @@ class MyExpandableDraggableSwipeableItemAdapter
         final int dragState = holder.getDragStateFlags();
         final int swipeState = holder.getSwipeStateFlags();
 
-        if (((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED) != 0) ||
-                ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0) ||
+                ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
 
-            if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) {
+            } else if ((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) {
                 bgResId = R.drawable.bg_item_dragging_state;
-            } else if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            } else if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_item_swiping_active_state;
-            } else if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_SWIPING) != 0) {
+            } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
                 bgResId = R.drawable.bg_item_swiping_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;
@@ -287,7 +298,7 @@ class MyExpandableDraggableSwipeableItemAdapter
 
         // set swiping properties
         holder.setSwipeItemHorizontalSlideAmount(
-                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+                item.isPinned() ? Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
     }
 
     @Override
@@ -361,32 +372,32 @@ class MyExpandableDraggableSwipeableItemAdapter
     @Override
     public int onGetGroupItemSwipeReactionType(MyGroupViewHolder holder, int groupPosition, int x, int y) {
         if (onCheckGroupCanStartDrag(holder, groupPosition, x, y)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH_H;
+            return Swipeable.REACTION_CAN_NOT_SWIPE_BOTH_H;
         }
 
-        return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_H;
+        return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
     }
 
     @Override
     public int onGetChildItemSwipeReactionType(MyChildViewHolder holder, int groupPosition, int childPosition, int x, int y) {
         if (onCheckChildCanStartDrag(holder, groupPosition, childPosition, x, y)) {
-            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH_H;
+            return Swipeable.REACTION_CAN_NOT_SWIPE_BOTH_H;
         }
 
-        return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_H;
+        return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
     }
 
     @Override
     public void onSetGroupItemSwipeBackground(MyGroupViewHolder holder, int groupPosition, int type) {
         int bgResId = 0;
         switch (type) {
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
                 bgResId = R.drawable.bg_swipe_item_neutral;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_LEFT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
                 bgResId = R.drawable.bg_swipe_group_item_left;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
                 bgResId = R.drawable.bg_swipe_group_item_right;
                 break;
         }
@@ -398,13 +409,13 @@ class MyExpandableDraggableSwipeableItemAdapter
     public void onSetChildItemSwipeBackground(MyChildViewHolder holder, int groupPosition, int childPosition, int type) {
         int bgResId = 0;
         switch (type) {
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
                 bgResId = R.drawable.bg_swipe_item_neutral;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_LEFT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
                 bgResId = R.drawable.bg_swipe_item_left;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
                 bgResId = R.drawable.bg_swipe_item_right;
                 break;
         }
@@ -418,7 +429,7 @@ class MyExpandableDraggableSwipeableItemAdapter
 
         switch (result) {
             // swipe right
-            case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
+            case Swipeable.RESULT_SWIPED_RIGHT:
                 if (mProvider.getGroupItem(groupPosition).isPinned()) {
                     // pinned --- back to default position
                     return new GroupUnpinResultAction(this, groupPosition);
@@ -427,10 +438,10 @@ class MyExpandableDraggableSwipeableItemAdapter
                     return new GroupSwipeRightResultAction(this, groupPosition);
                 }
                 // swipe left -- pin
-            case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
+            case Swipeable.RESULT_SWIPED_LEFT:
                 return new GroupSwipeLeftResultAction(this, groupPosition);
             // other --- do nothing
-            case RecyclerViewSwipeManager.RESULT_CANCELED:
+            case Swipeable.RESULT_CANCELED:
             default:
                 return new GroupUnpinResultAction(this, groupPosition);
         }
@@ -442,7 +453,7 @@ class MyExpandableDraggableSwipeableItemAdapter
 
         switch (result) {
             // swipe right
-            case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
+            case Swipeable.RESULT_SWIPED_RIGHT:
                 if (mProvider.getChildItem(groupPosition, childPosition).isPinned()) {
                     // pinned --- back to default position
                     return new ChildUnpinResultAction(this, groupPosition, childPosition);
@@ -451,10 +462,10 @@ class MyExpandableDraggableSwipeableItemAdapter
                     return new ChildSwipeRightResultAction(this, groupPosition, childPosition);
                 }
                 // swipe left -- pin
-            case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
+            case Swipeable.RESULT_SWIPED_LEFT:
                 return new ChildSwipeLeftResultAction(this, groupPosition, childPosition);
             // other --- do nothing
-            case RecyclerViewSwipeManager.RESULT_CANCELED:
+            case Swipeable.RESULT_CANCELED:
             default:
                 return new ChildUnpinResultAction(this, groupPosition, childPosition);
         }

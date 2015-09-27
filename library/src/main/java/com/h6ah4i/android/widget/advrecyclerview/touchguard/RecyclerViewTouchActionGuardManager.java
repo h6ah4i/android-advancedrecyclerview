@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.touchguard;
 
+import android.support.annotation.NonNull;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -75,7 +76,7 @@ public class RecyclerViewTouchActionGuardManager {
      *
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
-    public void attachRecyclerView(RecyclerView rv) {
+    public void attachRecyclerView(@NonNull RecyclerView rv) {
         if (rv == null) {
             throw new IllegalArgumentException("RecyclerView cannot be null");
         }

@@ -19,6 +19,7 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 import android.support.v7.widget.RecyclerView;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 
 public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> extends BaseSwipeableItemAdapter<T> {
     /**
@@ -29,13 +30,13 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> extends
      * @param holder The ViewHolder which is associated to the swiped item.
      * @param position The position of the item within the adapter's data set.
      * @param result The result code of user's swipe operation.
-     *              {@link RecyclerViewSwipeManager#RESULT_CANCELED},
-     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_LEFT},
-     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_UP},
-     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT} or
-     *              {@link RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
+     *              {@link SwipeableItemConstants#RESULT_CANCELED},
+     *              {@link SwipeableItemConstants#RESULT_SWIPED_LEFT},
+     *              {@link SwipeableItemConstants#RESULT_SWIPED_UP},
+     *              {@link SwipeableItemConstants#RESULT_SWIPED_RIGHT} or
+     *              {@link SwipeableItemConstants#RESULT_SWIPED_DOWN}
      *
      * @return Result action.
      */
-    SwipeResultAction onSwipeItem(T holder, int position, int result);
+    SwipeResultAction onSwipeItem(T holder, int position, @SwipeableItemResults int result);
 }

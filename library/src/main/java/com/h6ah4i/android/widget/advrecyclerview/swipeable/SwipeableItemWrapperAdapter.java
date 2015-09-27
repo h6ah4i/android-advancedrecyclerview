@@ -29,6 +29,9 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends BaseWrapperAdapter<VH> {
     private static final String TAG = "ARVSwipeableWrapper";
 
+    private interface Constants extends SwipeableItemConstants {
+    }
+
     private static final int STATE_FLAG_INITIAL_VALUE = -1;
 
     private static final boolean LOCAL_LOGV = false;
@@ -101,10 +104,10 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         }
 
         if (isSwiping()) {
-            int flags = RecyclerViewSwipeManager.STATE_FLAG_SWIPING;
+            int flags = Constants.STATE_FLAG_SWIPING;
 
             if (position == mSwipingItemPosition) {
-                flags |= RecyclerViewSwipeManager.STATE_FLAG_IS_ACTIVE;
+                flags |= Constants.STATE_FLAG_IS_ACTIVE;
             }
 
             safeUpdateFlags(holder, flags);
@@ -320,11 +323,11 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         final SwipeableItemViewHolder holder2 = (SwipeableItemViewHolder) holder;
 
         final int curFlags = holder2.getSwipeStateFlags();
-        final int mask = ~RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED;
+        final int mask = ~Constants.STATE_FLAG_IS_UPDATED;
 
         // append UPDATED flag
         if ((curFlags == STATE_FLAG_INITIAL_VALUE) || (((curFlags ^ flags) & mask) != 0)) {
-            flags |= RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED;
+            flags |= Constants.STATE_FLAG_IS_UPDATED;
         }
 
         ((SwipeableItemViewHolder) holder).setSwipeStateFlags(flags);

@@ -19,6 +19,7 @@ package com.h6ah4i.android.widget.advrecyclerview.decoration;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -37,7 +38,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
      * @param divider divider drawable
      * @param overlap whether the divider is drawn overlapped on bottom of the item.
      */
-    public SimpleListDividerDecorator(Drawable divider, boolean overlap) {
+    public SimpleListDividerDecorator(@NonNull Drawable divider, boolean overlap) {
         mDividerDrawable = divider;
         mDividerHeight = mDividerDrawable.getIntrinsicHeight();
         mOverlap = overlap;

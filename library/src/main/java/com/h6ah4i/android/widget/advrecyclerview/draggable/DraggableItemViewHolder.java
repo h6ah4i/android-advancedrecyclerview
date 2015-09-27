@@ -16,6 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
+import com.h6ah4i.android.widget.advrecyclerview.draggable.annotation.DraggableItemStateFlags;
+
 /**
  * Interface which provides required information for dragging item.
  *
@@ -26,21 +28,22 @@ public interface DraggableItemViewHolder {
      * Sets the state flags value for dragging item
      *
      * @param flags Bitwise OR of these flags;
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager#STATE_FLAG_DRAGGING}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager#STATE_FLAG_IS_ACTIVE}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager#STATE_FLAG_IS_IN_RANGE}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager#STATE_FLAG_IS_UPDATED}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_DRAGGING}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_ACTIVE}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_IN_RANGE}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_UPDATED}
      */
-    void setDragStateFlags(int flags);
+    void setDragStateFlags(@DraggableItemStateFlags int flags);
 
     /**
      * Gets the state flags value for dragging item
      *
      * @return  Bitwise OR of these flags;
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager#STATE_FLAG_DRAGGING}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager#STATE_FLAG_IS_ACTIVE}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager#STATE_FLAG_IS_IN_RANGE}
-     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager#STATE_FLAG_IS_UPDATED}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_DRAGGING}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_ACTIVE}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_IN_RANGE}
+     *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_UPDATED}
      */
+    @DraggableItemStateFlags
     int getDragStateFlags();
 }
