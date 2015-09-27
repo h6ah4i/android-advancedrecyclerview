@@ -28,11 +28,6 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.LegacySwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionRemoveItem;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 

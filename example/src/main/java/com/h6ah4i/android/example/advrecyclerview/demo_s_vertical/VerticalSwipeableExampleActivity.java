@@ -28,7 +28,6 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataProviderFragment;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ItemPinnedMessageDialogFragment;
-import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.RecyclerListViewFragment;
 
 
 public class VerticalSwipeableExampleActivity extends AppCompatActivity implements ItemPinnedMessageDialogFragment.EventListener {

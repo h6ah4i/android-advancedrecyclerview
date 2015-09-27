@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;

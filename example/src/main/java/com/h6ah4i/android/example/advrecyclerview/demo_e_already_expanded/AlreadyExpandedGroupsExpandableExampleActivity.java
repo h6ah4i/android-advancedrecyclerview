@@ -22,10 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.data.ExampleAddRemoveExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleAddRemoveExpandableDataProviderFragment;
-import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleExpandableDataProviderFragment;
 
 public class AlreadyExpandedGroupsExpandableExampleActivity extends AppCompatActivity {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
