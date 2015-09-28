@@ -31,7 +31,6 @@ import com.h6ah4i.android.example.advrecyclerview.common.fragment.ItemPinnedMess
 public class UnderSwipeableExampleActivity extends AppCompatActivity implements ItemPinnedMessageDialogFragment.EventListener {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     private static final String FRAGMENT_LIST_VIEW = "list view";
-    private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,14 +84,6 @@ public class UnderSwipeableExampleActivity extends AppCompatActivity implements 
                 Snackbar.LENGTH_SHORT);
 
         snackbar.show();
-    }
-
-    private void onItemUndoActionClicked() {
-        int position = getDataProvider().undoLastRemoval();
-        if (position >= 0) {
-            final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
-            ((RecyclerListViewFragment) fragment).notifyItemInserted(position);
-        }
     }
 
     // implements ItemPinnedMessageDialogFragment.EventListener
