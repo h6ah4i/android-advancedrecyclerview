@@ -23,6 +23,7 @@
     <string name="activity_title_about">Advanced RecyclerView About</string>
 
     <string name="activity_title_demo_d">Draggable</string>
+    <string name="activity_title_demo_d_grid">Draggable (Grid Layout)</string>
     <string name="activity_title_demo_d_with_longpress">Draggable with Long Press</string>
     <string name="activity_title_demo_s">Swipeable</string>
     <string name="activity_title_demo_us">Button under swipeable item</string>
@@ -34,8 +35,11 @@
     <string name="activity_title_demo_e_add_remove">Expandable (Add/Remove items)</string>
     <string name="activity_title_demo_e_already_expanded">Expandable (Groups already expanded)</string>
     <string name="activity_title_demo_s_vertical">Swipeable (Vertical)</string>
+    <string name="activity_title_demo_s_viewpager">Swipeable with ViewPager</string>
+    <string name="activity_title_demo_s_legacy">Swipeable (Legacy)</string>
 
     <string name="button_text_launch_demo_d">@string/activity_title_demo_d</string>
+    <string name="button_text_launch_demo_d_grid">@string/activity_title_demo_d_grid</string>
     <string name="button_text_launch_demo_d_with_longpress">@string/activity_title_demo_d_with_longpress</string>
     <string name="button_text_launch_demo_s">@string/activity_title_demo_s</string>
     <string name="button_text_launch_demo_us">@string/activity_title_demo_us</string>
@@ -47,6 +51,8 @@
     <string name="button_text_launch_demo_e_add_remove">@string/activity_title_demo_e_add_remove</string>
     <string name="button_text_launch_demo_e_already_expanded">@string/activity_title_demo_e_already_expanded</string>
     <string name="button_text_launch_demo_s_vertical">@string/activity_title_demo_s_vertical</string>
+    <string name="button_text_launch_demo_s_viewpager">@string/activity_title_demo_s_viewpager</string>
+    <string name="button_text_launch_demo_s_legacy">@string/activity_title_demo_s_legacy</string>
 
     <string name="snack_bar_text_item_removed">1 item removed</string>
     <string name="snack_bar_text_group_item_removed">1 group item removed</string>

@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewParent;
@@ -29,7 +30,7 @@ public class RecyclerViewAdapterUtils {
      * @param view Child view of the RecyclerView's item
      * @return Parent RecyclerView instance
      */
-    public static RecyclerView getParentRecyclerView(View view) {
+    public static RecyclerView getParentRecyclerView(@Nullable View view) {
         if (view == null) {
             return null;
         }
@@ -48,7 +49,7 @@ public class RecyclerViewAdapterUtils {
      * @param view Child view of the RecyclerView's item
      * @return Item view
      */
-    public static View getParentViewHolderItemView(View view) {
+    public static View getParentViewHolderItemView(@Nullable View view) {
         if (view == null) {
             return null;
         }
@@ -67,7 +68,7 @@ public class RecyclerViewAdapterUtils {
      * @param view Child view of the RecyclerView's item
      * @return ViewHolder
      */
-    public static RecyclerView.ViewHolder getViewHolder(View view) {
+    public static RecyclerView.ViewHolder getViewHolder(@Nullable View view) {
         RecyclerView rv = getParentRecyclerView(view);
         View rvChild = getParentViewHolderItemView(view);
 

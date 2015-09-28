@@ -21,8 +21,11 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -41,34 +44,8 @@ import java.lang.ref.WeakReference;
  * Provides item drag &amp; drop operation for {@link android.support.v7.widget.RecyclerView}
  */
 @SuppressWarnings("PointlessBitwiseExpression")
-public class RecyclerViewDragDropManager {
+public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private static final String TAG = "ARVDragDropManager";
-
-    /**
-     * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
-     * Indicates that currently performing dragging.
-     */
-    public static final int STATE_FLAG_DRAGGING = (1 << 0);
-
-    /**
-     * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
-     * Indicates that this item is being dragged.
-     */
-    public static final int STATE_FLAG_IS_ACTIVE = (1 << 1);
-
-    /**
-     * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
-     * Indicates that this item is in the range of drag-sortable items
-     */
-    public static final int STATE_FLAG_IS_IN_RANGE = (1 << 2);
-
-    /**
-     * State flag for the {@link DraggableItemViewHolder#setDragStateFlags(int)} and {@link DraggableItemViewHolder#getDragStateFlags()} methods.
-     * If this flag is set, some other flags are changed and require to apply.
-     */
-    public static final int STATE_FLAG_IS_UPDATED = (1 << 31);
-
-    // ---
 
     /**
      * Default interpolator used for "swap target transition"
@@ -94,13 +71,13 @@ public class RecyclerViewDragDropManager {
          */
         void onItemDragStarted(int position);
 
-	    /**
-	     * Callback method to be invoked when item position is changed during drag.
-	     *
-	     * @param fromPosition The old position of the item.
-	     * @param toPosition The new position of the item
-	     */
-	    void onItemDragPositionChanged(int fromPosition, int toPosition);
+        /**
+         * Callback method to be invoked when item position is changed during drag.
+         *
+         * @param fromPosition The old position of the item.
+         * @param toPosition   The new position of the item
+         */
+        void onItemDragPositionChanged(int fromPosition, int toPosition);
 
         /**
          * Callback method to be invoked when dragging is finished.
@@ -226,7 +203,7 @@ public class RecyclerViewDragDropManager {
      * @return Wrapped adapter which is associated to this {@link RecyclerViewDragDropManager} instance.
      */
     @SuppressWarnings("unchecked")
-    public RecyclerView.Adapter createWrappedAdapter(RecyclerView.Adapter adapter) {
+    public RecyclerView.Adapter createWrappedAdapter(@NonNull RecyclerView.Adapter adapter) {
         if (mAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");
         }
@@ -254,7 +231,7 @@ public class RecyclerViewDragDropManager {
      *
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
-    public void attachRecyclerView(RecyclerView rv) {
+    public void attachRecyclerView(@NonNull RecyclerView rv) {
         //noinspection deprecation
         attachRecyclerView(rv, null);
     }
@@ -270,7 +247,7 @@ public class RecyclerViewDragDropManager {
      * @param scrollEventDistributor The distributor for {@link android.support.v7.widget.RecyclerView.OnScrollListener} event
      */
     @Deprecated
-    public void attachRecyclerView(RecyclerView rv, @SuppressWarnings("deprecation") RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
+    public void attachRecyclerView(@NonNull RecyclerView rv, @Nullable @SuppressWarnings("deprecation") RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
         if (rv == null) {
             throw new IllegalArgumentException("RecyclerView cannot be null");
         }
@@ -380,7 +357,7 @@ public class RecyclerViewDragDropManager {
      *
      * @param drawable The 9-patch drawable
      */
-    public void setDraggingItemShadowDrawable(NinePatchDrawable drawable) {
+    public void setDraggingItemShadowDrawable(@Nullable NinePatchDrawable drawable) {
         mShadowDrawable = drawable;
     }
 
@@ -389,7 +366,7 @@ public class RecyclerViewDragDropManager {
      *
      * @param interpolator Interpolator to set or null to clear
      */
-    public void setSwapTargetTranslationInterpolator(Interpolator interpolator) {
+    public void setSwapTargetTranslationInterpolator(@Nullable Interpolator interpolator) {
         mSwapTargetTranslationInterpolator = interpolator;
     }
 
@@ -443,7 +420,9 @@ public class RecyclerViewDragDropManager {
      *
      * @return The listener object
      */
-    public OnItemDragEventListener getOnItemDragEventListener() {
+    public
+    @Nullable
+    OnItemDragEventListener getOnItemDragEventListener() {
         return mItemDragEventListener;
     }
 
@@ -452,7 +431,7 @@ public class RecyclerViewDragDropManager {
      *
      * @param listener The listener object
      */
-    public void setOnItemDragEventListener(OnItemDragEventListener listener) {
+    public void setOnItemDragEventListener(@Nullable OnItemDragEventListener listener) {
         mItemDragEventListener = listener;
     }
 
@@ -1061,8 +1040,8 @@ public class RecyclerViewDragDropManager {
         if (mEdgeEffectDecorator != null) {
             final float edgeEffectStrength = 0.005f;
 
-            final int draggingItemTopLeft = (horizontal)? decorator.getTranslatedItemPositionLeft() : decorator.getTranslatedItemPositionTop();
-            final int draggingItemBottomRight = (horizontal)? decorator.getTranslatedItemPositionRight() : decorator.getTranslatedItemPositionBottom();
+            final int draggingItemTopLeft = (horizontal) ? decorator.getTranslatedItemPositionLeft() : decorator.getTranslatedItemPositionTop();
+            final int draggingItemBottomRight = (horizontal) ? decorator.getTranslatedItemPositionRight() : decorator.getTranslatedItemPositionBottom();
             final int draggingItemCenter = (draggingItemTopLeft + draggingItemBottomRight) / 2;
             final int nearEdgePosition;
 
@@ -1228,9 +1207,9 @@ public class RecyclerViewDragDropManager {
                 Log.d(TAG, "item swap (from: " + fromPosition + ", to: " + toPosition + ")");
             }
 
-	        if (mItemDragEventListener != null) {
-		        mItemDragEventListener.onItemDragPositionChanged(fromPosition, toPosition);
-	        }
+            if (mItemDragEventListener != null) {
+                mItemDragEventListener.onItemDragPositionChanged(fromPosition, toPosition);
+            }
 
             RecyclerView.ViewHolder firstVisibleItem = null;
 
@@ -1333,7 +1312,9 @@ public class RecyclerViewDragDropManager {
         switch (layoutType) {
             case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_HORIZONTAL:
             case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_VERTICAL:
-                swapTargetHolder = findSwapTargetItemForGridLayoutManager(rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range);
+                swapTargetHolder = findSwapTargetItemForGridLayoutManager(
+                        rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range,
+                        (layoutType == CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_VERTICAL));
                 break;
             case CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_HORIZONTAL:
                 swapTargetHolder = findSwapTargetItemForLinearLayoutManagerHorizontal(rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range);
@@ -1358,7 +1339,7 @@ public class RecyclerViewDragDropManager {
 
     private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManager(
             RecyclerView rv, RecyclerView.ViewHolder draggingItem,
-            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
+            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range, boolean vertical) {
         final int draggingItemPosition = draggingItem.getAdapterPosition();
         RecyclerView.ViewHolder swapTargetHolder = null;
 
@@ -1369,8 +1350,38 @@ public class RecyclerViewDragDropManager {
             int cy = overlayItemTop + draggingItem.itemView.getHeight() / 2;
 
             RecyclerView.ViewHolder vh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx, cy);
-            if (draggingItem != vh) {
-                swapTargetHolder = vh;
+            if (vh != null) {
+                if (draggingItem != vh) {
+                    swapTargetHolder = vh;
+                }
+            } else {
+                int spanCount = CustomRecyclerViewUtils.getSpanCount(rv);
+                int height = rv.getHeight();
+                int width = rv.getWidth();
+                int paddingLeft = rv.getPaddingLeft();
+                int paddingTop = rv.getPaddingTop();
+                int paddingRight = rv.getPaddingRight();
+                int paddingBottom = rv.getPaddingBottom();
+                int columnWidth = (width - paddingLeft - paddingRight) / spanCount;
+                int rowHeight = (height - paddingTop - paddingBottom) / spanCount;
+
+                for (int i = spanCount - 1; i >= 0; i--) {
+                    int cx2 = (vertical) ? (paddingLeft + (columnWidth * i) + (columnWidth / 2)) : cx;
+                    int cy2 = (!vertical) ? (paddingTop + (rowHeight * i) + (rowHeight / 2)) : cy;
+                    RecyclerView.ViewHolder vh2 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx2, cy2);
+
+                    if (vh2 != null) {
+                        int itemCount = rv.getLayoutManager().getItemCount();
+                        int pos = vh2.getAdapterPosition();
+
+                        if ((pos != RecyclerView.NO_POSITION) && (pos == itemCount - 1)) {
+                            if (draggingItem != vh2) {
+                                swapTargetHolder = vh2;
+                            }
+                        }
+                        break;
+                    }
+                }
             }
         }
 
@@ -1448,7 +1459,7 @@ public class RecyclerViewDragDropManager {
      *
      * @param interpolator Interpolator to set or null to clear
      */
-    public void setItemSettleBackIntoPlaceAnimationInterpolator(Interpolator interpolator) {
+    public void setItemSettleBackIntoPlaceAnimationInterpolator(@Nullable Interpolator interpolator) {
         mItemSettleBackIntoPlaceAnimationInterpolator = interpolator;
     }
 
@@ -1457,7 +1468,9 @@ public class RecyclerViewDragDropManager {
      *
      * @return Interpolator which is used for "settle back into place" animation
      */
-    public Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
+    public
+    @Nullable
+    Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
         return mItemSettleBackIntoPlaceAnimationInterpolator;
     }
 

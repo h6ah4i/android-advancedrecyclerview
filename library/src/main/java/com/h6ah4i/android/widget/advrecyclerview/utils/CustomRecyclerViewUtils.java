@@ -17,6 +17,8 @@
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -38,16 +40,16 @@ public class CustomRecyclerViewUtils {
     public static final int LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL = 4;
     public static final int LAYOUT_TYPE_STAGGERED_GRID_VERTICAL = 5;
 
-    public static RecyclerView.ViewHolder findChildViewHolderUnderWithoutTranslation(RecyclerView rv, float x, float y) {
+    public static RecyclerView.ViewHolder findChildViewHolderUnderWithoutTranslation(@NonNull RecyclerView rv, float x, float y) {
         final View child = findChildViewUnderWithoutTranslation(rv, x, y);
         return (child != null) ? rv.getChildViewHolder(child) : null;
     }
 
-    public static int getLayoutType(RecyclerView rv) {
+    public static int getLayoutType(@NonNull RecyclerView rv) {
         return getLayoutType(rv.getLayoutManager());
     }
 
-    public static int getLayoutType(RecyclerView.LayoutManager layoutManager) {
+    public static int getLayoutType(@Nullable RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof GridLayoutManager) {
             if (((GridLayoutManager) layoutManager).getOrientation() == GridLayoutManager.HORIZONTAL) {
                 return LAYOUT_TYPE_GRID_HORIZONTAL;
@@ -71,7 +73,7 @@ public class CustomRecyclerViewUtils {
         }
     }
 
-    private static View findChildViewUnderWithoutTranslation(ViewGroup parent, float x, float y) {
+    private static View findChildViewUnderWithoutTranslation(@NonNull ViewGroup parent, float x, float y) {
         final int count = parent.getChildCount();
         for (int i = count - 1; i >= 0; i--) {
             final View child = parent.getChildAt(i);
@@ -85,7 +87,7 @@ public class CustomRecyclerViewUtils {
         return null;
     }
 
-    public static RecyclerView.ViewHolder findChildViewHolderUnderWithTranslation(RecyclerView rv, float x, float y) {
+    public static RecyclerView.ViewHolder findChildViewHolderUnderWithTranslation(@NonNull RecyclerView rv, float x, float y) {
         final View child = rv.findChildViewUnder(x, y);
         return (child != null) ? rv.getChildViewHolder(child) : null;
     }
@@ -104,7 +106,7 @@ public class CustomRecyclerViewUtils {
         return outMargins;
     }
 
-    public static Rect getDecorationOffsets(RecyclerView.LayoutManager layoutManager, View view, Rect outDecorations) {
+    public static Rect getDecorationOffsets(@NonNull RecyclerView.LayoutManager layoutManager, View view, Rect outDecorations) {
         outDecorations.left = layoutManager.getLeftDecorationWidth(view);
         outDecorations.right = layoutManager.getRightDecorationWidth(view);
         outDecorations.top = layoutManager.getTopDecorationHeight(view);
@@ -113,7 +115,7 @@ public class CustomRecyclerViewUtils {
         return outDecorations;
     }
 
-    public static Rect getViewBounds(View v, Rect outBounds) {
+    public static Rect getViewBounds(@NonNull View v, @NonNull Rect outBounds) {
         outBounds.left = v.getLeft();
         outBounds.right = v.getRight();
         outBounds.top = v.getTop();
@@ -122,7 +124,7 @@ public class CustomRecyclerViewUtils {
     }
 
 
-    public static int findFirstVisibleItemPosition(RecyclerView rv) {
+    public static int findFirstVisibleItemPosition(@NonNull RecyclerView rv) {
         RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
 
         if (layoutManager instanceof LinearLayoutManager) {
@@ -132,7 +134,7 @@ public class CustomRecyclerViewUtils {
         }
     }
 
-    public static int findLastVisibleItemPosition(RecyclerView rv) {
+    public static int findLastVisibleItemPosition(@NonNull RecyclerView rv) {
         RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
 
         if (layoutManager instanceof LinearLayoutManager) {
@@ -142,7 +144,7 @@ public class CustomRecyclerViewUtils {
         }
     }
 
-    public static int findFirstCompletelyVisibleItemPosition(RecyclerView rv) {
+    public static int findFirstCompletelyVisibleItemPosition(@NonNull RecyclerView rv) {
         RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
 
         if (layoutManager instanceof LinearLayoutManager) {
@@ -152,7 +154,7 @@ public class CustomRecyclerViewUtils {
         }
     }
 
-    public static int findLastCompletelyVisibleItemPosition(RecyclerView rv) {
+    public static int findLastCompletelyVisibleItemPosition(@NonNull RecyclerView rv) {
         RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
 
         if (layoutManager instanceof LinearLayoutManager) {
@@ -162,7 +164,7 @@ public class CustomRecyclerViewUtils {
         }
     }
 
-    public static int getSynchronizedPosition(RecyclerView.ViewHolder holder) {
+    public static int getSynchronizedPosition(@NonNull RecyclerView.ViewHolder holder) {
         int pos1 = holder.getLayoutPosition();
         int pos2 = holder.getAdapterPosition();
         if (pos1 == pos2) {
@@ -172,7 +174,7 @@ public class CustomRecyclerViewUtils {
         }
     }
 
-    public static int getSpanCount(RecyclerView rv) {
+    public static int getSpanCount(@NonNull RecyclerView rv) {
         RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
 
         if (layoutManager instanceof GridLayoutManager) {
@@ -184,7 +186,7 @@ public class CustomRecyclerViewUtils {
         }
     }
 
-    public static int getOrientation(RecyclerView rv) {
+    public static int getOrientation(@NonNull RecyclerView rv) {
         RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
 
         if (layoutManager instanceof GridLayoutManager) {

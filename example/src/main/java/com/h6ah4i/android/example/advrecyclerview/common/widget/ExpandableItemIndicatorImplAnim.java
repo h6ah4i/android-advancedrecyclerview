@@ -19,12 +19,9 @@ package com.h6ah4i.android.example.advrecyclerview.common.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.wnafee.vector.MorphButton;

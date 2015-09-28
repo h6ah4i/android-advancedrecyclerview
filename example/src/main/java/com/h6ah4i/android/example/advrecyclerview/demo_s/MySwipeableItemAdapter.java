@@ -26,8 +26,8 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
@@ -39,6 +39,10 @@ class MySwipeableItemAdapter
         extends RecyclerView.Adapter<MySwipeableItemAdapter.MyViewHolder>
         implements SwipeableItemAdapter<MySwipeableItemAdapter.MyViewHolder> {
     private static final String TAG = "MySwipeableItemAdapter";
+
+    // NOTE: Make accessible with short name
+    private interface Swipeable extends SwipeableItemConstants {
+    }
 
     private AbstractDataProvider mProvider;
     private EventListener mEventListener;
@@ -134,12 +138,12 @@ class MySwipeableItemAdapter
         // set background resource (target view ID: container)
         final int swipeState = holder.getSwipeStateFlags();
 
-        if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_UPDATED) != 0) {
+        if ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
 
-            if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_item_swiping_active_state;
-            } else if ((swipeState & RecyclerViewSwipeManager.STATE_FLAG_SWIPING) != 0) {
+            } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
                 bgResId = R.drawable.bg_item_swiping_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;
@@ -150,7 +154,7 @@ class MySwipeableItemAdapter
 
         // set swiping properties
         holder.setSwipeItemHorizontalSlideAmount(
-                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+                item.isPinned() ? Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
     }
 
     @Override
@@ -160,20 +164,20 @@ class MySwipeableItemAdapter
 
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
-        return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_H;
+        return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
     }
 
     @Override
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
         int bgRes = 0;
         switch (type) {
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_neutral;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_LEFT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_left;
                 break;
-            case RecyclerViewSwipeManager.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
+            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
                 bgRes = R.drawable.bg_swipe_item_right;
                 break;
         }
@@ -187,7 +191,7 @@ class MySwipeableItemAdapter
 
         switch (result) {
             // swipe right
-            case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
+            case Swipeable.RESULT_SWIPED_RIGHT:
                 if (mProvider.getItem(position).isPinned()) {
                     // pinned --- back to default position
                     return new UnpinResultAction(this, position);
@@ -196,10 +200,10 @@ class MySwipeableItemAdapter
                     return new SwipeRightResultAction(this, position);
                 }
                 // swipe left -- pin
-            case RecyclerViewSwipeManager.RESULT_SWIPED_LEFT:
+            case Swipeable.RESULT_SWIPED_LEFT:
                 return new SwipeLeftResultAction(this, position);
             // other --- do nothing
-            case RecyclerViewSwipeManager.RESULT_CANCELED:
+            case Swipeable.RESULT_CANCELED:
             default:
                 return new UnpinResultAction(this, position);
         }

@@ -19,8 +19,10 @@ package com.h6ah4i.android.widget.advrecyclerview.utils;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.annotation.DraggableItemStateFlags;
 
 public abstract class AbstractDraggableSwipeableItemViewHolder extends AbstractSwipeableItemViewHolder implements DraggableItemViewHolder {
+    @DraggableItemStateFlags
     private int mDragStateFlags;
 
     public AbstractDraggableSwipeableItemViewHolder(View itemView) {
@@ -28,11 +30,12 @@ public abstract class AbstractDraggableSwipeableItemViewHolder extends AbstractS
     }
 
     @Override
-    public void setDragStateFlags(int flags) {
+    public void setDragStateFlags(@DraggableItemStateFlags int flags) {
         mDragStateFlags = flags;
     }
 
     @Override
+    @DraggableItemStateFlags
     public int getDragStateFlags() {
         return mDragStateFlags;
     }

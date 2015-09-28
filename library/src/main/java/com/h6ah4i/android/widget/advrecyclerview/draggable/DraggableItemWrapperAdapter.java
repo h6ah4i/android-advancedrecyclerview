@@ -34,6 +34,9 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
     private static final int STATE_FLAG_INITIAL_VALUE = -1;
 
+    private interface Constants extends DraggableItemConstants {
+    }
+
     private static final boolean LOCAL_LOGV = false;
     private static final boolean LOCAL_LOGD = false;
     private static final boolean LOCAL_LOGI = true;
@@ -101,13 +104,13 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
                 }
             }
 
-            int flags = RecyclerViewDragDropManager.STATE_FLAG_DRAGGING;
+            int flags = Constants.STATE_FLAG_DRAGGING;
 
             if (itemId == mDraggingItemId) {
-                flags |= RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE;
+                flags |= Constants.STATE_FLAG_IS_ACTIVE;
             }
             if (mDraggableRange.checkInRange(position)) {
-                flags |= RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE;
+                flags |= Constants.STATE_FLAG_IS_IN_RANGE;
             }
 
             safeUpdateFlags(holder, flags);
@@ -365,11 +368,11 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         final DraggableItemViewHolder holder2 = (DraggableItemViewHolder) holder;
 
         final int curFlags = holder2.getDragStateFlags();
-        final int mask = ~RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED;
+        final int mask = ~Constants.STATE_FLAG_IS_UPDATED;
 
         // append UPDATED flag
         if ((curFlags == STATE_FLAG_INITIAL_VALUE) || (((curFlags ^ flags) & mask) != 0)) {
-            flags |= RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED;
+            flags |= Constants.STATE_FLAG_IS_UPDATED;
         }
 
         ((DraggableItemViewHolder) holder).setDragStateFlags(flags);
@@ -420,7 +423,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
         BaseSwipeableItemAdapter<VH> swipeableItemAdapter = (BaseSwipeableItemAdapter<VH>) adapter;
         swipeableItemAdapter.onSetSwipeBackground(holder, correctedPosition, type);
-    } 
+    }
 
     @SuppressWarnings("unchecked")
     @Override

@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
      *
      * @return True if the listener object successfully added, otherwise false. Also returns true if have already been added.
      */
-    public boolean add(T listener, int index) {
+    public boolean add(@NonNull T listener, int index) {
         final String METHOD_NAME = "add()";
 
         if (listener == null) {
@@ -137,7 +138,7 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
      *
      * @return True for successfully removed the listener object, otherwise false
      */
-    public boolean remove(T listener) {
+    public boolean remove(@NonNull T listener) {
         final String METHOD_NAME = "remove()";
 
         if (listener == null) {

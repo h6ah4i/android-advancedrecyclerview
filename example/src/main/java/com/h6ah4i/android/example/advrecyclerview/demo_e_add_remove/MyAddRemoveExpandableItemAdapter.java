@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
@@ -34,6 +35,10 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 class MyAddRemoveExpandableItemAdapter
         extends AbstractExpandableItemAdapter<MyAddRemoveExpandableItemAdapter.MyGroupViewHolder, MyAddRemoveExpandableItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyExpandableItemAdapter";
+
+    // NOTE: Make accessible with short name
+    private interface Expandable extends ExpandableItemConstants {
+    }
 
     private RecyclerViewExpandableItemManager mExpandableItemManager;
     private AbstractAddRemoveExpandableDataProvider mProvider;
@@ -183,10 +188,10 @@ class MyAddRemoveExpandableItemAdapter
         // set background resource (target view ID: container)
         final int expandState = holder.getExpandStateFlags();
 
-        if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0) {
+        if ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
 
-            if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
+            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
             } else {
                 bgResId = R.drawable.bg_group_item_normal_state;

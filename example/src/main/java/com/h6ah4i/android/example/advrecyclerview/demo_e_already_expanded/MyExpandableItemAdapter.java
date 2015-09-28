@@ -25,8 +25,8 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
-import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
@@ -37,6 +37,10 @@ class MyExpandableItemAdapter
 
     private AbstractAddRemoveExpandableDataProvider mProvider;
     private RecyclerViewExpandableItemManager mExpandableItemManager;
+
+    // NOTE: Make accessible with short name
+    private interface Expandable extends ExpandableItemConstants {
+    }
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
         public FrameLayout mContainer;
@@ -134,12 +138,12 @@ class MyExpandableItemAdapter
         // set background resource (target view ID: container)
         final int expandState = holder.getExpandStateFlags();
 
-        if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0) {
+        if ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
             boolean isExpanded;
-            boolean animateIndicator = ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
+            boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
 
-            if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
+            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
                 isExpanded = true;
             } else {

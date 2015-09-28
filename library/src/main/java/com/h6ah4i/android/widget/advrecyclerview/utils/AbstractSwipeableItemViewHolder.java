@@ -21,10 +21,16 @@ import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemViewHolder;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemReactions;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemStateFlags;
 
 public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewHolder implements SwipeableItemViewHolder {
+    @SwipeableItemStateFlags
     private int mSwipeStateFlags;
+    @SwipeableItemResults
     private int mSwipeResult = RecyclerViewSwipeManager.RESULT_NONE;
+    @SwipeableItemReactions
     private int mAfterSwipeReaction = RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
     private float mHorizontalSwipeAmount;
     private float mVerticalSwipeAmount;
@@ -38,32 +44,35 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     }
 
     @Override
-    public void setSwipeStateFlags(int flags) {
+    public void setSwipeStateFlags(@SwipeableItemStateFlags int flags) {
         mSwipeStateFlags = flags;
     }
 
     @Override
+    @SwipeableItemStateFlags
     public int getSwipeStateFlags() {
         return mSwipeStateFlags;
     }
 
     @Override
-    public void setSwipeResult(int result) {
+    public void setSwipeResult(@SwipeableItemResults int result) {
         mSwipeResult = result;
     }
 
     @Override
+    @SwipeableItemResults
     public int getSwipeResult() {
         return mSwipeResult;
     }
 
     @Override
+    @SwipeableItemReactions
     public int getAfterSwipeReaction() {
         return mAfterSwipeReaction;
     }
 
     @Override
-    public void setAfterSwipeReaction(int reaction) {
+    public void setAfterSwipeReaction(@SwipeableItemReactions int reaction) {
         mAfterSwipeReaction = reaction;
     }
 

@@ -18,6 +18,8 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,7 +33,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 /**
  * Provides item swipe operation for {@link android.support.v7.widget.RecyclerView}
  */
-public class RecyclerViewExpandableItemManager {
+public class RecyclerViewExpandableItemManager implements ExpandableItemConstants {
     private static final String TAG = "ARVExpandableItemMgr";
 
     /**
@@ -41,38 +43,6 @@ public class RecyclerViewExpandableItemManager {
 
 
     /**
-     * State flag for the {@link ExpandableItemViewHolder#setExpandStateFlags(int)} and {@link ExpandableItemViewHolder#getExpandStateFlags()} methods.
-     * Indicates that this ViewHolder is associated to group item.
-     */
-    @SuppressWarnings("PointlessBitwiseExpression")
-    public static final int STATE_FLAG_IS_GROUP = (1 << 0);
-
-    /**
-     * State flag for the {@link ExpandableItemViewHolder#setExpandStateFlags(int)} and {@link ExpandableItemViewHolder#getExpandStateFlags()} methods.
-     * Indicates that this ViewHolder is associated to child item.
-     */
-    public static final int STATE_FLAG_IS_CHILD = (1 << 1);
-
-    /**
-     * State flag for the {@link ExpandableItemViewHolder#setExpandStateFlags(int)} and {@link ExpandableItemViewHolder#getExpandStateFlags()} methods.
-     * Indicates that this is an expanded group item.
-     */
-    public static final int STATE_FLAG_IS_EXPANDED = (1 << 2);
-
-    /**
-     * State flag for the {@link ExpandableItemViewHolder#setExpandStateFlags(int)} and {@link ExpandableItemViewHolder#getExpandStateFlags()} methods.
-     * If this flag is set, the {@link #STATE_FLAG_IS_EXPANDED} flag has changed.
-     */
-    public static final int STATE_FLAG_HAS_EXPANDED_STATE_CHANGED = (1 << 3);
-
-    /**
-     * State flag for the {@link ExpandableItemViewHolder#setExpandStateFlags(int)} and {@link ExpandableItemViewHolder#getExpandStateFlags()} methods.
-     * If this flag is set, some other flags are changed and require to apply.
-     */
-    public static final int STATE_FLAG_IS_UPDATED = (1 << 31);
-    // ---
-
-    /**
      * Used for being notified when a group is expanded
      */
     public interface OnGroupExpandListener {
@@ -80,7 +50,7 @@ public class RecyclerViewExpandableItemManager {
          * Callback method to be invoked when a group in this expandable list has been expanded.
          *
          * @param groupPosition The group position that was expanded
-         * @param fromUser Whether the expand request is issued by a user operation
+         * @param fromUser      Whether the expand request is issued by a user operation
          */
         void onGroupExpand(int groupPosition, boolean fromUser);
     }
@@ -93,7 +63,7 @@ public class RecyclerViewExpandableItemManager {
          * Callback method to be invoked when a group in this expandable list has been collapsed.
          *
          * @param groupPosition The group position that was collapsed
-         * @param fromUser Whether the collapse request is issued by a user operation
+         * @param fromUser      Whether the collapse request is issued by a user operation
          */
         void onGroupCollapse(int groupPosition, boolean fromUser);
     }
@@ -118,7 +88,7 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param savedState The saved state object which is obtained from the {@link #getSavedState()} method.
      */
-    public RecyclerViewExpandableItemManager(Parcelable savedState) {
+    public RecyclerViewExpandableItemManager(@Nullable Parcelable savedState) {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -150,14 +120,14 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Attaches {@link android.support.v7.widget.RecyclerView} instance.
-     *
+     * <p/>
      * Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
      * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
      *
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
-    public void attachRecyclerView(RecyclerView rv) {
+    public void attachRecyclerView(@NonNull RecyclerView rv) {
         if (rv == null) {
             throw new IllegalArgumentException("RecyclerView cannot be null");
         }
@@ -177,7 +147,7 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.
-     *
+     * <p/>
      * This method should be called in order to avoid memory leaks.
      */
     public void release() {
@@ -195,16 +165,15 @@ public class RecyclerViewExpandableItemManager {
      * Create wrapped adapter.
      *
      * @param adapter The target adapter.
-     *
      * @return Wrapped adapter which is associated to this {@link RecyclerViewExpandableItemManager} instance.
      */
     @SuppressWarnings("unchecked")
-    public RecyclerView.Adapter createWrappedAdapter(RecyclerView.Adapter adapter) {
+    public RecyclerView.Adapter createWrappedAdapter(@NonNull RecyclerView.Adapter adapter) {
         if (mAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");
         }
 
-        int [] adapterSavedState = (mSavedState != null) ? mSavedState.adapterSavedState : null;
+        int[] adapterSavedState = (mSavedState != null) ? mSavedState.adapterSavedState : null;
         mSavedState = null;
 
         mAdapter = new ExpandableRecyclerViewWrapperAdapter(this, adapter, adapterSavedState);
@@ -221,13 +190,13 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Gets saved state object in order to restore the internal state.
-     *
+     * <p/>
      * Call this method in Activity/Fragment's onSavedInstance() and save to the bundle.
      *
      * @return The Parcelable object which stores information need to restore the internal states.
      */
     public Parcelable getSavedState() {
-        int [] adapterSavedState = null;
+        int[] adapterSavedState = null;
 
         if (mAdapter != null) {
             adapterSavedState = mAdapter.getExpandedItemsSavedStateArray();
@@ -318,7 +287,7 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Expand all groups.
-     *
+     * <p/>
      * Note that this method does not invoke the {@link OnGroupExpandListener#onGroupExpand(int, boolean)} callback.
      */
     public void expandAll() {
@@ -329,7 +298,7 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Collapse all groups.
-     *
+     * <p/>
      * Note that this method does not invoke the {@link OnGroupCollapseListener#onGroupCollapse(int, boolean)} callback.
      */
     public void collapseAll() {
@@ -342,7 +311,6 @@ public class RecyclerViewExpandableItemManager {
      * Expand a group.
      *
      * @param groupPosition The group position to be expanded
-     *
      * @return True if the group was expanded, false otherwise  (If the group was already expanded, this will return false)
      */
     public boolean expandGroup(int groupPosition) {
@@ -353,7 +321,6 @@ public class RecyclerViewExpandableItemManager {
      * Collapse a group.
      *
      * @param groupPosition The group position to be collapsed
-     *
      * @return True if the group was collapsed, false otherwise  (If the group was already collapsed, this will return false)
      */
     public boolean collapseGroup(int groupPosition) {
@@ -365,7 +332,6 @@ public class RecyclerViewExpandableItemManager {
      * (represented in a packed position). Use {@link #getPackedPositionChild(long)}, {@link #getPackedPositionGroup(long)} to unpack.
      *
      * @param flatPosition The flat position to be converted
-     *
      * @return The group and/or child position for the given flat position in packed position representation.
      */
     public long getExpandablePosition(int flatPosition) {
@@ -379,7 +345,6 @@ public class RecyclerViewExpandableItemManager {
      * Converts a group and/or child position to a flat position.
      *
      * @param packedPosition The group and/or child position to be converted in packed position representation.
-     *
      * @return The group and/or child position for the given flat position in packed position representation.
      */
     public int getFlatPosition(long packedPosition) {
@@ -395,7 +360,6 @@ public class RecyclerViewExpandableItemManager {
      * See {@link #getPackedPositionForChild(int, int)}.
      *
      * @param packedPosition The packed position from which the child position will be returned.
-     *
      * @return The child position portion of the packed position. If this does not contain a child, returns {@link android.support.v7.widget.RecyclerView#NO_POSITION}.
      */
     public static int getPackedPositionChild(long packedPosition) {
@@ -404,7 +368,7 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Returns the packed position representation of a child position.
-     *
+     * <p/>
      * In general, a packed position should be used in situations where the position given to/returned from
      * {@link RecyclerViewExpandableItemManager} method can either be a child or group.
      * The two positions are packed into a single long which can be unpacked using {@link #getPackedPositionChild(long)} and
@@ -412,7 +376,6 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param groupPosition The child's parent group's position
      * @param childPosition The child position within the group
-     *
      * @return The packed position representation of the child (and parent group).
      */
     public static long getPackedPositionForChild(int groupPosition, int childPosition) {
@@ -423,7 +386,6 @@ public class RecyclerViewExpandableItemManager {
      * Returns the packed position representation of a group's position. See {@link #getPackedPositionForChild(int, int)}.
      *
      * @param groupPosition The child's parent group's position.
-     *
      * @return The packed position representation of the group.
      */
     public static long getPackedPositionForGroup(int groupPosition) {
@@ -434,7 +396,6 @@ public class RecyclerViewExpandableItemManager {
      * Gets the group position from a packed position. See {@link #getPackedPositionForChild(int, int)}.
      *
      * @param packedPosition The packed position from which the group position will be returned.
-     *
      * @return THe group position of the packed position. If this does not contain a group, returns {@link android.support.v7.widget.RecyclerView#NO_POSITION}.
      */
     public static int getPackedPositionGroup(long packedPosition) {
@@ -445,7 +406,6 @@ public class RecyclerViewExpandableItemManager {
      * Whether the given group is currently expanded.
      *
      * @param groupPosition The group to check
-     *
      * @return Whether the group is currently expanded
      */
     public boolean isGroupExpanded(int groupPosition) {
@@ -454,14 +414,13 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Gets combined ID for child item.
-     *
+     * <p/>
      * bit 0-31: Lower 32 bits of the childId
      * bit 32-62: Lower 31 bits of the groupId
      * bit 63: reserved
      *
      * @param groupId The ID of the group that contains the child.
      * @param childId The ID of the child.
-     *
      * @return The unique ID of the child across all groups and children in the list
      */
     public static long getCombinedChildId(long groupId, long childId) {
@@ -470,13 +429,12 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Gets combined ID for child item.
-     *
+     * <p/>
      * bit 0-31: all bits are set to 1
      * bit 32-62: Lower 31 bits of the groupId
      * bit 63: reserved
      *
      * @param groupId The ID of the group that contains the child.
-     *
      * @return The unique ID of the child across all groups and children in the list
      */
     public static long getCombinedGroupId(long groupId) {
@@ -487,7 +445,6 @@ public class RecyclerViewExpandableItemManager {
      * Checks whether the passed view type is a group's one.
      *
      * @param rawViewType raw view type value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemViewType()})
-     *
      * @return True for the a group view type, otherwise false
      */
     public static boolean isGroupViewType(int rawViewType) {
@@ -498,7 +455,6 @@ public class RecyclerViewExpandableItemManager {
      * Gets group view type from a raw view type.
      *
      * @param rawViewType raw view type value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemViewType()})
-     *
      * @return Group view type for the given raw view type.
      */
     public static int getGroupViewType(int rawViewType) {
@@ -509,7 +465,6 @@ public class RecyclerViewExpandableItemManager {
      * Gets child view type from a raw view type.
      *
      * @param rawViewType raw view type value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemViewType()})
-     *
      * @return Child view type for the given raw view type.
      */
     public static int getChildViewType(int rawViewType) {
@@ -521,7 +476,7 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param listener The callback that will be invoked.
      */
-    public void setOnGroupExpandListener(OnGroupExpandListener listener) {
+    public void setOnGroupExpandListener(@Nullable OnGroupExpandListener listener) {
         if (mAdapter != null) {
             mAdapter.setOnGroupExpandListener(listener);
         } else {
@@ -535,7 +490,7 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param listener The callback that will be invoked.
      */
-    public void setOnGroupCollapseListener(OnGroupCollapseListener listener) {
+    public void setOnGroupCollapseListener(@Nullable OnGroupCollapseListener listener) {
         if (mAdapter != null) {
             mAdapter.setOnGroupCollapseListener(listener);
         } else {
@@ -550,23 +505,23 @@ public class RecyclerViewExpandableItemManager {
      *
      * @param savedState The saved state object
      */
-    public void restoreState(Parcelable savedState) {
+    public void restoreState(@Nullable Parcelable savedState) {
         restoreState(savedState, false, false);
     }
 
     /**
      * Restore saves state.
-     *
+     * <p/>
      * This method is useful when the adapter can not be prepared (because data loading may takes time and processed asynchronously)
      * before creating this manager instance.
      *
-     * @param savedState The saved state object
-     * @param callHooks Whether to call hook routines
-     *                  ({@link ExpandableItemAdapter#onHookGroupExpand(int, boolean)},
-     *                  {@link ExpandableItemAdapter#onHookGroupCollapse(int, boolean)})
+     * @param savedState    The saved state object
+     * @param callHooks     Whether to call hook routines
+     *                      ({@link ExpandableItemAdapter#onHookGroupExpand(int, boolean)},
+     *                      {@link ExpandableItemAdapter#onHookGroupCollapse(int, boolean)})
      * @param callListeners Whether to invoke {@link OnGroupExpandListener} and/or {@link OnGroupCollapseListener} listener events
      */
-    public void restoreState(Parcelable savedState, boolean callHooks, boolean callListeners) {
+    public void restoreState(@Nullable Parcelable savedState, boolean callHooks, boolean callListeners) {
         if (savedState == null) {
             return; // do nothing
         }
@@ -584,16 +539,15 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Notify any registered observers that the group item at <code>groupPosition</code> has changed.
-     *
+     * <p/>
      * <p>This is an group item change event, not a structural change event. It indicates that any
      * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
      * The item at <code>groupPosition</code> retains the same identity.</p>
-     *
+     * <p/>
      * <p>This method does not notify for children that are contained in the specified group.
      * If children have also changed, use {@link #notifyGroupAndChildrenItemsChanged(int)} instead.</p>
      *
      * @param groupPosition Position of the group item that has changed
-     *
      * @see #notifyGroupAndChildrenItemsChanged(int)
      */
     public void notifyGroupItemChanged(int groupPosition) {
@@ -602,13 +556,12 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Notify any registered observers that the group and children items at <code>groupPosition</code> have changed.
-     *
+     * <p/>
      * <p>This is an group item change event, not a structural change event. It indicates that any
      * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
      * The item at <code>groupPosition</code> retains the same identity.</p>
      *
      * @param groupPosition Position of the group item which contains changed children
-     *
      * @see #notifyGroupItemChanged(int)
      * @see #notifyChildrenOfGroupItemChanged(int)
      */
@@ -618,16 +571,15 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Notify any registered observers that the children items contained in the group item at <code>groupPosition</code> have changed.
-     *
+     * <p/>
      * <p>This is an group item change event, not a structural change event. It indicates that any
      * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
      * The item at <code>groupPosition</code> retains the same identity.</p>
-     *
+     * <p/>
      * <p>This method does not notify for the group item.
      * If the group has also changed, use {@link #notifyGroupAndChildrenItemsChanged(int)} instead.</p>
      *
      * @param groupPosition Position of the group item which contains changed children
-     *
      * @see #notifyGroupAndChildrenItemsChanged(int)
      */
     public void notifyChildrenOfGroupItemChanged(int groupPosition) {
@@ -636,14 +588,13 @@ public class RecyclerViewExpandableItemManager {
 
     /**
      * Notify any registered observers that the child item at <code>{groupPosition, childPosition}</code> has changed.
-     *
+     * <p/>
      * <p>This is an item change event, not a structural change event. It indicates that any
      * reflection of the data at <code>{groupPosition, childPosition}</code> is out of date and should be updated.
      * The item at <code>{groupPosition, childPosition}</code> retains the same identity.</p>
      *
      * @param groupPosition Position of the group item which contains the changed child
      * @param childPosition Position of the child item in the group that has changed
-     *
      * @see #notifyChildItemRangeChanged(int, int, int)
      */
     public void notifyChildItemChanged(int groupPosition, int childPosition) {
@@ -653,15 +604,14 @@ public class RecyclerViewExpandableItemManager {
     /**
      * Notify any registered observers that the <code>itemCount</code> child items starting at
      * position <code>{groupPosition, childPosition}</code> have changed.
-     *
+     * <p/>
      * <p>This is an item change event, not a structural change event. It indicates that
      * any reflection of the data in the given position range is out of date and should
      * be updated. The items in the given range retain the same identity.</p>
      *
-     * @param groupPosition Position of the group item which contains the changed child
+     * @param groupPosition      Position of the group item which contains the changed child
      * @param childPositionStart Position of the first child item in the group that has changed
-     * @param itemCount Number of items that have changed
-     *
+     * @param itemCount          Number of items that have changed
      * @see #notifyChildItemChanged(int, int)
      */
     public void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount) {
@@ -672,13 +622,12 @@ public class RecyclerViewExpandableItemManager {
      * Notify any registered observers that the group item reflected at <code>groupPosition</code>
      * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
      * position <code>groupPosition + 1</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their
      * positions may be altered.</p>
      *
      * @param groupPosition Position of the newly inserted group item in the data set
-     *
      * @see #notifyGroupItemInserted(int, boolean)
      * @see #notifyGroupItemRangeInserted(int, int)
      * @see #notifyGroupItemRangeInserted(int, int, boolean)
@@ -691,14 +640,13 @@ public class RecyclerViewExpandableItemManager {
      * Notify any registered observers that the group item reflected at <code>groupPosition</code>
      * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
      * position <code>groupPosition + 1</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their
      * positions may be altered.</p>
      *
      * @param groupPosition Position of the newly inserted group item in the data set
-     * @param expanded Whether the groups will be inserted already expanded
-     *
+     * @param expanded      Whether the groups will be inserted already expanded
      * @see #notifyGroupItemInserted(int)
      * @see #notifyGroupItemRangeInserted(int, int)
      * @see #notifyGroupItemRangeInserted(int, int, boolean)
@@ -712,14 +660,13 @@ public class RecyclerViewExpandableItemManager {
      * group items starting at <code>groupPositionStart</code> have been newly inserted. The group items
      * previously located at <code>groupPositionStart</code> and beyond can now be found starting
      * at position <code>groupPositionStart + itemCount</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
      *
      * @param groupPositionStart Position of the first group item that was inserted
-     * @param itemCount Number of group items inserted
-     *
+     * @param itemCount          Number of group items inserted
      * @see #notifyGroupItemInserted(int)
      * @see #notifyGroupItemInserted(int, boolean)
      * @see #notifyGroupItemRangeInserted(int, int, boolean)
@@ -733,15 +680,14 @@ public class RecyclerViewExpandableItemManager {
      * group items starting at <code>groupPositionStart</code> have been newly inserted and may be <code>expanded</code>.
      * The group items previously located at <code>groupPositionStart</code> and beyond can now be found starting
      * at position <code>groupPositionStart + itemCount</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
      *
      * @param groupPositionStart Position of the first group item that was inserted
-     * @param itemCount Number of group items inserted
-     * @param expanded Whether the groups will be inserted already expanded
-     *
+     * @param itemCount          Number of group items inserted
+     * @param expanded           Whether the groups will be inserted already expanded
      * @see #notifyGroupItemInserted(int)
      * @see #notifyGroupItemInserted(int, boolean)
      * @see #notifyGroupItemRangeInserted(int, int)
@@ -754,14 +700,13 @@ public class RecyclerViewExpandableItemManager {
      * Notify any registered observers that the group item reflected at <code>groupPosition</code>
      * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
      * position <code>groupPosition + 1</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their
      * positions may be altered.</p>
      *
      * @param groupPosition Position of the group item which contains the inserted child
      * @param childPosition Position of the newly inserted child item in the data set
-     *
      * @see #notifyChildItemRangeInserted(int, int, int)
      */
     public void notifyChildItemInserted(int groupPosition, int childPosition) {
@@ -773,15 +718,14 @@ public class RecyclerViewExpandableItemManager {
      * child items starting at <code>childPositionStart</code> have been newly inserted. The child items
      * previously located at <code>childPositionStart</code> and beyond can now be found starting
      * at position <code>childPositionStart + itemCount</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
      *
-     * @param groupPosition Position of the group item which contains the inserted child
+     * @param groupPosition      Position of the group item which contains the inserted child
      * @param childPositionStart Position of the first child item that was inserted
-     * @param itemCount Number of child items inserted
-     *
+     * @param itemCount          Number of child items inserted
      * @see #notifyChildItemInserted(int, int)
      */
     public void notifyChildItemRangeInserted(int groupPosition, int childPositionStart, int itemCount) {
@@ -792,13 +736,12 @@ public class RecyclerViewExpandableItemManager {
      * Notify any registered observers that the group item previously located at <code>groupPosition</code>
      * has been removed from the data set. The group items previously located at and after
      * <code>groupPosition</code> may now be found at <code>oldGroupPosition - 1</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
      *
      * @param groupPosition Position of the group item that has now been removed
-     *
      * @see #notifyGroupItemRangeRemoved(int, int)
      */
     public void notifyGroupItemRemoved(int groupPosition) {
@@ -810,13 +753,13 @@ public class RecyclerViewExpandableItemManager {
      * located at <code>groupPositionStart</code> have been removed from the data set. The group items
      * previously located at and after <code>groupPositionStart + itemCount</code> may now be found
      * at <code>oldPosition - itemCount</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the data
      * set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
      *
      * @param groupPositionStart Previous position of the first group item that was removed
-     * @param itemCount Number of group items removed from the data set
+     * @param itemCount          Number of group items removed from the data set
      */
     public void notifyGroupItemRangeRemoved(int groupPositionStart, int itemCount) {
         mAdapter.notifyGroupItemRangeRemoved(groupPositionStart, itemCount);
@@ -826,14 +769,13 @@ public class RecyclerViewExpandableItemManager {
      * Notify any registered observers that the child item previously located at <code>childPosition</code>
      * has been removed from the data set. The child items previously located at and after
      * <code>childPosition</code> may now be found at <code>oldGroupPosition - 1</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
      *
      * @param groupPosition Position of the group item which was the parent of the child item that was removed
      * @param childPosition Position of the child item that has now been removed
-     *
      * @see #notifyGroupItemRangeRemoved(int, int)
      */
     public void notifyChildItemRemoved(int groupPosition, int childPosition) {
@@ -845,14 +787,14 @@ public class RecyclerViewExpandableItemManager {
      * located at <code>childPositionStart</code> have been removed from the data set. The child items
      * previously located at and after <code>childPositionStart + itemCount</code> may now be found
      * at <code>oldPosition - itemCount</code>.
-     *
+     * <p/>
      * <p>This is a structural change event. Representations of other existing items in the data
      * set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
      *
-     * @param groupPosition Position of the group item which was the parent of the child item that was removed
+     * @param groupPosition      Position of the group item which was the parent of the child item that was removed
      * @param childPositionStart Previous position of the first child item that was removed
-     * @param itemCount Number of child items removed from the data set
+     * @param itemCount          Number of child items removed from the data set
      */
     public void notifyChildItemRangeRemoved(int groupPosition, int childPositionStart, int itemCount) {
         mAdapter.notifyChildItemRangeRemoved(groupPosition, childPositionStart, itemCount);
@@ -871,7 +813,6 @@ public class RecyclerViewExpandableItemManager {
      * Gets the number of children in a specified group.
      *
      * @param groupPosition the position of the group for which the children count should be returned
-     *
      * @return the number of children
      */
     public int getChildCount(int groupPosition) {
@@ -881,7 +822,7 @@ public class RecyclerViewExpandableItemManager {
     /**
      * Scroll to a group.
      *
-     * @param groupPosition Position of the group item
+     * @param groupPosition   Position of the group item
      * @param childItemHeight Height of each child item height
      */
     public void scrollToGroup(int groupPosition, int childItemHeight) {
@@ -891,10 +832,10 @@ public class RecyclerViewExpandableItemManager {
     /**
      * Scroll to a group.
      *
-     * @param groupPosition Position of the group item
+     * @param groupPosition   Position of the group item
      * @param childItemHeight Height of each child item height
-     * @param topMargin Top margin
-     * @param bottomMargin Bottom margin
+     * @param topMargin       Top margin
+     * @param bottomMargin    Bottom margin
      */
     public void scrollToGroup(int groupPosition, int childItemHeight, int topMargin, int bottomMargin) {
         int totalChildrenHeight = getChildCount(groupPosition) * childItemHeight;
@@ -904,10 +845,10 @@ public class RecyclerViewExpandableItemManager {
     /**
      * Scroll to a group with specifying total children height.
      *
-     * @param groupPosition Position of the group item
+     * @param groupPosition       Position of the group item
      * @param totalChildrenHeight Total height of children items
-     * @param topMargin Top margin
-     * @param bottomMargin Bottom margin
+     * @param topMargin           Top margin
+     * @param bottomMargin        Bottom margin
      */
     public void scrollToGroupWithTotalChildrenHeight(int groupPosition, int totalChildrenHeight, int topMargin, int bottomMargin) {
         long packedPosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
@@ -952,7 +893,7 @@ public class RecyclerViewExpandableItemManager {
     }
 
     public static class SavedState implements Parcelable {
-        final int [] adapterSavedState;
+        final int[] adapterSavedState;
 
         public SavedState(int[] adapterSavedState) {
             this.adapterSavedState = adapterSavedState;

@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.demo_d.DraggableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_d_grid.DraggableGridExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_longpress.DraggableWithLongPressExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_section.DraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ds.DraggableSwipeableExampleActivity;
@@ -35,7 +36,9 @@ import com.h6ah4i.android.example.advrecyclerview.demo_e_already_expanded.Alread
 import com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_eds.ExpandableDraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s.SwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_s_legacy.LegacySwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.VerticalSwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager.ViewPagerSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_us.UnderSwipeableExampleActivity;
 
 public class ExampleLauncherContentsFragment extends Fragment implements View.OnClickListener {
@@ -49,6 +52,7 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
         super.onViewCreated(view, savedInstanceState);
 
         view.findViewById(R.id.button_launch_demo_d).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_d_grid).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_d_with_longpress).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_s).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_us).setOnClickListener(this);
@@ -60,6 +64,8 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
         view.findViewById(R.id.button_launch_demo_e_add_remove).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_e_already_expanded).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_s_vertical).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_s_viewpager).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_s_legacy).setOnClickListener(this);
     }
 
     @Override
@@ -67,6 +73,9 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
         switch (v.getId()) {
             case R.id.button_launch_demo_d:
                 launchExampleActivity(DraggableExampleActivity.class);
+                break;
+            case R.id.button_launch_demo_d_grid:
+                launchExampleActivity(DraggableGridExampleActivity.class);
                 break;
             case R.id.button_launch_demo_d_with_longpress:
                 launchExampleActivity(DraggableWithLongPressExampleActivity.class);
@@ -100,6 +109,12 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
                 break;
             case R.id.button_launch_demo_s_vertical:
                 launchExampleActivity(VerticalSwipeableExampleActivity.class);
+                break;
+            case R.id.button_launch_demo_s_viewpager:
+                launchExampleActivity(ViewPagerSwipeableExampleActivity.class);
+                break;
+            case R.id.button_launch_demo_s_legacy:
+                launchExampleActivity(LegacySwipeableExampleActivity.class);
                 break;
         }
     }

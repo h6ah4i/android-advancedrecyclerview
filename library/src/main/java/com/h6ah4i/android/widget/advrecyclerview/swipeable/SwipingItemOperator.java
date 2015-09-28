@@ -20,8 +20,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.Interpolator;
 
-import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
-
 class SwipingItemOperator {
     @SuppressWarnings("unused")
     private static final String TAG = "SwipingItemOperator";

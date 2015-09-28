@@ -20,9 +20,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
@@ -34,7 +34,12 @@ class ExpandableRecyclerViewWrapperAdapter
         extends BaseWrapperAdapter<RecyclerView.ViewHolder>
         implements DraggableItemAdapter<RecyclerView.ViewHolder>,
         SwipeableItemAdapter<RecyclerView.ViewHolder> {
+
     private static final String TAG = "ARVExpandableWrapper";
+
+    // NOTE: Make accessible with short name
+    private interface Constants extends ExpandableItemConstants {
+    }
 
     private static final int VIEW_TYPE_FLAG_IS_GROUP = ExpandableAdapterHelper.VIEW_TYPE_FLAG_IS_GROUP;
 
@@ -174,13 +179,13 @@ class ExpandableRecyclerViewWrapperAdapter
         int flags = 0;
 
         if (childPosition == RecyclerView.NO_POSITION) {
-            flags |= RecyclerViewExpandableItemManager.STATE_FLAG_IS_GROUP;
+            flags |= Constants.STATE_FLAG_IS_GROUP;
         } else {
-            flags |= RecyclerViewExpandableItemManager.STATE_FLAG_IS_CHILD;
+            flags |= Constants.STATE_FLAG_IS_CHILD;
         }
 
         if (mPositionTranslator.isGroupExpanded(groupPosition)) {
-            flags |= RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED;
+            flags |= Constants.STATE_FLAG_IS_EXPANDED;
         }
 
         safeUpdateExpandStateFlags(holder, flags);
@@ -884,16 +889,16 @@ class ExpandableRecyclerViewWrapperAdapter
         final ExpandableItemViewHolder holder2 = (ExpandableItemViewHolder) holder;
 
         final int curFlags = holder2.getExpandStateFlags();
-        final int mask = ~RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED;
+        final int mask = ~Constants.STATE_FLAG_IS_UPDATED;
 
         // append HAS_EXPANDED_STATE_CHANGED flag
-        if ((curFlags != STATE_FLAG_INITIAL_VALUE) && (((curFlags ^ flags) & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0)) {
-            flags |= RecyclerViewExpandableItemManager.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED;
+        if ((curFlags != STATE_FLAG_INITIAL_VALUE) && (((curFlags ^ flags) & Constants.STATE_FLAG_IS_EXPANDED) != 0)) {
+            flags |= Constants.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED;
         }
 
         // append UPDATED flag
         if ((curFlags == STATE_FLAG_INITIAL_VALUE) || (((curFlags ^ flags) & mask) != 0)) {
-            flags |= RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED;
+            flags |= Constants.STATE_FLAG_IS_UPDATED;
         }
 
         holder2.setExpandStateFlags(flags);
@@ -923,8 +928,8 @@ class ExpandableRecyclerViewWrapperAdapter
         final int flags = holder2.getDragStateFlags();
         boolean needCorrection = false;
 
-        if (((flags & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) &&
-                ((flags & RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE) == 0)) {
+        if (((flags & DraggableItemConstants.STATE_FLAG_DRAGGING) != 0) &&
+                ((flags & DraggableItemConstants.STATE_FLAG_IS_IN_RANGE) == 0)) {
             if (!groupRangeSpecified || isInGroupRange) {
                 if (!childRangeSpecified || (childRangeSpecified && isInChildRange)) {
                     needCorrection = true;
@@ -934,8 +939,8 @@ class ExpandableRecyclerViewWrapperAdapter
 
         if (needCorrection) {
             holder2.setDragStateFlags(
-                    flags | RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE |
-                            RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED);
+                    flags | DraggableItemConstants.STATE_FLAG_IS_IN_RANGE |
+                            DraggableItemConstants.STATE_FLAG_IS_UPDATED);
         }
     }
 }

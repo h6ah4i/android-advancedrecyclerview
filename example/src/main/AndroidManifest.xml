@@ -41,6 +41,10 @@
             android:label="@string/activity_title_demo_d"/>
 
         <activity
+            android:name=".demo_d_grid.DraggableGridExampleActivity"
+            android:label="@string/activity_title_demo_d_grid"/>
+
+        <activity
             android:name=".demo_d_with_longpress.DraggableWithLongPressExampleActivity"
             android:label="@string/activity_title_demo_d_with_longpress"/>
 
@@ -83,6 +87,14 @@
         <activity
             android:name=".demo_s_vertical.VerticalSwipeableExampleActivity"
             android:label="@string/activity_title_demo_s_vertical"/>
+
+        <activity
+            android:name=".demo_s_viewpager.ViewPagerSwipeableExampleActivity"
+            android:label="@string/activity_title_demo_s_viewpager"/>
+
+        <activity
+            android:name=".demo_s_legacy.LegacySwipeableExampleActivity"
+            android:label="@string/activity_title_demo_s_legacy"/>
 
         <activity
             android:name=".about.AboutActivity"

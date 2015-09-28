@@ -111,7 +111,7 @@ public class RecyclerListViewFragment extends Fragment {
         } else {
             mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
         }
-        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(), R.drawable.list_divider), true));
+        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(null, ContextCompat.getDrawable(getContext(), R.drawable.list_divider_v), true));
 
         // NOTE:
         // The initialization order is very important! This order determines the priority of touch event handling.
@@ -157,7 +157,7 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     private void onItemViewClick(View v, boolean pinned) {
-        int position = mRecyclerView.getChildPosition(v);
+        int position = mRecyclerView.getChildAdapterPosition(v);
         if (position != RecyclerView.NO_POSITION) {
             ((VerticalSwipeableExampleActivity) getActivity()).onItemClicked(position);
         }
