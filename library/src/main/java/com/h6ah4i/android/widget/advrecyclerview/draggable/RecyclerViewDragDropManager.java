@@ -25,6 +25,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -70,13 +71,13 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
          */
         void onItemDragStarted(int position);
 
-	    /**
-	     * Callback method to be invoked when item position is changed during drag.
-	     *
-	     * @param fromPosition The old position of the item.
-	     * @param toPosition The new position of the item
-	     */
-	    void onItemDragPositionChanged(int fromPosition, int toPosition);
+        /**
+         * Callback method to be invoked when item position is changed during drag.
+         *
+         * @param fromPosition The old position of the item.
+         * @param toPosition   The new position of the item
+         */
+        void onItemDragPositionChanged(int fromPosition, int toPosition);
 
         /**
          * Callback method to be invoked when dragging is finished.
@@ -419,7 +420,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      *
      * @return The listener object
      */
-    public @Nullable OnItemDragEventListener getOnItemDragEventListener() {
+    public
+    @Nullable
+    OnItemDragEventListener getOnItemDragEventListener() {
         return mItemDragEventListener;
     }
 
@@ -1037,8 +1040,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         if (mEdgeEffectDecorator != null) {
             final float edgeEffectStrength = 0.005f;
 
-            final int draggingItemTopLeft = (horizontal)? decorator.getTranslatedItemPositionLeft() : decorator.getTranslatedItemPositionTop();
-            final int draggingItemBottomRight = (horizontal)? decorator.getTranslatedItemPositionRight() : decorator.getTranslatedItemPositionBottom();
+            final int draggingItemTopLeft = (horizontal) ? decorator.getTranslatedItemPositionLeft() : decorator.getTranslatedItemPositionTop();
+            final int draggingItemBottomRight = (horizontal) ? decorator.getTranslatedItemPositionRight() : decorator.getTranslatedItemPositionBottom();
             final int draggingItemCenter = (draggingItemTopLeft + draggingItemBottomRight) / 2;
             final int nearEdgePosition;
 
@@ -1204,9 +1207,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 Log.d(TAG, "item swap (from: " + fromPosition + ", to: " + toPosition + ")");
             }
 
-	        if (mItemDragEventListener != null) {
-		        mItemDragEventListener.onItemDragPositionChanged(fromPosition, toPosition);
-	        }
+            if (mItemDragEventListener != null) {
+                mItemDragEventListener.onItemDragPositionChanged(fromPosition, toPosition);
+            }
 
             RecyclerView.ViewHolder firstVisibleItem = null;
 
@@ -1309,7 +1312,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         switch (layoutType) {
             case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_HORIZONTAL:
             case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_VERTICAL:
-                swapTargetHolder = findSwapTargetItemForGridLayoutManager(rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range);
+                swapTargetHolder = findSwapTargetItemForGridLayoutManager(
+                        rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range,
+                        (layoutType == CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_VERTICAL));
                 break;
             case CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_HORIZONTAL:
                 swapTargetHolder = findSwapTargetItemForLinearLayoutManagerHorizontal(rv, draggingItem, draggingItemId, overlayItemLeft, overlayItemTop, range);
@@ -1334,7 +1339,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
     private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManager(
             RecyclerView rv, RecyclerView.ViewHolder draggingItem,
-            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
+            long draggingItemId, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range, boolean vertical) {
         final int draggingItemPosition = draggingItem.getAdapterPosition();
         RecyclerView.ViewHolder swapTargetHolder = null;
 
@@ -1345,8 +1350,38 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             int cy = overlayItemTop + draggingItem.itemView.getHeight() / 2;
 
             RecyclerView.ViewHolder vh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx, cy);
-            if (draggingItem != vh) {
-                swapTargetHolder = vh;
+            if (vh != null) {
+                if (draggingItem != vh) {
+                    swapTargetHolder = vh;
+                }
+            } else {
+                int spanCount = CustomRecyclerViewUtils.getSpanCount(rv);
+                int height = rv.getHeight();
+                int width = rv.getWidth();
+                int paddingLeft = rv.getPaddingLeft();
+                int paddingTop = rv.getPaddingTop();
+                int paddingRight = rv.getPaddingRight();
+                int paddingBottom = rv.getPaddingBottom();
+                int columnWidth = (width - paddingLeft - paddingRight) / spanCount;
+                int rowHeight = (height - paddingTop - paddingBottom) / spanCount;
+
+                for (int i = spanCount - 1; i >= 0; i--) {
+                    int cx2 = (vertical) ? (paddingLeft + (columnWidth * i) + (columnWidth / 2)) : cx;
+                    int cy2 = (!vertical) ? (paddingTop + (rowHeight * i) + (rowHeight / 2)) : cy;
+                    RecyclerView.ViewHolder vh2 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx2, cy2);
+
+                    if (vh2 != null) {
+                        int itemCount = rv.getLayoutManager().getItemCount();
+                        int pos = vh2.getAdapterPosition();
+
+                        if ((pos != RecyclerView.NO_POSITION) && (pos == itemCount - 1)) {
+                            if (draggingItem != vh2) {
+                                swapTargetHolder = vh2;
+                            }
+                        }
+                        break;
+                    }
+                }
             }
         }
 
@@ -1433,7 +1468,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      *
      * @return Interpolator which is used for "settle back into place" animation
      */
-    public @Nullable Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
+    public
+    @Nullable
+    Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
         return mItemSettleBackIntoPlaceAnimationInterpolator;
     }
 
