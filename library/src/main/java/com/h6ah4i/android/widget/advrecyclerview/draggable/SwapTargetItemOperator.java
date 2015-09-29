@@ -33,27 +33,23 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     private Interpolator mSwapTargetTranslationInterpolator;
     private int mTranslationX;
     private int mTranslationY;
-    private int mDraggingItemHeight;
-    private int mDraggingItemWidth;
     private Rect mSwapTargetDecorationOffsets = new Rect();
     private Rect mSwapTargetItemMargins = new Rect();
-    private Rect mDraggingItemMargins = new Rect();
     private Rect mDraggingItemDecorationOffsets = new Rect();
     private boolean mStarted;
     private float mReqTranslationPhase;
     private float mCurTranslationPhase;
-    private long mDraggingItemId;
+    private DraggingItemInfo mDraggingItemInfo;
     private ItemDraggableRange mRange;
 
-    public SwapTargetItemOperator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem, ItemDraggableRange range) {
+    public SwapTargetItemOperator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem, ItemDraggableRange range, DraggingItemInfo draggingItemInfo) {
         super(recyclerView, draggingItem);
 
-        mDraggingItemId = mDraggingItem.getItemId();
+        mDraggingItemInfo = draggingItemInfo;
         mRange = range;
 
-        CustomRecyclerViewUtils.getLayoutMargins(mDraggingItem.itemView, mDraggingItemMargins);
         CustomRecyclerViewUtils.getDecorationOffsets(
-                mRecyclerView.getLayoutManager(), mDraggingItem.itemView, mDraggingItemDecorationOffsets);
+                mRecyclerView.getLayoutManager(), mDraggingItemViewHolder.itemView, mDraggingItemDecorationOffsets);
     }
 
     private static float calculateCurrentTranslationPhase(float cur, float req) {
@@ -70,15 +66,15 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        final RecyclerView.ViewHolder draggingItem = mDraggingItem;
+        final RecyclerView.ViewHolder draggingItem = mDraggingItemViewHolder;
 
-        if (draggingItem == null || draggingItem.getItemId() != mDraggingItemId) {
+        if (draggingItem == null || draggingItem.getItemId() != mDraggingItemInfo.id) {
             return;
         }
 
         final RecyclerView.ViewHolder swapTargetItem =
                 RecyclerViewDragDropManager.findSwapTargetItem(
-                        mRecyclerView, draggingItem, mDraggingItemId, mTranslationX, mTranslationY, mRange);
+                        mRecyclerView, draggingItem, mDraggingItemInfo, mTranslationX, mTranslationY, mRange);
 
         // reset Y-translation if the swap target has changed
         if ((mSwapTargetItem != swapTargetItem) && (mSwapTargetItem != null)) {
@@ -151,10 +147,10 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
         final int pos1 = draggingItem.getLayoutPosition();
         final int pos2 = swapTargetItem.getLayoutPosition();
 
-        final Rect m1 = mDraggingItemMargins;
+        final Rect m1 = mDraggingItemInfo.margins;
         final Rect d1 = mDraggingItemDecorationOffsets;
-        final int h1 = mDraggingItemHeight + m1.top + m1.bottom + d1.top + d1.bottom;
-        final int w1 = mDraggingItemWidth + m1.left + m1.right + d1.left + d1.right;
+        final int h1 = mDraggingItemInfo.height + m1.top + m1.bottom + d1.top + d1.bottom;
+        final int w1 = mDraggingItemInfo.width + m1.left + m1.right + d1.left + d1.right;
 
         if (mSwapTargetTranslationInterpolator != null) {
             translationPhase = mSwapTargetTranslationInterpolator.getInterpolation(translationPhase);
@@ -187,9 +183,6 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
             return;
         }
 
-        mDraggingItemHeight = mDraggingItem.itemView.getHeight();
-        mDraggingItemWidth = mDraggingItem.itemView.getWidth();
-
         mRecyclerView.addItemDecoration(this, 0);
 
         mStarted = true;
@@ -208,20 +201,19 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
 
         if (mSwapTargetItem != null) {
             // return to default position
-            updateSwapTargetTranslation(mDraggingItem, mSwapTargetItem, mCurTranslationPhase);
+            updateSwapTargetTranslation(mDraggingItemViewHolder, mSwapTargetItem, mCurTranslationPhase);
             moveToDefaultPosition(mSwapTargetItem.itemView, animate);
             mSwapTargetItem = null;
         }
 
         mRange = null;
-        mDraggingItem = null;
+        mDraggingItemViewHolder = null;
         mTranslationX = 0;
         mTranslationY = 0;
-        mDraggingItemWidth = 0;
-        mDraggingItemHeight = 0;
         mCurTranslationPhase = 0.0f;
         mReqTranslationPhase = 0.0f;
         mStarted = false;
+        mDraggingItemInfo = null;
     }
 
     public void update(int translationX, int translationY) {
