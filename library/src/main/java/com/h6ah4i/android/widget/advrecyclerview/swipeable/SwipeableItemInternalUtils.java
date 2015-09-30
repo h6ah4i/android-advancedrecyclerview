@@ -25,6 +25,7 @@ public class SwipeableItemInternalUtils {
     private SwipeableItemInternalUtils() {
     }
 
+    @SuppressWarnings("unchecked")
     public static SwipeResultAction invokeOnSwipeItem(
             BaseSwipeableItemAdapter<?> adapter, RecyclerView.ViewHolder holder, int position, int result) {
 

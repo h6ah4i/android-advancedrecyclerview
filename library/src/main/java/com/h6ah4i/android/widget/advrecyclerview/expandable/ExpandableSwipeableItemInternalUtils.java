@@ -25,6 +25,7 @@ class ExpandableSwipeableItemInternalUtils {
     private ExpandableSwipeableItemInternalUtils() {
     }
 
+    @SuppressWarnings("unchecked")
     public static SwipeResultAction invokeOnSwipeItem(
             BaseExpandableSwipeableItemAdapter<?, ?> adapter, RecyclerView.ViewHolder holder,
             int groupPosition, int childPosition, int result) {
@@ -46,7 +47,7 @@ class ExpandableSwipeableItemInternalUtils {
                 case RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM:
                     //noinspection deprecation
                     return new LegacyExpandableSwipeResultAction<>(
-                            (LegacyExpandableSwipeableItemAdapter) adapter,
+                            (LegacyExpandableSwipeableItemAdapter<RecyclerView.ViewHolder, RecyclerView.ViewHolder>) adapter,
                             holder, groupPosition, childPosition, result, reaction);
                 default:
                     throw new IllegalStateException("Unexpected reaction type: " + reaction);

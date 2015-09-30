@@ -42,6 +42,7 @@ public class LegacyExpandableSwipeResultAction<GVH extends RecyclerView.ViewHold
         mReaction = reaction;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void onPerformAction() {
         if (mChildPosition == RecyclerView.NO_POSITION) {
