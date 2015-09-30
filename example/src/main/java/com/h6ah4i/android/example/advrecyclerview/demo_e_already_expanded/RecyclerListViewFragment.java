@@ -144,7 +144,7 @@ public class RecyclerListViewFragment extends Fragment {
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_e_add_remove, menu);
+        inflater.inflate(R.menu.menu_e_already_expanded, menu);
     }
 
     @Override
