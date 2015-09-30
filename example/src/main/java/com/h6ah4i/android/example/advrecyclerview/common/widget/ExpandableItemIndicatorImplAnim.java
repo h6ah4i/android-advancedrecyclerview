@@ -38,7 +38,7 @@ class ExpandableItemIndicatorImplAnim extends ExpandableItemIndicator.Impl {
 
     @Override
     public void setExpandedState(boolean isExpanded, boolean animate) {
-        MorphButton.MorphState indicatorState = (isExpanded) ? MorphButton.MorphState.END : MorphButton.MorphState.START;
+        MorphButton.MorphState indicatorState = (isExpanded) ? MorphButton.MorphState.START : MorphButton.MorphState.END;
 
         if (mMorphButton.getState() != indicatorState) {
             mMorphButton.setState(indicatorState, animate);
