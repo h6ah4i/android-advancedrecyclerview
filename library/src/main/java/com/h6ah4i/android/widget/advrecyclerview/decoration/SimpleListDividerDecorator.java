@@ -63,6 +63,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         final int childCount = parent.getChildCount();
 
+
         if (childCount == 0) {
             return;
         }
@@ -70,14 +71,6 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
         final float xPositionThreshold = (mOverlap) ? 1.0f : (mVerticalDividerWidth + 1.0f); // [px]
         final float yPositionThreshold = (mOverlap) ? 1.0f : (mHorizontalDividerHeight + 1.0f); // [px]
         final float zPositionThreshold = 1.0f; // [px]
-
-        int savedCount = c.save(Canvas.CLIP_SAVE_FLAG);
-
-        c.clipRect(
-                parent.getLeft() + parent.getPaddingLeft(),
-                parent.getTop() + parent.getPaddingTop(),
-                parent.getRight() - parent.getPaddingRight(),
-                parent.getBottom() + parent.getPaddingBottom());
 
         for (int i = 0; i < childCount - 1; i++) {
             final View child = parent.getChildAt(i);
@@ -135,8 +128,6 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
                 mVerticalDrawable.draw(c);
             }
         }
-
-        c.restoreToCount(savedCount);
     }
 
     @Override
