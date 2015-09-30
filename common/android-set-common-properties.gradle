@@ -16,7 +16,7 @@
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.0'
+    buildToolsVersion '23.0.1'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
