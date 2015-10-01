@@ -176,6 +176,11 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             throw new IllegalStateException("adapter is not set properly");
         }
 
+        final int layoutOrientation = CustomRecyclerViewUtils.getOrientation(rv);
+        if (layoutOrientation == CustomRecyclerViewUtils.ORIENTATION_UNKNOWN) {
+            throw new IllegalStateException("failed to determine layout orientation");
+        }
+
         mRecyclerView = rv;
         mRecyclerView.addOnItemTouchListener(mInternalUseOnItemTouchListener);
 
@@ -188,6 +193,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mItemSlideAnimator = new ItemSlidingAnimator(mAdapter);
         mItemSlideAnimator.setImmediatelySetTranslationThreshold(
                 (int) (rv.getResources().getDisplayMetrics().density * SLIDE_ITEM_IMMEDIATELY_SET_TRANSLATION_THRESHOLD_DP + 0.5f));
+
+        mSwipeHorizontal = (layoutOrientation == CustomRecyclerViewUtils.ORIENTATION_VERTICAL);
     }
 
     /**
@@ -320,16 +327,10 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             return false;
         }
 
-        final int layoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
-        if (layoutOrientation == CustomRecyclerViewUtils.ORIENTATION_UNKNOWN) {
-            return false;
-        }
-
         mInitialTouchX = touchX;
         mInitialTouchY = touchY;
         mCheckingTouchSlop = holder.getItemId();
         mSwipingItemReactionType = reactionType;
-        mSwipeHorizontal = (layoutOrientation == CustomRecyclerViewUtils.ORIENTATION_VERTICAL);
 
         return true;
     }
