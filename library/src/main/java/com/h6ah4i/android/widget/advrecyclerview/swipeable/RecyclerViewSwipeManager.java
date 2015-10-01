@@ -421,15 +421,15 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         boolean dirMasked;
         if (mSwipeHorizontal) {
             if (swipeAxisDelta < 0) {
-                dirMasked = ((mSwipingItemReactionType & REACTION_FLAG_MASK_START_SWIPE_LEFT) != 0);
+                dirMasked = ((mSwipingItemReactionType & REACTION_MASK_START_SWIPE_LEFT) != 0);
             } else {
-                dirMasked = ((mSwipingItemReactionType & REACTION_FLAG_MASK_START_SWIPE_RIGHT) != 0);
+                dirMasked = ((mSwipingItemReactionType & REACTION_MASK_START_SWIPE_RIGHT) != 0);
             }
         } else {
             if (swipeAxisDelta < 0) {
-                dirMasked = ((mSwipingItemReactionType & REACTION_FLAG_MASK_START_SWIPE_UP) != 0);
+                dirMasked = ((mSwipingItemReactionType & REACTION_MASK_START_SWIPE_UP) != 0);
             } else {
-                dirMasked = ((mSwipingItemReactionType & REACTION_FLAG_MASK_START_SWIPE_DOWN) != 0);
+                dirMasked = ((mSwipingItemReactionType & REACTION_MASK_START_SWIPE_DOWN) != 0);
             }
         }
 
