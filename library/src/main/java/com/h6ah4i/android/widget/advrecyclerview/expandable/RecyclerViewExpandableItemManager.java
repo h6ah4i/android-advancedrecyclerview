@@ -119,11 +119,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
-     * <p/>
-     * Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
+     * <p>Attaches {@link android.support.v7.widget.RecyclerView} instance.</p>
+     * <p>Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
-     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
+     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.</p>
      *
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
@@ -146,9 +145,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.
-     * <p/>
-     * This method should be called in order to avoid memory leaks.
+     * <p>Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.</p>
+     * <p>This method should be called in order to avoid memory leaks.</p>
      */
     public void release() {
         if (mRecyclerView != null && mInternalUseOnItemTouchListener != null) {
@@ -189,9 +187,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Gets saved state object in order to restore the internal state.
-     * <p/>
-     * Call this method in Activity/Fragment's onSavedInstance() and save to the bundle.
+     * <p>Gets saved state object in order to restore the internal state.</p>
+     * <p>Call this method in Activity/Fragment's onSavedInstance() and save to the bundle.</p>
      *
      * @return The Parcelable object which stores information need to restore the internal states.
      */
@@ -286,9 +283,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Expand all groups.
-     * <p/>
-     * Note that this method does not invoke the {@link OnGroupExpandListener#onGroupExpand(int, boolean)} callback.
+     * <p>Expand all groups.</p>
+     * <p>Note that this method does not invoke the {@link OnGroupExpandListener#onGroupExpand(int, boolean)} callback.</p>
      */
     public void expandAll() {
         if (mAdapter != null) {
@@ -297,9 +293,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Collapse all groups.
-     * <p/>
-     * Note that this method does not invoke the {@link OnGroupCollapseListener#onGroupCollapse(int, boolean)} callback.
+     * <p>Collapse all groups.</p>
+     * <p>Note that this method does not invoke the {@link OnGroupCollapseListener#onGroupCollapse(int, boolean)} callback.</p>
      */
     public void collapseAll() {
         if (mAdapter != null) {
@@ -367,12 +362,11 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Returns the packed position representation of a child position.
-     * <p/>
-     * In general, a packed position should be used in situations where the position given to/returned from
+     * <p>Returns the packed position representation of a child position.</p>
+     * <p>In general, a packed position should be used in situations where the position given to/returned from
      * {@link RecyclerViewExpandableItemManager} method can either be a child or group.
      * The two positions are packed into a single long which can be unpacked using {@link #getPackedPositionChild(long)} and
-     * {@link #getPackedPositionGroup(long)}.
+     * {@link #getPackedPositionGroup(long)}.</p>
      *
      * @param groupPosition The child's parent group's position
      * @param childPosition The child position within the group
@@ -413,11 +407,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Gets combined ID for child item.
-     * <p/>
-     * bit 0-31: Lower 32 bits of the childId
+     * <p>Gets combined ID for child item.</p>
+     * <p>bit 0-31: Lower 32 bits of the childId
      * bit 32-62: Lower 31 bits of the groupId
-     * bit 63: reserved
+     * bit 63: reserved</p>
      *
      * @param groupId The ID of the group that contains the child.
      * @param childId The ID of the child.
@@ -428,11 +421,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Gets combined ID for child item.
-     * <p/>
-     * bit 0-31: all bits are set to 1
+     * <p>Gets combined ID for child item.</p>
+     * <p>bit 0-31: all bits are set to 1
      * bit 32-62: Lower 31 bits of the groupId
-     * bit 63: reserved
+     * bit 63: reserved</p>
      *
      * @param groupId The ID of the group that contains the child.
      * @return The unique ID of the child across all groups and children in the list
@@ -510,10 +502,9 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Restore saves state.
-     * <p/>
-     * This method is useful when the adapter can not be prepared (because data loading may takes time and processed asynchronously)
-     * before creating this manager instance.
+     * <p>Restore saves state.</p>
+     * <p>This method is useful when the adapter can not be prepared (because data loading may takes time and processed asynchronously)
+     * before creating this manager instance.</p>
      *
      * @param savedState    The saved state object
      * @param callHooks     Whether to call hook routines
@@ -538,12 +529,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the group item at <code>groupPosition</code> has changed.
-     * <p/>
+     * <p>Notify any registered observers that the group item at <code>groupPosition</code> has changed.</p>
      * <p>This is an group item change event, not a structural change event. It indicates that any
      * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
      * The item at <code>groupPosition</code> retains the same identity.</p>
-     * <p/>
      * <p>This method does not notify for children that are contained in the specified group.
      * If children have also changed, use {@link #notifyGroupAndChildrenItemsChanged(int)} instead.</p>
      *
@@ -555,8 +544,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the group and children items at <code>groupPosition</code> have changed.
-     * <p/>
+     * <p>Notify any registered observers that the group and children items at <code>groupPosition</code> have changed.</p>
      * <p>This is an group item change event, not a structural change event. It indicates that any
      * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
      * The item at <code>groupPosition</code> retains the same identity.</p>
@@ -570,12 +558,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the children items contained in the group item at <code>groupPosition</code> have changed.
-     * <p/>
+     * <p>Notify any registered observers that the children items contained in the group item at <code>groupPosition</code> have changed.</p>
      * <p>This is an group item change event, not a structural change event. It indicates that any
      * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
      * The item at <code>groupPosition</code> retains the same identity.</p>
-     * <p/>
      * <p>This method does not notify for the group item.
      * If the group has also changed, use {@link #notifyGroupAndChildrenItemsChanged(int)} instead.</p>
      *
@@ -587,8 +573,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the child item at <code>{groupPosition, childPosition}</code> has changed.
-     * <p/>
+     * <p>Notify any registered observers that the child item at <code>{groupPosition, childPosition}</code> has changed.</p>
      * <p>This is an item change event, not a structural change event. It indicates that any
      * reflection of the data at <code>{groupPosition, childPosition}</code> is out of date and should be updated.
      * The item at <code>{groupPosition, childPosition}</code> retains the same identity.</p>
@@ -602,9 +587,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the <code>itemCount</code> child items starting at
-     * position <code>{groupPosition, childPosition}</code> have changed.
-     * <p/>
+     * <p>Notify any registered observers that the <code>itemCount</code> child items starting at
+     * position <code>{groupPosition, childPosition}</code> have changed.</p>
      * <p>This is an item change event, not a structural change event. It indicates that
      * any reflection of the data in the given position range is out of date and should
      * be updated. The items in the given range retain the same identity.</p>
@@ -619,10 +603,9 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the group item reflected at <code>groupPosition</code>
+     * <p>Notify any registered observers that the group item reflected at <code>groupPosition</code>
      * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
-     * position <code>groupPosition + 1</code>.
-     * <p/>
+     * position <code>groupPosition + 1</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their
      * positions may be altered.</p>
@@ -637,10 +620,9 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the group item reflected at <code>groupPosition</code>
+     * <p>Notify any registered observers that the group item reflected at <code>groupPosition</code>
      * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
-     * position <code>groupPosition + 1</code>.
-     * <p/>
+     * position <code>groupPosition + 1</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their
      * positions may be altered.</p>
@@ -656,11 +638,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the currently reflected <code>itemCount</code>
+     * <p>Notify any registered observers that the currently reflected <code>itemCount</code>
      * group items starting at <code>groupPositionStart</code> have been newly inserted. The group items
      * previously located at <code>groupPositionStart</code> and beyond can now be found starting
-     * at position <code>groupPositionStart + itemCount</code>.
-     * <p/>
+     * at position <code>groupPositionStart + itemCount</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
@@ -676,11 +657,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the currently reflected <code>itemCount</code>
+     * <p>Notify any registered observers that the currently reflected <code>itemCount</code>
      * group items starting at <code>groupPositionStart</code> have been newly inserted and may be <code>expanded</code>.
      * The group items previously located at <code>groupPositionStart</code> and beyond can now be found starting
-     * at position <code>groupPositionStart + itemCount</code>.
-     * <p/>
+     * at position <code>groupPositionStart + itemCount</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
@@ -697,10 +677,9 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the group item reflected at <code>groupPosition</code>
+     * <p>Notify any registered observers that the group item reflected at <code>groupPosition</code>
      * has been newly inserted. The group item previously at <code>groupPosition</code> is now at
-     * position <code>groupPosition + 1</code>.
-     * <p/>
+     * position <code>groupPosition + 1</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their
      * positions may be altered.</p>
@@ -714,11 +693,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the currently reflected <code>itemCount</code>
+     * <p>Notify any registered observers that the currently reflected <code>itemCount</code>
      * child items starting at <code>childPositionStart</code> have been newly inserted. The child items
      * previously located at <code>childPositionStart</code> and beyond can now be found starting
-     * at position <code>childPositionStart + itemCount</code>.
-     * <p/>
+     * at position <code>childPositionStart + itemCount</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
@@ -733,10 +711,9 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the group item previously located at <code>groupPosition</code>
+     * <p>Notify any registered observers that the group item previously located at <code>groupPosition</code>
      * has been removed from the data set. The group items previously located at and after
-     * <code>groupPosition</code> may now be found at <code>oldGroupPosition - 1</code>.
-     * <p/>
+     * <code>groupPosition</code> may now be found at <code>oldGroupPosition - 1</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
@@ -749,11 +726,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the <code>itemCount</code> group items previously
+     * <p>Notify any registered observers that the <code>itemCount</code> group items previously
      * located at <code>groupPositionStart</code> have been removed from the data set. The group items
      * previously located at and after <code>groupPositionStart + itemCount</code> may now be found
-     * at <code>oldPosition - itemCount</code>.
-     * <p/>
+     * at <code>oldPosition - itemCount</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the data
      * set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
@@ -766,10 +742,9 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the child item previously located at <code>childPosition</code>
+     * <p>Notify any registered observers that the child item previously located at <code>childPosition</code>
      * has been removed from the data set. The child items previously located at and after
-     * <code>childPosition</code> may now be found at <code>oldGroupPosition - 1</code>.
-     * <p/>
+     * <code>childPosition</code> may now be found at <code>oldGroupPosition - 1</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the
      * data set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>
@@ -783,11 +758,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * Notify any registered observers that the <code>itemCount</code> child items previously
+     * <p>Notify any registered observers that the <code>itemCount</code> child items previously
      * located at <code>childPositionStart</code> have been removed from the data set. The child items
      * previously located at and after <code>childPositionStart + itemCount</code> may now be found
-     * at <code>oldPosition - itemCount</code>.
-     * <p/>
+     * at <code>oldPosition - itemCount</code>.</p>
      * <p>This is a structural change event. Representations of other existing items in the data
      * set are still considered up to date and will not be rebound, though their positions
      * may be altered.</p>

@@ -221,11 +221,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /**
-     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
-     * <p/>
-     * Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
+     * <p>Attaches {@link android.support.v7.widget.RecyclerView} instance.</p>
+     * <p>Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
-     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
+     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.</p>
      *
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
@@ -235,11 +234,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /**
-     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
-     * <p/>
-     * Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
+     * <p>Attaches {@link android.support.v7.widget.RecyclerView} instance.</p>
+     * <p>Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
-     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.
+     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.</p>
      *
      * @param rv                     The {@link android.support.v7.widget.RecyclerView} instance
      * @param scrollEventDistributor The distributor for {@link android.support.v7.widget.RecyclerView.OnScrollListener} event
@@ -304,9 +302,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /**
-     * Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.
-     * <p/>
-     * This method should be called in order to avoid memory leaks.
+     * <p>Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.</p>
+     * <p>This method should be called in order to avoid memory leaks.</p>
      */
     public void release() {
         cancelDrag();

@@ -37,10 +37,9 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
     int getChildCount(int groupPosition);
 
     /**
-     * Gets the ID for the group at the given position. This group ID must be unique across groups.
-     * <p/>
-     * The combined ID (see {@link RecyclerViewExpandableItemManager#getCombinedGroupId(long)})
-     * must be unique across ALL items (groups and all children).
+     * <p>Gets the ID for the group at the given position. This group ID must be unique across groups.</p>
+     * <p>The combined ID (see {@link RecyclerViewExpandableItemManager#getCombinedGroupId(long)})
+     * must be unique across ALL items (groups and all children).</p>
      *
      * @param groupPosition the position of the group for which the ID is wanted
      * @return the ID associated with the group
@@ -48,11 +47,10 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
     long getGroupId(int groupPosition);
 
     /**
-     * Gets the ID for the given child within the given group.
-     * <p/>
-     * This ID must be unique across all children within the group.
+     * <p>Gets the ID for the given child within the given group.</p>
+     * <p>This ID must be unique across all children within the group.
      * The combined ID (see {@link RecyclerViewExpandableItemManager#getCombinedChildId(long, long)})
-     * must be unique across ALL items (groups and all children).
+     * must be unique across ALL items (groups and all children).</p>
      *
      * @param groupPosition the position of the group that contains the child
      * @param childPosition the position of the child within the group for which the ID is wanted
@@ -119,10 +117,9 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
     void onBindChildViewHolder(CVH holder, int groupPosition, int childPosition, int viewType);
 
     /**
-     * Called when a user attempt to expand/collapse a group item by tapping.
-     * <p/>
-     * Tips: If you want to set your own click event listener to group items, make this method always return false.
-     * It will disable auto expanding/collapsing when a group item is clicked.
+     * <p>Called when a user attempt to expand/collapse a group item by tapping.</p>
+     * <p>Tips: If you want to set your own click event listener to group items, make this method always return false.
+     * It will disable auto expanding/collapsing when a group item is clicked.</p>
      *
      * @param holder        The ViewHolder which is associated to group item user is attempt to expand/collapse
      * @param groupPosition Group position
