@@ -109,7 +109,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
             if (mHorizontalDividerHeight != 0) {
                 final int left = child.getLeft();
                 final int right = child.getRight();
-                final int top = child.getBottom();
+                final int top = child.getBottom() - (mOverlap ? mHorizontalDividerHeight : 0);
                 final int bottom = top + mHorizontalDividerHeight;
 
                 mHorizontalDrawable.setAlpha((int) ((0.5f * 255) * (childAlpha + nextChildAlpha) + 0.5f));
@@ -118,7 +118,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
             }
 
             if (mVerticalDividerWidth != 0) {
-                final int left = child.getRight();
+                final int left = child.getRight() - (mOverlap ? mVerticalDividerWidth : 0);
                 final int right = left + mVerticalDividerWidth;
                 final int top = child.getTop();
                 final int bottom = child.getBottom();
