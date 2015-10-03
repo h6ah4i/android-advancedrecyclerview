@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_d_with_longpress;
+package com.h6ah4i.android.example.advrecyclerview.demo_d_on_longpress;
 
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;

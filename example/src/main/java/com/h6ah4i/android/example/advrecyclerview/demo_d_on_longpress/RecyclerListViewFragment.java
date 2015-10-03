@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_d_with_longpress;
+package com.h6ah4i.android.example.advrecyclerview.demo_d_on_longpress;
 
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
@@ -131,6 +131,6 @@ public class RecyclerListViewFragment extends Fragment {
     }
 
     public AbstractDataProvider getDataProvider() {
-        return ((DraggableWithLongPressExampleActivity) getActivity()).getDataProvider();
+        return ((DragOnLongPressExampleActivity) getActivity()).getDataProvider();
     }
 }

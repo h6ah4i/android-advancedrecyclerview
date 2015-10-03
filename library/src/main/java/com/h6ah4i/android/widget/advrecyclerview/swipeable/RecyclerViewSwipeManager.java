@@ -18,6 +18,8 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
@@ -40,11 +42,6 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 @SuppressWarnings("PointlessBitwiseExpression")
 public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private static final String TAG = "ARVSwipeManager";
-
-    static final int BIT_SHIFT_AMOUNT_LEFT = 0;
-    static final int BIT_SHIFT_AMOUNT_UP = 8;
-    static final int BIT_SHIFT_AMOUNT_RIGHT = 16;
-    static final int BIT_SHIFT_AMOUNT_DOWN = 24;
 
     /**
      * Used for listening item swipe events
@@ -102,6 +99,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private VelocityTracker mVelocityTracker;
     private SwipingItemOperator mSwipingItemOperator;
     private OnItemSwipeEventListener mItemSwipeEventListener;
+    private InternalHandler mHandler;
 
     /**
      * Constructor.
@@ -195,6 +193,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
                 (int) (rv.getResources().getDisplayMetrics().density * SLIDE_ITEM_IMMEDIATELY_SET_TRANSLATION_THRESHOLD_DP + 0.5f));
 
         mSwipeHorizontal = (layoutOrientation == CustomRecyclerViewUtils.ORIENTATION_VERTICAL);
+        mHandler = new InternalHandler(this);
     }
 
     /**
@@ -202,6 +201,11 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
      * <p>This method should be called in order to avoid memory leaks.</p>
      */
     public void release() {
+        if (mHandler != null) {
+            mHandler.release();
+            mHandler = null;
+        }
+
         if (mRecyclerView != null && mInternalUseOnItemTouchListener != null) {
             mRecyclerView.removeOnItemTouchListener(mInternalUseOnItemTouchListener);
         }
@@ -332,6 +336,10 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mCheckingTouchSlop = holder.getItemId();
         mSwipingItemReactionType = reactionType;
 
+        if ((reactionType & REACTION_START_SWIPE_ON_LONG_PRESS) != 0) {
+            mHandler.startLongPressDetection(e);
+        }
+
         return true;
     }
 
@@ -340,6 +348,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     private void handleActionUpOrCancelWhileNotSwiping() {
+        mHandler.cancelLongPressDetection();
+
         mCheckingTouchSlop = RecyclerView.NO_ID;
         mSwipingItemReactionType = 0;
     }
@@ -446,19 +456,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             return false;
         }
 
-        final int itemPosition = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
-
-        if (itemPosition == RecyclerView.NO_POSITION) {
-            return false;
-        }
-
-        if (LOCAL_LOGD) {
-            Log.d(TAG, "swiping started");
-        }
-
-        startSwiping(rv, e, holder, itemPosition);
-
-        return true;
+        return checkConditionAndStartSwiping(e, holder);
     }
 
     private void handleActionMoveWhileSwiping(MotionEvent e) {
@@ -472,13 +470,32 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mSwipingItemOperator.update(swipeDistanceX, swipeDistanceY);
     }
 
-    private void startSwiping(RecyclerView rv, MotionEvent e, RecyclerView.ViewHolder holder, int itemPosition) {
+    private boolean checkConditionAndStartSwiping(MotionEvent e, RecyclerView.ViewHolder holder) {
+        final int itemPosition = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
+
+        if (itemPosition == RecyclerView.NO_POSITION) {
+            return false;
+        }
+
+        startSwiping(e, holder, itemPosition);
+
+        return true;
+    }
+
+    private void startSwiping(MotionEvent e, RecyclerView.ViewHolder holder, int itemPosition) {
+        if (LOCAL_LOGD) {
+            Log.d(TAG, "swiping started");
+        }
+
+        mHandler.cancelLongPressDetection();
+
         mSwipingItem = holder;
         mSwipingItemPosition = itemPosition;
         mLastTouchX = (int) (e.getX() + 0.5f);
         mLastTouchY = (int) (e.getY() + 0.5f);
         mTouchedItemOffsetX = mLastTouchX;
         mTouchedItemOffsetY = mLastTouchY;
+        mCheckingTouchSlop = RecyclerView.NO_ID;
         CustomRecyclerViewUtils.getLayoutMargins(holder.itemView, mSwipingItemMargins);
 
         mSwipingItemOperator = new SwipingItemOperator(this, mSwipingItem, mSwipingItemPosition, mSwipingItemReactionType, mSwipeHorizontal);
@@ -504,6 +521,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         if (swipingItem == null) {
             return;
         }
+
+        mHandler.cancelLongPressDetection();
 
         if (mRecyclerView != null && mRecyclerView.getParent() != null) {
             mRecyclerView.getParent().requestDisallowInterceptTouchEvent(false);
@@ -772,7 +791,54 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         return mItemSlideAnimator.getSwipeContainerViewTranslationY(holder);
     }
 
+    private void handleOnLongPress(MotionEvent e) {
+        RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForItemId(mCheckingTouchSlop);
+        if (holder != null) {
+            checkConditionAndStartSwiping(e, holder);
+        }
+    }
+
     private static boolean supportsViewPropertyAnimator() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    private static class InternalHandler extends Handler {
+        private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();// + ViewConfiguration.getTapTimeout();
+        private static final int MSG_LONGPRESS = 1;
+
+        private RecyclerViewSwipeManager mHolder;
+        private MotionEvent mDownMotionEvent;
+
+        public InternalHandler(RecyclerViewSwipeManager holder) {
+            mHolder = holder;
+        }
+
+        public void release() {
+            removeCallbacks(null);
+            mHolder = null;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_LONGPRESS:
+                    mHolder.handleOnLongPress(mDownMotionEvent);
+                    break;
+            }
+        }
+
+        public void startLongPressDetection(MotionEvent e) {
+            cancelLongPressDetection();
+            mDownMotionEvent = MotionEvent.obtain(e);
+            sendEmptyMessageAtTime(MSG_LONGPRESS, e.getDownTime() + LONGPRESS_TIMEOUT);
+        }
+
+        public void cancelLongPressDetection() {
+            removeMessages(MSG_LONGPRESS);
+            if (mDownMotionEvent != null) {
+                mDownMotionEvent.recycle();
+                mDownMotionEvent = null;
+            }
+        }
     }
 }
