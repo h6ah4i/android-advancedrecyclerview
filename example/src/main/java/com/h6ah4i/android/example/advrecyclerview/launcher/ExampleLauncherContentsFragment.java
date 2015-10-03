@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.demo_d.DraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_grid.DraggableGridExampleActivity;
-import com.h6ah4i.android.example.advrecyclerview.demo_d_with_longpress.DraggableWithLongPressExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_d_on_longpress.DragOnLongPressExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_section.DraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ds.DraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_e.ExpandableExampleActivity;
@@ -53,7 +53,7 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
 
         view.findViewById(R.id.button_launch_demo_d).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_d_grid).setOnClickListener(this);
-        view.findViewById(R.id.button_launch_demo_d_with_longpress).setOnClickListener(this);
+        view.findViewById(R.id.button_launch_demo_d_on_longpress).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_s).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_us).setOnClickListener(this);
         view.findViewById(R.id.button_launch_demo_e).setOnClickListener(this);
@@ -77,8 +77,8 @@ public class ExampleLauncherContentsFragment extends Fragment implements View.On
             case R.id.button_launch_demo_d_grid:
                 launchExampleActivity(DraggableGridExampleActivity.class);
                 break;
-            case R.id.button_launch_demo_d_with_longpress:
-                launchExampleActivity(DraggableWithLongPressExampleActivity.class);
+            case R.id.button_launch_demo_d_on_longpress:
+                launchExampleActivity(DragOnLongPressExampleActivity.class);
                 break;
             case R.id.button_launch_demo_s:
                 launchExampleActivity(SwipeableExampleActivity.class);

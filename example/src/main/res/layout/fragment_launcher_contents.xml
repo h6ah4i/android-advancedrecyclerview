@@ -60,9 +60,9 @@
             android:text="@string/button_text_launch_demo_us" />
 
         <Button
-            android:id="@+id/button_launch_demo_d_with_longpress"
+            android:id="@+id/button_launch_demo_d_on_longpress"
             style="@style/exampleLauncherButtonStyle"
-            android:text="@string/button_text_launch_demo_d_with_longpress" />
+            android:text="@string/button_text_launch_demo_d_on_longpress" />
 
         <Button
             android:id="@+id/button_launch_demo_d_with_section"
