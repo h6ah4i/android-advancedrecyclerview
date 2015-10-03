@@ -53,6 +53,7 @@ import java.lang.annotation.RetentionPolicy;
         SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH,
         SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT,
         SwipeableItemConstants.REACTION_CAN_SWIPE_BOTH,
+        SwipeableItemConstants.REACTION_START_SWIPE_ON_LONG_PRESS,
 })
 @Retention(RetentionPolicy.SOURCE)
 public @interface SwipeableItemReactions {
