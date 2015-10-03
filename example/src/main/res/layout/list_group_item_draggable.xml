@@ -18,10 +18,9 @@
 <FrameLayout
     style="@style/commonListItemStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="@dimen/list_group_item_height"
     android:layout_marginTop="8dp"
     android:background="#ffffff">
 
@@ -36,8 +35,6 @@
             android:id="@+id/drag_handle"
             android:layout_width="32dp"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:layout_gravity="top|left"
             android:background="#20000000"
             tools:ignore="RtlHardcoded"/>
@@ -47,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top|left"
-            android:layout_marginLeft="32dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:gravity="center"/>
 

@@ -14,8 +14,13 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<resources>
-    <color name="ripple_item_normal_state">#80666666</color>
-    <color name="ripple_group_item_normal_state">#80006600</color>
-    <color name="ripple_group_item_expanded_state">#80006600</color>
-</resources>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <color android:color="@color/bg_swipe_item_pinned"/>
+    </item>
+    <item android:bottom="16dp">
+        <bitmap
+            android:src="@drawable/ic_item_swipe_pinned"
+            android:gravity="bottom|center_horizontal"/>
+    </item>
+</layer-list>

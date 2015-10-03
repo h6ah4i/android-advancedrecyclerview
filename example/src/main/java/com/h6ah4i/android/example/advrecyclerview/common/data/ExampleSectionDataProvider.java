@@ -16,8 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.common.data;
 
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,7 +30,6 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
     public ExampleSectionDataProvider() {
         final String sectionItems = "ABCDE";
         final String innerSectionItems = "abc";
-//        final String innerSectionItems = "abcdefghijklmnopqrstuvwxyz";
 
         mData = new LinkedList<>();
 
@@ -42,8 +39,7 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
                 final long id = mData.size();
                 final int viewType = ITEM_VIEW_TYPE_SECTION_HEADER;
                 final String text = "Section " + Character.toString(sectionItems.charAt(i));
-                final int swipeReaction = RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_BOTH;
-                mData.add(new ConcreteData(id, true, viewType, text, swipeReaction));
+                mData.add(new ConcreteData(id, true, viewType, text));
             }
 
             // put section child items
@@ -51,8 +47,7 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
                 final long id = mData.size();
                 final int viewType = ITEM_VIEW_TYPE_SECTION_ITEM;
                 final String text = Character.toString(innerSectionItems.charAt(j));
-                final int swipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;
-                mData.add(new ConcreteData(id, false, viewType, text, swipeReaction));
+                mData.add(new ConcreteData(id, false, viewType, text));
             }
         }
     }
@@ -119,15 +114,13 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
         private final boolean mIsSectionHeader;
         private final String mText;
         private final int mViewType;
-        private final int mSwipeReaction;
-        private boolean mPinnedToSwipeLeft;
+        private boolean mPinned;
 
-        ConcreteData(long id, boolean isSectionHeader, int viewType, String text, int swipeReaction) {
+        ConcreteData(long id, boolean isSectionHeader, int viewType, String text) {
             mId = id;
             mIsSectionHeader = isSectionHeader;
             mViewType = viewType;
             mText = text;
-            mSwipeReaction = swipeReaction;
         }
 
         @Override
@@ -151,23 +144,18 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
         }
 
         @Override
-        public int getSwipeReactionType() {
-            return mSwipeReaction;
-        }
-
-        @Override
         public String getText() {
             return mText;
         }
 
         @Override
-        public boolean isPinnedToSwipeLeft() {
-            return mPinnedToSwipeLeft;
+        public boolean isPinned() {
+            return mPinned;
         }
 
         @Override
-        public void setPinnedToSwipeLeft(boolean pinedToSwipeLeft) {
-            mPinnedToSwipeLeft = pinedToSwipeLeft;
+        public void setPinned(boolean pinned) {
+            mPinned = pinned;
         }
     }
 }

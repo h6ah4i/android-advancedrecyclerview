@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -67,7 +68,7 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
                 onItemUndoActionClicked();
             }
         });
-        snackbar.setActionTextColor(getResources().getColor(R.color.snackbar_action_color_done));
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color_done));
         snackbar.show();
     }
 
@@ -89,7 +90,7 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
                 onItemUndoActionClicked();
             }
         });
-        snackbar.setActionTextColor(getResources().getColor(R.color.snackbar_action_color_done));
+        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color_done));
         snackbar.show();
     }
 
@@ -126,9 +127,9 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
         AbstractExpandableDataProvider.GroupData data = getDataProvider().getGroupItem(groupPosition);
 
-        if (data.isPinnedToSwipeLeft()) {
+        if (data.isPinned()) {
             // unpin if tapped the pinned item
-            data.setPinnedToSwipeLeft(false);
+            data.setPinned(false);
             ((RecyclerListViewFragment) fragment).notifyGroupItemChanged(groupPosition);
         }
     }
@@ -137,9 +138,9 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
         AbstractExpandableDataProvider.ChildData data = getDataProvider().getChildItem(groupPosition, childPosition);
 
-        if (data.isPinnedToSwipeLeft()) {
+        if (data.isPinned()) {
             // unpin if tapped the pinned item
-            data.setPinnedToSwipeLeft(false);
+            data.setPinned(false);
             ((RecyclerListViewFragment) fragment).notifyChildItemChanged(groupPosition, childPosition);
         }
     }
@@ -171,11 +172,11 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
 
         if (childPosition == RecyclerView.NO_POSITION) {
             // group item
-            getDataProvider().getGroupItem(groupPosition).setPinnedToSwipeLeft(ok);
+            getDataProvider().getGroupItem(groupPosition).setPinned(ok);
             ((RecyclerListViewFragment) fragment).notifyGroupItemChanged(groupPosition);
         } else {
             // child item
-            getDataProvider().getChildItem(groupPosition, childPosition).setPinnedToSwipeLeft(ok);
+            getDataProvider().getChildItem(groupPosition, childPosition).setPinned(ok);
             ((RecyclerListViewFragment) fragment).notifyChildItemChanged(groupPosition, childPosition);
         }
     }

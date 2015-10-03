@@ -18,10 +18,9 @@
 <FrameLayout
     style="@style/commonListItemStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="96dp"
+    android:layout_height="@dimen/list_item2_height"
     android:layout_marginTop="8dp"
     android:background="#ffffff">
 
@@ -47,6 +46,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="top|left"
             android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
             android:gravity="center"/>
 
     </FrameLayout>

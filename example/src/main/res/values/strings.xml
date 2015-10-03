@@ -23,8 +23,10 @@
     <string name="activity_title_about">Advanced RecyclerView About</string>
 
     <string name="activity_title_demo_d">Draggable</string>
-    <string name="activity_title_demo_d_with_longpress">Draggable with Long Press</string>
+    <string name="activity_title_demo_d_grid">Draggable (Grid Layout)</string>
+    <string name="activity_title_demo_d_on_longpress">Drag on Long Press</string>
     <string name="activity_title_demo_s">Swipeable</string>
+    <string name="activity_title_demo_s_on_longpress">Swipe on Long Press</string>
     <string name="activity_title_demo_us">Button under swipeable item</string>
     <string name="activity_title_demo_e">Expandable</string>
     <string name="activity_title_demo_ds">Draggable + Swipeable</string>
@@ -32,17 +34,10 @@
     <string name="activity_title_demo_d_with_section">Draggable with Section</string>
     <string name="activity_title_demo_ed_with_section">Expandable + Draggable with Section</string>
     <string name="activity_title_demo_e_add_remove">Expandable (Add/Remove items)</string>
-
-    <string name="button_text_launch_demo_d">@string/activity_title_demo_d</string>
-    <string name="button_text_launch_demo_d_with_longpress">@string/activity_title_demo_d_with_longpress</string>
-    <string name="button_text_launch_demo_s">@string/activity_title_demo_s</string>
-    <string name="button_text_launch_demo_us">@string/activity_title_demo_us</string>
-    <string name="button_text_launch_demo_e">@string/activity_title_demo_e</string>
-    <string name="button_text_launch_demo_ds">@string/activity_title_demo_ds</string>
-    <string name="button_text_launch_demo_eds">@string/activity_title_demo_eds</string>
-    <string name="button_text_launch_demo_d_with_section">@string/activity_title_demo_d_with_section</string>
-    <string name="button_text_launch_demo_ed_with_section">@string/activity_title_demo_ed_with_section</string>
-    <string name="button_text_launch_demo_e_add_remove">@string/activity_title_demo_e_add_remove</string>
+    <string name="activity_title_demo_e_already_expanded">Expandable (Groups already expanded)</string>
+    <string name="activity_title_demo_s_vertical">Swipeable (Vertical)</string>
+    <string name="activity_title_demo_s_viewpager">Swipeable with ViewPager</string>
+    <string name="activity_title_demo_s_legacy">Swipeable (Legacy)</string>
 
     <string name="snack_bar_text_item_removed">1 item removed</string>
     <string name="snack_bar_text_group_item_removed">1 group item removed</string>

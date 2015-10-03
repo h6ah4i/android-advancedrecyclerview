@@ -36,7 +36,7 @@ public class ExampleDataProvider extends AbstractDataProvider {
                 final long id = mData.size();
                 final int viewType = 0;
                 final String text = Character.toString(atoz.charAt(j));
-                final int swipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_LEFT | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_RIGHT;
+                final int swipeReaction = RecyclerViewSwipeManager.REACTION_CAN_SWIPE_UP | RecyclerViewSwipeManager.REACTION_CAN_SWIPE_DOWN;
                 mData.add(new ConcreteData(id, viewType, text, swipeReaction));
             }
         }
@@ -103,14 +103,12 @@ public class ExampleDataProvider extends AbstractDataProvider {
         private final long mId;
         private final String mText;
         private final int mViewType;
-        private final int mSwipeReaction;
-        private boolean mPinnedToSwipeLeft;
+        private boolean mPinned;
 
         ConcreteData(long id, int viewType, String text, int swipeReaction) {
             mId = id;
             mViewType = viewType;
             mText = makeText(id, text, swipeReaction);
-            mSwipeReaction = swipeReaction;
         }
 
         private static String makeText(long id, String text, int swipeReaction) {
@@ -144,23 +142,18 @@ public class ExampleDataProvider extends AbstractDataProvider {
         }
 
         @Override
-        public int getSwipeReactionType() {
-            return mSwipeReaction;
-        }
-
-        @Override
         public String getText() {
             return mText;
         }
 
         @Override
-        public boolean isPinnedToSwipeLeft() {
-            return mPinnedToSwipeLeft;
+        public boolean isPinned() {
+            return mPinned;
         }
 
         @Override
-        public void setPinnedToSwipeLeft(boolean pinedToSwipeLeft) {
-            mPinnedToSwipeLeft = pinedToSwipeLeft;
+        public void setPinned(boolean pinned) {
+            mPinned = pinned;
         }
     }
 }

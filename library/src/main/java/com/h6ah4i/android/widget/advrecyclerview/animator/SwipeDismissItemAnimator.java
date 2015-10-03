@@ -148,7 +148,9 @@ public class SwipeDismissItemAnimator extends GeneralItemAnimator {
             final int reaction = item2.getAfterSwipeReaction();
 
             return ((result == RecyclerViewSwipeManager.RESULT_SWIPED_LEFT) ||
-                    (result == RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT)) &&
+                    (result == RecyclerViewSwipeManager.RESULT_SWIPED_UP) ||
+                    (result == RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT) ||
+                    (result == RecyclerViewSwipeManager.RESULT_SWIPED_DOWN)) &&
                     (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM);
         }
 
