@@ -26,6 +26,7 @@
     <string name="activity_title_demo_d_grid">Draggable (Grid Layout)</string>
     <string name="activity_title_demo_d_on_longpress">Drag on Long Press</string>
     <string name="activity_title_demo_s">Swipeable</string>
+    <string name="activity_title_demo_s_on_longpress">Swipe on Long Press</string>
     <string name="activity_title_demo_us">Button under swipeable item</string>
     <string name="activity_title_demo_e">Expandable</string>
     <string name="activity_title_demo_ds">Draggable + Swipeable</string>
@@ -42,6 +43,7 @@
     <string name="button_text_launch_demo_d_grid">@string/activity_title_demo_d_grid</string>
     <string name="button_text_launch_demo_d_on_longpress">@string/activity_title_demo_d_on_longpress</string>
     <string name="button_text_launch_demo_s">@string/activity_title_demo_s</string>
+    <string name="button_text_launch_demo_s_on_long_press">@string/activity_title_demo_s_on_longpress</string>
     <string name="button_text_launch_demo_us">@string/activity_title_demo_us</string>
     <string name="button_text_launch_demo_e">@string/activity_title_demo_e</string>
     <string name="button_text_launch_demo_ds">@string/activity_title_demo_ds</string>

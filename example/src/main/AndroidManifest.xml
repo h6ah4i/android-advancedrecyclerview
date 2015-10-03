@@ -53,6 +53,10 @@
             android:label="@string/activity_title_demo_s"/>
 
         <activity
+            android:name=".demo_s_longpress.SwipeOnLongPressExampleActivity"
+            android:label="@string/activity_title_demo_s_on_longpress"/>
+
+        <activity
             android:name=".demo_us.UnderSwipeableExampleActivity"
             android:label="@string/activity_title_demo_us"/>
 
