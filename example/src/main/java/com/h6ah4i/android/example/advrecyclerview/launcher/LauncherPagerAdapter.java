@@ -14,22 +14,38 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.widget.advrecyclerview.draggable;
+package com.h6ah4i.android.example.advrecyclerview.launcher;
 
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 
-class TopBottomEdgeEffectDecorator extends BaseEdgeEffectDecorator {
-    public TopBottomEdgeEffectDecorator(RecyclerView recyclerView) {
-        super(recyclerView);
+public class LauncherPagerAdapter extends FragmentPagerAdapter {
+    public LauncherPagerAdapter(FragmentManager fm) {
+        super(fm);
     }
 
     @Override
-    protected int getEdgeDirection(int no) {
-        switch (no) {
+    public int getCount() {
+        return 4;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        return LauncherPageFragment.newInstance(position);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
             case 0:
-                return EDGE_TOP;
+                return "Drag";
             case 1:
-                return EDGE_BOTTOM;
+                return "Swipe";
+            case 2:
+                return "Expand";
+            case 3:
+                return "Advanced";
             default:
                 throw new IllegalArgumentException();
         }

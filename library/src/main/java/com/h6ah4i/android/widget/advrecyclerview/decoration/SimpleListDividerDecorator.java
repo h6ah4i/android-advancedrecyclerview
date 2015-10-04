@@ -19,7 +19,6 @@ package com.h6ah4i.android.widget.advrecyclerview.decoration;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -64,6 +63,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         final int childCount = parent.getChildCount();
 
+
         if (childCount == 0) {
             return;
         }
@@ -71,14 +71,6 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
         final float xPositionThreshold = (mOverlap) ? 1.0f : (mVerticalDividerWidth + 1.0f); // [px]
         final float yPositionThreshold = (mOverlap) ? 1.0f : (mHorizontalDividerHeight + 1.0f); // [px]
         final float zPositionThreshold = 1.0f; // [px]
-
-        int savedCount = c.save(Canvas.CLIP_SAVE_FLAG);
-
-        c.clipRect(
-                parent.getLeft() + parent.getPaddingLeft(),
-                parent.getTop() + parent.getPaddingTop(),
-                parent.getRight() - parent.getPaddingRight(),
-                parent.getBottom() + parent.getPaddingBottom());
 
         for (int i = 0; i < childCount - 1; i++) {
             final View child = parent.getChildAt(i);
@@ -117,7 +109,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
             if (mHorizontalDividerHeight != 0) {
                 final int left = child.getLeft();
                 final int right = child.getRight();
-                final int top = child.getBottom();
+                final int top = child.getBottom() - (mOverlap ? mHorizontalDividerHeight : 0);
                 final int bottom = top + mHorizontalDividerHeight;
 
                 mHorizontalDrawable.setAlpha((int) ((0.5f * 255) * (childAlpha + nextChildAlpha) + 0.5f));
@@ -126,7 +118,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
             }
 
             if (mVerticalDividerWidth != 0) {
-                final int left = child.getRight();
+                final int left = child.getRight() - (mOverlap ? mVerticalDividerWidth : 0);
                 final int right = left + mVerticalDividerWidth;
                 final int top = child.getTop();
                 final int bottom = child.getBottom();
@@ -136,8 +128,6 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
                 mVerticalDrawable.draw(c);
             }
         }
-
-        c.restoreToCount(savedCount);
     }
 
     @Override

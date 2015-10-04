@@ -34,11 +34,11 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
     private Interpolator mReturnToDefaultPositionInterpolator;
 
     protected RecyclerView mRecyclerView;
-    protected RecyclerView.ViewHolder mDraggingItem;
+    protected RecyclerView.ViewHolder mDraggingItemViewHolder;
 
-    public BaseDraggableItemDecorator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem) {
+    public BaseDraggableItemDecorator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItemViewHolder) {
         mRecyclerView = recyclerView;
-        mDraggingItem = draggingItem;
+        mDraggingItemViewHolder = draggingItemViewHolder;
 
         final float displayDensity = recyclerView.getResources().getDisplayMetrics().density;
         mReturnToDefaultPositionAnimateThreshold = (int) (RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_DP * displayDensity + 0.5f);

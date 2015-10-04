@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
@@ -117,15 +116,15 @@ class MyViewPagerSwipeableItemAdapter
 
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
-        // NOTE: Need to specify REACTION_FLAG_MASK_START_xxx flags to make ViewPager can handle touch event.
+        // NOTE: Need to specify REACTION_MASK_START_xxx flags to make ViewPager can handle touch event.
         if (mCanSwipeLeft) {
             return Swipeable.REACTION_CAN_SWIPE_LEFT |
                     Swipeable.REACTION_CAN_NOT_SWIPE_RIGHT_WITH_RUBBER_BAND_EFFECT |
-                    Swipeable.REACTION_FLAG_MASK_START_SWIPE_RIGHT;
+                    Swipeable.REACTION_MASK_START_SWIPE_RIGHT;
         } else {
             return Swipeable.REACTION_CAN_SWIPE_RIGHT |
                     Swipeable.REACTION_CAN_NOT_SWIPE_LEFT_WITH_RUBBER_BAND_EFFECT |
-                    Swipeable.REACTION_FLAG_MASK_START_SWIPE_LEFT;
+                    Swipeable.REACTION_MASK_START_SWIPE_LEFT;
         }
     }
 

@@ -24,9 +24,9 @@ class SwipingItemOperator {
     @SuppressWarnings("unused")
     private static final String TAG = "SwipingItemOperator";
 
-    private static final int REACTION_CAN_NOT_SWIPE = SwipeReactionUtils.REACTION_CAN_NOT_SWIPE;
-    private static final int REACTION_CAN_NOT_SWIPE_WITH_RUBBER_EFFECT = SwipeReactionUtils.REACTION_CAN_NOT_SWIPE_WITH_RUBBER_EFFECT;
-    private static final int REACTION_CAN_SWIPE = SwipeReactionUtils.REACTION_CAN_SWIPE;
+    private static final int REACTION_CAN_NOT_SWIPE = InternalConstants.REACTION_CAN_NOT_SWIPE;
+    private static final int REACTION_CAN_NOT_SWIPE_WITH_RUBBER_BAND_EFFECT = InternalConstants.REACTION_CAN_NOT_SWIPE_WITH_RUBBER_BAND_EFFECT;
+    private static final int REACTION_CAN_SWIPE = InternalConstants.REACTION_CAN_SWIPE;
 
     private static final float RUBBER_BAND_LIMIT = 0.15f;
     private static final int MIN_GRABBING_AREA_SIZE = 48;
@@ -127,7 +127,7 @@ class SwipingItemOperator {
         switch (reactionType) {
             case REACTION_CAN_NOT_SWIPE:
                 break;
-            case REACTION_CAN_NOT_SWIPE_WITH_RUBBER_EFFECT:
+            case REACTION_CAN_NOT_SWIPE_WITH_RUBBER_BAND_EFFECT:
                 float proportion = Math.min(Math.abs(distance), itemSize) * invItemSize;
                 translateAmount = Math.signum(distance) * RUBBER_BAND_INTERPOLATOR.getInterpolation(proportion);
                 break;

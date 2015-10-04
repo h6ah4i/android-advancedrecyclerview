@@ -31,8 +31,6 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     @SuppressWarnings("unused")
     private static final String TAG = "DraggingItemDecorator";
 
-    private int mGrabbedPositionX;
-    private int mGrabbedPositionY;
     private int mTranslationX;
     private int mTranslationY;
     private int mRecyclerViewPaddingLeft;
@@ -41,23 +39,19 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private int mTranslationRightLimit;
     private int mTranslationTopLimit;
     private int mTranslationBottomLimit;
-    private int mGrabbedItemWidth;
-    private int mGrabbedItemHeight;
     private int mTouchPositionX;
     private int mTouchPositionY;
     private NinePatchDrawable mShadowDrawable;
     private Rect mShadowPadding = new Rect();
-    private Rect mDraggingItemMargins = new Rect();
     private boolean mStarted;
     private boolean mIsScrolling;
     private ItemDraggableRange mRange;
     private int mLayoutOrientation;
-    private int mSpanCount;
+    private DraggingItemInfo mDraggingItemInfo;
 
     public DraggingItemDecorator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem, ItemDraggableRange range) {
         super(recyclerView, draggingItem);
         mRange = range;
-        CustomRecyclerViewUtils.getLayoutMargins(mDraggingItem.itemView, mDraggingItemMargins);
     }
 
     private static int clip(int value, int min, int max) {
@@ -126,31 +120,26 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         // However, if the RecyclerView has any other decorations or RecyclerView is in scrolling state,
         // need to draw it to avoid visual corruptions.
         if (mDraggingItemImage != null) {
-            final float left = mTranslationX + /*mRecyclerViewPaddingLeft*/ +mDraggingItemMargins.left - mShadowPadding.left;
+            final float left = mTranslationX + /*mRecyclerViewPaddingLeft*/ + mDraggingItemInfo.margins.left - mShadowPadding.left;
             final float top = /*mDraggingItemMargins.top +*/ mTranslationY - mShadowPadding.top;
             c.drawBitmap(mDraggingItemImage, left, top, null);
         }
     }
 
-    public void start(MotionEvent e, float grabbedPositionX, float grabbedPositionY) {
+    public void start(MotionEvent e, DraggingItemInfo draggingItemInfo) {
         if (mStarted) {
             return;
         }
 
-        final View itemView = mDraggingItem.itemView;
+        final View itemView = mDraggingItemViewHolder.itemView;
 
-        mGrabbedPositionX = (int) (grabbedPositionX + 0.5f);
-        mGrabbedPositionY = (int) (grabbedPositionY + 0.5f);
-
+        mDraggingItemInfo = draggingItemInfo;
         mDraggingItemImage = createDraggingItemImage(itemView, mShadowDrawable);
 
-        mGrabbedItemWidth = itemView.getWidth();
-        mGrabbedItemHeight = itemView.getHeight();
         mTranslationLeftLimit = mRecyclerView.getPaddingLeft();
         mTranslationTopLimit = mRecyclerView.getPaddingTop();
         mRecyclerViewPaddingLeft = mRecyclerView.getPaddingLeft();
         mLayoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
-        mSpanCount = CustomRecyclerViewUtils.getSpanCount(mRecyclerView);
 
         // hide
         itemView.setVisibility(View.INVISIBLE);
@@ -175,15 +164,15 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
         // return to default position
         updateDraggingItemPosition(mTranslationX, mTranslationY);
-        if (mDraggingItem != null) {
-            moveToDefaultPosition(mDraggingItem.itemView, animate);
+        if (mDraggingItemViewHolder != null) {
+            moveToDefaultPosition(mDraggingItemViewHolder.itemView, animate);
         }
 
         // show
-        if (mDraggingItem != null) {
-            mDraggingItem.itemView.setVisibility(View.VISIBLE);
+        if (mDraggingItemViewHolder != null) {
+            mDraggingItemViewHolder.itemView.setVisibility(View.VISIBLE);
         }
-        mDraggingItem = null;
+        mDraggingItemViewHolder = null;
 
         if (mDraggingItemImage != null) {
             mDraggingItemImage.recycle();
@@ -191,8 +180,6 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         }
 
         mRange = null;
-        mGrabbedPositionX = 0;
-        mGrabbedPositionY = 0;
         mTranslationX = 0;
         mTranslationY = 0;
         mTranslationLeftLimit = 0;
@@ -200,8 +187,6 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationTopLimit = 0;
         mTranslationBottomLimit = 0;
         mRecyclerViewPaddingLeft = 0;
-        mGrabbedItemWidth = 0;
-        mGrabbedItemHeight = 0;
         mTouchPositionX = 0;
         mTouchPositionY = 0;
         mStarted = false;
@@ -241,10 +226,10 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         final int childCount = rv.getChildCount();
         if (childCount > 0) {
             mTranslationLeftLimit = rv.getPaddingLeft();
-            mTranslationRightLimit = Math.max(0, (rv.getWidth() - rv.getPaddingLeft() - mGrabbedItemWidth));
+            mTranslationRightLimit = Math.max(0, (rv.getWidth() - rv.getPaddingLeft() - mDraggingItemInfo.width));
 
             mTranslationTopLimit = rv.getPaddingTop();
-            mTranslationBottomLimit = Math.max(0, (rv.getHeight() - rv.getPaddingBottom() - mGrabbedItemHeight));
+            mTranslationBottomLimit = Math.max(0, (rv.getHeight() - rv.getPaddingBottom() - mDraggingItemInfo.height));
 
             if (!mIsScrolling) {
                 final int firstVisiblePosition = CustomRecyclerViewUtils.findFirstVisibleItemPosition(rv);
@@ -285,8 +270,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             mTranslationBottomLimit = mTranslationTopLimit = rv.getPaddingTop();
         }
 
-        mTranslationX = mTouchPositionX - mGrabbedPositionX;
-        mTranslationY = mTouchPositionY - mGrabbedPositionY;
+        mTranslationX = mTouchPositionX - mDraggingItemInfo.grabbedPositionX;
+        mTranslationY = mTouchPositionY - mDraggingItemInfo.grabbedPositionY;
 
         mTranslationX = clip(mTranslationX, mTranslationLeftLimit, mTranslationRightLimit);
         mTranslationY = clip(mTranslationY, mTranslationTopLimit, mTranslationBottomLimit);
@@ -340,11 +325,11 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     private void updateDraggingItemPosition(float translationX, int translationY) {
         // NOTE: Need to update the view position to make other decorations work properly while dragging
-        if (mDraggingItem != null) {
+        if (mDraggingItemViewHolder != null) {
             setItemTranslation(
-                    mRecyclerView, mDraggingItem,
-                    translationX - mDraggingItem.itemView.getLeft(),
-                    translationY - mDraggingItem.itemView.getTop());
+                    mRecyclerView, mDraggingItemViewHolder,
+                    translationX - mDraggingItemViewHolder.itemView.getLeft(),
+                    translationY - mDraggingItemViewHolder.itemView.getTop());
         }
     }
 
@@ -362,7 +347,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     }
 
     public int getTranslatedItemPositionBottom() {
-        return mTranslationY + mGrabbedItemHeight;
+        return mTranslationY + mDraggingItemInfo.height;
     }
 
     public int getTranslatedItemPositionLeft() {
@@ -370,23 +355,25 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     }
 
     public int getTranslatedItemPositionRight() {
-        return mTranslationX + mGrabbedItemWidth;
+        return mTranslationX + mDraggingItemInfo.width;
     }
 
     public void invalidateDraggingItem() {
-        if (mDraggingItem != null) {
-            mDraggingItem.itemView.setVisibility(View.VISIBLE);
+        if (mDraggingItemViewHolder != null) {
+            ViewCompat.setTranslationX(mDraggingItemViewHolder.itemView, 0);
+            ViewCompat.setTranslationY(mDraggingItemViewHolder.itemView, 0);
+            mDraggingItemViewHolder.itemView.setVisibility(View.VISIBLE);
         }
 
-        mDraggingItem = null;
+        mDraggingItemViewHolder = null;
     }
 
     public void setDraggingItemViewHolder(RecyclerView.ViewHolder holder) {
-        if (mDraggingItem != null) {
+        if (mDraggingItemViewHolder != null) {
             throw new IllegalStateException("A new view holder is attempt to be assigned before invalidating the older one");
         }
 
-        mDraggingItem = holder;
+        mDraggingItemViewHolder = holder;
 
         holder.itemView.setVisibility(View.INVISIBLE);
     }

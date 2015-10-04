@@ -16,11 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import android.support.annotation.IntDef;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
 public interface ExpandableItemConstants {
     /**
      * State flag for the {@link ExpandableItemViewHolder#setExpandStateFlags(int)} and {@link ExpandableItemViewHolder#getExpandStateFlags()} methods.

@@ -87,7 +87,7 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
 
     /**
      * Deprecated. Use the {@link #getSwipeItemHorizontalSlideAmount()} instead.
-     * @param amount
+     * @param amount horizontal swipe amount
      */
     @Deprecated
     public void setSwipeItemSlideAmount(float amount) {

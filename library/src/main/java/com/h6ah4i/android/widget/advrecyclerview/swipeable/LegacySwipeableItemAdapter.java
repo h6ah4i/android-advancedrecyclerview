@@ -32,9 +32,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableI
 public interface LegacySwipeableItemAdapter<T extends RecyclerView.ViewHolder> extends BaseSwipeableItemAdapter<T> {
 
     /**
-     * Called when item is swiped.
-     * <p/>
-     * *Note that do not change the data set and do not call notifyDataXXX() methods inside of this method.*
+     * <p>Called when item is swiped.</p>
+     * <p>*Note that do not change the data set and do not call notifyDataXXX() methods inside of this method.*</p>
      *
      * @param holder   The ViewHolder which is associated to the swiped item.
      * @param position The position of the item within the adapter's data set.
@@ -53,9 +52,8 @@ public interface LegacySwipeableItemAdapter<T extends RecyclerView.ViewHolder> e
     int onSwipeItem(T holder, int position, int result);
 
     /**
-     * Called after {@link #onSwipeItem(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.
-     * <p/>
-     * You can update the data set and call notifyDataXXX() methods inside of this method.
+     * <p>Called after {@link #onSwipeItem(android.support.v7.widget.RecyclerView.ViewHolder, int, int)} method.</p>
+     * <p>You can update the data set and call notifyDataXXX() methods inside of this method.</p>
      *
      * @param holder   The ViewHolder which is associated to the swiped item.
      * @param position The position of the item within the adapter's data set.

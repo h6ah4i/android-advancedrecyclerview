@@ -43,6 +43,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="top|left"
             android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
             android:gravity="center"
             tools:ignore="RtlHardcoded"/>
 
