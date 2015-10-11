@@ -122,6 +122,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private long mInitialTouchItemId = RecyclerView.NO_ID;
     private boolean mInitiateOnLongPress;
     private boolean mInitiateOnMove = true;
+    private int mLongPressTimeout;
 
     private boolean mInScrollByMethod;
     private int mActualScrollByXAmount;
@@ -192,6 +193,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         };
 
         mScrollOnDraggingProcess = new ScrollOnDraggingProcessRunnable(this);
+
+        mLongPressTimeout = ViewConfiguration.getLongPressTimeout();
     }
 
     /**
@@ -283,7 +286,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDisplayDensity = mRecyclerView.getResources().getDisplayMetrics().density;
         mTouchSlop = ViewConfiguration.get(mRecyclerView.getContext()).getScaledTouchSlop();
         mScrollTouchSlop = (int) (mTouchSlop * SCROLL_TOUCH_SLOP_MULTIPLY + 0.5f);
-        mHandler = new InternalHandler(this);
+        mHandler = new InternalHandler(this, mLongPressTimeout);
 
         if (supportsEdgeEffect()) {
             // edge effect is available on ICS or later
@@ -399,6 +402,15 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      */
     public void setInitiateOnMove(boolean initiateOnMove) {
         mInitiateOnMove = initiateOnMove;
+    }
+
+    /**
+     * Sets the time required to consider press as long press. (default: 500ms)
+     *
+     * @param longPressTimeout Integer in milli seconds.
+     */
+    public void setLongPressTimeout(int longPressTimeout) {
+        mLongPressTimeout = longPressTimeout;
     }
 
     /**
@@ -1554,14 +1566,15 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     private static class InternalHandler extends Handler {
-        private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();// + ViewConfiguration.getTapTimeout();
+        private final int LONGPRESS_TIMEOUT;// + ViewConfiguration.getTapTimeout();
         private static final int MSG_LONGPRESS = 1;
 
         private RecyclerViewDragDropManager mHolder;
         private MotionEvent mDownMotionEvent;
 
-        public InternalHandler(RecyclerViewDragDropManager holder) {
+        public InternalHandler(RecyclerViewDragDropManager holder, int longPressTimeout) {
             mHolder = holder;
+            LONGPRESS_TIMEOUT = longPressTimeout;
         }
 
         public void release() {

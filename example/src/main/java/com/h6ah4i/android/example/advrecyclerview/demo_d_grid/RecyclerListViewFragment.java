@@ -67,6 +67,7 @@ public class RecyclerListViewFragment extends Fragment {
         // Start dragging after long press
         mRecyclerViewDragDropManager.setInitiateOnLongPress(true);
         mRecyclerViewDragDropManager.setInitiateOnMove(false);
+        mRecyclerViewDragDropManager.setLongPressTimeout(750);
 
         //adapter
         final MyDraggableItemAdapter myItemAdapter = new MyDraggableItemAdapter(getDataProvider());
