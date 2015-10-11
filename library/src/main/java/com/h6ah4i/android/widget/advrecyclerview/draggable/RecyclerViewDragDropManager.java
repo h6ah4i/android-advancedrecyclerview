@@ -1553,6 +1553,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
+    public void cancelLongPressDetection() {
+        mHandler.cancelLongPressDetection();
+    }
+
     private static class InternalHandler extends Handler {
         private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();// + ViewConfiguration.getTapTimeout();
         private static final int MSG_LONGPRESS = 1;
