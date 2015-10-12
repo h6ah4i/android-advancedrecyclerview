@@ -122,6 +122,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private long mInitialTouchItemId = RecyclerView.NO_ID;
     private boolean mInitiateOnLongPress;
     private boolean mInitiateOnMove = true;
+    private int mLongPressTimeout;
 
     private boolean mInScrollByMethod;
     private int mActualScrollByXAmount;
@@ -192,6 +193,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         };
 
         mScrollOnDraggingProcess = new ScrollOnDraggingProcessRunnable(this);
+
+        mLongPressTimeout = ViewConfiguration.getLongPressTimeout();
     }
 
     /**
@@ -402,6 +405,15 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /**
+     * Sets the time required to consider press as long press. (default: 500ms)
+     *
+     * @param longPressTimeout Integer in milli seconds.
+     */
+    public void setLongPressTimeout(int longPressTimeout) {
+        mLongPressTimeout = longPressTimeout;
+    }
+
+    /**
      * Gets the interpolator which ise used for determining the position of the swapping item.
      *
      * @return Interpolator which is used for determining the position of the swapping item
@@ -458,7 +470,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                handleActionUpOrCancel(rv, e);
+                handleActionUpOrCancel(action, true);
                 break;
 
             case MotionEvent.ACTION_DOWN:
@@ -497,7 +509,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                handleActionUpOrCancel(rv, e);
+                handleActionUpOrCancel(action, true);
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -529,6 +541,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         if (LOCAL_LOGV) {
             Log.v(TAG, "onScrollStateChanged(newState = " + newState + ")");
         }
+
+        if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+            cancelDrag(true);
+        }
     }
 
     private boolean handleActionDown(RecyclerView rv, MotionEvent e) {
@@ -552,7 +568,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
 
         if (mInitiateOnLongPress) {
-            mHandler.startLongPressDetection(e);
+            mHandler.startLongPressDetection(e, mLongPressTimeout);
         }
 
         return true;
@@ -633,6 +649,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     private void cancelDrag(boolean immediately) {
+        handleActionUpOrCancel(MotionEvent.ACTION_CANCEL, false);
+
         if (immediately) {
             finishDragging(false);
         } else {
@@ -737,8 +755,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
-    private boolean handleActionUpOrCancel(RecyclerView rv, MotionEvent e) {
-        final boolean result = (MotionEventCompat.getActionMasked(e) == MotionEvent.ACTION_UP);
+    private boolean handleActionUpOrCancel(int action, boolean invokeFinish) {
+        final boolean result = (action == MotionEvent.ACTION_UP);
 
         mHandler.cancelLongPressDetection();
 
@@ -756,7 +774,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mCanDragH = false;
         mCanDragV = false;
 
-        if (isDragging()) {
+        if (invokeFinish && isDragging()) {
             if (LOCAL_LOGD) {
                 Log.d(TAG, "dragging finished  --- result = " + result);
             }
@@ -1554,7 +1572,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     private static class InternalHandler extends Handler {
-        private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();// + ViewConfiguration.getTapTimeout();
         private static final int MSG_LONGPRESS = 1;
 
         private RecyclerViewDragDropManager mHolder;
@@ -1578,10 +1595,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             }
         }
 
-        public void startLongPressDetection(MotionEvent e) {
+        public void startLongPressDetection(MotionEvent e, int timeout) {
             cancelLongPressDetection();
             mDownMotionEvent = MotionEvent.obtain(e);
-            sendEmptyMessageAtTime(MSG_LONGPRESS, e.getDownTime() + LONGPRESS_TIMEOUT);
+            sendEmptyMessageAtTime(MSG_LONGPRESS, e.getDownTime() + timeout);
         }
 
         public void cancelLongPressDetection() {
