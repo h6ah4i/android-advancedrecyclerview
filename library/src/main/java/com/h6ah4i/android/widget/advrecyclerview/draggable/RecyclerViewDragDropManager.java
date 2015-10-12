@@ -470,7 +470,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                handleActionUpOrCancel(rv, e);
+                handleActionUpOrCancel(action, true);
                 break;
 
             case MotionEvent.ACTION_DOWN:
@@ -509,7 +509,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                handleActionUpOrCancel(rv, e);
+                handleActionUpOrCancel(action, true);
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -645,6 +645,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     private void cancelDrag(boolean immediately) {
+        handleActionUpOrCancel(MotionEvent.ACTION_CANCEL, false);
+
         if (immediately) {
             finishDragging(false);
         } else {
@@ -749,8 +751,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
-    private boolean handleActionUpOrCancel(RecyclerView rv, MotionEvent e) {
-        final boolean result = (MotionEventCompat.getActionMasked(e) == MotionEvent.ACTION_UP);
+    private boolean handleActionUpOrCancel(int action, boolean invokeFinish) {
+        final boolean result = (action == MotionEvent.ACTION_UP);
 
         mHandler.cancelLongPressDetection();
 
@@ -768,7 +770,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mCanDragH = false;
         mCanDragV = false;
 
-        if (isDragging()) {
+        if (invokeFinish && isDragging()) {
             if (LOCAL_LOGD) {
                 Log.d(TAG, "dragging finished  --- result = " + result);
             }
