@@ -119,6 +119,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+                RecyclerViewSwipeManager.this.onRequestDisallowInterceptTouchEvent(disallowIntercept);
             }
         };
         mVelocityTracker = VelocityTracker.obtain();
@@ -255,11 +256,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (isSwiping()) {
-                    handleActionUpOrCancelWhileSwiping(e);
+                if (handleActionUpOrCancel(e)) {
                     return true;
-                } else {
-                    handleActionUpOrCancelWhileNotSwiping();
                 }
                 break;
 
@@ -300,12 +298,18 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                handleActionUpOrCancelWhileSwiping(e);
+                handleActionUpOrCancel(e);
                 break;
 
             case MotionEvent.ACTION_MOVE:
                 handleActionMoveWhileSwiping(e);
                 break;
+        }
+    }
+
+    /*package*/ void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+        if (disallowIntercept) {
+            cancelSwipe();
         }
     }
 
@@ -358,6 +362,24 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         return WrapperAdapterUtils.findWrappedAdapter(rv.getAdapter(), SwipeableItemWrapperAdapter.class);
     }
 
+    private boolean handleActionUpOrCancel(MotionEvent e) {
+        int action = MotionEvent.ACTION_CANCEL;
+
+        if (e != null) {
+            action = MotionEventCompat.getActionMasked(e);
+            mLastTouchX = (int) (e.getX() + 0.5f);
+            mLastTouchY = (int) (e.getY() + 0.5f);
+        }
+
+        if (isSwiping()) {
+            handleActionUpOrCancelWhileSwiping(action);
+            return true;
+        } else {
+            handleActionUpOrCancelWhileNotSwiping();
+            return false;
+        }
+    }
+
     private void handleActionUpOrCancelWhileNotSwiping() {
         mHandler.cancelLongPressDetection();
 
@@ -365,13 +387,10 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mSwipingItemReactionType = 0;
     }
 
-    private boolean handleActionUpOrCancelWhileSwiping(MotionEvent e) {
-        mLastTouchX = (int) (e.getX() + 0.5f);
-        mLastTouchY = (int) (e.getY() + 0.5f);
-
+    private void handleActionUpOrCancelWhileSwiping(int action) {
         int result = RESULT_CANCELED;
 
-        if (MotionEventCompat.getActionMasked(e) == MotionEvent.ACTION_UP) {
+        if (action == MotionEvent.ACTION_UP) {
             final boolean horizontal = mSwipeHorizontal;
             final View itemView = mSwipingItem.itemView;
             final int viewSize = (horizontal) ? itemView.getWidth() : itemView.getHeight();
@@ -405,8 +424,6 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         finishSwiping(result);
-
-        return true;
     }
 
     private boolean handleActionMoveWhileNotSwiping(RecyclerView rv, MotionEvent e) {
@@ -657,6 +674,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     public void cancelSwipe() {
+        handleActionUpOrCancel(null);
         finishSwiping(RESULT_CANCELED);
     }
 
