@@ -1,3 +1,7 @@
+## 0.8.1
+- Fixed issue #124 (Long press should cancel when recycler view scrolls)
+
+
 ## 0.8.0
 [Main new features and improvements]
 - Support GridLayoutManager (drag & drop, swipe)   (issue #41, #67, #86)
