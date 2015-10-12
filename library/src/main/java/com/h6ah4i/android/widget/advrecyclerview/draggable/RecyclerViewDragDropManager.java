@@ -286,7 +286,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDisplayDensity = mRecyclerView.getResources().getDisplayMetrics().density;
         mTouchSlop = ViewConfiguration.get(mRecyclerView.getContext()).getScaledTouchSlop();
         mScrollTouchSlop = (int) (mTouchSlop * SCROLL_TOUCH_SLOP_MULTIPLY + 0.5f);
-        mHandler = new InternalHandler(this, mLongPressTimeout);
+        mHandler = new InternalHandler(this);
 
         if (supportsEdgeEffect()) {
             // edge effect is available on ICS or later
@@ -564,7 +564,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
 
         if (mInitiateOnLongPress) {
-            mHandler.startLongPressDetection(e);
+            mHandler.startLongPressDetection(e, mLongPressTimeout);
         }
 
         return true;
@@ -1566,15 +1566,13 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     private static class InternalHandler extends Handler {
-        private final int LONGPRESS_TIMEOUT;// + ViewConfiguration.getTapTimeout();
         private static final int MSG_LONGPRESS = 1;
 
         private RecyclerViewDragDropManager mHolder;
         private MotionEvent mDownMotionEvent;
 
-        public InternalHandler(RecyclerViewDragDropManager holder, int longPressTimeout) {
+        public InternalHandler(RecyclerViewDragDropManager holder) {
             mHolder = holder;
-            LONGPRESS_TIMEOUT = longPressTimeout;
         }
 
         public void release() {
@@ -1591,10 +1589,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             }
         }
 
-        public void startLongPressDetection(MotionEvent e) {
+        public void startLongPressDetection(MotionEvent e, int timeout) {
             cancelLongPressDetection();
             mDownMotionEvent = MotionEvent.obtain(e);
-            sendEmptyMessageAtTime(MSG_LONGPRESS, e.getDownTime() + LONGPRESS_TIMEOUT);
+            sendEmptyMessageAtTime(MSG_LONGPRESS, e.getDownTime() + timeout);
         }
 
         public void cancelLongPressDetection() {
