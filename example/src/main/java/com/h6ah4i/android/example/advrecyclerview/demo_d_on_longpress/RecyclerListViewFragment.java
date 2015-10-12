@@ -92,6 +92,15 @@ public class RecyclerListViewFragment extends Fragment {
 
         mRecyclerViewDragDropManager.attachRecyclerView(mRecyclerView);
 
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                mRecyclerViewDragDropManager.cancelLongPressDetection();
+
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
         // for debugging
 //        animator.setDebug(true);
 //        animator.setMoveDuration(2000);
