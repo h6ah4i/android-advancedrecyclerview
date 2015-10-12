@@ -541,6 +541,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         if (LOCAL_LOGV) {
             Log.v(TAG, "onScrollStateChanged(newState = " + newState + ")");
         }
+
+        if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+            cancelDrag(true);
+        }
     }
 
     private boolean handleActionDown(RecyclerView rv, MotionEvent e) {
