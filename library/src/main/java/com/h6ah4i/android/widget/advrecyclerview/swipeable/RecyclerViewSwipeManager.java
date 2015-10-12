@@ -100,6 +100,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private SwipingItemOperator mSwipingItemOperator;
     private OnItemSwipeEventListener mItemSwipeEventListener;
     private InternalHandler mHandler;
+    private int mLongPressTimeout;
 
     /**
      * Constructor.
@@ -121,6 +122,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             }
         };
         mVelocityTracker = VelocityTracker.obtain();
+        mLongPressTimeout = ViewConfiguration.getLongPressTimeout();
     }
 
     /**
@@ -234,6 +236,15 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         return (mSwipingItem != null);
     }
 
+    /**
+     * Sets the time required to consider press as long press. (default: 500ms)
+     *
+     * @param longPressTimeout Integer in milli seconds.
+     */
+    public void setLongPressTimeout(int longPressTimeout) {
+        mLongPressTimeout = longPressTimeout;
+    }
+
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         final int action = MotionEventCompat.getActionMasked(e);
 
@@ -337,7 +348,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mSwipingItemReactionType = reactionType;
 
         if ((reactionType & REACTION_START_SWIPE_ON_LONG_PRESS) != 0) {
-            mHandler.startLongPressDetection(e);
+            mHandler.startLongPressDetection(e, mLongPressTimeout);
         }
 
         return true;
@@ -803,7 +814,6 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     private static class InternalHandler extends Handler {
-        private static final int LONGPRESS_TIMEOUT = ViewConfiguration.getLongPressTimeout();// + ViewConfiguration.getTapTimeout();
         private static final int MSG_LONGPRESS = 1;
 
         private RecyclerViewSwipeManager mHolder;
@@ -827,10 +837,10 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             }
         }
 
-        public void startLongPressDetection(MotionEvent e) {
+        public void startLongPressDetection(MotionEvent e, int timeout) {
             cancelLongPressDetection();
             mDownMotionEvent = MotionEvent.obtain(e);
-            sendEmptyMessageAtTime(MSG_LONGPRESS, e.getDownTime() + LONGPRESS_TIMEOUT);
+            sendEmptyMessageAtTime(MSG_LONGPRESS, e.getDownTime() + timeout);
         }
 
         public void cancelLongPressDetection() {
