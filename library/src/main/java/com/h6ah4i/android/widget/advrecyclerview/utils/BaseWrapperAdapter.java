@@ -120,6 +120,10 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
         notifyItemRangeChanged(positionStart, itemCount);
     }
 
+    protected void onHandleWrappedAdapterItemRangeChanged(int positionStart, int itemCount, Object payload) {
+        notifyItemRangeChanged(positionStart, itemCount, payload);
+    }
+
     protected void onHandleWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
         notifyItemRangeInserted(positionStart, itemCount);
     }
@@ -150,6 +154,14 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
         }
 
         onHandleWrappedAdapterItemRangeChanged(positionStart, itemCount);
+    }
+
+    /*package*/ final void onWrappedAdapterItemRangeChanged(int positionStart, int itemCount, Object payload) {
+        if (LOCAL_LOGD) {
+            Log.d(TAG, "onWrappedAdapterItemRangeChanged(positionStart = " + positionStart + ", itemCount = " + itemCount + ", payload = " + payload + ")");
+        }
+
+        onHandleWrappedAdapterItemRangeChanged(positionStart, itemCount, payload);
     }
 
     /*package*/ final void onWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
@@ -196,6 +208,14 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
             final BaseWrapperAdapter<VH> holder = mRefHolder.get();
             if (holder != null) {
                 holder.onWrappedAdapterItemRangeChanged(positionStart, itemCount);
+            }
+        }
+
+        @Override
+        public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+            final BaseWrapperAdapter<VH> holder = mRefHolder.get();
+            if (holder != null) {
+                holder.onWrappedAdapterItemRangeChanged(positionStart, itemCount, payload);
             }
         }
 
