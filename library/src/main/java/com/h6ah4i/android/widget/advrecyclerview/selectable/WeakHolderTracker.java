@@ -13,7 +13,7 @@ class WeakHolderTracker<VH extends RecyclerView.ViewHolder> {
 
     /**
      * Returns the holder with a given position. If non-null, the returned
-     * holder is guaranteed to have getPosition() == position.
+     * holder is guaranteed to have getAdapterPosition() == position.
      *
      * @param position
      * @return
@@ -25,7 +25,7 @@ class WeakHolderTracker<VH extends RecyclerView.ViewHolder> {
         }
 
         VH holder = holderRef.get();
-        if (holder == null || holder.getPosition() != position) {
+        if (holder == null || holder.getAdapterPosition() != position) {
             mHoldersByPosition.remove(position);
             return null;
         }

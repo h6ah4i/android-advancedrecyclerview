@@ -23,9 +23,7 @@ import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.ListView;
 
-
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.ArrayList;
@@ -47,6 +45,20 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
     private WeakHolderTracker<VH> mTracker = new WeakHolderTracker<VH>();
 
     private int mChoiceMode = ListView.CHOICE_MODE_SINGLE;
+    private boolean mCheckable =false;
+
+    public void setCheckable(boolean checkable) {
+        boolean changed = mCheckable != checkable;
+        mCheckable =checkable;
+
+        if (changed) {
+            refreshAllHolders();
+        }
+    }
+
+    public boolean isCheckable() {
+        return mCheckable && isSelectable();
+    }
 
     public boolean isSelectable(int position) {
         VH holder = mTracker.getHolder(position);
@@ -112,7 +124,7 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
     public void setSelected(VH holder, boolean isSelected) {
         if (mChoiceMode == ListView.CHOICE_MODE_SINGLE) {
             for (SelectableItemViewHolder selectedViewHolder : getSelectedViewHolders()) {
-                if (selectedViewHolder.getPosition() != holder.getPosition()) {
+                if (selectedViewHolder.getPosition() != holder.getAdapterPosition()) {
                     if (selectedViewHolder instanceof RecyclerView.ViewHolder) {
                         setSelectedInternal((VH)selectedViewHolder, false);
                     }
@@ -124,8 +136,8 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
 
 
     private void setSelectedInternal(VH holder, boolean isSelected) {
-        mSelections.put(holder.getPosition(), isSelected);
-        refreshHolder(mTracker.getHolder(holder.getPosition()));
+        mSelections.put(holder.getAdapterPosition(), isSelected);
+        refreshHolder(mTracker.getHolder(holder.getAdapterPosition()));
 
         mSelectableItemAdapter.onItemSelected(holder, isSelected);
     }
@@ -164,12 +176,12 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
     /**
      * <p>Return a list of selected positions.</p>
      *
-     * @return A list of the currently selected positions.
+     * @return A list of the currently selected positions in reverse order.
      */
     public List<Integer> getSelectedPositions() {
         List<Integer> positions = new ArrayList<Integer>();
 
-        for (int i = 0; i < mSelections.size(); i++) {
+        for (int i = mSelections.size() -1; i >=0; i--) {
             if (mSelections.valueAt(i)) {
                 positions.add(mSelections.keyAt(i));
             }
@@ -181,12 +193,12 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
     /**
      * <p>Return a list of selected items.</p>
      *
-     * @return A list of the currently selected items.
+     * @return A list of the currently selected items in reverse order.
      */
     public List<Object> getSelectedItems() {
         List<Object> items = new ArrayList<Object>();
 
-        for (int i = 0; i < mSelections.size(); i++) {
+        for (int i = mSelections.size() -1; i >=0; i--) {
             if (mSelections.valueAt(i)) {
                 items.add(mSelectableItemAdapter.getItem(mSelections.keyAt(i)));
             }
@@ -198,12 +210,12 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
     /**
      * <p>Return a list of selected view holder.</p>
      *
-     * @return A list of the currently selected view holders.
+     * @return A list of the currently selected view holders in reverse order.
      */
     public List<SelectableItemViewHolder> getSelectedViewHolders() {
         List<SelectableItemViewHolder> positions = new ArrayList<SelectableItemViewHolder>();
 
-        for (int i = 0; i < mSelections.size(); i++) {
+        for (int i = mSelections.size() -1; i >=0; i--) {
             if (mSelections.valueAt(i)) {
                 VH viewHolder = mTracker.getHolder(mSelections.keyAt(i));
                 if (viewHolder instanceof  SelectableItemViewHolder) {
@@ -291,10 +303,11 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
             return;
         }
 
-        if (holder instanceof  SelectableItemViewHolder) {
+        if (holder instanceof SelectableItemViewHolder) {
 
             SelectableItemViewHolder selectableHolder = (SelectableItemViewHolder) holder;
             selectableHolder.setSelectable(isSelectable());
+            selectableHolder.setCheckable(isCheckable());
             if (selectableHolder.isSelectable()) {
                 boolean isActivated = mSelections.get(holder.getPosition());
                 if (isActivated != selectableHolder.isActivated()) {
@@ -308,10 +321,18 @@ class SelectableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends B
                     mSelectableItemAdapter.onItemSelected(holder, selectableHolder.isActivated());
                 }
             }
+
+            if (holder.itemView instanceof CheckableState) {
+                CheckableState checkable = (CheckableState) holder.itemView;
+                checkable.setCheckable(selectableHolder.isCheckable());
+            }
+
             if (holder.itemView instanceof Checkable) {
                 Checkable checkable = (Checkable) holder.itemView;
                 checkable.setChecked(selectableHolder.isActivated());
             }
+
+
         }
 
     }

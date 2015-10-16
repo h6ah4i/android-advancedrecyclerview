@@ -28,6 +28,7 @@ import com.h6ah4i.android.widget.advrecyclerview.R;
 public  class ElevatingSelectableViewHolder extends RecyclerView.ViewHolder implements SelectableItemViewHolder {
 
     private boolean mIsSelectable = false;
+    private boolean mCheckable = false;
     private StateListAnimator mSelectionModeStateListAnimator;
     private StateListAnimator mDefaultModeStateListAnimator;
 
@@ -164,6 +165,21 @@ public  class ElevatingSelectableViewHolder extends RecyclerView.ViewHolder impl
         }
     }
 
+    public boolean isCheckable() {
+        return mCheckable;
+    }
+
+    public void setCheckable(boolean checkable) {
+        boolean changed = mCheckable != checkable;
+        this.mCheckable = checkable;
+        if (changed) {
+            if (itemView instanceof  CheckableState) {
+                ((CheckableState) itemView).setCheckable(mCheckable);
+            }
+            refreshChrome();
+        }
+    }
+
     /**
      * Returns whether {@link #itemView} is currently in a
      * selectable mode.
@@ -204,6 +220,5 @@ public  class ElevatingSelectableViewHolder extends RecyclerView.ViewHolder impl
             }
         }
     }
-
 
 }

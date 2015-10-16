@@ -4,6 +4,21 @@ package com.h6ah4i.android.widget.advrecyclerview.selectable;
  * <p>Public interface used by selectable items connected to {@link com.h6ah4i.android.widget.advrecyclerview.selectable.SelectableItemWrapperAdapter}.</p>
  */
 public interface SelectableItemViewHolder {
+
+    /**
+     * <p>Turn display of checkbox on/off for this holder.</p>
+     *
+     * @param checkable True if checkmark is visible is on.
+     */
+    void setCheckable(boolean checkable);
+
+    /**
+     * <p>Checkbox visible.</p>
+     *
+     * @return True if checkbox visible.
+     */
+    boolean isCheckable();
+
     /**
      * <p>Turn selection mode on for this holder.</p>
      *
@@ -51,4 +66,5 @@ public interface SelectableItemViewHolder {
      * @return Item id this holder is currently bound to.
      */
     long getItemId();
+
 }

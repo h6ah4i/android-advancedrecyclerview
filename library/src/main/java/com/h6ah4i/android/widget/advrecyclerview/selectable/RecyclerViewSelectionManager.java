@@ -221,6 +221,15 @@ public class RecyclerViewSelectionManager {
         return false;
     }
 
+    public boolean isManaging(RecyclerView recyclerView) {
+        return isManaging(recyclerView.getAdapter());
+    }
+
+    public boolean isManaging(RecyclerView.Adapter adapter) {
+        SelectableItemWrapperAdapter wrapperAdapter = WrapperAdapterUtils.findWrappedAdapter(adapter, SelectableItemWrapperAdapter.class);
+        return wrapperAdapter!=null && mAdapter!=null && mAdapter.equals(wrapperAdapter);
+    }
+
     private static SelectableItemWrapperAdapter getSelectableItemWrapperAdapter(RecyclerView rv) {
         return WrapperAdapterUtils.findWrappedAdapter(rv.getAdapter(), SelectableItemWrapperAdapter.class);
     }
@@ -263,6 +272,10 @@ public class RecyclerViewSelectionManager {
     }
     public boolean isSelected(int position) {
         return getSelectableItemWrapperAdapter(mRecyclerView).isSelected(position);
+    }
+
+    public void setCheckable(boolean selectable) {
+        getSelectableItemWrapperAdapter(mRecyclerView).setCheckable(selectable);
     }
 
     public void toggleSelection(int position) {

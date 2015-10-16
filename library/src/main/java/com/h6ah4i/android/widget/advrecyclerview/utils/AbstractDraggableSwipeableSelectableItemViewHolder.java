@@ -32,6 +32,7 @@ public abstract class AbstractDraggableSwipeableSelectableItemViewHolder extends
     private int mAfterSwipeReaction = RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
     private float mSwipeAmount;
     private boolean mSelectable;
+    private boolean mCheckable;
     private float mMaxLeftSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT;
     private float mMaxRightSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
 
@@ -113,7 +114,13 @@ public abstract class AbstractDraggableSwipeableSelectableItemViewHolder extends
     public boolean isSelectable() { return mSelectable; }
 
     @Override
-    public void setSelectable(boolean mSelectable) { this.mSelectable = mSelectable; }
+    public void setSelectable(boolean mSelectable) { this.mSelectable = mSelectable;
+    }
+    @Override
+    public boolean isCheckable() { return mCheckable; }
+
+    @Override
+    public void setCheckable(boolean mCheckable) { this.mCheckable = mCheckable;}
 
     @Override
     public boolean isActivated() {
