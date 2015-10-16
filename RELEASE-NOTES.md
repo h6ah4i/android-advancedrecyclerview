@@ -1,3 +1,52 @@
+## 0.8.1
+- Fixed issue #124 (Long press should cancel when recycler view scrolls)
+
+
+## 0.8.0
+[Main new features and improvements]
+- Support GridLayoutManager (drag & drop, swipe)   (issue #41, #67, #86)
+- Support horizontal layout orientaiton (LinearLayoutManager and GridLayoutManager)   (issue #116)
+- Organized demo launcher screen
+
+[Changes of RecyclerViewExpandableItemManager]
+- Added the expandAll()/collapseAll() methods   (issue #100)
+- Added variant of the notifyGroupItemInseterd()/notifyGroupItemRangeInseterd() methods   (issue #100)
+- Added the getGroupCount()/getChildCount() methods
+- Added the scrollToGroup() method   (issue #60)
+- Added the STATE_FLAG_HAS_EXPANDED_STATE_CHANGED state flag
+
+[Changes of RecyclerViewSwipeManager]
+- Added vertical swipe feature   (issue #116)
+- Introduced the SwipeResultAction object   (issue #69)
+  - This is a BREAKING CHANGE. Please refer to the Migration Guide section on README.
+
+[Changes of RecyclerViewDragDropManager]
+- Added the setDragEdgeScrollSpeed() and getDragEdgeScrollSpeed()   (issue #85)
+
+[New demos]
+- "Draggable (Grid Layout)"
+- "Expandable (Groups already expanded)"
+- "Swipeable (Vertical)"
+- "Swipeable with ViewPager"
+- "Swipeable (Legacy)"
+- "Swipe on Long Press"
+
+[Fixed issues]
+- Fixed issue #41 (Swipe not working if RecyclerView is using a GridLayout)
+- Fixed issue #60 (Scroll to the last child if it is offscreen)
+- Fixed issue #67 (GridLayoutManager support)
+- Fixed issue #69 (Dispatch events to parent when can't swipe to a direction)
+- Fixed issue #75 (Error In -->Expandable(Add/Remove Items))
+- Fixed issue #85 (Drag & drop edge scroll speed)
+- Fixed issue #86 (Require help in implementing drag and drop for Grid View)
+- Fixed issue #98 (Callback method when swipe animation is fully completed?)
+- Fixed issue #100 (How to expand all group by default?)
+- Fixed issue #111 (Drag is not working when a drag handle is small)
+- Fixed issue #116 (can i build a horizontal recyclerview?)
+- Fixed issue #118 (How to swipe on LongClick? enhancement)
+- Fixed some other minor issues
+
+
 ## 0.7.4
 - Fixed issue #75 (Error In -->Expandable(Add/Remove Items))
 

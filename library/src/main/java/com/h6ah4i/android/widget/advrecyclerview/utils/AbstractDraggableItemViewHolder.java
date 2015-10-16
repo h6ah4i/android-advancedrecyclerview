@@ -20,8 +20,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.annotation.DraggableItemStateFlags;
 
 public abstract class AbstractDraggableItemViewHolder extends RecyclerView.ViewHolder implements DraggableItemViewHolder {
+    @DraggableItemStateFlags
     private int mDragStateFlags;
 
     public AbstractDraggableItemViewHolder(View itemView) {
@@ -29,11 +31,12 @@ public abstract class AbstractDraggableItemViewHolder extends RecyclerView.ViewH
     }
 
     @Override
-    public void setDragStateFlags(int flags) {
+    public void setDragStateFlags(@DraggableItemStateFlags int flags) {
         mDragStateFlags = flags;
     }
 
     @Override
+    @DraggableItemStateFlags
     public int getDragStateFlags() {
         return mDragStateFlags;
     }

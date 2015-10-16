@@ -34,6 +34,9 @@ public class ExampleAddRemoveExpandableDataProvider extends AbstractAddRemoveExp
 
         for (int i = 0; i < 1; i++) {
             addGroupItem(i);
+            for (int j = 0; j < 3; j++) {
+                addChildItem(i, j);
+            }
         }
     }
 

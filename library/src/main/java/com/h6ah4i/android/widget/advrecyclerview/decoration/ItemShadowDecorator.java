@@ -21,6 +21,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -37,7 +38,7 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
      *
      * @param shadow 9-patch drawable used for drop shadow
      */
-    public ItemShadowDecorator(NinePatchDrawable shadow) {
+    public ItemShadowDecorator(@NonNull NinePatchDrawable shadow) {
         mShadowDrawable = shadow;
         mShadowDrawable.getPadding(mShadowPadding);
     }
@@ -49,14 +50,6 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
         if (childCount == 0) {
             return;
         }
-
-        int savedCount = c.save(Canvas.CLIP_SAVE_FLAG);
-
-        c.clipRect(
-                parent.getLeft() + Math.max(0, parent.getPaddingLeft() - mShadowPadding.left),
-                parent.getTop()/* + Math.max(0, parent.getPaddingTop() - mShadowPadding.top)*/,
-                parent.getRight() - Math.max(0, parent.getPaddingRight() - mShadowPadding.right),
-                parent.getBottom()/* - Math.max(0, parent.getPaddingBottom() - mShadowPadding.bottom)*/);
 
         for (int i = 0; i < childCount; i++) {
             final View child = parent.getChildAt(i);
@@ -76,8 +69,6 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
             mShadowDrawable.setBounds(left + tx, top + ty, right + tx, bottom + ty);
             mShadowDrawable.draw(c);
         }
-
-        c.restoreToCount(savedCount);
     }
 
     private static boolean shouldDrawDropShadow(View child) {

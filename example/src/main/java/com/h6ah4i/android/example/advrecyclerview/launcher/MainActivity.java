@@ -17,13 +17,14 @@
 package com.h6ah4i.android.example.advrecyclerview.launcher;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 
 public class MainActivity extends AppCompatActivity {
     private static final String FRAGMENT_TAG_OPTIONS_MENU = "options menu";
-    private static final String FRAGMENT_LAUNCHER_CONTENTS = "launcher contents";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +32,15 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
+
+        pager.setAdapter(new LauncherPagerAdapter(getSupportFragmentManager()));
+        tabLayout.setupWithViewPager(pager);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(new OptionsMenuFragment(), FRAGMENT_TAG_OPTIONS_MENU)
-                    .commit();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new ExampleLauncherContentsFragment(), FRAGMENT_LAUNCHER_CONTENTS)
                     .commit();
         }
     }

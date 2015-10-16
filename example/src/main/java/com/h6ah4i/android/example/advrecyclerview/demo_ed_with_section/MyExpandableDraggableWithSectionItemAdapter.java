@@ -28,22 +28,29 @@ import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandable
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.GroupPositionItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 
-public class MyExpandableDraggableWithSectionItemAdapter
+class MyExpandableDraggableWithSectionItemAdapter
         extends AbstractExpandableItemAdapter<MyExpandableDraggableWithSectionItemAdapter.MyGroupViewHolder, MyExpandableDraggableWithSectionItemAdapter.MyChildViewHolder>
         implements ExpandableDraggableItemAdapter<MyExpandableDraggableWithSectionItemAdapter.MyGroupViewHolder, MyExpandableDraggableWithSectionItemAdapter.MyChildViewHolder> {
     private static final String TAG = "MyEDWithSectionAdapter";
 
     private static final int GROUP_ITEM_VIEW_TYPE_SECTION_HEADER = 0;
     private static final int GROUP_ITEM_VIEW_TYPE_SECTION_ITEM = 1;
+
+    // NOTE: Make accessible with short name
+    private interface Expandable extends ExpandableItemConstants {
+    }
+    private interface Draggable extends DraggableItemConstants {
+    }
 
     private AbstractExpandableDataProvider mProvider;
 
@@ -187,33 +194,34 @@ public class MyExpandableDraggableWithSectionItemAdapter
         final int dragState = holder.getDragStateFlags();
         final int expandState = holder.getExpandStateFlags();
 
-        if (((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED) != 0) ||
-                ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0) ||
+                ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
             boolean isExpanded;
+            boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
 
-            if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_group_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if (((dragState & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) &&
-                    ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE) != 0)) {
+            } else if (((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) &&
+                    ((dragState & Draggable.STATE_FLAG_IS_IN_RANGE) != 0)) {
                 bgResId = R.drawable.bg_group_item_dragging_state;
-            } else if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
+            } else if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
             } else {
                 bgResId = R.drawable.bg_group_item_normal_state;
             }
 
-            if ((expandState & RecyclerViewExpandableItemManager.STATE_FLAG_IS_EXPANDED) != 0) {
+            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
                 isExpanded = true;
             } else {
                 isExpanded = false;
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
-            holder.mIndicator.setExpandedState(isExpanded, true);
+            holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
         }
     }
 
@@ -227,16 +235,16 @@ public class MyExpandableDraggableWithSectionItemAdapter
 
         final int dragState = holder.getDragStateFlags();
 
-        if (((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
 
-            if ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_ACTIVE) != 0) {
+            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if (((dragState & RecyclerViewDragDropManager.STATE_FLAG_DRAGGING) != 0) &&
-                    ((dragState & RecyclerViewDragDropManager.STATE_FLAG_IS_IN_RANGE) != 0)) {
+            } else if (((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) &&
+                    ((dragState & Draggable.STATE_FLAG_IS_IN_RANGE) != 0)) {
                 bgResId = R.drawable.bg_item_dragging_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;

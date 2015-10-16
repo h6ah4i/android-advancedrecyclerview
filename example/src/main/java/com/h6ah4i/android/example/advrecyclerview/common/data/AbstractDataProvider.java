@@ -25,13 +25,11 @@ public abstract class AbstractDataProvider {
 
         public abstract int getViewType();
 
-        public abstract int getSwipeReactionType();
-
         public abstract String getText();
 
-        public abstract void setPinnedToSwipeLeft(boolean pinned);
+        public abstract void setPinned(boolean pinned);
 
-        public abstract boolean isPinnedToSwipeLeft();
+        public abstract boolean isPinned();
     }
 
     public abstract int getCount();
