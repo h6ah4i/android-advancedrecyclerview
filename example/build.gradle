@@ -27,8 +27,10 @@ android {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 9
-        versionName "0.7.4"
+
+        versionCode 11
+        versionName "0.8.1"
+
     }
     signingConfigs {
         release
@@ -50,7 +52,9 @@ if (loadSigningConfigFromPropertiesFile(
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
-    compile 'com.android.support:design:23.0.0'
+	
+    compile 'com.android.support:design:23.1.0'
+
     // NOTE: vector-compat is available on API level 14 or later
     compile 'com.wnafee:vector-compat:1.0.5'
 }

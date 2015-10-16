@@ -38,27 +38,36 @@
 
         <activity
             android:name=".demo_d.DraggableExampleActivity"
-            android:label="@string/activity_title_demo_d" />
+            android:label="@string/activity_title_demo_d"/>
 
         <activity
-            android:name=".demo_us.UnderSwipeableExampleActivity"
-            android:label="@string/activity_title_demo_us" />
+            android:name=".demo_d_grid.DraggableGridExampleActivity"
+            android:label="@string/activity_title_demo_d_grid"/>
 
         <activity
-            android:name=".demo_d_with_longpress.DraggableWithLongPressExampleActivity"
-            android:label="@string/activity_title_demo_d_with_longpress" />
+            android:name=".demo_d_on_longpress.DragOnLongPressExampleActivity"
+            android:label="@string/activity_title_demo_d_on_longpress"/>
+
 
         <activity
             android:name=".demo_s.SwipeableExampleActivity"
-            android:label="@string/activity_title_demo_s" />
+            android:label="@string/activity_title_demo_s"/>
+
+        <activity
+            android:name=".demo_s_longpress.SwipeOnLongPressExampleActivity"
+            android:label="@string/activity_title_demo_s_on_longpress"/>
+
+        <activity
+            android:name=".demo_us.UnderSwipeableExampleActivity"
+            android:label="@string/activity_title_demo_us"/>
 
         <activity
             android:name=".demo_e.ExpandableExampleActivity"
-            android:label="@string/activity_title_demo_e" />
+            android:label="@string/activity_title_demo_e"/>
 
         <activity
             android:name=".demo_ds.DraggableSwipeableExampleActivity"
-            android:label="@string/activity_title_demo_ds" />
+            android:label="@string/activity_title_demo_ds"/>
 
         <activity
             android:name=".demo_ds_selection.DraggableSwipeableSelectableExampleActivity"
@@ -66,19 +75,35 @@
 
         <activity
             android:name=".demo_eds.ExpandableDraggableSwipeableExampleActivity"
-            android:label="@string/activity_title_demo_eds" />
+            android:label="@string/activity_title_demo_eds"/>
 
         <activity
             android:name=".demo_d_with_section.DraggableWithSectionExampleActivity"
-            android:label="@string/activity_title_demo_d_with_section" />
+            android:label="@string/activity_title_demo_d_with_section"/>
 
         <activity
             android:name=".demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity"
-            android:label="@string/activity_title_demo_ed_with_section" />
+            android:label="@string/activity_title_demo_ed_with_section"/>
 
         <activity
             android:name=".demo_e_add_remove.AddRemoveExpandableExampleActivity"
-            android:label="@string/activity_title_demo_e_add_remove" />
+            android:label="@string/activity_title_demo_e_add_remove"/>
+
+        <activity
+            android:name=".demo_e_already_expanded.AlreadyExpandedGroupsExpandableExampleActivity"
+            android:label="@string/activity_title_demo_e_already_expanded"/>
+
+        <activity
+            android:name=".demo_s_vertical.VerticalSwipeableExampleActivity"
+            android:label="@string/activity_title_demo_s_vertical"/>
+
+        <activity
+            android:name=".demo_s_viewpager.ViewPagerSwipeableExampleActivity"
+            android:label="@string/activity_title_demo_s_viewpager"/>
+
+        <activity
+            android:name=".demo_s_legacy.LegacySwipeableExampleActivity"
+            android:label="@string/activity_title_demo_s_legacy"/>
 
         <activity
             android:name=".demo_selection.SelectableExampleActivity"

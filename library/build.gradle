@@ -33,8 +33,6 @@ android {
         minSdkVersion 9
         targetSdkVersion 23
 
-
-
         def dataProps = new Properties()
         dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
 
@@ -56,8 +54,10 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.android.support:recyclerview-v7:23.0.0'
+
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:recyclerview-v7:23.1.0'
+
 }
 
 tasks.withType(JavaCompile) {
