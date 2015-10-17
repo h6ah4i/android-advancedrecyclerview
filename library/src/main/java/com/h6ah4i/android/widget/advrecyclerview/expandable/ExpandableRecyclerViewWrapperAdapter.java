@@ -727,17 +727,17 @@ class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
-    /*package*/ void notifyGroupAndChildrenItemsChanged(int groupPosition) {
+    /*package*/ void notifyGroupAndChildrenItemsChanged(int groupPosition, Object payload) {
         final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
         final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
         final int visibleChildCount = mPositionTranslator.getVisibleChildCount(groupPosition);
 
         if (flatPosition != RecyclerView.NO_POSITION) {
-            notifyItemRangeChanged(flatPosition, 1 + visibleChildCount);
+            notifyItemRangeChanged(flatPosition, 1 + visibleChildCount, payload);
         }
     }
 
-    /*package*/ void notifyChildrenOfGroupItemChanged(int groupPosition) {
+    /*package*/ void notifyChildrenOfGroupItemChanged(int groupPosition, Object payload) {
         final int visibleChildCount = mPositionTranslator.getVisibleChildCount(groupPosition);
 
         // notify if the group is expanded
@@ -746,16 +746,16 @@ class ExpandableRecyclerViewWrapperAdapter
             final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
 
             if (flatPosition != RecyclerView.NO_POSITION) {
-                notifyItemRangeChanged(flatPosition, visibleChildCount);
+                notifyItemRangeChanged(flatPosition, visibleChildCount, payload);
             }
         }
     }
 
-    /*package*/ void notifyChildItemChanged(int groupPosition, int childPosition) {
-        notifyChildItemRangeChanged(groupPosition, childPosition, 1);
+    /*package*/ void notifyChildItemChanged(int groupPosition, int childPosition, Object payload) {
+        notifyChildItemRangeChanged(groupPosition, childPosition, 1, payload);
     }
 
-    /*package*/ void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount) {
+    /*package*/ void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount, Object payload) {
         final int visibleChildCount = mPositionTranslator.getVisibleChildCount(groupPosition);
 
         // notify if the group is expanded
@@ -767,7 +767,7 @@ class ExpandableRecyclerViewWrapperAdapter
                 final int startPosition = flatPosition + childPositionStart;
                 final int count = Math.min(itemCount, (visibleChildCount - childPositionStart));
 
-                notifyItemRangeChanged(startPosition, count);
+                notifyItemRangeChanged(startPosition, count, payload);
             }
         }
     }
