@@ -203,7 +203,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
             ViewCompat.setTranslationY(oldHolder.itemView, prevTranslationY);
             ViewCompat.setAlpha(oldHolder.itemView, prevAlpha);
 
-            if (newHolder != null && newHolder.itemView != null) {
+            if (newHolder != null) {
                 // carry over translation values
                 endAnimation(newHolder);
                 ViewCompat.setTranslationX(newHolder.itemView, -deltaX);
