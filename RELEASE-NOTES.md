@@ -1,3 +1,8 @@
+## 0.8.2
+- Updated support library to v23.1.0
+- Added notify*Changed methods which has payload parameter
+
+
 ## 0.8.1
 - Fixed issue #124 (Long press should cancel when recycler view scrolls)
 

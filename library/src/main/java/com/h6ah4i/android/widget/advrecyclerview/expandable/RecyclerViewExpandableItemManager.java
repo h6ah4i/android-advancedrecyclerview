@@ -554,7 +554,23 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildrenOfGroupItemChanged(int)
      */
     public void notifyGroupAndChildrenItemsChanged(int groupPosition) {
-        mAdapter.notifyGroupAndChildrenItemsChanged(groupPosition);
+        mAdapter.notifyGroupAndChildrenItemsChanged(groupPosition, null);
+    }
+
+    /**
+     * <p>Notify any registered observers that the group and children items at <code>groupPosition</code> have changed.</p>
+     * <p>This is an group item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
+     * The item at <code>groupPosition</code> retains the same identity.</p>
+     *
+     * @param groupPosition Position of the group item which contains changed children
+     * @param payload  A non-null list of merged payloads. Can be empty list if requires full update.
+     * @see #notifyGroupItemChanged(int)
+     * @see #notifyChildrenOfGroupItemChanged(int)
+     * @see #notifyGroupAndChildrenItemsChanged(int)
+     */
+    public void notifyGroupAndChildrenItemsChanged(int groupPosition, Object payload) {
+        mAdapter.notifyGroupAndChildrenItemsChanged(groupPosition, payload);
     }
 
     /**
@@ -569,7 +585,23 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupAndChildrenItemsChanged(int)
      */
     public void notifyChildrenOfGroupItemChanged(int groupPosition) {
-        mAdapter.notifyChildrenOfGroupItemChanged(groupPosition);
+        mAdapter.notifyChildrenOfGroupItemChanged(groupPosition, null);
+    }
+
+    /**
+     * <p>Notify any registered observers that the children items contained in the group item at <code>groupPosition</code> have changed.</p>
+     * <p>This is an group item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
+     * The item at <code>groupPosition</code> retains the same identity.</p>
+     * <p>This method does not notify for the group item.
+     * If the group has also changed, use {@link #notifyGroupAndChildrenItemsChanged(int)} instead.</p>
+     *
+     * @param groupPosition Position of the group item which contains changed children
+     * @param payload  A non-null list of merged payloads. Can be empty list if requires full update.
+     * @see #notifyGroupAndChildrenItemsChanged(int)
+     */
+    public void notifyChildrenOfGroupItemChanged(int groupPosition, Object payload) {
+        mAdapter.notifyChildrenOfGroupItemChanged(groupPosition, payload);
     }
 
     /**
@@ -583,7 +615,22 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildItemRangeChanged(int, int, int)
      */
     public void notifyChildItemChanged(int groupPosition, int childPosition) {
-        mAdapter.notifyChildItemChanged(groupPosition, childPosition);
+        mAdapter.notifyChildItemChanged(groupPosition, childPosition, null);
+    }
+
+    /**
+     * <p>Notify any registered observers that the child item at <code>{groupPosition, childPosition}</code> has changed.</p>
+     * <p>This is an item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>{groupPosition, childPosition}</code> is out of date and should be updated.
+     * The item at <code>{groupPosition, childPosition}</code> retains the same identity.</p>
+     *
+     * @param groupPosition Position of the group item which contains the changed child
+     * @param childPosition Position of the child item in the group that has changed
+     * @param payload  A non-null list of merged payloads. Can be empty list if requires full update.
+     * @see #notifyChildItemRangeChanged(int, int, int)
+     */
+    public void notifyChildItemChanged(int groupPosition, int childPosition, Object payload) {
+        mAdapter.notifyChildItemChanged(groupPosition, childPosition, payload);
     }
 
     /**
@@ -599,7 +646,24 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildItemChanged(int, int)
      */
     public void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount) {
-        mAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount);
+        mAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount, null);
+    }
+
+    /**
+     * <p>Notify any registered observers that the <code>itemCount</code> child items starting at
+     * position <code>{groupPosition, childPosition}</code> have changed.</p>
+     * <p>This is an item change event, not a structural change event. It indicates that
+     * any reflection of the data in the given position range is out of date and should
+     * be updated. The items in the given range retain the same identity.</p>
+     *
+     * @param groupPosition      Position of the group item which contains the changed child
+     * @param childPositionStart Position of the first child item in the group that has changed
+     * @param itemCount          Number of items that have changed
+     * @param payload  A non-null list of merged payloads. Can be empty list if requires full update.
+     * @see #notifyChildItemChanged(int, int)
+     */
+    public void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount, Object payload) {
+        mAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount, payload);
     }
 
     /**

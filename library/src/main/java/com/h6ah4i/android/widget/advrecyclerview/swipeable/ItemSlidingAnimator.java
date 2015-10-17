@@ -563,7 +563,14 @@ public class ItemSlidingAnimator {
         @Override
         public void onAnimationEnd(View view) {
             mAnimator.setListener(null);
-            mAnimator.setUpdateListener(null);
+            // [WORKAROUND]
+            // Issue 189686: NPE can be occurred when using the ViewPropertyAnimatorCompat
+            // https://code.google.com/p/android/issues/detail?id=189686
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                InternalHelperKK.clearViewPropertyAnimatorUpdateListener(view);
+            } else {
+                mAnimator.setUpdateListener(null);
+            }
 
             ViewCompat.setTranslationX(view, mToX);
             ViewCompat.setTranslationY(view, mToY);

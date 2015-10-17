@@ -92,6 +92,13 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
     @Override
     public boolean animateChange(
             RecyclerView.ViewHolder oldHolder, RecyclerView.ViewHolder newHolder, int fromX, int fromY, int toX, int toY) {
+        if (oldHolder == newHolder) {
+            // NOTE: This condition can be occurred since v23.1.0.
+            // Don't know how to run change animations when the same view holder is re-used.
+            // run a move animation to handle position changes.
+            return mMoveAnimationsManager.addPendingAnimation(oldHolder, fromX, fromY, toX, toY);
+        }
+
         if (mDebug) {
             final String oldId = (oldHolder != null) ? Long.toString(oldHolder.getItemId()) : "-";
             final String oldPosition = (oldHolder != null) ? Long.toString(oldHolder.getLayoutPosition()) : "-";
