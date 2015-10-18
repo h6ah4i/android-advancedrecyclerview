@@ -54,4 +54,5 @@ dependencies {
 
     // NOTE: vector-compat is available on API level 14 or later
     compile 'com.wnafee:vector-compat:1.0.5'
+    compile 'com.github.bumptech.glide:glide:3.6.1'
 }

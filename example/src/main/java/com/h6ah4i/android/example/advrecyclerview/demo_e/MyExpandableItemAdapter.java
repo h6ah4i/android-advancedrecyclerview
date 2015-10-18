@@ -16,12 +16,15 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_e;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
@@ -60,8 +63,10 @@ class MyExpandableItemAdapter
     }
 
     public static class MyChildViewHolder extends MyBaseViewHolder {
+        public ImageView mImageView;
         public MyChildViewHolder(View v) {
             super(v);
+            mImageView = (ImageView) v.findViewById(R.id.image);
         }
     }
 
@@ -113,7 +118,7 @@ class MyExpandableItemAdapter
     @Override
     public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.list_item, parent, false);
+        final View v = inflater.inflate(R.layout.list_item_with_image, parent, false);
         return new MyChildViewHolder(v);
     }
 
@@ -149,6 +154,17 @@ class MyExpandableItemAdapter
         }
     }
 
+    static String [] PICTURE_URLS = new String[]{
+            "https://snap-photos.s3.amazonaws.com/img-thumbs/960w/GR0DSV725A.jpg",
+            "https://snap-photos.s3.amazonaws.com/img-thumbs/960w/FU16HJEOWR.jpg",
+            "https://snap-photos.s3.amazonaws.com/img-thumbs/960w/8SALDQRRZX.jpg",
+            "https://snap-photos.s3.amazonaws.com/img-thumbs/960w/MUBLKRGUPW.jpg",
+            "https://snap-photos.s3.amazonaws.com/img-thumbs/960w/LQPCRU2ZOP.jpg",
+            "https://snap-photos.s3.amazonaws.com/img-thumbs/960w/4YL5F2WXR6.jpg",
+            "https://snap-photos.s3.amazonaws.com/img-thumbs/960w/2YBIJCIZQY.jpg",
+            "https://snap-photos.s3.amazonaws.com/img-thumbs/960w/SG1F43NBME.jpg",
+    };
+
     @Override
     public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
         // group item
@@ -161,6 +177,10 @@ class MyExpandableItemAdapter
         int bgResId;
         bgResId = R.drawable.bg_item_normal_state;
         holder.mContainer.setBackgroundResource(bgResId);
+
+        String pictureUrl = PICTURE_URLS[childPosition % PICTURE_URLS.length];
+
+        Glide.with(holder.mImageView.getContext()).load(Uri.parse(pictureUrl)).into(holder.mImageView);
     }
 
     @Override
