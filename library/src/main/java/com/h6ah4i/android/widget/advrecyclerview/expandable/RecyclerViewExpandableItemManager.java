@@ -31,7 +31,7 @@ import android.view.ViewConfiguration;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 
 /**
- * Provides item swipe operation for {@link android.support.v7.widget.RecyclerView}
+ * Provides item expansion operation for {@link android.support.v7.widget.RecyclerView}
  */
 public class RecyclerViewExpandableItemManager implements ExpandableItemConstants {
     private static final String TAG = "ARVExpandableItemMgr";
