@@ -260,7 +260,11 @@ class MyDraggableSwipeableItemAdapter
             // other --- do nothing
             case Swipeable.RESULT_CANCELED:
             default:
-                return new UnpinResultAction(this, position);
+                if (position != RecyclerView.NO_POSITION) {
+                    return new UnpinResultAction(this, position);
+                } else {
+                    return null;
+                }
         }
     }
 

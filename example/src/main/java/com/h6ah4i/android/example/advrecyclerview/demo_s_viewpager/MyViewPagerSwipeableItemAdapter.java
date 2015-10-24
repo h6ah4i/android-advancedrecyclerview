@@ -136,11 +136,8 @@ class MyViewPagerSwipeableItemAdapter
     public SwipeResultAction onSwipeItem(MyViewHolder holder, final int position, int result) {
         Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
-        switch (result) {
-            case Swipeable.RESULT_SWIPED_RIGHT:
-            case Swipeable.RESULT_SWIPED_LEFT:
-            case Swipeable.RESULT_CANCELED:
-            default:
+        if (position == RecyclerView.NO_POSITION) {
+            return null;
         }
 
         if ((mCanSwipeLeft && result == Swipeable.RESULT_SWIPED_LEFT) ||

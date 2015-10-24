@@ -553,7 +553,10 @@ class ExpandableRecyclerViewWrapperAdapter
     @Override
     public SwipeResultAction onSwipeItem(RecyclerView.ViewHolder holder, int position, int result) {
         if (!(mExpandableItemAdapter instanceof BaseExpandableSwipeableItemAdapter)) {
-            return new SwipeResultActionDefault();
+            return null;
+        }
+        if (position == RecyclerView.NO_POSITION) {
+            return null;
         }
 
         final BaseExpandableSwipeableItemAdapter<?, ?> adapter = (BaseExpandableSwipeableItemAdapter<?, ?>) mExpandableItemAdapter;
