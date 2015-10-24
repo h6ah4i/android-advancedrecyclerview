@@ -33,6 +33,7 @@ import android.view.ViewConfiguration;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -587,7 +588,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         if (resultAction == null) {
-            resultAction = null; // TODO set default action
+            resultAction = new SwipeResultActionDefault(); // set default action
         }
 
         int afterReaction = resultAction.getResultActionType();
