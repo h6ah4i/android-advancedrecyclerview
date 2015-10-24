@@ -17,6 +17,7 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,8 +55,10 @@ class MyExpandableDraggableSwipeableItemAdapter
     // NOTE: Make accessible with short name
     private interface Expandable extends ExpandableItemConstants {
     }
+
     private interface Draggable extends DraggableItemConstants {
     }
+
     private interface Swipeable extends SwipeableItemConstants {
     }
 
@@ -441,7 +444,11 @@ class MyExpandableDraggableSwipeableItemAdapter
             // other --- do nothing
             case Swipeable.RESULT_CANCELED:
             default:
-                return new GroupUnpinResultAction(this, groupPosition);
+                if (groupPosition != RecyclerView.NO_POSITION) {
+                    return new GroupUnpinResultAction(this, groupPosition);
+                } else {
+                    return null;
+                }
         }
     }
 
@@ -465,7 +472,11 @@ class MyExpandableDraggableSwipeableItemAdapter
             // other --- do nothing
             case Swipeable.RESULT_CANCELED:
             default:
-                return new ChildUnpinResultAction(this, groupPosition, childPosition);
+                if (groupPosition != RecyclerView.NO_POSITION) {
+                    return new ChildUnpinResultAction(this, groupPosition, childPosition);
+                } else {
+                    return null;
+                }
         }
     }
 

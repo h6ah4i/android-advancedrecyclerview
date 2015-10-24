@@ -208,7 +208,11 @@ class MyUnderSwipeableItemAdapter
             case Swipeable.RESULT_SWIPED_RIGHT:
             case Swipeable.RESULT_CANCELED:
             default:
-                return new UnpinResultAction(this, position);
+                if (position != RecyclerView.NO_POSITION) {
+                    return new UnpinResultAction(this, position);
+                } else {
+                    return null;
+                }
         }
     }
 
