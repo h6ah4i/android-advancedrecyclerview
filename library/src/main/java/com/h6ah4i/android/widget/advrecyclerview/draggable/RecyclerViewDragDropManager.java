@@ -1321,25 +1321,27 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
         RecyclerView.ViewHolder swapTargetHolder = null;
 
-        overlayItemLeft = Math.max(overlayItemLeft, rv.getPaddingLeft());
-        overlayItemLeft = Math.min(overlayItemLeft, Math.max(0, rv.getWidth() - rv.getPaddingRight() - draggingItemInfo.width));
-
-        overlayItemTop = Math.max(overlayItemTop, rv.getPaddingTop());
-        overlayItemTop = Math.min(overlayItemTop, Math.max(0, rv.getHeight() - rv.getPaddingBottom() - draggingItemInfo.height));
-
-
         if ((draggingItem == null) || (
                 draggingItem.getAdapterPosition() != RecyclerView.NO_POSITION &&
                         draggingItem.getItemId() == draggingItemInfo.id)) {
 
             final int layoutType = CustomRecyclerViewUtils.getLayoutType(rv);
+            final boolean isVerticalLayout =
+                    (CustomRecyclerViewUtils.extractOrientation(layoutType) == CustomRecyclerViewUtils.ORIENTATION_VERTICAL);
+
+            if (isVerticalLayout) {
+                overlayItemLeft = Math.max(overlayItemLeft, rv.getPaddingLeft());
+                overlayItemLeft = Math.min(overlayItemLeft, Math.max(0, rv.getWidth() - rv.getPaddingRight() - draggingItemInfo.width));
+            } else {
+                overlayItemTop = Math.max(overlayItemTop, rv.getPaddingTop());
+                overlayItemTop = Math.min(overlayItemTop, Math.max(0, rv.getHeight() - rv.getPaddingBottom() - draggingItemInfo.height));
+            }
 
             switch (layoutType) {
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_HORIZONTAL:
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_VERTICAL:
                     swapTargetHolder = findSwapTargetItemForGridLayoutManager(
-                            rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, range,
-                            (layoutType == CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_VERTICAL));
+                            rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, range, isVerticalLayout);
                     break;
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_HORIZONTAL:
                     swapTargetHolder = findSwapTargetItemForLinearLayoutManagerHorizontal(rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, range);
@@ -1379,10 +1381,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             int spanCount = CustomRecyclerViewUtils.getSpanCount(rv);
             int height = rv.getHeight();
             int width = rv.getWidth();
-            int paddingLeft = rv.getPaddingLeft();
-            int paddingTop = rv.getPaddingTop();
-            int paddingRight = rv.getPaddingRight();
-            int paddingBottom = rv.getPaddingBottom();
+            int paddingLeft = (vertical) ? rv.getPaddingLeft() : 0;
+            int paddingTop = (!vertical) ? rv.getPaddingTop() : 0;
+            int paddingRight = (vertical) ? rv.getPaddingRight() : 0;
+            int paddingBottom = (!vertical) ? rv.getPaddingBottom() : 0;
             int columnWidth = (width - paddingLeft - paddingRight) / spanCount;
             int rowHeight = (height - paddingTop - paddingBottom) / spanCount;
 

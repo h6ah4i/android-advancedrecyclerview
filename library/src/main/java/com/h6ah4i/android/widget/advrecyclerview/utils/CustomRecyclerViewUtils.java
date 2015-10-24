@@ -49,6 +49,23 @@ public class CustomRecyclerViewUtils {
         return getLayoutType(rv.getLayoutManager());
     }
 
+    public static int extractOrientation(int layoutType) {
+        switch (layoutType) {
+            case LAYOUT_TYPE_UNKNOWN:
+                return ORIENTATION_UNKNOWN;
+            case LAYOUT_TYPE_LINEAR_HORIZONTAL:
+            case LAYOUT_TYPE_GRID_HORIZONTAL:
+            case LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL:
+                return ORIENTATION_HORIZONTAL;
+            case LAYOUT_TYPE_LINEAR_VERTICAL:
+            case LAYOUT_TYPE_GRID_VERTICAL:
+            case LAYOUT_TYPE_STAGGERED_GRID_VERTICAL:
+                return ORIENTATION_VERTICAL;
+            default:
+                throw new IllegalArgumentException("Unknown layout type (= " + layoutType + ")");
+        }
+    }
+
     public static int getLayoutType(@Nullable RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof GridLayoutManager) {
             if (((GridLayoutManager) layoutManager).getOrientation() == GridLayoutManager.HORIZONTAL) {
@@ -124,21 +141,29 @@ public class CustomRecyclerViewUtils {
     }
 
 
-    public static int findFirstVisibleItemPosition(@NonNull RecyclerView rv) {
+    public static int findFirstVisibleItemPosition(@NonNull RecyclerView rv, boolean includesPadding) {
         RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
 
         if (layoutManager instanceof LinearLayoutManager) {
-            return (((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition());
+            if (includesPadding) {
+                return findFirstVisibleItemPositionIncludesPadding((LinearLayoutManager) layoutManager);
+            } else {
+                return (((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition());
+            }
         } else {
             return RecyclerView.NO_POSITION;
         }
     }
 
-    public static int findLastVisibleItemPosition(@NonNull RecyclerView rv) {
+    public static int findLastVisibleItemPosition(@NonNull RecyclerView rv, boolean includesPadding) {
         RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
 
         if (layoutManager instanceof LinearLayoutManager) {
-            return (((LinearLayoutManager) layoutManager).findLastVisibleItemPosition());
+            if (includesPadding) {
+                return findLastVisibleItemPositionIncludesPadding((LinearLayoutManager) layoutManager);
+            } else {
+                return (((LinearLayoutManager) layoutManager).findLastVisibleItemPosition());
+            }
         } else {
             return RecyclerView.NO_POSITION;
         }
@@ -198,5 +223,43 @@ public class CustomRecyclerViewUtils {
         } else {
             return ORIENTATION_UNKNOWN;
         }
+    }
+
+    private static int findFirstVisibleItemPositionIncludesPadding(LinearLayoutManager lm) {
+        final View child = findOneVisibleChildIncludesPadding(lm, 0, lm.getChildCount(), false, true);
+        return child == null ? RecyclerView.NO_POSITION : lm.getPosition(child);
+    }
+
+    private static int findLastVisibleItemPositionIncludesPadding(LinearLayoutManager lm) {
+        final View child = findOneVisibleChildIncludesPadding(lm, lm.getChildCount() - 1, -1, false, true);
+        return child == null ? RecyclerView.NO_POSITION : lm.getPosition(child);
+    }
+
+    // This method is a modified version of the LinearLayoutManager.findOneVisibleChild().
+    private static View findOneVisibleChildIncludesPadding(
+            LinearLayoutManager lm, int fromIndex, int toIndex,
+            boolean completelyVisible, boolean acceptPartiallyVisible) {
+        boolean isVertical = (lm.getOrientation() == LinearLayoutManager.VERTICAL);
+        final int start = 0;
+        final int end = (isVertical) ? lm.getHeight() : lm.getWidth();
+        final int next = toIndex > fromIndex ? 1 : -1;
+        View partiallyVisible = null;
+        for (int i = fromIndex; i != toIndex; i += next) {
+            final View child = lm.getChildAt(i);
+            final int childStart = (isVertical) ? child.getTop() : child.getLeft();
+            final int childEnd = (isVertical) ? child.getBottom() : child.getRight();
+            if (childStart < end && childEnd > start) {
+                if (completelyVisible) {
+                    if (childStart >= start && childEnd <= end) {
+                        return child;
+                    } else if (acceptPartiallyVisible && partiallyVisible == null) {
+                        partiallyVisible = child;
+                    }
+                } else {
+                    return child;
+                }
+            }
+        }
+        return partiallyVisible;
     }
 }

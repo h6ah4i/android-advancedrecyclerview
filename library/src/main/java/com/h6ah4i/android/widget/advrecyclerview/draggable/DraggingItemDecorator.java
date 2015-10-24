@@ -33,7 +33,6 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     private int mTranslationX;
     private int mTranslationY;
-    private int mRecyclerViewPaddingLeft;
     private Bitmap mDraggingItemImage;
     private int mTranslationLeftLimit;
     private int mTranslationRightLimit;
@@ -120,7 +119,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         // However, if the RecyclerView has any other decorations or RecyclerView is in scrolling state,
         // need to draw it to avoid visual corruptions.
         if (mDraggingItemImage != null) {
-            final float left = mTranslationX + /*mRecyclerViewPaddingLeft*/ + mDraggingItemInfo.margins.left - mShadowPadding.left;
+            final float left = mTranslationX + mDraggingItemInfo.margins.left - mShadowPadding.left;
             final float top = /*mDraggingItemMargins.top +*/ mTranslationY - mShadowPadding.top;
             c.drawBitmap(mDraggingItemImage, left, top, null);
         }
@@ -138,7 +137,6 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
         mTranslationLeftLimit = mRecyclerView.getPaddingLeft();
         mTranslationTopLimit = mRecyclerView.getPaddingTop();
-        mRecyclerViewPaddingLeft = mRecyclerView.getPaddingLeft();
         mLayoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
 
         // hide
@@ -186,7 +184,6 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationRightLimit = 0;
         mTranslationTopLimit = 0;
         mTranslationBottomLimit = 0;
-        mRecyclerViewPaddingLeft = 0;
         mTouchPositionX = 0;
         mTouchPositionY = 0;
         mStarted = false;
@@ -224,42 +221,55 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private void updateTranslationOffset() {
         final RecyclerView rv = mRecyclerView;
         final int childCount = rv.getChildCount();
-        if (childCount > 0) {
-            mTranslationLeftLimit = rv.getPaddingLeft();
-            mTranslationRightLimit = Math.max(0, (rv.getWidth() - rv.getPaddingLeft() - mDraggingItemInfo.width));
 
-            mTranslationTopLimit = rv.getPaddingTop();
-            mTranslationBottomLimit = Math.max(0, (rv.getHeight() - rv.getPaddingBottom() - mDraggingItemInfo.height));
+        if (childCount > 0) {
+            mTranslationLeftLimit = 0;
+            mTranslationRightLimit = rv.getWidth() - mDraggingItemInfo.width;
+
+            mTranslationTopLimit = 0;
+            mTranslationBottomLimit = rv.getHeight() - mDraggingItemInfo.height;
+
+            switch (mLayoutOrientation) {
+                case CustomRecyclerViewUtils.ORIENTATION_VERTICAL: {
+                    mTranslationLeftLimit += rv.getPaddingLeft();
+                    mTranslationRightLimit -= rv.getPaddingRight();
+                    break;
+                }
+                case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL: {
+                    mTranslationTopLimit += rv.getPaddingTop();
+                    mTranslationBottomLimit -= rv.getPaddingBottom();
+                    break;
+                }
+            }
+
+            mTranslationRightLimit = Math.max(mTranslationLeftLimit, mTranslationRightLimit);
+            mTranslationBottomLimit = Math.max(mTranslationTopLimit, mTranslationBottomLimit);
 
             if (!mIsScrolling) {
-                final int firstVisiblePosition = CustomRecyclerViewUtils.findFirstVisibleItemPosition(rv);
-                final int lastVisiblePosition = CustomRecyclerViewUtils.findLastVisibleItemPosition(rv);
-
+                final int firstVisiblePosition = CustomRecyclerViewUtils.findFirstVisibleItemPosition(rv, true);
+                final int lastVisiblePosition = CustomRecyclerViewUtils.findLastVisibleItemPosition(rv, true);
+                final View firstChild = findRangeFirstItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
+                final View lastChild = findRangeLastItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
 
                 switch (mLayoutOrientation) {
                     case CustomRecyclerViewUtils.ORIENTATION_VERTICAL: {
-                        final View topChild = findRangeFirstItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
-                        final View bottomChild = findRangeLastItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
 
-                        if (topChild != null) {
-                            mTranslationTopLimit = Math.min(mTranslationBottomLimit, topChild.getTop());
+                        if (firstChild != null) {
+                            mTranslationTopLimit = Math.min(mTranslationBottomLimit, firstChild.getTop());
                         }
 
-                        if (bottomChild != null) {
-                            mTranslationBottomLimit = Math.min(mTranslationBottomLimit, bottomChild.getTop());
+                        if (lastChild != null) {
+                            mTranslationBottomLimit = Math.min(mTranslationBottomLimit, lastChild.getTop());
                         }
                         break;
                     }
                     case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL: {
-                        final View leftChild = findRangeFirstItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
-                        final View rightChild = findRangeLastItem(rv, mRange, firstVisiblePosition, lastVisiblePosition);
-
-                        if (leftChild != null) {
-                            mTranslationLeftLimit = Math.min(mTranslationLeftLimit, leftChild.getLeft());
+                        if (firstChild != null) {
+                            mTranslationLeftLimit = Math.min(mTranslationLeftLimit, firstChild.getLeft());
                         }
 
-                        if (rightChild != null) {
-                            mTranslationRightLimit = Math.min(mTranslationRightLimit, rightChild.getLeft());
+                        if (lastChild != null) {
+                            mTranslationRightLimit = Math.min(mTranslationRightLimit, lastChild.getLeft());
                         }
                         break;
                     }
