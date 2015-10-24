@@ -90,6 +90,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
     private RecyclerView.ViewHolder mSwipingItem;
     private int mSwipingItemPosition = RecyclerView.NO_POSITION;
+    private long mSwipingItemId = RecyclerView.NO_ID;
     private Rect mSwipingItemMargins = new Rect();
     private int mTouchedItemOffsetX;
     private int mTouchedItemOffsetY;
@@ -494,8 +495,9 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
         final int swipeDistanceX = mLastTouchX - mTouchedItemOffsetX;
         final int swipeDistanceY = mLastTouchY - mTouchedItemOffsetY;
+        mSwipingItemPosition = getItemPosition(mAdapter, mSwipingItemId, mSwipingItemPosition);
 
-        mSwipingItemOperator.update(swipeDistanceX, swipeDistanceY);
+        mSwipingItemOperator.update(mSwipingItemPosition, swipeDistanceX, swipeDistanceY);
     }
 
     private boolean checkConditionAndStartSwiping(MotionEvent e, RecyclerView.ViewHolder holder) {
@@ -519,6 +521,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
         mSwipingItem = holder;
         mSwipingItemPosition = itemPosition;
+        mSwipingItemId = mAdapter.getItemId(itemPosition);
         mLastTouchX = (int) (e.getX() + 0.5f);
         mLastTouchY = (int) (e.getY() + 0.5f);
         mTouchedItemOffsetX = mLastTouchX;
@@ -526,7 +529,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mCheckingTouchSlop = RecyclerView.NO_ID;
         CustomRecyclerViewUtils.getLayoutMargins(holder.itemView, mSwipingItemMargins);
 
-        mSwipingItemOperator = new SwipingItemOperator(this, mSwipingItem, mSwipingItemPosition, mSwipingItemReactionType, mSwipeHorizontal);
+        mSwipingItemOperator = new SwipingItemOperator(this, mSwipingItem, mSwipingItemReactionType, mSwipeHorizontal);
         mSwipingItemOperator.start();
 
         mVelocityTracker.clear();
@@ -556,12 +559,13 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             mRecyclerView.getParent().requestDisallowInterceptTouchEvent(false);
         }
 
-        final int itemPosition = mSwipingItemPosition;
+        final int itemPosition = getItemPosition(mAdapter, mSwipingItemId, mSwipingItemPosition);
 
         mVelocityTracker.clear();
 
         mSwipingItem = null;
         mSwipingItemPosition = RecyclerView.NO_POSITION;
+        mSwipingItemId = RecyclerView.NO_ID;
         mLastTouchX = 0;
         mLastTouchY = 0;
         mInitialTouchX = 0;
@@ -671,6 +675,24 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
                 // NOTE: returned value should not be used.
                 return ItemSlidingAnimator.DIR_LEFT;
         }
+    }
+
+    private static int getItemPosition(@Nullable RecyclerView.Adapter adapter, long itemId, int itemPositionGuess) {
+        if (adapter == null)
+            return RecyclerView.NO_POSITION;
+
+        final int itemCount = adapter.getItemCount();
+        if (itemPositionGuess >= 0 && itemPositionGuess < itemCount) {
+            if (adapter.getItemId(itemPositionGuess) == itemId)
+                return itemPositionGuess;
+        }
+
+        for (int i=0; i < itemCount; i++) {
+            if (adapter.getItemId(i) == itemId)
+                return i;
+        }
+
+        return RecyclerView.NO_POSITION;
     }
 
     public void cancelSwipe() {
