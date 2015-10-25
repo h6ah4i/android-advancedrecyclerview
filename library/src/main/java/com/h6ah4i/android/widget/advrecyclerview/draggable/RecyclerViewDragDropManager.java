@@ -128,7 +128,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private int mActualScrollByXAmount;
     private int mActualScrollByYAmount;
     private Rect mTmpRect1 = new Rect();
-    private Runnable mDeferredCancelProcess;
     private int mItemSettleBackIntoPlaceAnimationDuration = 200;
     private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR;
 
@@ -347,7 +346,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      * @return True if currently performing item dragging
      */
     public boolean isDragging() {
-        return (mDraggingItemInfo != null) && (mDeferredCancelProcess == null);
+        return (mDraggingItemInfo != null) && (!mHandler.isCancelDragRequested());
     }
 
     /**
@@ -655,18 +654,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             finishDragging(false);
         } else {
             if (isDragging()) {
-                if (mDeferredCancelProcess == null) {
-                    mDeferredCancelProcess = new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mDeferredCancelProcess == this) {
-                                mDeferredCancelProcess = null;
-                                finishDragging(false);
-                            }
-                        }
-                    };
-                    mRecyclerView.post(mDeferredCancelProcess);
-                }
+                mHandler.requestDeferredCancelDrag();
             }
         }
     }
@@ -679,10 +667,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         // cancel deferred request
-        if (mDeferredCancelProcess != null) {
-            mRecyclerView.removeCallbacks(mDeferredCancelProcess);
-            mDeferredCancelProcess = null;
-        }
+        mHandler.removeDeferredCancelDragRequest();
 
         // NOTE: setOverScrollMode() have to be called before calling removeItemDecoration()
         if (mRecyclerView != null && mDraggingItemViewHolder != null) {
@@ -1573,6 +1558,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
     private static class InternalHandler extends Handler {
         private static final int MSG_LONGPRESS = 1;
+        private static final int MSG_DEFERRED_CANCEL_DRAG = 2;
 
         private RecyclerViewDragDropManager mHolder;
         private MotionEvent mDownMotionEvent;
@@ -1592,6 +1578,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 case MSG_LONGPRESS:
                     mHolder.handleOnLongPress(mDownMotionEvent);
                     break;
+                case MSG_DEFERRED_CANCEL_DRAG:
+                    mHolder.cancelDrag(true);
+                    break;
             }
         }
 
@@ -1607,6 +1596,21 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 mDownMotionEvent.recycle();
                 mDownMotionEvent = null;
             }
+        }
+
+        public void removeDeferredCancelDragRequest() {
+            removeMessages(MSG_DEFERRED_CANCEL_DRAG);
+        }
+
+        public void requestDeferredCancelDrag() {
+            if (isCancelDragRequested()) {
+                return;
+            }
+            sendEmptyMessage(MSG_DEFERRED_CANCEL_DRAG);
+        }
+
+        public boolean isCancelDragRequested() {
+            return hasMessages(MSG_DEFERRED_CANCEL_DRAG);
         }
     }
 }

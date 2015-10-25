@@ -39,7 +39,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
     private BaseSwipeableItemAdapter mSwipeableItemAdapter;
     private RecyclerViewSwipeManager mSwipeManager;
-    private int mSwipingItemPosition = RecyclerView.NO_POSITION;
+    private long mSwipingItemId = RecyclerView.NO_ID;
 
     public SwipeableItemWrapperAdapter(RecyclerViewSwipeManager manager, RecyclerView.Adapter<VH> adapter) {
         super(adapter);
@@ -62,12 +62,15 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
         mSwipeableItemAdapter = null;
         mSwipeManager = null;
-        mSwipingItemPosition = RecyclerView.NO_POSITION;
+        mSwipingItemId = RecyclerView.NO_ID;
     }
 
     @Override
     public void onViewRecycled(VH holder) {
         super.onViewRecycled(holder);
+
+        if (mSwipingItemId == holder.getItemId())
+            mSwipeManager.cancelSwipe();
 
         // reset SwipeableItemViewHolder state
         if (holder instanceof SwipeableItemViewHolder) {
@@ -107,7 +110,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         if (isSwiping()) {
             int flags = Constants.STATE_FLAG_SWIPING;
 
-            if (position == mSwipingItemPosition) {
+            if (holder.getItemId() == mSwipingItemId) {
                 flags |= Constants.STATE_FLAG_IS_ACTIVE;
             }
 
@@ -229,12 +232,12 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ void onSwipeItemStarted(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder holder, int position) {
+    /*package*/ void onSwipeItemStarted(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder holder, long id) {
         if (LOCAL_LOGD) {
-            Log.d(TAG, "onSwipeItemStarted(holder = " + holder + ", position = " + position + ")");
+            Log.d(TAG, "onSwipeItemStarted(holder = " + holder + ", id = " + id + ")");
         }
 
-        mSwipingItemPosition = position;
+        mSwipingItemId = id;
 
         notifyDataSetChanged();
     }
@@ -247,7 +250,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
             Log.d(TAG, "onSwipeItemFinished(holder = " + holder + ", position = " + position + ", result = " + result + ")");
         }
 
-        mSwipingItemPosition = RecyclerView.NO_POSITION;
+        mSwipingItemId = RecyclerView.NO_ID;
 
         return SwipeableItemInternalUtils.invokeOnSwipeItem(mSwipeableItemAdapter, holder, position, result);
     }
@@ -270,7 +273,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     }
 
     protected boolean isSwiping() {
-        return (mSwipingItemPosition != RecyclerView.NO_POSITION);
+        return (mSwipingItemId != RecyclerView.NO_ID);
     }
 
     private boolean swipeHorizontal() {
