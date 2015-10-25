@@ -544,7 +544,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         // raise onSwipeItemStarted() event
-        mAdapter.onSwipeItemStarted(this, holder, itemPosition);
+        mAdapter.onSwipeItemStarted(this, holder, mSwipingItemId);
     }
 
     private void finishSwiping(int result) {
