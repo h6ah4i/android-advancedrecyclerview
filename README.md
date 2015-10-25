@@ -21,8 +21,6 @@ src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
 <img src="http://img.youtube.com/vi/S7cSwMArjUQ/0.jpg" alt="Advanced" width="480" height="360" border="10" />
 </a>
 
-NOTE: This library does not contain [Snackbar](http://www.google.com/design/spec/components/snackbars-toasts.html). The above example app uses third-party library. (thx. [Snackbar developed by William Mora ](https://github.com/nispok/snackbar)).
-
 ---
 
 Target platforms
