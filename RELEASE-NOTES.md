@@ -1,3 +1,9 @@
+## 0.8.3
+- Fixed issue #131 (Bottom padding of recycler view offsets the dragging item [Drag drop] bug)
+- Fixed issue #133 (Wrong item position used when data set changes during swipe bug)
+- Fixed issue #136 (Item swipe completes after holder recycled bug)
+
+
 ## 0.8.2
 - Updated support library to v23.1.0
 - Added notify*Changed methods which has payload parameter

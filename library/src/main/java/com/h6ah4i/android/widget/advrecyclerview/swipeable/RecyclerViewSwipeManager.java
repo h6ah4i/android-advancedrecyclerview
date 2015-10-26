@@ -33,6 +33,7 @@ import android.view.ViewConfiguration;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -90,6 +91,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
     private RecyclerView.ViewHolder mSwipingItem;
     private int mSwipingItemPosition = RecyclerView.NO_POSITION;
+    private long mSwipingItemId = RecyclerView.NO_ID;
     private Rect mSwipingItemMargins = new Rect();
     private int mTouchedItemOffsetX;
     private int mTouchedItemOffsetY;
@@ -234,7 +236,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
      * @return True if currently performing item swiping
      */
     public boolean isSwiping() {
-        return (mSwipingItem != null);
+        return (mSwipingItem != null) && (!mHandler.isCancelSwipeRequested());
     }
 
     /**
@@ -256,7 +258,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (handleActionUpOrCancel(e)) {
+                if (handleActionUpOrCancel(e, true)) {
                     return true;
                 }
                 break;
@@ -298,7 +300,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                handleActionUpOrCancel(e);
+                handleActionUpOrCancel(e, true);
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -309,7 +311,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
     /*package*/ void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         if (disallowIntercept) {
-            cancelSwipe();
+            cancelSwipe(true);
         }
     }
 
@@ -362,7 +364,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         return WrapperAdapterUtils.findWrappedAdapter(rv.getAdapter(), SwipeableItemWrapperAdapter.class);
     }
 
-    private boolean handleActionUpOrCancel(MotionEvent e) {
+    private boolean handleActionUpOrCancel(MotionEvent e, boolean invokeFinish) {
         int action = MotionEvent.ACTION_CANCEL;
 
         if (e != null) {
@@ -372,7 +374,9 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         if (isSwiping()) {
-            handleActionUpOrCancelWhileSwiping(action);
+            if (invokeFinish) {
+                handleActionUpOrCancelWhileSwiping(action);
+            }
             return true;
         } else {
             handleActionUpOrCancelWhileNotSwiping();
@@ -494,8 +498,9 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
         final int swipeDistanceX = mLastTouchX - mTouchedItemOffsetX;
         final int swipeDistanceY = mLastTouchY - mTouchedItemOffsetY;
+        mSwipingItemPosition = getItemPosition(mAdapter, mSwipingItemId, mSwipingItemPosition);
 
-        mSwipingItemOperator.update(swipeDistanceX, swipeDistanceY);
+        mSwipingItemOperator.update(mSwipingItemPosition, swipeDistanceX, swipeDistanceY);
     }
 
     private boolean checkConditionAndStartSwiping(MotionEvent e, RecyclerView.ViewHolder holder) {
@@ -519,6 +524,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
         mSwipingItem = holder;
         mSwipingItemPosition = itemPosition;
+        mSwipingItemId = mAdapter.getItemId(itemPosition);
         mLastTouchX = (int) (e.getX() + 0.5f);
         mLastTouchY = (int) (e.getY() + 0.5f);
         mTouchedItemOffsetX = mLastTouchX;
@@ -526,7 +532,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mCheckingTouchSlop = RecyclerView.NO_ID;
         CustomRecyclerViewUtils.getLayoutMargins(holder.itemView, mSwipingItemMargins);
 
-        mSwipingItemOperator = new SwipingItemOperator(this, mSwipingItem, mSwipingItemPosition, mSwipingItemReactionType, mSwipeHorizontal);
+        mSwipingItemOperator = new SwipingItemOperator(this, mSwipingItem, mSwipingItemReactionType, mSwipeHorizontal);
         mSwipingItemOperator.start();
 
         mVelocityTracker.clear();
@@ -540,7 +546,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         // raise onSwipeItemStarted() event
-        mAdapter.onSwipeItemStarted(this, holder, itemPosition);
+        mAdapter.onSwipeItemStarted(this, holder, mSwipingItemId);
     }
 
     private void finishSwiping(int result) {
@@ -550,18 +556,22 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             return;
         }
 
+        // cancel deferred request
+        mHandler.removeDeferredCancelSwipeRequest();
+
         mHandler.cancelLongPressDetection();
 
         if (mRecyclerView != null && mRecyclerView.getParent() != null) {
             mRecyclerView.getParent().requestDisallowInterceptTouchEvent(false);
         }
 
-        final int itemPosition = mSwipingItemPosition;
+        final int itemPosition = getItemPosition(mAdapter, mSwipingItemId, mSwipingItemPosition);
 
         mVelocityTracker.clear();
 
         mSwipingItem = null;
         mSwipingItemPosition = RecyclerView.NO_POSITION;
+        mSwipingItemId = RecyclerView.NO_ID;
         mLastTouchX = 0;
         mLastTouchY = 0;
         mInitialTouchX = 0;
@@ -583,7 +593,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         if (resultAction == null) {
-            resultAction = null; // TODO set default action
+            resultAction = new SwipeResultActionDefault(); // set default action
         }
 
         int afterReaction = resultAction.getResultActionType();
@@ -673,9 +683,38 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
     }
 
+    private static int getItemPosition(@Nullable RecyclerView.Adapter adapter, long itemId, int itemPositionGuess) {
+        if (adapter == null)
+            return RecyclerView.NO_POSITION;
+
+        final int itemCount = adapter.getItemCount();
+        if (itemPositionGuess >= 0 && itemPositionGuess < itemCount) {
+            if (adapter.getItemId(itemPositionGuess) == itemId)
+                return itemPositionGuess;
+        }
+
+        for (int i=0; i < itemCount; i++) {
+            if (adapter.getItemId(i) == itemId)
+                return i;
+        }
+
+        return RecyclerView.NO_POSITION;
+    }
+
     public void cancelSwipe() {
-        handleActionUpOrCancel(null);
-        finishSwiping(RESULT_CANCELED);
+        cancelSwipe(false);
+    }
+
+    /*package*/ void cancelSwipe(boolean immediately) {
+        handleActionUpOrCancel(null, false);
+
+        if (immediately) {
+            finishSwiping(RESULT_CANCELED);
+        } else {
+            if (isSwiping()) {
+                mHandler.requestDeferredCancelSwipe();
+            }
+        }
     }
 
     /*package*/ boolean isAnimationRunning(RecyclerView.ViewHolder item) {
@@ -833,6 +872,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
     private static class InternalHandler extends Handler {
         private static final int MSG_LONGPRESS = 1;
+        private static final int MSG_DEFERRED_CANCEL_SWIPE = 2;
 
         private RecyclerViewSwipeManager mHolder;
         private MotionEvent mDownMotionEvent;
@@ -852,6 +892,9 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
                 case MSG_LONGPRESS:
                     mHolder.handleOnLongPress(mDownMotionEvent);
                     break;
+                case MSG_DEFERRED_CANCEL_SWIPE:
+                    mHolder.cancelSwipe(true);
+                    break;
             }
         }
 
@@ -867,6 +910,21 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
                 mDownMotionEvent.recycle();
                 mDownMotionEvent = null;
             }
+        }
+
+        public void removeDeferredCancelSwipeRequest() {
+            removeMessages(MSG_DEFERRED_CANCEL_SWIPE);
+        }
+
+        public void requestDeferredCancelSwipe() {
+            if (isCancelSwipeRequested()) {
+                return;
+            }
+            sendEmptyMessage(MSG_DEFERRED_CANCEL_SWIPE);
+        }
+
+        public boolean isCancelSwipeRequested() {
+            return hasMessages(MSG_DEFERRED_CANCEL_SWIPE);
         }
     }
 }
