@@ -133,7 +133,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     protected void onHandleWrappedAdapterItemRangeChanged(int positionStart, int itemCount, Object payload) {
-        notifyItemRangeChanged(positionStart, itemCount);
+        notifyItemRangeChanged(positionStart, itemCount, payload);
     }
 
     protected void onHandleWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
