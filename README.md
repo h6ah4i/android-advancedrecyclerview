@@ -50,39 +50,6 @@ dependencies {
 }
 ```
 
----
-
-*This library is provided as the AAR format.
-The source jar file won't be downloaded automatically (due to the current Gradle and Anndroid Studio limitation), so javadoc comments are not displayed on IDE.*
-
-**Here is a workaround thanks to the superb [AARLinkSources](https://github.com/xujiaao/AARLinkSources) Gradle plugin !**
-
-```groovy
-buildscript {
-    repositories {
-        maven { url 'https://raw.github.com/xujiaao/mvn-repository/master/releases' }
-    }
-
-    dependencies {
-        classpath 'com.github.xujiaao:aarLinkSources:1.0.0'
-    }
-}
-
-apply plugin: 'com.android.application'
-apply plugin: 'aar-link-sources'
-
-android {
-    ...
-}
-
-dependencies {
-    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.3@aar'){
-        transitive=true
-    }
-    aarLinkSources 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.3:sources@jar'
-}
-```
-
 Migration Guide
 ---
 
@@ -91,7 +58,7 @@ The version 0.8.0 has fixed a lot of issues and introduced some new features. So
 ### Swipe
 
 The `SwipeableItemAdapter` interface has been changed drastically.
-Also, some methods and some constants are marked as deprecated because vertical swipe feature is added. 
+Also, some methods and some constants are marked as deprecated because vertical swipe feature is added.
 
 #### Recommended way
 Implement the new `SwipeableItemAdapter.onItemSwipe()` method which returns `SwipeResultAction` objects.
