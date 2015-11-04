@@ -1,3 +1,7 @@
+## 0.8.4
+- Fixed issue #142 (Recycler View crash on destroy)
+
+
 ## 0.8.3
 - Fixed issue #131 (Bottom padding of recycler view offsets the dragging item [Drag drop] bug)
 - Fixed issue #133 (Wrong item position used when data set changes during swipe bug)
