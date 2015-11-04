@@ -3,6 +3,7 @@ Advanced RecyclerView
 
 This RecyclerView extension library provides Google's Inbox app like swiping, Play Music app like drag-and-drop sorting and expandable item features. Works on API level 9 or later.
 
+[ ![Download](https://api.bintray.com/packages/h6ah4i/maven/android-advancedrecyclerview/images/download.svg) ](https://bintray.com/h6ah4i/maven/android-advancedrecyclerview/_latestVersion)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Advanced%20RecyclerView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1432)
 
 ---
@@ -32,7 +33,7 @@ Target platforms
 Latest version
 ---
 
-- Version 0.8.3  (Oct. 27, 2015)   ([RELEASE NOTES](./RELEASE-NOTES.md))
+- Version 0.8.4  (Nov. 4, 2015)   ([RELEASE NOTES](./RELEASE-NOTES.md))
 
 *If you are using support library v23.0.x, please use v0.8.1 instead.*
 
@@ -44,42 +45,9 @@ This library is published on jCenter. Just add these lines to `build.gradle`.
 
 ```groovy
 dependencies {
-    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.3@aar'){
+    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.4@aar'){
         transitive=true
     }
-}
-```
-
----
-
-*This library is provided as the AAR format.
-The source jar file won't be downloaded automatically (due to the current Gradle and Anndroid Studio limitation), so javadoc comments are not displayed on IDE.*
-
-**Here is a workaround thanks to the superb [AARLinkSources](https://github.com/xujiaao/AARLinkSources) Gradle plugin !**
-
-```groovy
-buildscript {
-    repositories {
-        maven { url 'https://raw.github.com/xujiaao/mvn-repository/master/releases' }
-    }
-
-    dependencies {
-        classpath 'com.github.xujiaao:aarLinkSources:1.0.0'
-    }
-}
-
-apply plugin: 'com.android.application'
-apply plugin: 'aar-link-sources'
-
-android {
-    ...
-}
-
-dependencies {
-    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.3@aar'){
-        transitive=true
-    }
-    aarLinkSources 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.3:sources@jar'
 }
 ```
 
@@ -91,7 +59,7 @@ The version 0.8.0 has fixed a lot of issues and introduced some new features. So
 ### Swipe
 
 The `SwipeableItemAdapter` interface has been changed drastically.
-Also, some methods and some constants are marked as deprecated because vertical swipe feature is added. 
+Also, some methods and some constants are marked as deprecated because vertical swipe feature is added.
 
 #### Recommended way
 Implement the new `SwipeableItemAdapter.onItemSwipe()` method which returns `SwipeResultAction` objects.
