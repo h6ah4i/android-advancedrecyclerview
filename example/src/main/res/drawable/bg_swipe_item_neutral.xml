@@ -16,4 +16,4 @@
 -->
 <color
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/bg_swipe_item_neutral"/>
+    android:color="@android:color/transparent"/>
