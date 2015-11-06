@@ -69,8 +69,9 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     public void onViewRecycled(VH holder) {
         super.onViewRecycled(holder);
 
-        if (mSwipingItemId == holder.getItemId())
+        if ((mSwipingItemId != RecyclerView.NO_ID) && (mSwipingItemId == holder.getItemId())) {
             mSwipeManager.cancelSwipe();
+        }
 
         // reset SwipeableItemViewHolder state
         if (holder instanceof SwipeableItemViewHolder) {
