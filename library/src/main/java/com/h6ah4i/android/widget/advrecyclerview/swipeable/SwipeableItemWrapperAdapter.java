@@ -186,7 +186,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         }
     }
 
-    // NOTE: This method is called from RecyclerViewDragDropManager
+    // NOTE: This method is called from RecyclerViewSwipeManager
     /*package*/
     @SuppressWarnings("unchecked")
     int getSwipeReactionType(RecyclerView.ViewHolder holder, int position, int x, int y) {
@@ -197,7 +197,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         return mSwipeableItemAdapter.onGetSwipeReactionType(holder, position, x, y);
     }
 
-    // NOTE: This method is called from RecyclerViewDragDropManager
+    // NOTE: This method is called from RecyclerViewSwipeManager
     /*package*/
     @SuppressWarnings("unchecked")
     void onUpdateSlideAmount(RecyclerView.ViewHolder holder, int position, boolean horizontal, float amount, boolean isSwiping, int type) {
@@ -231,7 +231,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
                 (horizontal ? amount : 0.0f), (horizontal ? 0.0f : amount), isSwiping);
     }
 
-    // NOTE: This method is called from RecyclerViewDragDropManager
+    // NOTE: This method is called from RecyclerViewSwipeManager
     /*package*/ void onSwipeItemStarted(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder holder, long id) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onSwipeItemStarted(holder = " + holder + ", id = " + id + ")");
@@ -242,7 +242,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         notifyDataSetChanged();
     }
 
-    // NOTE: This method is called from RecyclerViewDragDropManager
+    // NOTE: This method is called from RecyclerViewSwipeManager
     /*package*/
     @SuppressWarnings("unchecked")
     SwipeResultAction onSwipeItemFinished(RecyclerView.ViewHolder holder, int position, int result) {
