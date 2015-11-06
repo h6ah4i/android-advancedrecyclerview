@@ -206,6 +206,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
      * <p>This method should be called in order to avoid memory leaks.</p>
      */
     public void release() {
+        cancelSwipe(true);
+
         if (mHandler != null) {
             mHandler.release();
             mHandler = null;
