@@ -308,7 +308,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      * <p>This method should be called in order to avoid memory leaks.</p>
      */
     public void release() {
-        cancelDrag();
+        cancelDrag(true);
 
         if (mHandler != null) {
             mHandler.release();
