@@ -26,6 +26,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
+import java.util.List;
+
 class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends BaseWrapperAdapter<VH> {
     private static final String TAG = "ARVSwipeableWrapper";
 
@@ -101,7 +103,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position) {
+    public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
         float prevSwipeItemSlideAmount = 0;
 
         if (holder instanceof SwipeableItemViewHolder) {
@@ -116,10 +118,10 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
             }
 
             safeUpdateFlags(holder, flags);
-            super.onBindViewHolder(holder, position);
+            super.onBindViewHolder(holder, position, payloads);
         } else {
             safeUpdateFlags(holder, 0);
-            super.onBindViewHolder(holder, position);
+            super.onBindViewHolder(holder, position, payloads);
         }
 
         if (holder instanceof SwipeableItemViewHolder) {
