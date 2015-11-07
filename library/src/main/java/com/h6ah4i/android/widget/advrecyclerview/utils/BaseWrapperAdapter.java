@@ -41,7 +41,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
         super.setHasStableIds(mWrappedAdapter.hasStableIds());
     }
 
-    private boolean isWrappedAdapterAlive(){
+    public boolean isWrappedAdapterAlive(){
         return mWrappedAdapter!=null;
     }
 
