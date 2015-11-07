@@ -19,7 +19,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="list_item_translation_z">2dp</dimen>
+    <dimen name="list_item_elevation">2dp</dimen>
     <dimen name="list_item_height">64dp</dimen>
     <dimen name="list_item2_height">96dp</dimen>
     <dimen name="list_group_item_height">96dp</dimen>
