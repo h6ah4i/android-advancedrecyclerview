@@ -77,11 +77,16 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
         // reset SwipeableItemViewHolder state
         if (holder instanceof SwipeableItemViewHolder) {
-            mSwipeManager.cancelPendingAnimations(holder);
+            if (mSwipeManager != null) {
+                mSwipeManager.cancelPendingAnimations(holder);
+            }
 
-            setSwipeItemSlideAmount(((SwipeableItemViewHolder) holder), 0.0f, swipeHorizontal());
+            SwipeableItemViewHolder swipeableHolder = (SwipeableItemViewHolder) holder;
 
-            View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+            swipeableHolder.setSwipeItemHorizontalSlideAmount(0);
+            swipeableHolder.setSwipeItemVerticalSlideAmount(0);
+
+            View containerView = swipeableHolder.getSwipeableContainerView();
 
             if (containerView != null) {
                 ViewCompat.animate(containerView).cancel();
