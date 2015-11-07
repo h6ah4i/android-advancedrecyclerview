@@ -32,6 +32,7 @@ import android.view.View;
 public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
     private final NinePatchDrawable mShadowDrawable;
     private final Rect mShadowPadding = new Rect();
+    private final boolean mCastShadowForTransparentBackgroundItem;
 
     /**
      * Constructor.
@@ -39,8 +40,19 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
      * @param shadow 9-patch drawable used for drop shadow
      */
     public ItemShadowDecorator(@NonNull NinePatchDrawable shadow) {
+        this(shadow, true);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param shadow 9-patch drawable used for drop shadow
+     * @param castShadowForTransparentBackgroundItem Whether to cast shadows for transparent items
+     */
+    public ItemShadowDecorator(@NonNull NinePatchDrawable shadow, boolean castShadowForTransparentBackgroundItem) {
         mShadowDrawable = shadow;
         mShadowDrawable.getPadding(mShadowPadding);
+        mCastShadowForTransparentBackgroundItem = castShadowForTransparentBackgroundItem;
     }
 
     @Override
@@ -71,7 +83,7 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
         }
     }
 
-    private static boolean shouldDrawDropShadow(View child) {
+    private boolean shouldDrawDropShadow(View child) {
         if (child.getVisibility() != View.VISIBLE) {
             return false;
         }
@@ -84,7 +96,7 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
             return false;
         }
 
-        if (background instanceof ColorDrawable) {
+        if (!mCastShadowForTransparentBackgroundItem && (background instanceof ColorDrawable)) {
             //noinspection RedundantCast
             if (((ColorDrawable) background).getAlpha() == 0) {
                 return false;
