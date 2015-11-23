@@ -1,3 +1,11 @@
+## 0.8.5
+- Updated support library to v23.1.1
+- Fixed issue #145 (SwipeableItemWrapperAdapter.onViewRecycled crash bug)
+- Re-implement the ExpandableItemIndicator without vector-compat (related issue: #149)
+- Reduced overdraws on API level v20 or lower (related PR: #146)
+- Small bug fixes
+
+
 ## 0.8.4
 - Fixed issue #142 (Recycler View crash on destroy)
 

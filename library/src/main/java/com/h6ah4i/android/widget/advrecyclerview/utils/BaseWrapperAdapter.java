@@ -21,6 +21,8 @@ import android.util.Log;
 import android.view.ViewGroup;
 
 import java.lang.ref.WeakReference;
+import java.util.Collections;
+import java.util.List;
 
 public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<VH> {
@@ -30,6 +32,8 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
     private RecyclerView.Adapter<VH> mWrappedAdapter;
     private BridgeObserver mBridgeObserver;
 
+    protected static final List<Object> FULLUPDATE_PAYLOADS = Collections.emptyList();
+
     public BaseWrapperAdapter(RecyclerView.Adapter<VH> adapter) {
         mWrappedAdapter = adapter;
         mBridgeObserver = new BridgeObserver<>(this);
@@ -37,7 +41,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
         super.setHasStableIds(mWrappedAdapter.hasStableIds());
     }
 
-    private boolean isWrappedAdapterAlive(){
+    public boolean isWrappedAdapterAlive(){
         return mWrappedAdapter!=null;
     }
 
@@ -105,8 +109,13 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
+        onBindViewHolder(holder, position, FULLUPDATE_PAYLOADS);
+    }
+
+    @Override
+    public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
         if (isWrappedAdapterAlive())
-            mWrappedAdapter.onBindViewHolder(holder, position);
+            mWrappedAdapter.onBindViewHolder(holder, position, payloads);
     }
 
     @Override

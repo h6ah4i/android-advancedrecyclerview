@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemAdapter;
 
+import java.util.List;
+
 public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements ExpandableItemAdapter<GVH, CVH> {
@@ -84,6 +86,22 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      */
     @Override
     public final void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onBindGroupViewHolder(GVH holder, int groupPosition, int viewType, List<Object> payloads) {
+        onBindGroupViewHolder(holder, groupPosition, viewType);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onBindChildViewHolder(CVH holder, int groupPosition, int childPosition, int viewType, List<Object> payloads) {
+        onBindChildViewHolder(holder, groupPosition, childPosition, viewType);
     }
 
     /**
