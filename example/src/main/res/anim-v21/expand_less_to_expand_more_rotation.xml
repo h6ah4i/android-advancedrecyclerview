@@ -15,7 +15,7 @@
        limitations under the License.
 -->
 <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@integer/anim_duration"
+    android:duration="@integer/expandable_item_indicator_anim_duration"
     android:propertyName="rotation"
-    android:valueFrom="-180"
-    android:valueTo="0"/>
+    android:valueFrom="0"
+    android:valueTo="-180"/>

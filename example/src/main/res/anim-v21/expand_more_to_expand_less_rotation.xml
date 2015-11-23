@@ -14,17 +14,8 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/image_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:background="@null"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_expand_more"/>
-
-</merge>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="@integer/expandable_item_indicator_anim_duration"
+    android:propertyName="rotation"
+    android:valueFrom="-180"
+    android:valueTo="0"/>

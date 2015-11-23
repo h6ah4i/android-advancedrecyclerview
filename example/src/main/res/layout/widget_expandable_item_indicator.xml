@@ -14,8 +14,17 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@integer/anim_duration"
-    android:propertyName="rotation"
-    android:valueFrom="0"
-    android:valueTo="-180"/>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:scaleType="center"
+        android:src="@drawable/ic_expand_more"/>
+
+</merge>

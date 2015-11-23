@@ -37,4 +37,6 @@
     <color name="bg_swipe_group_item_dismiss">#ff295db3</color>
 
     <color name="snackbar_action_color_done">#ffccccff</color>
+
+    <color name="expandable_item_indicator_color">#42000000</color>
 </resources>

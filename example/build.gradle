@@ -51,7 +51,4 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
     compile 'com.android.support:design:23.1.1'
-
-    // NOTE: vector-compat is available on API level 14 or later
-    compile 'com.wnafee:vector-compat:1.0.5'
 }
