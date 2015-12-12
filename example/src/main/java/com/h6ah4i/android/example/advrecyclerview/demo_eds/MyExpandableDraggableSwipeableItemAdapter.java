@@ -264,9 +264,9 @@ class MyExpandableDraggableSwipeableItemAdapter
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
         // set listeners
-        // (if the item is *not pinned*, click event comes to the itemView)
+        // (if the item is *pinned*, click event comes to the itemView)
         holder.itemView.setOnClickListener(mItemViewOnClickListener);
-        // (if the item is *pinned*, click event comes to the mContainer)
+        // (if the item is *not pinned*, click event comes to the mContainer)
         holder.mContainer.setOnClickListener(mSwipeableViewContainerOnClickListener);
 
         // set text
