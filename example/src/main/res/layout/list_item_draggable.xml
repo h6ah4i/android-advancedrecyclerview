@@ -21,7 +21,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height"
-    android:background="@drawable/bg_swipe_item_neutral">
+    android:background="@drawable/bg_swipe_item_neutral"
+    android:outlineProvider="bounds">
 
     <FrameLayout
         android:id="@+id/container"
