@@ -81,9 +81,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
         @Override
         public boolean addPendingAnimation(RecyclerView.ViewHolder item) {
             endAnimation(item);
-
             ViewCompat.setAlpha(item.itemView, 0);
-
             enqueuePendingAnimationInfo(new AddAnimationInfo(item));
 
             return true;
@@ -242,7 +240,6 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
             final ViewPropertyAnimatorCompat animator = ViewCompat.animate(view);
 
             animator.setDuration(getDuration());
-
             startActiveItemAnimation(info, info.holder, animator);
         }
 
