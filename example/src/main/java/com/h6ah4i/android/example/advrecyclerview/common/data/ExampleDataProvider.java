@@ -104,6 +104,7 @@ public class ExampleDataProvider extends AbstractDataProvider {
         private final String mText;
         private final int mViewType;
         private boolean mPinned;
+        private int mSwipeLevel;
 
         ConcreteData(long id, int viewType, String text, int swipeReaction) {
             mId = id;
@@ -154,6 +155,16 @@ public class ExampleDataProvider extends AbstractDataProvider {
         @Override
         public void setPinned(boolean pinned) {
             mPinned = pinned;
+        }
+
+        @Override
+        public int getSwipeLevel() {
+            return mSwipeLevel;
+        }
+
+        @Override
+        public void setSwipeLevel(int level) {
+            mSwipeLevel = level;
         }
     }
 }

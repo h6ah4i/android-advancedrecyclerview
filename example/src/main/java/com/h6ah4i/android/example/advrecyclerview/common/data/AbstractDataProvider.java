@@ -30,6 +30,10 @@ public abstract class AbstractDataProvider {
         public abstract void setPinned(boolean pinned);
 
         public abstract boolean isPinned();
+
+        public abstract int getSwipeLevel();
+
+        public abstract void setSwipeLevel(int level);
     }
 
     public abstract int getCount();

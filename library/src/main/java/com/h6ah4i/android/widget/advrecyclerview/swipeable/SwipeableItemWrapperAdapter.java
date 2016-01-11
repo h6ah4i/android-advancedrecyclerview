@@ -89,9 +89,20 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
             View containerView = swipeableHolder.getSwipeableContainerView();
 
             if (containerView != null) {
-                ViewCompat.animate(containerView).cancel();
-                ViewCompat.setTranslationX(containerView, 0.0f);
-                ViewCompat.setTranslationY(containerView, 0.0f);
+                if (swipeableHolder instanceof MultiSwipeableItemViewHolder) {
+                    MultiSwipeableItemViewHolder vh = (MultiSwipeableItemViewHolder) swipeableHolder;
+                    for (int i = vh.getMaxSwipeLevel() - 1; i >= 0; i--) {
+                        View v = vh.getSwipeableContainerView(i);
+
+                        ViewCompat.animate(v).cancel();
+                        ViewCompat.setTranslationX(v, 0.0f);
+                        ViewCompat.setTranslationY(v, 0.0f);
+                    }
+                } else {
+                    ViewCompat.animate(containerView).cancel();
+                    ViewCompat.setTranslationX(containerView, 0.0f);
+                    ViewCompat.setTranslationY(containerView, 0.0f);
+                }
             }
         }
     }

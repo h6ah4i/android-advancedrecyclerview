@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.MultiSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
@@ -57,19 +58,41 @@ class MySwipeableItemAdapter
         void onItemViewClicked(View v, boolean pinned);
     }
 
-    public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
-        public FrameLayout mContainer;
+    public static class MyViewHolder extends AbstractSwipeableItemViewHolder implements MultiSwipeableItemViewHolder {
+        public FrameLayout mContainerOuter;
+        public FrameLayout mContainerInner;
         public TextView mTextView;
+        public int mSwipeLevel;
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainerOuter = (FrameLayout) v.findViewById(R.id.container_outer);
+            mContainerInner = (FrameLayout) v.findViewById(R.id.container_inner);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
         }
 
         @Override
         public View getSwipeableContainerView() {
-            return mContainer;
+            return getSwipeableContainerView(mSwipeLevel);
+        }
+
+        @Override
+        public View getSwipeableContainerView(int level) {
+            if (level == 0) {
+                return mContainerInner;
+            } else {
+                return mContainerOuter;
+            }
+        }
+
+        @Override
+        public int getCurrentSwipeLevel() {
+            return mSwipeLevel;
+        }
+
+        @Override
+        public int getMaxSwipeLevel() {
+            return 2;
         }
     }
 
@@ -94,15 +117,15 @@ class MySwipeableItemAdapter
     }
 
     private void onItemViewClick(View v) {
-        if (mEventListener != null) {
-            mEventListener.onItemViewClicked(v, true); // true --- pinned
-        }
+//        if (mEventListener != null) {
+//            mEventListener.onItemViewClicked(v, true); // true --- pinned
+//        }
     }
 
     private void onSwipeableViewContainerClick(View v) {
-        if (mEventListener != null) {
-            mEventListener.onItemViewClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v), false);  // false --- not pinned
-        }
+//        if (mEventListener != null) {
+//            mEventListener.onItemViewClicked(RecyclerViewAdapterUtils.getParentViewHolderItemView(v), false);  // false --- not pinned
+//        }
     }
 
     @Override
@@ -118,7 +141,7 @@ class MySwipeableItemAdapter
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.list_item, parent, false);
+        final View v = inflater.inflate(R.layout.list_item_double_swipe, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -130,31 +153,22 @@ class MySwipeableItemAdapter
         // (if the item is *pinned*, click event comes to the itemView)
         holder.itemView.setOnClickListener(mItemViewOnClickListener);
         // (if the item is *not pinned*, click event comes to the mContainer)
-        holder.mContainer.setOnClickListener(mSwipeableViewContainerOnClickListener);
+        holder.mContainerOuter.setOnClickListener(mSwipeableViewContainerOnClickListener);
+        holder.mContainerInner.setOnClickListener(mSwipeableViewContainerOnClickListener);
+
+        holder.mSwipeLevel = item.getSwipeLevel();
 
         // set text
         holder.mTextView.setText(item.getText());
 
-        // set background resource (target view ID: container)
-        final int swipeState = holder.getSwipeStateFlags();
-
-        if ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0) {
-            int bgResId;
-
-            if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
-                bgResId = R.drawable.bg_item_swiping_active_state;
-            } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
-                bgResId = R.drawable.bg_item_swiping_state;
-            } else {
-                bgResId = R.drawable.bg_item_normal_state;
-            }
-
-            holder.mContainer.setBackgroundResource(bgResId);
-        }
+        holder.mContainerInner.setBackgroundResource(R.drawable.bg_item_normal_state);
 
         // set swiping properties
-        holder.setSwipeItemHorizontalSlideAmount(
-                item.isPinned() ? Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+        if (holder.mSwipeLevel == 1) {
+            holder.setSwipeItemHorizontalSlideAmount(Swipeable.OUTSIDE_OF_THE_WINDOW_RIGHT);
+        } else if (holder.mSwipeLevel == -1) {
+            holder.setSwipeItemHorizontalSlideAmount(Swipeable.OUTSIDE_OF_THE_WINDOW_LEFT);
+        }
     }
 
     @Override
@@ -169,47 +183,67 @@ class MySwipeableItemAdapter
 
     @Override
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
-        int bgRes = 0;
-        switch (type) {
-            case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
-                bgRes = R.drawable.bg_swipe_item_neutral;
-                break;
-            case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
-                bgRes = R.drawable.bg_swipe_item_left;
-                break;
-            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
-                bgRes = R.drawable.bg_swipe_item_right;
-                break;
-        }
+        final int NEUTRAL = R.drawable.bg_swipe_item_neutral;
+        final int SWIPE_ONCE = R.drawable.bg_swipe_item_left;
+        final int SWIPE_TWICE = R.drawable.bg_swipe_item_right;
 
-        holder.itemView.setBackgroundResource(bgRes);
+        if (holder.getCurrentSwipeLevel() == 0) {
+            int bgRes = 0;
+            switch (type) {
+                case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
+                    bgRes = NEUTRAL;
+                    break;
+                case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
+                case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
+                    bgRes = SWIPE_ONCE;
+                    break;
+            }
+            holder.mContainerOuter.setBackgroundResource(bgRes);
+        } else {
+            int bgRes = 0;
+            switch (type) {
+                case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
+                    bgRes = SWIPE_ONCE;
+                    break;
+                case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
+                case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
+                    bgRes = SWIPE_TWICE;
+                    break;
+            }
+            holder.itemView.setBackgroundResource(bgRes);
+        }
     }
 
     @Override
     public SwipeResultAction onSwipeItem(MyViewHolder holder, final int position, int result) {
         Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
-        switch (result) {
-            // swipe right
-            case Swipeable.RESULT_SWIPED_RIGHT:
-                if (mProvider.getItem(position).isPinned()) {
-                    // pinned --- back to default position
-                    return new UnpinResultAction(this, position);
-                } else {
-                    // not pinned --- remove
-                    return new SwipeRightResultAction(this, position);
-                }
-                // swipe left -- pin
-            case Swipeable.RESULT_SWIPED_LEFT:
-                return new SwipeLeftResultAction(this, position);
-            // other --- do nothing
-            case Swipeable.RESULT_CANCELED:
-            default:
-                if (position != RecyclerView.NO_POSITION) {
-                    return new UnpinResultAction(this, position);
-                } else {
-                    return null;
-                }
+        if (holder.getCurrentSwipeLevel() == 0) {
+            switch (result) {
+                case Swipeable.RESULT_SWIPED_RIGHT:
+                case Swipeable.RESULT_SWIPED_LEFT:
+                    return new SwipeOnceResultAction(this, position, result);
+                case Swipeable.RESULT_CANCELED:
+                default:
+                    if (position != RecyclerView.NO_POSITION) {
+                        return new CancelSwipeResultAction(this, position);
+                    } else {
+                        return null;
+                    }
+            }
+        } else {
+            switch (result) {
+                case Swipeable.RESULT_SWIPED_RIGHT:
+                case Swipeable.RESULT_SWIPED_LEFT:
+                    return new SwipeTwiceResultAction(this, position);
+                case Swipeable.RESULT_CANCELED:
+                default:
+                    if (position != RecyclerView.NO_POSITION) {
+                        return new CancelSwipeResultAction(this, position);
+                    } else {
+                        return null;
+                    }
+            }
         }
     }
 
@@ -221,14 +255,16 @@ class MySwipeableItemAdapter
         mEventListener = eventListener;
     }
 
-    private static class SwipeLeftResultAction extends SwipeResultActionMoveToSwipedDirection {
+    private static class SwipeOnceResultAction extends SwipeResultActionMoveToSwipedDirection {
         private MySwipeableItemAdapter mAdapter;
         private final int mPosition;
         private boolean mSetPinned;
+        private int mDirection;
 
-        SwipeLeftResultAction(MySwipeableItemAdapter adapter, int position) {
+        SwipeOnceResultAction(MySwipeableItemAdapter adapter, int position, int result) {
             mAdapter = adapter;
             mPosition = position;
+            mDirection = (result == Swipeable.RESULT_SWIPED_LEFT) ? -1 : 1;
         }
 
         @Override
@@ -237,8 +273,8 @@ class MySwipeableItemAdapter
 
             AbstractDataProvider.Data item = mAdapter.mProvider.getItem(mPosition);
 
-            if (!item.isPinned()) {
-                item.setPinned(true);
+            if (item.getSwipeLevel() == 0) {
+                item.setSwipeLevel(mDirection);
                 mAdapter.notifyItemChanged(mPosition);
                 mSetPinned = true;
             }
@@ -248,9 +284,9 @@ class MySwipeableItemAdapter
         protected void onSlideAnimationEnd() {
             super.onSlideAnimationEnd();
 
-            if (mSetPinned && mAdapter.mEventListener != null) {
-                mAdapter.mEventListener.onItemPinned(mPosition);
-            }
+//            if (mSetPinned && mAdapter.mEventListener != null) {
+//                mAdapter.mEventListener.onItemPinned(mPosition);
+//            }
         }
 
         @Override
@@ -261,11 +297,11 @@ class MySwipeableItemAdapter
         }
     }
 
-    private static class SwipeRightResultAction extends SwipeResultActionRemoveItem {
+    private static class SwipeTwiceResultAction extends SwipeResultActionRemoveItem {
         private MySwipeableItemAdapter mAdapter;
         private final int mPosition;
 
-        SwipeRightResultAction(MySwipeableItemAdapter adapter, int position) {
+        SwipeTwiceResultAction(MySwipeableItemAdapter adapter, int position) {
             mAdapter = adapter;
             mPosition = position;
         }
@@ -282,9 +318,9 @@ class MySwipeableItemAdapter
         protected void onSlideAnimationEnd() {
             super.onSlideAnimationEnd();
 
-            if (mAdapter.mEventListener != null) {
-                mAdapter.mEventListener.onItemRemoved(mPosition);
-            }
+//            if (mAdapter.mEventListener != null) {
+//                mAdapter.mEventListener.onItemRemoved(mPosition);
+//            }
         }
 
         @Override
@@ -295,11 +331,11 @@ class MySwipeableItemAdapter
         }
     }
 
-    private static class UnpinResultAction extends SwipeResultActionDefault {
+    private static class CancelSwipeResultAction extends SwipeResultActionDefault {
         private MySwipeableItemAdapter mAdapter;
         private final int mPosition;
 
-        UnpinResultAction(MySwipeableItemAdapter adapter, int position) {
+        CancelSwipeResultAction(MySwipeableItemAdapter adapter, int position) {
             mAdapter = adapter;
             mPosition = position;
         }
@@ -309,8 +345,8 @@ class MySwipeableItemAdapter
             super.onPerformAction();
 
             AbstractDataProvider.Data item = mAdapter.mProvider.getItem(mPosition);
-            if (item.isPinned()) {
-                item.setPinned(false);
+            if (item.getSwipeLevel() != 0) {
+                item.setSwipeLevel(0);
                 mAdapter.notifyItemChanged(mPosition);
             }
         }

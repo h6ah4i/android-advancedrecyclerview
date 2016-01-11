@@ -382,9 +382,18 @@ public class ItemSlidingAnimator {
 
         cancelDeferredProcess(holder);
 
-        final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
 
-        ViewCompat.animate(containerView).cancel();
+        if (holder instanceof MultiSwipeableItemViewHolder) {
+            MultiSwipeableItemViewHolder vh = (MultiSwipeableItemViewHolder) holder;
+            for (int i = vh.getMaxSwipeLevel() - 1; i >= 0; i--) {
+                View v = vh.getSwipeableContainerView(i);
+                ViewCompat.animate(v).cancel();
+            }
+        } else {
+            final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+
+            ViewCompat.animate(containerView).cancel();
+        }
 
         if (mActive.remove(holder)) {
             throw new IllegalStateException("after animation is cancelled, item should not be in the active animation list [slide]");

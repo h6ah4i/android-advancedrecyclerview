@@ -115,6 +115,7 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
         private final String mText;
         private final int mViewType;
         private boolean mPinned;
+        private int mSwipeLevel;
 
         ConcreteData(long id, boolean isSectionHeader, int viewType, String text) {
             mId = id;
@@ -156,6 +157,16 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
         @Override
         public void setPinned(boolean pinned) {
             mPinned = pinned;
+        }
+
+        @Override
+        public int getSwipeLevel() {
+            return mSwipeLevel;
+        }
+
+        @Override
+        public void setSwipeLevel(int level) {
+            mSwipeLevel = level;
         }
     }
 }
