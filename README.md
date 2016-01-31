@@ -12,7 +12,7 @@ This RecyclerView extension library provides Google's Inbox app like swiping, Pl
 
 <a href="https://play.google.com/store/apps/details?id=com.h6ah4i.android.example.advrecyclerview">
 <img alt="Get it on Google Play"
-src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" width="204" height="60" />
 </a>
 
 
