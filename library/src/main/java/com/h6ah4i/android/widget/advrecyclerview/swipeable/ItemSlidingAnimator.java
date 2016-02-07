@@ -578,6 +578,9 @@ public class ItemSlidingAnimator {
 
             mActive.remove(mViewHolder);
 
+            // WORKAROUND: issue #152 - bug:Samsung S3 4.1.1(genymotion) with swipe left
+            ViewCompat.postInvalidateOnAnimation((View) mViewHolder.itemView.getParent());
+
             if (mSwipeFinish != null) {
                 mSwipeFinish.resultAction.slideAnimationEnd();
             }
