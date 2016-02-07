@@ -119,8 +119,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         // However, if the RecyclerView has any other decorations or RecyclerView is in scrolling state,
         // need to draw it to avoid visual corruptions.
         if (mDraggingItemImage != null) {
-            final float left = mTranslationX + mDraggingItemInfo.margins.left - mShadowPadding.left;
-            final float top = /*mDraggingItemMargins.top +*/ mTranslationY - mShadowPadding.top;
+            final float left = mTranslationX - mShadowPadding.left;
+            final float top = mTranslationY - mShadowPadding.top;
             c.drawBitmap(mDraggingItemImage, left, top, null);
         }
     }
