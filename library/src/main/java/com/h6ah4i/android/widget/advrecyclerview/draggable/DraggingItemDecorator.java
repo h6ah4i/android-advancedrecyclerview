@@ -259,7 +259,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
                         }
 
                         if (lastChild != null) {
-                            mTranslationBottomLimit = Math.min(mTranslationBottomLimit, lastChild.getTop());
+                            final int limit = Math.max(0, lastChild.getBottom() - mDraggingItemInfo.height);
+                            mTranslationBottomLimit = Math.min(mTranslationBottomLimit, limit);
                         }
                         break;
                     }
@@ -269,7 +270,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
                         }
 
                         if (lastChild != null) {
-                            mTranslationRightLimit = Math.min(mTranslationRightLimit, lastChild.getLeft());
+                            final int limit = Math.max(0, lastChild.getRight() - mDraggingItemInfo.width);
+                            mTranslationRightLimit = Math.min(mTranslationRightLimit, limit);
                         }
                         break;
                     }
