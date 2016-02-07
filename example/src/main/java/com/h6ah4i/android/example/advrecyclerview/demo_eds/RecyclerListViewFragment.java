@@ -48,7 +48,7 @@ public class RecyclerListViewFragment extends Fragment
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private MyExpandableDraggableSwipeableItemAdapter mAdapter;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
     private RecyclerViewDragDropManager mRecyclerViewDragDropManager;
@@ -86,6 +86,83 @@ public class RecyclerListViewFragment extends Fragment
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
         mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
                 (NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z3));
+
+        // !------------------------!
+        mRecyclerViewDragDropManager.setOnItemDragEventListener(new RecyclerViewDragDropManager.OnItemDragEventListener() {
+            long mDraggedItemId;
+
+            @Override
+            public void onItemDragStarted(int position) {
+                mDraggedItemId = mWrappedAdapter.getItemId(position);
+            }
+
+            @Override
+            public void onItemDragPositionChanged(int fromPosition, int toPosition) {
+            }
+
+            @Override
+            public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+                // METHOD 1 (this is the most easy way if from item ID is not required.)
+                long toItemId1 = mDraggedItemId;
+
+                // METHOD 2
+                long fromPackedPosition = mRecyclerViewExpandableItemManager.getExpandablePosition(fromPosition);
+                long toPackedPosition = mRecyclerViewExpandableItemManager.getExpandablePosition(toPosition);
+
+                int fromGroupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(fromPackedPosition);
+                int fromChildPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(fromPackedPosition);
+
+                int toGroupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(toPackedPosition);
+                int toChildPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(toPackedPosition);
+
+                long fromGroupId = (fromGroupPosition != RecyclerView.NO_POSITION) ? mAdapter.getGroupId(fromGroupPosition) : RecyclerView.NO_ID;
+                long fromChildId = (fromChildPosition != RecyclerView.NO_POSITION) ? mAdapter.getGroupId(fromChildPosition) : RecyclerView.NO_ID;
+
+                long toGroupId = (toGroupPosition != RecyclerView.NO_POSITION) ? mAdapter.getGroupId(toGroupPosition) : RecyclerView.NO_ID;
+                long toChildId = (toChildPosition != RecyclerView.NO_POSITION) ? mAdapter.getGroupId(toChildPosition) : RecyclerView.NO_ID;
+
+                final long fromItemId2 = RecyclerViewExpandableItemManager.getCombinedChildId(fromGroupId, fromChildId);
+                final long toItemId2 = RecyclerViewExpandableItemManager.getCombinedChildId(toGroupId, toChildId);
+
+                // METHOD 3
+                // NOTE: These view holders must not be held beyond the scope of this method!
+                RecyclerView.ViewHolder fromViewHolder = mRecyclerView.findViewHolderForLayoutPosition(fromPosition);
+                RecyclerView.ViewHolder toViewHolder = mRecyclerView.findViewHolderForLayoutPosition(toPosition);
+
+                long fromItemId3 = fromViewHolder.getItemId();
+                long toItemId3 = toViewHolder.getItemId();
+
+                // verify
+                assert(fromItemId2 == fromItemId3);
+                assert(toItemId1 == toItemId2);
+                assert(toItemId2 == toItemId3);
+
+                // post a runnable and process extra works inside it.
+                mRecyclerView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        // You can fine to use item IDs everywhere, but have to check the returned view holder is not null!
+                        RecyclerView.ViewHolder fromViewHolder = mRecyclerView.findViewHolderForItemId(fromItemId2);
+                        RecyclerView.ViewHolder toViewHolder = mRecyclerView.findViewHolderForItemId(toItemId2);
+
+                        if (fromViewHolder != null) {
+                            int fromFlatPosition = fromViewHolder.getAdapterPosition();
+                            long fromPackedPosition = mRecyclerViewExpandableItemManager.getExpandablePosition(fromFlatPosition);
+                            int fromGroupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(fromPackedPosition);
+                            int fromChildPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(fromPackedPosition);
+                        }
+
+                        if (toViewHolder != null) {
+                            int toFlatPosition = toViewHolder.getAdapterPosition();
+                            long toPackedPosition = mRecyclerViewExpandableItemManager.getExpandablePosition(toFlatPosition);
+                            int toGroupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(toPackedPosition);
+                            int toChildPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(toPackedPosition);
+                        }
+                    }
+                });
+            }
+        });
+        // !------------------------!
 
         // swipe manager
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
