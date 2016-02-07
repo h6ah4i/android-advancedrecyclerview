@@ -129,11 +129,11 @@ public class RecyclerListViewFragment extends Fragment
                 RecyclerView.ViewHolder fromViewHolder = mRecyclerView.findViewHolderForLayoutPosition(fromPosition);
                 RecyclerView.ViewHolder toViewHolder = mRecyclerView.findViewHolderForLayoutPosition(toPosition);
 
-                long fromItemId3 = fromViewHolder.getItemId();
+                long fromItemId3 = (fromViewHolder != null) ? fromViewHolder.getItemId() : RecyclerView.NO_ID; // fromViewHolder can be a null
                 long toItemId3 = toViewHolder.getItemId();
 
                 // verify
-                assert(fromItemId2 == fromItemId3);
+                assert(fromItemId3 == RecyclerView.NO_ID || fromItemId2 == fromItemId3);
                 assert(toItemId1 == toItemId2);
                 assert(toItemId2 == toItemId3);
 
