@@ -1,3 +1,19 @@
+## 0.8.6
+[New features]
+- Added these methods to RecyclerViewExpandableItemManager (issue #161)
+  - getExpandedGroupsCount()
+  - getCollapsedGroupsCount()
+  - isAllGroupsExpanded()
+  - isAllGroupsCollapsed()
+
+[Bug fixes]
+- Fixed issue #158, #173, #176 (NullPointerException bug)
+- Fixed issue #173 (crash bugs bug)
+- Fixed issue #163 (Dragging with only 2 items in list lags significantly more than if it had more than 2 items.. bug)
+- Fixed issue #153 (Bug:happens as the user dragging,and the item root view's margin is set bug)
+- Fixed issue #152 (bug:Samsung S3 4.1.1(genymotion) with swipe left bug)
+
+
 ## 0.8.5
 - Updated support library to v23.1.1
 - Fixed issue #145 (SwipeableItemWrapperAdapter.onViewRecycled crash bug)
