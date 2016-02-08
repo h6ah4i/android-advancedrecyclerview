@@ -930,6 +930,42 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
         }
     }
 
+    /**
+     * Gets the number of expanded groups.
+     *
+     * @return the number of expanded groups
+     */
+    public int getExpandedGroupsCount() {
+        return mAdapter.getExpandedGroupsCount();
+    }
+
+    /**
+     * Gets the number of collapsed groups.
+     *
+     * @return the number of collapsed groups
+     */
+    public int getCollapsedGroupsCount() {
+        return mAdapter.getCollapsedGroupsCount();
+    }
+
+    /**
+     * Whether the all groups are expanded.
+     *
+     * @return True if there is at least 1 group exists and every groups are expanded, otherwise false.
+     */
+    public boolean isAllGroupsExpanded() {
+        return mAdapter.isAllGroupsExpanded();
+    }
+
+    /**
+     * Whether the all groups are expanded.
+     *
+     * @return True if no group exists or every groups are collapsed, otherwise false.
+     */
+    public boolean isAllGroupsCollapsed() {
+        return mAdapter.isAllGroupsCollapsed();
+    }
+
     public static class SavedState implements Parcelable {
         final int[] adapterSavedState;
 

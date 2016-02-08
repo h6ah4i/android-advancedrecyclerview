@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -577,6 +578,13 @@ public class ItemSlidingAnimator {
 
 
             mActive.remove(mViewHolder);
+
+            // [WORKAROUND]
+            // issue #152 - bug:Samsung S3 4.1.1(genymotion) with swipe left
+            ViewParent itemParentView = mViewHolder.itemView.getParent();
+            if (itemParentView != null) {
+                ViewCompat.postInvalidateOnAnimation((View) itemParentView);
+            }
 
             if (mSwipeFinish != null) {
                 mSwipeFinish.resultAction.slideAnimationEnd();

@@ -387,7 +387,9 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     private void handleActionUpOrCancelWhileNotSwiping() {
-        mHandler.cancelLongPressDetection();
+        if (mHandler != null) {
+            mHandler.cancelLongPressDetection();
+        }
 
         mCheckingTouchSlop = RecyclerView.NO_ID;
         mSwipingItemReactionType = 0;

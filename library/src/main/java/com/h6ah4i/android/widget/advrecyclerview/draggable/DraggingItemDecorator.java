@@ -119,8 +119,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         // However, if the RecyclerView has any other decorations or RecyclerView is in scrolling state,
         // need to draw it to avoid visual corruptions.
         if (mDraggingItemImage != null) {
-            final float left = mTranslationX + mDraggingItemInfo.margins.left - mShadowPadding.left;
-            final float top = /*mDraggingItemMargins.top +*/ mTranslationY - mShadowPadding.top;
+            final float left = mTranslationX - mShadowPadding.left;
+            final float top = mTranslationY - mShadowPadding.top;
             c.drawBitmap(mDraggingItemImage, left, top, null);
         }
     }
@@ -259,7 +259,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
                         }
 
                         if (lastChild != null) {
-                            mTranslationBottomLimit = Math.min(mTranslationBottomLimit, lastChild.getTop());
+                            final int limit = Math.max(0, lastChild.getBottom() - mDraggingItemInfo.height);
+                            mTranslationBottomLimit = Math.min(mTranslationBottomLimit, limit);
                         }
                         break;
                     }
@@ -269,7 +270,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
                         }
 
                         if (lastChild != null) {
-                            mTranslationRightLimit = Math.min(mTranslationRightLimit, lastChild.getLeft());
+                            final int limit = Math.max(0, lastChild.getRight() - mDraggingItemInfo.width);
+                            mTranslationRightLimit = Math.min(mTranslationRightLimit, limit);
                         }
                         break;
                     }

@@ -667,7 +667,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         // cancel deferred request
-        mHandler.removeDeferredCancelDragRequest();
+        if (mHandler != null) {
+            mHandler.removeDeferredCancelDragRequest();
+        }
 
         // NOTE: setOverScrollMode() have to be called before calling removeItemDecoration()
         if (mRecyclerView != null && mDraggingItemViewHolder != null) {
@@ -743,7 +745,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private boolean handleActionUpOrCancel(int action, boolean invokeFinish) {
         final boolean result = (action == MotionEvent.ACTION_UP);
 
-        mHandler.cancelLongPressDetection();
+        if (mHandler != null) {
+            mHandler.cancelLongPressDetection();
+        }
 
         mInitialTouchX = 0;
         mInitialTouchY = 0;

@@ -596,11 +596,23 @@ class ExpandablePositionTranslator {
         mCachedGroupId = newId;
     }
 
+    public int getExpandedGroupsCount() {
+        return mExpandedGroupCount;
+    }
+
+    public int getCollapsedGroupsCount() {
+        return mGroupCount - mExpandedGroupCount;
+    }
+
     public boolean isAllExpanded() {
-        return (mExpandedGroupCount == mGroupCount);
+        return !isEmpty() && (mExpandedGroupCount == mGroupCount);
     }
 
     public boolean isAllCollapsed() {
-        return (mExpandedGroupCount == 0);
+        return isEmpty() || (mExpandedGroupCount == 0);
+    }
+
+    public boolean isEmpty() {
+        return mGroupCount == 0;
     }
 }

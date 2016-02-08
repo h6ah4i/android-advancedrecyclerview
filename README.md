@@ -12,7 +12,7 @@ This RecyclerView extension library provides Google's Inbox app like swiping, Pl
 
 <a href="https://play.google.com/store/apps/details?id=com.h6ah4i.android.example.advrecyclerview">
 <img alt="Get it on Google Play"
-src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" width="204" height="60" />
 </a>
 
 
@@ -33,7 +33,7 @@ Target platforms
 Latest version
 ---
 
-- Version 0.8.5  (Nov. 23, 2015)   ([RELEASE NOTES](./RELEASE-NOTES.md))
+- Version 0.8.6  (Feb. 8, 2016)   ([RELEASE NOTES](./RELEASE-NOTES.md))
 
 *If you are using support library v23.0.x, please use v0.8.1 instead.*
 
@@ -45,7 +45,7 @@ This library is published on jCenter. Just add these lines to `build.gradle`.
 
 ```groovy
 dependencies {
-    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.5@aar'){
+    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.6@aar'){
         transitive=true
     }
 }

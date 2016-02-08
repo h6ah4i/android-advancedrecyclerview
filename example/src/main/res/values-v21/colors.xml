@@ -16,5 +16,5 @@
 -->
 <resources>
     <!-- NOTE: requires non transparent color to cast item shadows -->
-    <color name="bg_swipe_item_neutral">#ffffffff</color>
+    <color name="bg_swipe_item_neutral">@android:color/transparent</color>
 </resources>

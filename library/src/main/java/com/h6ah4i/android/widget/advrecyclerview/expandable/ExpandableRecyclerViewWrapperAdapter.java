@@ -606,14 +606,14 @@ class ExpandableRecyclerViewWrapperAdapter
     }
 
     /*package*/ void expandAll() {
-        if (!mPositionTranslator.isAllExpanded()) {
+        if (!mPositionTranslator.isEmpty() && !mPositionTranslator.isAllExpanded()) {
             mPositionTranslator.build(mExpandableItemAdapter, true);
             notifyDataSetChanged();
         }
     }
 
     /*package*/ void collapseAll() {
-        if (!mPositionTranslator.isAllCollapsed()) {
+        if (!mPositionTranslator.isEmpty() && !mPositionTranslator.isAllCollapsed()) {
             mPositionTranslator.build(mExpandableItemAdapter, false);
             notifyDataSetChanged();
         }
@@ -879,6 +879,22 @@ class ExpandableRecyclerViewWrapperAdapter
 
     /*package*/ int getChildCount(int groupPosition) {
         return mExpandableItemAdapter.getChildCount(groupPosition);
+    }
+
+    /*package*/ int getExpandedGroupsCount() {
+        return mPositionTranslator.getExpandedGroupsCount();
+    }
+
+    /*package*/ int getCollapsedGroupsCount() {
+        return mPositionTranslator.getCollapsedGroupsCount();
+    }
+
+    /*package*/ boolean isAllGroupsExpanded() {
+        return mPositionTranslator.isAllExpanded();
+    }
+
+    /*package*/ boolean isAllGroupsCollapsed() {
+        return mPositionTranslator.isAllCollapsed();
     }
 
     private static ExpandableItemAdapter getExpandableItemAdapter(RecyclerView.Adapter adapter) {
