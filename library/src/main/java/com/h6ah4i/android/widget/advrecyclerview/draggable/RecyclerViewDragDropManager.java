@@ -86,6 +86,14 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
          * @param result       Indicates whether the dragging operation was succeeded.
          */
         void onItemDragFinished(int fromPosition, int toPosition, boolean result);
+
+        /**
+         * Callback method to be invoked when the distance of currently dragging item is updated.
+         *
+         * @param offsetX The horizontal distance of currently dragging item from the initial position in pixels.
+         * @param offsetY The vertical distance of currently dragging item from the initial position in pixels.
+         */
+        void onItemDragMoveDistanceUpdated(int offsetX, int offsetY);
     }
 
     // --
@@ -145,6 +153,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private int mDragMinTouchY;
     private int mDragMaxTouchX;
     private int mDragMaxTouchY;
+    private int mDragScrollDistanceX;
+    private int mDragScrollDistanceY;
     private int mScrollDirMask = SCROLL_DIR_NONE;
     private int mOrigOverScrollMode;
     private ItemDraggableRange mDraggableRange;
@@ -637,6 +647,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         if (mItemDragEventListener != null) {
             mItemDragEventListener.onItemDragStarted(mAdapter.getDraggingItemInitialPosition());
+            mItemDragEventListener.onItemDragMoveDistanceUpdated(0, 0);
         }
     }
 
@@ -716,6 +727,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDragMinTouchY = 0;
         mDragMaxTouchX = 0;
         mDragMaxTouchY = 0;
+        mDragScrollDistanceX = 0;
+        mDragScrollDistanceY = 0;
         mCanDragH = false;
         mCanDragV = false;
 
@@ -759,6 +772,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDragMinTouchY = 0;
         mDragMaxTouchX = 0;
         mDragMaxTouchY = 0;
+        mDragScrollDistanceX = 0;
+        mDragScrollDistanceY = 0;
         mInitialTouchItemId = RecyclerView.NO_ID;
         mCanDragH = false;
         mCanDragV = false;
@@ -881,13 +896,18 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         updateDragDirectionMask();
 
         // update decorators
-        mDraggingItemDecorator.update(e);
-        if (mSwapTargetItemOperator != null) {
-            mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationX(), mDraggingItemDecorator.getDraggingItemTranslationY());
-        }
+        final boolean updated = mDraggingItemDecorator.update(e, false);
 
-        // check swapping
-        checkItemSwapping(rv);
+        if (updated) {
+            if (mSwapTargetItemOperator != null) {
+                mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationX(), mDraggingItemDecorator.getDraggingItemTranslationY());
+            }
+
+            // check swapping
+            checkItemSwapping(rv);
+
+            onItemMoveDistanceUpdated();
+        }
     }
 
     private void updateDragDirectionMask() {
@@ -924,6 +944,17 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             int draggingItemCurrentPosition = mAdapter.getDraggingItemCurrentPosition();
             swapItems(rv, draggingItemCurrentPosition, draggingItem, swapTargetHolder);
         }
+    }
+
+    private void onItemMoveDistanceUpdated() {
+        if (mItemDragEventListener == null) {
+            return;
+        }
+
+        final int moveX = mDragScrollDistanceX + mDraggingItemDecorator.getDraggingItemMoveOffsetX();
+        final int moveY = mDragScrollDistanceY + mDraggingItemDecorator.getDraggingItemMoveOffsetY();
+
+        mItemDragEventListener.onItemDragMoveDistanceUpdated(moveX, moveY);
     }
 
     /*package*/ void handleScrollOnDragging() {
@@ -1013,7 +1044,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 decorator.setIsScrolling(!reachedToLastSoftLimit);
             }
 
-            decorator.refresh();
+            decorator.refresh(true);
             if (mSwapTargetItemOperator != null) {
                 mSwapTargetItemOperator.update(
                         decorator.getDraggingItemTranslationX(),
@@ -1061,6 +1092,16 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         ViewCompat.postOnAnimation(mRecyclerView, mCheckItemSwappingRunnable);
+
+        if (actualScrolledAmount != 0) {
+            if (horizontal) {
+                mDragScrollDistanceX += actualScrolledAmount;
+            } else {
+                mDragScrollDistanceY += actualScrolledAmount;
+            }
+
+            onItemMoveDistanceUpdated();
+        }
     }
 
     private void updateEdgeEffect(float distance) {
