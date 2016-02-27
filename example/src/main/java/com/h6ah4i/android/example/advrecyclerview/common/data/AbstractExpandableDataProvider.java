@@ -17,6 +17,10 @@
 package com.h6ah4i.android.example.advrecyclerview.common.data;
 
 public abstract class AbstractExpandableDataProvider {
+    public abstract void reset();
+    public abstract void shuffle();
+    public abstract void clear();
+
     public static abstract class BaseData {
 
         public abstract String getText();

@@ -69,6 +69,18 @@ public class ExampleSectionExpandableDataProvider extends AbstractExpandableData
     }
 
     @Override
+    public void reset() {
+    }
+
+    @Override
+    public void shuffle() {
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    @Override
     public int getGroupCount() {
         return mData.size();
     }

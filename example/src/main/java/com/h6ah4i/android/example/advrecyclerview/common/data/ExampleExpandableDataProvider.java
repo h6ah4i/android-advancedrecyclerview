@@ -22,6 +22,7 @@ import android.support.v4.util.Pair;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,8 +39,15 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
     private int mLastRemovedChildPosition = -1;
 
     public ExampleExpandableDataProvider() {
+        reset();
+    }
+
+    @Override
+    public void reset() {
         final String groupItems = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         final String childItems = "abc";
+
+        clearLastRemovalInfo();
 
         mData = new LinkedList<>();
 
@@ -59,6 +67,30 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
 
             mData.add(new Pair<GroupData, List<ChildData>>(group, children));
         }
+    }
+
+    @Override
+    public void shuffle() {
+        clearLastRemovalInfo();
+        Collections.shuffle(mData);
+
+        for (Pair<GroupData, List<ChildData>> g: mData) {
+            Collections.shuffle(g.second);
+        }
+    }
+
+    @Override
+    public void clear() {
+        clearLastRemovalInfo();
+        mData.clear();
+    }
+
+    private void clearLastRemovalInfo() {
+        mLastRemovedGroup = null;
+        mLastRemovedChild = null;
+        mLastRemovedChildParentGroupId = -1;
+        mLastRemovedChildPosition = -1;
+        mLastRemovedGroupPosition = -1;
     }
 
     @Override

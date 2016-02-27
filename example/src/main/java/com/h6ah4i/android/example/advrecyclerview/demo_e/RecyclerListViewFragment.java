@@ -26,6 +26,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -46,6 +49,7 @@ public class RecyclerListViewFragment
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
 
@@ -74,6 +78,7 @@ public class RecyclerListViewFragment
         //adapter
         final MyExpandableItemAdapter myItemAdapter = new MyExpandableItemAdapter(getDataProvider());
 
+        mAdapter = myItemAdapter;
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(myItemAdapter);       // wrap for expanding
 
         final GeneralItemAnimator animator = new RefactoredDefaultItemAnimator();
@@ -97,6 +102,36 @@ public class RecyclerListViewFragment
         mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(), R.drawable.list_divider_h), true));
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
+
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_e_reset_shuffle_clear, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_reset:
+                // Reset to initial data
+                getDataProvider().reset();
+                mAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.menu_shuffle:
+                // Shuffle all items
+                getDataProvider().shuffle();
+                mAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.menu_clear:
+                // Remove all items
+                getDataProvider().clear();
+                mAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
