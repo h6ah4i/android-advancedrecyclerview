@@ -153,6 +153,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private boolean mCanDragH;
     private boolean mCanDragV;
     private float mDragEdgeScrollSpeed = 1.0f;
+    private boolean mPerformingInitialMoveAnimation;
 
 
     @Deprecated
@@ -542,7 +543,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-            cancelDrag(true);
+//            cancelDrag(true);
         }
     }
 
@@ -579,6 +580,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
+    private void initialMoveAnimationFinished() {
+        mPerformingInitialMoveAnimation = false;
+    }
+
     @SuppressWarnings("unchecked")
     private void startDragging(RecyclerView rv, MotionEvent e, RecyclerView.ViewHolder holder, ItemDraggableRange range) {
         safeEndAnimation(rv, holder);
@@ -607,6 +612,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mScrollDirMask = SCROLL_DIR_NONE;
 
         mRecyclerView.getParent().requestDisallowInterceptTouchEvent(true);
+
+        mHandler.cancelLongPressDetection();
+        mPerformingInitialMoveAnimation = mHandler.startInitialItemAnimationTimer(mRecyclerView);
 
         startScrollOnDraggingProcess();
 
@@ -666,9 +674,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             return;
         }
 
-        // cancel deferred request
+        // cancel deferred requests
         if (mHandler != null) {
             mHandler.removeDeferredCancelDragRequest();
+            mHandler.cancelInitialMoveAnimationTimer();
         }
 
         // NOTE: setOverScrollMode() have to be called before calling removeItemDecoration()
@@ -718,6 +727,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDragMaxTouchY = 0;
         mCanDragH = false;
         mCanDragV = false;
+        mPerformingInitialMoveAnimation = false;
 
 
         int draggingItemInitialPosition = RecyclerView.NO_POSITION;
@@ -781,6 +791,13 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             return false;
         }
     }
+
+
+    private static boolean isAnimationRunning(RecyclerView rv) {
+        final RecyclerView.ItemAnimator itemAnimator = rv.getItemAnimator();
+        return (itemAnimator != null) && (itemAnimator.isRunning());
+    }
+
 
     private boolean checkConditionAndStartDragging(RecyclerView rv, MotionEvent e, boolean checkTouchSlop) {
         if (mDraggingItemInfo != null) {
@@ -868,7 +885,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     private void handleActionMoveWhileDragging(RecyclerView rv, MotionEvent e) {
-
         mLastTouchX = (int) (e.getX() + 0.5f);
         mLastTouchY = (int) (e.getY() + 0.5f);
 
@@ -879,6 +895,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         // update drag direction mask
         updateDragDirectionMask();
+
+        if (mPerformingInitialMoveAnimation/* && isAnimationRunning(mRecyclerView)*/) {
+            return;
+        }
 
         // update decorators
         mDraggingItemDecorator.update(e);
@@ -1266,7 +1286,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             return false;
         }
 
-        final int itemPosition = holder.getAdapterPosition();
+        final int itemPosition = holder.getLayoutPosition();
         final RecyclerView.Adapter adapter = rv.getAdapter();
 
         // verify the touched item is valid state
@@ -1565,6 +1585,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private static class InternalHandler extends Handler {
         private static final int MSG_LONGPRESS = 1;
         private static final int MSG_DEFERRED_CANCEL_DRAG = 2;
+        private static final int MSG_DELAY_INITIAL_ANIMATION_FINISHED = 3;
 
         private RecyclerViewDragDropManager mHolder;
         private MotionEvent mDownMotionEvent;
@@ -1586,6 +1607,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                     break;
                 case MSG_DEFERRED_CANCEL_DRAG:
                     mHolder.cancelDrag(true);
+                    break;
+                case MSG_DELAY_INITIAL_ANIMATION_FINISHED:
+                    mHolder.initialMoveAnimationFinished();
                     break;
             }
         }
@@ -1617,6 +1641,22 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         public boolean isCancelDragRequested() {
             return hasMessages(MSG_DEFERRED_CANCEL_DRAG);
+        }
+
+        public boolean startInitialItemAnimationTimer(RecyclerView rv) {
+            RecyclerView.ItemAnimator animator = rv.getItemAnimator();
+            long duration = (animator != null) ? animator.getMoveDuration() + animator.getRemoveDuration() : 0;
+
+            if (duration > 0) {
+                sendEmptyMessageDelayed(MSG_DELAY_INITIAL_ANIMATION_FINISHED, duration);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public void cancelInitialMoveAnimationTimer() {
+            removeMessages(MSG_DELAY_INITIAL_ANIMATION_FINISHED);
         }
     }
 }

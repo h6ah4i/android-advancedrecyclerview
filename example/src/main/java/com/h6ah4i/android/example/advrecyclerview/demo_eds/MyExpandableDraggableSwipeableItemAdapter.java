@@ -17,6 +17,7 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
 import android.support.v4.view.ViewCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -333,7 +334,24 @@ class MyExpandableDraggableSwipeableItemAdapter
         final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
         final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
 
-        return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
+        boolean r =  ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
+
+
+        if (r) {
+            if (mExpandableItemManager.isAllGroupsCollapsed()) {
+                return true;
+            } else {
+                RecyclerView rv = (RecyclerView) holder.itemView.getParent();
+                LinearLayoutManager lm = (LinearLayoutManager) rv.getLayoutManager();
+                int offset = holder.itemView.getTop() - rv.getPaddingTop() - ((ViewGroup.MarginLayoutParams)holder.itemView.getLayoutParams()).topMargin;
+                mExpandableItemManager.collapseAll();
+                lm.scrollToPositionWithOffset(groupPosition, offset);
+                rv.getItemAnimator().endAnimations();
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     @Override

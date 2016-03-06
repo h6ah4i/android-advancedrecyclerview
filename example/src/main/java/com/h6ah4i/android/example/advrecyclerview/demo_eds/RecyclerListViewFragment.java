@@ -79,8 +79,8 @@ public class RecyclerListViewFragment extends Fragment
 
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
-        mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
-        mRecyclerViewTouchActionGuardManager.setEnabled(true);
+        //mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
+        //mRecyclerViewTouchActionGuardManager.setEnabled(true);
 
         // drag & drop manager
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
