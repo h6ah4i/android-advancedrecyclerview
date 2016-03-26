@@ -77,6 +77,22 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getGroupItemViewType(int groupPosition) {
+        return 0;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getChildItemViewType(int groupPosition, int childPosition) {
+        return 0;
+    }
+
+    /**
      * This method will not be called.
      * Override {@link #onBindGroupViewHolder(RecyclerView.ViewHolder, int, int)} ()} and
      * {@link #onBindChildViewHolder(RecyclerView.ViewHolder, int, int, int)} instead.
