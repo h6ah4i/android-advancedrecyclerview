@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_s;
+package com.h6ah4i.android.example.advrecyclerview.demo_s_basic;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;

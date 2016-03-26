@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_d;
+package com.h6ah4i.android.example.advrecyclerview.demo_d_basic;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
