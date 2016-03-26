@@ -15,7 +15,7 @@
        limitations under the License.
 -->
 <animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:drawable="@drawable/ic_expand_less_vector">
+    android:drawable="@drawable/ic_expand_less">
 
     <target
         android:name="rotationGroup"

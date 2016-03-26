@@ -27,6 +27,7 @@ android {
         targetSdkVersion 23
         versionCode 16
         versionName "0.8.6"
+        vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
