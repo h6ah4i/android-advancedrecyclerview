@@ -152,6 +152,16 @@ Primary classes/interfaces
 | [`AbstractDraggableSwipeableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractDraggableSwipeableItemViewHolder.java) | ViewHolder class which implements boilerplate code of the `DraggableItemViewHolder` and the `SwipeableItemViewHolder` interfaces      |
 | [`AbstractExpandableItemAdapter<GVH, CVH>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractExpandableItemAdapter.java)  | Adapter class which implements boilerplate code of the `ExpandableItemAdapter` interface |
 
+Other examples
+---
+
+| 
+### iOS Mail app like swipe action
+
+<img src="images/other_example_ios_mail.png" width="200" />
+
+- [Repository](https://github.com/h6ah4i/RecyclerViewiOSMailAppLikeSwipe)
+
 
 License
 ---
