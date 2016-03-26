@@ -50,5 +50,5 @@ if (loadSigningConfigFromPropertiesFile(
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
-    compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:design:23.2.1'
 }
