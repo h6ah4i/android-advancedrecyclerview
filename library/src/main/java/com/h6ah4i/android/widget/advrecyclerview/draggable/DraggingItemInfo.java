@@ -25,6 +25,8 @@ public class DraggingItemInfo {
     public final int width;
     public final int height;
     public final long id;
+    public final int initialItemLeft;
+    public final int initialItemTop;
     public final int grabbedPositionX;
     public final int grabbedPositionY;
     public final Rect margins;
@@ -33,8 +35,10 @@ public class DraggingItemInfo {
         width = vh.itemView.getWidth();
         height = vh.itemView.getHeight();
         id = vh.getItemId();
-        grabbedPositionX = touchX - vh.itemView.getLeft();
-        grabbedPositionY = touchY - vh.itemView.getTop();
+        initialItemLeft = vh.itemView.getLeft();
+        initialItemTop = vh.itemView.getTop();
+        grabbedPositionX = touchX - initialItemLeft;
+        grabbedPositionY = touchY - initialItemTop;
         margins = new Rect();
         CustomRecyclerViewUtils.getLayoutMargins(vh.itemView, margins);
     }
