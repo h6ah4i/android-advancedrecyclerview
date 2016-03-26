@@ -34,6 +34,15 @@ android {
         release
     }
 
+    productFlavors {
+        // for saving build time during debugging
+        lollipop {
+            minSdkVersion 21
+        }
+        gb {
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
