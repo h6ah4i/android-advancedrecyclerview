@@ -42,7 +42,7 @@ public class ViewPagerSwipeableExampleActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
         mViewPager = (ViewPager) findViewById(R.id.pager);
 
-        mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+        mViewPager.setAdapter(new ViewPagerSwipeableExamplePagerAdapter(getSupportFragmentManager()));
 
         mTabLayout.setupWithViewPager(mViewPager);
 

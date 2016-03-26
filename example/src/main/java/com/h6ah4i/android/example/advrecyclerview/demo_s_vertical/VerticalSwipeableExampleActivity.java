@@ -45,7 +45,7 @@ public class VerticalSwipeableExampleActivity extends AppCompatActivity implemen
                     .add(new ExampleDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new RecyclerListViewFragment(), FRAGMENT_LIST_VIEW)
+                    .add(R.id.container, new VerticalSwipeableExampleFragment(), FRAGMENT_LIST_VIEW)
                     .commit();
         }
     }
@@ -97,7 +97,7 @@ public class VerticalSwipeableExampleActivity extends AppCompatActivity implemen
         if (data.isPinned()) {
             // unpin if tapped the pinned item
             data.setPinned(false);
-            ((RecyclerListViewFragment) fragment).notifyItemChanged(position);
+            ((VerticalSwipeableExampleFragment) fragment).notifyItemChanged(position);
         }
     }
 
@@ -105,7 +105,7 @@ public class VerticalSwipeableExampleActivity extends AppCompatActivity implemen
         int position = getDataProvider().undoLastRemoval();
         if (position >= 0) {
             final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
-            ((RecyclerListViewFragment) fragment).notifyItemInserted(position);
+            ((VerticalSwipeableExampleFragment) fragment).notifyItemInserted(position);
         }
     }
 
@@ -115,7 +115,7 @@ public class VerticalSwipeableExampleActivity extends AppCompatActivity implemen
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
 
         getDataProvider().getItem(itemPosition).setPinned(ok);
-        ((RecyclerListViewFragment) fragment).notifyItemChanged(itemPosition);
+        ((VerticalSwipeableExampleFragment) fragment).notifyItemChanged(itemPosition);
     }
 
     public AbstractDataProvider getDataProvider() {

@@ -46,7 +46,7 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
                     .add(new ExampleExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new RecyclerListViewFragment(), FRAGMENT_LIST_VIEW)
+                    .add(R.id.container, new ExpandableDraggableSwipeableExampleFragment(), FRAGMENT_LIST_VIEW)
                     .commit();
         }
     }
@@ -130,7 +130,7 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
         if (data.isPinned()) {
             // unpin if tapped the pinned item
             data.setPinned(false);
-            ((RecyclerListViewFragment) fragment).notifyGroupItemChanged(groupPosition);
+            ((ExpandableDraggableSwipeableExampleFragment) fragment).notifyGroupItemChanged(groupPosition);
         }
     }
 
@@ -141,7 +141,7 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
         if (data.isPinned()) {
             // unpin if tapped the pinned item
             data.setPinned(false);
-            ((RecyclerListViewFragment) fragment).notifyChildItemChanged(groupPosition, childPosition);
+            ((ExpandableDraggableSwipeableExampleFragment) fragment).notifyChildItemChanged(groupPosition, childPosition);
         }
     }
 
@@ -158,10 +158,10 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
 
         if (childPosition == RecyclerView.NO_POSITION) {
             // group item
-            ((RecyclerListViewFragment) fragment).notifyGroupItemRestored(groupPosition);
+            ((ExpandableDraggableSwipeableExampleFragment) fragment).notifyGroupItemRestored(groupPosition);
         } else {
             // child item
-            ((RecyclerListViewFragment) fragment).notifyChildItemRestored(groupPosition, childPosition);
+            ((ExpandableDraggableSwipeableExampleFragment) fragment).notifyChildItemRestored(groupPosition, childPosition);
         }
     }
 
@@ -173,11 +173,11 @@ public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivi
         if (childPosition == RecyclerView.NO_POSITION) {
             // group item
             getDataProvider().getGroupItem(groupPosition).setPinned(ok);
-            ((RecyclerListViewFragment) fragment).notifyGroupItemChanged(groupPosition);
+            ((ExpandableDraggableSwipeableExampleFragment) fragment).notifyGroupItemChanged(groupPosition);
         } else {
             // child item
             getDataProvider().getChildItem(groupPosition, childPosition).setPinned(ok);
-            ((RecyclerListViewFragment) fragment).notifyChildItemChanged(groupPosition, childPosition);
+            ((ExpandableDraggableSwipeableExampleFragment) fragment).notifyChildItemChanged(groupPosition, childPosition);
         }
     }
 

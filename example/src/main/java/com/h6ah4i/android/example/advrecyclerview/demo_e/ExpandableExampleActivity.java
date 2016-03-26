@@ -38,7 +38,7 @@ public class ExpandableExampleActivity extends AppCompatActivity {
                     .add(new ExampleExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new RecyclerListViewFragment(), FRAGMENT_LIST_VIEW)
+                    .add(R.id.container, new ExpandableExampleFragment(), FRAGMENT_LIST_VIEW)
                     .commit();
         }
     }

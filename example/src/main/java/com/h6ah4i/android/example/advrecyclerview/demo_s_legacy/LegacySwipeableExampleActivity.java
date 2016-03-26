@@ -45,7 +45,7 @@ public class LegacySwipeableExampleActivity extends AppCompatActivity implements
                     .add(new ExampleDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new RecyclerListViewFragment(), FRAGMENT_LIST_VIEW)
+                    .add(R.id.container, new LegacySwipeableExampleFragment(), FRAGMENT_LIST_VIEW)
                     .commit();
         }
 
@@ -103,7 +103,7 @@ public class LegacySwipeableExampleActivity extends AppCompatActivity implements
         if (data.isPinned()) {
             // unpin if tapped the pinned item
             data.setPinned(false);
-            ((RecyclerListViewFragment) fragment).notifyItemChanged(position);
+            ((LegacySwipeableExampleFragment) fragment).notifyItemChanged(position);
         }
     }
 
@@ -111,7 +111,7 @@ public class LegacySwipeableExampleActivity extends AppCompatActivity implements
         int position = getDataProvider().undoLastRemoval();
         if (position >= 0) {
             final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
-            ((RecyclerListViewFragment) fragment).notifyItemInserted(position);
+            ((LegacySwipeableExampleFragment) fragment).notifyItemInserted(position);
         }
     }
 
@@ -121,7 +121,7 @@ public class LegacySwipeableExampleActivity extends AppCompatActivity implements
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
 
         getDataProvider().getItem(itemPosition).setPinned(ok);
-        ((RecyclerListViewFragment) fragment).notifyItemChanged(itemPosition);
+        ((LegacySwipeableExampleFragment) fragment).notifyItemChanged(itemPosition);
     }
 
     public AbstractDataProvider getDataProvider() {

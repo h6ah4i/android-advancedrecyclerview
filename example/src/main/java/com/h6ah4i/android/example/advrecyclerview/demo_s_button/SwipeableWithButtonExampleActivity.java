@@ -14,15 +14,12 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_s_longpress;
+package com.h6ah4i.android.example.advrecyclerview.demo_s_button;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
@@ -30,10 +27,10 @@ import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataPro
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ItemPinnedMessageDialogFragment;
 
 
-public class SwipeOnLongPressExampleActivity extends AppCompatActivity implements ItemPinnedMessageDialogFragment.EventListener {
+
+public class SwipeableWithButtonExampleActivity extends AppCompatActivity implements ItemPinnedMessageDialogFragment.EventListener {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     private static final String FRAGMENT_LIST_VIEW = "list view";
-    private static final String FRAGMENT_TAG_ITEM_PINNED_DIALOG = "item pinned dialog";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,30 +42,9 @@ public class SwipeOnLongPressExampleActivity extends AppCompatActivity implement
                     .add(new ExampleDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new SwipeOnLongPressExampleFragment(), FRAGMENT_LIST_VIEW)
+                    .add(R.id.container, new SwipeableWithButtonExampleFragment(), FRAGMENT_LIST_VIEW)
                     .commit();
         }
-    }
-
-    /**
-     * This method will be called when a list item is removed
-     *
-     * @param position The position of the item within data set
-     */
-    public void onItemRemoved(int position) {
-        Snackbar snackbar = Snackbar.make(
-                findViewById(R.id.container),
-                R.string.snack_bar_text_item_removed,
-                Snackbar.LENGTH_LONG);
-
-        snackbar.setAction(R.string.snack_bar_action_undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemUndoActionClicked();
-            }
-        });
-        snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color_done));
-        snackbar.show();
     }
 
     /**
@@ -77,12 +53,6 @@ public class SwipeOnLongPressExampleActivity extends AppCompatActivity implement
      * @param position The position of the item within data set
      */
     public void onItemPinned(int position) {
-        final DialogFragment dialog = ItemPinnedMessageDialogFragment.newInstance(position);
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(dialog, FRAGMENT_TAG_ITEM_PINNED_DIALOG)
-                .commit();
     }
 
     /**
@@ -97,16 +67,23 @@ public class SwipeOnLongPressExampleActivity extends AppCompatActivity implement
         if (data.isPinned()) {
             // unpin if tapped the pinned item
             data.setPinned(false);
-            ((SwipeOnLongPressExampleFragment) fragment).notifyItemChanged(position);
+            ((SwipeableWithButtonExampleFragment) fragment).notifyItemChanged(position);
         }
     }
+    /**
+     * This method will be called when a "button placed under the swipeable view" is clicked
+     *
+     * @param position The position of the item within data set
+     */
+    public void onItemButtonClicked(int position) {
+        String text = getString(R.string.snack_bar_text_button_clicked, position);
 
-    private void onItemUndoActionClicked() {
-        int position = getDataProvider().undoLastRemoval();
-        if (position >= 0) {
-            final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
-            ((SwipeOnLongPressExampleFragment) fragment).notifyItemInserted(position);
-        }
+        Snackbar snackbar = Snackbar.make(
+                findViewById(R.id.container),
+                text,
+                Snackbar.LENGTH_SHORT);
+
+        snackbar.show();
     }
 
     // implements ItemPinnedMessageDialogFragment.EventListener
@@ -115,7 +92,7 @@ public class SwipeOnLongPressExampleActivity extends AppCompatActivity implement
         final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_LIST_VIEW);
 
         getDataProvider().getItem(itemPosition).setPinned(ok);
-        ((SwipeOnLongPressExampleFragment) fragment).notifyItemChanged(itemPosition);
+        ((SwipeableWithButtonExampleFragment) fragment).notifyItemChanged(itemPosition);
     }
 
     public AbstractDataProvider getDataProvider() {

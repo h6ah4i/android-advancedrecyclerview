@@ -38,7 +38,7 @@ public class ExpandableDraggableWithSectionExampleActivity extends AppCompatActi
                     .add(new ExampleSectionExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new RecyclerListViewFragment(), FRAGMENT_LIST_VIEW)
+                    .add(R.id.container, new ExpandableDraggableWithSectionExampleFragment(), FRAGMENT_LIST_VIEW)
                     .commit();
         }
     }
