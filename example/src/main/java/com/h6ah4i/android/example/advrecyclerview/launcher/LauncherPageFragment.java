@@ -26,22 +26,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.example.advrecyclerview.demo_d.DraggableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_d_basic.DraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_grid.DraggableGridExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_d_minimal.MinimalDraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_on_longpress.DragOnLongPressExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_section.DraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ds.DraggableSwipeableExampleActivity;
-import com.h6ah4i.android.example.advrecyclerview.demo_e.ExpandableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_e_add_remove.AddRemoveExpandableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_e_already_expanded.AlreadyExpandedGroupsExpandableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_e_basic.ExpandableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_e_minimal.MinimalExpandableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_eds.ExpandableDraggableSwipeableExampleActivity;
-import com.h6ah4i.android.example.advrecyclerview.demo_s.SwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_s_basic.SwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_s_button.SwipeableWithButtonExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_legacy.LegacySwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_longpress.SwipeOnLongPressExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_s_minimal.MinimalSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.VerticalSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager.ViewPagerSwipeableExampleActivity;
-import com.h6ah4i.android.example.advrecyclerview.demo_us.UnderSwipeableExampleActivity;
 
 public class LauncherPageFragment extends Fragment {
     private static final String ARG_PAGE_NO = "page no";
@@ -83,23 +86,26 @@ public class LauncherPageFragment extends Fragment {
         switch (pageNo) {
             case 0:
                 // Drag
-                adapter.put(DraggableExampleActivity.class, R.string.activity_title_demo_d);
+                adapter.put(MinimalDraggableExampleActivity.class, R.string.activity_title_demo_d_minimal);
+                adapter.put(DraggableExampleActivity.class, R.string.activity_title_demo_d_basic);
                 adapter.put(DragOnLongPressExampleActivity.class, R.string.activity_title_demo_d_on_longpress);
                 adapter.put(DraggableWithSectionExampleActivity.class, R.string.activity_title_demo_d_with_section);
                 adapter.put(DraggableGridExampleActivity.class, R.string.activity_title_demo_d_grid);
                 break;
             case 1:
                 // Swipe
-                adapter.put(SwipeableExampleActivity.class, R.string.activity_title_demo_s);
+                adapter.put(MinimalSwipeableExampleActivity.class, R.string.activity_title_demo_s_minimal);
+                adapter.put(SwipeableExampleActivity.class, R.string.activity_title_demo_s_basic);
                 adapter.put(SwipeOnLongPressExampleActivity.class, R.string.activity_title_demo_s_on_longpress);
-                adapter.put(UnderSwipeableExampleActivity.class, R.string.activity_title_demo_us);
+                adapter.put(SwipeableWithButtonExampleActivity.class, R.string.activity_title_demo_us);
                 adapter.put(VerticalSwipeableExampleActivity.class, R.string.activity_title_demo_s_vertical);
                 adapter.put(ViewPagerSwipeableExampleActivity.class, R.string.activity_title_demo_s_viewpager);
                 adapter.put(LegacySwipeableExampleActivity.class, R.string.activity_title_demo_s_legacy);
                 break;
             case 2:
                 // Expand
-                adapter.put(ExpandableExampleActivity.class, R.string.activity_title_demo_e);
+                adapter.put(MinimalExpandableExampleActivity.class, R.string.activity_title_demo_e_minimal);
+                adapter.put(ExpandableExampleActivity.class, R.string.activity_title_demo_e_basic);
                 adapter.put(AddRemoveExpandableExampleActivity.class, R.string.activity_title_demo_e_add_remove);
                 adapter.put(AlreadyExpandedGroupsExpandableExampleActivity.class, R.string.activity_title_demo_e_already_expanded);
                 break;

@@ -25,12 +25,22 @@ android {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 16
-        versionName "0.8.6"
+        versionCode 17
+        versionName "0.8.7"
+        vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
         release
+    }
+
+    productFlavors {
+        // for saving build time during debugging
+        lollipop {
+            minSdkVersion 21
+        }
+        gb {
+        }
     }
 
     buildTypes {
@@ -50,5 +60,5 @@ if (loadSigningConfigFromPropertiesFile(
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:design:23.2.1'
 }

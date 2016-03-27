@@ -142,7 +142,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         // hide
         itemView.setVisibility(View.INVISIBLE);
 
-        update(e);
+        update(e, true);
 
         mRecyclerView.addItemDecoration(this);
 
@@ -189,17 +189,27 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mStarted = false;
     }
 
-    public void update(MotionEvent e) {
+    public boolean update(MotionEvent e, boolean force) {
         mTouchPositionX = (int) (e.getX() + 0.5f);
         mTouchPositionY = (int) (e.getY() + 0.5f);
-        refresh();
+
+        return refresh(force);
     }
 
-    public void refresh() {
-        updateTranslationOffset();
-        updateDraggingItemPosition(mTranslationX, mTranslationY);
+    public boolean refresh(boolean force) {
+        final int prevTranslationX = mTranslationX;
+        final int prevTranslationY = mTranslationY;
 
-        ViewCompat.postInvalidateOnAnimation(mRecyclerView);
+        updateTranslationOffset();
+
+        final boolean updated = (prevTranslationX != mTranslationX) || (prevTranslationY != mTranslationY);
+
+        if (updated || force) {
+            updateDraggingItemPosition(mTranslationX, mTranslationY);
+            ViewCompat.postInvalidateOnAnimation(mRecyclerView);
+        }
+
+        return updated;
     }
 
     public void setShadowDrawable(NinePatchDrawable shadowDrawable) {
@@ -216,6 +226,14 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     public int getDraggingItemTranslationX() {
         return mTranslationX;
+    }
+
+    public int getDraggingItemMoveOffsetY() {
+        return mTranslationY - mDraggingItemInfo.initialItemTop;
+    }
+
+    public int getDraggingItemMoveOffsetX() {
+        return mTranslationX - mDraggingItemInfo.initialItemLeft;
     }
 
     private void updateTranslationOffset() {

@@ -48,8 +48,8 @@ public class ExpandableItemIndicator extends FrameLayout {
     }
 
     protected void onInit(Context context, AttributeSet attrs, int defStyleAttr) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // NOTE: VectorDrawable only supports API level 21 or later
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            // NOTE: Use animated indicator only on API level 16+ due to performance reason.
             mImpl = new ExpandableItemIndicatorImplAnim();
         } else {
             mImpl = new ExpandableItemIndicatorImplNoAnim();

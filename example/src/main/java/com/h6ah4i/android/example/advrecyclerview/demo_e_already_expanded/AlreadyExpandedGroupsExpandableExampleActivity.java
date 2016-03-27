@@ -38,7 +38,7 @@ public class AlreadyExpandedGroupsExpandableExampleActivity extends AppCompatAct
                     .add(new ExampleAddRemoveExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new RecyclerListViewFragment(), FRAGMENT_LIST_VIEW)
+                    .add(R.id.container, new AlreadyExpandedGroupsExpandableExampleFragment(), FRAGMENT_LIST_VIEW)
                     .commit();
         }
     }

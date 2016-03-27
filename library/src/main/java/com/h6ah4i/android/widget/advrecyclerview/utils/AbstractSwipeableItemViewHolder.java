@@ -115,9 +115,7 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     }
 
     @Override
-    public View getSwipeableContainerView() {
-        return null;
-    }
+    public abstract View getSwipeableContainerView();
 
     @Override
     public void setMaxLeftSwipeAmount(float amount) {

@@ -38,7 +38,7 @@ public class DraggableWithSectionExampleActivity extends AppCompatActivity {
                     .add(new ExampleSectionDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
                     .commit();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new RecyclerListViewFragment(), FRAGMENT_LIST_VIEW)
+                    .add(R.id.container, new DraggableWithSectionExampleFragment(), FRAGMENT_LIST_VIEW)
                     .commit();
         }
     }

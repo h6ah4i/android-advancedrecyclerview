@@ -1,3 +1,13 @@
+## 0.8.7
+[New features]
+- Added onItemDragMoveDistanceUpdated() callback to OnItemDragEventListener (#191)
+- Added "minimal" draggable/swipeable/expandable examples
+- Updated support library to v23.2.1
+
+[Bug fixes]
+- Fixed drag & drop behavior of GridLayoutManager (related to #193)
+
+
 ## 0.8.6
 [New features]
 - Added these methods to RecyclerViewExpandableItemManager (issue #161)

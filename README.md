@@ -33,7 +33,7 @@ Target platforms
 Latest version
 ---
 
-- Version 0.8.6  (Feb. 8, 2016)   ([RELEASE NOTES](./RELEASE-NOTES.md))
+- Version 0.8.7  (Mar. 27, 2016)   ([RELEASE NOTES](./RELEASE-NOTES.md))
 
 *If you are using support library v23.0.x, please use v0.8.1 instead.*
 
@@ -45,7 +45,7 @@ This library is published on jCenter. Just add these lines to `build.gradle`.
 
 ```groovy
 dependencies {
-    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.6@aar'){
+    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.8.7@aar'){
         transitive=true
     }
 }
@@ -151,6 +151,16 @@ Primary classes/interfaces
 | [`AbstractExpandableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractExpandableItemViewHolder.java)            | ViewHolder class which implements boilerplate code of the  `ExpandableItemViewHolder` interface      |
 | [`AbstractDraggableSwipeableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractDraggableSwipeableItemViewHolder.java) | ViewHolder class which implements boilerplate code of the `DraggableItemViewHolder` and the `SwipeableItemViewHolder` interfaces      |
 | [`AbstractExpandableItemAdapter<GVH, CVH>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractExpandableItemAdapter.java)  | Adapter class which implements boilerplate code of the `ExpandableItemAdapter` interface |
+
+Other examples
+---
+
+| 
+### iOS Mail app like swipe action
+
+<img src="images/other_example_ios_mail.png" width="200" />
+
+- [Repository](https://github.com/h6ah4i/RecyclerViewiOSMailAppLikeSwipe)
 
 
 License

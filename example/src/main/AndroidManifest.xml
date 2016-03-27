@@ -37,8 +37,12 @@
         </activity>
 
         <activity
-            android:name=".demo_d.DraggableExampleActivity"
-            android:label="@string/activity_title_demo_d"/>
+            android:name=".demo_d_minimal.MinimalDraggableExampleActivity"
+            android:label="@string/activity_title_demo_d_minimal"/>
+
+        <activity
+            android:name=".demo_d_basic.DraggableExampleActivity"
+            android:label="@string/activity_title_demo_d_basic"/>
 
         <activity
             android:name=".demo_d_grid.DraggableGridExampleActivity"
@@ -49,20 +53,28 @@
             android:label="@string/activity_title_demo_d_on_longpress"/>
 
         <activity
-            android:name=".demo_s.SwipeableExampleActivity"
-            android:label="@string/activity_title_demo_s"/>
+            android:name=".demo_s_minimal.MinimalSwipeableExampleActivity"
+            android:label="@string/activity_title_demo_s_minimal"/>
+
+        <activity
+            android:name=".demo_s_basic.SwipeableExampleActivity"
+            android:label="@string/activity_title_demo_s_basic"/>
 
         <activity
             android:name=".demo_s_longpress.SwipeOnLongPressExampleActivity"
             android:label="@string/activity_title_demo_s_on_longpress"/>
 
         <activity
-            android:name=".demo_us.UnderSwipeableExampleActivity"
+            android:name=".demo_s_button.SwipeableWithButtonExampleActivity"
             android:label="@string/activity_title_demo_us"/>
 
         <activity
-            android:name=".demo_e.ExpandableExampleActivity"
-            android:label="@string/activity_title_demo_e"/>
+            android:name=".demo_e_minimal.MinimalExpandableExampleActivity"
+            android:label="@string/activity_title_demo_e_minimal"/>
+
+        <activity
+            android:name=".demo_e_basic.ExpandableExampleActivity"
+            android:label="@string/activity_title_demo_e_basic"/>
 
         <activity
             android:name=".demo_ds.DraggableSwipeableExampleActivity"
