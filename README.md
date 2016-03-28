@@ -92,9 +92,36 @@ Usage
 
 Please check the implementation of the simple examples.
 
-- [Drag & Drop example](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d/)
-- [Swipe example](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s/)
-- [Expandable item example](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e/)
+### Drag & Drop related examples
+
+- [Basic](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_basic/)
+- [Minimal](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_minimal/)
+- [Grid](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_grid/)
+- [Drag with section](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_with_section/)
+- [Long press event](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_on_longpress/)
+
+### Expandable item related examples
+
+- [Basic](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_basic/)
+- [Minimal](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_minimal/)
+- [Add & Remove](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_add_remove/)
+- [Already expanded](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_already_expanded/)
+
+### Swiping related examples
+
+- [Basic](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic/)
+- [Minimal](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_minimal/)
+- [With button](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_button/)
+- [Legacy](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_legacy/)
+- [Vertical](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_vertical/)
+- [Viewpager](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_viewpager/)
+- [Long press event](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_longpress/)
+
+### Hybrid examples
+
+- [Draggable & Swiping](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_ds/)
+- [Draggable & Swiping with section](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_ed_with_section/)
+- [Expandable & Draggable & Swiping](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_eds/)
 
 
 Primary classes/interfaces
