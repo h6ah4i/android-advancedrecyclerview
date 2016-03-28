@@ -96,26 +96,26 @@ Please check the implementation of the simple examples.
 
 - [Basic](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_basic/)
 - [Minimal](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_minimal/)
-- [Grid](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_grid/)
-- [Drag with section](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_with_section/)
-- [Long press event](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_on_longpress/)
+- [Draggable grid](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_grid/)
+- [Draggable with section](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_with_section/)
+- [Drag on Long press](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_on_longpress/)
 
 ### Expandable item related examples
 
 - [Basic](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_basic/)
 - [Minimal](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_minimal/)
-- [Add & Remove](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_add_remove/)
-- [Already expanded](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_already_expanded/)
+- [Add & Remove item](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_add_remove/)
+- [Already expanded groups](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_already_expanded/)
 
-### Swiping related examples
+### Swipeable related examples
 
 - [Basic](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic/)
 - [Minimal](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_minimal/)
-- [With button](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_button/)
+- [Swipeable with button](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_button/)
 - [Legacy](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_legacy/)
 - [Vertical](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_vertical/)
 - [Viewpager](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_viewpager/)
-- [Long press event](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_longpress/)
+- [Swipe on long press](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_longpress/)
 
 ### Hybrid examples
 
