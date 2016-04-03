@@ -25,7 +25,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -1037,7 +1036,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         // scroll
         if ((!reachedToFirstHardLimit && (scrollAmount < 0)) ||
                 (!reachedToLastHardLimit && (scrollAmount > 0))) {
-            safeEndAnimations(rv);
+            safeEndAnimationsIfRequired(rv);
 
             actualScrolledAmount = (horizontal)
                     ? scrollByXAndGetScrolledAmount(scrollAmount)
@@ -1270,7 +1269,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         // NOTE: This method invokes notifyItemMoved() method internally. Be careful!
         mAdapter.moveItem(fromPosition, toPosition);
 
-        safeEndAnimations(rv);
+        safeEndAnimationsIfRequired(rv);
 
         switch (CustomRecyclerViewUtils.getOrientation(rv)) {
             case CustomRecyclerViewUtils.ORIENTATION_VERTICAL:
@@ -1299,7 +1298,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 break;
         }
 
-        safeEndAnimations(rv);
+        safeEndAnimationsIfRequired(rv);
     }
 
     private static DraggableItemWrapperAdapter getDraggableItemWrapperAdapter(RecyclerView rv) {
@@ -1350,6 +1349,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
+    private void safeEndAnimationsIfRequired(RecyclerView rv) {
+        if (mSwapTargetItemOperator != null) {
+            safeEndAnimations(rv);
+        }
+    }
+
     /*package*/
     static RecyclerView.ViewHolder findSwapTargetItem(
             RecyclerView rv, RecyclerView.ViewHolder draggingItem,
@@ -1375,7 +1380,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             switch (layoutType) {
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_HORIZONTAL:
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_VERTICAL:
-                    swapTargetHolder = findSwapTargetItemForGridLayoutManager(
+                case CustomRecyclerViewUtils.LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL:
+                case CustomRecyclerViewUtils.LAYOUT_TYPE_STAGGERED_GRID_VERTICAL:
+                    swapTargetHolder = findSwapTargetItemForXGridLayoutManager(
                             rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, isVerticalLayout);
                     break;
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_HORIZONTAL:
@@ -1399,7 +1406,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         return swapTargetHolder;
     }
 
-    private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManager(
+    private static RecyclerView.ViewHolder findSwapTargetItemForXGridLayoutManager(
             RecyclerView rv, @Nullable RecyclerView.ViewHolder draggingItem,
             DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical) {
         final int spanSize = draggingItemInfo.spanSize;
@@ -1407,7 +1414,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         RecyclerView.ViewHolder swapTargetHolder = null;
 
         for (int i = 0; i < spanSize; i++) {
-            swapTargetHolder = findSwapTargetItemForGridLayoutManagerInternal(
+            swapTargetHolder = findSwapTargetItemForXGridLayoutManagerInternal(
                     rv, draggingItemInfo, overlayItemLeft, overlayItemTop, vertical, i);
 
             if (swapTargetHolder != null) {
@@ -1422,7 +1429,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         return swapTargetHolder;
     }
 
-    private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManagerInternal(
+    private static RecyclerView.ViewHolder findSwapTargetItemForXGridLayoutManagerInternal(
             RecyclerView rv, DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical, int step) {
 
         int cx = overlayItemLeft;
