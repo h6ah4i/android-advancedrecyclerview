@@ -49,6 +49,10 @@
             android:label="@string/activity_title_demo_d_grid"/>
 
         <activity
+            android:name=".demo_d_staggered_grid.DraggableStaggeredGridExampleActivity"
+            android:label="@string/activity_title_demo_d_staggered_grid"/>
+
+        <activity
             android:name=".demo_d_on_longpress.DragOnLongPressExampleActivity"
             android:label="@string/activity_title_demo_d_on_longpress"/>
 
