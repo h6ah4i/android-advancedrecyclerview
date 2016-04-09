@@ -311,6 +311,16 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     // NOTE: This method is called from RecyclerViewDragDropManager
     /*package*/
     @SuppressWarnings("unchecked")
+    boolean canDropItems(int draggingPosition, int dropPosition) {
+        if (LOCAL_LOGV) {
+            Log.v(TAG, "canDropItems(draggingPosition = " + draggingPosition + ", dropPosition = " + dropPosition + ")");
+        }
+        return mDraggableItemAdapter.onCheckCanDrop(draggingPosition, dropPosition);
+    }
+
+    // NOTE: This method is called from RecyclerViewDragDropManager
+    /*package*/
+    @SuppressWarnings("unchecked")
     ItemDraggableRange getItemDraggableRange(RecyclerView.ViewHolder holder, int position) {
         if (LOCAL_LOGV) {
             Log.v(TAG, "getItemDraggableRange(holder = " + holder + ", position = " + position + ")");

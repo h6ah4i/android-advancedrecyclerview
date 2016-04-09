@@ -109,6 +109,10 @@ class DraggableStaggeredGridExampleAdapter
                 // NOTE:
                 // This dummy header item is required to workaround the
                 // weired animation when occurs on moving the item 0
+                //
+                // Related issue
+                //   Issue 99047:	Inconsistent behavior produced by mAdapter.notifyItemMoved(indexA,indexB);
+                //   https://code.google.com/p/android/issues/detail?id=99047&q=notifyItemMoved&colspec=ID%20Status%20Priority%20Owner%20Summary%20Stars%20Reporter%20Opened&
                 final View v = inflater.inflate(R.layout.dummy_header_item, parent, false);
                 return new HeaderItemViewHolder(v);
             }
@@ -205,6 +209,11 @@ class DraggableStaggeredGridExampleAdapter
     public ItemDraggableRange onGetItemDraggableRange(BaseViewHolder holder, int position) {
         int headerCount = getHeaderItemCount();
         return new ItemDraggableRange(headerCount, getItemCount() - 1);
+    }
+
+    @Override
+    public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
+        return true;
     }
 
     static int getHeaderItemCount() {
