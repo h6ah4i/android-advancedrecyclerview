@@ -25,6 +25,7 @@
     <string name="activity_title_demo_d_minimal">Draggable (Minimal)</string>
     <string name="activity_title_demo_d_basic">Draggable (Basic)</string>
     <string name="activity_title_demo_d_grid">Draggable (Grid Layout)</string>
+    <string name="activity_title_demo_d_staggered_grid">Draggable (Staggered Grid Layout)</string>
     <string name="activity_title_demo_d_on_longpress">Drag on Long Press</string>
     <string name="activity_title_demo_s_minimal">Swipeable (Minimal)</string>
     <string name="activity_title_demo_s_basic">Swipeable (Basic)</string>

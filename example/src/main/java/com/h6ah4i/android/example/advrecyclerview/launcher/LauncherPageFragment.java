@@ -30,6 +30,7 @@ import com.h6ah4i.android.example.advrecyclerview.demo_d_basic.DraggableExampleA
 import com.h6ah4i.android.example.advrecyclerview.demo_d_grid.DraggableGridExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_minimal.MinimalDraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_on_longpress.DragOnLongPressExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_d_staggered_grid.DraggableStaggeredGridExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_with_section.DraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ds.DraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_e_add_remove.AddRemoveExpandableExampleActivity;
@@ -91,6 +92,7 @@ public class LauncherPageFragment extends Fragment {
                 adapter.put(DragOnLongPressExampleActivity.class, R.string.activity_title_demo_d_on_longpress);
                 adapter.put(DraggableWithSectionExampleActivity.class, R.string.activity_title_demo_d_with_section);
                 adapter.put(DraggableGridExampleActivity.class, R.string.activity_title_demo_d_grid);
+                adapter.put(DraggableStaggeredGridExampleActivity.class, R.string.activity_title_demo_d_staggered_grid);
                 break;
             case 1:
                 // Swipe
