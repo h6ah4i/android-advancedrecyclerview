@@ -547,6 +547,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         if (mInScrollByMethod) {
             mActualScrollByXAmount = dx;
             mActualScrollByYAmount = dy;
+        } else if (isDragging()) {
+            ViewCompat.postOnAnimationDelayed(mRecyclerView, mCheckItemSwappingRunnable, 500);
         }
     }
 
