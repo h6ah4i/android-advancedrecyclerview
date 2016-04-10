@@ -57,6 +57,10 @@
             android:label="@string/activity_title_demo_d_on_longpress"/>
 
         <activity
+            android:name=".demo_d_check_can_drop.DraggableCheckCanDropExampleActivity"
+            android:label="@string/activity_title_demo_d_check_can_drop"/>
+
+        <activity
             android:name=".demo_s_minimal.MinimalSwipeableExampleActivity"
             android:label="@string/activity_title_demo_s_minimal"/>
 

@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_basic.DraggableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_d_check_can_drop.DraggableCheckCanDropExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_grid.DraggableGridExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_minimal.MinimalDraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_on_longpress.DragOnLongPressExampleActivity;
@@ -91,6 +92,7 @@ public class LauncherPageFragment extends Fragment {
                 adapter.put(DraggableExampleActivity.class, R.string.activity_title_demo_d_basic);
                 adapter.put(DragOnLongPressExampleActivity.class, R.string.activity_title_demo_d_on_longpress);
                 adapter.put(DraggableWithSectionExampleActivity.class, R.string.activity_title_demo_d_with_section);
+                adapter.put(DraggableCheckCanDropExampleActivity.class, R.string.activity_title_demo_d_check_can_drop);
                 adapter.put(DraggableGridExampleActivity.class, R.string.activity_title_demo_d_grid);
                 adapter.put(DraggableStaggeredGridExampleActivity.class, R.string.activity_title_demo_d_staggered_grid);
                 break;
