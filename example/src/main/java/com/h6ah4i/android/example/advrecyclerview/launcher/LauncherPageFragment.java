@@ -42,6 +42,7 @@ import com.h6ah4i.android.example.advrecyclerview.demo_s_longpress.SwipeOnLongPr
 import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.VerticalSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager.ViewPagerSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_us.UnderSwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_us_both_direction.DoubleUnderSwipeableExampleActivity;
 
 public class LauncherPageFragment extends Fragment {
     private static final String ARG_PAGE_NO = "page no";
@@ -93,6 +94,7 @@ public class LauncherPageFragment extends Fragment {
                 adapter.put(SwipeableExampleActivity.class, R.string.activity_title_demo_s);
                 adapter.put(SwipeOnLongPressExampleActivity.class, R.string.activity_title_demo_s_on_longpress);
                 adapter.put(UnderSwipeableExampleActivity.class, R.string.activity_title_demo_us);
+                adapter.put(DoubleUnderSwipeableExampleActivity.class, R.string.activity_title_demo_double_us);
                 adapter.put(VerticalSwipeableExampleActivity.class, R.string.activity_title_demo_s_vertical);
                 adapter.put(ViewPagerSwipeableExampleActivity.class, R.string.activity_title_demo_s_viewpager);
                 adapter.put(LegacySwipeableExampleActivity.class, R.string.activity_title_demo_s_legacy);

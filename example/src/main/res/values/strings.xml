@@ -50,4 +50,5 @@
     <string name="dialog_message_child_item_pinned">Child item pinned! (group = %1$d, child = %2$d)</string>
 
     <string name="menu_item_about">About</string>
+    <string name="activity_title_demo_double_us">Two button under swipeable item</string>
 </resources>

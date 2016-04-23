@@ -29,13 +29,23 @@
         android:background="#888888">
 
         <Button
-            android:id="@android:id/button1"
+            android:id="@android:id/button2"
             style="@style/Widget.AppCompat.Button.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="16dp"
+            android:text="Button"/>
+
+        <Button
+            android:id="@android:id/button1"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
             android:text="Button"/>
 
     </RelativeLayout>

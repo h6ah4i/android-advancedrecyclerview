@@ -61,6 +61,10 @@
             android:label="@string/activity_title_demo_us"/>
 
         <activity
+            android:name=".demo_us_both_direction.DoubleUnderSwipeableExampleActivity"
+            android:label="@string/activity_title_demo_us"/>
+
+        <activity
             android:name=".demo_e.ExpandableExampleActivity"
             android:label="@string/activity_title_demo_e"/>
 
