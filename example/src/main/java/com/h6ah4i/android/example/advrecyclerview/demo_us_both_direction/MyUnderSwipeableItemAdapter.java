@@ -63,13 +63,15 @@ class MyUnderSwipeableItemAdapter
     public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
         public FrameLayout mContainer;
         public TextView mTextView;
-        public Button mButton;
+        public Button mButton1;
+        public Button mButton2;
 
         public MyViewHolder(View v) {
             super(v);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
-            mButton = (Button) v.findViewById(android.R.id.button1);
+            mButton1 = (Button) v.findViewById(android.R.id.button1);
+            mButton2 = (Button) v.findViewById(android.R.id.button2);
         }
 
         @Override
@@ -137,7 +139,8 @@ class MyUnderSwipeableItemAdapter
         // set listeners
         // (if the item is *pinned*, click event comes to the mContainer)
         holder.mContainer.setOnClickListener(mSwipeableViewContainerOnClickListener);
-        holder.mButton.setOnClickListener(mUnderSwipeableViewButtonOnClickListener);
+        holder.mButton1.setOnClickListener(mUnderSwipeableViewButtonOnClickListener);
+        holder.mButton2.setOnClickListener(mUnderSwipeableViewButtonOnClickListener);
 
         // set text
         holder.mTextView.setText(item.getText());
