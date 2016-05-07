@@ -443,7 +443,7 @@ public class ItemSlidingAnimator {
         final WeakReference<RecyclerView.ViewHolder> mRefHolder;
 
         public ViewHolderDeferredProcess(RecyclerView.ViewHolder holder) {
-            mRefHolder = new WeakReference<RecyclerView.ViewHolder>(holder);
+            mRefHolder = new WeakReference<>(holder);
         }
 
         @Override
