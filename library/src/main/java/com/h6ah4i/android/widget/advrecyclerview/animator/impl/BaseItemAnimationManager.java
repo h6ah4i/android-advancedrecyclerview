@@ -28,10 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
-    protected BaseItemAnimator mItemAnimator;
-    protected List<T> mPending;
-    protected List<List<T>> mDeferredReadySets;
-    protected List<RecyclerView.ViewHolder> mActive;
+    protected final BaseItemAnimator mItemAnimator;
+    protected final List<T> mPending;
+    protected final List<List<T>> mDeferredReadySets;
+    protected final List<RecyclerView.ViewHolder> mActive;
 
     public BaseItemAnimationManager(BaseItemAnimator itemAnimator) {
         mItemAnimator = itemAnimator;

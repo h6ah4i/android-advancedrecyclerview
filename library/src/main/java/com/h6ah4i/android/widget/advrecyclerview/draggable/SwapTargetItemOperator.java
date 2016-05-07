@@ -34,9 +34,9 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     private Interpolator mSwapTargetTranslationInterpolator;
     private int mTranslationX;
     private int mTranslationY;
-    private Rect mSwapTargetDecorationOffsets = new Rect();
-    private Rect mSwapTargetItemMargins = new Rect();
-    private Rect mDraggingItemDecorationOffsets = new Rect();
+    private final Rect mSwapTargetDecorationOffsets = new Rect();
+    private final Rect mSwapTargetItemMargins = new Rect();
+    private final Rect mDraggingItemDecorationOffsets = new Rect();
     private boolean mStarted;
     private float mReqTranslationPhase;
     private float mCurTranslationPhase;

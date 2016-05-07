@@ -92,7 +92,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private RecyclerView.ViewHolder mSwipingItem;
     private int mSwipingItemPosition = RecyclerView.NO_POSITION;
     private long mSwipingItemId = RecyclerView.NO_ID;
-    private Rect mSwipingItemMargins = new Rect();
+    private final Rect mSwipingItemMargins = new Rect();
     private int mTouchedItemOffsetX;
     private int mTouchedItemOffsetY;
     private int mLastTouchX;

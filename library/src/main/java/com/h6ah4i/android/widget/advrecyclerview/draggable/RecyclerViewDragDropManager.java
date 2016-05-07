@@ -137,7 +137,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private boolean mInScrollByMethod;
     private int mActualScrollByXAmount;
     private int mActualScrollByYAmount;
-    private Rect mTmpRect1 = new Rect();
+    private final Rect mTmpRect1 = new Rect();
     private int mItemSettleBackIntoPlaceAnimationDuration = 200;
     private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR;
 
@@ -1170,7 +1170,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
-    private Runnable mCheckItemSwappingRunnable = new Runnable() {
+    private final Runnable mCheckItemSwappingRunnable = new Runnable() {
         @Override
         public void run() {
             if (mDraggingItemViewHolder != null) {

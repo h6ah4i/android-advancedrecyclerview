@@ -58,7 +58,7 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
     }
 
     private static class InternalRecyclerListener implements RecyclerView.RecyclerListener {
-        private WeakReference<RecyclerViewRecyclerEventDistributor> mRefDistributor;
+        private final WeakReference<RecyclerViewRecyclerEventDistributor> mRefDistributor;
 
         public InternalRecyclerListener(RecyclerViewRecyclerEventDistributor distributor) {
             super();

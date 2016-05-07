@@ -32,7 +32,7 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
     private final Drawable mVerticalDrawable;
     private final int mHorizontalDividerHeight;
     private final int mVerticalDividerWidth;
-    private boolean mOverlap;
+    private final boolean mOverlap;
 
     /**
      * Constructor.

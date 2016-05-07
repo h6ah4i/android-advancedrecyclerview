@@ -48,13 +48,13 @@ public class ItemSlidingAnimator {
     public static final int DIR_RIGHT = 2;
     public static final int DIR_DOWN = 3;
 
-    private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
-    private Interpolator mSlideToDefaultPositionAnimationInterpolator = new AccelerateDecelerateInterpolator();
-    private Interpolator mSlideToOutsideOfWindowAnimationInterpolator = new AccelerateInterpolator(0.8f);
-    private List<RecyclerView.ViewHolder> mActive;
-    private List<WeakReference<ViewHolderDeferredProcess>> mDeferredProcesses;
-    private int[] mTmpLocation = new int[2];
-    private Rect mTmpRect = new Rect();
+    private final SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
+    private final Interpolator mSlideToDefaultPositionAnimationInterpolator = new AccelerateDecelerateInterpolator();
+    private final Interpolator mSlideToOutsideOfWindowAnimationInterpolator = new AccelerateInterpolator(0.8f);
+    private final List<RecyclerView.ViewHolder> mActive;
+    private final List<WeakReference<ViewHolderDeferredProcess>> mDeferredProcesses;
+    private final int[] mTmpLocation = new int[2];
+    private final Rect mTmpRect = new Rect();
     private int mImmediatelySetTranslationThreshold;
 
     public ItemSlidingAnimator(SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> adapter) {
@@ -511,7 +511,7 @@ public class ItemSlidingAnimator {
         private final long mDuration;
         private final boolean mHorizontal;
         private final SwipeFinishInfo mSwipeFinish;
-        private Interpolator mInterpolator;
+        private final Interpolator mInterpolator;
         private float mInvSize;
 
         public SlidingAnimatorListenerObject(
@@ -605,7 +605,7 @@ public class ItemSlidingAnimator {
     }
 
     private static class SwipeFinishInfo {
-        int itemPosition;
+        final int itemPosition;
         SwipeResultAction resultAction;
 
         public SwipeFinishInfo(int itemPosition, SwipeResultAction resultAction) {
