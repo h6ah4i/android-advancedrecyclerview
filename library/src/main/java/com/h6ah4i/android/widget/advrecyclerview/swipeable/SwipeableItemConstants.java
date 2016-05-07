@@ -18,6 +18,7 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.support.v7.widget.RecyclerView;
 
+@SuppressWarnings("PointlessBitwiseExpression")
 public interface SwipeableItemConstants {
     /**
      * State flag for the {@link SwipeableItemViewHolder#setSwipeStateFlags(int)} and {@link SwipeableItemViewHolder#getSwipeStateFlags()} methods.
