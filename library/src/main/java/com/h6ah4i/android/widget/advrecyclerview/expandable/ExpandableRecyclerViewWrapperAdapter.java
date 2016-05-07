@@ -476,10 +476,7 @@ class ExpandableRecyclerViewWrapperAdapter
     }
 
     private static boolean isChildPositionRange(ItemDraggableRange range) {
-        if (range.getClass().equals(ChildPositionItemDraggableRange.class)) {
-            return true;
-        }
-        return false;
+        return range.getClass().equals(ChildPositionItemDraggableRange.class);
     }
 
     @Override
