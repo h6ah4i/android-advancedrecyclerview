@@ -142,7 +142,7 @@ class ExpandablePositionTranslator {
 
         if (adapter != null || collapseListener != null) {
             for (int i = index; i < idAndPos.length; i++) {
-                final int id2 = (int) (idAndPos[i] >> 32);
+                // final int id2 = (int) (idAndPos[i] >> 32);
                 final int position = (int) (idAndPos[i] & LOWER_31BIT_MASK);
 
                 if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {

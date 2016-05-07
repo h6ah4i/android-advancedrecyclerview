@@ -604,6 +604,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
         verifyAfterReaction(result, afterReaction);
 
+        //noinspection UnusedAssignment
         boolean slideAnimated = false;
 
         switch (afterReaction) {
