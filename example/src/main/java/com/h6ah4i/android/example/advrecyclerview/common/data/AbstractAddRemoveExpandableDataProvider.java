@@ -23,6 +23,9 @@ public abstract class AbstractAddRemoveExpandableDataProvider {
 
     public static abstract class GroupData extends BaseData {
         public abstract long getGroupId();
+        public abstract String getName();
+        public abstract boolean isChecked();
+        public abstract void setChecked(boolean checked);
     }
 
     public static abstract class ChildData extends BaseData {

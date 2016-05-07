@@ -17,11 +17,15 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_e_add_remove;
 
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
@@ -48,14 +52,20 @@ class AddRemoveExpandableExampleAdapter
             onClickItemView(v);
         }
     };
+    private CompoundButton.OnCheckedChangeListener mItemOnCheckChangeLitener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            onClickItemSwitchView(buttonView, isChecked);
+        }
+    };
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
-        public FrameLayout mContainer;
+        public ViewGroup mContainer;
         public TextView mTextView;
 
         public MyBaseViewHolder(View v, View.OnClickListener clickListener) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = (ViewGroup) v.findViewById(R.id.container);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
 
             mContainer.setOnClickListener(clickListener);
@@ -63,41 +73,16 @@ class AddRemoveExpandableExampleAdapter
     }
 
     public static class MyGroupViewHolder extends MyBaseViewHolder {
-        public Button mButtonAddChildTop;
-        public Button mButtonAddChildBottom;
-        public Button mButtonAddChild2Bottom;
-        public Button mButtonRemoveChildTop;
-        public Button mButtonRemoveChildBottom;
-        public Button mButtonRemoveChild2Bottom;
-        public Button mButtonAddGroupAbove;
-        public Button mButtonAddGroupBelow;
-        public Button mButtonRemoveGroup;
-        public Button mButtonClearChildren;
+
+        public TextView tvName;
+        public SwitchCompat switchCompat;
 
         public MyGroupViewHolder(View v, View.OnClickListener clickListener) {
             super(v, clickListener);
 
-            mButtonAddChildTop = (Button) v.findViewById(R.id.button_add_child_top);
-            mButtonAddChildBottom = (Button) v.findViewById(R.id.button_add_child_bottom);
-            mButtonAddChild2Bottom = (Button) v.findViewById(R.id.button_add_child_bottom_2);
-            mButtonRemoveChildTop = (Button) v.findViewById(R.id.button_remove_child_top);
-            mButtonRemoveChildBottom = (Button) v.findViewById(R.id.button_remove_child_bottom);
-            mButtonRemoveChild2Bottom = (Button) v.findViewById(R.id.button_remove_child_bottom_2);
-            mButtonAddGroupAbove = (Button) v.findViewById(R.id.button_add_group_above);
-            mButtonAddGroupBelow = (Button) v.findViewById(R.id.button_add_group_below);
-            mButtonRemoveGroup = (Button) v.findViewById(R.id.button_remove_group);
-            mButtonClearChildren = (Button) v.findViewById(R.id.button_clear_children);
+            tvName = (TextView) v.findViewById(R.id.tv_name);
+            switchCompat = (SwitchCompat) v.findViewById(R.id.sc_switch);
 
-            mButtonAddChildTop.setOnClickListener(clickListener);
-            mButtonAddChildBottom.setOnClickListener(clickListener);
-            mButtonAddChild2Bottom.setOnClickListener(clickListener);
-            mButtonRemoveChildTop.setOnClickListener(clickListener);
-            mButtonRemoveChildBottom.setOnClickListener(clickListener);
-            mButtonRemoveChild2Bottom.setOnClickListener(clickListener);
-            mButtonAddGroupAbove.setOnClickListener(clickListener);
-            mButtonAddGroupBelow.setOnClickListener(clickListener);
-            mButtonRemoveGroup.setOnClickListener(clickListener);
-            mButtonClearChildren.setOnClickListener(clickListener);
         }
     }
 
@@ -164,7 +149,9 @@ class AddRemoveExpandableExampleAdapter
     public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_group_item_with_add_remove_buttons, parent, false);
-        return new MyGroupViewHolder(v, mItemOnClickListener);
+        MyGroupViewHolder vh = new MyGroupViewHolder(v, mItemOnClickListener);
+        vh.switchCompat.setOnCheckedChangeListener(mItemOnCheckChangeLitener);
+        return vh;
     }
 
     @Override
@@ -174,13 +161,63 @@ class AddRemoveExpandableExampleAdapter
         return new MyChildViewHolder(v, mItemOnClickListener);
     }
 
+    //    @Override
+//    public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
+//        // child item
+//        final AbstractAddRemoveExpandableDataProvider.BaseData item = mProvider.getGroupItem(groupPosition);
+//
+//        // set text
+//        holder.mTextView.setText(item.getText());
+//
+//        // mark as clickable
+//        holder.itemView.setClickable(true);
+//
+//        // set background resource (target view ID: container)
+//        final int expandState = holder.getExpandStateFlags();
+//
+//        if ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0) {
+//            int bgResId;
+//
+//            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
+//                bgResId = R.drawable.bg_group_item_expanded_state;
+//            } else {
+//                bgResId = R.drawable.bg_group_item_normal_state;
+//            }
+//
+//            holder.mContainer.setBackgroundResource(bgResId);
+//        }
+//    }
     @Override
     public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
         // child item
-        final AbstractAddRemoveExpandableDataProvider.BaseData item = mProvider.getGroupItem(groupPosition);
+        final AbstractAddRemoveExpandableDataProvider.GroupData item = mProvider.getGroupItem(groupPosition);
 
         // set text
-        holder.mTextView.setText(item.getText());
+        holder.tvName.setText(item.getName());
+
+        if (holder.switchCompat != null) {
+
+            if (item.isChecked()) {
+
+                holder.tvName.setText(item.getName() + " On"); // Working normally
+
+                if (!holder.switchCompat.isChecked())
+                    holder.switchCompat.setChecked(true); // NullPointerException
+
+            } else {
+
+                holder.tvName.setText(item.getName() + " Off"); // Working normally
+
+                if (holder.switchCompat.isChecked())
+                    holder.switchCompat.setChecked(false); // NullPointerException
+
+            }
+
+        } else {
+
+            Log.d("SWITCHNULL", "container is null");
+
+        }
 
         // mark as clickable
         holder.itemView.setClickable(true);
@@ -198,6 +235,52 @@ class AddRemoveExpandableExampleAdapter
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
+        }
+
+    }
+
+    void onClickItemSwitchView(View v, boolean isChecked) {
+        RecyclerView.ViewHolder vh = RecyclerViewAdapterUtils.getViewHolder(v);
+        int flatPosition = vh.getAdapterPosition();
+
+        if (flatPosition == RecyclerView.NO_POSITION) {
+            return;
+        }
+
+        long expandablePosition = mExpandableItemManager.getExpandablePosition(flatPosition);
+        int groupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(expandablePosition);
+
+        switch (v.getId()) {
+            // common events
+            case R.id.sc_switch:
+
+                handleOnClickGroupItemSwitchView(groupPosition, isChecked);
+
+                break;
+            default:
+                throw new IllegalStateException("Unexpected click event");
+        }
+    }
+
+    private void handleOnClickGroupItemSwitchView(int groupPosition, boolean checked) {
+
+        mProvider.getGroupItem(groupPosition).setChecked(checked);
+
+        mExpandableItemManager.notifyGroupItemChanged(groupPosition);
+
+        // toggle expanded/collapsed
+        if (checked) {
+
+            handleOnClickGroupItemAddChildBottomButton(groupPosition, null, null);
+
+            mExpandableItemManager.expandGroup(groupPosition);
+
+        } else {
+
+            handleOnClickGroupItemClearChildrenButton(groupPosition);
+
+            mExpandableItemManager.collapseGroup(groupPosition);
+
         }
     }
 
@@ -242,37 +325,37 @@ class AddRemoveExpandableExampleAdapter
                     handleOnClickChildItemContainerView(groupPosition, childPosition);
                 }
                 break;
-            // group item events
-            case R.id.button_add_child_top:
-                handleOnClickGroupItemAddChildTopButton(groupPosition);
-                break;
-            case R.id.button_add_child_bottom:
-                handleOnClickGroupItemAddChildBottomButton(groupPosition);
-                break;
-            case R.id.button_add_child_bottom_2:
-                handleOnClickGroupItemAddChild2BottomButton(groupPosition);
-                break;
-            case R.id.button_remove_child_top:
-                handleOnClickGroupItemRemoveChildTopButton(groupPosition);
-                break;
-            case R.id.button_remove_child_bottom:
-                handleOnClickGroupItemRemoveChildBottomButton(groupPosition);
-                break;
-            case R.id.button_remove_child_bottom_2:
-                handleOnClickGroupItemRemoveChild2BottomButton(groupPosition);
-                break;
-            case R.id.button_add_group_above:
-                handleOnClickGroupItemAddAboveButton(groupPosition);
-                break;
-            case R.id.button_add_group_below:
-                handleOnClickGroupItemAddBelowButton(groupPosition);
-                break;
-            case R.id.button_remove_group:
-                handleOnClickGroupItemRemoveButton(groupPosition);
-                break;
-            case R.id.button_clear_children:
-                handleOnClickGroupItemClearChildrenButton(groupPosition);
-                break;
+//            // group item events
+//            case R.id.button_add_child_top:
+//                handleOnClickGroupItemAddChildTopButton(groupPosition);
+//                break;
+//            case R.id.button_add_child_bottom:
+//                handleOnClickGroupItemAddChildBottomButton(groupPosition);
+//                break;
+//            case R.id.button_add_child_bottom_2:
+//                handleOnClickGroupItemAddChild2BottomButton(groupPosition);
+//                break;
+//            case R.id.button_remove_child_top:
+//                handleOnClickGroupItemRemoveChildTopButton(groupPosition);
+//                break;
+//            case R.id.button_remove_child_bottom:
+//                handleOnClickGroupItemRemoveChildBottomButton(groupPosition);
+//                break;
+//            case R.id.button_remove_child_bottom_2:
+//                handleOnClickGroupItemRemoveChild2BottomButton(groupPosition);
+//                break;
+//            case R.id.button_add_group_above:
+//                handleOnClickGroupItemAddAboveButton(groupPosition);
+//                break;
+//            case R.id.button_add_group_below:
+//                handleOnClickGroupItemAddBelowButton(groupPosition);
+//                break;
+//            case R.id.button_remove_group:
+//                handleOnClickGroupItemRemoveButton(groupPosition);
+//                break;
+//            case R.id.button_clear_children:
+//                handleOnClickGroupItemClearChildrenButton(groupPosition);
+//                break;
             // child item events
             case R.id.button_add_child_above:
                 handleOnClickChildItemAddAboveButton(groupPosition, childPosition);
@@ -293,7 +376,7 @@ class AddRemoveExpandableExampleAdapter
         mExpandableItemManager.notifyChildItemInserted(groupPosition, 0);
     }
 
-    private void handleOnClickGroupItemAddChildBottomButton(int groupPosition) {
+    private void handleOnClickGroupItemAddChildBottomButton(int groupPosition, Object x, Object y) {
         int childCount = mProvider.getChildCount(groupPosition);
 
         mProvider.addChildItem(groupPosition, childCount);

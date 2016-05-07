@@ -111,6 +111,7 @@ public class ExampleAddRemoveExpandableDataProvider extends AbstractAddRemoveExp
     public static final class ConcreteGroupData extends GroupData {
         private final long mId;
         private final String mText;
+        private boolean mChecked;
 
         ConcreteGroupData(long id, String text) {
             mId = id;
@@ -125,6 +126,21 @@ public class ExampleAddRemoveExpandableDataProvider extends AbstractAddRemoveExp
         @Override
         public String getText() {
             return mText;
+        }
+
+        @Override
+        public String getName() {
+            return mText;
+        }
+
+        @Override
+        public boolean isChecked() {
+            return mChecked;
+        }
+
+        @Override
+        public void setChecked(boolean checked) {
+            mChecked = checked;
         }
     }
 
