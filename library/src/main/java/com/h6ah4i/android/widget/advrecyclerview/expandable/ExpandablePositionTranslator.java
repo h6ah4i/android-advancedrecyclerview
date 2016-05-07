@@ -484,6 +484,7 @@ class ExpandablePositionTranslator {
             return 0;
         }
 
+        //noinspection UnnecessaryLocalVariable
         final int n = count;
 
         enlargeArraysIfNeeded(mGroupCount + n, true);
@@ -535,6 +536,7 @@ class ExpandablePositionTranslator {
             return 0;
         }
 
+        //noinspection UnnecessaryLocalVariable
         final int n = count;
         int removedVisibleItemCount = 0;
 

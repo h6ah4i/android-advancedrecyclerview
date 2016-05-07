@@ -352,7 +352,9 @@ public class ItemSlidingAnimator {
 
         final int curTranslationX = (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
         final int curTranslationY = (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        //noinspection UnnecessaryLocalVariable
         final int toX = translationX;
+        //noinspection UnnecessaryLocalVariable
         final int toY = translationY;
 
         if ((duration == 0) ||

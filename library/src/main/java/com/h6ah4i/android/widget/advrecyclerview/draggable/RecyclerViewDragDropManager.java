@@ -1220,7 +1220,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             @NonNull RecyclerView.ViewHolder swapTargetHolder) {
 
         final Rect swapTargetMargins = CustomRecyclerViewUtils.getLayoutMargins(swapTargetHolder.itemView, mTmpRect1);
-        final int fromPosition = draggingItemAdapterPosition;
+        @SuppressWarnings("UnnecessaryLocalVariable") final int fromPosition = draggingItemAdapterPosition;
         final int toPosition = swapTargetHolder.getAdapterPosition();
         final int diffPosition = Math.abs(fromPosition - toPosition);
         boolean performSwapping = false;

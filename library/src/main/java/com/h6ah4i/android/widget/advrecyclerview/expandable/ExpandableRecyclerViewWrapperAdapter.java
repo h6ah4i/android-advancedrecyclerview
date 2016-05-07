@@ -270,6 +270,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final ExpandableDraggableItemAdapter adapter = (ExpandableDraggableItemAdapter) mExpandableItemAdapter;
 
+        //noinspection UnnecessaryLocalVariable
         final int flatPosition = position;
         final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
@@ -303,6 +304,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final ExpandableDraggableItemAdapter adapter = (ExpandableDraggableItemAdapter) mExpandableItemAdapter;
 
+        //noinspection UnnecessaryLocalVariable
         final int flatPosition = position;
         final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
@@ -392,11 +394,13 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final ExpandableDraggableItemAdapter adapter = (ExpandableDraggableItemAdapter) mExpandableItemAdapter;
 
+        //noinspection UnnecessaryLocalVariable
         final int draggingFlatPosition = draggingPosition;
         final long draggingExpandablePosition = mPositionTranslator.getExpandablePosition(draggingFlatPosition);
         final int draggingGroupPosition = ExpandableAdapterHelper.getPackedPositionGroup(draggingExpandablePosition);
         final int draggingChildPosition = ExpandableAdapterHelper.getPackedPositionChild(draggingExpandablePosition);
 
+        //noinspection UnnecessaryLocalVariable
         final int dropFlatPosition = dropPosition;
         final long dropExpandablePosition = mPositionTranslator.getExpandablePosition(dropFlatPosition);
         final int dropGroupPosition = ExpandableAdapterHelper.getPackedPositionGroup(dropExpandablePosition);
@@ -600,6 +604,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final BaseExpandableSwipeableItemAdapter adapter = (BaseExpandableSwipeableItemAdapter) mExpandableItemAdapter;
 
+        //noinspection UnnecessaryLocalVariable
         final int flatPosition = position;
         final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
@@ -621,6 +626,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final BaseExpandableSwipeableItemAdapter adapter = (BaseExpandableSwipeableItemAdapter) mExpandableItemAdapter;
 
+        //noinspection UnnecessaryLocalVariable
         final int flatPosition = position;
         final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
@@ -645,6 +651,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final BaseExpandableSwipeableItemAdapter<?, ?> adapter = (BaseExpandableSwipeableItemAdapter<?, ?>) mExpandableItemAdapter;
 
+        //noinspection UnnecessaryLocalVariable
         final int flatPosition = position;
         final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
@@ -662,6 +669,7 @@ class ExpandableRecyclerViewWrapperAdapter
             return false;
         }
 
+        //noinspection UnnecessaryLocalVariable
         final int flatPosition = position;
         final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
         final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);

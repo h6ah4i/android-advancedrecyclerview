@@ -35,6 +35,7 @@ android {
         def dataProps = new Properties()
         dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
 
+        //noinspection GroovyAssignabilityCheck
         versionCode dataProps.VERSION_CODE.toInteger()
         versionName dataProps.VERSION_NAME
     }

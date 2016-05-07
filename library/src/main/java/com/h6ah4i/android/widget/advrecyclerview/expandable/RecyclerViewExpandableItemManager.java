@@ -911,8 +911,9 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
 
         int parentHeight = mRecyclerView.getHeight();
 
-        int topRoom = groupItemTop;
-        int bottomRoom = parentHeight - groupItemBottom;
+        //noinspection UnnecessaryLocalVariable
+        final int topRoom = groupItemTop;
+        final int bottomRoom = parentHeight - groupItemBottom;
 
         if (topRoom <= topMargin) {
             // scroll down
