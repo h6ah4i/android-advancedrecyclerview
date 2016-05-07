@@ -210,7 +210,7 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
         if (mListeners != null) {
             return mListeners.size();
         } else {
-            return mListeners.size();
+            return 0;
         }
     }
 
