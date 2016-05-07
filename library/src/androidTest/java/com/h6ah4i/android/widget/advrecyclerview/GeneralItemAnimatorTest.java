@@ -234,15 +234,14 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-
-        String mBindedText;
+        String mBoundText;
 
         public ViewHolder(View itemView) {
             super(itemView);
         }
 
         public void bind(String text) {
-            mBindedText = text;
+            mBoundText = text;
             ((TextView) itemView).setText(text);
         }
     }

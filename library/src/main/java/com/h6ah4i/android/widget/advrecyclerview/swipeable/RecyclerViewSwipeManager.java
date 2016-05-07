@@ -428,7 +428,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         if (LOCAL_LOGD) {
-            Log.d(TAG, "swping finished  --- result = " + result);
+            Log.d(TAG, "swiping finished  --- result = " + result);
         }
 
         finishSwiping(result);

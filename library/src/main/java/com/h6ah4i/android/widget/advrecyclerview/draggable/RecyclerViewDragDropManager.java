@@ -1228,7 +1228,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         final long actualDraggingItemId = rv.getAdapter().getItemId(fromPosition);
         if (actualDraggingItemId != mDraggingItemInfo.id) {
             if (LOCAL_LOGV) {
-                Log.v(TAG, "RecyclerView state has not been synched to data yet");
+                Log.v(TAG, "RecyclerView state has not been synchronized to data yet");
             }
             return;
         }
