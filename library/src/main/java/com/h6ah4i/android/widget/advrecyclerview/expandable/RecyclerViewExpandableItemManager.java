@@ -888,6 +888,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param topMargin           Top margin
      * @param bottomMargin        Bottom margin
      */
+    @SuppressWarnings("StatementWithEmptyBody")
     public void scrollToGroupWithTotalChildrenHeight(int groupPosition, int totalChildrenHeight, int topMargin, int bottomMargin) {
         long packedPosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
         int flatPosition = getFlatPosition(packedPosition);
