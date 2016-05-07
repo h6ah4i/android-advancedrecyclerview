@@ -117,10 +117,6 @@
             android:label="@string/activity_title_demo_s_viewpager"/>
 
         <activity
-            android:name=".demo_s_legacy.LegacySwipeableExampleActivity"
-            android:label="@string/activity_title_demo_s_legacy"/>
-
-        <activity
             android:name=".about.AboutActivity"
             android:label="@string/activity_title_about"/>
     </application>

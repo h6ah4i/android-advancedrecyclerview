@@ -42,7 +42,6 @@ import com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section.Expandabl
 import com.h6ah4i.android.example.advrecyclerview.demo_eds.ExpandableDraggableSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_basic.SwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_button.SwipeableWithButtonExampleActivity;
-import com.h6ah4i.android.example.advrecyclerview.demo_s_legacy.LegacySwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_longpress.SwipeOnLongPressExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_minimal.MinimalSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.VerticalSwipeableExampleActivity;
@@ -104,7 +103,6 @@ public class LauncherPageFragment extends Fragment {
                 adapter.put(SwipeableWithButtonExampleActivity.class, R.string.activity_title_demo_us);
                 adapter.put(VerticalSwipeableExampleActivity.class, R.string.activity_title_demo_s_vertical);
                 adapter.put(ViewPagerSwipeableExampleActivity.class, R.string.activity_title_demo_s_viewpager);
-                adapter.put(LegacySwipeableExampleActivity.class, R.string.activity_title_demo_s_legacy);
                 break;
             case 2:
                 // Expand
