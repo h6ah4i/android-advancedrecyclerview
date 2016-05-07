@@ -186,6 +186,7 @@ abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
 
         if (dir == EDGE_LEFT || dir == EDGE_RIGHT) {
             int t = width;
+            //noinspection SuspiciousNameCombination
             width = height;
             height = t;
         }
