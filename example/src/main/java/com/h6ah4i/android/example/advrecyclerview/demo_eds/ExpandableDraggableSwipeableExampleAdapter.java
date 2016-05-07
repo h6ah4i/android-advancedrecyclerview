@@ -361,6 +361,16 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
+    public boolean onCheckGroupCanDrop(int draggingGroupPosition, int dropGroupPosition) {
+        return true;
+    }
+
+    @Override
+    public boolean onCheckChildCanDrop(int draggingGroupPosition, int draggingChildPosition, int dropGroupPosition, int dropChildPosition) {
+        return true;
+    }
+
+    @Override
     public void onMoveGroupItem(int fromGroupPosition, int toGroupPosition) {
         mProvider.moveGroupItem(fromGroupPosition, toGroupPosition);
     }

@@ -19,6 +19,7 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 import android.support.v7.widget.RecyclerView;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 
 public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder> {
     /**
@@ -86,4 +87,32 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
      * @param toChildPosition New child position of the item.
      */
     void onMoveChildItem(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition);
+
+
+    /**
+     * Called while dragging in order to check whether the dragging item can be dropped to the specified position.
+     *
+     * NOTE: This method will be called when the checkCanDrop option is enabled by {@link RecyclerViewDragDropManager#setCheckCanDropEnabled(boolean)}.
+     *
+     * @param draggingGroupPosition The position of the currently dragging group item.
+     * @param dropGroupPosition The position of a group item whether to check can be dropped or not.
+     *
+     * @return Whether can be dropped to the specified position.
+     */
+    boolean onCheckGroupCanDrop(int draggingGroupPosition, int dropGroupPosition);
+
+
+    /**
+     * Called while dragging in order to check whether the dragging item can be dropped to the specified position.
+     *
+     * NOTE: This method will be called when the checkCanDrop option is enabled by {@link RecyclerViewDragDropManager#setCheckCanDropEnabled(boolean)}.
+     *
+     * @param draggingGroupPosition The group position of the currently dragging item.
+     * @param draggingChildPosition The child position of the currently dragging item.
+     * @param dropGroupPosition The group position to check whether the dragging item can be dropped or not.
+     * @param dropChildPosition The child position to check whether the dragging item can be dropped or not.
+     *
+     * @return Whether can be dropped to the specified position.
+     */
+    boolean onCheckChildCanDrop(int draggingGroupPosition, int draggingChildPosition, int dropGroupPosition, int dropChildPosition);
 }

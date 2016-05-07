@@ -191,6 +191,11 @@ class DraggableWithSectionExampleAdapter
         return new ItemDraggableRange(start, end);
     }
 
+    @Override
+    public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
+        return true;
+    }
+
     private int findFirstSectionItem(int position) {
         AbstractDataProvider.Data item = mProvider.getItem(position);
 

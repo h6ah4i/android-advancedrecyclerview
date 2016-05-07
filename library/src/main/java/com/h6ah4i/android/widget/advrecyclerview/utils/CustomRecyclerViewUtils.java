@@ -212,8 +212,10 @@ public class CustomRecyclerViewUtils {
     }
 
     public static int getOrientation(@NonNull RecyclerView rv) {
-        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
+        return getOrientation(rv.getLayoutManager());
+    }
 
+    public static int getOrientation(@NonNull RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof GridLayoutManager) {
             return ((GridLayoutManager) layoutManager).getOrientation();
         } else if (layoutManager instanceof LinearLayoutManager) {
@@ -261,5 +263,13 @@ public class CustomRecyclerViewUtils {
             }
         }
         return partiallyVisible;
+    }
+
+    public static int safeGetAdapterPosition(@Nullable RecyclerView.ViewHolder holder) {
+        return (holder != null) ? holder.getAdapterPosition() : RecyclerView.NO_POSITION;
+    }
+
+    public static View findViewByPosition(RecyclerView.LayoutManager layoutManager, int position) {
+        return (position != RecyclerView.NO_POSITION) ? layoutManager.findViewByPosition(position) : null;
     }
 }

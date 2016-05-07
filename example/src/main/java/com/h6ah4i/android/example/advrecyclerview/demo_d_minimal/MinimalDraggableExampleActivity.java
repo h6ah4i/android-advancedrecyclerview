@@ -132,5 +132,10 @@ public class MinimalDraggableExampleActivity extends AppCompatActivity {
         public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
             return null;
         }
+
+        @Override
+        public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
+            return true;
+        }
     }
 }

@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.h6ah4i.android.example.advrecyclerview.demo_d_basic;
+package com.h6ah4i.android.example.advrecyclerview.demo_d_check_can_drop;
 
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -34,9 +34,9 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstant
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 
-class DraggableExampleItemAdapter
-        extends RecyclerView.Adapter<DraggableExampleItemAdapter.MyViewHolder>
-        implements DraggableItemAdapter<DraggableExampleItemAdapter.MyViewHolder> {
+class DraggableCheckCanDropExampleItemAdapter
+        extends RecyclerView.Adapter<DraggableCheckCanDropExampleItemAdapter.MyViewHolder>
+        implements DraggableItemAdapter<DraggableCheckCanDropExampleItemAdapter.MyViewHolder> {
     private static final String TAG = "MyDraggableItemAdapter";
 
     // NOTE: Make accessible with short name
@@ -58,7 +58,7 @@ class DraggableExampleItemAdapter
         }
     }
 
-    public DraggableExampleItemAdapter(AbstractDataProvider dataProvider) {
+    public DraggableCheckCanDropExampleItemAdapter(AbstractDataProvider dataProvider) {
         mProvider = dataProvider;
 
         // DraggableItemAdapter requires stable ID, and also
@@ -149,6 +149,6 @@ class DraggableExampleItemAdapter
 
     @Override
     public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
-        return true;
+        return (draggingPosition % 2) == (dropPosition % 2);
     }
 }
