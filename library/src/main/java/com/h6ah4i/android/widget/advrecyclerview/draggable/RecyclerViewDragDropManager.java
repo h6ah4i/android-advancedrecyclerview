@@ -1316,7 +1316,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         if ((firstVisible == fromPosition) && (firstOrigin != null) && (toOrigin != null)) {
             rv.scrollBy(0, -(toOrigin - firstOrigin));
             safeEndAnimations(rv);
-        } else if ((firstVisible == toPosition) && (fromView != null) && (fromOrigin != toOrigin)) {
+        } else if ((firstVisible == toPosition) && (fromView != null) && (fromOrigin != null) && (!fromOrigin.equals(toOrigin))) {
             ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fromView.getLayoutParams();
             rv.scrollBy(0, -(layoutManager.getDecoratedMeasuredHeight(fromView) + lp.topMargin + lp.bottomMargin));
             safeEndAnimations(rv);
