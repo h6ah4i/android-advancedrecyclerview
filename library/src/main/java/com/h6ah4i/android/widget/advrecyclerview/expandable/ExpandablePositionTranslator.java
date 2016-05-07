@@ -21,7 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.Arrays;
 
 class ExpandablePositionTranslator {
-    private final int ALLOCATE_UNIT = 256;
+    private final static int ALLOCATE_UNIT = 256;
 
     private final static long FLAG_EXPANDED = 0x0000000080000000l;
     private final static long LOWER_31BIT_MASK = 0x000000007fffffffl;
