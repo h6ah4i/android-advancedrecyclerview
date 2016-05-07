@@ -985,7 +985,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
             dest.writeIntArray(this.adapterSavedState);
         }
 
-        private SavedState(Parcel in) {
+        SavedState(Parcel in) {
             this.adapterSavedState = in.createIntArray();
         }
 

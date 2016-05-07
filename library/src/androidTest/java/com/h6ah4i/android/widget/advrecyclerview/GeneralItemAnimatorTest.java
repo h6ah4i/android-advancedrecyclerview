@@ -210,7 +210,7 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
 
         final List<String> mItems;
 
-        private Adapter(int count) {
+        Adapter(int count) {
             mItems = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 mItems.add("item-" + i);

@@ -514,7 +514,7 @@ public class ItemSlidingAnimator {
         private final Interpolator mInterpolator;
         private float mInvSize;
 
-        public SlidingAnimatorListenerObject(
+        SlidingAnimatorListenerObject(
                 SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> adapter,
                 List<RecyclerView.ViewHolder> activeViewHolders,
                 RecyclerView.ViewHolder holder, int toX, int toY, long duration, boolean horizontal,
@@ -530,7 +530,7 @@ public class ItemSlidingAnimator {
             mInterpolator = interpolator;
         }
 
-        private void start() {
+        void start() {
             final View containerView = ((SwipeableItemViewHolder) mViewHolder).getSwipeableContainerView();
 
             mInvSize = (1.0f / Math.max(1.0f, mHorizontal ? containerView.getWidth() : containerView.getHeight()));

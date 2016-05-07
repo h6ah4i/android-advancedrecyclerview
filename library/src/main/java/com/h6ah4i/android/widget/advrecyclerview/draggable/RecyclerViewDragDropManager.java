@@ -141,7 +141,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
     // these fields are only valid while dragging
     private DraggableItemWrapperAdapter mAdapter;
-    private RecyclerView.ViewHolder mDraggingItemViewHolder;
+    /*package*/ RecyclerView.ViewHolder mDraggingItemViewHolder;
     private DraggingItemInfo mDraggingItemInfo;
     private DraggingItemDecorator mDraggingItemDecorator;
     private SwapTargetItemOperator mSwapTargetItemOperator;
@@ -568,7 +568,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         return true;
     }
 
-    private void handleOnLongPress(MotionEvent e) {
+    /*package*/ void handleOnLongPress(MotionEvent e) {
         if (mInitiateOnLongPress) {
             checkConditionAndStartDragging(mRecyclerView, e, false);
         }
@@ -643,7 +643,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         cancelDrag(false);
     }
 
-    private void cancelDrag(boolean immediately) {
+    /*package*/ void cancelDrag(boolean immediately) {
         handleActionUpOrCancel(MotionEvent.ACTION_CANCEL, false);
 
         if (immediately) {
@@ -917,7 +917,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
-    private void checkItemSwapping(RecyclerView rv) {
+    /*package*/ void checkItemSwapping(RecyclerView rv) {
         final RecyclerView.ViewHolder draggingItem = mDraggingItemViewHolder;
 
         final int overlayItemLeft = mLastTouchX - mDraggingItemInfo.grabbedPositionX;
@@ -1133,7 +1133,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         @Override
         public void run() {
             if (mDraggingItemViewHolder != null) {
-                checkItemSwapping(mRecyclerView);
+                checkItemSwapping(getRecyclerView());
             }
         }
     };

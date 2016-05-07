@@ -864,7 +864,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         return mItemSlideAnimator.getSwipeContainerViewTranslationY(holder);
     }
 
-    private void handleOnLongPress(MotionEvent e) {
+    /*package*/ void handleOnLongPress(MotionEvent e) {
         RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForItemId(mCheckingTouchSlop);
         if (holder != null) {
             checkConditionAndStartSwiping(e, holder);
