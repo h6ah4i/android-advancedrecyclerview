@@ -19,10 +19,10 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 import android.support.v7.widget.RecyclerView;
 
 class ExpandableAdapterHelper {
-    public static final long NO_EXPANDABLE_POSITION = 0xffffffffffffffffl;
+    public static final long NO_EXPANDABLE_POSITION = 0xffffffffffffffffL;
 
-    private static final long LOWER_32BIT_MASK = 0x00000000ffffffffl;
-    private static final long LOWER_31BIT_MASK = 0x000000007fffffffl;
+    private static final long LOWER_32BIT_MASK = 0x00000000ffffffffL;
+    private static final long LOWER_31BIT_MASK = 0x000000007fffffffL;
 
     /*package*/ static final int VIEW_TYPE_FLAG_IS_GROUP = 0x80000000;
 

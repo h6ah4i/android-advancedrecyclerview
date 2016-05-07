@@ -23,10 +23,10 @@ import java.util.Arrays;
 class ExpandablePositionTranslator {
     private final static int ALLOCATE_UNIT = 256;
 
-    private final static long FLAG_EXPANDED = 0x0000000080000000l;
-    private final static long LOWER_31BIT_MASK = 0x000000007fffffffl;
-    private final static long LOWER_32BIT_MASK = 0x00000000ffffffffl;
-    private final static long UPPER_32BIT_MASK = 0xffffffff00000000l;
+    private final static long FLAG_EXPANDED = 0x0000000080000000L;
+    private final static long LOWER_31BIT_MASK = 0x000000007fffffffL;
+    private final static long LOWER_32BIT_MASK = 0x00000000ffffffffL;
+    private final static long UPPER_32BIT_MASK = 0xffffffff00000000L;
 
     /*
      * bit 64-32: offset  (use for caching purpose)
