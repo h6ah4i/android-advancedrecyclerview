@@ -34,7 +34,6 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-import com.h6ah4i.android.widget.advrecyclerview.event.RecyclerViewOnScrollEventDistributor;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -115,7 +114,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private RecyclerView mRecyclerView;
     private Interpolator mSwapTargetTranslationInterpolator = DEFAULT_SWAP_TARGET_TRANSITION_INTERPOLATOR;
     private ScrollOnDraggingProcessRunnable mScrollOnDraggingProcess;
-    private boolean mScrollEventRegisteredToDistributor;
 
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
     private RecyclerView.OnScrollListener mInternalUseOnScrollListener;
@@ -165,10 +163,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private boolean mCanDragH;
     private boolean mCanDragV;
     private float mDragEdgeScrollSpeed = 1.0f;
-
-
-    @Deprecated
-    private long mDraggingItemId = RecyclerView.NO_ID;
 
     /**
      * Constructor.
@@ -247,21 +241,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
-        //noinspection deprecation
-        attachRecyclerView(rv, null);
-    }
-
-    /**
-     * <p>Attaches {@link android.support.v7.widget.RecyclerView} instance.</p>
-     * <p>Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
-     * the wrapped adapter instance which is returned by the
-     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.</p>
-     *
-     * @param rv                     The {@link android.support.v7.widget.RecyclerView} instance
-     * @param scrollEventDistributor The distributor for {@link android.support.v7.widget.RecyclerView.OnScrollListener} event
-     */
-    @Deprecated
-    public void attachRecyclerView(@NonNull RecyclerView rv, @Nullable @SuppressWarnings("deprecation") RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
         if (isReleased()) {
             throw new IllegalStateException("Accessing released object");
         }
@@ -274,24 +253,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             throw new IllegalStateException("adapter is not set properly");
         }
 
-        if (scrollEventDistributor != null) {
-            final RecyclerView rv2 = scrollEventDistributor.getRecyclerView();
-
-            if (rv2 != null && rv2 != rv) {
-                throw new IllegalArgumentException("The scroll event distributor attached to different RecyclerView instance");
-            }
-        }
-
         mRecyclerView = rv;
 
-        if (scrollEventDistributor != null) {
-            scrollEventDistributor.add(mInternalUseOnScrollListener);
-            mScrollEventRegisteredToDistributor = true;
-        } else {
-            mRecyclerView.addOnScrollListener(mInternalUseOnScrollListener);
-            mScrollEventRegisteredToDistributor = false;
-        }
-
+        mRecyclerView.addOnScrollListener(mInternalUseOnScrollListener);
         mRecyclerView.addOnItemTouchListener(mInternalUseOnItemTouchListener);
 
         mDisplayDensity = mRecyclerView.getResources().getDisplayMetrics().density;
@@ -337,7 +301,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
         mInternalUseOnItemTouchListener = null;
 
-        if (mRecyclerView != null && mInternalUseOnScrollListener != null && mScrollEventRegisteredToDistributor) {
+        if (mRecyclerView != null && mInternalUseOnScrollListener != null) {
             mRecyclerView.removeOnScrollListener(mInternalUseOnScrollListener);
         }
         mInternalUseOnScrollListener = null;
@@ -349,7 +313,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mAdapter = null;
         mRecyclerView = null;
         mSwapTargetTranslationInterpolator = null;
-        mScrollEventRegisteredToDistributor = false;
     }
 
     /**
