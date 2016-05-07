@@ -40,6 +40,7 @@ abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
 
     protected abstract int getEdgeDirection(int no);
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
         boolean needsInvalidate = false;
