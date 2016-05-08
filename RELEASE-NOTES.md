@@ -1,3 +1,16 @@
+## 0.9.0
+[New features]
+- Introduce `DraggableItemAdapter.onCheckCanDrop()` callback (issue #233)
+
+[Improvements]
+- Improved Drag & Drop behavior for StaggeredGridLayout (issue #219)
+- Updated support library to v23.3.0
+
+[Breaking changes]
+- Removed deprecated classes/methods/fields marked as @Deprecated in v0.8.x
+- Removed Legacy* swipable feature related classes
+
+
 ## 0.8.7
 [New features]
 - Added onItemDragMoveDistanceUpdated() callback to OnItemDragEventListener (#191)
