@@ -30,6 +30,7 @@ public class RecyclerViewAdapterUtils {
      * @param view Child view of the RecyclerView's item
      * @return Parent RecyclerView instance
      */
+    @Nullable
     public static RecyclerView getParentRecyclerView(@Nullable View view) {
         if (view == null) {
             return null;
@@ -49,18 +50,13 @@ public class RecyclerViewAdapterUtils {
      * @param view Child view of the RecyclerView's item
      * @return Item view
      */
+    @Nullable
     public static View getParentViewHolderItemView(@Nullable View view) {
-        if (view == null) {
+        RecyclerView rv = getParentRecyclerView(view);
+        if (rv == null) {
             return null;
         }
-        ViewParent parent = view.getParent();
-        if (parent instanceof RecyclerView) {
-            return view;
-        } else if (parent instanceof View) {
-            return getParentViewHolderItemView((View) parent);
-        } else {
-            return null;
-        }
+        return rv.findContainingItemView(view);
     }
 
     /**
@@ -68,14 +64,12 @@ public class RecyclerViewAdapterUtils {
      * @param view Child view of the RecyclerView's item
      * @return ViewHolder
      */
+    @Nullable
     public static RecyclerView.ViewHolder getViewHolder(@Nullable View view) {
         RecyclerView rv = getParentRecyclerView(view);
-        View rvChild = getParentViewHolderItemView(view);
-
-        if (rv != null && rvChild != null) {
-            return rv.getChildViewHolder(rvChild);
-        } else {
+        if (rv == null) {
             return null;
         }
+        return rv.findContainingViewHolder(view);
     }
 }
