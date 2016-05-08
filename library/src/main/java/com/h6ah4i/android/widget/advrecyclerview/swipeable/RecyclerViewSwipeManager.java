@@ -92,7 +92,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private RecyclerView.ViewHolder mSwipingItem;
     private int mSwipingItemPosition = RecyclerView.NO_POSITION;
     private long mSwipingItemId = RecyclerView.NO_ID;
-    private Rect mSwipingItemMargins = new Rect();
+    private final Rect mSwipingItemMargins = new Rect();
     private int mTouchedItemOffsetX;
     private int mTouchedItemOffsetY;
     private int mLastTouchX;
@@ -167,10 +167,6 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
-        if (rv == null) {
-            throw new IllegalArgumentException("RecyclerView cannot be null");
-        }
-
         if (isReleased()) {
             throw new IllegalStateException("Accessing released object");
         }
@@ -432,7 +428,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         if (LOCAL_LOGD) {
-            Log.d(TAG, "swping finished  --- result = " + result);
+            Log.d(TAG, "swiping finished  --- result = " + result);
         }
 
         finishSwiping(result);
@@ -608,6 +604,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
         verifyAfterReaction(result, afterReaction);
 
+        //noinspection UnusedAssignment
         boolean slideAnimated = false;
 
         switch (afterReaction) {
@@ -867,7 +864,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         return mItemSlideAnimator.getSwipeContainerViewTranslationY(holder);
     }
 
-    private void handleOnLongPress(MotionEvent e) {
+    /*package*/ void handleOnLongPress(MotionEvent e) {
         RecyclerView.ViewHolder holder = mRecyclerView.findViewHolderForItemId(mCheckingTouchSlop);
         if (holder != null) {
             checkConditionAndStartSwiping(e, holder);

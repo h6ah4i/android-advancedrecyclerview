@@ -23,6 +23,7 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
@@ -49,8 +50,16 @@
             android:label="@string/activity_title_demo_d_grid"/>
 
         <activity
+            android:name=".demo_d_staggered_grid.DraggableStaggeredGridExampleActivity"
+            android:label="@string/activity_title_demo_d_staggered_grid"/>
+
+        <activity
             android:name=".demo_d_on_longpress.DragOnLongPressExampleActivity"
             android:label="@string/activity_title_demo_d_on_longpress"/>
+
+        <activity
+            android:name=".demo_d_check_can_drop.DraggableCheckCanDropExampleActivity"
+            android:label="@string/activity_title_demo_d_check_can_drop"/>
 
         <activity
             android:name=".demo_s_minimal.MinimalSwipeableExampleActivity"
@@ -107,10 +116,6 @@
         <activity
             android:name=".demo_s_viewpager.ViewPagerSwipeableExampleActivity"
             android:label="@string/activity_title_demo_s_viewpager"/>
-
-        <activity
-            android:name=".demo_s_legacy.LegacySwipeableExampleActivity"
-            android:label="@string/activity_title_demo_s_legacy"/>
 
         <activity
             android:name=".about.AboutActivity"

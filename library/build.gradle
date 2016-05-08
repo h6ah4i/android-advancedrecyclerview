@@ -35,6 +35,7 @@ android {
         def dataProps = new Properties()
         dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
 
+        //noinspection GroovyAssignabilityCheck
         versionCode dataProps.VERSION_CODE.toInteger()
         versionName dataProps.VERSION_NAME
     }
@@ -53,8 +54,8 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:recyclerview-v7:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
 }
 
 tasks.withType(JavaCompile) {

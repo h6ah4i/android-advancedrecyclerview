@@ -25,16 +25,15 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
-import com.h6ah4i.android.widget.advrecyclerview.event.RecyclerViewOnScrollEventDistributor;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
@@ -112,10 +111,21 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private static final float SCROLL_AMOUNT_COEFF = 25;
     private static final float SCROLL_TOUCH_SLOP_MULTIPLY = 1.5f;
 
+    static class SwapTarget {
+        public RecyclerView.ViewHolder holder;
+        public int position;
+        public boolean self;
+
+        public void clear() {
+            holder = null;
+            position = RecyclerView.NO_POSITION;
+            self = false;
+        }
+    }
+
     private RecyclerView mRecyclerView;
     private Interpolator mSwapTargetTranslationInterpolator = DEFAULT_SWAP_TARGET_TRANSITION_INTERPOLATOR;
     private ScrollOnDraggingProcessRunnable mScrollOnDraggingProcess;
-    private boolean mScrollEventRegisteredToDistributor;
 
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
     private RecyclerView.OnScrollListener mInternalUseOnScrollListener;
@@ -132,17 +142,18 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private boolean mInitiateOnLongPress;
     private boolean mInitiateOnMove = true;
     private int mLongPressTimeout;
+    private boolean mCheckCanDrop;
 
     private boolean mInScrollByMethod;
     private int mActualScrollByXAmount;
     private int mActualScrollByYAmount;
-    private Rect mTmpRect1 = new Rect();
+    private final Rect mTmpRect1 = new Rect();
     private int mItemSettleBackIntoPlaceAnimationDuration = 200;
     private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR;
 
     // these fields are only valid while dragging
     private DraggableItemWrapperAdapter mAdapter;
-    private RecyclerView.ViewHolder mDraggingItemViewHolder;
+    /*package*/ RecyclerView.ViewHolder mDraggingItemViewHolder;
     private DraggingItemInfo mDraggingItemInfo;
     private DraggingItemDecorator mDraggingItemDecorator;
     private SwapTargetItemOperator mSwapTargetItemOperator;
@@ -165,9 +176,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private boolean mCanDragV;
     private float mDragEdgeScrollSpeed = 1.0f;
 
-
-    @Deprecated
-    private long mDraggingItemId = RecyclerView.NO_ID;
+    private SwapTarget mTempSwapTarget = new SwapTarget();
 
     /**
      * Constructor.
@@ -246,25 +255,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
-        //noinspection deprecation
-        attachRecyclerView(rv, null);
-    }
-
-    /**
-     * <p>Attaches {@link android.support.v7.widget.RecyclerView} instance.</p>
-     * <p>Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
-     * the wrapped adapter instance which is returned by the
-     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.</p>
-     *
-     * @param rv                     The {@link android.support.v7.widget.RecyclerView} instance
-     * @param scrollEventDistributor The distributor for {@link android.support.v7.widget.RecyclerView.OnScrollListener} event
-     */
-    @Deprecated
-    public void attachRecyclerView(@NonNull RecyclerView rv, @Nullable @SuppressWarnings("deprecation") RecyclerViewOnScrollEventDistributor scrollEventDistributor) {
-        if (rv == null) {
-            throw new IllegalArgumentException("RecyclerView cannot be null");
-        }
-
         if (isReleased()) {
             throw new IllegalStateException("Accessing released object");
         }
@@ -277,24 +267,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             throw new IllegalStateException("adapter is not set properly");
         }
 
-        if (scrollEventDistributor != null) {
-            final RecyclerView rv2 = scrollEventDistributor.getRecyclerView();
-
-            if (rv2 != null && rv2 != rv) {
-                throw new IllegalArgumentException("The scroll event distributor attached to different RecyclerView instance");
-            }
-        }
-
         mRecyclerView = rv;
 
-        if (scrollEventDistributor != null) {
-            scrollEventDistributor.add(mInternalUseOnScrollListener);
-            mScrollEventRegisteredToDistributor = true;
-        } else {
-            mRecyclerView.addOnScrollListener(mInternalUseOnScrollListener);
-            mScrollEventRegisteredToDistributor = false;
-        }
-
+        mRecyclerView.addOnScrollListener(mInternalUseOnScrollListener);
         mRecyclerView.addOnItemTouchListener(mInternalUseOnItemTouchListener);
 
         mDisplayDensity = mRecyclerView.getResources().getDisplayMetrics().density;
@@ -340,7 +315,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
         mInternalUseOnItemTouchListener = null;
 
-        if (mRecyclerView != null && mInternalUseOnScrollListener != null && mScrollEventRegisteredToDistributor) {
+        if (mRecyclerView != null && mInternalUseOnScrollListener != null) {
             mRecyclerView.removeOnScrollListener(mInternalUseOnScrollListener);
         }
         mInternalUseOnScrollListener = null;
@@ -352,7 +327,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mAdapter = null;
         mRecyclerView = null;
         mSwapTargetTranslationInterpolator = null;
-        mScrollEventRegisteredToDistributor = false;
     }
 
     /**
@@ -474,6 +448,24 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         return mDragEdgeScrollSpeed;
     }
 
+    /**
+     * Sets whether to use {@link DraggableItemAdapter#onCheckCanDrop(int, int)}.
+     *
+     * @param enabled True if use {@link DraggableItemAdapter#onCheckCanDrop(int, int)}.
+     */
+    public void setCheckCanDropEnabled(boolean enabled) {
+        mCheckCanDrop = enabled;
+    }
+
+    /**
+     * Gets whether to use {@link DraggableItemAdapter#onCheckCanDrop(int, int)}.
+     *
+     * @return True if {@link DraggableItemAdapter#onCheckCanDrop(int, int)} is used, false otherwise.
+     */
+    public boolean isCheckCanDropEnabled() {
+        return mCheckCanDrop;
+    }
+
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         final int action = MotionEventCompat.getActionMasked(e);
 
@@ -548,6 +540,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         if (mInScrollByMethod) {
             mActualScrollByXAmount = dx;
             mActualScrollByYAmount = dy;
+        } else if (isDragging()) {
+            ViewCompat.postOnAnimationDelayed(mRecyclerView, mCheckItemSwappingRunnable, 500);
         }
     }
 
@@ -588,7 +582,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         return true;
     }
 
-    private void handleOnLongPress(MotionEvent e) {
+    /*package*/ void handleOnLongPress(MotionEvent e) {
         if (mInitiateOnLongPress) {
             checkConditionAndStartDragging(mRecyclerView, e, false);
         }
@@ -635,9 +629,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDraggingItemDecorator.setShadowDrawable(mShadowDrawable);
         mDraggingItemDecorator.start(e, mDraggingItemInfo);
 
-        int layoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
+        final int layoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
-        if (supportsViewTranslation() &&
+        if (supportsViewTranslation() && !mCheckCanDrop &&
                 (layoutType == CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_VERTICAL ||
                         layoutType == CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_HORIZONTAL)) {
             mSwapTargetItemOperator = new SwapTargetItemOperator(mRecyclerView, holder, mDraggableRange, mDraggingItemInfo);
@@ -663,7 +657,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         cancelDrag(false);
     }
 
-    private void cancelDrag(boolean immediately) {
+    /*package*/ void cancelDrag(boolean immediately) {
         handleActionUpOrCancel(MotionEvent.ACTION_CANCEL, false);
 
         if (immediately) {
@@ -736,7 +730,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDragScrollDistanceY = 0;
         mCanDragH = false;
         mCanDragV = false;
-
 
         int draggingItemInitialPosition = RecyclerView.NO_POSITION;
         int draggingItemCurrentPosition = RecyclerView.NO_POSITION;
@@ -937,17 +930,43 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
-    private void checkItemSwapping(RecyclerView rv) {
+    /*package*/ void checkItemSwapping(RecyclerView rv) {
         final RecyclerView.ViewHolder draggingItem = mDraggingItemViewHolder;
 
         final int overlayItemLeft = mLastTouchX - mDraggingItemInfo.grabbedPositionX;
         final int overlayItemTop = mLastTouchY - mDraggingItemInfo.grabbedPositionY;
-        final RecyclerView.ViewHolder swapTargetHolder =
-                findSwapTargetItem(rv, draggingItem, mDraggingItemInfo, overlayItemLeft, overlayItemTop, mDraggableRange);
+        final int draggingItemInitialPosition = mAdapter.getDraggingItemInitialPosition();
+        final int draggingItemCurrentPosition = mAdapter.getDraggingItemCurrentPosition();
+        SwapTarget swapTarget;
+        boolean canSwap = false;
 
-        if ((swapTargetHolder != null) && (swapTargetHolder != mDraggingItemViewHolder)) {
-            int draggingItemCurrentPosition = mAdapter.getDraggingItemCurrentPosition();
-            swapItems(rv, draggingItemCurrentPosition, draggingItem, swapTargetHolder);
+        swapTarget = findSwapTargetItem(mTempSwapTarget, rv, draggingItem, mDraggingItemInfo, overlayItemLeft, overlayItemTop, mDraggableRange, mCheckCanDrop, false);
+
+        if (swapTarget.position != RecyclerView.NO_POSITION) {
+            if (!mCheckCanDrop) {
+                canSwap = true;
+            }
+            if (!canSwap) {
+                canSwap = mAdapter.canDropItems(draggingItemInitialPosition, swapTarget.position);
+            }
+            if (!canSwap) {
+                swapTarget = findSwapTargetItem(mTempSwapTarget, rv, draggingItem, mDraggingItemInfo, overlayItemLeft, overlayItemTop, mDraggableRange, mCheckCanDrop, true);
+
+                if (swapTarget.position != RecyclerView.NO_POSITION) {
+                    canSwap = mAdapter.canDropItems(draggingItemInitialPosition, swapTarget.position);
+                }
+            }
+        }
+
+        if (canSwap) {
+            final boolean isLinearLayout = CustomRecyclerViewUtils.isLinearLayout(CustomRecyclerViewUtils.getLayoutType(rv));
+            final boolean smoothSwapping = isLinearLayout && (mSwapTargetItemOperator != null);
+
+            swapItems(rv, draggingItemCurrentPosition, draggingItem, swapTarget.holder, smoothSwapping);
+        }
+
+        if (mSwapTargetItemOperator != null) {
+            mSwapTargetItemOperator.setSwapTargetItem((canSwap) ? swapTarget.holder : null);
         }
     }
 
@@ -1037,7 +1056,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         // scroll
         if ((!reachedToFirstHardLimit && (scrollAmount < 0)) ||
                 (!reachedToLastHardLimit && (scrollAmount > 0))) {
-            safeEndAnimations(rv);
+            safeEndAnimationsIfRequired(rv);
 
             actualScrolledAmount = (horizontal)
                     ? scrollByXAndGetScrolledAmount(scrollAmount)
@@ -1123,11 +1142,11 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
-    private Runnable mCheckItemSwappingRunnable = new Runnable() {
+    private final Runnable mCheckItemSwappingRunnable = new Runnable() {
         @Override
         public void run() {
             if (mDraggingItemViewHolder != null) {
-                checkItemSwapping(mRecyclerView);
+                checkItemSwapping(getRecyclerView());
             }
         }
     };
@@ -1170,10 +1189,11 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             RecyclerView rv,
             int draggingItemAdapterPosition,
             @Nullable RecyclerView.ViewHolder draggingItem,
-            @NonNull RecyclerView.ViewHolder swapTargetHolder) {
+            @NonNull RecyclerView.ViewHolder swapTargetHolder,
+            boolean smoothSwapping) {
 
         final Rect swapTargetMargins = CustomRecyclerViewUtils.getLayoutMargins(swapTargetHolder.itemView, mTmpRect1);
-        final int fromPosition = draggingItemAdapterPosition;
+        @SuppressWarnings("UnnecessaryLocalVariable") final int fromPosition = draggingItemAdapterPosition;
         final int toPosition = swapTargetHolder.getAdapterPosition();
         final int diffPosition = Math.abs(fromPosition - toPosition);
         boolean performSwapping = false;
@@ -1185,14 +1205,14 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         final long actualDraggingItemId = rv.getAdapter().getItemId(fromPosition);
         if (actualDraggingItemId != mDraggingItemInfo.id) {
             if (LOCAL_LOGV) {
-                Log.v(TAG, "RecyclerView state has not been synched to data yet");
+                Log.v(TAG, "RecyclerView state has not been synchronized to data yet");
             }
             return;
         }
 
         //noinspection StatementWithEmptyBody
         if (diffPosition == 0) {
-        } else if ((diffPosition == 1) && (draggingItem != null)) {
+        } else if ((diffPosition == 1) && (draggingItem != null) && smoothSwapping) {
             final View v1 = draggingItem.itemView;
             final View v2 = swapTargetHolder.itemView;
             final Rect m1 = mDraggingItemInfo.margins;
@@ -1256,50 +1276,32 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             mItemDragEventListener.onItemDragPositionChanged(fromPosition, toPosition);
         }
 
-        RecyclerView.ViewHolder firstVisibleItem = null;
-
-        if (rv.getChildCount() > 0) {
-            View child = rv.getChildAt(0);
-            if (child != null) {
-                firstVisibleItem = rv.getChildViewHolder(child);
-            }
-        }
-
-        final int prevFirstItemPosition = (firstVisibleItem != null) ? firstVisibleItem.getAdapterPosition() : RecyclerView.NO_POSITION;
+        final RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+        final int layoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
+        final boolean isVertical = (CustomRecyclerViewUtils.extractOrientation(layoutType) == CustomRecyclerViewUtils.ORIENTATION_VERTICAL);
+        final int firstVisible = CustomRecyclerViewUtils.findFirstVisibleItemPosition(mRecyclerView, false);
+        View fromView = CustomRecyclerViewUtils.findViewByPosition(layoutManager, fromPosition);
+        View toView = CustomRecyclerViewUtils.findViewByPosition(layoutManager, toPosition);
+        View firstView = CustomRecyclerViewUtils.findViewByPosition(layoutManager, firstVisible);
+        Integer fromOrigin = getItemViewOrigin(fromView, isVertical);
+        Integer toOrigin = getItemViewOrigin(toView, isVertical);
+        Integer firstOrigin = getItemViewOrigin(firstView, isVertical);
 
         // NOTE: This method invokes notifyItemMoved() method internally. Be careful!
         mAdapter.moveItem(fromPosition, toPosition);
 
-        safeEndAnimations(rv);
-
-        switch (CustomRecyclerViewUtils.getOrientation(rv)) {
-            case CustomRecyclerViewUtils.ORIENTATION_VERTICAL:
-                if (fromPosition == prevFirstItemPosition) {
-                    //noinspection UnnecessaryLocalVariable
-                    final Rect margins = swapTargetMargins;
-                    final int curTopItemHeight = swapTargetHolder.itemView.getHeight() + margins.top + margins.bottom;
-                    scrollByYAndGetScrolledAmount(-curTopItemHeight);
-                } else if (toPosition == prevFirstItemPosition) {
-                    final Rect margins = mDraggingItemInfo.margins;
-                    final int curTopItemHeight = mDraggingItemInfo.height + margins.top + margins.bottom;
-                    scrollByYAndGetScrolledAmount(-curTopItemHeight);
-                }
-                break;
-            case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL:
-                if (fromPosition == prevFirstItemPosition) {
-                    //noinspection UnnecessaryLocalVariable
-                    final Rect margins = swapTargetMargins;
-                    final int curLeftItemHeight = swapTargetHolder.itemView.getWidth() + margins.left + margins.right;
-                    scrollByXAndGetScrolledAmount(-curLeftItemHeight);
-                } else if (toPosition == prevFirstItemPosition) {
-                    final Rect margins = mDraggingItemInfo.margins;
-                    final int curLeftItemHeight = mDraggingItemInfo.width + margins.left + margins.right;
-                    scrollByXAndGetScrolledAmount(-curLeftItemHeight);
-                }
-                break;
+        if ((firstVisible == fromPosition) && (firstOrigin != null) && (toOrigin != null)) {
+            rv.scrollBy(0, -(toOrigin - firstOrigin));
+            safeEndAnimations(rv);
+        } else if ((firstVisible == toPosition) && (fromView != null) && (fromOrigin != null) && (!fromOrigin.equals(toOrigin))) {
+            ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fromView.getLayoutParams();
+            rv.scrollBy(0, -(layoutManager.getDecoratedMeasuredHeight(fromView) + lp.topMargin + lp.bottomMargin));
+            safeEndAnimations(rv);
         }
+    }
 
-        safeEndAnimations(rv);
+    private static Integer getItemViewOrigin(View itemView, boolean vertical) {
+        return (itemView != null) ? ((vertical) ? itemView.getTop() : itemView.getLeft()) : null;
     }
 
     private static DraggableItemWrapperAdapter getDraggableItemWrapperAdapter(RecyclerView rv) {
@@ -1350,11 +1352,19 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     }
 
+    private void safeEndAnimationsIfRequired(RecyclerView rv) {
+        if (mSwapTargetItemOperator != null) {
+            safeEndAnimations(rv);
+        }
+    }
+
     /*package*/
-    static RecyclerView.ViewHolder findSwapTargetItem(
-            RecyclerView rv, RecyclerView.ViewHolder draggingItem,
-            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range) {
+    static SwapTarget findSwapTargetItem(
+            SwapTarget dest, RecyclerView rv, RecyclerView.ViewHolder draggingItem,
+            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, ItemDraggableRange range, boolean checkCanSwap, boolean alternative) {
         RecyclerView.ViewHolder swapTargetHolder = null;
+
+        dest.clear();
 
         if ((draggingItem == null) || (
                 draggingItem.getAdapterPosition() != RecyclerView.NO_POSITION &&
@@ -1376,17 +1386,26 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_HORIZONTAL:
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_GRID_VERTICAL:
                     swapTargetHolder = findSwapTargetItemForGridLayoutManager(
-                            rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, isVerticalLayout);
+                            rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, isVerticalLayout, checkCanSwap, alternative);
+                    break;
+                case CustomRecyclerViewUtils.LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL:
+                case CustomRecyclerViewUtils.LAYOUT_TYPE_STAGGERED_GRID_VERTICAL:
+                    swapTargetHolder = findSwapTargetItemForStaggeredGridLayoutManager(
+                            rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, isVerticalLayout, checkCanSwap, alternative);
                     break;
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_HORIZONTAL:
-                    swapTargetHolder = findSwapTargetItemForLinearLayoutManagerHorizontal(rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop);
-                    break;
                 case CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_VERTICAL:
-                    swapTargetHolder = findSwapTargetItemForLinearLayoutManagerVertical(rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop);
+                    swapTargetHolder = findSwapTargetItemForLinearLayoutManager(
+                            rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, isVerticalLayout, checkCanSwap, alternative);
                     break;
                 default:
                     break;
             }
+        }
+
+        if (swapTargetHolder == draggingItem) {
+            swapTargetHolder = null;
+            dest.self = true;
         }
 
         // check range
@@ -1396,34 +1415,171 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             }
         }
 
-        return swapTargetHolder;
+        dest.holder = swapTargetHolder;
+        dest.position = CustomRecyclerViewUtils.safeGetAdapterPosition(swapTargetHolder);
+
+        return dest;
     }
 
     private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManager(
             RecyclerView rv, @Nullable RecyclerView.ViewHolder draggingItem,
-            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical) {
-        final int spanSize = draggingItemInfo.spanSize;
+            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical, boolean checkCanSwap, boolean alternative) {
+
+        if (alternative) {
+            return null;
+        }
+
+        RecyclerView.ViewHolder swapTargetHolder;
+
+        swapTargetHolder = findSwapTargetItemForGridLayoutManagerInternal1(
+                rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, vertical);
+
+        if (swapTargetHolder == null) {
+            swapTargetHolder = findSwapTargetItemForGridLayoutManagerInternal2(
+                    rv, draggingItem, draggingItemInfo, overlayItemLeft, overlayItemTop, vertical);
+        }
+
+        return swapTargetHolder;
+    }
+
+    private static RecyclerView.ViewHolder findSwapTargetItemForStaggeredGridLayoutManager(
+            RecyclerView rv, @Nullable RecyclerView.ViewHolder draggingItem,
+            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical, boolean checkCanSwap, boolean alternative) {
+
+        if (alternative) {
+            return null;
+        }
+
+        if (draggingItem == null) {
+            return null;
+        }
 
         RecyclerView.ViewHolder swapTargetHolder = null;
 
-        for (int i = 0; i < spanSize; i++) {
-            swapTargetHolder = findSwapTargetItemForGridLayoutManagerInternal(
-                    rv, draggingItemInfo, overlayItemLeft, overlayItemTop, vertical, i);
+        int spanCount = CustomRecyclerViewUtils.getSpanCount(rv);
+        int draggingItemSpanIndex = CustomRecyclerViewUtils.getSpanIndex(draggingItem);
 
-            if (swapTargetHolder != null) {
-                if (swapTargetHolder == draggingItem) {
-                    swapTargetHolder = null;
+        RecyclerView.ViewHolder ssvh, csvh, esvh, sevh, cevh, eevh;
+        int sSpanIndex, eSpanIndex;
+        int overlayItemOrigin;
+        int draggingItemOrigin;
+
+        if (vertical) {
+            int sx = overlayItemLeft + 1;
+            int ex = overlayItemLeft + draggingItemInfo.width - 2;
+            int sy = overlayItemTop + 1;
+            int cy = overlayItemTop + draggingItemInfo.height / 2 - 1;
+            int ey = overlayItemTop + draggingItemInfo.height - 2;
+
+            int sPadding = rv.getPaddingLeft();
+            int ePadding = rv.getPaddingRight();
+            int rvSize = rv.getWidth();
+            float spanLength = (rvSize - sPadding - ePadding) * (1.0f / spanCount);
+
+            sSpanIndex = Math.min(Math.max((int) ((sx - draggingItemInfo.margins.left - sPadding) / spanLength), 0), spanCount - 1);
+            eSpanIndex = Math.min(Math.max((int) ((ex - draggingItemInfo.margins.right - sPadding) / spanLength), 0), spanCount - 1);
+
+            overlayItemOrigin = overlayItemTop;
+            draggingItemOrigin = draggingItem.itemView.getTop();
+
+            ssvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, sx, sy);
+            csvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, sx, cy);
+            esvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, sx, ey);
+            sevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, ex, sy);
+            cevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, ex, cy);
+            eevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, ex, ey);
+        } else {
+            int sx = overlayItemLeft + 1;
+            int cx = overlayItemLeft + draggingItemInfo.width / 2 - 1;
+            int ex = overlayItemLeft + draggingItemInfo.width - 2;
+            int sy = overlayItemTop + 1;
+            int ey = overlayItemTop + draggingItemInfo.height - 2;
+
+            int sPadding = rv.getPaddingTop();
+            int ePadding = rv.getPaddingBottom();
+            int rvSize = rv.getHeight();
+            float spanLength = (rvSize - sPadding - ePadding) * (1.0f / spanCount);
+
+            sSpanIndex = Math.min(Math.max((int) ((sx - draggingItemInfo.margins.top - sPadding) / spanLength), 0), spanCount - 1);
+            eSpanIndex = Math.min(Math.max((int) ((ex - draggingItemInfo.margins.left - sPadding) / spanLength), 0), spanCount - 1);
+
+            overlayItemOrigin = overlayItemLeft;
+            draggingItemOrigin = draggingItem.itemView.getLeft();
+
+            ssvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, sx, sy);
+            csvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx, sy);
+            esvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, ex, sy);
+            sevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, sx, ey);
+            cevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx, ey);
+            eevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, ex, ey);
+        }
+
+        int sState = 0;
+        int eState = 0;
+
+        if (csvh != null) {
+            sState |= 1;
+            if (csvh == ssvh) {
+                sState |= 2;
+            }
+            if (csvh == esvh) {
+                sState |= 4;
+            }
+        }
+
+        if (cevh != null) {
+            eState |= 1;
+            if (cevh == sevh) {
+                eState |= 2;
+            }
+            if (cevh == eevh) {
+                eState |= 4;
+            }
+        }
+
+        int sCount = Integer.bitCount(sState);
+        int eCount = Integer.bitCount(eState);
+
+        if (sSpanIndex != draggingItemSpanIndex && sSpanIndex == eSpanIndex) {
+            if (sCount == 3) {
+                swapTargetHolder = csvh;
+            } else if (eCount == 3) {
+                swapTargetHolder = cevh;
+            }
+        }
+
+        if (swapTargetHolder == null) {
+            if (sCount == 2 && eCount != 2) {
+                swapTargetHolder = csvh;
+            } else if (eCount == 2 && sCount != 2) {
+                swapTargetHolder = cevh;
+            }
+        }
+
+        if (swapTargetHolder != null) {
+            int swapTargetItemSpanIndex = CustomRecyclerViewUtils.getSpanIndex(swapTargetHolder);
+
+            if (draggingItemSpanIndex == swapTargetItemSpanIndex) {
+                if (overlayItemOrigin <= draggingItemOrigin) {
+                    // upward or left
+                    if (((sState | eState) & 2) != 0) {
+                        swapTargetHolder = null;
+                    }
+                } else {
+                    // downward or right
+                    if (((sState | eState) & 4) != 0) {
+                        swapTargetHolder = null;
+                    }
                 }
-
-                break;
             }
         }
 
         return swapTargetHolder;
     }
 
-    private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManagerInternal(
-            RecyclerView rv, DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical, int step) {
+    private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManagerInternal1(
+            RecyclerView rv, @Nullable RecyclerView.ViewHolder draggingItem,
+            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical) {
 
         int cx = overlayItemLeft;
         int cy = overlayItemTop;
@@ -1432,90 +1588,135 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             final int ml = draggingItemInfo.margins.left;
             final int mr = draggingItemInfo.margins.right;
 
-            cx += (int) ((draggingItemInfo.width + (ml + mr)) / draggingItemInfo.spanSize * (step + 0.5f) - ml);
+            cx += (int) ((draggingItemInfo.width + (ml + mr)) / draggingItemInfo.spanSize * 0.5f - ml);
             cy += draggingItemInfo.height / 2;
         } else {
             final int mt = draggingItemInfo.margins.top;
             final int mb = draggingItemInfo.margins.bottom;
 
             cx += draggingItemInfo.width / 2;
-            cy += (int) ((draggingItemInfo.height + (mt + mb)) / draggingItemInfo.spanSize * (step + 0.5f) - mt);
+            cy += (int) ((draggingItemInfo.height + (mt + mb)) / draggingItemInfo.spanSize * 0.5f - mt);
         }
 
-        RecyclerView.ViewHolder vh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx, cy);
-        if (vh != null) {
-            return vh;
-        } else {
-            int spanCount = CustomRecyclerViewUtils.getSpanCount(rv);
-            int height = rv.getHeight();
-            int width = rv.getWidth();
-            int paddingLeft = (vertical) ? rv.getPaddingLeft() : 0;
-            int paddingTop = (!vertical) ? rv.getPaddingTop() : 0;
-            int paddingRight = (vertical) ? rv.getPaddingRight() : 0;
-            int paddingBottom = (!vertical) ? rv.getPaddingBottom() : 0;
-            int columnWidth = (width - paddingLeft - paddingRight) / spanCount;
-            int rowHeight = (height - paddingTop - paddingBottom) / spanCount;
+        return CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx, cy);
+    }
 
-            for (int i = spanCount - 1; i >= 0; i--) {
-                int cx2 = (vertical) ? (paddingLeft + (columnWidth * i) + (columnWidth / 2)) : cx;
-                int cy2 = (!vertical) ? (paddingTop + (rowHeight * i) + (rowHeight / 2)) : cy;
-                RecyclerView.ViewHolder vh2 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx2, cy2);
+    private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManagerInternal2(
+            RecyclerView rv, @Nullable RecyclerView.ViewHolder draggingItem,
+            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical) {
 
-                if (vh2 != null) {
-                    int itemCount = rv.getLayoutManager().getItemCount();
-                    int pos = vh2.getAdapterPosition();
+        final int spanCount = CustomRecyclerViewUtils.getSpanCount(rv);
+        final int height = rv.getHeight();
+        final int width = rv.getWidth();
+        final int paddingLeft = (vertical) ? rv.getPaddingLeft() : 0;
+        final int paddingTop = (!vertical) ? rv.getPaddingTop() : 0;
+        final int paddingRight = (vertical) ? rv.getPaddingRight() : 0;
+        final int paddingBottom = (!vertical) ? rv.getPaddingBottom() : 0;
+        final int columnWidth = (width - paddingLeft - paddingRight) / spanCount;
+        final int rowHeight = (height - paddingTop - paddingBottom) / spanCount;
 
-                    if ((pos != RecyclerView.NO_POSITION) && (pos == itemCount - 1)) {
-                        return vh2;
-                    }
-                    break;
+        final int cx = overlayItemLeft + draggingItemInfo.width / 2;
+        final int cy = overlayItemTop + draggingItemInfo.height / 2;
+
+        for (int i = spanCount - 1; i >= 0; i--) {
+            int cx2 = (vertical) ? (paddingLeft + (columnWidth * i) + (columnWidth / 2)) : cx;
+            int cy2 = (!vertical) ? (paddingTop + (rowHeight * i) + (rowHeight / 2)) : cy;
+            RecyclerView.ViewHolder vh2 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx2, cy2);
+
+            if (vh2 != null) {
+                int itemCount = rv.getLayoutManager().getItemCount();
+                int pos = vh2.getAdapterPosition();
+
+                if ((pos != RecyclerView.NO_POSITION) && (pos == itemCount - 1)) {
+                    return vh2;
                 }
+                break;
             }
         }
 
         return null;
     }
 
-    private static RecyclerView.ViewHolder findSwapTargetItemForLinearLayoutManagerVertical(
-            RecyclerView rv, RecyclerView.ViewHolder draggingItem,
-            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop) {
-        RecyclerView.ViewHolder swapTargetHolder = null;
 
-        if (draggingItem != null) {
-            final int draggingItemPosition = draggingItem.getAdapterPosition();
-            final int draggingViewTop = draggingItem.itemView.getTop();
+    private static RecyclerView.ViewHolder verifyStaggeredGridSwapTargetItem(
+            RecyclerView rv, @Nullable RecyclerView.ViewHolder draggingItem,
+            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical,
+            RecyclerView.ViewHolder swapTargetItem) {
+        final int draggingItemSpanIndex = CustomRecyclerViewUtils.getSpanIndex(draggingItem);
+        final int swapTargetItemSpanIndex = CustomRecyclerViewUtils.getSpanIndex(swapTargetItem);
+        if (swapTargetItemSpanIndex == draggingItemSpanIndex) {
+            final int draggingItemPosition = CustomRecyclerViewUtils.safeGetLayoutPosition(draggingItem);
+            final int swapTargetItemPosition = swapTargetItem.getLayoutPosition();
 
-            if (overlayItemTop < draggingViewTop) {
-                if (draggingItemPosition > 0) {
-                    swapTargetHolder = rv.findViewHolderForAdapterPosition(draggingItemPosition - 1);
+            if (draggingItemPosition != RecyclerView.NO_POSITION) {
+                final int cx2;
+                final int cy2;
+                if (vertical) {
+                    cx2 = overlayItemLeft + draggingItemInfo.width / 2;
+                    if (swapTargetItemPosition < draggingItemPosition) {
+                        // move to upward
+                        cy2 = overlayItemTop;
+                    } else {
+                        // move to downward
+                        cy2 = overlayItemTop + draggingItemInfo.height;
+                    }
+                } else {
+                    cy2 = overlayItemTop + draggingItemInfo.height / 2;
+                    if (swapTargetItemPosition < draggingItemPosition) {
+                        // move to left
+                        cx2 = overlayItemLeft;
+                    } else {
+                        // move to right
+                        cx2 = overlayItemLeft + draggingItemInfo.width;
+                    }
                 }
-            } else if (overlayItemTop > draggingViewTop) {
-                if (draggingItemPosition < (rv.getAdapter().getItemCount() - 1)) {
-                    swapTargetHolder = rv.findViewHolderForAdapterPosition(draggingItemPosition + 1);
+
+                RecyclerView.ViewHolder vh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx2, cy2);
+
+                if (swapTargetItem == vh) {
+                    swapTargetItem = null;
                 }
             }
         }
 
-        return swapTargetHolder;
+        return swapTargetItem;
     }
 
-    private static RecyclerView.ViewHolder findSwapTargetItemForLinearLayoutManagerHorizontal(
-            RecyclerView rv, @Nullable RecyclerView.ViewHolder draggingItem,
-            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop) {
+    private static RecyclerView.ViewHolder findSwapTargetItemForLinearLayoutManager(
+            RecyclerView rv, RecyclerView.ViewHolder draggingItem,
+            DraggingItemInfo draggingItemInfo, int overlayItemLeft, int overlayItemTop, boolean vertical, boolean checkCanSwap, boolean alternative) {
         RecyclerView.ViewHolder swapTargetHolder = null;
 
-        if (draggingItem != null) {
-            final int draggingItemPosition = draggingItem.getAdapterPosition();
-            final int draggingViewLeft = draggingItem.itemView.getLeft();
+        if (draggingItem == null) {
+            return null;
+        }
 
-            if (overlayItemLeft < draggingViewLeft) {
+        if (!checkCanSwap && !alternative) {
+            final int draggingItemPosition = draggingItem.getAdapterPosition();
+            final int draggingViewOrigin = (vertical) ? draggingItem.itemView.getTop() : draggingItem.itemView.getLeft();
+            final int overlayItemOrigin = (vertical) ? overlayItemTop : overlayItemLeft;
+
+            if (overlayItemOrigin < draggingViewOrigin) {
                 if (draggingItemPosition > 0) {
                     swapTargetHolder = rv.findViewHolderForAdapterPosition(draggingItemPosition - 1);
                 }
-            } else if (overlayItemLeft > draggingViewLeft) {
+            } else if (overlayItemOrigin > draggingViewOrigin) {
                 if (draggingItemPosition < (rv.getAdapter().getItemCount() - 1)) {
                     swapTargetHolder = rv.findViewHolderForAdapterPosition(draggingItemPosition + 1);
                 }
+            }
+        } else {
+            final float gap = draggingItem.itemView.getResources().getDisplayMetrics().density * 8;
+            final float hgap = Math.min(draggingItemInfo.width * 0.2f, gap);
+            final float vgap = Math.min(draggingItemInfo.height * 0.2f, gap);
+            final float cx = overlayItemLeft + draggingItemInfo.width * 0.5f;
+            final float cy = overlayItemTop + draggingItemInfo.height * 0.5f;
+
+            final RecyclerView.ViewHolder swapTargetHolder1 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx - hgap, cy - vgap);
+            final RecyclerView.ViewHolder swapTargetHolder2 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(rv, cx + hgap, cy + vgap);
+
+            if (swapTargetHolder1 == swapTargetHolder2) {
+                swapTargetHolder = swapTargetHolder1;
             }
         }
 

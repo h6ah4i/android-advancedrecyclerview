@@ -146,4 +146,9 @@ class DragOnLongPressExampleAdapter
         // no drag-sortable range specified
         return null;
     }
+
+    @Override
+    public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
+        return true;
+    }
 }

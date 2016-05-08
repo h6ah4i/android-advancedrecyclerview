@@ -17,6 +17,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 class SwipeReactionUtils {
+    @SuppressWarnings("PointlessBitwiseExpression")
     public static int extractLeftReaction(int type) {
         return ((type >>> InternalConstants.BIT_SHIFT_AMOUNT_LEFT) & InternalConstants.REACTION_CAPABILITY_MASK);
     }

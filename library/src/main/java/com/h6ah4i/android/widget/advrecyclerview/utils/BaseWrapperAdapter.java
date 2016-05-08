@@ -210,7 +210,7 @@ public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     private static final class BridgeObserver<VH extends RecyclerView.ViewHolder> extends RecyclerView.AdapterDataObserver {
-        private WeakReference<BaseWrapperAdapter<VH>> mRefHolder;
+        private final WeakReference<BaseWrapperAdapter<VH>> mRefHolder;
 
         public BridgeObserver(BaseWrapperAdapter<VH> holder) {
             mRefHolder = new WeakReference<>(holder);

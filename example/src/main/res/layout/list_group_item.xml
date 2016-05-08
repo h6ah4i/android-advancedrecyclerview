@@ -21,14 +21,16 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_group_item_height"
     android:layout_marginTop="8dp"
-    android:background="#ffffff">
+    android:background="#ffffff"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true"
-        android:foreground="?attr/selectableItemBackground">
+        android:foreground="?attr/selectableItemBackground"
+        tools:ignore="UselessParent">
 
         <TextView
             android:id="@android:id/text1"

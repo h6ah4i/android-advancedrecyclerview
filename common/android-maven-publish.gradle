@@ -107,5 +107,7 @@ uploadArchives {
 
 artifacts {
     archives androidSourcesJar
-    archives androidJavadocsJar
+    if (System.getenv("JITPACK") != "true") {
+        archives androidJavadocsJar
+    }
 }

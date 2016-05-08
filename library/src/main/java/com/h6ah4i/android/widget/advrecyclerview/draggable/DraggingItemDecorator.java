@@ -41,7 +41,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private int mTouchPositionX;
     private int mTouchPositionY;
     private NinePatchDrawable mShadowDrawable;
-    private Rect mShadowPadding = new Rect();
+    private final Rect mShadowPadding = new Rect();
     private boolean mStarted;
     private boolean mIsScrolling;
     private ItemDraggableRange mRange;

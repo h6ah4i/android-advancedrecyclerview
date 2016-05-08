@@ -327,6 +327,7 @@ public interface SwipeableItemConstants {
      * and {@link SwipeableItemViewHolder#getSwipeItemHorizontalSlideAmount()} methods.</p>
      * <p>Indicates that this item is pinned to LEFT of the window.</p>
      */
+    @SuppressWarnings("PointlessArithmeticExpression")
     float OUTSIDE_OF_THE_WINDOW_LEFT = -((1 << 16) + 0);
 
     /**
@@ -341,6 +342,7 @@ public interface SwipeableItemConstants {
      * and {@link SwipeableItemViewHolder#getSwipeItemHorizontalSlideAmount()} methods.</p>
      * <p>Indicates that this item is pinned to RIGHT the window.</p>
      */
+    @SuppressWarnings("PointlessArithmeticExpression")
     float OUTSIDE_OF_THE_WINDOW_RIGHT = ((1 << 16) + 0);
 
     /**

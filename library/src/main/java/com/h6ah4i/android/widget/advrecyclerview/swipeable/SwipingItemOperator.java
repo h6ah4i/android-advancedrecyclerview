@@ -41,7 +41,7 @@ class SwipingItemOperator {
     private int mRightSwipeReactionType;
     private int mDownSwipeReactionType;
     private int mSwipingItemWidth;
-    private int mSwipingItemHeight;
+    private final int mSwipingItemHeight;
     private float mInvSwipingItemWidth;
     private float mInvSwipingItemHeight;
     private int mSwipeDistanceX;
@@ -49,7 +49,7 @@ class SwipingItemOperator {
     private float mPrevTranslateAmount;
     private int mInitialTranslateAmountX;
     private int mInitialTranslateAmountY;
-    private boolean mSwipeHorizontal;
+    private final boolean mSwipeHorizontal;
 
     public SwipingItemOperator(
             RecyclerViewSwipeManager manager, RecyclerView.ViewHolder swipingItem,

@@ -102,10 +102,6 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
     public boolean add(@NonNull T listener, int index) {
         final String METHOD_NAME = "add()";
 
-        if (listener == null) {
-            throw new IllegalArgumentException("can not specify null for the listener");
-        }
-
         verifyIsNotReleased(METHOD_NAME);
         verifyIsNotPerformingClearMethod(METHOD_NAME);
 
@@ -140,10 +136,6 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
      */
     public boolean remove(@NonNull T listener) {
         final String METHOD_NAME = "remove()";
-
-        if (listener == null) {
-            throw new IllegalArgumentException("can not specify null for the listener");
-        }
 
         verifyIsNotPerformingClearMethod(METHOD_NAME);
         verifyIsNotReleased(METHOD_NAME);
@@ -210,7 +202,7 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
         if (mListeners != null) {
             return mListeners.size();
         } else {
-            return mListeners.size();
+            return 0;
         }
     }
 

@@ -43,13 +43,6 @@ public class DraggingItemInfo {
         grabbedPositionY = touchY - initialItemTop;
         margins = new Rect();
         CustomRecyclerViewUtils.getLayoutMargins(vh.itemView, margins);
-
-        final RecyclerView.LayoutManager lm = rv.getLayoutManager();
-
-        if (lm instanceof GridLayoutManager) {
-            spanSize = ((GridLayoutManager)lm).getSpanSizeLookup().getSpanSize(vh.getLayoutPosition());
-        } else {
-            spanSize = 1;
-        }
+        spanSize = CustomRecyclerViewUtils.getSpanSize(vh);
     }
 }

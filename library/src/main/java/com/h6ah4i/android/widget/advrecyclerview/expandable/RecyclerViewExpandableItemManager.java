@@ -127,10 +127,6 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param rv The {@link android.support.v7.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
-        if (rv == null) {
-            throw new IllegalArgumentException("RecyclerView cannot be null");
-        }
-
         if (isReleased()) {
             throw new IllegalStateException("Accessing released object");
         }
@@ -892,6 +888,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param topMargin           Top margin
      * @param bottomMargin        Bottom margin
      */
+    @SuppressWarnings("StatementWithEmptyBody")
     public void scrollToGroupWithTotalChildrenHeight(int groupPosition, int totalChildrenHeight, int topMargin, int bottomMargin) {
         long packedPosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
         int flatPosition = getFlatPosition(packedPosition);
@@ -911,8 +908,9 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
 
         int parentHeight = mRecyclerView.getHeight();
 
-        int topRoom = groupItemTop;
-        int bottomRoom = parentHeight - groupItemBottom;
+        //noinspection UnnecessaryLocalVariable
+        final int topRoom = groupItemTop;
+        final int bottomRoom = parentHeight - groupItemBottom;
 
         if (topRoom <= topMargin) {
             // scroll down
@@ -987,7 +985,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
             dest.writeIntArray(this.adapterSavedState);
         }
 
-        private SavedState(Parcel in) {
+        SavedState(Parcel in) {
             this.adapterSavedState = in.createIntArray();
         }
 

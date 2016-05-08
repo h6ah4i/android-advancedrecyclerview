@@ -25,7 +25,9 @@
     <string name="activity_title_demo_d_minimal">Draggable (Minimal)</string>
     <string name="activity_title_demo_d_basic">Draggable (Basic)</string>
     <string name="activity_title_demo_d_grid">Draggable (Grid Layout)</string>
+    <string name="activity_title_demo_d_staggered_grid">Draggable (Staggered Grid Layout)</string>
     <string name="activity_title_demo_d_on_longpress">Drag on Long Press</string>
+    <string name="activity_title_demo_d_check_can_drop">Draggable (uses onCheckCanDrop)</string>
     <string name="activity_title_demo_s_minimal">Swipeable (Minimal)</string>
     <string name="activity_title_demo_s_basic">Swipeable (Basic)</string>
     <string name="activity_title_demo_s_on_longpress">Swipe on Long Press</string>
@@ -40,7 +42,6 @@
     <string name="activity_title_demo_e_already_expanded">Expandable (Groups already expanded)</string>
     <string name="activity_title_demo_s_vertical">Swipeable (Vertical)</string>
     <string name="activity_title_demo_s_viewpager">Swipeable with ViewPager</string>
-    <string name="activity_title_demo_s_legacy">Swipeable (Legacy)</string>
 
     <string name="snack_bar_text_item_removed">1 item removed</string>
     <string name="snack_bar_text_group_item_removed">1 group item removed</string>
