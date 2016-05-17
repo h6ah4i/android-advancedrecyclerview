@@ -1,3 +1,8 @@
+## 0.9.1
+[Bug fixes]
+- Fix broken drag and drop behavior on API level 10
+
+
 ## 0.9.0
 [New features]
 - Introduce `DraggableItemAdapter.onCheckCanDrop()` callback (issue #233)

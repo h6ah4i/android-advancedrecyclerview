@@ -959,10 +959,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         if (canSwap) {
-            final boolean isLinearLayout = CustomRecyclerViewUtils.isLinearLayout(CustomRecyclerViewUtils.getLayoutType(rv));
-            final boolean smoothSwapping = isLinearLayout && (mSwapTargetItemOperator != null);
-
-            swapItems(rv, draggingItemCurrentPosition, draggingItem, swapTarget.holder, smoothSwapping);
+            swapItems(rv, draggingItemCurrentPosition, draggingItem, swapTarget.holder);
         }
 
         if (mSwapTargetItemOperator != null) {
@@ -1189,8 +1186,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             RecyclerView rv,
             int draggingItemAdapterPosition,
             @Nullable RecyclerView.ViewHolder draggingItem,
-            @NonNull RecyclerView.ViewHolder swapTargetHolder,
-            boolean smoothSwapping) {
+            @NonNull RecyclerView.ViewHolder swapTargetHolder) {
 
         final Rect swapTargetMargins = CustomRecyclerViewUtils.getLayoutMargins(swapTargetHolder.itemView, mTmpRect1);
         @SuppressWarnings("UnnecessaryLocalVariable") final int fromPosition = draggingItemAdapterPosition;
@@ -1210,9 +1206,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             return;
         }
 
+        final boolean isLinearLayout = CustomRecyclerViewUtils.isLinearLayout(CustomRecyclerViewUtils.getLayoutType(rv));
+        final boolean swapNextItemSmoothlyInLinearLayout = isLinearLayout && (!supportsViewTranslation() || !mCheckCanDrop);
+
         //noinspection StatementWithEmptyBody
         if (diffPosition == 0) {
-        } else if ((diffPosition == 1) && (draggingItem != null) && smoothSwapping) {
+        } else if ((diffPosition == 1) && (draggingItem != null) && swapNextItemSmoothlyInLinearLayout) {
             final View v1 = draggingItem.itemView;
             final View v2 = swapTargetHolder.itemView;
             final Rect m1 = mDraggingItemInfo.margins;
