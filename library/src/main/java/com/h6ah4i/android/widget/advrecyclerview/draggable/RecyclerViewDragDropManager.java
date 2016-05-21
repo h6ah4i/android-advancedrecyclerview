@@ -563,11 +563,18 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             return false;
         }
 
+        final int touchX = (int) (e.getX() + 0.5f);
+        final int touchY = (int) (e.getY() + 0.5f);
+
+        if (!canStartDrag(holder, touchX, touchY)) {
+            return false;
+        }
+
         final int orientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
         final int spanCount = CustomRecyclerViewUtils.getSpanCount(mRecyclerView);
 
-        mInitialTouchX = mLastTouchX = (int) (e.getX() + 0.5f);
-        mInitialTouchY = mLastTouchY = (int) (e.getY() + 0.5f);
+        mInitialTouchX = mLastTouchX = touchX;
+        mInitialTouchY = mLastTouchY = touchY;
         mInitialTouchItemId = holder.getItemId();
         mCanDragH = (orientation == CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL) ||
                 ((orientation == CustomRecyclerViewUtils.ORIENTATION_VERTICAL) && (spanCount > 1));
@@ -823,22 +830,11 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             return false;
         }
 
-        int position = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
-
-        if (position == RecyclerView.NO_POSITION) {
+        if (!canStartDrag(holder, touchX, touchY)) {
             return false;
         }
 
-        final View view = holder.itemView;
-        final int translateX = (int) (ViewCompat.getTranslationX(view) + 0.5f);
-        final int translateY = (int) (ViewCompat.getTranslationY(view) + 0.5f);
-        final int viewX = touchX - (view.getLeft() + translateX);
-        final int viewY = touchY - (view.getTop() + translateY);
-
-        if (!mAdapter.canStartDrag(holder, position, viewX, viewY)) {
-            return false;
-        }
-
+        int position = holder.getAdapterPosition();
         ItemDraggableRange range = mAdapter.getItemDraggableRange(holder, position);
 
         if (range == null) {
@@ -855,6 +851,27 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         startDragging(rv, e, holder, range);
 
         return true;
+    }
+
+    private boolean canStartDrag(RecyclerView.ViewHolder holder, int touchX, int touchY) {
+        final int itemPosition = holder.getAdapterPosition();
+
+        if (itemPosition == RecyclerView.NO_POSITION) {
+            return false;
+        }
+
+        final View view = holder.itemView;
+        final int translateX = (int) (ViewCompat.getTranslationX(view) + 0.5f);
+        final int translateY = (int) (ViewCompat.getTranslationY(view) + 0.5f);
+        final int viewX = touchX - (view.getLeft() + translateX);
+        final int viewY = touchY - (view.getTop() + translateY);
+
+        if (mAdapter.canStartDrag(holder, itemPosition, viewX, viewY)) {
+            // NOTE: notifyXXX method might be called inside of the user implemented code. that is not acceptable.
+            return (holder.getAdapterPosition() == itemPosition);
+        } else {
+            return false;
+        }
     }
 
     private void verifyItemDraggableRange(ItemDraggableRange range, RecyclerView.ViewHolder holder) {
