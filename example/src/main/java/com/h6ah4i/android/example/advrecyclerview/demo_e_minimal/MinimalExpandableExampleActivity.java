@@ -115,7 +115,7 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
             for (int i = 0; i < 20; i++) {
                 MyGroupItem group = new MyGroupItem(i, "GROUP " + i);
                 for (int j = 0; j < 5; j++) {
-                    group.children.add(new MyChildItem(i, "child " + i));
+                    group.children.add(new MyChildItem(j, "child " + j));
                 }
                 mItems.add(group);
             }
