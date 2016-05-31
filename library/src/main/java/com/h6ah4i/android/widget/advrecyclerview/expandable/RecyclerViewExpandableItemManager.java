@@ -85,10 +85,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
 
     /**
      * Constructor.
-     *
-     * @param savedState The saved state object which is obtained from the {@link #getSavedState()} method.
      */
-    public RecyclerViewExpandableItemManager(@Nullable Parcelable savedState) {
+    public RecyclerViewExpandableItemManager() {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
             @Override
             public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -103,10 +101,6 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
             public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
             }
         };
-
-        if (savedState instanceof SavedState) {
-            mSavedState = (SavedState) savedState;
-        }
     }
 
     /**
@@ -200,6 +194,18 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
         }
 
         return new SavedState(adapterSavedState);
+    }
+
+    /**
+     * <p>Sets saved state object in order to restore the internal state.</p>
+     * <p>Call this method after you have set expand and collapse listeners.</p>
+     *
+     * @param savedState The Parcelable object which stores information need to restore the internal states.
+     */
+    public void setSavedState(@Nullable Parcelable savedState){
+        if (savedState instanceof SavedState) {
+            mSavedState = (SavedState) savedState;
+        }
     }
 
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {

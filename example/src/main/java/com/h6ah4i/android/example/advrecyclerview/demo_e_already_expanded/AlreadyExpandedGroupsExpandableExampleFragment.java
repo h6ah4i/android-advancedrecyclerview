@@ -69,7 +69,9 @@ public class AlreadyExpandedGroupsExpandableExampleFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
 
         final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
-        mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
+        mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager();
+        // state must be set after listeners are added
+        mRecyclerViewExpandableItemManager.setSavedState(eimSavedState);
 
         //adapter
         final AlreadyExpandedGroupsExpandableExampleAdapter myItemAdapter = new AlreadyExpandedGroupsExpandableExampleAdapter(mRecyclerViewExpandableItemManager, getDataProvider());
