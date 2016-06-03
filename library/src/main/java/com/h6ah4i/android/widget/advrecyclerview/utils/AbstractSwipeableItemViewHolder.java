@@ -76,24 +76,6 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
         mAfterSwipeReaction = reaction;
     }
 
-    /**
-     * Deprecated. Use the {@link #getSwipeItemHorizontalSlideAmount()} instead.
-     * @return horizontal swipe amount
-     */
-    @Deprecated
-    public float getSwipeItemSlideAmount() {
-        return getSwipeItemHorizontalSlideAmount();
-    }
-
-    /**
-     * Deprecated. Use the {@link #getSwipeItemHorizontalSlideAmount()} instead.
-     * @param amount horizontal swipe amount
-     */
-    @Deprecated
-    public void setSwipeItemSlideAmount(float amount) {
-        setSwipeItemHorizontalSlideAmount(amount);
-    }
-
     @Override
     public void setSwipeItemVerticalSlideAmount(float amount) {
         mVerticalSwipeAmount = amount;
@@ -115,9 +97,7 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     }
 
     @Override
-    public View getSwipeableContainerView() {
-        return null;
-    }
+    public abstract View getSwipeableContainerView();
 
     @Override
     public void setMaxLeftSwipeAmount(float amount) {

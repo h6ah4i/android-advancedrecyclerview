@@ -17,6 +17,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
 import android.graphics.Rect;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
@@ -25,17 +26,23 @@ public class DraggingItemInfo {
     public final int width;
     public final int height;
     public final long id;
+    public final int initialItemLeft;
+    public final int initialItemTop;
     public final int grabbedPositionX;
     public final int grabbedPositionY;
     public final Rect margins;
+    public final int spanSize;
 
-    public DraggingItemInfo(RecyclerView.ViewHolder vh, int touchX, int touchY) {
+    public DraggingItemInfo(RecyclerView rv, RecyclerView.ViewHolder vh, int touchX, int touchY) {
         width = vh.itemView.getWidth();
         height = vh.itemView.getHeight();
         id = vh.getItemId();
-        grabbedPositionX = touchX - vh.itemView.getLeft();
-        grabbedPositionY = touchY - vh.itemView.getTop();
+        initialItemLeft = vh.itemView.getLeft();
+        initialItemTop = vh.itemView.getTop();
+        grabbedPositionX = touchX - initialItemLeft;
+        grabbedPositionY = touchY - initialItemTop;
         margins = new Rect();
         CustomRecyclerViewUtils.getLayoutMargins(vh.itemView, margins);
+        spanSize = CustomRecyclerViewUtils.getSpanSize(vh);
     }
 }

@@ -50,4 +50,16 @@ public interface DraggableItemAdapter<T extends RecyclerView.ViewHolder> {
      * @param toPosition New position of the item.
      */
     void onMoveItem(int fromPosition, int toPosition);
+
+    /**
+     * Called while dragging in order to check whether the dragging item can be dropped to the specified position.
+     *
+     * NOTE: This method will be called when the checkCanDrop option is enabled by {@link RecyclerViewDragDropManager#setCheckCanDropEnabled(boolean)}.
+     *
+     * @param draggingPosition The position of the currently dragging item.
+     * @param dropPosition The position to check whether the dragging item can be dropped or not.
+     *
+     * @return Whether can be dropped to the specified position.
+     */
+    boolean onCheckCanDrop(int draggingPosition, int dropPosition);
 }

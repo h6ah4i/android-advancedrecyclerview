@@ -16,7 +16,8 @@
 <resources>
 
     <style name="commonListItemStyle">
-        <item name="android:translationZ">@dimen/list_item_translation_z</item>
+        <item name="android:elevation">@dimen/list_item_elevation</item>
+        <item name="android:outlineProvider">bounds</item>
     </style>
 
 </resources>

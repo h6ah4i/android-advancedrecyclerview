@@ -30,10 +30,10 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
     private static final int RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC = 20;
 
     private int mReturnToDefaultPositionDuration = 200;
-    private int mReturnToDefaultPositionAnimateThreshold;
+    private final int mReturnToDefaultPositionAnimateThreshold;
     private Interpolator mReturnToDefaultPositionInterpolator;
 
-    protected RecyclerView mRecyclerView;
+    protected final RecyclerView mRecyclerView;
     protected RecyclerView.ViewHolder mDraggingItemViewHolder;
 
     public BaseDraggableItemDecorator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItemViewHolder) {

@@ -29,6 +29,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
+import java.util.List;
+
 class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends BaseWrapperAdapter<VH> implements SwipeableItemAdapter<VH> {
     private static final String TAG = "ARVDraggableWrapper";
 
@@ -85,7 +87,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position) {
+    public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
         if (isDragging()) {
             final long draggingItemId = mDraggingItemInfo.id;
             final long itemId = holder.getItemId();
@@ -94,15 +96,16 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
                     position, mDraggingItemInitialPosition, mDraggingItemCurrentPosition);
 
             if (itemId == draggingItemId && holder != mDraggingItemViewHolder) {
-                if (mDraggingItemViewHolder == null) {
-                    if (LOCAL_LOGI) {
-                        Log.i(TAG, "a new view holder object for the currently dragging item is assigned");
-                    }
-                    mDraggingItemViewHolder = holder;
-                    mDragDropManager.onNewDraggingItemViewBound(holder);
-                } else {
-                    Log.e(TAG, "an another view holder object for the currently dragging item is assigned");
+                if (mDraggingItemViewHolder != null) {
+                    onDraggingItemRecycled();
                 }
+
+                if (LOCAL_LOGI) {
+                    Log.i(TAG, "a new view holder object for the currently dragging item is assigned");
+                }
+
+                mDraggingItemViewHolder = holder;
+                mDragDropManager.onNewDraggingItemViewBound(holder);
             }
 
             int flags = Constants.STATE_FLAG_DRAGGING;
@@ -115,10 +118,10 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
             }
 
             safeUpdateFlags(holder, flags);
-            super.onBindViewHolder(holder, origPosition);
+            super.onBindViewHolder(holder, origPosition, payloads);
         } else {
             safeUpdateFlags(holder, 0);
-            super.onBindViewHolder(holder, position);
+            super.onBindViewHolder(holder, position, payloads);
         }
     }
 
@@ -280,15 +283,19 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     public void onViewRecycled(VH holder) {
         if (isDragging()) {
             if (holder == mDraggingItemViewHolder) {
-                if (LOCAL_LOGI) {
-                    Log.i(TAG, "a view holder object which is bound to currently dragging item is recycled");
-                }
-                mDraggingItemViewHolder = null;
-                mDragDropManager.onDraggingItemViewRecycled();
+                onDraggingItemRecycled();
             }
         }
 
         super.onViewRecycled(holder);
+    }
+
+    private void onDraggingItemRecycled() {
+        if (LOCAL_LOGI) {
+            Log.i(TAG, "a view holder object which is bound to currently dragging item is recycled");
+        }
+        mDraggingItemViewHolder = null;
+        mDragDropManager.onDraggingItemViewRecycled();
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
@@ -299,6 +306,16 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
             Log.v(TAG, "canStartDrag(holder = " + holder + ", position = " + position + ", x = " + x + ", y = " + y + ")");
         }
         return mDraggableItemAdapter.onCheckCanStartDrag(holder, position, x, y);
+    }
+
+    // NOTE: This method is called from RecyclerViewDragDropManager
+    /*package*/
+    @SuppressWarnings("unchecked")
+    boolean canDropItems(int draggingPosition, int dropPosition) {
+        if (LOCAL_LOGV) {
+            Log.v(TAG, "canDropItems(draggingPosition = " + draggingPosition + ", dropPosition = " + dropPosition + ")");
+        }
+        return mDraggableItemAdapter.onCheckCanDrop(draggingPosition, dropPosition);
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager

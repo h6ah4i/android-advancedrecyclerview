@@ -25,12 +25,22 @@ android {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 14
-        versionName "0.8.4"
+        versionCode 19
+        versionName "0.9.1"
+        vectorDrawables.useSupportLibrary = true
     }
 
     signingConfigs {
         release
+    }
+
+    productFlavors {
+        // for saving build time during debugging
+        lollipop {
+            minSdkVersion 21
+        }
+        gb {
+        }
     }
 
     buildTypes {
@@ -50,8 +60,5 @@ if (loadSigningConfigFromPropertiesFile(
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
-    compile 'com.android.support:design:23.1.0'
-
-    // NOTE: vector-compat is available on API level 14 or later
-    compile 'com.wnafee:vector-compat:1.0.5'
+    compile 'com.android.support:design:23.3.0'
 }

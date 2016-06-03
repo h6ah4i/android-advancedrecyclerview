@@ -16,7 +16,12 @@
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.1'
+
+    if (System.getenv("JITPACK") == "true") {
+        buildToolsVersion '23.0.2'
+    } else {
+        buildToolsVersion '23.0.3'
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7

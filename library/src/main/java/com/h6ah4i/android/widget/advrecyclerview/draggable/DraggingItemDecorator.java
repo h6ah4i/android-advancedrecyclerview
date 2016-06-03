@@ -41,7 +41,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private int mTouchPositionX;
     private int mTouchPositionY;
     private NinePatchDrawable mShadowDrawable;
-    private Rect mShadowPadding = new Rect();
+    private final Rect mShadowPadding = new Rect();
     private boolean mStarted;
     private boolean mIsScrolling;
     private ItemDraggableRange mRange;
@@ -119,8 +119,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         // However, if the RecyclerView has any other decorations or RecyclerView is in scrolling state,
         // need to draw it to avoid visual corruptions.
         if (mDraggingItemImage != null) {
-            final float left = mTranslationX + mDraggingItemInfo.margins.left - mShadowPadding.left;
-            final float top = /*mDraggingItemMargins.top +*/ mTranslationY - mShadowPadding.top;
+            final float left = mTranslationX - mShadowPadding.left;
+            final float top = mTranslationY - mShadowPadding.top;
             c.drawBitmap(mDraggingItemImage, left, top, null);
         }
     }
@@ -142,7 +142,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         // hide
         itemView.setVisibility(View.INVISIBLE);
 
-        update(e);
+        update(e, true);
 
         mRecyclerView.addItemDecoration(this);
 
@@ -189,17 +189,27 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mStarted = false;
     }
 
-    public void update(MotionEvent e) {
+    public boolean update(MotionEvent e, boolean force) {
         mTouchPositionX = (int) (e.getX() + 0.5f);
         mTouchPositionY = (int) (e.getY() + 0.5f);
-        refresh();
+
+        return refresh(force);
     }
 
-    public void refresh() {
-        updateTranslationOffset();
-        updateDraggingItemPosition(mTranslationX, mTranslationY);
+    public boolean refresh(boolean force) {
+        final int prevTranslationX = mTranslationX;
+        final int prevTranslationY = mTranslationY;
 
-        ViewCompat.postInvalidateOnAnimation(mRecyclerView);
+        updateTranslationOffset();
+
+        final boolean updated = (prevTranslationX != mTranslationX) || (prevTranslationY != mTranslationY);
+
+        if (updated || force) {
+            updateDraggingItemPosition(mTranslationX, mTranslationY);
+            ViewCompat.postInvalidateOnAnimation(mRecyclerView);
+        }
+
+        return updated;
     }
 
     public void setShadowDrawable(NinePatchDrawable shadowDrawable) {
@@ -216,6 +226,14 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     public int getDraggingItemTranslationX() {
         return mTranslationX;
+    }
+
+    public int getDraggingItemMoveOffsetY() {
+        return mTranslationY - mDraggingItemInfo.initialItemTop;
+    }
+
+    public int getDraggingItemMoveOffsetX() {
+        return mTranslationX - mDraggingItemInfo.initialItemLeft;
     }
 
     private void updateTranslationOffset() {
@@ -259,7 +277,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
                         }
 
                         if (lastChild != null) {
-                            mTranslationBottomLimit = Math.min(mTranslationBottomLimit, lastChild.getTop());
+                            final int limit = Math.max(0, lastChild.getBottom() - mDraggingItemInfo.height);
+                            mTranslationBottomLimit = Math.min(mTranslationBottomLimit, limit);
                         }
                         break;
                     }
@@ -269,7 +288,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
                         }
 
                         if (lastChild != null) {
-                            mTranslationRightLimit = Math.min(mTranslationRightLimit, lastChild.getLeft());
+                            final int limit = Math.max(0, lastChild.getRight() - mDraggingItemInfo.width);
+                            mTranslationRightLimit = Math.min(mTranslationRightLimit, limit);
                         }
                         break;
                     }

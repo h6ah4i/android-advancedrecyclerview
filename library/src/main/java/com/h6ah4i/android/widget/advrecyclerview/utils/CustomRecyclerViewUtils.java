@@ -19,6 +19,7 @@ package com.h6ah4i.android.widget.advrecyclerview.utils;
 import android.graphics.Rect;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -39,6 +40,9 @@ public class CustomRecyclerViewUtils {
     public static final int LAYOUT_TYPE_GRID_VERTICAL = 3;
     public static final int LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL = 4;
     public static final int LAYOUT_TYPE_STAGGERED_GRID_VERTICAL = 5;
+
+    public static final int INVALID_SPAN_ID = -1;
+    public static final int INVALID_SPAN_COUNT = -1;
 
     public static RecyclerView.ViewHolder findChildViewHolderUnderWithoutTranslation(@NonNull RecyclerView rv, float x, float y) {
         final View child = findChildViewUnderWithoutTranslation(rv, x, y);
@@ -212,8 +216,10 @@ public class CustomRecyclerViewUtils {
     }
 
     public static int getOrientation(@NonNull RecyclerView rv) {
-        RecyclerView.LayoutManager layoutManager = rv.getLayoutManager();
+        return getOrientation(rv.getLayoutManager());
+    }
 
+    public static int getOrientation(@NonNull RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof GridLayoutManager) {
             return ((GridLayoutManager) layoutManager).getOrientation();
         } else if (layoutManager instanceof LinearLayoutManager) {
@@ -261,5 +267,115 @@ public class CustomRecyclerViewUtils {
             }
         }
         return partiallyVisible;
+    }
+
+    public static int safeGetAdapterPosition(@Nullable RecyclerView.ViewHolder holder) {
+        return (holder != null) ? holder.getAdapterPosition() : RecyclerView.NO_POSITION;
+    }
+
+    public static int safeGetLayoutPosition(@Nullable RecyclerView.ViewHolder holder) {
+        return (holder != null) ? holder.getLayoutPosition() : RecyclerView.NO_POSITION;
+    }
+
+    public static View findViewByPosition(RecyclerView.LayoutManager layoutManager, int position) {
+        return (position != RecyclerView.NO_POSITION) ? layoutManager.findViewByPosition(position) : null;
+    }
+
+
+    public static int getSpanIndex(@Nullable RecyclerView.ViewHolder holder) {
+        final View itemView = getLaidOutItemView(holder);
+
+        if (itemView == null) {
+            return INVALID_SPAN_ID;
+        }
+
+        ViewGroup.LayoutParams lp = itemView.getLayoutParams();
+
+        if (lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+            return ((StaggeredGridLayoutManager.LayoutParams) lp).getSpanIndex();
+        } else if (lp instanceof GridLayoutManager.LayoutParams) {
+            return ((GridLayoutManager.LayoutParams) lp).getSpanIndex();
+        } else if (lp instanceof RecyclerView.LayoutParams) {
+            return 0;
+        } else {
+            return INVALID_SPAN_ID;
+        }
+    }
+
+    public static int getSpanSize(@Nullable RecyclerView.ViewHolder holder) {
+        final View itemView = getLaidOutItemView(holder);
+
+        if (itemView == null) {
+            return INVALID_SPAN_COUNT;
+        }
+
+        ViewGroup.LayoutParams lp = itemView.getLayoutParams();
+
+        if (lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+            final boolean isFullSpan = ((StaggeredGridLayoutManager.LayoutParams) lp).isFullSpan();
+            if (isFullSpan) {
+                final RecyclerView rv = (RecyclerView) itemView.getParent();
+                final int spanCount = getSpanCount(rv);
+                return spanCount;
+            } else {
+                return 1;
+            }
+        } else if (lp instanceof GridLayoutManager.LayoutParams) {
+            return ((GridLayoutManager.LayoutParams) lp).getSpanSize();
+        } else if (lp instanceof RecyclerView.LayoutParams) {
+            return 1;
+        } else {
+            return INVALID_SPAN_COUNT;
+        }
+    }
+
+    public static boolean isFullSpan(@Nullable RecyclerView.ViewHolder holder) {
+        final View itemView = getLaidOutItemView(holder);
+
+        if (itemView == null) {
+            return true;
+        }
+
+        ViewGroup.LayoutParams lp = itemView.getLayoutParams();
+
+        if (lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+            return ((StaggeredGridLayoutManager.LayoutParams) lp).isFullSpan();
+        } else if (lp instanceof GridLayoutManager.LayoutParams) {
+            final RecyclerView rv = (RecyclerView) itemView.getParent();
+            final int spanCount = getSpanCount(rv);
+            final int spanSize = ((GridLayoutManager.LayoutParams) lp).getSpanSize();
+            return (spanCount == spanSize);
+        } else if (lp instanceof RecyclerView.LayoutParams) {
+            return true;
+        } else {
+            return true;
+        }
+    }
+
+    private static View getLaidOutItemView(@Nullable RecyclerView.ViewHolder  holder) {
+        if (holder == null) {
+            return null;
+        }
+
+        final View itemView = holder.itemView;
+
+        if (!ViewCompat.isLaidOut(itemView)) {
+            return null;
+        }
+
+        return itemView;
+    }
+
+    public static boolean isLinearLayout(int layoutType) {
+        return ((layoutType == LAYOUT_TYPE_LINEAR_VERTICAL) || (layoutType == LAYOUT_TYPE_LINEAR_HORIZONTAL));
+    }
+
+
+    public static boolean isGridLayout(int layoutType) {
+        return ((layoutType == LAYOUT_TYPE_GRID_VERTICAL) || (layoutType == LAYOUT_TYPE_GRID_HORIZONTAL));
+    }
+
+    public static boolean isStaggeredGridLayout(int layoutType) {
+        return ((layoutType == LAYOUT_TYPE_STAGGERED_GRID_VERTICAL) || (layoutType == LAYOUT_TYPE_STAGGERED_GRID_HORIZONTAL));
     }
 }

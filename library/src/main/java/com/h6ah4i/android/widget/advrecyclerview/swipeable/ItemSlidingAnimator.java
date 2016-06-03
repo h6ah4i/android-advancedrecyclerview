@@ -28,6 +28,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -47,13 +48,13 @@ public class ItemSlidingAnimator {
     public static final int DIR_RIGHT = 2;
     public static final int DIR_DOWN = 3;
 
-    private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
-    private Interpolator mSlideToDefaultPositionAnimationInterpolator = new AccelerateDecelerateInterpolator();
-    private Interpolator mSlideToOutsideOfWindowAnimationInterpolator = new AccelerateInterpolator(0.8f);
-    private List<RecyclerView.ViewHolder> mActive;
-    private List<WeakReference<ViewHolderDeferredProcess>> mDeferredProcesses;
-    private int[] mTmpLocation = new int[2];
-    private Rect mTmpRect = new Rect();
+    private final SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
+    private final Interpolator mSlideToDefaultPositionAnimationInterpolator = new AccelerateDecelerateInterpolator();
+    private final Interpolator mSlideToOutsideOfWindowAnimationInterpolator = new AccelerateInterpolator(0.8f);
+    private final List<RecyclerView.ViewHolder> mActive;
+    private final List<WeakReference<ViewHolderDeferredProcess>> mDeferredProcesses;
+    private final int[] mTmpLocation = new int[2];
+    private final Rect mTmpRect = new Rect();
     private int mImmediatelySetTranslationThreshold;
 
     public ItemSlidingAnimator(SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> adapter) {
@@ -351,7 +352,9 @@ public class ItemSlidingAnimator {
 
         final int curTranslationX = (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
         final int curTranslationY = (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        //noinspection UnnecessaryLocalVariable
         final int toX = translationX;
+        //noinspection UnnecessaryLocalVariable
         final int toY = translationY;
 
         if ((duration == 0) ||
@@ -440,7 +443,7 @@ public class ItemSlidingAnimator {
         final WeakReference<RecyclerView.ViewHolder> mRefHolder;
 
         public ViewHolderDeferredProcess(RecyclerView.ViewHolder holder) {
-            mRefHolder = new WeakReference<RecyclerView.ViewHolder>(holder);
+            mRefHolder = new WeakReference<>(holder);
         }
 
         @Override
@@ -508,10 +511,10 @@ public class ItemSlidingAnimator {
         private final long mDuration;
         private final boolean mHorizontal;
         private final SwipeFinishInfo mSwipeFinish;
-        private Interpolator mInterpolator;
+        private final Interpolator mInterpolator;
         private float mInvSize;
 
-        public SlidingAnimatorListenerObject(
+        SlidingAnimatorListenerObject(
                 SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> adapter,
                 List<RecyclerView.ViewHolder> activeViewHolders,
                 RecyclerView.ViewHolder holder, int toX, int toY, long duration, boolean horizontal,
@@ -527,7 +530,7 @@ public class ItemSlidingAnimator {
             mInterpolator = interpolator;
         }
 
-        private void start() {
+        void start() {
             final View containerView = ((SwipeableItemViewHolder) mViewHolder).getSwipeableContainerView();
 
             mInvSize = (1.0f / Math.max(1.0f, mHorizontal ? containerView.getWidth() : containerView.getHeight()));
@@ -578,6 +581,13 @@ public class ItemSlidingAnimator {
 
             mActive.remove(mViewHolder);
 
+            // [WORKAROUND]
+            // issue #152 - bug:Samsung S3 4.1.1(Genymotion) with swipe left
+            ViewParent itemParentView = mViewHolder.itemView.getParent();
+            if (itemParentView != null) {
+                ViewCompat.postInvalidateOnAnimation((View) itemParentView);
+            }
+
             if (mSwipeFinish != null) {
                 mSwipeFinish.resultAction.slideAnimationEnd();
             }
@@ -595,7 +605,7 @@ public class ItemSlidingAnimator {
     }
 
     private static class SwipeFinishInfo {
-        int itemPosition;
+        final int itemPosition;
         SwipeResultAction resultAction;
 
         public SwipeFinishInfo(int itemPosition, SwipeResultAction resultAction) {
