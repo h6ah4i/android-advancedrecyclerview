@@ -45,6 +45,7 @@ public class ExpandableDraggableWithSectionExampleFragment extends Fragment
         implements RecyclerViewExpandableItemManager.OnGroupCollapseListener,
         RecyclerViewExpandableItemManager.OnGroupExpandListener {
     private static final String SAVED_STATE_EXPANDABLE_ITEM_MANAGER = "RecyclerViewExpandableItemManager";
+    private static final boolean ALLOW_ITEMS_MOVE_ACROSS_SECTIONS = false; // Set this flag "true" to change draggable item range
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -91,7 +92,6 @@ public class ExpandableDraggableWithSectionExampleFragment extends Fragment
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 
         //adapter
-        getDataProvider();
         final ExpandableDraggableWithSectionExampleAdapter myItemAdapter = new ExpandableDraggableWithSectionExampleAdapter(getDataProvider());
 
         mAdapter = myItemAdapter;
@@ -99,6 +99,9 @@ public class ExpandableDraggableWithSectionExampleFragment extends Fragment
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(myItemAdapter);       // wrap for expanding
         mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(mWrappedAdapter);           // wrap for dragging
         mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);      // wrap for swiping
+
+        mRecyclerViewDragDropManager.setCheckCanDropEnabled(ALLOW_ITEMS_MOVE_ACROSS_SECTIONS);
+        myItemAdapter.setAllowItemsMoveAcrossSections(ALLOW_ITEMS_MOVE_ACROSS_SECTIONS);
 
         final GeneralItemAnimator animator = new SwipeDismissItemAnimator();
 
