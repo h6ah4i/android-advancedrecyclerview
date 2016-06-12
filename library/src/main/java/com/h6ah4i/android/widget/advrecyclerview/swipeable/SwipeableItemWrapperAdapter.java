@@ -83,6 +83,10 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
             SwipeableItemViewHolder swipeableHolder = (SwipeableItemViewHolder) holder;
 
+            // reset result and reaction (#262)
+            swipeableHolder.setSwipeResult(SwipeableItemConstants.RESULT_NONE);
+            swipeableHolder.setAfterSwipeReaction(SwipeableItemConstants.AFTER_SWIPE_REACTION_DEFAULT);
+
             swipeableHolder.setSwipeItemHorizontalSlideAmount(0);
             swipeableHolder.setSwipeItemVerticalSlideAmount(0);
 
