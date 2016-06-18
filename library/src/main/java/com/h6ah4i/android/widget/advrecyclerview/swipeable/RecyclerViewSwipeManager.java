@@ -82,6 +82,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private int mTouchSlop;
     private int mMinFlingVelocity; // [pixels per second]
     private int mMaxFlingVelocity; // [pixels per second]
+    private int mSwipeThresholdDistance; // [pixels]
     private int mInitialTouchX;
     private int mInitialTouchY;
     private long mCheckingTouchSlop = RecyclerView.NO_ID;
@@ -192,6 +193,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mTouchSlop = vc.getScaledTouchSlop();
         mMinFlingVelocity = vc.getScaledMinimumFlingVelocity();
         mMaxFlingVelocity = vc.getScaledMaximumFlingVelocity();
+        mSwipeThresholdDistance = (int) (mTouchSlop * MIN_DISTANCE_TOUCH_SLOP_MUL);
 
         mItemSlideAnimator = new ItemSlidingAnimator(mAdapter);
         mItemSlideAnimator.setImmediatelySetTranslationThreshold(
@@ -248,6 +250,24 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
      */
     public void setLongPressTimeout(int longPressTimeout) {
         mLongPressTimeout = longPressTimeout;
+    }
+
+    /**
+     * Sets swipe thredhold distance.
+     *
+     * @param distanceInPixels Integer specifies threshold distance in pixels.
+     */
+    public void setSwipeThresholdDistance(int distanceInPixels) {
+        mSwipeThresholdDistance = Math.max(distanceInPixels, mTouchSlop);
+    }
+
+    /**
+     * Gets swipe thredhold distance.
+     *
+     * @return Threshold distance in pixels.
+     */
+    public int getSwipeThresholdDistance() {
+        return mSwipeThresholdDistance;
     }
 
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -410,7 +430,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             final float velocity = (horizontal) ? mVelocityTracker.getXVelocity() : mVelocityTracker.getYVelocity();
             final float absVelocity = Math.abs(velocity);
 
-            if ((absDistance > (mTouchSlop * MIN_DISTANCE_TOUCH_SLOP_MUL)) &&
+            if ((absDistance > mSwipeThresholdDistance) &&
                     ((distance * velocity) > 0.0f) &&
                     (absVelocity <= mMaxFlingVelocity) &&
                     ((absDistance > (viewSize / 2)) || (absVelocity >= mMinFlingVelocity))) {
