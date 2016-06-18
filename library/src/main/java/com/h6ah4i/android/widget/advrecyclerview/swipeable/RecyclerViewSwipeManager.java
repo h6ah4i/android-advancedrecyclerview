@@ -67,7 +67,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
     // ---
 
-    private static final int MIN_DISTANCE_TOUCH_SLOP_MUL = 10;
+    private static final int MIN_DISTANCE_TOUCH_SLOP_MUL = 5;
     private static final int SLIDE_ITEM_IMMEDIATELY_SET_TRANSLATION_THRESHOLD_DP = 8;
 
     private static final boolean LOCAL_LOGV = false;
