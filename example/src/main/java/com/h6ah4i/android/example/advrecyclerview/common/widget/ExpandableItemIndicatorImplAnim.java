@@ -21,8 +21,6 @@ import android.content.Context;
 import android.graphics.drawable.Animatable;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -30,7 +28,8 @@ import android.view.View;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+// NOTE: AnimatedVectorDrawableCompat works on API level 11+
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 class ExpandableItemIndicatorImplAnim extends ExpandableItemIndicator.Impl {
     private AppCompatImageView mImageView;
 
