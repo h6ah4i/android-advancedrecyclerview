@@ -163,8 +163,8 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
 
         @Override
         public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
-            MyChildItem group = mItems.get(groupPosition).children.get(childPosition);
-            holder.textView.setText(group.text);
+            MyChildItem child = mItems.get(groupPosition).children.get(childPosition);
+            holder.textView.setText(child.text);
         }
 
         @Override
