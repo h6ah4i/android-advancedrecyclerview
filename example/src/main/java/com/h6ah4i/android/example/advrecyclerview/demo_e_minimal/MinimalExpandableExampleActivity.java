@@ -23,13 +23,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
-import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
 
@@ -54,7 +53,7 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
         RecyclerViewExpandableItemManager expMgr = new RecyclerViewExpandableItemManager(null);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(expMgr.createWrappedAdapter(new MyAdapter()));
+        recyclerView.setAdapter(expMgr.createWrappedAdapter(new MyAdapter(recyclerView, expMgr)));
 
         expMgr.attachRecyclerView(recyclerView);
     }
@@ -82,6 +81,7 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
         public MyChildItem(long id, String text) {
             super(id, text);
         }
+        public boolean checked;
     }
 
     static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
@@ -100,16 +100,25 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
     }
 
     static class MyChildViewHolder extends MyBaseViewHolder {
+        CheckBox checkBox;
         public MyChildViewHolder(View itemView) {
             super(itemView);
+            checkBox = (CheckBox) itemView.findViewById(android.R.id.checkbox);
         }
     }
 
-    static class MyAdapter extends AbstractExpandableItemAdapter<MyGroupViewHolder, MyChildViewHolder> {
+    static class MyAdapter extends AbstractExpandableItemAdapter<MyGroupViewHolder, MyChildViewHolder> implements CompoundButton.OnCheckedChangeListener {
+
+        private RecyclerView mRecyclerView;
+        private RecyclerViewExpandableItemManager mExpandableItemManager;
+
         List<MyGroupItem> mItems;
 
-        public MyAdapter() {
+        public MyAdapter(RecyclerView rv, RecyclerViewExpandableItemManager expandableItemManager) {
             setHasStableIds(true); // this is required for expandable feature.
+
+            mRecyclerView = rv;
+            mExpandableItemManager = expandableItemManager;
 
             mItems = new ArrayList<>();
             for (int i = 0; i < 20; i++) {
@@ -165,11 +174,57 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
         public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
             MyChildItem child = mItems.get(groupPosition).children.get(childPosition);
             holder.textView.setText(child.text);
+            holder.checkBox.setOnCheckedChangeListener(null);
+            holder.checkBox.setChecked(child.checked);
+            holder.checkBox.setOnCheckedChangeListener(this);
+        }
+
+        @Override
+        public void onViewRecycled(RecyclerView.ViewHolder holder) {
+            super.onViewRecycled(holder);
+
+            if (holder instanceof MyChildViewHolder) {
+                ((MyChildViewHolder) holder).checkBox.setOnCheckedChangeListener(null);
+            }
         }
 
         @Override
         public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
             return true;
         }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            MyChildViewHolder vh = (MyChildViewHolder) mRecyclerView.findContainingViewHolder(buttonView);
+            int flatPosition = vh.getLayoutPosition();
+            long packedPosition = mExpandableItemManager.getExpandablePosition(flatPosition);
+            int groupPosition = RecyclerViewExpandableItemManager.getPackedPositionGroup(packedPosition);
+            int childPosition = RecyclerViewExpandableItemManager.getPackedPositionChild(packedPosition);
+
+            List<MyChildItem> children = mItems.get(groupPosition).children;
+            MyChildItem child = children.get(childPosition);
+            child.checked = isChecked;
+
+            if (isChecked) {
+                int from = childPosition;
+                int to = children.size() - 1;
+
+                children.remove(from);
+                children.add(to, child);
+
+                // [note] Oops, I'll add the following helper methods to reduce boilerplate code.
+                // mExpandableItemManager.notifyGroupItemMoved(from, to);
+                // mExpandableItemManager.notifyChildItemMoved(groupPosition, fromChildPosition, toChildPosition);
+                // mExpandableItemManager.notifyChildItemMoved(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
+
+                long packedFrom = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, from);
+                long packedTo = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, to);
+                int flatFrom = mExpandableItemManager.getFlatPosition(packedFrom);
+                int flatTo = mExpandableItemManager.getFlatPosition(packedTo);
+
+                notifyItemMoved(flatFrom, flatTo);
+            }
+        }
+
     }
 }
