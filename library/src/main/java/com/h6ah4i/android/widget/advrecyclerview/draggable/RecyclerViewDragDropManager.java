@@ -1307,12 +1307,23 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mAdapter.moveItem(fromPosition, toPosition);
 
         if ((firstVisible == fromPosition) && (firstOrigin != null) && (toOrigin != null)) {
-            rv.scrollBy(0, -(toOrigin - firstOrigin));
+            scrollBySpecifiedOrientation(rv, -(toOrigin - firstOrigin), isVertical);
             safeEndAnimations(rv);
         } else if ((firstVisible == toPosition) && (fromView != null) && (fromOrigin != null) && (!fromOrigin.equals(toOrigin))) {
             ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) fromView.getLayoutParams();
-            rv.scrollBy(0, -(layoutManager.getDecoratedMeasuredHeight(fromView) + lp.topMargin + lp.bottomMargin));
+            int amount =  (isVertical)
+                    ? -(layoutManager.getDecoratedMeasuredHeight(fromView) + lp.topMargin + lp.bottomMargin)
+                    : -(layoutManager.getDecoratedMeasuredWidth(fromView) + lp.leftMargin + lp.rightMargin);
+            scrollBySpecifiedOrientation(rv, amount, isVertical);
             safeEndAnimations(rv);
+        }
+    }
+
+    private static void scrollBySpecifiedOrientation(RecyclerView rv, int amount, boolean vertical) {
+        if (vertical) {
+            rv.scrollBy(0, amount);
+        } else {
+            rv.scrollBy(amount, 0);
         }
     }
 
