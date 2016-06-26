@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+  
+  
+  
+  
+   <html class="no-js"> 
+
+  <head lang="en-us">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    <title>Getting started - Advanced RecyclerView</title>
+    <meta name="generator" content="Hugo 0.16" />
+
+    
+    <meta name="description" content="Documentation for Advanced RecyclerView library.">
+    
+    <link rel="canonical" href="http://h6ah4i.com/android-advancedrecyclerview/getting-started/">
+    
+    <meta name="author" content="Haruki Hasegawa (@h6ah4i)">
+    
+
+    <meta property="og:url" content="http://h6ah4i.com/android-advancedrecyclerview/getting-started/">
+    <meta property="og:title" content="Advanced RecyclerView">
+    <meta property="og:image" content="http://h6ah4i.com/android-advancedrecyclerview/images/logo.png">
+    <meta name="apple-mobile-web-app-title" content="Advanced RecyclerView">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="shortcut icon" type="image/x-icon" href="http://h6ah4i.com/android-advancedrecyclerview/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="http://h6ah4i.com/android-advancedrecyclerview/images/favicon.ico">
+
+    <style>
+      @font-face {
+        font-family: 'Icon';
+        src: url('http://h6ah4i.com/android-advancedrecyclerview/fonts/icon.eot?52m981');
+        src: url('http://h6ah4i.com/android-advancedrecyclerview/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+             url('http://h6ah4i.com/android-advancedrecyclerview/fonts/icon.woff?52m981')
+               format('woff'),
+             url('http://h6ah4i.com/android-advancedrecyclerview/fonts/icon.ttf?52m981')
+               format('truetype'),
+             url('http://h6ah4i.com/android-advancedrecyclerview/fonts/icon.svg?52m981#icon')
+               format('svg');
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://h6ah4i.com/android-advancedrecyclerview/stylesheets/application.css">
+    <link rel="stylesheet" href="http://h6ah4i.com/android-advancedrecyclerview/stylesheets/temporary.css">
+    <link rel="stylesheet" href="http://h6ah4i.com/android-advancedrecyclerview/stylesheets/palettes.css">
+    <link rel="stylesheet" href="http://h6ah4i.com/android-advancedrecyclerview/stylesheets/highlight/highlight.css">
+
+    
+    
+    
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,700|Roboto%2bMono">
+    <style>
+      body, input {
+        font-family: 'Roboto', Helvetica, Arial, sans-serif;
+      }
+      pre, code {
+        font-family: 'Roboto Mono', 'Courier New', 'Courier', monospace;
+      }
+    </style>
+
+    
+    <script src="http://h6ah4i.com/android-advancedrecyclerview/javascripts/modernizr.js"></script>
+
+    
+
+  </head>
+  <body class="palette-primary-blue-grey palette-accent-orange">
+
+
+
+	
+	
+
+
+<div class="backdrop">
+	<div class="backdrop-paper"></div>
+</div>
+
+<input class="toggle" type="checkbox" id="toggle-drawer">
+<input class="toggle" type="checkbox" id="toggle-search">
+<label class="toggle-button overlay" for="toggle-drawer"></label>
+
+<header class="header">
+	<nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        Getting started
+      </div>
+    </div>
+
+    
+
+    
+    
+        
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+</header>
+
+<main class="main">
+	<div class="drawer">
+		<nav aria-label="Navigation">
+  <a href="https://github.com/h6ah4i/android-advancedrecyclerview" class="project">
+    <div class="banner">
+      
+        <div class="logo">
+          <img src="http://h6ah4i.com/android-advancedrecyclerview/images/logo.png">
+        </div>
+      
+      <div class="name">
+        <strong>Advanced RecyclerView <span class="version">0.0.1</span></strong>
+        
+          <br>
+          h6ah4i/android-advancedrecyclerview
+        
+      </div>
+    </div>
+  </a>
+
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            <a href="https://github.com/h6ah4i/android-advancedrecyclerview/archive/master.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/h6ah4i/android-advancedrecyclerview/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+
+      <div class="toc">
+        
+        <ul>
+          
+
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Home" href="http://h6ah4i.com/android-advancedrecyclerview">
+	
+	Home
+</a>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a class="current" title="Getting started" href="http://h6ah4i.com/android-advancedrecyclerview/getting-started/">
+	
+	Getting started
+</a>
+
+
+<ul id="scrollspy">
+</ul>
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="FAQ" href="http://h6ah4i.com/android-advancedrecyclerview/faq/">
+	
+	FAQ
+</a>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Expandable" href="http://h6ah4i.com/android-advancedrecyclerview/expandable/">
+	
+	Expandable
+</a>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="License" href="http://h6ah4i.com/android-advancedrecyclerview/license/">
+	
+	License
+</a>
+
+
+  
+</li>
+
+
+        </ul>
+        
+
+        
+        <hr>
+        <span class="section">The author</span>
+        
+        <ul>
+          
+
+          
+        </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+
+	</div>
+
+	<article class="article">
+		<div class="wrapper">
+			<h1>Getting started </h1>
+
+			
+
+<hr />
+
+<p><strong>TODO just imported from theme example</strong></p>
+
+<hr />
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="installing-hugo">Installing Hugo</h3>
+
+<p>Hugo itself is just a single binary without dependencies on expensive runtimes like Ruby, Python or PHP and without dependencies on any databases. You just need to download the <a href="https://github.com/spf13/hugo/releases">latest version</a>. For more information read the official <a href="http://gohugo.io/overview/installing/">installation guides</a>.</p>
+
+<p>Let&rsquo;s make sure Hugo is set up as expected. You should see a similar version number in your terminal:</p>
+
+<pre><code class="language-sh">hugo version
+# Hugo Static Site Generator v0.15 BuildDate: 2016-01-03T12:47:47+01:00
+</code></pre>
+
+<h3 id="installing-material">Installing Material</h3>
+
+<p>Next, assuming you have Hugo up and running the <code>hugo-material-docs</code> theme can be installed with <code>git</code>:</p>
+
+<pre><code class="language-sh"># create a new Hugo website
+hugo new site my-awesome-docs
+
+# move into the themes folder of your website
+cd my-awesome-docs/themes/
+
+# download the theme
+git clone git@github.com:digitalcraftsman/hugo-material-docs.git
+</code></pre>
+
+<h2 id="setup">Setup</h2>
+
+<p>Next, take a look in the <code>exampleSite</code> folder at <code>themes/hugo-material-docs/</code>. This directory contains an example config file and the content that you are currently reading. It serves as an example setup for your documentation.</p>
+
+<p>Copy at least the <code>config.toml</code> in the root directory of your website. Overwrite the existing config file if necessary.</p>
+
+<p>Hugo includes a development server, so you can view your changes as you go -
+very handy. Spin it up with the following command:</p>
+
+<pre><code class="language-sh">hugo server
+</code></pre>
+
+<p>Now you can go to <a href="http://localhost:1313">localhost:1313</a> and the Material
+theme should be visible. You can now start writing your documentation, or read
+on and customize the theme through some options.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Before you are able to deploy your documentation you should take a few minute to adjust some information in the <code>config.toml</code>. Open the file in an editor:</p>
+
+<pre><code class="language-toml">baseurl = &quot;http://replace-this-with-your-hugo-site.com/&quot;
+languageCode = &quot;en-us&quot;
+title = &quot;Material Docs&quot;
+
+[params]
+  # General information
+  author = &quot;Digitalcraftsman&quot;
+  description = &quot;A material design theme for documentations.&quot;
+  copyright = &quot;Released under the MIT license&quot;
+</code></pre>
+
+<h2 id="options">Options</h2>
+
+<h3 id="github-integration">Github integration</h3>
+
+<p>If your project is hosted on GitHub, add the repository link to the
+configuration. If the <code>provider</code> equals <strong>GitHub</strong>, the Material theme will
+add a download and star button, and display the number of stars:</p>
+
+<pre><code class="language-toml">[params]
+  # Repository
+  provider = &quot;GitHub&quot;
+  repo_url = &quot;https://github.com/digitalcraftsman/hugo-material-docs&quot;
+</code></pre>
+
+<h3 id="adding-a-version">Adding a version</h3>
+
+<p>In order to add the current version next to the project banner inside the
+drawer, you can set the variable <code>version</code>:</p>
+
+<pre><code class="language-toml">[params]
+  version = &quot;1.0.0&quot;
+</code></pre>
+
+<p>This will also change the link behind the download button to point to the
+archive with the respective version on GitHub, assuming a release tagged with
+this exact version identifier.</p>
+
+<h3 id="adding-a-logo">Adding a logo</h3>
+
+<p>If your project has a logo, you can add it to the drawer/navigation by defining
+the variable <code>logo</code>. Ideally, the image of your logo should have
+rectangular shape with a minimum resolution of 128x128 and leave some room
+towards the edges. The logo will also be used as a web application icon on iOS.
+Save your logo somewhere in the <code>static/</code> folder and reference the file relative to this location:</p>
+
+<pre><code class="language-toml">[params]
+  logo = &quot;images/logo.png&quot;
+</code></pre>
+
+<h3 id="adding-a-custom-favicon">Adding a custom favicon</h3>
+
+<p>Favicons are small small icons that are displayed in the tabs right next to the title of the current page. As with the logo above you need to save your favicon in <code>static/</code> and link it relative to this folder in the config file:</p>
+
+<pre><code class="language-toml">[params]
+  favicon = &quot;favicon.ico&quot;
+</code></pre>
+
+<h3 id="google-analytics">Google Analytics</h3>
+
+<p>You can enable Google Analytics by replacing <code>UA-XXXXXXXX-X</code> with your own tracking code.</p>
+
+<pre><code class="language-toml">googleAnalytics = &quot;UA-XXXXXXXX-X&quot;
+</code></pre>
+
+<h3 id="small-tweaks">Small tweaks</h3>
+
+<p>This theme provides a simple way for making small adjustments, that is changing
+some margins, centering text, etc. Simply put the CSS and Javascript files that
+contain your adjustments in the <code>static/</code> directory (ideally in subdirectories of their own) and include them via the <code>custom_css</code> and <code>custom_js</code>
+variables in your <code>config.toml</code>. Reference the files relative to <code>static/</code>:</p>
+
+<pre><code class="language-toml">[params]
+  # Custom assets
+  custom_css = [
+    &quot;foo.css&quot;,
+    &quot;bar.css&quot;
+  ]
+
+  custom_js  = [&quot;buzz.js&quot;]
+</code></pre>
+
+<h3 id="changing-the-color-palette">Changing the color palette</h3>
+
+<p>Material defines a default hue for every primary and accent color on Google&rsquo;s
+material design [color palette][]. This makes it very easy to change the overall look of the theme. Just set the variables <code>palette.primary</code> and <code>palette.accent</code> to one of the colors defined in the palette:</p>
+
+<pre><code class="language-toml">[params.palette]
+  primary = &quot;red&quot;
+  accent  = &quot;light green&quot;
+</code></pre>
+
+<p>Color names can be written upper- or lowercase but must match the names of the
+material design <a href="http://www.materialui.co/colors">color palette</a>. Valid values are: <em>red</em>, <em>pink</em>, <em>purple</em>, <em>deep purple</em>, <em>indigo</em>, <em>blue</em>, <em>light blue</em>, <em>cyan</em>, <em>teal</em>, <em>green</em>, <em>light
+green</em>, <em>lime</em>, <em>yellow</em>, <em>amber</em>, <em>orange</em>, <em>deep orange</em>, <em>brown</em>, <em>grey</em> and
+<em>blue grey</em>. The last three colors can only be used as a primary color.</p>
+
+<p><img src="http://h6ah4i.com/android-advancedrecyclerview/images/colors.png" alt="Color palette" /></p>
+
+<p>If the color is set via this configuration, an additional CSS file called
+<code>palettes.css</code> is included that defines the color palettes.</p>
+
+<h3 id="changing-the-font-family">Changing the font family</h3>
+
+<p>Material uses the <a href="http://font.ubuntu.com">Ubuntu font family</a> by default, specifically the regular sans-serif type for text and the monospaced type for code. Both fonts are loaded from <a href="https://www.google.com/fonts">Google Fonts</a> and can be easily changed to other fonts, like for example Google&rsquo;s own <a href="https://www.google.com/fonts/specimen/Roboto">Roboto font</a>:</p>
+
+<pre><code class="language-toml">[params.font]
+  text = &quot;Roboto&quot;
+  code = &quot;Roboto Mono&quot;
+</code></pre>
+
+<p>The text font will be loaded in font-weights 400 and <strong>700</strong>, the monospaced
+font in regular weight.</p>
+
+<h3 id="syntax-highlighting">Syntax highlighting</h3>
+
+<p>This theme uses the popular <a href="https://highlightjs.org/">Highlight.js</a> library to colorize code examples. The default theme is called <code>Github</code> with a few small tweaks. You can link our own theme if you like. Again, store your stylesheet in the <code>static/</code> folder and set the relative path in the config file:</p>
+
+<pre><code class="language-toml">[params]
+  # Syntax highlighting theme
+  highlight_css  = &quot;path/to/theme.css&quot;
+</code></pre>
+
+<h3 id="adding-a-github-and-twitter-account">Adding a GitHub and Twitter account</h3>
+
+<p>If you have a GitHub and/or Twitter account, you can add links to your
+accounts to the drawer by setting the variables <code>github</code> and
+<code>twitter</code> respectively:</p>
+
+<pre><code class="language-toml">[social]
+  twitter = &quot;&quot;
+  github  = &quot;digitalcraftsman&quot;
+</code></pre>
+
+<h3 id="adding-menu-entries">Adding menu entries</h3>
+
+<p>Once you created your first content files you can link them manually in the sidebar on the left. A menu entry has the following schema:</p>
+
+<pre><code class="language-toml">[[menu.main]]
+  name   = &quot;Material&quot;
+  url    = &quot;/&quot;
+  weight = 0
+  pre    = &quot;&quot;
+</code></pre>
+
+<p><code>name</code> is the title displayed in the menu and <code>url</code> the relative URL to the content. The <code>weight</code> attribute allows you to modify the order of the menu entries. A menu entry appears further down the more weight you add. The <code>pre</code> attribute is optional and allows you to *pre*pend elements to a menu link, e.g. an icon.</p>
+
+<p>Instead of just linking a single file you can enhance the sidebar by creating a nested menu. This way you can list all pages of a section instead of linking them one by one (without nesting).</p>
+
+<p>You need extend the frontmatter of each file content file in a section slightly. The snippet below registers this content file as &lsquo;child&rsquo; of a menu entry that already exists.</p>
+
+<pre><code class="language-yaml">menu:
+  main:
+    parent: Material
+    identifier: &lt;link name&gt;
+    weight: 0
+</code></pre>
+
+<p><code>main</code> specifies to which menu the content file should be added. <code>main</code> is the only menu in this theme by default. <code>parent</code> let&rsquo;s you register this content file to an existing menu entry, in this case the <code>Material</code> link. Note that the parent in the frontmatter needs to match the name in <code>config.toml</code>.</p>
+
+<p><code>identifier</code> is the link that is shown in the menu. Ideally you choose the same name for the <code>identifier</code> and the <code>title</code> of the page. Again, <code>weight</code> allows you to change the order of the nested links in a section.</p>
+
+<h3 id="markdown-extensions">Markdown extensions</h3>
+
+<p>Hugo uses <a href="https://github.com/russross/blackfriday">Blackfriday</a> to process your content. For a detailed description of all options take a look at the <a href="http://gohugo.io/overview/configuration/#configure-blackfriday-rendering">Blackfriday configuration</a> section in the Hugo documentation.</p>
+
+<pre><code class="language-toml">[blackfriday]
+  smartypants = true
+  fractions = true
+  smartDashes = true
+  plainIDAnchors = true
+</code></pre>
+
+
+			<aside class="copyright" role="note">
+				
+				&copy; 2016 Haruki Hasegawa &ndash;
+				
+				Documentation built with
+				<a href="https://www.gohugo.io" target="_blank">Hugo</a>
+				using the
+				<a href="http://github.com/digitalcraftsman/hugo-material-docs" target="_blank">Material</a> theme.
+			</aside>
+
+			<footer class="footer">
+				
+
+<nav class="pagination" aria-label="Footer">
+  <div class="previous">
+  
+      <a href="http://h6ah4i.com/android-advancedrecyclerview/" title="Advanced RecyclerView">
+        <span class="direction">
+          Previous
+        </span>
+        <div class="page">
+          <div class="button button-previous" role="button" aria-label="Previous">
+            <i class="icon icon-back"></i>
+          </div>
+          <div class="stretch">
+            <div class="title">
+              Advanced RecyclerView
+            </div>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+
+  <div class="next">
+  
+      <a href="http://h6ah4i.com/android-advancedrecyclerview/faq/" title="FAQ">
+        <span class="direction">
+          Next
+        </span>
+        <div class="page">
+          <div class="stretch">
+            <div class="title">
+              FAQ
+            </div>
+          </div>
+          <div class="button button-next" role="button" aria-label="Next">
+            <i class="icon icon-forward"></i>
+          </div>
+        </div>
+      </a>
+  
+  </div>
+</nav>
+
+
+
+
+
+			</footer>
+		</div>
+	</article>
+
+	<div class="results" role="status" aria-live="polite">
+		<div class="scrollable">
+			<div class="wrapper">
+				<div class="meta"></div>
+				<div class="list"></div>
+			</div>
+		</div>
+	</div>
+</main>
+
+    <script>
+    
+      var base_url = 'http:\/\/h6ah4i.com\/android-advancedrecyclerview\/';
+      var repo_id  = 'h6ah4i\/android-advancedrecyclerview';
+    
+    </script>
+
+    <script src="http://h6ah4i.com/android-advancedrecyclerview/javascripts/application.js"></script>
+    
+
+    <script>
+      /* Add headers to scrollspy */
+      var headers   = document.getElementsByTagName("h2");
+      var scrollspy = document.getElementById('scrollspy');
+
+      if(scrollspy) {
+        if(headers.length > 0) {
+          for(var i = 0; i < headers.length; i++) {
+            var li = document.createElement("li");
+            li.setAttribute("class", "anchor");
+
+            var a  = document.createElement("a");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", headers[i].innerHTML);
+            a.innerHTML = headers[i].innerHTML;
+            
+            li.appendChild(a)
+            scrollspy.appendChild(li);
+          }
+        } else {
+          scrollspy.parentElement.removeChild(scrollspy)
+        }
+        
+
+        /* Add permanent link next to the headers */
+        var headers = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+        for(var i = 0; i < headers.length; i++) {
+            var a = document.createElement("a");
+            a.setAttribute("class", "headerlink");
+            a.setAttribute("href", "#" + headers[i].id);
+            a.setAttribute("title", "Permanent link")
+            a.innerHTML = "#";
+            headers[i].appendChild(a);
+        }
+      }
+    </script>
+
+    
+
+    <script src="//gohugo.io/js/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>

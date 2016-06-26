@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Getting-starteds on Advanced RecyclerView</title>
+    <link>http://h6ah4i.com/android-advancedrecyclerview/getting-started/</link>
+    <description>Recent content in Getting-starteds on Advanced RecyclerView</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 09 Mar 2016 00:11:02 +0100</lastBuildDate>
+    <atom:link href="http://h6ah4i.com/android-advancedrecyclerview/getting-started/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Getting started</title>
+      <link>http://h6ah4i.com/android-advancedrecyclerview/getting-started/</link>
+      <pubDate>Wed, 09 Mar 2016 00:11:02 +0100</pubDate>
+      
+      <guid>http://h6ah4i.com/android-advancedrecyclerview/getting-started/</guid>
+      <description>
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;TODO just imported from theme example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
+
+&lt;h3 id=&#34;installing-hugo&#34;&gt;Installing Hugo&lt;/h3&gt;
+
+&lt;p&gt;Hugo itself is just a single binary without dependencies on expensive runtimes like Ruby, Python or PHP and without dependencies on any databases. You just need to download the &lt;a href=&#34;https://github.com/spf13/hugo/releases&#34;&gt;latest version&lt;/a&gt;. For more information read the official &lt;a href=&#34;http://gohugo.io/overview/installing/&#34;&gt;installation guides&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Let&amp;rsquo;s make sure Hugo is set up as expected. You should see a similar version number in your terminal:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;hugo version
+# Hugo Static Site Generator v0.15 BuildDate: 2016-01-03T12:47:47+01:00
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;installing-material&#34;&gt;Installing Material&lt;/h3&gt;
+
+&lt;p&gt;Next, assuming you have Hugo up and running the &lt;code&gt;hugo-material-docs&lt;/code&gt; theme can be installed with &lt;code&gt;git&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;# create a new Hugo website
+hugo new site my-awesome-docs
+
+# move into the themes folder of your website
+cd my-awesome-docs/themes/
+
+# download the theme
+git clone git@github.com:digitalcraftsman/hugo-material-docs.git
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;setup&#34;&gt;Setup&lt;/h2&gt;
+
+&lt;p&gt;Next, take a look in the &lt;code&gt;exampleSite&lt;/code&gt; folder at &lt;code&gt;themes/hugo-material-docs/&lt;/code&gt;. This directory contains an example config file and the content that you are currently reading. It serves as an example setup for your documentation.&lt;/p&gt;
+
+&lt;p&gt;Copy at least the &lt;code&gt;config.toml&lt;/code&gt; in the root directory of your website. Overwrite the existing config file if necessary.&lt;/p&gt;
+
+&lt;p&gt;Hugo includes a development server, so you can view your changes as you go -
+very handy. Spin it up with the following command:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;hugo server
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now you can go to &lt;a href=&#34;http://localhost:1313&#34;&gt;localhost:1313&lt;/a&gt; and the Material
+theme should be visible. You can now start writing your documentation, or read
+on and customize the theme through some options.&lt;/p&gt;
+
+&lt;h2 id=&#34;configuration&#34;&gt;Configuration&lt;/h2&gt;
+
+&lt;p&gt;Before you are able to deploy your documentation you should take a few minute to adjust some information in the &lt;code&gt;config.toml&lt;/code&gt;. Open the file in an editor:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;baseurl = &amp;quot;http://replace-this-with-your-hugo-site.com/&amp;quot;
+languageCode = &amp;quot;en-us&amp;quot;
+title = &amp;quot;Material Docs&amp;quot;
+
+[params]
+  # General information
+  author = &amp;quot;Digitalcraftsman&amp;quot;
+  description = &amp;quot;A material design theme for documentations.&amp;quot;
+  copyright = &amp;quot;Released under the MIT license&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;options&#34;&gt;Options&lt;/h2&gt;
+
+&lt;h3 id=&#34;github-integration&#34;&gt;Github integration&lt;/h3&gt;
+
+&lt;p&gt;If your project is hosted on GitHub, add the repository link to the
+configuration. If the &lt;code&gt;provider&lt;/code&gt; equals &lt;strong&gt;GitHub&lt;/strong&gt;, the Material theme will
+add a download and star button, and display the number of stars:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[params]
+  # Repository
+  provider = &amp;quot;GitHub&amp;quot;
+  repo_url = &amp;quot;https://github.com/digitalcraftsman/hugo-material-docs&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;adding-a-version&#34;&gt;Adding a version&lt;/h3&gt;
+
+&lt;p&gt;In order to add the current version next to the project banner inside the
+drawer, you can set the variable &lt;code&gt;version&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[params]
+  version = &amp;quot;1.0.0&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will also change the link behind the download button to point to the
+archive with the respective version on GitHub, assuming a release tagged with
+this exact version identifier.&lt;/p&gt;
+
+&lt;h3 id=&#34;adding-a-logo&#34;&gt;Adding a logo&lt;/h3&gt;
+
+&lt;p&gt;If your project has a logo, you can add it to the drawer/navigation by defining
+the variable &lt;code&gt;logo&lt;/code&gt;. Ideally, the image of your logo should have
+rectangular shape with a minimum resolution of 128x128 and leave some room
+towards the edges. The logo will also be used as a web application icon on iOS.
+Save your logo somewhere in the &lt;code&gt;static/&lt;/code&gt; folder and reference the file relative to this location:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[params]
+  logo = &amp;quot;images/logo.png&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;adding-a-custom-favicon&#34;&gt;Adding a custom favicon&lt;/h3&gt;
+
+&lt;p&gt;Favicons are small small icons that are displayed in the tabs right next to the title of the current page. As with the logo above you need to save your favicon in &lt;code&gt;static/&lt;/code&gt; and link it relative to this folder in the config file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[params]
+  favicon = &amp;quot;favicon.ico&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;google-analytics&#34;&gt;Google Analytics&lt;/h3&gt;
+
+&lt;p&gt;You can enable Google Analytics by replacing &lt;code&gt;UA-XXXXXXXX-X&lt;/code&gt; with your own tracking code.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;googleAnalytics = &amp;quot;UA-XXXXXXXX-X&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;small-tweaks&#34;&gt;Small tweaks&lt;/h3&gt;
+
+&lt;p&gt;This theme provides a simple way for making small adjustments, that is changing
+some margins, centering text, etc. Simply put the CSS and Javascript files that
+contain your adjustments in the &lt;code&gt;static/&lt;/code&gt; directory (ideally in subdirectories of their own) and include them via the &lt;code&gt;custom_css&lt;/code&gt; and &lt;code&gt;custom_js&lt;/code&gt;
+variables in your &lt;code&gt;config.toml&lt;/code&gt;. Reference the files relative to &lt;code&gt;static/&lt;/code&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[params]
+  # Custom assets
+  custom_css = [
+    &amp;quot;foo.css&amp;quot;,
+    &amp;quot;bar.css&amp;quot;
+  ]
+
+  custom_js  = [&amp;quot;buzz.js&amp;quot;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;changing-the-color-palette&#34;&gt;Changing the color palette&lt;/h3&gt;
+
+&lt;p&gt;Material defines a default hue for every primary and accent color on Google&amp;rsquo;s
+material design [color palette][]. This makes it very easy to change the overall look of the theme. Just set the variables &lt;code&gt;palette.primary&lt;/code&gt; and &lt;code&gt;palette.accent&lt;/code&gt; to one of the colors defined in the palette:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[params.palette]
+  primary = &amp;quot;red&amp;quot;
+  accent  = &amp;quot;light green&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Color names can be written upper- or lowercase but must match the names of the
+material design &lt;a href=&#34;http://www.materialui.co/colors&#34;&gt;color palette&lt;/a&gt;. Valid values are: &lt;em&gt;red&lt;/em&gt;, &lt;em&gt;pink&lt;/em&gt;, &lt;em&gt;purple&lt;/em&gt;, &lt;em&gt;deep purple&lt;/em&gt;, &lt;em&gt;indigo&lt;/em&gt;, &lt;em&gt;blue&lt;/em&gt;, &lt;em&gt;light blue&lt;/em&gt;, &lt;em&gt;cyan&lt;/em&gt;, &lt;em&gt;teal&lt;/em&gt;, &lt;em&gt;green&lt;/em&gt;, &lt;em&gt;light
+green&lt;/em&gt;, &lt;em&gt;lime&lt;/em&gt;, &lt;em&gt;yellow&lt;/em&gt;, &lt;em&gt;amber&lt;/em&gt;, &lt;em&gt;orange&lt;/em&gt;, &lt;em&gt;deep orange&lt;/em&gt;, &lt;em&gt;brown&lt;/em&gt;, &lt;em&gt;grey&lt;/em&gt; and
+&lt;em&gt;blue grey&lt;/em&gt;. The last three colors can only be used as a primary color.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;http://h6ah4i.com/android-advancedrecyclerview/images/colors.png&#34; alt=&#34;Color palette&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If the color is set via this configuration, an additional CSS file called
+&lt;code&gt;palettes.css&lt;/code&gt; is included that defines the color palettes.&lt;/p&gt;
+
+&lt;h3 id=&#34;changing-the-font-family&#34;&gt;Changing the font family&lt;/h3&gt;
+
+&lt;p&gt;Material uses the &lt;a href=&#34;http://font.ubuntu.com&#34;&gt;Ubuntu font family&lt;/a&gt; by default, specifically the regular sans-serif type for text and the monospaced type for code. Both fonts are loaded from &lt;a href=&#34;https://www.google.com/fonts&#34;&gt;Google Fonts&lt;/a&gt; and can be easily changed to other fonts, like for example Google&amp;rsquo;s own &lt;a href=&#34;https://www.google.com/fonts/specimen/Roboto&#34;&gt;Roboto font&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[params.font]
+  text = &amp;quot;Roboto&amp;quot;
+  code = &amp;quot;Roboto Mono&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The text font will be loaded in font-weights 400 and &lt;strong&gt;700&lt;/strong&gt;, the monospaced
+font in regular weight.&lt;/p&gt;
+
+&lt;h3 id=&#34;syntax-highlighting&#34;&gt;Syntax highlighting&lt;/h3&gt;
+
+&lt;p&gt;This theme uses the popular &lt;a href=&#34;https://highlightjs.org/&#34;&gt;Highlight.js&lt;/a&gt; library to colorize code examples. The default theme is called &lt;code&gt;Github&lt;/code&gt; with a few small tweaks. You can link our own theme if you like. Again, store your stylesheet in the &lt;code&gt;static/&lt;/code&gt; folder and set the relative path in the config file:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[params]
+  # Syntax highlighting theme
+  highlight_css  = &amp;quot;path/to/theme.css&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;adding-a-github-and-twitter-account&#34;&gt;Adding a GitHub and Twitter account&lt;/h3&gt;
+
+&lt;p&gt;If you have a GitHub and/or Twitter account, you can add links to your
+accounts to the drawer by setting the variables &lt;code&gt;github&lt;/code&gt; and
+&lt;code&gt;twitter&lt;/code&gt; respectively:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[social]
+  twitter = &amp;quot;&amp;quot;
+  github  = &amp;quot;digitalcraftsman&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;adding-menu-entries&#34;&gt;Adding menu entries&lt;/h3&gt;
+
+&lt;p&gt;Once you created your first content files you can link them manually in the sidebar on the left. A menu entry has the following schema:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[[menu.main]]
+  name   = &amp;quot;Material&amp;quot;
+  url    = &amp;quot;/&amp;quot;
+  weight = 0
+  pre    = &amp;quot;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;name&lt;/code&gt; is the title displayed in the menu and &lt;code&gt;url&lt;/code&gt; the relative URL to the content. The &lt;code&gt;weight&lt;/code&gt; attribute allows you to modify the order of the menu entries. A menu entry appears further down the more weight you add. The &lt;code&gt;pre&lt;/code&gt; attribute is optional and allows you to *pre*pend elements to a menu link, e.g. an icon.&lt;/p&gt;
+
+&lt;p&gt;Instead of just linking a single file you can enhance the sidebar by creating a nested menu. This way you can list all pages of a section instead of linking them one by one (without nesting).&lt;/p&gt;
+
+&lt;p&gt;You need extend the frontmatter of each file content file in a section slightly. The snippet below registers this content file as &amp;lsquo;child&amp;rsquo; of a menu entry that already exists.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-yaml&#34;&gt;menu:
+  main:
+    parent: Material
+    identifier: &amp;lt;link name&amp;gt;
+    weight: 0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;main&lt;/code&gt; specifies to which menu the content file should be added. &lt;code&gt;main&lt;/code&gt; is the only menu in this theme by default. &lt;code&gt;parent&lt;/code&gt; let&amp;rsquo;s you register this content file to an existing menu entry, in this case the &lt;code&gt;Material&lt;/code&gt; link. Note that the parent in the frontmatter needs to match the name in &lt;code&gt;config.toml&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;identifier&lt;/code&gt; is the link that is shown in the menu. Ideally you choose the same name for the &lt;code&gt;identifier&lt;/code&gt; and the &lt;code&gt;title&lt;/code&gt; of the page. Again, &lt;code&gt;weight&lt;/code&gt; allows you to change the order of the nested links in a section.&lt;/p&gt;
+
+&lt;h3 id=&#34;markdown-extensions&#34;&gt;Markdown extensions&lt;/h3&gt;
+
+&lt;p&gt;Hugo uses &lt;a href=&#34;https://github.com/russross/blackfriday&#34;&gt;Blackfriday&lt;/a&gt; to process your content. For a detailed description of all options take a look at the &lt;a href=&#34;http://gohugo.io/overview/configuration/#configure-blackfriday-rendering&#34;&gt;Blackfriday configuration&lt;/a&gt; section in the Hugo documentation.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-toml&#34;&gt;[blackfriday]
+  smartypants = true
+  fractions = true
+  smartDashes = true
+  plainIDAnchors = true
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

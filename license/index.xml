@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Licenses on Advanced RecyclerView</title>
+    <link>http://h6ah4i.com/android-advancedrecyclerview/license/</link>
+    <description>Recent content in Licenses on Advanced RecyclerView</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 09 Mar 2016 20:10:46 +0100</lastBuildDate>
+    <atom:link href="http://h6ah4i.com/android-advancedrecyclerview/license/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>License</title>
+      <link>http://h6ah4i.com/android-advancedrecyclerview/license/</link>
+      <pubDate>Wed, 09 Mar 2016 20:10:46 +0100</pubDate>
+      
+      <guid>http://h6ah4i.com/android-advancedrecyclerview/license/</guid>
+      <description>&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;TODO just imported from theme example&lt;/strong&gt;&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Copyright &amp;copy; 2016 Digitalcraftsman &lt;a href=&#34;mailto:digitalcraftsman@protonmail.com&#34;&gt;digitalcraftsman@protonmail.com&lt;/a&gt;&lt;br&gt;
+Copyright &amp;copy; 2016 Martin Donath &lt;a href=&#34;mailto:martin.donath@squidfunk.com&#34;&gt;martin.donath@squidfunk.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &amp;ldquo;Software&amp;rdquo;), to
+deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:&lt;/p&gt;
+
+&lt;p&gt;The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.&lt;/p&gt;
+
+&lt;p&gt;THE SOFTWARE IS PROVIDED &amp;ldquo;AS IS&amp;rdquo;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+IN THE SOFTWARE.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
