@@ -936,6 +936,44 @@ class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
+    /*package*/ void notifyGroupItemMoved(int fromGroupPosition, int toGroupPosition) {
+        long packedFrom = RecyclerViewExpandableItemManager.getPackedPositionForGroup(fromGroupPosition);
+        long packedTo = RecyclerViewExpandableItemManager.getPackedPositionForGroup(toGroupPosition);
+        int flatFrom = getFlatPosition(packedFrom);
+        int flatTo = getFlatPosition(packedTo);
+        boolean fromExpanded = isGroupExpanded(fromGroupPosition);
+        boolean toExpanded = isGroupExpanded(toGroupPosition);
+
+        mPositionTranslator.moveGroupItem(fromGroupPosition, toGroupPosition);
+
+        if (!fromExpanded && !toExpanded) {
+            notifyItemMoved(flatFrom, flatTo);
+        } else {
+            notifyDataSetChanged();
+        }
+    }
+
+    /*package*/ void notifyChildItemMoved(int groupPosition, int fromChildPosition, int toChildPosition) {
+        notifyChildItemMoved(groupPosition, fromChildPosition, groupPosition, toChildPosition);
+    }
+
+    /*package*/ void notifyChildItemMoved(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition) {
+        long packedFrom = RecyclerViewExpandableItemManager.getPackedPositionForChild(fromGroupPosition, fromChildPosition);
+        long packedTo = RecyclerViewExpandableItemManager.getPackedPositionForChild(toGroupPosition, toChildPosition);
+        int flatFrom = getFlatPosition(packedFrom);
+        int flatTo = getFlatPosition(packedTo);
+
+        mPositionTranslator.moveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
+
+        if (flatFrom != RecyclerView.NO_POSITION && flatTo != RecyclerView.NO_POSITION) {
+            notifyItemMoved(flatFrom, flatTo);
+        } else if (flatFrom != RecyclerView.NO_POSITION) {
+            notifyItemRemoved(flatFrom);
+        } else if (flatTo != RecyclerView.NO_POSITION) {
+            notifyItemInserted(flatTo);
+        }
+    }
+
     private void raiseOnGroupExpandedSequentially(int groupPositionStart, int count, boolean fromUser) {
         if (mOnGroupExpandListener != null) {
             for (int i = 0; i < count; i++) {
