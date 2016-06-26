@@ -212,17 +212,12 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
                 children.remove(from);
                 children.add(to, child);
 
-                // [note] Oops, I'll add the following helper methods to reduce boilerplate code.
-                // mExpandableItemManager.notifyGroupItemMoved(from, to);
-                // mExpandableItemManager.notifyChildItemMoved(groupPosition, fromChildPosition, toChildPosition);
-                // mExpandableItemManager.notifyChildItemMoved(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
+                // [note] These three methods are only available on the develop branch (commit: 1b2ec40920b444e1903e14b5467923aa83dfd7cf).
+                // - notifyGroupItemMoved(from, to)
+                // - notifyChildItemMoved(groupPosition, fromChildPosition, toChildPosition)
+                // - notifyChildItemMoved(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition)
 
-                long packedFrom = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, from);
-                long packedTo = RecyclerViewExpandableItemManager.getPackedPositionForChild(groupPosition, to);
-                int flatFrom = mExpandableItemManager.getFlatPosition(packedFrom);
-                int flatTo = mExpandableItemManager.getFlatPosition(packedTo);
-
-                notifyItemMoved(flatFrom, flatTo);
+                mExpandableItemManager.notifyChildItemMoved(groupPosition, from, to);
             }
         }
 
