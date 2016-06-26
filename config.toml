@@ -1,3 +1,77 @@
-baseurl = "http://replace-this-with-your-hugo-site.com/"
+baseurl = "http://h6ah4i.com/android-advancedrecyclerview/"
 languageCode = "en-us"
-title = "My New Hugo Site"
+title = "Advanced RecyclerView"
+theme = "hugo-material-docs"
+metadataformat = "yaml"
+canonifyurls = true
+# Enable Google Analytics by entering your tracking id
+googleAnalytics = ""
+
+[params]
+	# General information
+	author = "Haruki Hasegawa (@h6ah4i)"
+	description = "Documentation for Advanced RecyclerView library."
+	copyright = "Haruki Hasegawa"
+
+	# Repository
+	provider = "GitHub"
+	repo_url = "https://github.com/h6ah4i/android-advancedrecyclerview"
+
+	version = "0.0.1"
+	logo = "images/logo.png"
+	favicon = ""
+
+	permalink = "#"
+
+	# Custom assets
+	custom_css = []
+	custom_js  = []
+
+	# Syntax highlighting theme
+	highlight_css  = ""
+
+	[params.palette]
+    	primary = "blue-grey"
+    	accent  = "orange"
+
+    [params.font]
+    	text = "Roboto"
+    	code = "Roboto Mono"
+
+
+[social]
+	twitter = ""
+	github  = ""
+
+
+[[menu.main]]
+	name   = "Home"
+	url    = "/android-advancedrecyclerview"
+	weight = 0
+
+[[menu.main]]
+	name   = "Getting started"
+	url    = "getting-started/"
+	weight = 10
+
+[[menu.main]]
+	name   = "FAQ"
+	url    = "faq/"
+	weight = 20
+
+[[menu.main]]
+	name   = "Expandable"
+	url    = "expandable/"
+	weight = 30
+
+[[menu.main]]
+	name   = "License"
+	url    = "license/"
+	weight = 40
+
+
+[blackfriday]
+	smartypants	= true
+	fractions = true
+	smartDashes = true
+	plainIDAnchors = true
