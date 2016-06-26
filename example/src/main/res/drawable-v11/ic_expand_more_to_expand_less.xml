@@ -19,6 +19,6 @@
 
     <target
         android:name="rotationGroup"
-        android:animation="@anim/expand_more_to_expand_less_rotation" />
+        android:animation="@animator/expand_more_to_expand_less_rotation" />
 
 </animated-vector>
