@@ -140,6 +140,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private int mInitialTouchY;
     private long mInitialTouchItemId = RecyclerView.NO_ID;
     private boolean mInitiateOnLongPress;
+    private boolean mInitiateOnTouch;
     private boolean mInitiateOnMove = true;
     private int mLongPressTimeout;
     private boolean mCheckCanDrop;
@@ -393,6 +394,24 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /**
+     * Returns whether dragging starts on touch the handle immediately.
+     *
+     * @return True if dragging starts on touch the handle immediately, false otherwise.
+     */
+    public boolean isInitiateOnTouchEnabled() {
+        return mInitiateOnTouch;
+    }
+
+    /**
+     * Sets whether dragging starts on touch the handle immediately. (default: false)
+     *
+     * @param initiateOnTouch True to initiate dragging on touch the handle immediately.
+     */
+    public void setInitiateOnTouch(boolean initiateOnTouch) {
+        mInitiateOnTouch = initiateOnTouch;
+    }
+
+    /**
      * Sets the time required to consider press as long press. (default: 500ms)
      *
      * @param longPressTimeout Integer in milli seconds.
@@ -468,6 +487,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
         final int action = MotionEventCompat.getActionMasked(e);
+        boolean handled = false;
 
         if (LOCAL_LOGV) {
             Log.v(TAG, "onInterceptTouchEvent() action = " + action);
@@ -481,7 +501,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
             case MotionEvent.ACTION_DOWN:
                 if (!isDragging()) {
-                    handleActionDown(rv, e);
+                    handled = handleActionDown(rv, e);
                 }
                 break;
 
@@ -489,15 +509,15 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 if (isDragging()) {
                     // NOTE: The first ACTION_MOVE event will come here. (maybe a bug of RecyclerView?)
                     handleActionMoveWhileDragging(rv, e);
-                    return true;
+                    handled = true;
                 } else {
                     if (handleActionMoveWhileNotDragging(rv, e)) {
-                        return true;
+                        handled = true;
                     }
                 }
         }
 
-        return false;
+        return handled;
     }
 
     /*package*/ void onTouchEvent(RecyclerView rv, MotionEvent e) {
@@ -581,12 +601,18 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mCanDragV = (orientation == CustomRecyclerViewUtils.ORIENTATION_VERTICAL) ||
                 ((orientation == CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL) && (spanCount > 1));
 
+        boolean handled;
 
-        if (mInitiateOnLongPress) {
+        if (mInitiateOnTouch) {
+            handled = checkConditionAndStartDragging(rv, e, false);
+        } else if (mInitiateOnLongPress) {
             mHandler.startLongPressDetection(e, mLongPressTimeout);
+            handled = false;
+        } else {
+            handled = false;
         }
 
-        return true;
+        return handled;
     }
 
     /*package*/ void handleOnLongPress(MotionEvent e) {
