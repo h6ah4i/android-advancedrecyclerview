@@ -21,6 +21,7 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
@@ -37,6 +38,8 @@ import android.view.animation.Interpolator;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 
 /**
@@ -56,6 +59,20 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      * Default interpolator used for "item settle back into place" animation
      */
     public static final Interpolator DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR = new DecelerateInterpolator();
+
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({ITEM_MOVE_MODE_DEFAULT, ITEM_MOVE_MODE_SWAP})
+    public @interface ItemMoveMode{}
+
+    /**
+     * Default item move mode
+     */
+    public static final int ITEM_MOVE_MODE_DEFAULT = 0;
+
+    /**
+     * Swap two items between dragging item and the item under a finger (or mouse pointer)
+     */
+    public static final int ITEM_MOVE_MODE_SWAP = 1;
 
     // ---
 
@@ -151,6 +168,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private final Rect mTmpRect1 = new Rect();
     private int mItemSettleBackIntoPlaceAnimationDuration = 200;
     private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR;
+    private int mItemMoveMode = ITEM_MOVE_MODE_DEFAULT;
 
     // these fields are only valid while dragging
     private DraggableItemWrapperAdapter mAdapter;
@@ -176,6 +194,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private boolean mCanDragH;
     private boolean mCanDragV;
     private float mDragEdgeScrollSpeed = 1.0f;
+    private int mCurrentItemMoveMode = ITEM_MOVE_MODE_DEFAULT;
 
     private SwapTarget mTempSwapTarget = new SwapTarget();
 
@@ -647,13 +666,14 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDragStartTouchY = mDragMinTouchY = mDragMaxTouchY = mLastTouchY;
         mDragStartTouchX = mDragMinTouchX = mDragMaxTouchX = mLastTouchX;
         mScrollDirMask = SCROLL_DIR_NONE;
+        mCurrentItemMoveMode = mItemMoveMode;
 
         mRecyclerView.getParent().requestDisallowInterceptTouchEvent(true);
 
         startScrollOnDraggingProcess();
 
         // raise onDragItemStarted() event
-        mAdapter.onDragItemStarted(mDraggingItemInfo, holder, mDraggableRange);
+        mAdapter.onDragItemStarted(mDraggingItemInfo, holder, mDraggableRange, mCurrentItemMoveMode);
 
         // setup decorators
         mAdapter.onBindViewHolder(holder, holder.getLayoutPosition());
@@ -681,6 +701,23 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             mItemDragEventListener.onItemDragStarted(mAdapter.getDraggingItemInitialPosition());
             mItemDragEventListener.onItemDragMoveDistanceUpdated(0, 0);
         }
+    }
+
+    /**
+     * Gets item move mode
+     * @return item move mode
+     */
+    @ItemMoveMode
+    public int getItemMoveMode() {
+        return mItemMoveMode;
+    }
+
+    /**
+     * Sets item move
+     * @param mode item move mode
+     */
+    public void setItemMoveMode(@ItemMoveMode int mode) {
+        mItemMoveMode = mode;
     }
 
     /**

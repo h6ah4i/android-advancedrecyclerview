@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.example.advrecyclerview.common.data;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -96,6 +97,16 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
         final ConcreteData item = mData.remove(fromPosition);
 
         mData.add(toPosition, item);
+        mLastRemovedPosition = -1;
+    }
+
+    @Override
+    public void swapItem(int fromPosition, int toPosition) {
+        if (fromPosition == toPosition) {
+            return;
+        }
+
+        Collections.swap(mData, fromPosition, toPosition);
         mLastRemovedPosition = -1;
     }
 

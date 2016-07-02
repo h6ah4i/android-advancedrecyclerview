@@ -20,13 +20,19 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
@@ -39,12 +45,18 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 public class DraggableGridExampleFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private DraggableGridExampleAdapter mAdapter;
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewDragDropManager mRecyclerViewDragDropManager;
 
     public DraggableGridExampleFragment() {
         super();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -123,6 +135,33 @@ public class DraggableGridExampleFragment extends Fragment {
         mLayoutManager = null;
 
         super.onDestroyView();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_drag_grid, menu);
+
+        // setting up the item move mode selection switch
+        MenuItem menuSwitchItem = menu.findItem(R.id.menu_switch_swap_mode);
+        CompoundButton actionView = (CompoundButton) MenuItemCompat.getActionView(menuSwitchItem).findViewById(R.id.switch_view);
+
+        actionView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                updateItemMoveMode(isChecked);
+            }
+        });
+    }
+
+    private void updateItemMoveMode(boolean swapMode) {
+        int mode = (swapMode)
+                ? RecyclerViewDragDropManager.ITEM_MOVE_MODE_SWAP
+                : RecyclerViewDragDropManager.ITEM_MOVE_MODE_DEFAULT;
+
+        mRecyclerViewDragDropManager.setItemMoveMode(mode);
+        mAdapter.setItemMoveMode(mode);
+
+        Snackbar.make(getView(), "Item move mode: " + (swapMode ? "SWAP" : "DEFAULT"), Snackbar.LENGTH_SHORT).show();
     }
 
     private boolean supportsViewElevation() {

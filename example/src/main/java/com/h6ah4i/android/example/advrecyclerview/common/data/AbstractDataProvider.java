@@ -40,5 +40,7 @@ public abstract class AbstractDataProvider {
 
     public abstract void moveItem(int fromPosition, int toPosition);
 
+    public abstract void swapItem(int fromPosition, int toPosition);
+
     public abstract int undoLastRemoval();
 }
