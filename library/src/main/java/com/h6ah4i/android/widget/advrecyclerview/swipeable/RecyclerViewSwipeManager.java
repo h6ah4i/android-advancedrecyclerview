@@ -522,9 +522,9 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
         final int swipeDistanceX = mLastTouchX - mTouchedItemOffsetX;
         final int swipeDistanceY = mLastTouchY - mTouchedItemOffsetY;
-        mSwipingItemPosition = getItemPosition(mAdapter, mSwipingItemId, mSwipingItemPosition);
+        final int swipingItemPosition = getSwipingItemPosition();
 
-        mSwipingItemOperator.update(mSwipingItemPosition, swipeDistanceX, swipeDistanceY);
+        mSwipingItemOperator.update(swipingItemPosition, swipeDistanceX, swipeDistanceY);
     }
 
     private boolean checkConditionAndStartSwiping(MotionEvent e, RecyclerView.ViewHolder holder) {
@@ -589,7 +589,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             mRecyclerView.getParent().requestDisallowInterceptTouchEvent(false);
         }
 
-        final int itemPosition = getItemPosition(mAdapter, mSwipingItemId, mSwipingItemPosition);
+        final int itemPosition = getSwipingItemPosition();
 
         mVelocityTracker.clear();
 
@@ -687,7 +687,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
                 case RESULT_SWIPED_DOWN:
                     break;
                 default:
-                    throw new IllegalStateException("Unexpected after reaction has been requested: result = " + result +", afterReaction = " + afterReaction);
+                    throw new IllegalStateException("Unexpected after reaction has been requested: result = " + result + ", afterReaction = " + afterReaction);
             }
         }
     }
@@ -708,7 +708,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
     }
 
-    private static int getItemPosition(@Nullable RecyclerView.Adapter adapter, long itemId, int itemPositionGuess) {
+    /*package*/
+    static int getItemPosition(@Nullable RecyclerView.Adapter adapter, long itemId, int itemPositionGuess) {
         if (adapter == null)
             return RecyclerView.NO_POSITION;
 
@@ -718,7 +719,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
                 return itemPositionGuess;
         }
 
-        for (int i=0; i < itemCount; i++) {
+        for (int i = 0; i < itemCount; i++) {
             if (adapter.getItemId(i) == itemId)
                 return i;
         }
@@ -803,7 +804,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
      *
      * @return The listener object
      */
-    public @Nullable OnItemSwipeEventListener getOnItemSwipeEventListener() {
+    @Nullable
+    public OnItemSwipeEventListener getOnItemSwipeEventListener() {
         return mItemSwipeEventListener;
     }
 
@@ -889,6 +891,19 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         if (holder != null) {
             checkConditionAndStartSwiping(e, holder);
         }
+    }
+
+    /*package*/ int getSwipingItemPosition() {
+        return mSwipingItemPosition;
+    }
+
+    /*package*/ int syncSwipingItemPosition() {
+        return syncSwipingItemPosition(mSwipingItemPosition);
+    }
+
+    /*package*/ int syncSwipingItemPosition(int positionGuess) {
+        mSwipingItemPosition = getItemPosition(mAdapter, mSwipingItemId, positionGuess);
+        return mSwipingItemPosition;
     }
 
     private static boolean supportsViewPropertyAnimator() {
