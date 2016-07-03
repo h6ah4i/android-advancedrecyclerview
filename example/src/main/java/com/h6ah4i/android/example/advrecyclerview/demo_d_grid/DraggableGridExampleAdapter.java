@@ -30,12 +30,14 @@ import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 
 class DraggableGridExampleAdapter
         extends RecyclerView.Adapter<DraggableGridExampleAdapter.MyViewHolder>
         implements DraggableItemAdapter<DraggableGridExampleAdapter.MyViewHolder> {
     private static final String TAG = "MyDraggableItemAdapter";
+    private int mItemMoveMode = RecyclerViewDragDropManager.ITEM_MOVE_MODE_DEFAULT;
 
     // NOTE: Make accessible with short name
     private interface Draggable extends DraggableItemConstants {
@@ -62,6 +64,10 @@ class DraggableGridExampleAdapter
         // DraggableItemAdapter requires stable ID, and also
         // have to implement the getItemId() method appropriately.
         setHasStableIds(true);
+    }
+
+    public void setItemMoveMode(int itemMoveMode) {
+        mItemMoveMode = itemMoveMode;
     }
 
     @Override
@@ -122,9 +128,13 @@ class DraggableGridExampleAdapter
             return;
         }
 
-        mProvider.moveItem(fromPosition, toPosition);
-
-        notifyItemMoved(fromPosition, toPosition);
+        if (mItemMoveMode == RecyclerViewDragDropManager.ITEM_MOVE_MODE_DEFAULT) {
+            mProvider.moveItem(fromPosition, toPosition);
+            notifyItemMoved(fromPosition, toPosition);
+        } else {
+            mProvider.swapItem(fromPosition, toPosition);
+            notifyDataSetChanged();
+        }
     }
 
     @Override

@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,9 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(expMgr.createWrappedAdapter(new MyAdapter()));
+
+        // NOTE: need to disable change animations to ripple effect work properly
+        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         expMgr.attachRecyclerView(recyclerView);
     }
@@ -115,7 +119,7 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
             for (int i = 0; i < 20; i++) {
                 MyGroupItem group = new MyGroupItem(i, "GROUP " + i);
                 for (int j = 0; j < 5; j++) {
-                    group.children.add(new MyChildItem(i, "child " + i));
+                    group.children.add(new MyChildItem(j, "child " + j));
                 }
                 mItems.add(group);
             }
@@ -163,8 +167,8 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
 
         @Override
         public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
-            MyChildItem group = mItems.get(groupPosition).children.get(childPosition);
-            holder.textView.setText(group.text);
+            MyChildItem child = mItems.get(groupPosition).children.get(childPosition);
+            holder.textView.setText(child.text);
         }
 
         @Override

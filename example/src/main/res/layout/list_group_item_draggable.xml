@@ -32,12 +32,14 @@
         android:foreground="?attr/selectableItemBackground"
         tools:ignore="UselessParent">
 
+        <!-- NOTE: the drag handle should set android:clickable=true not to propagate click events to the parent views -->
         <View
             android:id="@+id/drag_handle"
             android:layout_width="32dp"
             android:layout_height="match_parent"
             android:layout_gravity="top|left"
             android:background="#20000000"
+            android:clickable="true"
             tools:ignore="RtlHardcoded"/>
 
         <TextView

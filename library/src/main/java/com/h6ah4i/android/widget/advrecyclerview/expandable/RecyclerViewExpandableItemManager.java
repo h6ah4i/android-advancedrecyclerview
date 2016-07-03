@@ -839,6 +839,48 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
+     * <p>Notify any registered observers that the group item reflected at
+     * <code>fromGroupPosition</code> has been moved to <code>toGroupPosition</code>.</p>
+     * <p>This is a structural change event. Representations of other existing items in the data set are
+     * still considered up to date and will not be rebound, though their positions may be altered.</p>
+     *
+     * @param fromGroupPosition Previous position of the group item.
+     * @param toGroupPosition New position of the group item.
+     */
+    public void notifyGroupItemMoved(int fromGroupPosition, int toGroupPosition) {
+        mAdapter.notifyGroupItemMoved(fromGroupPosition, toGroupPosition);
+    }
+
+    /**
+     * <p>Notify any registered observers that the child item reflected at
+     * <code>groupPosition, fromChildPosition</code> has been moved to <code>groupPosition, toChildPosition</code>.</p>
+     * <p>This is a structural change event. Representations of other existing items in the data set are
+     * still considered up to date and will not be rebound, though their positions may be altered.</p>
+     *
+     * @param groupPosition Group position of the child item.
+     * @param fromChildPosition Previous child position of the child item.
+     * @param toChildPosition New child position of the child item.
+     */
+    public void notifyChildItemMoved(int groupPosition, int fromChildPosition, int toChildPosition) {
+        mAdapter.notifyChildItemMoved(groupPosition, fromChildPosition, toChildPosition);
+    }
+
+    /**
+     * <p>Notify any registered observers that the child item reflected at
+     * <code>fromGroupPosition, fromChildPosition</code> has been moved to <code>toGroupPosition, toChildPosition</code>.</p>
+     * <p>This is a structural change event. Representations of other existing items in the data set are
+     * still considered up to date and will not be rebound, though their positions may be altered.</p>
+     * 
+     * @param fromGroupPosition Previous group position of the child item.
+     * @param fromChildPosition Previous child position of the child item.
+     * @param toGroupPosition New group position of the child item.
+     * @param toChildPosition New child position of the child item.
+     */
+    public void notifyChildItemMoved(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition) {
+        mAdapter.notifyChildItemMoved(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
+    }
+
+    /**
      * Gets the number of groups.
      *
      * @return the number of groups

@@ -83,6 +83,10 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
             SwipeableItemViewHolder swipeableHolder = (SwipeableItemViewHolder) holder;
 
+            // reset result and reaction (#262)
+            swipeableHolder.setSwipeResult(SwipeableItemConstants.RESULT_NONE);
+            swipeableHolder.setAfterSwipeReaction(SwipeableItemConstants.AFTER_SWIPE_REACTION_DEFAULT);
+
             swipeableHolder.setSwipeItemHorizontalSlideAmount(0);
             swipeableHolder.setSwipeItemVerticalSlideAmount(0);
 
@@ -147,45 +151,50 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     protected void onHandleWrappedAdapterChanged() {
         if (isSwiping()) {
             cancelSwipe();
-        } else {
-            super.onHandleWrappedAdapterChanged();
         }
+        super.onHandleWrappedAdapterChanged();
     }
 
     @Override
     protected void onHandleWrappedAdapterItemRangeChanged(int positionStart, int itemCount) {
-        if (isSwiping()) {
-            cancelSwipe();
-        } else {
-            super.onHandleWrappedAdapterItemRangeChanged(positionStart, itemCount);
-        }
+        super.onHandleWrappedAdapterItemRangeChanged(positionStart, itemCount);
+    }
+
+    @Override
+    protected void onHandleWrappedAdapterItemRangeChanged(int positionStart, int itemCount, Object payload) {
+        super.onHandleWrappedAdapterItemRangeChanged(positionStart, itemCount, payload);
     }
 
     @Override
     protected void onHandleWrappedAdapterItemRangeInserted(int positionStart, int itemCount) {
         if (isSwiping()) {
-            cancelSwipe();
-        } else {
-            super.onHandleWrappedAdapterItemRangeInserted(positionStart, itemCount);
+            int pos = mSwipeManager.getSwipingItemPosition();
+            if (pos >= positionStart) {
+                mSwipeManager.syncSwipingItemPosition(pos + itemCount);
+            }
         }
+        super.onHandleWrappedAdapterItemRangeInserted(positionStart, itemCount);
     }
 
     @Override
     protected void onHandleWrappedAdapterItemRangeRemoved(int positionStart, int itemCount) {
         if (isSwiping()) {
-            cancelSwipe();
-        } else {
-            super.onHandleWrappedAdapterItemRangeRemoved(positionStart, itemCount);
+            int pos = mSwipeManager.getSwipingItemPosition();
+            if (checkInRange(pos, positionStart, itemCount)) {
+                cancelSwipe();
+            } else if (positionStart < pos) {
+                mSwipeManager.syncSwipingItemPosition(pos - itemCount);
+            }
         }
+        super.onHandleWrappedAdapterItemRangeRemoved(positionStart, itemCount);
     }
 
     @Override
     protected void onHandleWrappedAdapterRangeMoved(int fromPosition, int toPosition, int itemCount) {
         if (isSwiping()) {
-            cancelSwipe();
-        } else {
-            super.onHandleWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
+            mSwipeManager.syncSwipingItemPosition();
         }
+        super.onHandleWrappedAdapterRangeMoved(fromPosition, toPosition, itemCount);
     }
 
     private void cancelSwipe() {
@@ -282,6 +291,10 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
     protected boolean isSwiping() {
         return (mSwipingItemId != RecyclerView.NO_ID);
+    }
+
+    private static boolean checkInRange(int pos, int start, int count) {
+        return (pos >= start) && (pos < (start + count));
     }
 
     private boolean swipeHorizontal() {

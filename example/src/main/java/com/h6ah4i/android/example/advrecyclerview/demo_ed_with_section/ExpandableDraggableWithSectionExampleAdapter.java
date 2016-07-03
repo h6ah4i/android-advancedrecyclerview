@@ -46,9 +46,12 @@ class ExpandableDraggableWithSectionExampleAdapter
     private static final int GROUP_ITEM_VIEW_TYPE_SECTION_HEADER = 0;
     private static final int GROUP_ITEM_VIEW_TYPE_SECTION_ITEM = 1;
 
+    private boolean mAllowItemsMoveAcrossSections;
+
     // NOTE: Make accessible with short name
     private interface Expandable extends ExpandableItemConstants {
     }
+
     private interface Draggable extends DraggableItemConstants {
     }
 
@@ -306,29 +309,37 @@ class ExpandableDraggableWithSectionExampleAdapter
 
     @Override
     public ItemDraggableRange onGetGroupItemDraggableRange(MyGroupViewHolder holder, int groupPosition) {
-        // sort within the same section
-        final int start = findFirstSectionItem(groupPosition);
-        final int end = findLastSectionItem(groupPosition);
+        if (mAllowItemsMoveAcrossSections) {
+            return null;
+        } else {
+            // sort within the same section
+            final int start = findFirstSectionItem(groupPosition);
+            final int end = findLastSectionItem(groupPosition);
 
-        return new GroupPositionItemDraggableRange(start, end);
+            return new GroupPositionItemDraggableRange(start, end);
+        }
     }
 
     @Override
     public ItemDraggableRange onGetChildItemDraggableRange(MyChildViewHolder holder, int groupPosition, int childPosition) {
-        // sort within the same group
-        return new GroupPositionItemDraggableRange(groupPosition, groupPosition);
+        if (mAllowItemsMoveAcrossSections) {
+            return null;
+        } else {
+            // sort within the same group
+            return new GroupPositionItemDraggableRange(groupPosition, groupPosition);
 
-//        // sort within the same section
-//        final int start = findFirstSectionItem(groupPosition);
-//        final int end = findLastSectionItem(groupPosition);
+//            // sort within the same section
+//            final int start = findFirstSectionItem(groupPosition);
+//            final int end = findLastSectionItem(groupPosition);
 //
-//        return new GroupPositionItemDraggableRange(start, end);
-
-//        // sort within the specified child range
-//        final int start = 0;
-//        final int end = 2;
+//            return new GroupPositionItemDraggableRange(start, end);
 //
-//        return new ChildPositionItemDraggableRange(start, end);
+//            // sort within the specified child range
+//            final int start = 0;
+//            final int end = 2;
+//
+//            return new GroupPositionItemDraggableRange(start, end);
+        }
     }
 
     @Override
@@ -338,7 +349,14 @@ class ExpandableDraggableWithSectionExampleAdapter
 
     @Override
     public boolean onCheckChildCanDrop(int draggingGroupPosition, int draggingChildPosition, int dropGroupPosition, int dropChildPosition) {
-        return true;
+        final AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(dropGroupPosition);
+
+        if (item.isSectionHeader()) {
+            // If the group item is a section header, skip it.
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Override
@@ -391,6 +409,10 @@ class ExpandableDraggableWithSectionExampleAdapter
         }
 
         return position;
+    }
+
+    public void setAllowItemsMoveAcrossSections(boolean allowed) {
+        mAllowItemsMoveAcrossSections = allowed;
     }
 
     private static boolean isSectionHeader(MyGroupViewHolder holder) {
