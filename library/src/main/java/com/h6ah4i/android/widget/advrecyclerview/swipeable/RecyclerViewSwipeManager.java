@@ -253,7 +253,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     /**
-     * Sets swipe thredhold distance.
+     * Sets swipe threshold distance.
      *
      * @param distanceInPixels Integer specifies threshold distance in pixels.
      */
@@ -262,7 +262,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     /**
-     * Gets swipe thredhold distance.
+     * Gets swipe threshold distance.
      *
      * @return Threshold distance in pixels.
      */
