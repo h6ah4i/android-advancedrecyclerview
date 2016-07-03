@@ -45,4 +45,20 @@ public class DraggingItemInfo {
         CustomRecyclerViewUtils.getLayoutMargins(vh.itemView, margins);
         spanSize = CustomRecyclerViewUtils.getSpanSize(vh);
     }
+
+    private DraggingItemInfo(DraggingItemInfo info, RecyclerView.ViewHolder vh) {
+        width = vh.itemView.getWidth();
+        height = vh.itemView.getHeight();
+        id = info.id;
+        initialItemLeft = info.initialItemLeft;
+        initialItemTop = info.initialItemTop;
+        grabbedPositionX = (info.grabbedPositionX < width) ? info.grabbedPositionX : (width / 2);
+        grabbedPositionY = (info.grabbedPositionY < height) ? info.grabbedPositionY : (height / 2);
+        margins = new Rect(info.margins);
+        spanSize = CustomRecyclerViewUtils.getSpanSize(vh);
+    }
+
+    public static DraggingItemInfo createWithNewView(DraggingItemInfo info, RecyclerView.ViewHolder vh) {
+        return new DraggingItemInfo(info, vh);
+    }
 }

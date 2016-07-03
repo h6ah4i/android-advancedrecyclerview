@@ -149,6 +149,19 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mStarted = true;
     }
 
+    public void updateDraggingItemView(DraggingItemInfo info, RecyclerView.ViewHolder vh) {
+        if (!mStarted) {
+            return;
+        }
+        if (mDraggingItemViewHolder != vh) {
+            invalidateDraggingItem();
+            mDraggingItemViewHolder = vh;
+        }
+        mDraggingItemImage = createDraggingItemImage(vh.itemView, mShadowDrawable);
+        mDraggingItemInfo = info;
+        refresh(true);
+    }
+
     public void finish(boolean animate) {
         if (mStarted) {
             mRecyclerView.removeItemDecoration(this);
