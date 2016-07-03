@@ -749,9 +749,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         final int layoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
-        if (supportsViewTranslation() && !mCheckCanDrop &&
-                (layoutType == CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_VERTICAL ||
-                        layoutType == CustomRecyclerViewUtils.LAYOUT_TYPE_LINEAR_HORIZONTAL)) {
+        if (supportsViewTranslation() && !mCheckCanDrop && CustomRecyclerViewUtils.isLinearLayout(layoutType)) {
             mSwapTargetItemOperator = new SwapTargetItemOperator(mRecyclerView, holder, mDraggableRange, mDraggingItemInfo);
             mSwapTargetItemOperator.setSwapTargetTranslationInterpolator(mSwapTargetTranslationInterpolator);
             mSwapTargetItemOperator.start();
@@ -1443,8 +1441,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         Integer toOrigin = getItemViewOrigin(toView, isVertical);
         Integer firstOrigin = getItemViewOrigin(firstView, isVertical);
 
-        // NOTE: This method invokes notifyItemMoved() method internally. Be careful!
-        mAdapter.moveItem(fromPosition, toPosition);
+        // NOTE: This method invokes notifyItemMoved() or notifyDataSetChanged() method internally. Be careful!
+        mAdapter.moveItem(fromPosition, toPosition, layoutType);
 
         if ((firstVisible == fromPosition) && (firstOrigin != null) && (toOrigin != null)) {
             scrollBySpecifiedOrientation(rv, -(toOrigin - firstOrigin), isVertical);
@@ -1739,15 +1737,27 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         RecyclerView.ViewHolder vh1 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx - gap, cy - gap);
-        RecyclerView.ViewHolder vh2 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx + gap, cy - gap);
-        RecyclerView.ViewHolder vh3 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx - gap, cy + gap);
-        RecyclerView.ViewHolder vh4 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx + gap, cy + gap);
-
-        if (vh1 == vh2 && vh1 == vh3 && vh1 == vh4) {
+        if (vh1 == null || vh1 == fc.draggingItem) {
             return vh1;
-        } else {
+        }
+        RecyclerView.ViewHolder vh2 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx + gap, cy - gap);
+        if (vh2 == null || vh2 == fc.draggingItem) {
+            return vh2;
+        }
+        RecyclerView.ViewHolder vh3 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx - gap, cy + gap);
+        if (vh3 == null || vh3 == fc.draggingItem) {
+            return vh3;
+        }
+        RecyclerView.ViewHolder vh4 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx + gap, cy + gap);
+        if (vh4 == null || vh4 == fc.draggingItem) {
+            return vh4;
+        }
+
+        if (!(vh1 == vh2 && vh1 == vh3 && vh1 == vh4)) {
             return null;
         }
+
+        return vh1;
     }
 
     private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManagerInternal2(FindSwapTargetContext fc) {

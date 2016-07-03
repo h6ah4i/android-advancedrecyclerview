@@ -27,6 +27,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemInternal
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.List;
@@ -341,7 +342,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ void moveItem(int fromPosition, int toPosition) {
+    /*package*/ void moveItem(int fromPosition, int toPosition, int layoutType) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onMoveItem(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ")");
         }
@@ -370,7 +371,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         // Don't move items in wrapped adapter here.
 
         // notify to observers
-        if (mItemMoveMode == RecyclerViewDragDropManager.ITEM_MOVE_MODE_DEFAULT) {
+        if (mItemMoveMode == RecyclerViewDragDropManager.ITEM_MOVE_MODE_DEFAULT && CustomRecyclerViewUtils.isLinearLayout(layoutType)) {
             notifyItemMoved(fromPosition, toPosition);
         } else {
             notifyDataSetChanged();
