@@ -1,3 +1,19 @@
+## 0.9.2
+[New features]
+- Added `void RecyclerViewDragDropManager.setItemMoveMode(@ItemMoveMode int mode)` (issue #253, #269)
+- Added `void RecyclerViewSwipeManager.setSwipeThresholdDistance(int distanceInPixels)` (issue #266)
+- Added `notifyGroupItemMoved()` and `notifyChildItemMoved()` methods to `RecyclerViewExpandableItemManager` (issue #270)
+- Added `RecyclerViewDragDropManager.setInitiateOnTouch(boolean initiateOnTouch)` (issue #273)
+
+[Improvements]
+- Better handling of `notifyItem*` method calls during swiping (issue #274)
+- Improved span size change handling during dragging (issue #278)
+
+[Bug fixes]
+- IllegalStateException (issue #247)
+- Item loses Remove Animation properties when removed + undo (issue #262)
+
+
 ## 0.9.1
 [Bug fixes]
 - Fix broken drag and drop behavior on API level 10
@@ -5,7 +21,7 @@
 
 ## 0.9.0
 [New features]
-- Introduce `DraggableItemAdapter.onCheckCanDrop()` callback (issue #233)
+- Introduced `DraggableItemAdapter.onCheckCanDrop()` callback (issue #233)
 
 [Improvements]
 - Improved Drag & Drop behavior for StaggeredGridLayout (issue #219)
