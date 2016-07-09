@@ -71,20 +71,15 @@ public class AlreadyExpandedGroupsExpandableExampleFragment extends Fragment {
         final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
         mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
 
+        // Expand all group items by default. This method must be called before creating a wrapper adapter.
+        mRecyclerViewExpandableItemManager.setDefaultGroupsExpandedState(true);
+
         //adapter
         final AlreadyExpandedGroupsExpandableExampleAdapter myItemAdapter = new AlreadyExpandedGroupsExpandableExampleAdapter(mRecyclerViewExpandableItemManager, getDataProvider());
 
         mAdapter = myItemAdapter;
 
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(myItemAdapter);       // wrap for expanding
-
-        // Expand all group items if no saved state exists.
-        // The expandAll() method should be called here (before attaching the RecyclerView instance),
-        // because it can reduce overheads of updating item views.
-        if (eimSavedState == null) {
-            mRecyclerViewExpandableItemManager.expandAll();
-        }
-
         final GeneralItemAnimator animator = new RefactoredDefaultItemAnimator();
 
         // Change animations are enabled by default since support-v7-recyclerview v22.
