@@ -30,6 +30,8 @@ import android.view.ViewConfiguration;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 
+import java.util.List;
+
 /**
  * Provides item expansion operation for {@link android.support.v7.widget.RecyclerView}
  */
@@ -540,7 +542,35 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupAndChildrenItemsChanged(int)
      */
     public void notifyGroupItemChanged(int groupPosition) {
-        mAdapter.notifyGroupItemChanged(groupPosition);
+        mAdapter.notifyGroupItemChanged(groupPosition, null);
+    }
+
+    /**
+     * <p>Notify any registered observers that the group item at <code>groupPosition</code> has changed
+     * with an optional payload object.</p>
+     * <p>This is an group item change event, not a structural change event. It indicates that any
+     * reflection of the data at <code>groupPosition</code> is out of date and should be updated.
+     * The item at <code>groupPosition</code> retains the same identity.</p>
+     * <p>This method does not notify for children that are contained in the specified group.
+     * If children have also changed, use {@link #notifyGroupAndChildrenItemsChanged(int, Object)} instead.</p>
+     *
+     * <p>
+     * Client can optionally pass a payload for partial change. These payloads will be merged
+     * and may be passed to adapter's {@link ExpandableItemAdapter#onBindGroupViewHolder(RecyclerView.ViewHolder, int, int, List)} if the
+     * item is already represented by a ViewHolder and it will be rebound to the same
+     * ViewHolder. A notifyItemRangeChanged() with null payload will clear all existing
+     * payloads on that item and prevent future payload until
+     * {@link ExpandableItemAdapter#onBindGroupViewHolder(RecyclerView.ViewHolder, int, int, List)} is called.
+     * Adapter should not assume that the payload will always be passed to onBindGroupViewHolder(), e.g. when the view is not
+     * attached, the payload will be simply dropped.</p>
+     *
+     * @param groupPosition Position of the group item that has changed
+     * @param payload Optional parameter, use null to identify a "full" update
+     *
+     * @see #notifyGroupAndChildrenItemsChanged(int, Object)
+     */
+    public void notifyGroupItemChanged(int groupPosition, Object payload) {
+        mAdapter.notifyGroupItemChanged(groupPosition, payload);
     }
 
     /**

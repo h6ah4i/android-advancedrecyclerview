@@ -813,12 +813,12 @@ class ExpandableRecyclerViewWrapperAdapter
                 (callListeners ? mOnGroupCollapseListener : null));
     }
 
-    /*package*/ void notifyGroupItemChanged(int groupPosition) {
+    /*package*/ void notifyGroupItemChanged(int groupPosition, Object payload) {
         final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
         final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
 
         if (flatPosition != RecyclerView.NO_POSITION) {
-            notifyItemChanged(flatPosition);
+            notifyItemChanged(flatPosition, payload);
         }
     }
 
