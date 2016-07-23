@@ -36,9 +36,9 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
-class SwipeableWIthButtonExampleAdapter
-        extends RecyclerView.Adapter<SwipeableWIthButtonExampleAdapter.MyViewHolder>
-        implements SwipeableItemAdapter<SwipeableWIthButtonExampleAdapter.MyViewHolder> {
+class SwipeableWithButtonExampleAdapter
+        extends RecyclerView.Adapter<SwipeableWithButtonExampleAdapter.MyViewHolder>
+        implements SwipeableItemAdapter<SwipeableWithButtonExampleAdapter.MyViewHolder> {
     private static final String TAG = "MySwipeableItemAdapter";
 
     // NOTE: Make accessible with short name
@@ -77,7 +77,7 @@ class SwipeableWIthButtonExampleAdapter
 
     }
 
-    public SwipeableWIthButtonExampleAdapter(AbstractDataProvider dataProvider) {
+    public SwipeableWithButtonExampleAdapter(AbstractDataProvider dataProvider) {
         mProvider = dataProvider;
         mSwipeableViewContainerOnClickListener = new View.OnClickListener() {
             @Override
@@ -225,11 +225,11 @@ class SwipeableWIthButtonExampleAdapter
     }
 
     private static class SwipeLeftResultAction extends SwipeResultActionMoveToSwipedDirection {
-        private SwipeableWIthButtonExampleAdapter mAdapter;
+        private SwipeableWithButtonExampleAdapter mAdapter;
         private final int mPosition;
         private boolean mSetPinned;
 
-        SwipeLeftResultAction(SwipeableWIthButtonExampleAdapter adapter, int position) {
+        SwipeLeftResultAction(SwipeableWithButtonExampleAdapter adapter, int position) {
             mAdapter = adapter;
             mPosition = position;
         }
@@ -265,10 +265,10 @@ class SwipeableWIthButtonExampleAdapter
     }
 
     private static class UnpinResultAction extends SwipeResultActionDefault {
-        private SwipeableWIthButtonExampleAdapter mAdapter;
+        private SwipeableWithButtonExampleAdapter mAdapter;
         private final int mPosition;
 
-        UnpinResultAction(SwipeableWIthButtonExampleAdapter adapter, int position) {
+        UnpinResultAction(SwipeableWithButtonExampleAdapter adapter, int position) {
             mAdapter = adapter;
             mPosition = position;
         }

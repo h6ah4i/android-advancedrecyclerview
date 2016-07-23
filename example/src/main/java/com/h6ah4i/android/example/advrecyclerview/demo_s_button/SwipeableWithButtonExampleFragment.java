@@ -72,8 +72,8 @@ public class SwipeableWithButtonExampleFragment extends Fragment {
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 
         //adapter
-        final SwipeableWIthButtonExampleAdapter myItemAdapter = new SwipeableWIthButtonExampleAdapter(getDataProvider());
-        myItemAdapter.setEventListener(new SwipeableWIthButtonExampleAdapter.EventListener() {
+        final SwipeableWithButtonExampleAdapter myItemAdapter = new SwipeableWithButtonExampleAdapter(getDataProvider());
+        myItemAdapter.setEventListener(new SwipeableWithButtonExampleAdapter.EventListener() {
             @Override
             public void onItemPinned(int position) {
                 ((SwipeableWithButtonExampleActivity) getActivity()).onItemPinned(position);
