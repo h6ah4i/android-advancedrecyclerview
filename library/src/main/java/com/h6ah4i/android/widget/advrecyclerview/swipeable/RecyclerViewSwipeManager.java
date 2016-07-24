@@ -77,6 +77,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private RecyclerView mRecyclerView;
 
     private long mReturnToDefaultPositionAnimationDuration = 300;
+    private long mMoveToSpecifiedPositionAnimationDuration = 200;
     private long mMoveToOutsideWindowAnimationDuration = 200;
 
     private int mTouchSlop;
@@ -759,7 +760,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         } else if (amount == 0.0f) {
             mItemSlideAnimator.slideToDefaultPosition(holder, horizontal, shouldAnimate, mReturnToDefaultPositionAnimationDuration);
         } else {
-            mItemSlideAnimator.slideToSpecifiedPosition(holder, amount, horizontal);
+            mItemSlideAnimator.slideToSpecifiedPosition(holder, amount, horizontal, shouldAnimate, mMoveToSpecifiedPositionAnimationDuration);
         }
     }
 
@@ -779,6 +780,25 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
      */
     public void setReturnToDefaultPositionAnimationDuration(long duration) {
         mReturnToDefaultPositionAnimationDuration = duration;
+    }
+
+
+    /**
+     * Gets the duration of the "move to specified position" animation
+     *
+     * @return Duration of the "move to specified position" animation in milliseconds
+     */
+    public long getMoveToSpecifiedPositionAnimationDuration() {
+        return mMoveToSpecifiedPositionAnimationDuration;
+    }
+
+    /**
+     * Sets the duration of the "move to specified position" animation
+     *
+     * @param duration Duration of the "move to specified position" animation in milliseconds
+     */
+    public void setMoveToSpecifiedPositionAnimationDuration(long duration) {
+        mMoveToSpecifiedPositionAnimationDuration = duration;
     }
 
     /**

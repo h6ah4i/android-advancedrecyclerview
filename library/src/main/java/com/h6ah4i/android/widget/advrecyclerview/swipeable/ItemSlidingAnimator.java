@@ -31,6 +31,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.FrameLayout;
 
@@ -50,6 +51,7 @@ public class ItemSlidingAnimator {
 
     private final SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
     private final Interpolator mSlideToDefaultPositionAnimationInterpolator = new AccelerateDecelerateInterpolator();
+    private final Interpolator mSlideToSpecifiedPositionAnimationInterpolator = new DecelerateInterpolator();
     private final Interpolator mSlideToOutsideOfWindowAnimationInterpolator = new AccelerateInterpolator(0.8f);
     private final List<RecyclerView.ViewHolder> mActive;
     private final List<WeakReference<ViewHolderDeferredProcess>> mDeferredProcesses;
@@ -65,7 +67,7 @@ public class ItemSlidingAnimator {
 
     public void slideToDefaultPosition(RecyclerView.ViewHolder holder, boolean horizontal, boolean shouldAnimate, long duration) {
         cancelDeferredProcess(holder);
-        slideToSpecifiedPositionInternal(holder, 0, horizontal, shouldAnimate, duration, null);
+        slideToSpecifiedPositionInternal(holder, 0, horizontal, shouldAnimate, mSlideToDefaultPositionAnimationInterpolator, duration, null);
     }
 
     public void slideToOutsideOfWindow(RecyclerView.ViewHolder holder, int dir, boolean shouldAnimate, long duration) {
@@ -73,9 +75,9 @@ public class ItemSlidingAnimator {
         slideToOutsideOfWindowInternal(holder, dir, shouldAnimate, duration, null);
     }
 
-    public void slideToSpecifiedPosition(RecyclerView.ViewHolder holder, float position, boolean horizontal) {
+    public void slideToSpecifiedPosition(RecyclerView.ViewHolder holder, float position, boolean horizontal, boolean shouldAnimate, long duration) {
         cancelDeferredProcess(holder);
-        slideToSpecifiedPositionInternal(holder, position, horizontal, false, 0, null);
+        slideToSpecifiedPositionInternal(holder, position, horizontal, shouldAnimate, mSlideToSpecifiedPositionAnimationInterpolator, duration, null);
     }
 
     public boolean finishSwipeSlideToDefaultPosition(
@@ -83,7 +85,9 @@ public class ItemSlidingAnimator {
             boolean shouldAnimate, long duration,
             int itemPosition, SwipeResultAction resultAction) {
         cancelDeferredProcess(holder);
-        return slideToSpecifiedPositionInternal(holder, 0, horizontal, shouldAnimate, duration,
+        return slideToSpecifiedPositionInternal(
+                holder, 0, horizontal, shouldAnimate,
+                mSlideToDefaultPositionAnimationInterpolator, duration,
                 new SwipeFinishInfo(itemPosition, resultAction));
     }
 
@@ -118,14 +122,17 @@ public class ItemSlidingAnimator {
 
     private boolean slideToSpecifiedPositionInternal(
             final RecyclerView.ViewHolder holder, final float position,
-            boolean horizontal, boolean shouldAnimate, long duration,
+            boolean horizontal, boolean shouldAnimate, Interpolator interpolator, long duration,
             SwipeFinishInfo swipeFinish) {
-        final Interpolator defaultInterpolator = mSlideToDefaultPositionAnimationInterpolator;
+        final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
+
+        if (shouldAnimate) {
+            shouldAnimate = ViewCompat.isAttachedToWindow(containerView) && (containerView.getVisibility() == View.VISIBLE);
+        }
 
         duration = (shouldAnimate) ? duration : 0;
 
         if (position != 0.0f) {
-            final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
             final int width = containerView.getWidth();
             final int height = containerView.getHeight();
 
@@ -133,12 +140,12 @@ public class ItemSlidingAnimator {
                 final int translationX;
                 translationX = (int) (width * position + 0.5f);
                 return animateSlideInternalCompat(
-                        holder, horizontal, translationX, 0, duration, defaultInterpolator, swipeFinish);
+                        holder, horizontal, translationX, 0, duration, interpolator, swipeFinish);
             } else if (!horizontal && (height != 0)) {
                 final int translationY;
                 translationY = (int) (height * position + 0.5f);
                 return animateSlideInternalCompat(
-                        holder, horizontal, 0, translationY, duration, defaultInterpolator, swipeFinish);
+                        holder, horizontal, 0, translationY, duration, interpolator, swipeFinish);
             } else {
                 if (swipeFinish != null) {
                     throw new IllegalStateException(
@@ -152,7 +159,7 @@ public class ItemSlidingAnimator {
             }
         } else {
             return animateSlideInternalCompat(
-                    holder, horizontal, 0, 0, duration, defaultInterpolator, swipeFinish);
+                    holder, horizontal, 0, 0, duration, interpolator, swipeFinish);
         }
     }
 
@@ -177,7 +184,6 @@ public class ItemSlidingAnimator {
         final int bottom = containerView.getBottom();
         final int width = right - left;
         final int height = bottom - top;
-        final boolean parentIsShown = parent.isShown();
 
         parent.getWindowVisibleDisplayFrame(mTmpRect);
         final int windowWidth = mTmpRect.width();
@@ -186,7 +192,7 @@ public class ItemSlidingAnimator {
         int translateX = 0;
         int translateY = 0;
 
-        if ((width == 0) || (height == 0) || !parentIsShown) {
+        if ((width == 0) || (height == 0)) {
             // not measured yet or not shown
             switch (dir) {
                 case DIR_LEFT:
@@ -229,7 +235,7 @@ public class ItemSlidingAnimator {
         }
 
         if (shouldAnimate) {
-            shouldAnimate = containerView.isShown();
+            shouldAnimate = ViewCompat.isAttachedToWindow(containerView) && (containerView.getVisibility() == View.VISIBLE);
         }
 
         duration = (shouldAnimate) ? duration : 0;
