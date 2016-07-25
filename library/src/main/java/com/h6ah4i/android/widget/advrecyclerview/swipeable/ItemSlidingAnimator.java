@@ -67,7 +67,7 @@ public class ItemSlidingAnimator {
 
     public void slideToDefaultPosition(RecyclerView.ViewHolder holder, boolean horizontal, boolean shouldAnimate, long duration) {
         cancelDeferredProcess(holder);
-        slideToSpecifiedPositionInternal(holder, 0, horizontal, shouldAnimate, mSlideToDefaultPositionAnimationInterpolator, duration, null);
+        slideToSpecifiedPositionInternal(holder, 0, false, horizontal, shouldAnimate, mSlideToDefaultPositionAnimationInterpolator, duration, null);
     }
 
     public void slideToOutsideOfWindow(RecyclerView.ViewHolder holder, int dir, boolean shouldAnimate, long duration) {
@@ -75,9 +75,9 @@ public class ItemSlidingAnimator {
         slideToOutsideOfWindowInternal(holder, dir, shouldAnimate, duration, null);
     }
 
-    public void slideToSpecifiedPosition(RecyclerView.ViewHolder holder, float position, boolean horizontal, boolean shouldAnimate, long duration) {
+    public void slideToSpecifiedPosition(RecyclerView.ViewHolder holder, float amount, boolean proportionalAmount, boolean horizontal, boolean shouldAnimate, long duration) {
         cancelDeferredProcess(holder);
-        slideToSpecifiedPositionInternal(holder, position, horizontal, shouldAnimate, mSlideToSpecifiedPositionAnimationInterpolator, duration, null);
+        slideToSpecifiedPositionInternal(holder, amount, proportionalAmount, horizontal, shouldAnimate, mSlideToSpecifiedPositionAnimationInterpolator, duration, null);
     }
 
     public boolean finishSwipeSlideToDefaultPosition(
@@ -86,7 +86,7 @@ public class ItemSlidingAnimator {
             int itemPosition, SwipeResultAction resultAction) {
         cancelDeferredProcess(holder);
         return slideToSpecifiedPositionInternal(
-                holder, 0, horizontal, shouldAnimate,
+                holder, 0, false, horizontal, shouldAnimate,
                 mSlideToDefaultPositionAnimationInterpolator, duration,
                 new SwipeFinishInfo(itemPosition, resultAction));
     }
@@ -121,7 +121,7 @@ public class ItemSlidingAnimator {
     }
 
     private boolean slideToSpecifiedPositionInternal(
-            final RecyclerView.ViewHolder holder, final float position,
+            final RecyclerView.ViewHolder holder, float amount, boolean proportional,
             boolean horizontal, boolean shouldAnimate, Interpolator interpolator, long duration,
             SwipeFinishInfo swipeFinish) {
         final View containerView = ((SwipeableItemViewHolder) holder).getSwipeableContainerView();
@@ -132,18 +132,18 @@ public class ItemSlidingAnimator {
 
         duration = (shouldAnimate) ? duration : 0;
 
-        if (position != 0.0f) {
+        if (amount != 0.0f) {
             final int width = containerView.getWidth();
             final int height = containerView.getHeight();
 
-            if (horizontal && width != 0) {
+            if (horizontal && (proportional || width != 0)) {
                 final int translationX;
-                translationX = (int) (width * position + 0.5f);
+                translationX = (int) ((proportional ? width * amount : amount) + 0.5f);
                 return animateSlideInternalCompat(
                         holder, horizontal, translationX, 0, duration, interpolator, swipeFinish);
-            } else if (!horizontal && (height != 0)) {
+            } else if (!horizontal && (proportional || height != 0)) {
                 final int translationY;
-                translationY = (int) (height * position + 0.5f);
+                translationY = (int) ((proportional ? height * amount : amount) + 0.5f);
                 return animateSlideInternalCompat(
                         holder, horizontal, 0, translationY, duration, interpolator, swipeFinish);
             } else {
@@ -153,7 +153,7 @@ public class ItemSlidingAnimator {
                 }
 
                 scheduleViewHolderDeferredSlideProcess(
-                        holder, new DeferredSlideProcess(holder, position, horizontal));
+                        holder, new DeferredSlideProcess(holder, amount, horizontal));
 
                 return false;
             }
@@ -562,7 +562,7 @@ public class ItemSlidingAnimator {
             float translation = mHorizontal ? ViewCompat.getTranslationX(view) : ViewCompat.getTranslationY(view);
             float amount = translation * mInvSize;
 
-            mAdapter.onUpdateSlideAmount(mViewHolder, mViewHolder.getLayoutPosition(), mHorizontal, amount, false);
+            mAdapter.onUpdateSlideAmount(mViewHolder, mViewHolder.getLayoutPosition(), amount, true, mHorizontal, false);
         }
 
         @Override

@@ -748,7 +748,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         return (mItemSlideAnimator != null) && (mItemSlideAnimator.isRunning(item));
     }
 
-    private void slideItem(RecyclerView.ViewHolder holder, float amount, boolean horizontal, boolean shouldAnimate) {
+    private void slideItem(RecyclerView.ViewHolder holder, float amount, boolean proportionalAmount, boolean horizontal, boolean shouldAnimate) {
         if (amount == OUTSIDE_OF_THE_WINDOW_LEFT) {
             mItemSlideAnimator.slideToOutsideOfWindow(holder, ItemSlidingAnimator.DIR_LEFT, shouldAnimate, mMoveToOutsideWindowAnimationDuration);
         } else if (amount == OUTSIDE_OF_THE_WINDOW_TOP) {
@@ -760,7 +760,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         } else if (amount == 0.0f) {
             mItemSlideAnimator.slideToDefaultPosition(holder, horizontal, shouldAnimate, mReturnToDefaultPositionAnimationDuration);
         } else {
-            mItemSlideAnimator.slideToSpecifiedPosition(holder, amount, horizontal, shouldAnimate, mMoveToSpecifiedPositionAnimationDuration);
+            mItemSlideAnimator.slideToSpecifiedPosition(holder, amount, proportionalAmount, horizontal, shouldAnimate, mMoveToSpecifiedPositionAnimationDuration);
         }
     }
 
@@ -844,7 +844,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
     /*package*/ void applySlideItem(
             RecyclerView.ViewHolder holder, int itemPosition,
-            float prevAmount, float amount, boolean horizontal, boolean shouldAnimate, boolean isSwiping) {
+            float prevAmount, float amount, boolean proportionalAmount,
+            boolean horizontal, boolean shouldAnimate, boolean isSwiping) {
         final SwipeableItemViewHolder holder2 = (SwipeableItemViewHolder) holder;
         final View containerView = holder2.getSwipeableContainerView();
 
@@ -864,20 +865,22 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             reqBackgroundType = determineBackgroundType(amount, horizontal);
         }
 
-        if (amount == 0.0f) {
-            slideItem(holder, amount, horizontal, shouldAnimate);
-            mAdapter.onUpdateSlideAmount(holder, itemPosition, horizontal, amount, isSwiping, reqBackgroundType);
-        } else {
-            float adjustedAmount = amount;
+        float adjustedAmount = amount;
+
+        if (amount != 0.0f) {
+            boolean isLimitProportional = holder2.isProportionalSwipeAmountModeEnabled();
             float minLimit = horizontal ? holder2.getMaxLeftSwipeAmount() : holder2.getMaxUpSwipeAmount();
             float maxLimit = horizontal ? holder2.getMaxRightSwipeAmount() : holder2.getMaxDownSwipeAmount();
 
+            minLimit = adaptAmount(holder2, horizontal, minLimit, isLimitProportional, proportionalAmount);
+            maxLimit = adaptAmount(holder2, horizontal, maxLimit, isLimitProportional, proportionalAmount);
+
             adjustedAmount = Math.max(adjustedAmount, minLimit);
             adjustedAmount = Math.min(adjustedAmount, maxLimit);
-
-            mAdapter.onUpdateSlideAmount(holder, itemPosition, horizontal, amount, isSwiping, reqBackgroundType);
-            slideItem(holder, adjustedAmount, horizontal, shouldAnimate);
         }
+
+        slideItem(holder, adjustedAmount, proportionalAmount, horizontal, shouldAnimate);
+        mAdapter.onUpdateSlideAmount(holder, itemPosition, amount, proportionalAmount, horizontal, isSwiping, reqBackgroundType);
     }
 
     private static int determineBackgroundType(float amount, boolean horizontal) {
@@ -924,6 +927,31 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     /*package*/ int syncSwipingItemPosition(int positionGuess) {
         mSwipingItemPosition = getItemPosition(mAdapter, mSwipingItemId, positionGuess);
         return mSwipingItemPosition;
+    }
+
+    /*package*/
+    static float adaptAmount(SwipeableItemViewHolder holder, boolean horizontal, float srcAmount, boolean isSrcProportional, boolean isDestProportional) {
+        float destAmount = srcAmount;
+
+        if ((isSrcProportional ^ isDestProportional) && (srcAmount != 0.0f) && !isSpecialSwipeAmountValue(srcAmount)) {
+            View v = holder.getSwipeableContainerView();
+            float d = (horizontal) ? v.getWidth() : v.getHeight();
+
+            if (isDestProportional) {
+                d = (d != 0) ? (1 / d) : 0;
+            }
+
+            destAmount *= d;
+        }
+
+        return destAmount;
+    }
+
+    private static boolean isSpecialSwipeAmountValue(float amount) {
+        return (amount == SwipeableItemConstants.OUTSIDE_OF_THE_WINDOW_LEFT) ||
+                (amount == SwipeableItemConstants.OUTSIDE_OF_THE_WINDOW_RIGHT) ||
+                (amount == SwipeableItemConstants.OUTSIDE_OF_THE_WINDOW_TOP) ||
+                (amount == SwipeableItemConstants.OUTSIDE_OF_THE_WINDOW_BOTTOM);
     }
 
     private static boolean supportsViewPropertyAnimator() {

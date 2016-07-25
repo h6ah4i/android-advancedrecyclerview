@@ -160,8 +160,16 @@ class SwipeableWithButtonExampleAdapter
         // set swiping properties
         holder.setMaxLeftSwipeAmount(-0.5f);
         holder.setMaxRightSwipeAmount(0);
-        holder.setSwipeItemHorizontalSlideAmount(
-                item.isPinned() ? -0.5f : 0);
+        holder.setSwipeItemHorizontalSlideAmount(item.isPinned() ? -0.5f : 0);
+
+        // Or, it can be specified in pixels instead of proportional value.
+        // float density = holder.itemView.getResources().getDisplayMetrics().density;
+        // float pinnedDistance = (density * 100); // 100 dp
+
+        // holder.setProportionalSwipeAmountModeEnabled(false);
+        // holder.setMaxLeftSwipeAmount(-pinnedDistance);
+        // holder.setMaxRightSwipeAmount(0);
+        // holder.setSwipeItemHorizontalSlideAmount(item.isPinned() ? -pinnedDistance: 0);
     }
 
     @Override
