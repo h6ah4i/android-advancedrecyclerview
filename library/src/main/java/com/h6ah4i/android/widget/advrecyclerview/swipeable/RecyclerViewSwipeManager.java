@@ -420,30 +420,54 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         int result = RESULT_CANCELED;
 
         if (action == MotionEvent.ACTION_UP) {
+            final float swipeThresholdDistanceCoeff = 0.5f;
+            final float swipeThresholdVelocity = mMinFlingVelocity;
+
             final boolean horizontal = mSwipeHorizontal;
-            final View itemView = mSwipingItem.itemView;
-            final int viewSize = (horizontal) ? itemView.getWidth() : itemView.getHeight();
+            final SwipeableItemViewHolder holder = (SwipeableItemViewHolder) mSwipingItem;
+            final View containerView = holder.getSwipeableContainerView();
+            final int containerSize = (horizontal) ? containerView.getWidth() : containerView.getHeight();
             final float distance = (horizontal) ? (mLastTouchX - mInitialTouchX) : (mLastTouchY - mInitialTouchY);
             final float absDistance = Math.abs(distance);
+            final boolean canSwipeNegativeDir = (horizontal) ? SwipeReactionUtils.canSwipeLeft(mSwipingItemReactionType) : SwipeReactionUtils.canSwipeUp(mSwipingItemReactionType);
+            final boolean canSwipePositiveDir = (horizontal) ? SwipeReactionUtils.canSwipeRight(mSwipingItemReactionType) : SwipeReactionUtils.canSwipeDown(mSwipingItemReactionType);
+            final boolean proportional = holder.isProportionalSwipeAmountModeEnabled();
+            float negativeDirLimit = (horizontal) ? holder.getMaxLeftSwipeAmount() : holder.getMaxUpSwipeAmount();
+            float positiveDirLimit = (horizontal) ? holder.getMaxRightSwipeAmount() : holder.getMaxDownSwipeAmount();
+
+            negativeDirLimit = adaptAmount(holder, horizontal, negativeDirLimit, proportional, false);
+            positiveDirLimit = adaptAmount(holder, horizontal, positiveDirLimit, proportional, false);
+
+            if (isSpecialSwipeAmountValue(negativeDirLimit)) {
+                negativeDirLimit = -containerSize;
+            }
+            if (isSpecialSwipeAmountValue(positiveDirLimit)) {
+                positiveDirLimit = containerSize;
+            }
 
             mVelocityTracker.computeCurrentVelocity(1000, mMaxFlingVelocity); // 1000: pixels per second
+
 
             final float velocity = (horizontal) ? mVelocityTracker.getXVelocity() : mVelocityTracker.getYVelocity();
             final float absVelocity = Math.abs(velocity);
 
-            if ((absDistance > mSwipeThresholdDistance) &&
-                    ((distance * velocity) > 0.0f) &&
-                    (absVelocity <= mMaxFlingVelocity) &&
-                    ((absDistance > (viewSize / 2)) || (absVelocity >= mMinFlingVelocity))) {
+            boolean swiped = false;
 
-                if (horizontal && (distance < 0) && SwipeReactionUtils.canSwipeLeft(mSwipingItemReactionType)) {
-                    result = RESULT_SWIPED_LEFT;
-                } else if ((!horizontal) && (distance < 0) && SwipeReactionUtils.canSwipeUp(mSwipingItemReactionType)) {
-                    result = RESULT_SWIPED_UP;
-                } else if (horizontal && (distance > 0) && SwipeReactionUtils.canSwipeRight(mSwipingItemReactionType)) {
-                    result = RESULT_SWIPED_RIGHT;
-                } else if ((!horizontal) && (distance > 0) && SwipeReactionUtils.canSwipeDown(mSwipingItemReactionType)) {
-                    result = RESULT_SWIPED_DOWN;
+            if (absDistance > mSwipeThresholdDistance) {
+                if (((distance * velocity) >= 0.0f) && (absVelocity >= swipeThresholdVelocity))   {
+                    swiped = true;
+                } else if ((distance < 0) && (distance <= negativeDirLimit * swipeThresholdDistanceCoeff)) {
+                    swiped = true;
+                } else if ((distance > 0) && (distance >= positiveDirLimit * swipeThresholdDistanceCoeff)) {
+                    swiped = true;
+                }
+            }
+
+            if (swiped) {
+                if ((distance < 0) && canSwipeNegativeDir) {
+                    result = (horizontal) ? RESULT_SWIPED_LEFT : RESULT_SWIPED_UP;
+                } else if ((distance > 0) && canSwipePositiveDir) {
+                    result = (horizontal) ? RESULT_SWIPED_RIGHT : RESULT_SWIPED_DOWN;
                 }
             }
         }
