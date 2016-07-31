@@ -84,6 +84,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     private int mTouchSlop;
     private int mInitialTouchX;
     private int mInitialTouchY;
+    private boolean mDefaultGroupsExpandedState = false;
 
     /**
      * Constructor.
@@ -173,7 +174,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
             throw new IllegalStateException("already have a wrapped adapter");
         }
 
-        int[] adapterSavedState = (mSavedState != null) ? mSavedState.adapterSavedState : null;
+        long[] adapterSavedState = (mSavedState != null) ? mSavedState.adapterSavedState : null;
         mSavedState = null;
 
         mAdapter = new ExpandableRecyclerViewWrapperAdapter(this, adapter, adapterSavedState);
@@ -195,7 +196,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return The Parcelable object which stores information need to restore the internal states.
      */
     public Parcelable getSavedState() {
-        int[] adapterSavedState = null;
+        long[] adapterSavedState = null;
 
         if (mAdapter != null) {
             adapterSavedState = mAdapter.getExpandedItemsSavedStateArray();
@@ -710,7 +711,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupItemRangeInserted(int, int, boolean)
      */
     public void notifyGroupItemInserted(int groupPosition) {
-        notifyGroupItemInserted(groupPosition, false);
+        notifyGroupItemInserted(groupPosition, mDefaultGroupsExpandedState);
     }
 
     /**
@@ -747,7 +748,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupItemRangeInserted(int, int, boolean)
      */
     public void notifyGroupItemRangeInserted(int groupPositionStart, int itemCount) {
-        notifyGroupItemRangeInserted(groupPositionStart, itemCount, false);
+        notifyGroupItemRangeInserted(groupPositionStart, itemCount, mDefaultGroupsExpandedState);
     }
 
     /**
@@ -1040,10 +1041,28 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
         return mAdapter.isAllGroupsCollapsed();
     }
 
-    public static class SavedState implements Parcelable {
-        final int[] adapterSavedState;
+    /**
+     * Sets default group items expanded state
+     *
+     * @param expanded default group expanded state (true: expanded, false: collapsed)
+     */
+    public void setDefaultGroupsExpandedState(boolean expanded) {
+        mDefaultGroupsExpandedState = expanded;
+    }
 
-        public SavedState(int[] adapterSavedState) {
+    /**
+     * Gets default group items expanded state
+     *
+     * @return True if groups are expanded by default, otherwise false.
+     */
+    public boolean getDefaultGroupsExpandedState() {
+        return mDefaultGroupsExpandedState;
+    }
+
+    public static class SavedState implements Parcelable {
+        final long[] adapterSavedState;
+
+        public SavedState(long[] adapterSavedState) {
             this.adapterSavedState = adapterSavedState;
         }
 
@@ -1054,11 +1073,11 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeIntArray(this.adapterSavedState);
+            dest.writeLongArray(this.adapterSavedState);
         }
 
         SavedState(Parcel in) {
-            this.adapterSavedState = in.createIntArray();
+            this.adapterSavedState = in.createLongArray();
         }
 
         public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
