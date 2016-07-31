@@ -90,6 +90,8 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
             swipeableHolder.setSwipeItemHorizontalSlideAmount(0);
             swipeableHolder.setSwipeItemVerticalSlideAmount(0);
 
+            swipeableHolder.setProportionalSwipeAmountModeEnabled(true);
+
             View containerView = swipeableHolder.getSwipeableContainerView();
 
             if (containerView != null) {
@@ -114,8 +116,9 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     @Override
     public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
         float prevSwipeItemSlideAmount = 0;
+        SwipeableItemViewHolder swipeableHolder = (holder instanceof SwipeableItemViewHolder) ? (((SwipeableItemViewHolder) holder)) : null;
 
-        if (holder instanceof SwipeableItemViewHolder) {
+        if (swipeableHolder != null) {
             prevSwipeItemSlideAmount = getSwipeItemSlideAmount(((SwipeableItemViewHolder) holder), swipeHorizontal());
         }
 
@@ -133,16 +136,17 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
             super.onBindViewHolder(holder, position, payloads);
         }
 
-        if (holder instanceof SwipeableItemViewHolder) {
-            final float swipeItemSlideAmount = getSwipeItemSlideAmount(((SwipeableItemViewHolder) holder), swipeHorizontal());
+        if (swipeableHolder != null) {
+            final float swipeItemSlideAmount = getSwipeItemSlideAmount(swipeableHolder, swipeHorizontal());
+            final boolean proportionalAmount = swipeableHolder.isProportionalSwipeAmountModeEnabled();
 
-            boolean isSwiping = mSwipeManager.isSwiping();
-            boolean isAnimationRunning = mSwipeManager.isAnimationRunning(holder);
+            final boolean isSwiping = mSwipeManager.isSwiping();
+            final boolean isAnimationRunning = mSwipeManager.isAnimationRunning(holder);
             if ((prevSwipeItemSlideAmount != swipeItemSlideAmount) || !(isSwiping || isAnimationRunning)) {
                 mSwipeManager.applySlideItem(
                         holder, position,
-                        prevSwipeItemSlideAmount, swipeItemSlideAmount, swipeHorizontal(),
-                        true, isSwiping);
+                        prevSwipeItemSlideAmount, swipeItemSlideAmount, proportionalAmount,
+                        swipeHorizontal(), true, isSwiping);
             }
         }
     }
@@ -217,35 +221,42 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     // NOTE: This method is called from RecyclerViewSwipeManager
     /*package*/
     @SuppressWarnings("unchecked")
-    void onUpdateSlideAmount(RecyclerView.ViewHolder holder, int position, boolean horizontal, float amount, boolean isSwiping, int type) {
+    void onUpdateSlideAmount(RecyclerView.ViewHolder holder, int position, float amount, boolean proportionalAmount, boolean horizontal, boolean isSwiping, int type) {
         if (LOCAL_LOGV) {
             Log.v(TAG, "onUpdateSlideAmount(holder = " + holder +
                     ", position = " + position +
-                    ", horizontal = " + horizontal +
                     ", amount = " + amount +
+                    ", proportionalAmount = " + proportionalAmount +
+                    ", horizontal = " + horizontal +
                     ", isSwiping = " + isSwiping +
                     ", type = " + type + ")");
         }
 
         mSwipeableItemAdapter.onSetSwipeBackground(holder, position, type);
-        ((SwipeableItemViewHolder) holder).onSlideAmountUpdated(
-                (horizontal ? amount : 0.0f), (horizontal ? 0.0f : amount), isSwiping);
+
+        onUpdateSlideAmount(holder, position, amount, proportionalAmount, horizontal, isSwiping);
     }
 
     // NOTE: This method is called from ItemSlidingAnimator
     /*package*/
     @SuppressWarnings("unchecked")
-    void onUpdateSlideAmount(RecyclerView.ViewHolder holder, int position, boolean horizontal, float amount, boolean isSwiping) {
+    void onUpdateSlideAmount(RecyclerView.ViewHolder holder, int position, float amount, boolean proportionalAmount, boolean horizontal, boolean isSwiping) {
         if (LOCAL_LOGV) {
             Log.v(TAG, "onUpdateSlideAmount(holder = " + holder +
                     ", position = " + position +
-                    ", horizontal = " + horizontal +
                     ", amount = " + amount +
+                    ", proportionalAmount = " + proportionalAmount +
+                    ", horizontal = " + horizontal +
                     ", isSwiping = " + isSwiping + ")");
         }
 
-        ((SwipeableItemViewHolder) holder).onSlideAmountUpdated(
-                (horizontal ? amount : 0.0f), (horizontal ? 0.0f : amount), isSwiping);
+        SwipeableItemViewHolder holder2 = (SwipeableItemViewHolder) holder;
+        boolean isItemExpectsProportionalAmount = holder2.isProportionalSwipeAmountModeEnabled();
+
+        float adaptedAmount = RecyclerViewSwipeManager.adaptAmount(holder2, horizontal, amount, proportionalAmount, isItemExpectsProportionalAmount);
+
+        holder2.onSlideAmountUpdated(
+                (horizontal ? adaptedAmount : 0.0f), (horizontal ? 0.0f : adaptedAmount), isSwiping);
     }
 
     // NOTE: This method is called from RecyclerViewSwipeManager

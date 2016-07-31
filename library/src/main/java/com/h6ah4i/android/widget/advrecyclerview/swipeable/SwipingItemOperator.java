@@ -135,8 +135,8 @@ class SwipingItemOperator {
 
         mSwipeManager.applySlideItem(
                 mSwipingItem, itemPosition,
-                mPrevTranslateAmount, translateAmount, mSwipeHorizontal,
-                false, true);
+                mPrevTranslateAmount, translateAmount, true,
+                mSwipeHorizontal, false, true);
 
         mPrevTranslateAmount = translateAmount;
     }

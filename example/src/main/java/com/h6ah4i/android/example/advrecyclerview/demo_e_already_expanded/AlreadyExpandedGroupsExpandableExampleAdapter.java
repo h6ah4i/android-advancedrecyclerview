@@ -195,7 +195,7 @@ class AlreadyExpandedGroupsExpandableExampleAdapter
             }
         }
 
-        mExpandableItemManager.notifyGroupItemRangeInserted(groupPosition, groupCount, true);
+        mExpandableItemManager.notifyGroupItemRangeInserted(groupPosition, groupCount);
     }
 
     // NOTE: This method is called from Fragment
