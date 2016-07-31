@@ -420,7 +420,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         int result = RESULT_CANCELED;
 
         if (action == MotionEvent.ACTION_UP) {
-            final float swipeThresholdDistanceCoeff = 0.5f;
+            final float swipeThresholdDistanceCoeff = 0.8f;
             final float swipeThresholdVelocity = mMinFlingVelocity;
 
             final boolean horizontal = mSwipeHorizontal;
@@ -452,21 +452,27 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             final float absVelocity = Math.abs(velocity);
 
             boolean swiped = false;
+            boolean positiveDir = false;
 
             if (absDistance > mSwipeThresholdDistance) {
-                if (((distance * velocity) >= 0.0f) && (absVelocity >= swipeThresholdVelocity))   {
-                    swiped = true;
+                if (absVelocity >= swipeThresholdVelocity) {
+                    if ((velocity * distance) >= 0) {
+                        swiped = true;
+                        positiveDir = (velocity > 0);
+                    }
                 } else if ((distance < 0) && (distance <= negativeDirLimit * swipeThresholdDistanceCoeff)) {
                     swiped = true;
+                    positiveDir = false;
                 } else if ((distance > 0) && (distance >= positiveDirLimit * swipeThresholdDistanceCoeff)) {
                     swiped = true;
+                    positiveDir = true;
                 }
             }
 
             if (swiped) {
-                if ((distance < 0) && canSwipeNegativeDir) {
+                if (!positiveDir && canSwipeNegativeDir) {
                     result = (horizontal) ? RESULT_SWIPED_LEFT : RESULT_SWIPED_UP;
-                } else if ((distance > 0) && canSwipePositiveDir) {
+                } else if (positiveDir && canSwipePositiveDir) {
                     result = (horizontal) ? RESULT_SWIPED_RIGHT : RESULT_SWIPED_DOWN;
                 }
             }
