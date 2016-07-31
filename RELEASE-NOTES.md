@@ -1,3 +1,13 @@
+## 0.9.3
+[New features]
+- Added `RecyclerViewExpandableItemManager.setDefaultGroupsExpandedState(boolean expanded)` (issue #281)
+- Added `SwipebleItemViewHolder.setProportionalSwipeAmountModeEnabled(boolean enabled)` (issue #286)
+- Added `RecyclerViewExpandableItemManager.notifyGroupItemChanged(int groupPosition, Object payload)`
+
+[Bug fixes]
+- Fixed item sliding animation not working bug (issue #285)
+
+
 ## 0.9.2
 [New features]
 - Added `void RecyclerViewDragDropManager.setItemMoveMode(@ItemMoveMode int mode)` (issue #253, #269)
