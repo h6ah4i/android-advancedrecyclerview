@@ -21,6 +21,7 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.FloatRange;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -218,6 +219,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private int mItemSettleBackIntoPlaceAnimationDuration = 200;
     private Interpolator mItemSettleBackIntoPlaceAnimationInterpolator = DEFAULT_ITEM_SETTLE_BACK_INTO_PLACE_ANIMATION_INTERPOLATOR;
     private int mItemMoveMode = ITEM_MOVE_MODE_DEFAULT;
+
+    private DraggingItemEffectsInfo mDraggingItemEffectsInfo = new DraggingItemEffectsInfo();
 
     // these fields are only valid while dragging
     private DraggableItemWrapperAdapter mAdapter;
@@ -745,6 +748,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         mDraggingItemDecorator = new DraggingItemDecorator(mRecyclerView, holder, mDraggableRange);
         mDraggingItemDecorator.setShadowDrawable(mShadowDrawable);
+        mDraggingItemDecorator.setupDraggingItemEffects(mDraggingItemEffectsInfo);
         mDraggingItemDecorator.start(e, mDraggingItemInfo);
 
         final int layoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
@@ -1869,6 +1873,138 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     @Nullable
     Interpolator getItemSettleBackIntoPlaceAnimationInterpolator() {
         return mItemSettleBackIntoPlaceAnimationInterpolator;
+    }
+
+    /**
+     * Sets duration of "drag start" item animation.
+     *
+     * @param duration Specify the animation duration in milliseconds
+     */
+    public void setDragStartItemAnimationDuration(int duration) {
+        mDraggingItemEffectsInfo.durationMillis = duration;
+    }
+
+    /**
+     * Gets the duration of "drag start" animation.
+     *
+     * @return The duration of "drag start" animation in milliseconds
+     */
+    public int getDragStartItemAnimationDuration() {
+        return mDraggingItemEffectsInfo.durationMillis;
+    }
+
+    /**
+     * Sets the interpolator which is used for "drag start scaling" item animation.
+     *
+     * @param interpolator Interpolator to set or null to clear
+     */
+    public void setDragStartItemScaleAnimationInterpolator(Interpolator interpolator) {
+        mDraggingItemEffectsInfo.scaleInterpolator = interpolator;
+    }
+
+    /**
+     * Gets the interpolator which ise used for "drag start scaling" animation.
+     *
+     * @return Interpolator which is used for "drag start scaling" animation
+     */
+    public
+    @Nullable
+    Interpolator getDragStartItemScaleAnimationInterpolator() {
+        return mDraggingItemEffectsInfo.scaleInterpolator;
+    }
+
+    /**
+     * Sets the interpolator which is used for "drag start rotation" item animation.
+     *
+     * @param interpolator Interpolator to set or null to clear
+     */
+    public void setDragStartItemRotationAnimationInterpolator(Interpolator interpolator) {
+        mDraggingItemEffectsInfo.rotationInterpolator = interpolator;
+    }
+
+    /**
+     * Gets the interpolator which ise used for "drag start rotation" animation.
+     *
+     * @return Interpolator which is used for "drag start rotation" animation
+     */
+    public
+    @Nullable
+    Interpolator getDragStartItemRotationAnimationInterpolator() {
+        return mDraggingItemEffectsInfo.rotationInterpolator;
+    }
+
+    /**
+     * Sets the interpolator which is used for "drag start alpha" item animation.
+     *
+     * @param interpolator Interpolator to set or null to clear
+     */
+    public void setDragStartItemAlphaAnimationInterpolator(Interpolator interpolator) {
+        mDraggingItemEffectsInfo.alphaInterpolator = interpolator;
+    }
+
+    /**
+     * Gets the interpolator which ise used for "drag start alpha" animation.
+     *
+     * @return Interpolator which is used for "drag start alpha" animation
+     */
+    public
+    @Nullable
+    Interpolator getDragStartItemAlphaAnimationInterpolator() {
+        return mDraggingItemEffectsInfo.alphaInterpolator;
+    }
+
+    /**
+     * Sets dragging item scaling factor.
+     *
+     * @param scale Scaling factor (e.g. 1.0: no scaling, 2.0: 2x scaling)
+     */
+    public void setDraggingItemScale(float scale) {
+        mDraggingItemEffectsInfo.scale = scale;
+    }
+
+    /**
+     * Gets dragging item scaling factor.
+     *
+     * @return Scaling factor
+     */
+    public float getDraggingItemScale() {
+        return mDraggingItemEffectsInfo.scale;
+    }
+
+    /**
+     * Sets dragging item rotation.
+     *
+     * @param rotation Rotation in degrees
+     */
+    public void setDraggingItemRotation(float rotation) {
+        mDraggingItemEffectsInfo.rotation = rotation;
+    }
+
+    /**
+     * Gets dragging item rotation.
+     *
+     * @return Rotation in degrees
+     */
+    public float getDraggingItemRotation() {
+        return mDraggingItemEffectsInfo.rotation;
+    }
+
+    /**
+     * Sets dragging item alpha.
+     *
+     * @param alpha Alpha (e.g. 1.0: fully opaque, 0.0: fully transparent)
+     */
+    public void setDraggingItemAlpha(@FloatRange(from=0.0, to=1.0) float alpha) {
+        mDraggingItemEffectsInfo.alpha = alpha;
+    }
+
+    /**
+     * Gets dragging item alpha.
+     *
+     * @return Alpha
+     */
+    public float getDraggingItemAlpha() {
+        return mDraggingItemEffectsInfo.alpha;
     }
 
     /*package*/ void onDraggingItemViewRecycled() {

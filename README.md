@@ -98,6 +98,7 @@ Primary classes/interfaces
 | [`DraggableItemAdapter<T>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.java)             | Implement this interface on your RecyclerView.Adapter    |
 | [`DraggableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.java)             | Implement this interface on your RecyclerView.ViewHolder |
 | [`DraggableItemConstants`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.java)               | Constant values area decleared in this interface |
+| [`DraggableItemAnimator`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/animator/DraggableItemAnimator.java)
 
 
 ### Swiping related classes/interfaces
@@ -108,6 +109,7 @@ Primary classes/interfaces
 | [`SwipeableItemAdapter<T>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemAdapter.java)             | Implement this interface on your RecyclerView.Adapter    |
 | [`SwipeableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemViewHolder.java)             | Implement this interface on your RecyclerView.ViewHolder |
 | [`SwipeableItemConstants`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemConstants.java)               | Constant values area decleared in this interface |
+| [`SwipeDismissItemAnimator`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/animator/SwipeDismissItemAnimator.java)
 
 
 ### Expandable item related classes/interfaces

@@ -208,7 +208,7 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
         if (mSwapTargetItem != null) {
             // return to default position
             updateSwapTargetTranslation(mDraggingItemViewHolder, mSwapTargetItem, mCurTranslationPhase);
-            moveToDefaultPosition(mSwapTargetItem.itemView, animate);
+            moveToDefaultPosition(mSwapTargetItem.itemView, 1.0f, 0.0f, 1.0f, animate);
             mSwapTargetItem = null;
         }
 
