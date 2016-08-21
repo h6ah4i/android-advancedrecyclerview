@@ -9,12 +9,11 @@ hugo
 git add -A
 
 # Commit changes.
-msg="rebuilding site `date`"
+msg="rebuilding site `LANG=C date`"
 if [ $# -eq 1 ]
   then msg="$1"
 fi
 git commit -m "$msg"
 
 # Push source and build repos.
-git push origin master
-git subtree push --prefix=public origin gh-pages#!/bin/bash
+git push origin gh-pages-source
