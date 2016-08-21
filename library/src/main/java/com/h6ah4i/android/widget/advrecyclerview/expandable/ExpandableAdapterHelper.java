@@ -63,6 +63,24 @@ class ExpandableAdapterHelper {
         return (rawViewType & (~VIEW_TYPE_FLAG_IS_GROUP));
     }
 
+    public static boolean isGroupItemId(long rawId) {
+        return (rawId != RecyclerView.NO_ID) && ((rawId & LOWER_32BIT_MASK) == LOWER_32BIT_MASK);
+    }
+
+    public static long getGroupItemId(long rawId) {
+        if ((rawId == RecyclerView.NO_ID) || !isGroupItemId(rawId)) {
+            return RecyclerView.NO_ID;
+        }
+        return (rawId >> 32);
+    }
+
+    public static long getChildItemId(long rawId) {
+        if ((rawId == RecyclerView.NO_ID) || isGroupItemId(rawId)) {
+            return RecyclerView.NO_ID;
+        }
+        return (int) (rawId & LOWER_32BIT_MASK);
+    }
+
     private ExpandableAdapterHelper() {
     }
 }

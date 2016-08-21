@@ -467,6 +467,36 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
+     * Checks whether the passed item ID is a group's one.
+     *
+     * @param rawId raw item ID value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemId()})
+     * @return True for the a group view type, otherwise false
+     */
+    public static boolean isGroupItemId(long rawId) {
+        return ExpandableAdapterHelper.isGroupItemId(rawId);
+    }
+
+    /**
+     * Gets group item ID from a raw ID.
+     *
+     * @param rawId raw item ID value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemId()})
+     * @return Group item ID for the given raw item ID.
+     */
+    public static long getGroupItemId(long rawId) {
+        return ExpandableAdapterHelper.getGroupItemId(rawId);
+    }
+
+    /**
+     * Gets child item ID from a raw ID.
+     *
+     * @param rawId raw item ID value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemId()})
+     * @return Child item ID for the given raw item ID.
+     */
+    public static long getChildItemId(long rawId) {
+        return ExpandableAdapterHelper.getChildItemId(rawId);
+    }
+
+    /**
      * Register a callback to be invoked when an group item has been expanded.
      *
      * @param listener The callback that will be invoked.
