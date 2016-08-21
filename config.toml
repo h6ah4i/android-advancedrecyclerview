@@ -7,6 +7,7 @@ canonifyurls = true
 # Enable Google Analytics by entering your tracking id
 googleAnalytics = ""
 
+
 [params]
 	# General information
 	author = "Haruki Hasegawa (@h6ah4i)"
@@ -17,7 +18,7 @@ googleAnalytics = ""
 	provider = "GitHub"
 	repo_url = "https://github.com/h6ah4i/android-advancedrecyclerview"
 
-	version = "0.0.1"
+	version = "0.9.3"
 	logo = "images/logo.png"
 	favicon = ""
 
@@ -55,13 +56,23 @@ googleAnalytics = ""
 	weight = 10
 
 [[menu.main]]
-	name   = "FAQ"
-	url    = "faq/"
+	name   = "Draggable"
+	url    = "draggable/"
+	weight = 20
+
+[[menu.main]]
+	name   = "Swipeable"
+	url    = "swipeable/"
 	weight = 20
 
 [[menu.main]]
 	name   = "Expandable"
 	url    = "expandable/"
+	weight = 20
+
+[[menu.main]]
+	name   = "FAQ"
+	url    = "faq/"
 	weight = 30
 
 [[menu.main]]
