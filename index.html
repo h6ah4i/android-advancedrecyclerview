@@ -136,7 +136,7 @@
         </div>
       
       <div class="name">
-        <strong>Advanced RecyclerView <span class="version">0.0.1</span></strong>
+        <strong>Advanced RecyclerView <span class="version">0.9.3</span></strong>
         
           <br>
           h6ah4i/android-advancedrecyclerview
@@ -212,9 +212,9 @@
 
 
 
-<a  title="FAQ" href="http://h6ah4i.com/android-advancedrecyclerview/faq/">
+<a  title="Draggable" href="http://h6ah4i.com/android-advancedrecyclerview/draggable/">
 	
-	FAQ
+	Draggable
 </a>
 
 
@@ -232,6 +232,40 @@
 <a  title="Expandable" href="http://h6ah4i.com/android-advancedrecyclerview/expandable/">
 	
 	Expandable
+</a>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="Swipeable" href="http://h6ah4i.com/android-advancedrecyclerview/swipeable/">
+	
+	Swipeable
+</a>
+
+
+  
+</li>
+
+
+
+<li>
+  
+    
+
+
+
+<a  title="FAQ" href="http://h6ah4i.com/android-advancedrecyclerview/faq/">
+	
+	FAQ
 </a>
 
 
@@ -283,61 +317,35 @@
 
 				
 
-<hr />
-
-<p><strong>TODO just imported from theme example</strong></p>
-
-<hr />
-
-<h2 id="beautiful-documentation">Beautiful documentation</h2>
-
-<p>Material is a theme for <a href="https://gohugo.io">Hugo</a>, a fast and flexible static site generator. It is built using Google&rsquo;s <a href="https://www.google.com/design/spec/material-design/introduction.html">material design</a>
-guidelines, fully responsive, optimized for touch and pointer devices as well
-as all sorts of screen sizes.</p>
-
-<p><img src="http://h6ah4i.com/android-advancedrecyclerview/images/screen.png" alt="Material Screenshot" /></p>
-
-<p>Material is very lightweight – it is built from scratch using Javascript and
-CSS that weighs less than 30kb (minified, gzipped and excluding Google Fonts
-and Analytics). Yet, it is highly customizable and degrades gracefully in older
-browsers.</p>
-
-<h2 id="quick-start">Quick start</h2>
-
-<p>Install with <code>git</code>:</p>
-
-<pre><code class="language-sh">git clone git@github.com:digitalcraftsman/hugo-material-docs.git themes/hugo-material-docs
-</code></pre>
+<p><strong>Advanded RecyclerView</strong> is an extension library of the <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html"><code>RecyclerView</code></a>.</p>
 
 <h2 id="features">Features</h2>
 
 <ul>
-<li><p>Beautiful, readable and very user-friendly design based on Google&rsquo;s material
-design guidelines, packed in a full responsive template with a well-defined
-and <a href="http://h6ah4i.com/android-advancedrecyclerview/getting-started/#changing-the-color-palette">easily customizable color palette</a>, great typography, as well as a
-beautiful search interface and footer.</p></li>
+<li><strong>Swipe.</strong>
 
-<li><p>Well-tested and optimized Javascript and CSS including a cross-browser
-fixed/sticky header, a drawer that even works without Javascript using
-the <a href="http://tutorialzine.com/2015/08/quick-tip-css-only-dropdowns-with-the-checkbox-hack/">checkbox hack</a> with fallbacks, responsive tables that scroll when
-the screen is too small and well-defined print styles.</p></li>
+<ul>
+<li>Swipe dismiss and swipe pinning operation. (like Google&rsquo;s Inbox app)</li>
+</ul></li>
+<li><strong>Drag and Drop.</strong>
 
-<li><p>Extra configuration options like a <a href="http://h6ah4i.com/android-advancedrecyclerview/getting-started/#adding-a-logo">project logo</a>, links to the authors
-<a href="http://h6ah4i.com/android-advancedrecyclerview/getting-started/#adding-a-github-and-twitter-account">GitHub and Twitter accounts</a> and display of the amount of stars the
-project has on GitHub.</p></li>
+<ul>
+<li>Smooth item reordering with linear list (<a href="https://developer.android.com/reference/android/support/v7/widget/LinearLayoutManager.html"><code>LinearLayoutManager</code></a>). It behaves like the playlist of Google&rsquo;s Play Music app.</li>
+<li>Also drag &amp; drop work with <a href="https://developer.android.com/reference/android/support/v7/widget/GridLayoutManager.html"><code>GridLayoutManager</code></a> and <a href="https://developer.android.com/reference/android/support/v7/widget/StaggeredGridLayoutManager.html"><code>StaggeredGridLayoutManager</code></a>.</li>
+</ul></li>
+<li><strong>Expand.</strong>
 
-<li><p>Web application capability on iOS – when the page is saved to the homescreen,
-it behaves and looks like a native application.</p></li>
+<ul>
+<li>A list with collapsible groups and its children. This feature is port of the <a href="https://developer.android.com/reference/android/widget/ExpandableListView.html"><code>ExpandableListView</code></a> of Android framework.</li>
+</ul></li>
+<li><strong>Misc.</strong>
+
+<ul>
+<li>All swipe, drag and drop and expand features works together!</li>
+<li>An <code>ItemAnimator</code>, it behaves exact the same as the default <a href="https://developer.android.com/reference/android/support/v7/widget/SimpleItemAnimator.html"><code>SimpleItemAnimator</code></a>, but its code is refactored. More easy to customize!</li>
+<li>Some <code>ItemDecoration</code>s. Adding drop shadows to each items, drawing separators.</li>
+</ul></li>
 </ul>
-
-<p>See the <a href="http://h6ah4i.com/android-advancedrecyclerview/getting-started/">getting started guide</a> for instructions how to get
-it up and running.</p>
-
-<h2 id="acknowledgements">Acknowledgements</h2>
-
-<p>Last but not least a big thank you to <a href="https://github.com/squidfunk">Martin Donath</a>. He created the original <a href="https://github.com/squidfunk/mkdocs-material">Material theme</a> for Hugo&rsquo;s companion <a href="http://www.mkdocs.org/">MkDocs</a>. This port wouldn&rsquo;t be possible without him.</p>
-
-<p>Furthermore, thanks to <a href="https://gihub.com/spf13">Steve Francia</a> for creating Hugo and the <a href="https://github.com/spf13/hugo/graphs/contributors">awesome community</a> around the project.</p>
 
 			
 
@@ -363,14 +371,14 @@ it up and running.</p>
   
   
   <div class="next">
-      <a href="http://h6ah4i.com/android-advancedrecyclerview/getting-started/" title="Getting started">
+      <a href="http://h6ah4i.com/android-advancedrecyclerview/draggable/" title="Draggable">
         <span class="direction">
           Next
         </span>
         <div class="page">
           <div class="stretch">
             <div class="title">
-              Getting started
+              Draggable
             </div>
           </div>
           <div class="button button-next" role="button" aria-label="Next">

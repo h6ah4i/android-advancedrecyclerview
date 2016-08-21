@@ -1,100 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Advanced RecyclerView</title>
-    <link>http://h6ah4i.com/android-advancedrecyclerview/</link>
-    <description>Recent content on Advanced RecyclerView</description>
+    <title>Swipeables on Advanced RecyclerView</title>
+    <link>http://h6ah4i.com/android-advancedrecyclerview/swipeable/</link>
+    <description>Recent content in Swipeables on Advanced RecyclerView</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Mar 2016 21:07:13 +0100</lastBuildDate>
-    <atom:link href="http://h6ah4i.com/android-advancedrecyclerview/index.xml" rel="self" type="application/rss+xml" />
-    
-    <item>
-      <title>Advanced RecyclerView</title>
-      <link>http://h6ah4i.com/android-advancedrecyclerview/</link>
-      <pubDate>Tue, 08 Mar 2016 21:07:13 +0100</pubDate>
-      
-      <guid>http://h6ah4i.com/android-advancedrecyclerview/</guid>
-      <description>
-
-&lt;p&gt;&lt;strong&gt;Advanded RecyclerView&lt;/strong&gt; is an extension library of the &lt;a href=&#34;https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html&#34;&gt;&lt;code&gt;RecyclerView&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;features&#34;&gt;Features&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Swipe.&lt;/strong&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Swipe dismiss and swipe pinning operation. (like Google&amp;rsquo;s Inbox app)&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Drag and Drop.&lt;/strong&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Smooth item reordering with linear list (&lt;a href=&#34;https://developer.android.com/reference/android/support/v7/widget/LinearLayoutManager.html&#34;&gt;&lt;code&gt;LinearLayoutManager&lt;/code&gt;&lt;/a&gt;). It behaves like the playlist of Google&amp;rsquo;s Play Music app.&lt;/li&gt;
-&lt;li&gt;Also drag &amp;amp; drop work with &lt;a href=&#34;https://developer.android.com/reference/android/support/v7/widget/GridLayoutManager.html&#34;&gt;&lt;code&gt;GridLayoutManager&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://developer.android.com/reference/android/support/v7/widget/StaggeredGridLayoutManager.html&#34;&gt;&lt;code&gt;StaggeredGridLayoutManager&lt;/code&gt;&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Expand.&lt;/strong&gt;
-
-&lt;ul&gt;
-&lt;li&gt;A list with collapsible groups and its children. This feature is port of the &lt;a href=&#34;https://developer.android.com/reference/android/widget/ExpandableListView.html&#34;&gt;&lt;code&gt;ExpandableListView&lt;/code&gt;&lt;/a&gt; of Android framework.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Misc.&lt;/strong&gt;
-
-&lt;ul&gt;
-&lt;li&gt;All swipe, drag and drop and expand features works together!&lt;/li&gt;
-&lt;li&gt;An &lt;code&gt;ItemAnimator&lt;/code&gt;, it behaves exact the same as the default &lt;a href=&#34;https://developer.android.com/reference/android/support/v7/widget/SimpleItemAnimator.html&#34;&gt;&lt;code&gt;SimpleItemAnimator&lt;/code&gt;&lt;/a&gt;, but its code is refactored. More easy to customize!&lt;/li&gt;
-&lt;li&gt;Some &lt;code&gt;ItemDecoration&lt;/code&gt;s. Adding drop shadows to each items, drawing separators.&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Draggable</title>
-      <link>http://h6ah4i.com/android-advancedrecyclerview/draggable/</link>
-      <pubDate>Wed, 09 Mar 2016 00:11:02 +0100</pubDate>
-      
-      <guid>http://h6ah4i.com/android-advancedrecyclerview/draggable/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Expandable</title>
-      <link>http://h6ah4i.com/android-advancedrecyclerview/expandable/</link>
-      <pubDate>Wed, 09 Mar 2016 00:11:02 +0100</pubDate>
-      
-      <guid>http://h6ah4i.com/android-advancedrecyclerview/expandable/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Getting started</title>
-      <link>http://h6ah4i.com/android-advancedrecyclerview/getting-started/</link>
-      <pubDate>Wed, 09 Mar 2016 00:11:02 +0100</pubDate>
-      
-      <guid>http://h6ah4i.com/android-advancedrecyclerview/getting-started/</guid>
-      <description>
-
-&lt;h2 id=&#34;installation&#34;&gt;Installation&lt;/h2&gt;
-
-&lt;p&gt;Add the following lines of code into your &lt;code&gt;build.gradle&lt;/code&gt;.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-gradle&#34;&gt;dependencies {
-    compile (&#39;com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.9.3@aar&#39;){
-        transitive=true
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt;
-This library is served on &lt;a href=&#34;https://bintray.com/h6ah4i/maven/android-advancedrecyclerview/0.9.3/view&#34;&gt;jCenter&lt;/a&gt;. If the above gradle setting not getting work, try adding the following lines.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-gradle&#34;&gt;repositories {
-    jcenter()
-}
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
+    <lastBuildDate>Wed, 09 Mar 2016 00:11:02 +0100</lastBuildDate>
+    <atom:link href="http://h6ah4i.com/android-advancedrecyclerview/swipeable/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Swipeable</title>
@@ -406,42 +319,6 @@ class MyAdapter ... {
 &lt;h2 id=&#34;8-custom-more-and-details-of-the-implementation&#34;&gt;8. Custom more and details of the implementation&lt;/h2&gt;
 
 &lt;p&gt;Please refer to &lt;a href=&#34;https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic&#34;&gt;the example app implementation&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>FAQ</title>
-      <link>http://h6ah4i.com/android-advancedrecyclerview/faq/</link>
-      <pubDate>Wed, 09 Mar 2016 20:08:11 +0100</pubDate>
-      
-      <guid>http://h6ah4i.com/android-advancedrecyclerview/faq/</guid>
-      <description>&lt;hr /&gt;
-
-&lt;p&gt;&lt;strong&gt;TODO just imported from theme example&lt;/strong&gt;&lt;/p&gt;
-
-&lt;hr /&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>License</title>
-      <link>http://h6ah4i.com/android-advancedrecyclerview/license/</link>
-      <pubDate>Wed, 09 Mar 2016 20:10:46 +0100</pubDate>
-      
-      <guid>http://h6ah4i.com/android-advancedrecyclerview/license/</guid>
-      <description>&lt;p&gt;Copyright &amp;copy; 2015 Haruki Hasegawa&lt;/p&gt;
-
-&lt;p&gt;Licensed under the Apache License, Version 2.0 (the &amp;ldquo;License&amp;rdquo;);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://www.apache.org/licenses/LICENSE-2.0&#34;&gt;http://www.apache.org/licenses/LICENSE-2.0&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an &amp;ldquo;AS IS&amp;rdquo; BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.&lt;/p&gt;
 </description>
     </item>
     
