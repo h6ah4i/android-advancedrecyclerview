@@ -32,6 +32,7 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     private int mSwipeResult = RecyclerViewSwipeManager.RESULT_NONE;
     @SwipeableItemReactions
     private int mAfterSwipeReaction = RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
+    private boolean mIsProportionalAmountModeEnabled = true;
     private float mHorizontalSwipeAmount;
     private float mVerticalSwipeAmount;
     private float mMaxLeftSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT;
@@ -74,6 +75,16 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     @Override
     public void setAfterSwipeReaction(@SwipeableItemReactions int reaction) {
         mAfterSwipeReaction = reaction;
+    }
+
+    @Override
+    public void setProportionalSwipeAmountModeEnabled(boolean enabled) {
+        mIsProportionalAmountModeEnabled = enabled;
+    }
+
+    @Override
+    public boolean isProportionalSwipeAmountModeEnabled() {
+        return mIsProportionalAmountModeEnabled;
     }
 
     @Override

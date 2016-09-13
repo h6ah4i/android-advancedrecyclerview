@@ -79,7 +79,7 @@ class ExpandablePositionTranslator {
     }
 
     public void restoreExpandedGroupItems(
-            int[] restoreGroupIds,
+            long[] restoreGroupIds,
             ExpandableItemAdapter adapter,
             RecyclerViewExpandableItemManager.OnGroupExpandListener expandListener,
             RecyclerViewExpandableItemManager.OnGroupCollapseListener collapseListener) {
@@ -107,30 +107,33 @@ class ExpandablePositionTranslator {
         int index = 0;
         //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < restoreGroupIds.length; i++) {
-            final int id1 = restoreGroupIds[i];
+            final int id1 = (int) (restoreGroupIds[i] >>> 32);
+            final boolean expanded = ((restoreGroupIds[i] & FLAG_EXPANDED) != 0);
 
             for (int j = index; j < idAndPos.length; j++) {
-                final int id2 = (int) (idAndPos[j] >> 32);
+                final int id2 = (int) (idAndPos[j] >>> 32);
                 final int position = (int) (idAndPos[j] & LOWER_31BIT_MASK);
 
                 if (id2 < id1) {
                     index = j;
-
-                    if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {
-                        if (collapseGroup(position)) {
-                            if (collapseListener != null) {
-                                collapseListener.onGroupCollapse(position, fromUser);
-                            }
-                        }
-                    }
                 } else if (id2 == id1) {
                     // matched
                     index = j + 1;
 
-                    if (adapter == null || adapter.onHookGroupExpand(position, fromUser)) {
-                        if (expandGroup(position)) {
-                            if (expandListener != null) {
-                                expandListener.onGroupExpand(position, fromUser);
+                    if (expanded) {
+                        if (adapter == null || adapter.onHookGroupExpand(position, fromUser)) {
+                            if (expandGroup(position)) {
+                                if (expandListener != null) {
+                                    expandListener.onGroupExpand(position, fromUser);
+                                }
+                            }
+                        }
+                    } else {
+                        if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {
+                            if (collapseGroup(position)) {
+                                if (collapseListener != null) {
+                                    collapseListener.onGroupCollapse(position, fromUser);
+                                }
                             }
                         }
                     }
@@ -139,37 +142,17 @@ class ExpandablePositionTranslator {
                 }
             }
         }
-
-        if (adapter != null || collapseListener != null) {
-            for (int i = index; i < idAndPos.length; i++) {
-                // final int id2 = (int) (idAndPos[i] >> 32);
-                final int position = (int) (idAndPos[i] & LOWER_31BIT_MASK);
-
-                if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {
-                    if (collapseGroup(position)) {
-                        if (collapseListener != null) {
-                            collapseListener.onGroupCollapse(position, fromUser);
-                        }
-                    }
-                }
-            }
-        }
     }
 
-    public int[] getSavedStateArray() {
-        int[] expandedGroups = new int[mExpandedGroupCount];
+    public long[] getSavedStateArray() {
+        // bit 64-32: group id
+        // bit 31:    expanded or not
+        // bit 30-0:  reserved
+        long[] expandedGroups = new long[mGroupCount];
 
-        int index = 0;
         for (int i = 0; i < mGroupCount; i++) {
             final long t = mCachedGroupPosInfo[i];
-            if ((t & FLAG_EXPANDED) != 0) {
-                expandedGroups[index] = mCachedGroupId[i];
-                index += 1;
-            }
-        }
-
-        if (index != mExpandedGroupCount) {
-            throw new IllegalStateException("may be a bug  (index = " + index + ", mExpandedGroupCount = " + mExpandedGroupCount + ")");
+            expandedGroups[i] = ((long) mCachedGroupId[i] << 32l) | (t & FLAG_EXPANDED);
         }
 
         Arrays.sort(expandedGroups);
