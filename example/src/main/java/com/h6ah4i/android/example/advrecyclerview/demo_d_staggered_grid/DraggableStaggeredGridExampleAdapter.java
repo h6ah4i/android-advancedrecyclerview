@@ -148,8 +148,8 @@ class DraggableStaggeredGridExampleAdapter
         Context context = holder.itemView.getContext();
         int itemHeight = calcItemHeight(context, item);
         ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-        if (lp.height != itemHeight) {
-            lp.height = itemHeight;
+        if (lp.width != itemHeight) {
+            lp.width = itemHeight;
             holder.itemView.setLayoutParams(lp);
         }
 

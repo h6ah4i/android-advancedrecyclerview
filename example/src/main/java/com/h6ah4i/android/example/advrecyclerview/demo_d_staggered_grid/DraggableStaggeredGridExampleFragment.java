@@ -58,7 +58,7 @@ public class DraggableStaggeredGridExampleFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL);
 
         // drag & drop manager
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
