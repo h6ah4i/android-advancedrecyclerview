@@ -39,14 +39,14 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     private static final boolean LOCAL_LOGV = false;
     private static final boolean LOCAL_LOGD = false;
 
-    private BaseSwipeableItemAdapter mSwipeableItemAdapter;
+    private SwipeableItemAdapter mSwipeableItemAdapter;
     private RecyclerViewSwipeManager mSwipeManager;
     private long mSwipingItemId = RecyclerView.NO_ID;
 
     public SwipeableItemWrapperAdapter(RecyclerViewSwipeManager manager, RecyclerView.Adapter<VH> adapter) {
         super(adapter);
 
-        mSwipeableItemAdapter = getSwipeableItemAdapter(adapter);
+        mSwipeableItemAdapter = WrapperAdapterUtils.findWrappedAdapter(adapter, SwipeableItemAdapter.class);
         if (mSwipeableItemAdapter == null) {
             throw new IllegalArgumentException("adapter does not implement SwipeableItemAdapter");
         }
@@ -280,7 +280,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
         mSwipingItemId = RecyclerView.NO_ID;
 
-        return SwipeableItemInternalUtils.invokeOnSwipeItem(mSwipeableItemAdapter, holder, position, result);
+        return mSwipeableItemAdapter.onSwipeItem(holder, position, result);
     }
 
     /*package*/
@@ -369,9 +369,5 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         }
 
         ((SwipeableItemViewHolder) holder).setSwipeStateFlags(flags);
-    }
-
-    private static BaseSwipeableItemAdapter getSwipeableItemAdapter(RecyclerView.Adapter adapter) {
-        return WrapperAdapterUtils.findWrappedAdapter(adapter, BaseSwipeableItemAdapter.class);
     }
 }

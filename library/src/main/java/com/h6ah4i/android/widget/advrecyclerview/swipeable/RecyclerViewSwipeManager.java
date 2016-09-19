@@ -35,6 +35,7 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimat
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 /**
@@ -90,7 +91,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     private boolean mSwipeHorizontal;
 
     private ItemSlidingAnimator mItemSlideAnimator;
-    private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mAdapter;
+    private SwipeableItemWrapperAdapter<RecyclerView.ViewHolder> mWrapperAdapter;
     private RecyclerView.ViewHolder mSwipingItem;
     private int mSwipingItemPosition = RecyclerView.NO_POSITION;
     private long mSwipingItemId = RecyclerView.NO_ID;
@@ -142,13 +143,13 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             throw new IllegalArgumentException("The passed adapter does not support stable IDs");
         }
 
-        if (mAdapter != null) {
+        if (mWrapperAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");
         }
 
-        mAdapter = new SwipeableItemWrapperAdapter(this, adapter);
+        mWrapperAdapter = new SwipeableItemWrapperAdapter(this, adapter);
 
-        return mAdapter;
+        return mWrapperAdapter;
     }
 
     /**
@@ -177,10 +178,6 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             throw new IllegalStateException("RecyclerView instance has already been set");
         }
 
-        if (mAdapter == null || getSwipeableItemWrapperAdapter(rv) != mAdapter) {
-            throw new IllegalStateException("adapter is not set properly");
-        }
-
         final int layoutOrientation = CustomRecyclerViewUtils.getOrientation(rv);
         if (layoutOrientation == CustomRecyclerViewUtils.ORIENTATION_UNKNOWN) {
             throw new IllegalStateException("failed to determine layout orientation");
@@ -196,7 +193,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mMaxFlingVelocity = vc.getScaledMaximumFlingVelocity();
         mSwipeThresholdDistance = (int) (mTouchSlop * MIN_DISTANCE_TOUCH_SLOP_MUL);
 
-        mItemSlideAnimator = new ItemSlidingAnimator(mAdapter);
+        mItemSlideAnimator = new ItemSlidingAnimator(mWrapperAdapter);
         mItemSlideAnimator.setImmediatelySetTranslationThreshold(
                 (int) (rv.getResources().getDisplayMetrics().density * SLIDE_ITEM_IMMEDIATELY_SET_TRANSLATION_THRESHOLD_DP + 0.5f));
 
@@ -231,7 +228,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             mItemSlideAnimator = null;
         }
 
-        mAdapter = null;
+        mWrapperAdapter = null;
         mRecyclerView = null;
     }
 
@@ -339,20 +336,24 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     private boolean handleActionDown(RecyclerView rv, MotionEvent e) {
-        final RecyclerView.Adapter adapter = rv.getAdapter();
         final RecyclerView.ViewHolder holder = CustomRecyclerViewUtils.findChildViewHolderUnderWithTranslation(rv, e.getX(), e.getY());
 
         if (!(holder instanceof SwipeableItemViewHolder)) {
             return false;
         }
 
-        final int itemPosition = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
+        final int wrappedItemPosition = getWrappedItemPosition(holder);
+
 
         // verify the touched item is valid state
-        if (!(itemPosition >= 0 && itemPosition < adapter.getItemCount())) {
+        if (!(wrappedItemPosition >= 0 && wrappedItemPosition < mWrapperAdapter.getItemCount())) {
             return false;
         }
-        if (holder.getItemId() != adapter.getItemId(itemPosition)) {
+
+        final long wrappedAdapterItemId = ItemIdComposer.extractWrappedIdPart(mWrapperAdapter.getItemId(wrappedItemPosition));
+        final long wrappedItemId = ItemIdComposer.extractWrappedIdPart(holder.getItemId());
+
+        if (wrappedItemId != wrappedAdapterItemId) {
             return false;
         }
 
@@ -365,7 +366,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         final int viewX = touchX - (view.getLeft() + translateX);
         final int viewY = touchY - (view.getTop() + translateY);
 
-        final int reactionType = mAdapter.getSwipeReactionType(holder, itemPosition, viewX, viewY);
+        final int reactionType = mWrapperAdapter.getSwipeReactionType(holder, wrappedItemPosition, viewX, viewY);
 
         if (reactionType == 0) {
             return false;
@@ -381,10 +382,6 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         return true;
-    }
-
-    private static SwipeableItemWrapperAdapter getSwipeableItemWrapperAdapter(RecyclerView rv) {
-        return WrapperAdapterUtils.findWrappedAdapter(rv.getAdapter(), SwipeableItemWrapperAdapter.class);
     }
 
     private boolean handleActionUpOrCancel(MotionEvent e, boolean invokeFinish) {
@@ -559,13 +556,13 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     private boolean checkConditionAndStartSwiping(MotionEvent e, RecyclerView.ViewHolder holder) {
-        final int itemPosition = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
+        final int wrappedItemPosition = getWrappedItemPosition(holder);
 
-        if (itemPosition == RecyclerView.NO_POSITION) {
+        if (wrappedItemPosition == RecyclerView.NO_POSITION) {
             return false;
         }
 
-        startSwiping(e, holder, itemPosition);
+        startSwiping(e, holder, wrappedItemPosition);
 
         return true;
     }
@@ -579,7 +576,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
         mSwipingItem = holder;
         mSwipingItemPosition = itemPosition;
-        mSwipingItemId = mAdapter.getItemId(itemPosition);
+        mSwipingItemId = mWrapperAdapter.getItemId(itemPosition);
         mLastTouchX = (int) (e.getX() + 0.5f);
         mLastTouchY = (int) (e.getY() + 0.5f);
         mTouchedItemOffsetX = mLastTouchX;
@@ -601,7 +598,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         // raise onSwipeItemStarted() event
-        mAdapter.onSwipeItemStarted(this, holder, mSwipingItemId);
+        mWrapperAdapter.onSwipeItemStarted(this, holder, mSwipingItemId);
     }
 
     private void finishSwiping(int result) {
@@ -643,8 +640,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         final int slideDir = resultCodeToSlideDirection(result);
         SwipeResultAction resultAction = null;
 
-        if (mAdapter != null) {
-            resultAction = mAdapter.onSwipeItemFinished(swipingItem, itemPosition, result);
+        if (mWrapperAdapter != null) {
+            resultAction = mWrapperAdapter.onSwipeItemFinished(swipingItem, itemPosition, result);
         }
 
         if (resultAction == null) {
@@ -695,8 +692,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
                 throw new IllegalStateException("Unknown after reaction type: " + afterReaction);
         }
 
-        if (mAdapter != null) {
-            mAdapter.onSwipeItemFinished2(swipingItem, itemPosition, result, afterReaction, resultAction);
+        if (mWrapperAdapter != null) {
+            mWrapperAdapter.onSwipeItemFinished2(swipingItem, itemPosition, result, afterReaction, resultAction);
         }
 
         // raise onItemSwipeFinished() event
@@ -794,6 +791,13 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         } else {
             mItemSlideAnimator.slideToSpecifiedPosition(holder, amount, proportionalAmount, horizontal, shouldAnimate, mMoveToSpecifiedPositionAnimationDuration);
         }
+    }
+
+    private int getWrappedItemPosition(RecyclerView.ViewHolder holder) {
+        final RecyclerView.Adapter rootAdapter = mRecyclerView.getAdapter();
+        final int rootItemPosition = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
+
+        return WrapperAdapterUtils.unwrapPosition(rootAdapter, mWrapperAdapter, rootItemPosition);
     }
 
     /**
@@ -912,7 +916,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         slideItem(holder, adjustedAmount, proportionalAmount, horizontal, shouldAnimate);
-        mAdapter.onUpdateSlideAmount(holder, itemPosition, amount, proportionalAmount, horizontal, isSwiping, reqBackgroundType);
+        mWrapperAdapter.onUpdateSlideAmount(holder, itemPosition, amount, proportionalAmount, horizontal, isSwiping, reqBackgroundType);
     }
 
     private static int determineBackgroundType(float amount, boolean horizontal) {
@@ -957,7 +961,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     /*package*/ int syncSwipingItemPosition(int positionGuess) {
-        mSwipingItemPosition = getItemPosition(mAdapter, mSwipingItemId, positionGuess);
+        mSwipingItemPosition = getItemPosition(mWrapperAdapter, mSwipingItemId, positionGuess);
         return mSwipingItemPosition;
     }
 

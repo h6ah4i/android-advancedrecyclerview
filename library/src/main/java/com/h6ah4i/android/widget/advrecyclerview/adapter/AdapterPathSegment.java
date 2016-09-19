@@ -1,5 +1,5 @@
 /*
- *    Copyright (C) 2015 Haruki Hasegawa
+ *    Copyright (C) 2016 Haruki Hasegawa
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,20 +13,34 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
+package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-package com.h6ah4i.android.widget.advrecyclerview.utils;
-
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 
-import com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter;
-
 /**
- * This class exists just for compatibility purpose and it will be deprecated soon. Use {@link SimpleWrapperAdapter} directly.
- * @param <VH> ViewHolder type
+ * Adapter path segment
  */
-// @Deprecated
-public class BaseWrapperAdapter<VH extends RecyclerView.ViewHolder> extends SimpleWrapperAdapter<VH> {
-    public BaseWrapperAdapter(RecyclerView.Adapter<VH> adapter) {
-        super(adapter);
+public class AdapterPathSegment {
+    /**
+     * Adapter
+     */
+    public final RecyclerView.Adapter adapter;
+
+    /**
+     * Tag object
+     */
+    public final Object tag;
+
+    /**
+     * Constructor.
+     *
+     * @param adapter The adapter
+     * @param tag The tag object
+     */
+    public AdapterPathSegment(@NonNull RecyclerView.Adapter adapter, @Nullable Object tag) {
+        this.adapter = adapter;
+        this.tag = tag;
     }
 }

@@ -19,6 +19,7 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
@@ -26,13 +27,14 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
-import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.List;
 
 class ExpandableRecyclerViewWrapperAdapter
-        extends BaseWrapperAdapter<RecyclerView.ViewHolder>
+        extends SimpleWrapperAdapter<RecyclerView.ViewHolder>
         implements DraggableItemAdapter<RecyclerView.ViewHolder>,
         SwipeableItemAdapter<RecyclerView.ViewHolder> {
 
@@ -42,7 +44,7 @@ class ExpandableRecyclerViewWrapperAdapter
     private interface Constants extends ExpandableItemConstants {
     }
 
-    private static final int VIEW_TYPE_FLAG_IS_GROUP = ExpandableAdapterHelper.VIEW_TYPE_FLAG_IS_GROUP;
+    private static final int VIEW_TYPE_FLAG_IS_GROUP = ItemViewTypeComposer.BIT_MASK_EXPANDABLE_FLAG;
 
     private static final int STATE_FLAG_INITIAL_VALUE = -1;
 
@@ -107,11 +109,11 @@ class ExpandableRecyclerViewWrapperAdapter
 
         if (childPosition == RecyclerView.NO_POSITION) {
             final long groupId = mExpandableItemAdapter.getGroupId(groupPosition);
-            return ExpandableAdapterHelper.getCombinedGroupId(groupId);
+            return ItemIdComposer.composeExpandableGroupId(groupId);
         } else {
             final long groupId = mExpandableItemAdapter.getGroupId(groupPosition);
             final long childId = mExpandableItemAdapter.getChildId(groupPosition, childPosition);
-            return ExpandableAdapterHelper.getCombinedChildId(groupId, childId);
+            return ItemIdComposer.composeExpandableChildId(groupId, childId);
         }
     }
 
