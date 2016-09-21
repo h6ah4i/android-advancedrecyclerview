@@ -689,6 +689,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
                         itemPosition, resultAction);
             }
             break;
+            case AFTER_SWIPE_REACTION_DO_NOTHING:
+                break;
             default:
                 throw new IllegalStateException("Unknown after reaction type: " + afterReaction);
         }

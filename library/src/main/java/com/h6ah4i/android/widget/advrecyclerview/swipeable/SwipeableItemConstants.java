@@ -321,6 +321,8 @@ public interface SwipeableItemConstants {
      */
     int AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION = 2;
 
+    int AFTER_SWIPE_REACTION_DO_NOTHING = 3;
+
     // ---
     /**
      * <p>Special value for the {@link SwipeableItemViewHolder#setSwipeItemHorizontalSlideAmount(float)}
