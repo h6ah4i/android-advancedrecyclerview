@@ -36,7 +36,7 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> extends
      *              {@link SwipeableItemConstants#RESULT_SWIPED_RIGHT} or
      *              {@link SwipeableItemConstants#RESULT_SWIPED_DOWN}
      *
-     * @return Result action.
+     * @return {@link SwipeResultAction} object.
      */
     SwipeResultAction onSwipeItem(T holder, int position, @SwipeableItemResults int result);
 }
