@@ -659,7 +659,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         boolean slideAnimated = false;
 
         switch (afterReaction) {
-            case AFTER_SWIPE_REACTION_DEFAULT:
+            case AFTER_SWIPE_REACTION_MOVE_TO_ORIGIN:
                 slideAnimated = mItemSlideAnimator.finishSwipeSlideToDefaultPosition(
                         swipingItem, mSwipeHorizontal, true, mReturnToDefaultPositionAnimationDuration,
                         itemPosition, resultAction);

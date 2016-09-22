@@ -332,7 +332,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
     private static float getSwipeAmountFromAfterReaction(int result, int afterReaction) {
         switch (afterReaction) {
-            case RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT:
+            case RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_ORIGIN:
                 return 0.0f;
             case RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION:
             case RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_REMOVE_ITEM:
