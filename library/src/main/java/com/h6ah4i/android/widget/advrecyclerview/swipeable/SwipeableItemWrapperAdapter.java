@@ -290,10 +290,12 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         ((SwipeableItemViewHolder) holder).setSwipeResult(result);
         ((SwipeableItemViewHolder) holder).setAfterSwipeReaction(afterReaction);
 
-        setSwipeItemSlideAmount(
-                ((SwipeableItemViewHolder) holder),
-                getSwipeAmountFromAfterReaction(result, afterReaction),
-                swipeHorizontal());
+        if (afterReaction != RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DO_NOTHING) {
+            setSwipeItemSlideAmount(
+                    ((SwipeableItemViewHolder) holder),
+                    getSwipeAmountFromAfterReaction(result, afterReaction),
+                    swipeHorizontal());
+        }
 
         resultAction.performAction();
 
