@@ -432,7 +432,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     public int onGetSwipeReactionType(VH holder, int position, int x, int y) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
         if (!(adapter instanceof BaseSwipeableItemAdapter)) {
-            return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
+            return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_ANY;
         }
 
         int correctedPosition = getOriginalPosition(position);
