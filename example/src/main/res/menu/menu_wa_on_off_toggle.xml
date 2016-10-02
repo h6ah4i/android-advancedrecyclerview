@@ -17,8 +17,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/menu_switch_swap_mode"
-        android:title="OFF: Normal, ON: Swap"
-        app:actionLayout="@layout/menu_appbar_mode_switch"
+        android:id="@+id/menu_switch_on_off"
+        android:title="ON / OFF"
+        app:actionLayout="@layout/menu_appbar_on_off_switch"
         app:showAsAction="always"/>
 </menu>

@@ -21,7 +21,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/list_item_height"
-    android:background="#999999">
+    android:background="@color/bg_swipe_item_gray">
 
     <com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager.PagerSwipeItemFrameLayout
         android:id="@+id/container"

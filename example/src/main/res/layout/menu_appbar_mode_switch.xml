@@ -14,11 +14,22 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/menu_switch_swap_mode"
-        android:title="OFF: Normal, ON: Swap"
-        app:actionLayout="@layout/menu_appbar_mode_switch"
-        app:showAsAction="always"/>
-</menu>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingRight="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="Mode: "/>
+
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@null"/>
+</LinearLayout>

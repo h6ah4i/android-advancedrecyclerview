@@ -14,11 +14,19 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/menu_switch_swap_mode"
-        android:title="OFF: Normal, ON: Swap"
-        app:actionLayout="@layout/menu_appbar_mode_switch"
-        app:showAsAction="always"/>
-</menu>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="96dp"
+    android:background="#5a5689"
+    android:foreground="?attr/selectableItemBackground">
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="FOOTER"
+        android:textColor="#fff"/>
+
+</FrameLayout>

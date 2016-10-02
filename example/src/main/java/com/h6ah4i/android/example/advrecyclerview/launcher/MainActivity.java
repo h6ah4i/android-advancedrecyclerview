@@ -22,6 +22,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.tablayouthelper.TabLayoutHelper;
 
 public class MainActivity extends AppCompatActivity {
     private static final String FRAGMENT_TAG_OPTIONS_MENU = "options menu";
@@ -32,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tablayout);
         ViewPager pager = (ViewPager) findViewById(R.id.viewpager);
 
         pager.setAdapter(new LauncherPagerAdapter(getSupportFragmentManager()));
-        tabLayout.setupWithViewPager(pager);
+
+        TabLayoutHelper tabLayoutHelper = new TabLayoutHelper(tabLayout, pager);
+        tabLayoutHelper.setAutoAdjustTabModeEnabled(true);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()

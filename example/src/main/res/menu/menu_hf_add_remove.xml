@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
        Copyright (C) 2016 Haruki Hasegawa
 
@@ -16,9 +15,26 @@
 -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/menu_switch_swap_mode"
-        android:title="OFF: Normal, ON: Swap"
-        app:actionLayout="@layout/menu_appbar_mode_switch"
+        android:id="@+id/menu_add_header"
+        android:title="+Header"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_remove_header"
+        android:title="-Header"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_add_footer"
+        android:title="+Footer"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_remove_footer"
+        android:title="-Footer"
+        app:showAsAction="always"/>
+
+
 </menu>
