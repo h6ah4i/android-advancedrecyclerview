@@ -135,7 +135,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             return;
         }
 
-        final int elapsedMillis = (int)Math.min(System.currentTimeMillis() - mStartMillis, mStartAnimationDurationMillis);
+        final int elapsedMillis = (int) Math.min(System.currentTimeMillis() - mStartMillis, mStartAnimationDurationMillis);
         final float t = (mStartAnimationDurationMillis > 0) ? ((float) elapsedMillis / mStartAnimationDurationMillis) : 1.0f;
         final float scale = getInterpolation(mScaleInterpolator, t) * (mTargetDraggingItemScale - 1.0f) + 1.0f;
         final float alpha = getInterpolation(mAlphaInterpolator, t) * (mTargetDraggingItemAlpha - 1.0f) + 1.0f;
@@ -323,6 +323,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
             switch (mLayoutOrientation) {
                 case CustomRecyclerViewUtils.ORIENTATION_VERTICAL: {
+                    mTranslationTopLimit = -mDraggingItemInfo.height;
+                    mTranslationBottomLimit = rv.getHeight();
                     mTranslationLeftLimit += rv.getPaddingLeft();
                     mTranslationRightLimit -= rv.getPaddingRight();
                     break;
@@ -330,6 +332,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
                 case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL: {
                     mTranslationTopLimit += rv.getPaddingTop();
                     mTranslationBottomLimit -= rv.getPaddingBottom();
+                    mTranslationLeftLimit = -mDraggingItemInfo.width;
+                    mTranslationRightLimit = rv.getWidth();
                     break;
                 }
             }

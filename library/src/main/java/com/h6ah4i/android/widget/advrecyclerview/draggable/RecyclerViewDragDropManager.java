@@ -1601,124 +1601,29 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             return null;
         }
 
-        RecyclerView.ViewHolder swapTargetHolder = null;
+        final int sx = fc.overlayItemLeft + 1;
+        final int cx = fc.overlayItemLeft + fc.draggingItemInfo.width / 2 - 1;
+        final int ex = fc.overlayItemLeft + fc.draggingItemInfo.width - 2;
+        final int sy = fc.overlayItemTop + 1;
+        final int cy = fc.overlayItemTop + fc.draggingItemInfo.height / 2 - 1;
+        final int ey = fc.overlayItemTop + fc.draggingItemInfo.height - 2;
 
-        int spanCount = CustomRecyclerViewUtils.getSpanCount(fc.rv);
-        int draggingItemSpanIndex = CustomRecyclerViewUtils.getSpanIndex(fc.draggingItem);
-
-        RecyclerView.ViewHolder ssvh, csvh, esvh, sevh, cevh, eevh;
-        int sSpanIndex, eSpanIndex;
-        int overlayItemOrigin;
-        int draggingItemOrigin;
+        RecyclerView.ViewHolder csvh, ccvh, cevh;
 
         if (fc.vertical) {
-            int sx = fc.overlayItemLeft + 1;
-            int ex = fc.overlayItemLeft + fc.draggingItemInfo.width - 2;
-            int sy = fc.overlayItemTop + 1;
-            int cy = fc.overlayItemTop + fc.draggingItemInfo.height / 2 - 1;
-            int ey = fc.overlayItemTop + fc.draggingItemInfo.height - 2;
-
-            int sPadding = fc.rv.getPaddingLeft();
-            int ePadding = fc.rv.getPaddingRight();
-            int rvSize = fc.rv.getWidth();
-            float spanLength = (rvSize - sPadding - ePadding) * (1.0f / spanCount);
-
-            sSpanIndex = Math.min(Math.max((int) ((sx - fc.draggingItemInfo.margins.left - sPadding) / spanLength), 0), spanCount - 1);
-            eSpanIndex = Math.min(Math.max((int) ((ex - fc.draggingItemInfo.margins.right - sPadding) / spanLength), 0), spanCount - 1);
-
-            overlayItemOrigin = fc.overlayItemTop;
-            draggingItemOrigin = fc.draggingItem.itemView.getTop();
-
-            ssvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, sx, sy);
             csvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, sx, cy);
-            esvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, sx, ey);
-            sevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, ex, sy);
             cevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, ex, cy);
-            eevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, ex, ey);
+            ccvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx, cy);
         } else {
-            int sx = fc.overlayItemLeft + 1;
-            int cx = fc.overlayItemLeft + fc.draggingItemInfo.width / 2 - 1;
-            int ex = fc.overlayItemLeft + fc.draggingItemInfo.width - 2;
-            int sy = fc.overlayItemTop + 1;
-            int ey = fc.overlayItemTop + fc.draggingItemInfo.height - 2;
-
-            int sPadding = fc.rv.getPaddingTop();
-            int ePadding = fc.rv.getPaddingBottom();
-            int rvSize = fc.rv.getHeight();
-            float spanLength = (rvSize - sPadding - ePadding) * (1.0f / spanCount);
-
-            sSpanIndex = Math.min(Math.max((int) ((sx - fc.draggingItemInfo.margins.top - sPadding) / spanLength), 0), spanCount - 1);
-            eSpanIndex = Math.min(Math.max((int) ((ex - fc.draggingItemInfo.margins.left - sPadding) / spanLength), 0), spanCount - 1);
-
-            overlayItemOrigin = fc.overlayItemLeft;
-            draggingItemOrigin = fc.draggingItem.itemView.getLeft();
-
-            ssvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, sx, sy);
             csvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx, sy);
-            esvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, ex, sy);
-            sevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, sx, ey);
-            cevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx, ey);
-            eevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, ex, ey);
+            cevh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx, cy);
+            ccvh = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx, ey);
         }
 
-        int sState = 0;
-        int eState = 0;
+        RecyclerView.ViewHolder swapTargetHolder = null;
 
-        if (csvh != null) {
-            sState |= 1;
-            if (csvh == ssvh) {
-                sState |= 2;
-            }
-            if (csvh == esvh) {
-                sState |= 4;
-            }
-        }
-
-        if (cevh != null) {
-            eState |= 1;
-            if (cevh == sevh) {
-                eState |= 2;
-            }
-            if (cevh == eevh) {
-                eState |= 4;
-            }
-        }
-
-        int sCount = Integer.bitCount(sState);
-        int eCount = Integer.bitCount(eState);
-
-        if (sSpanIndex != draggingItemSpanIndex && sSpanIndex == eSpanIndex) {
-            if (sCount == 3) {
-                swapTargetHolder = csvh;
-            } else if (eCount == 3) {
-                swapTargetHolder = cevh;
-            }
-        }
-
-        if (swapTargetHolder == null) {
-            if (sCount == 2 && eCount != 2) {
-                swapTargetHolder = csvh;
-            } else if (eCount == 2 && sCount != 2) {
-                swapTargetHolder = cevh;
-            }
-        }
-
-        if (swapTargetHolder != null) {
-            int swapTargetItemSpanIndex = CustomRecyclerViewUtils.getSpanIndex(swapTargetHolder);
-
-            if (draggingItemSpanIndex == swapTargetItemSpanIndex) {
-                if (overlayItemOrigin <= draggingItemOrigin) {
-                    // upward or left
-                    if (((sState | eState) & 2) != 0) {
-                        swapTargetHolder = null;
-                    }
-                } else {
-                    // downward or right
-                    if (((sState | eState) & 4) != 0) {
-                        swapTargetHolder = null;
-                    }
-                }
-            }
+        if ((ccvh != fc.draggingItem) && (ccvh == csvh || ccvh == cevh)) {
+            swapTargetHolder = ccvh;
         }
 
         return swapTargetHolder;
