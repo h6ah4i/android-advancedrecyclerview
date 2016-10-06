@@ -35,7 +35,7 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     private static final int NOTIFY_REMOVAL_EFFECT_PHASE_1 = 0;
     private static final int NOTIFY_REMOVAL_EFFECT_END = 1;
 
-    private static final long ADDITIONAL_REMOVE_DURATION = 0;  // workaround: to avoid the gap between the below item
+    private static final long ADDITIONAL_REMOVE_DURATION = 50;  // workaround: to avoid the gap between the below item
 
     private RecyclerView mRecyclerView;
     private RecyclerView.ViewHolder mSwipingItem;
