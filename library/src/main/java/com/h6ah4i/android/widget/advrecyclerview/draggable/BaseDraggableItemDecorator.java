@@ -59,7 +59,7 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
         final int animDuration = (int) (mReturnToDefaultPositionDuration * durationFactor);
 
         if (supportsViewPropertyAnimation() && animate && (animDuration > RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC)) {
-            final ViewPropertyAnimatorCompat animator = ViewCompat.animate(targetView);
+            ViewPropertyAnimatorCompat animator = ViewCompat.animate(targetView);
 
             ViewCompat.setScaleX(targetView, initialScale);
             ViewCompat.setScaleY(targetView, initialScale);
@@ -85,6 +85,7 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
 
                 @Override
                 public void onAnimationEnd(View view) {
+                    ViewPropertyAnimatorCompat animator = ViewCompat.animate(view);
                     animator.setListener(null);
                     resetDraggingItemViewEffects(view, initialTranslationZ);
 

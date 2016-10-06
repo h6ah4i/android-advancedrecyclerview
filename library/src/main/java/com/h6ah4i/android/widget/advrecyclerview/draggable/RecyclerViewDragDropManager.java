@@ -125,6 +125,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
     private static final boolean LOCAL_LOGV = false;
     private static final boolean LOCAL_LOGD = false;
+    private static final boolean LOCAL_LOGI = true;
 
     private static final float SCROLL_THRESHOLD = 0.3f; // 0.0f < X < 0.5f
     private static final float SCROLL_AMOUNT_COEFF = 25;
@@ -1994,7 +1995,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      *
      * @param alpha Alpha (e.g. 1.0: fully opaque, 0.0: fully transparent)
      */
-    public void setDraggingItemAlpha(@FloatRange(from=0.0, to=1.0) float alpha) {
+    public void setDraggingItemAlpha(@FloatRange(from = 0.0, to = 1.0) float alpha) {
         mDraggingItemEffectsInfo.alpha = alpha;
     }
 
@@ -2007,14 +2008,34 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         return mDraggingItemEffectsInfo.alpha;
     }
 
-    /*package*/ void onDraggingItemViewRecycled() {
-        mDraggingItemViewHolder = null;
-        mDraggingItemDecorator.invalidateDraggingItem();
+    /*package*/ void onItemViewRecycled(RecyclerView.ViewHolder holder) {
+        if (holder == mDraggingItemViewHolder) {
+            onDraggingItemViewRecycled();
+        } else {
+            if (mSwapTargetItemOperator != null) {
+                mSwapTargetItemOperator.onItemViewRecycled(holder);
+            }
+        }
+    }
+
+    /* package */ RecyclerView.ViewHolder getDraggingItemViewHolder() {
+        return mDraggingItemViewHolder;
     }
 
     /*package*/ void onNewDraggingItemViewBound(RecyclerView.ViewHolder holder) {
+        if (mDraggingItemViewHolder != null) {
+            onDraggingItemViewRecycled();
+        }
         mDraggingItemViewHolder = holder;
         mDraggingItemDecorator.setDraggingItemViewHolder(holder);
+    }
+
+    private void onDraggingItemViewRecycled() {
+        if (LOCAL_LOGI) {
+            Log.i(TAG, "a view holder object which is bound to currently dragging item is recycled");
+        }
+        mDraggingItemViewHolder = null;
+        mDraggingItemDecorator.invalidateDraggingItem();
     }
 
     private static class ScrollOnDraggingProcessRunnable implements Runnable {

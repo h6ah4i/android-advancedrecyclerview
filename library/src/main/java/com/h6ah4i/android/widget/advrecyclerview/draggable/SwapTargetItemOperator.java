@@ -19,6 +19,8 @@ package com.h6ah4i.android.widget.advrecyclerview.draggable;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.Interpolator;
@@ -42,6 +44,25 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     private DraggingItemInfo mDraggingItemInfo;
     private ItemDraggableRange mRange;
     private boolean mSwapTargetItemChanged;
+
+    private static final ViewPropertyAnimatorListener RESET_TRANSLATION_LISTENER = new ViewPropertyAnimatorListener() {
+        @Override
+        public void onAnimationStart(View view) {
+        }
+
+        @Override
+        public void onAnimationEnd(View view) {
+            ViewPropertyAnimatorCompat animator = ViewCompat.animate(view);
+            animator.setListener(null);
+
+            ViewCompat.setTranslationX(view, 0);
+            ViewCompat.setTranslationY(view, 0);
+        }
+
+        @Override
+        public void onAnimationCancel(View view) {
+        }
+    };
 
     public SwapTargetItemOperator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem, ItemDraggableRange range, DraggingItemInfo draggingItemInfo) {
         super(recyclerView, draggingItem);
@@ -72,10 +93,22 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
 
         // reset Y-translation if the swap target has been changed
         if (mSwapTargetItem != null) {
-            ViewCompat.animate(mSwapTargetItem.itemView).translationX(0).translationY(0).setDuration(10).start();
+            ViewPropertyAnimatorCompat animator = ViewCompat.animate(mSwapTargetItem.itemView);
+            animator.cancel();
+            animator.setDuration(10)
+                    .translationX(0)
+                    .translationY(0)
+                    .setListener(RESET_TRANSLATION_LISTENER)
+                    .start();
         }
 
         mSwapTargetItem = swapTargetItem;
+
+        if (mSwapTargetItem != null) {
+            ViewPropertyAnimatorCompat animator = ViewCompat.animate(mSwapTargetItem.itemView);
+            animator.cancel();
+        }
+
         mSwapTargetItemChanged = true;
     }
 
@@ -225,5 +258,11 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     public void update(int translationX, int translationY) {
         mTranslationX = translationX;
         mTranslationY = translationY;
+    }
+
+    public void onItemViewRecycled(RecyclerView.ViewHolder holder) {
+        if (holder == mSwapTargetItem) {
+            setSwapTargetItem(null);
+        }
     }
 }

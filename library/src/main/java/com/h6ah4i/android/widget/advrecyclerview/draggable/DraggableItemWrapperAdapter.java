@@ -98,10 +98,6 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
                     position, mDraggingItemInitialPosition, mDraggingItemCurrentPosition, mItemMoveMode);
 
             if (itemId == draggingItemId && holder != mDraggingItemViewHolder) {
-                if (mDraggingItemViewHolder != null) {
-                    onDraggingItemRecycled();
-                }
-
                 if (LOCAL_LOGI) {
                     Log.i(TAG, "a new view holder object for the currently dragging item is assigned");
                 }
@@ -295,20 +291,11 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     @Override
     public void onViewRecycled(VH holder) {
         if (isDragging()) {
-            if (holder == mDraggingItemViewHolder) {
-                onDraggingItemRecycled();
-            }
+            mDragDropManager.onItemViewRecycled(holder);
+            mDraggingItemViewHolder = mDragDropManager.getDraggingItemViewHolder();
         }
 
         super.onViewRecycled(holder);
-    }
-
-    private void onDraggingItemRecycled() {
-        if (LOCAL_LOGI) {
-            Log.i(TAG, "a view holder object which is bound to currently dragging item is recycled");
-        }
-        mDraggingItemViewHolder = null;
-        mDragDropManager.onDraggingItemViewRecycled();
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
