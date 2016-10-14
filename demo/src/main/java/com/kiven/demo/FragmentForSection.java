@@ -2,6 +2,9 @@ package com.kiven.demo;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,18 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FragmentForSection extends Fragment implements RecyclerViewExpandableItemManager.OnGroupCollapseListener, RecyclerViewExpandableItemManager.OnGroupExpandListener {
+    MyAdapter myAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,9 +32,11 @@ public class FragmentForSection extends Fragment implements RecyclerViewExpandab
         manager.setOnGroupCollapseListener(this);
         manager.setOnGroupExpandListener(this);
 
+        myAdapter = new MyAdapter();
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(manager.createWrappedAdapter(new MyAdapter()));
-        manager.expandAll();
+        recyclerView.setAdapter(manager.createWrappedAdapter(myAdapter));
+        /*manager.expandAll();*/
 
         ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
@@ -43,27 +45,31 @@ public class FragmentForSection extends Fragment implements RecyclerViewExpandab
         return recyclerView;
     }
 
-    /**
-     * Callback method to be invoked when a group in this expandable list has been collapsed.
-     *
-     * @param groupPosition The group position that was collapsed
-     * @param fromUser      Whether the collapse request is issued by a user operation
-     */
     @Override
-    public void onGroupCollapse(int groupPosition, boolean fromUser) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        myAdapter.gruopCount = 3;
+        myAdapter.childCount = 2;
+        myAdapter.notifyDataSetChanged();
+
+        Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                myAdapter.gruopCount = 4;
+                myAdapter.childCount = 1;
+                myAdapter.notifyDataSetChanged();
+            }
+        };
+
+        handler.sendEmptyMessageDelayed(0, 7000);
     }
-
-    /**
-     * Callback method to be invoked when a group in this expandable list has been expanded.
-     *
-     * @param groupPosition The group position that was expanded
-     * @param fromUser      Whether the expand request is issued by a user operation
-     */
     @Override
-    public void onGroupExpand(int groupPosition, boolean fromUser) {
-
-    }
+    public void onGroupCollapse(int groupPosition, boolean fromUser) {}
+    @Override
+    public void onGroupExpand(int groupPosition, boolean fromUser) {}
 
     static class MyViewHolder extends AbstractExpandableItemViewHolder {
         TextView textView;
@@ -74,7 +80,7 @@ public class FragmentForSection extends Fragment implements RecyclerViewExpandab
         }
     }
 
-    static class MyItem {
+    /*static class MyItem {
         public final long id;
         public final String text;
 
@@ -82,15 +88,18 @@ public class FragmentForSection extends Fragment implements RecyclerViewExpandab
             this.id = id;
             this.text = text;
         }
-    }
+    }*/
 
-    class MyAdapter extends AbstractExpandableItemAdapter<MyViewHolder, MyViewHolder> implements ExpandableItemAdapter<MyViewHolder, MyViewHolder> {
-        List<MyItem> mGroupItems;
-        List<MyItem> mChildItems;
+    class MyAdapter extends AbstractExpandableItemAdapter<MyViewHolder, MyViewHolder> {
+        /*List<MyItem> mGroupItems;
+        List<MyItem> mChildItems;*/
+
+        int gruopCount = 0;
+        int childCount = 0;
 
         public MyAdapter() {
             setHasStableIds(true);
-            int size = 10;
+            /*int size = 10;
             mGroupItems = new ArrayList<>(size);
             for (int i = 0; i < size; i++) {
                 mGroupItems.add(new MyItem(i, "group " + i));
@@ -100,27 +109,29 @@ public class FragmentForSection extends Fragment implements RecyclerViewExpandab
             mChildItems = new ArrayList<>(size);
             for (int i = 0; i < size; i++) {
                 mChildItems.add(new MyItem(i, "child " + i));
-            }
+            }*/
         }
+
+
 
         @Override
         public int getGroupCount() {
-            return mGroupItems.size();
+            return /*mGroupItems.size()*/gruopCount;
         }
 
         @Override
         public int getChildCount(int groupPosition) {
-            return mChildItems.size();
+            return /*mChildItems.size()*/childCount;
         }
 
         @Override
         public long getGroupId(int groupPosition) {
-            return mGroupItems.get(groupPosition).id;
+            return /*mGroupItems.get(groupPosition).id*/groupPosition;
         }
 
         @Override
         public long getChildId(int groupPosition, int childPosition) {
-            return mChildItems.get(childPosition).id;
+            return /*mChildItems.get(childPosition).id*/childPosition;
         }
 
         @Override
@@ -137,28 +148,30 @@ public class FragmentForSection extends Fragment implements RecyclerViewExpandab
 
         @Override
         public void onBindGroupViewHolder(MyViewHolder holder, int groupPosition, int viewType) {
-            MyItem item = mGroupItems.get(groupPosition);
-            holder.textView.setText(item.text);
+            /*MyItem item = mGroupItems.get(groupPosition);
+            holder.textView.setText(item.text);*/
+            holder.textView.setText("group " + groupPosition);
         }
 
         @Override
         public void onBindChildViewHolder(MyViewHolder holder, int groupPosition, int childPosition, int viewType) {
-            MyItem item = mChildItems.get(childPosition);
-            holder.textView.setText(item.text);
+            /*MyItem item = mChildItems.get(childPosition);
+            holder.textView.setText(item.text);*/
+            holder.textView.setText("child " + childPosition);
         }
         @Override
         public boolean onCheckCanExpandOrCollapseGroup(MyViewHolder holder, int groupPosition, int x, int y, boolean expand) {
             return true;
         }
 
-        @Override
+        /*@Override
         public boolean onHookGroupExpand(int groupPosition, boolean fromUser) {
             return super.onHookGroupExpand(groupPosition, fromUser);
         }
 
         @Override
         public boolean onHookGroupCollapse(int groupPosition, boolean fromUser) {
-            return false;
-        }
+            return true;
+        }*/
     }
 }
