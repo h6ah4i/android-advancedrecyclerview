@@ -4,6 +4,9 @@ title: Swipeable
 weight: 10
 ---
 
+{{< figure src="/images/block-diagram-swipe.png" title="Block Diagram - Swipeable" >}}
+
+
 ## 1. Make the adapter supports stable ID
 
 **This step is very important. If adapter does not return stable & unique ID, it will cause weird behaviors (wrong animation, NPE, etc...)**
@@ -16,7 +19,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
     @Override
     public long getItemId(int position) {
-        return mItems.get(position).getId();  // requires static value, it means need to keep the same value even if the item position has been changed.
+        // requires static value, it means need to keep the same value
+        // even if the item position has been changed.
+        return mItems.get(position).getId();
     }
 }
 ```
@@ -318,4 +323,4 @@ void onCreate() {
 
 ## 8. Custom more and details of the implementation
 
-Please refer to [the example app implementation](https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic).
+Please refer to [the example app implementation]({{< github_repo_url >}}/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic).
