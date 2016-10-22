@@ -1,0 +1,50 @@
+# Project information
+site_name: 'Advanced RecyclerView'
+site_description: 'A short description of my project'
+site_author: 'Haruki Hasegawa'
+site_url: 'https://h6a.h4i.github.io/android-advancedrecyclerview'
+
+# Documentation and theme
+docs_dir: 'docs'
+theme: 'material'
+
+# Repository
+repo_name: 'GitHub'
+repo_url: 'https://github.com/h6ah4i/android-advancedrecyclerview'
+
+
+# Copyright
+copyright: 'Copyright (c) 2016 Haruki Hasegawa'
+
+extra:
+  version: '0.9.3'
+  palette:
+    primary: 'blue-grey'
+    accent: 'orange'
+  author:
+    github: 'h6ah4i'
+    twitter: 'h6a_h4i'
+
+# Extensions
+markdown_extensions:
+  - codehilite(css_class=code)
+  - admonition
+  - toc:
+      permalink: '#'
+
+# Customizations
+extra_css: ['stylesheets/overrides.css']
+extra_javascript: []
+
+
+# Pages
+pages:
+- Home: 'index.md'
+- Getting Started: 'getting-started.md'
+- Wrapper Adapter: 'wrapper-adapter.md'
+- Drag & Drop: 'draggable.md'
+- Swipeable: 'swipeable.md'
+- Expandable: 'expandable.md'
+- Advanced Examples: 'advanced-examples.md'
+- FAQ: 'faq.md'
+- License: 'license.md'
