@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html class="no-js ie8"><![endif]-->
+<!--[if IE 9 ]><html class="no-js ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
+    
+      
+        <title>ComposedAdapter - Advanced RecyclerView</title>
+      
+      
+      
+        <link rel="canonical" href="https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/composed-adapter/">
+      
+      
+        <meta name="author" content="Haruki Hasegawa">
+      
+    
+    <meta property="og:url" content="https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/composed-adapter/">
+    <meta property="og:title" content="Advanced RecyclerView">
+    <meta property="og:image" content="https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/composed-adapter//../../">
+    <meta name="apple-mobile-web-app-title" content="Advanced RecyclerView">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../../../favicon.ico">
+    <style>
+      @font-face {
+      	font-family: 'Icon';
+      	src: url('../../assets/fonts/icon.eot?52m981');
+      	src: url('../../assets/fonts/icon.eot?#iefix52m981')
+               format('embedded-opentype'),
+      		   url('../../assets/fonts/icon.woff?52m981')
+               format('woff'),
+      		   url('../../assets/fonts/icon.ttf?52m981')
+               format('truetype'),
+      		   url('../../assets/fonts/icon.svg?52m981#icon')
+               format('svg');
+      	font-weight: normal;
+      	font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="../../assets/stylesheets/application-a422ff04cc.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/palettes-05ab2406df.css">
+    
+    
+      
+      
+      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,700|Ubuntu+Mono">
+      <style>
+        body, input {
+          font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+        }
+        pre, code {
+          font-family: 'Ubuntu Mono', 'Courier New', 'Courier', monospace;
+        }
+      </style>
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/overrides.css">
+    
+      <link rel="stylesheet" href="../../vendor/highlight/styles/github.css">
+    
+    <script src="../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    
+  </head>
+  
+  
+  
+  <body class="palette-primary-blue-grey palette-accent-orange">
+    
+      
+      
+    
+    <div class="backdrop">
+      <div class="backdrop-paper"></div>
+    </div>
+    <input class="toggle" type="checkbox" id="toggle-drawer">
+    <input class="toggle" type="checkbox" id="toggle-search">
+    <label class="toggle-button overlay" for="toggle-drawer"></label>
+    <header class="header">
+      <nav aria-label="Header">
+  <div class="bar default">
+    <div class="button button-menu" role="button" aria-label="Menu">
+      <label class="toggle-button icon icon-menu" for="toggle-drawer">
+        <span></span>
+      </label>
+    </div>
+    <div class="stretch">
+      <div class="title">
+        
+          <span class="path">
+            
+              
+                Adapter <i class="icon icon-link"></i>
+              
+            
+          </span>
+        
+        ComposedAdapter
+      </div>
+    </div>
+    
+      
+      <div class="button button-twitter" role="button" aria-label="Twitter">
+        <a href="https://twitter.com/h6a_h4i" title="@h6a_h4i on Twitter" target="_blank" class="toggle-button icon icon-twitter"></a>
+      </div>
+    
+    
+      
+      <div class="button button-github" role="button" aria-label="GitHub">
+        <a href="https://github.com/h6ah4i" title="@h6ah4i on GitHub" target="_blank" class="toggle-button icon icon-github"></a>
+      </div>
+    
+    <div class="button button-search" role="button" aria-label="Search">
+      <label class="toggle-button icon icon-search" title="Search" for="toggle-search"></label>
+    </div>
+  </div>
+  <div class="bar search">
+    <div class="button button-close" role="button" aria-label="Close">
+      <label class="toggle-button icon icon-back" for="toggle-search"></label>
+    </div>
+    <div class="stretch">
+      <div class="field">
+        <input class="query" type="text" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck>
+      </div>
+    </div>
+    <div class="button button-reset" role="button" aria-label="Search">
+      <button class="toggle-button icon icon-close" id="reset-search"></button>
+    </div>
+  </div>
+</nav>
+    </header>
+    <main class="main">
+      
+      <div class="drawer">
+        <nav aria-label="Navigation">
+  
+  <a href="https://github.com/h6ah4i/android-advancedrecyclerview" class="project">
+    <div class="banner">
+      
+      <div class="name">
+        <strong>
+          Advanced RecyclerView
+          <span class="version">
+            0.9.3
+          </span>
+        </strong>
+        
+          <br>
+          h6ah4i/android-advancedrecyclerview
+        
+      </div>
+    </div>
+  </a>
+  <div class="scrollable">
+    <div class="wrapper">
+      
+        <ul class="repo">
+          <li class="repo-download">
+            
+            <a href="https://github.com/h6ah4i/android-advancedrecyclerview/archive/0.9.3.zip" target="_blank" title="Download" data-action="download">
+              <i class="icon icon-download"></i> Download
+            </a>
+          </li>
+          <li class="repo-stars">
+            <a href="https://github.com/h6ah4i/android-advancedrecyclerview/stargazers" target="_blank" title="Stargazers" data-action="star">
+              <i class="icon icon-star"></i> Stars
+              <span class="count">&ndash;</span>
+            </a>
+          </li>
+        </ul>
+        <hr>
+      
+      <div class="toc">
+        <ul>
+          
+            
+  <li>
+    <a class="" title="Home" href="../..">
+      Home
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Getting Started" href="../../getting-started/">
+      Getting Started
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <span class="section">Adapter</span>
+    <ul>
+      
+        
+  <li>
+    <a class="" title="Wrapper Adapter" href="../">
+      Wrapper Adapter
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="current" title="ComposedAdapter" href="./">
+      ComposedAdapter
+    </a>
+    
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Item position handling" href="#item-position-handling">
+                Item position handling
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Item ID and ViewType handling" href="#item-id-and-viewtype-handling">
+                Item ID and ViewType handling
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="How to migrate WRAPPED adapter?" href="#how-to-migrate-wrapped-adapter">
+                How to migrate WRAPPED adapter?
+              </a>
+            </li>
+          
+        </ul>
+      
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Headers & Footers" href="../headers-footers/">
+      Headers & Footers
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Insertion & Filtering" href="../insertion-filtering/">
+      Insertion & Filtering
+    </a>
+    
+  </li>
+
+      
+    </ul>
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Drag & Drop" href="../../draggable/">
+      Drag & Drop
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Swipeable" href="../../swipeable/">
+      Swipeable
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Expandable" href="../../expandable/">
+      Expandable
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="Advanced Examples" href="../../advanced-examples/">
+      Advanced Examples
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="FAQ" href="../../faq/">
+      FAQ
+    </a>
+    
+  </li>
+
+          
+            
+  <li>
+    <a class="" title="License" href="../../license/">
+      License
+    </a>
+    
+  </li>
+
+          
+        </ul>
+        
+          <hr>
+          <span class="section">The author</span>
+          <ul>
+            
+              
+              <li>
+                <a href="https://twitter.com/h6a_h4i" target="_blank" title="@h6a_h4i on Twitter">
+                  @h6a_h4i on Twitter
+                </a>
+              </li>
+            
+            
+              
+              <li>
+                <a href="https://github.com/h6ah4i" target="_blank" title="@h6ah4i on GitHub">
+                  @h6ah4i on GitHub
+                </a>
+              </li>
+            
+          </ul>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+      </div>
+      <article class="article">
+        <div class="wrapper">
+          
+            <h1>ComposedAdapter</h1>
+          
+          <div class="toc">
+<ul>
+<li><a href="#item-position-handling">Item position handling</a></li>
+<li><a href="#item-id-and-viewtype-handling">Item ID and ViewType handling</a><ul>
+<li><a href="#itemidcomposer">ItemIdComposer</a></li>
+<li><a href="#itemviewtypecomposer">ItemViewTypeComposer</a></li>
+</ul>
+</li>
+<li><a href="#how-to-migrate-wrapped-adapter">How to migrate WRAPPED adapter?</a><ul>
+<li><a href="#if-using-adaptergetadaperposition-adaptergetlayoutposition">If using Adapter.getAdaperPosition() / Adapter.getLayoutPosition())</a></li>
+<li><a href="#if-using-viewholdergetitemviewtype">If using ViewHolder.getItemViewType()</a></li>
+<li><a href="#if-using-viewholdergetitemid">If using ViewHolder.getItemId()</a></li>
+<li><a href="#if-your-adapter-overrides-optional-methods-of-recyclerviewadapter">If your adapter overrides optional methods of RecyclerView.Adapter</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<hr />
+<p>The <code>ComposedAdapter</code> is an adapter which aggregates multiple adapters into one.</p>
+<p><img alt="Basic usage of ComposedAdapter" src="../../images/block-diagram-composed-adapter.png" /></p>
+<pre class="code"><code class="language-java">dataSet = new DataSet();
+
+composedAdapter.addAdapter(new AdapterA(new DataSet()));
+composedAdapter.addAdapter(new AdapterB(new DataSet()));
+composedAdapter.addAdapter(new AdapterC(new DataSet()));</code></pre>
+
+
+<div class="admonition methods">
+<p class="admonition-title">Methods</p>
+<ul>
+<li><code>ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter)</code></li>
+<li><code>ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter, int position)</code></li>
+<li><code>boolean ComposedAdapter.addAdapter(ComposedChildAdapterTag tag)</code></li>
+</ul>
+</div>
+<p>The <code>ComposedAdapter</code> can hold the same child adapter instance multiple times like this;</p>
+<p><img alt="ComposedAdapter can hold the same child adapter instance multiple times" src="../../images/block-diagram-composed-adapter-2.png" /></p>
+<pre class="code"><code class="language-java">dataSet = new DataSet();
+
+adapterA = new AdapterA(dataSet);
+composedAdapter.addAdapter(adapterA);
+composedAdapter.addAdapter(adapterA);
+
+adapterA2 = new AdapterA(dataSet);
+composedAdapter.addAdapter(adapterA2);</code></pre>
+
+
+<h2 id="item-position-handling">Item position handling<a class="headerlink" href="#item-position-handling" title="Permanent link">#</a></h2>
+<p>The <code>ComposedAdapter</code> calls each child adapters as <strong>segment</strong>, also child adapter's local item position are called as <strong>offset</strong>.</p>
+<p><img alt="Segments and Offsets" src="../../images/block-diagram-composed-adapter-3.png" /></p>
+<div class="admonition methods">
+<p class="admonition-title">Methods</p>
+<ul>
+<li><code>int ComposedAdapter.getSegment(ComposedChildAdapterTag tag)</code></li>
+<li><code>long ComposedAdapter.getSegmentedPosition(int flatPosition)</code></li>
+<li><code>int ComposedAdapter.extractSegmentPart(long segmentedPosition)</code></li>
+<li><code>int ComposedAdapter.extractSegmentOffsetPart(long segmentedPosition)</code></li>
+</ul>
+</div>
+<h2 id="item-id-and-viewtype-handling">Item ID and ViewType handling<a class="headerlink" href="#item-id-and-viewtype-handling" title="Permanent link">#</a></h2>
+<p>When merging adapters, we must take care about item IDs. They have to be unique in entire the dataset, but the problem is child datasets may contains the duplicated IDs. The <code>ItemIdComposer</code> is used to manage this problem.</p>
+<h3 id="itemidcomposer">ItemIdComposer<a class="headerlink" href="#itemidcomposer" title="Permanent link">#</a></h3>
+<p>This utility class provides several static methods to handle the <em>packed</em> item ID value.</p>
+<p>Item IDs are expressed by 64 bits length integer in RecyclerView, so it can be embed multiple information by using bit operation technique. <code>ItemIdComposer</code> divides 64 bits into four chunks; <em>view type segment</em>, <em>group ID</em>, <em>child ID</em> and <em>reserved bit</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Bits</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bit 63</td>
+<td>Reserved</td>
+</tr>
+<tr>
+<td>bit 62-56</td>
+<td>View type segment</td>
+</tr>
+<tr>
+<td>bit 55-28</td>
+<td>Group ID</td>
+</tr>
+<tr>
+<td>bit 27-0</td>
+<td>Child ID</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition methods">
+<p class="admonition-title">Methods</p>
+<ul>
+<li><code>long ItemIdComposer.composeSegment(int segment, long wrappedId)</code></li>
+<li><code>int ItemIdComposer.extractSegmentPart(long composedId)</code></li>
+<li><code>long ItemIdComposer.extractExpandableGroupIdPart(long composedId)</code></li>
+<li><code>long ItemIdComposer.extractExpandableChildIdPart(long composedId)</code></li>
+<li><code>long ItemIdComposer.extractWrappedIdPart(long composedId)</code></li>
+<li><code>boolean ItemIdComposer.isExpandableGroup(long composedId)</code></li>
+<li><code>long ItemIdComposer.composeExpandableChildId(long groupId, long childId)</code></li>
+<li><code>long ItemIdComposer.composeExpandableGroupId(long groupId)</code></li>
+</ul>
+</div>
+<h3 id="itemviewtypecomposer">ItemViewTypeComposer<a class="headerlink" href="#itemviewtypecomposer" title="Permanent link">#</a></h3>
+<p>Item view type has similar problem like item ID. The <code>ItemViewTypeCompser</code> manages packed item view type value that <code>ItemIdComposer</code> doing it for item ID.</p>
+<p>Item view types are expressed by 32 bits integer in RecyclerView, and <code>ItemViewTypeCompser</code> divides it into three chunks; <em>expandable group flag</em>, <em>view type segment</em> and <em>wrapped view type code</em>.</p>
+<table>
+<thead>
+<tr>
+<th>Bits</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bit 31</td>
+<td>Expandable group flag  (1: expandable group / 0: normal item)</td>
+</tr>
+<tr>
+<td>bit 30-24</td>
+<td>View type segment</td>
+</tr>
+<tr>
+<td>bit 27-0</td>
+<td>Wrapped view type code</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition methods">
+<p class="admonition-title">Methods</p>
+<ul>
+<li><code>int ItemViewTypeComposer.composeSegment(int segment, int wrappedViewType)</code></li>
+<li><code>int ItemViewTypeComposer.extractSegmentPart(int composedViewType)</code></li>
+<li><code>int ItemViewTypeComposer.extractWrappedViewTypePart(int composedViewType)</code></li>
+<li><code>boolean ItemViewTypeComposer.isExpandableGroup(int composedViewType)</code></li>
+</ul>
+</div>
+<h2 id="how-to-migrate-wrapped-adapter">How to migrate <strong>WRAPPED</strong> adapter?<a class="headerlink" href="#how-to-migrate-wrapped-adapter" title="Permanent link">#</a></h2>
+<p>Need to tweak several thing in your adapter implemtation because wrapper adapter modifies <em>item position</em>, <em>item ID</em> and <em>item view type</em>.</p>
+<h3 id="if-using-adaptergetadaperposition-adaptergetlayoutposition">If using Adapter.getAdaperPosition() / Adapter.getLayoutPosition())<a class="headerlink" href="#if-using-adaptergetadaperposition-adaptergetlayoutposition" title="Permanent link">#</a></h3>
+<p>Use `WrapperAdapterUtils.</p>
+<pre class="code"><code class="language-java">@Overfides
+void onClick(View v) {
+    RecyclerView rv = RecyclerViewAdapterUtils.getParentRecyclerView(v);
+    RecyclerView.ViewHolder vh = rv.findContainingViewHolder(v);
+
+    int rootPosition = vh.getAdapterPosition();
+    if (rootPosition == RecyclerView.NO_POSITION) {
+        return;
+    }
+
+    // need to determine adapter local position like this:
+    RecyclerView.Adapter rootAdapter = rv.getAdapter();
+    int localPosition = WrapperAdapterUtils.unwrapPosition(rootAdapter, this, rootPosition);
+
+    Item item = mItems.get(localPosition);
+    ...
+}</code></pre>
+
+
+<h3 id="if-using-viewholdergetitemviewtype">If using ViewHolder.getItemViewType()<a class="headerlink" href="#if-using-viewholdergetitemviewtype" title="Permanent link">#</a></h3>
+<p>Use <code>ItemViewTypeComposer.extractWrappedViewTypePart()</code>.</p>
+<pre class="code"><code class="language-java">@Overfides
+void onClick(View v) {
+    RecyclerView.ViewHolder vh = recyclerView.findContainingViewHolder(v);
+
+    int rawViewType = vh.getItemViewType();
+    int viewType = ItemIdComposer.extractWrappedIdPart(rawViewType);
+
+    // use &quot;viewType&quot; here to determine which type of item is clicked
+    ...
+}</code></pre>
+
+
+<h3 id="if-using-viewholdergetitemid">If using ViewHolder.getItemId()<a class="headerlink" href="#if-using-viewholdergetitemid" title="Permanent link">#</a></h3>
+<p>Use <code>ItemIdComposer.extractWrappedIdPart()</code>.</p>
+<pre class="code"><code class="language-java">@Overfides
+void onClick(View v) {
+    RecyclerView.ViewHolder vh = recyclerView.findContainingViewHolder(v);
+
+    long rawId = vh.getItemId();
+    long id = ItemIdComposer.extractWrappedIdPart(rawId);
+
+    // use &quot;id&quot; here to determine which item is clicked
+    ...
+}</code></pre>
+
+
+<h3 id="if-your-adapter-overrides-optional-methods-of-recyclerviewadapter">If your adapter overrides optional methods of RecyclerView.Adapter<a class="headerlink" href="#if-your-adapter-overrides-optional-methods-of-recyclerviewadapter" title="Permanent link">#</a></h3>
+<p>Implement <code>WrappedAdapter</code> interface and use the <code>viewType</code> parameter instead of <code>ViewHolder.getitemViewType()</code>, if your adapter overrides these methods listed below.</p>
+<ul>
+<li><code>onViewAttachedToWindow()</code></li>
+<li><code>onViewDetachedFromWindow()</code></li>
+<li><code>onViewRecycled()</code></li>
+<li><code>onFailedToRecycleView()</code></li>
+</ul>
+<pre class="code"><code class="language-java">class MyInnerAdapter&lt;VH&gt; implements WrappedAdapter&lt;VH&gt; {
+    // the following four methods are provided by WrappedAdapter interface
+    @Overrides
+    void onViewAttachedToWindow(VH holder, int viewType) {
+    }
+
+    @Overrides
+    void onViewDetachedFromWindow(VH holder, int viewType) {
+    }
+
+    @Overrides
+    void onViewRecycled(VH holder, int viewType) {
+    }
+
+    @Overrides
+    boolean onFailedToRecycleView(VH holder, int viewType) {
+    }
+
+    // proxy to WrappedAdapter's methods
+    @Overrides
+    void onViewAttachedToWindow(VH holder) {
+        onViewAttachedToWindow(holder, holder.getItemViewType());
+    }
+
+    @Overrides
+    void onViewDetachedFromWindow(VH holder, int viewType) {
+        onViewDetachedFromWindow(holder, holder.getItemViewType());
+    }
+
+    @Overrides
+    void onViewRecycled(VH holder, int viewType) {
+        onViewRecycled(holder, holder.getItemViewType());
+    }
+
+    @Overrides
+    boolean onFailedToRecycleView(VH holder, int viewType) {
+        onFailedToRecycleView(holder, holder.getItemViewType());
+    }
+}</code></pre>
+          <aside class="copyright" role="note">
+            
+              Copyright (c) 2016 Haruki Hasegawa &ndash;
+            
+            Documentation built with
+            <a href="http://www.mkdocs.org" target="_blank">MkDocs</a>
+            using the
+            <a href="http://squidfunk.github.io/mkdocs-material/" target="_blank">
+              Material
+            </a>
+            theme.
+          </aside>
+          
+            <footer class="footer">
+              
+  <nav class="pagination" aria-label="Footer">
+    <div class="previous">
+      
+        <a href="../" title="Wrapper Adapter">
+          <span class="direction">
+            Previous
+          </span>
+          <div class="page">
+            <div class="button button-previous" role="button" aria-label="Previous">
+              <i class="icon icon-back"></i>
+            </div>
+            <div class="stretch">
+              <div class="title">
+                Wrapper Adapter
+              </div>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+    <div class="next">
+      
+        <a href="../headers-footers/" title="Headers & Footers">
+          <span class="direction">
+            Next
+          </span>
+          <div class="page">
+            <div class="stretch">
+              <div class="title">
+                Headers & Footers
+              </div>
+            </div>
+            <div class="button button-next" role="button" aria-label="Next">
+              <i class="icon icon-forward"></i>
+            </div>
+          </div>
+        </a>
+      
+    </div>
+  </nav>
+
+            </footer>
+          
+        </div>
+      </article>
+      <div class="results" role="status" aria-live="polite">
+        <div class="scrollable">
+          <div class="wrapper">
+            <div class="meta"></div>
+            <div class="list"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script>
+      var base_url = '../..';
+      var repo_id  = 'h6ah4i/android-advancedrecyclerview';
+    </script>
+    <script src="../../assets/javascripts/application-997097ee0c.js"></script>
+    
+      <script src="../../vendor/highlight/highlight.pack.js"></script>
+    
+      <script src="../../javascripts/application.js"></script>
+    
+    
+  </body>
+</html>

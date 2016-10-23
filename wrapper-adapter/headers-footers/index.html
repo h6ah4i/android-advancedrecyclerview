@@ -9,45 +9,45 @@
     <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1">
     
       
-        <title>Drag & Drop - Advanced RecyclerView</title>
+        <title>Headers & Footers - Advanced RecyclerView</title>
       
       
       
-        <link rel="canonical" href="https://h6a.h4i.github.io/android-advancedrecyclerview/draggable/">
+        <link rel="canonical" href="https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/headers-footers/">
       
       
         <meta name="author" content="Haruki Hasegawa">
       
     
-    <meta property="og:url" content="https://h6a.h4i.github.io/android-advancedrecyclerview/draggable/">
+    <meta property="og:url" content="https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/headers-footers/">
     <meta property="og:title" content="Advanced RecyclerView">
-    <meta property="og:image" content="https://h6a.h4i.github.io/android-advancedrecyclerview/draggable//../">
+    <meta property="og:image" content="https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/headers-footers//../../">
     <meta name="apple-mobile-web-app-title" content="Advanced RecyclerView">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
-    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../../favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../../../../favicon.ico">
     <style>
       @font-face {
       	font-family: 'Icon';
-      	src: url('../assets/fonts/icon.eot?52m981');
-      	src: url('../assets/fonts/icon.eot?#iefix52m981')
+      	src: url('../../assets/fonts/icon.eot?52m981');
+      	src: url('../../assets/fonts/icon.eot?#iefix52m981')
                format('embedded-opentype'),
-      		   url('../assets/fonts/icon.woff?52m981')
+      		   url('../../assets/fonts/icon.woff?52m981')
                format('woff'),
-      		   url('../assets/fonts/icon.ttf?52m981')
+      		   url('../../assets/fonts/icon.ttf?52m981')
                format('truetype'),
-      		   url('../assets/fonts/icon.svg?52m981#icon')
+      		   url('../../assets/fonts/icon.svg?52m981#icon')
                format('svg');
       	font-weight: normal;
       	font-style: normal;
       }
     </style>
-    <link rel="stylesheet" href="../assets/stylesheets/application-a422ff04cc.css">
+    <link rel="stylesheet" href="../../assets/stylesheets/application-a422ff04cc.css">
     
-      <link rel="stylesheet" href="../assets/stylesheets/palettes-05ab2406df.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/palettes-05ab2406df.css">
     
     
       
@@ -64,11 +64,11 @@
       </style>
     
     
-      <link rel="stylesheet" href="../stylesheets/overrides.css">
+      <link rel="stylesheet" href="../../stylesheets/overrides.css">
     
-      <link rel="stylesheet" href="../vendor/highlight/styles/github.css">
+      <link rel="stylesheet" href="../../vendor/highlight/styles/github.css">
     
-    <script src="../assets/javascripts/modernizr-4ab42b99fd.js"></script>
+    <script src="../../assets/javascripts/modernizr-4ab42b99fd.js"></script>
     
   </head>
   
@@ -98,9 +98,13 @@
         
           <span class="path">
             
+              
+                Adapter <i class="icon icon-link"></i>
+              
+            
           </span>
         
-        Drag & Drop
+        Headers & Footers
       </div>
     </div>
     
@@ -180,7 +184,7 @@
           
             
   <li>
-    <a class="" title="Home" href="..">
+    <a class="" title="Home" href="../..">
       Home
     </a>
     
@@ -189,7 +193,7 @@
           
             
   <li>
-    <a class="" title="Getting Started" href="../getting-started/">
+    <a class="" title="Getting Started" href="../../getting-started/">
       Getting Started
     </a>
     
@@ -203,7 +207,7 @@
       
         
   <li>
-    <a class="" title="Wrapper Adapter" href="../wrapper-adapter/">
+    <a class="" title="Wrapper Adapter" href="../">
       Wrapper Adapter
     </a>
     
@@ -212,7 +216,7 @@
       
         
   <li>
-    <a class="" title="ComposedAdapter" href="../wrapper-adapter/composed-adapter/">
+    <a class="" title="ComposedAdapter" href="../composed-adapter/">
       ComposedAdapter
     </a>
     
@@ -221,16 +225,41 @@
       
         
   <li>
-    <a class="" title="Headers & Footers" href="../wrapper-adapter/headers-footers/">
+    <a class="current" title="Headers & Footers" href="./">
       Headers & Footers
     </a>
+    
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Quick quide" href="#quick-quide">
+                Quick quide
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Click event handling" href="#click-event-handling">
+                Click event handling
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Multipe view type handling" href="#multipe-view-type-handling">
+                Multipe view type handling
+              </a>
+            </li>
+          
+        </ul>
+      
     
   </li>
 
       
         
   <li>
-    <a class="" title="Insertion & Filtering" href="../wrapper-adapter/insertion-filtering/">
+    <a class="" title="Insertion & Filtering" href="../insertion-filtering/">
       Insertion & Filtering
     </a>
     
@@ -243,19 +272,16 @@
           
             
   <li>
-    <a class="current" title="Drag & Drop" href="./">
+    <a class="" title="Drag & Drop" href="../../draggable/">
       Drag & Drop
     </a>
-    
-      
-      
     
   </li>
 
           
             
   <li>
-    <a class="" title="Swipeable" href="../swipeable/">
+    <a class="" title="Swipeable" href="../../swipeable/">
       Swipeable
     </a>
     
@@ -264,7 +290,7 @@
           
             
   <li>
-    <a class="" title="Expandable" href="../expandable/">
+    <a class="" title="Expandable" href="../../expandable/">
       Expandable
     </a>
     
@@ -273,7 +299,7 @@
           
             
   <li>
-    <a class="" title="Advanced Examples" href="../advanced-examples/">
+    <a class="" title="Advanced Examples" href="../../advanced-examples/">
       Advanced Examples
     </a>
     
@@ -282,7 +308,7 @@
           
             
   <li>
-    <a class="" title="FAQ" href="../faq/">
+    <a class="" title="FAQ" href="../../faq/">
       FAQ
     </a>
     
@@ -291,7 +317,7 @@
           
             
   <li>
-    <a class="" title="License" href="../license/">
+    <a class="" title="License" href="../../license/">
       License
     </a>
     
@@ -329,9 +355,121 @@
       <article class="article">
         <div class="wrapper">
           
-            <h1>Drag & Drop</h1>
+            <h1>Headers & Footers</h1>
           
-          <p><img alt="Block Diagram - Draggable" src="../images/block-diagram-drag-drop.png" /></p>
+          <p>When creating headers &amp; footers, the <code>AbstractHeaderFooterWrapperAdapter</code> can be a good alternative to the <code>ComposedAdapter</code>. This class provides simple way to creating a wrapper crass for headers &amp; footers by implementing small number of methods.</p>
+<h2 id="quick-quide">Quick quide<a class="headerlink" href="#quick-quide" title="Permanent link">#</a></h2>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">#</a></h3>
+<pre class="code"><code class="language-java">MyAdapter adapter = new MyAdapter();
+MyHeadFootAdapter wrappedAdapter = new MyHeadFootAdapter(adapter);
+
+recyclerView.setAdapter(wrappedAdapter);</code></pre>
+
+
+<h3 id="implementation-of-headers-footers-wrapper-adapter">Implementation of headers &amp; footers wrapper adapter<a class="headerlink" href="#implementation-of-headers-footers-wrapper-adapter" title="Permanent link">#</a></h3>
+<pre class="code"><code class="language-java">class MyHeadFootAdapter 
+    extends AbstractHeaderFooterWrapperAdapter&lt;MyHeadFootAdapter.HeaderVH, MyHeadFootAdapter.FooterVH&gt;
+{
+    static class HeaderVH extends RecylerView.ViewHolder { ... }
+    static class FooterVH extends RecylerView.ViewHolder { ... }
+
+    public MyHeadFootAdapter(RecyclerView.Adapter adapter) {
+        super.this(adapter);
+    }
+
+    @Override
+    public int getHeaderItemCount() {
+        return &lt;&lt;NUMBER OF HEADER ITEMS GOES HERE&gt;&gt;;
+    }
+
+    @Override
+    public int getFooterItemCount() {
+        return &lt;&lt;NUMBER OF FOOTER ITEMS GOES HERE&gt;&gt;;
+    }
+
+    @Override
+    public HeaderVH onCreateHeaderItemViewHolder(ViewGroup parent, int viewType) {
+        View v = ...;
+        return new HeaderVH(v);
+    }
+
+    @Override
+    public FooterVH onCreateFooterItemViewHolder(ViewGroup parent, int viewType) {
+        View v = ...;
+        return new FooterVH(v);
+    }
+
+    @Override
+    public void onBindHeaderItemViewHolder(HeaderVH holder, int localPosition) {
+        // bind data to header items views
+    }
+
+    @Override
+    public void onBindFooterItemViewHolder(FooterVH holder, int localPosition) {
+        // bind data to footer items views
+    }
+}</code></pre>
+
+
+<h2 id="click-event-handling">Click event handling<a class="headerlink" href="#click-event-handling" title="Permanent link">#</a></h2>
+<p>The <code>AbstractHeaderFooterWrapperAdapter</code> extends <code>ComposedAdapter</code> so the same click event hadling approach is required.</p>
+<pre class="code"><code class="language-java">class MyHeadFootAdapter 
+    extends AbstractHeaderFooterWrapperAdapter&lt;MyHeadFootAdapter.HeaderVH, MyHeadFootAdapter.FooterVH&gt;
+    implements View.OnClickListener {
+
+    @Override
+    public HeaderVH onCreateHeaderItemViewHolder(ViewGroup parent, int viewType) {
+        View v = ...;
+        return new HeaderVH(v);
+    }
+
+    @Override
+    public void onClick(View v) {
+        RecyclerView rv = RecyclerViewAdapterUtils.getParentRecyclerView(v);
+        RecyclerView.ViewHolder vh = rv.findContainingViewHolder(v);
+
+        int rootPosition = vh.getAdapterPosition();
+        if (rootPosition == RecyclerView.NO_POSITION) {
+            return;
+        }
+
+        // need to determine adapter local position like this:
+        RecyclerView.Adapter rootAdapter = rv.getAdapter();
+        int localPosition = WrapperAdapterUtils.unwrapPosition(rootAdapter, this, rootPosition);
+
+        // get segment
+        long segmentedPosition = getSegmentedPosition(localPosition);
+        int segment = extractSegmentPart(segmentedPosition);
+        int offset = extractSegmentOffsetPart(segmentedPosition);
+
+        String message;
+
+        if (segment == SEGMENT_TYPE_HEADER) {
+            // Header item is clicked !
+        } else if (segment == SEGMENT_TYPE_FOOTER) {
+            // Footer item is clicked !
+        }
+    }
+}</code></pre>
+
+
+<h2 id="multipe-view-type-handling">Multipe view type handling<a class="headerlink" href="#multipe-view-type-handling" title="Permanent link">#</a></h2>
+<p>Just same as <code>ComposedAdapter</code>, so need to use <code>ItemViewTypeComposer.extractWrappedViewTypePart()</code> when using view type.</p>
+<pre class="code"><code class="language-java">@Override
+public int getHeaderItemViewType(int localPosition) {
+    return position % 2;
+}
+
+@Override
+public void onBindHeaderItemViewHolder(HeaderViewHolder holder, int localPosition) {
+    int viewType = ItemViewTypeComposer.extractWrappedViewTypePart(holder.getItemViewType());
+
+    if (viewType == 0) {
+        ...
+    } else {
+        ...
+    }
+}</code></pre>
           <aside class="copyright" role="note">
             
               Copyright (c) 2016 Haruki Hasegawa &ndash;
@@ -350,7 +488,7 @@
   <nav class="pagination" aria-label="Footer">
     <div class="previous">
       
-        <a href="../wrapper-adapter/insertion-filtering/" title="Insertion & Filtering">
+        <a href="../composed-adapter/" title="ComposedAdapter">
           <span class="direction">
             Previous
           </span>
@@ -360,7 +498,7 @@
             </div>
             <div class="stretch">
               <div class="title">
-                Insertion & Filtering
+                ComposedAdapter
               </div>
             </div>
           </div>
@@ -369,14 +507,14 @@
     </div>
     <div class="next">
       
-        <a href="../swipeable/" title="Swipeable">
+        <a href="../insertion-filtering/" title="Insertion & Filtering">
           <span class="direction">
             Next
           </span>
           <div class="page">
             <div class="stretch">
               <div class="title">
-                Swipeable
+                Insertion & Filtering
               </div>
             </div>
             <div class="button button-next" role="button" aria-label="Next">
@@ -402,14 +540,14 @@
       </div>
     </main>
     <script>
-      var base_url = '..';
+      var base_url = '../..';
       var repo_id  = 'h6ah4i/android-advancedrecyclerview';
     </script>
-    <script src="../assets/javascripts/application-997097ee0c.js"></script>
+    <script src="../../assets/javascripts/application-997097ee0c.js"></script>
     
-      <script src="../vendor/highlight/highlight.pack.js"></script>
+      <script src="../../vendor/highlight/highlight.pack.js"></script>
     
-      <script src="../javascripts/application.js"></script>
+      <script src="../../javascripts/application.js"></script>
     
     
   </body>

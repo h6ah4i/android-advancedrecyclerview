@@ -1,44 +1,96 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
-  <url>
-    <loc>http://h6ah4i.com/android-advancedrecyclerview/</loc>
-    <lastmod>2016-03-08T21:07:13+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://h6ah4i.com/android-advancedrecyclerview/</loc>
-    <lastmod>2016-03-08T21:07:13+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://h6ah4i.com/android-advancedrecyclerview/draggable/</loc>
-    <lastmod>2016-03-09T00:11:02+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://h6ah4i.com/android-advancedrecyclerview/expandable/</loc>
-    <lastmod>2016-03-09T00:11:02+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://h6ah4i.com/android-advancedrecyclerview/getting-started/</loc>
-    <lastmod>2016-03-09T00:11:02+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://h6ah4i.com/android-advancedrecyclerview/swipeable/</loc>
-    <lastmod>2016-03-09T00:11:02+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://h6ah4i.com/android-advancedrecyclerview/faq/</loc>
-    <lastmod>2016-03-09T20:08:11+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://h6ah4i.com/android-advancedrecyclerview/license/</loc>
-    <lastmod>2016-03-09T20:10:46+01:00</lastmod>
-  </url>
-  
+
+    
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/getting-started/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/composed-adapter/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/headers-footers/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/insertion-filtering/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/draggable/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/swipeable/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/expandable/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/advanced-examples/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/faq/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://h6a.h4i.github.io/android-advancedrecyclerview/license/</loc>
+     <lastmod>2016-10-23</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
 </urlset>
