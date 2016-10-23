@@ -730,8 +730,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDraggableRange = range;
         mRootDraggableRange = convertToRootAdapterRange(path, mDraggableRange);
 
-        mOrigOverScrollMode = ViewCompat.getOverScrollMode(rv);
-        ViewCompat.setOverScrollMode(rv, ViewCompat.OVER_SCROLL_NEVER);
+        mOrigOverScrollMode = rv.getOverScrollMode();
+        rv.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         mLastTouchX = (int) (e.getX() + 0.5f);
         mLastTouchY = (int) (e.getY() + 0.5f);
@@ -830,7 +830,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         // NOTE: setOverScrollMode() have to be called before calling removeItemDecoration()
         if (mRecyclerView != null && mDraggingItemViewHolder != null) {
-            ViewCompat.setOverScrollMode(mRecyclerView, mOrigOverScrollMode);
+            mRecyclerView.setOverScrollMode(mOrigOverScrollMode);
         }
 
         if (mDraggingItemDecorator != null) {
