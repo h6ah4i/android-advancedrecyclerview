@@ -42,7 +42,6 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     private float mReqTranslationPhase;
     private float mCurTranslationPhase;
     private DraggingItemInfo mDraggingItemInfo;
-    private ItemDraggableRange mRange;
     private boolean mSwapTargetItemChanged;
 
     private static final ViewPropertyAnimatorListener RESET_TRANSLATION_LISTENER = new ViewPropertyAnimatorListener() {
@@ -64,11 +63,10 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
         }
     };
 
-    public SwapTargetItemOperator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem, ItemDraggableRange range, DraggingItemInfo draggingItemInfo) {
+    public SwapTargetItemOperator(RecyclerView recyclerView, RecyclerView.ViewHolder draggingItem, DraggingItemInfo draggingItemInfo) {
         super(recyclerView, draggingItem);
 
         mDraggingItemInfo = draggingItemInfo;
-        mRange = range;
 
         CustomRecyclerViewUtils.getDecorationOffsets(
                 mRecyclerView.getLayoutManager(), mDraggingItemViewHolder.itemView, mDraggingItemDecorationOffsets);
@@ -168,10 +166,10 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
             }
         } else if (orientation == CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL) {
             if (pos1 > pos2) {
-                // dragging item moving to upward
+                // dragging item moving to left
                 translationPhase = phaseX;
             } else {
-                // dragging item moving to downward
+                // dragging item moving to right
                 translationPhase = 1.0f + phaseX;
             }
         }
@@ -207,10 +205,10 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
                 break;
             case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL:
                 if (pos1 > pos2) {
-                    // dragging item moving to upward
+                    // dragging item moving to left
                     ViewCompat.setTranslationX(swapItemView, translationPhase * w1);
                 } else {
-                    // dragging item moving to downward
+                    // dragging item moving to right
                     ViewCompat.setTranslationX(swapItemView, (translationPhase - 1.0f) * w1);
                 }
                 break;
@@ -245,7 +243,6 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
             mSwapTargetItem = null;
         }
 
-        mRange = null;
         mDraggingItemViewHolder = null;
         mTranslationX = 0;
         mTranslationY = 0;

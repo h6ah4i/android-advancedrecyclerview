@@ -27,7 +27,7 @@ public class LauncherPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return LauncherPageFragment.NUM_PAGES;
     }
 
     @Override
@@ -37,17 +37,6 @@ public class LauncherPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
-                return "Drag";
-            case 1:
-                return "Swipe";
-            case 2:
-                return "Expand";
-            case 3:
-                return "Advanced";
-            default:
-                throw new IllegalArgumentException();
-        }
+        return LauncherPageFragment.getPageTitle(position);
     }
 }
