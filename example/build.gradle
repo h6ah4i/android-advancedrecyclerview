@@ -24,7 +24,7 @@ android {
     defaultConfig {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
         minSdkVersion 9
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 21
         versionName "0.9.3"
         vectorDrawables.useSupportLibrary = true
