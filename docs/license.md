@@ -1,9 +1,3 @@
----
-date: 2016-03-09T20:10:46+01:00
-title: License
-weight: 40
----
-
 Copyright (C) 2015 Haruki Hasegawa
 
 Licensed under the Apache License, Version 2.0 (the "License");

@@ -1,9 +1,3 @@
----
-date: 2016-03-09T00:11:02+01:00
-title: Swipeable
-weight: 10
----
-
 ![Block Diagram - Swipeable](/images/block-diagram-swipe.png)
 
 

@@ -1,8 +1,9 @@
 # Project information
 site_name: 'Advanced RecyclerView'
-site_description: 'A short description of my project'
+site_description: 'Documentation site for Advanced RecyclerView (https://github.com/h6ah4i/android-advancedrecyclerview)'
 site_author: 'Haruki Hasegawa'
 site_url: 'https://h6a.h4i.github.io/android-advancedrecyclerview'
+site_favicon: 'favicon.ico'
 
 # Documentation and theme
 docs_dir: 'docs'
@@ -33,15 +34,19 @@ markdown_extensions:
       permalink: '#'
 
 # Customizations
-extra_css: ['stylesheets/overrides.css']
-extra_javascript: []
+extra_css: ['stylesheets/overrides.css', 'vendor/highlight/styles/github.css']
+extra_javascript: ['vendor/highlight/highlight.pack.js', 'javascripts/application.js']
 
 
 # Pages
 pages:
 - Home: 'index.md'
 - Getting Started: 'getting-started.md'
-- Wrapper Adapter: 'wrapper-adapter.md'
+- Adapter:
+    - Wrapper Adapter: 'wrapper-adapter/index.md'
+    - ComposedAdapter: 'wrapper-adapter/composed-adapter.md'
+    - Headers & Footers: 'wrapper-adapter/headers-footers.md'
+    - Insertion & Filtering: 'wrapper-adapter/insertion-filtering.md'
 - Drag & Drop: 'draggable.md'
 - Swipeable: 'swipeable.md'
 - Expandable: 'expandable.md'

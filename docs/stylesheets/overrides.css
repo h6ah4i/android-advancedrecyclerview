@@ -2,29 +2,31 @@
     background: transparent;
 }
 
-.article figure img {
+.article p > img {
     margin: 0 auto;
     display: block;
-    max-height: 450px;
+    max-height: 420px;
     max-width: 100%;
 }
 
 @media screen and (min-width: 800px) {
-    .article figure img {
+    .article p > img {
         max-width: 80%;
     }
 }
 
-.article figure figcaption {
-    text-align: center;
-}
-
-.article figure figcaption h4 {
-    margin: 0;
-    padding: 0;
-}
-
 .article pre code {
-    font-size: 12px;
+    font-size: 14px;
     line-height: 1.5;
+}
+
+.article .admonition.methods {
+    background: transparent;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    color: rgba(0,0,0,0.46);
+}
+
+.article .admonition.methods > ul {
+    margin-top: 0;
 }
