@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.demo_composition_all.CompositionAllExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_basic.DraggableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_check_can_drop.DraggableCheckCanDropExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_d_grid.DraggableGridExampleActivity;
@@ -40,15 +41,30 @@ import com.h6ah4i.android.example.advrecyclerview.demo_e_basic.ExpandableExample
 import com.h6ah4i.android.example.advrecyclerview.demo_e_minimal.MinimalExpandableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section.ExpandableDraggableWithSectionExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_eds.ExpandableDraggableSwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_hf_add_remove.AddRemoveHeaderFooterExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_hf_e.ExpandableWithHeaderFooterExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_hf_minimal.MinimalHeaderFooterExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_basic.SwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_button.SwipeableWithButtonExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_longpress.SwipeOnLongPressExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_minimal.MinimalSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.VerticalSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager.ViewPagerSwipeableExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_wa_filtering.CustomFilteringWrapperAdapterExampleActivity;
+import com.h6ah4i.android.example.advrecyclerview.demo_wa_insertion.CustomInsertionWrapperAdapterExampleActivity;
 
 public class LauncherPageFragment extends Fragment {
     private static final String ARG_PAGE_NO = "page no";
+
+    public static final int PAGE_DRAG = 0;
+    public static final int PAGE_SWIPE = 1;
+    public static final int PAGE_EXPAND = 2;
+    public static final int PAGE_HEADER = 3;
+    public static final int PAGE_ADAPTER = 4;
+    public static final int PAGE_ADVANCED = 5;
+
+    public static final int NUM_PAGES = 6;
+
 
     public static LauncherPageFragment newInstance(int pageNo) {
         LauncherPageFragment fragment = new LauncherPageFragment();
@@ -81,11 +97,30 @@ public class LauncherPageFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    public static String getPageTitle(int pageNo) {
+        switch (pageNo) {
+            case PAGE_DRAG:
+                return "Drag";
+            case PAGE_SWIPE:
+                return "Swipe";
+            case PAGE_EXPAND:
+                return "Expand";
+            case PAGE_HEADER:
+                return "Header";
+            case PAGE_ADAPTER:
+                return "Adapter";
+            case PAGE_ADVANCED:
+                return "Advanced";
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
     private LauncherButtonsAdapter createAdapter(int pageNo) {
         LauncherButtonsAdapter adapter = new LauncherButtonsAdapter(this);
 
         switch (pageNo) {
-            case 0:
+            case PAGE_DRAG:
                 // Drag
                 adapter.put(MinimalDraggableExampleActivity.class, R.string.activity_title_demo_d_minimal);
                 adapter.put(DraggableExampleActivity.class, R.string.activity_title_demo_d_basic);
@@ -95,7 +130,7 @@ public class LauncherPageFragment extends Fragment {
                 adapter.put(DraggableGridExampleActivity.class, R.string.activity_title_demo_d_grid);
                 adapter.put(DraggableStaggeredGridExampleActivity.class, R.string.activity_title_demo_d_staggered_grid);
                 break;
-            case 1:
+            case PAGE_SWIPE:
                 // Swipe
                 adapter.put(MinimalSwipeableExampleActivity.class, R.string.activity_title_demo_s_minimal);
                 adapter.put(SwipeableExampleActivity.class, R.string.activity_title_demo_s_basic);
@@ -104,14 +139,26 @@ public class LauncherPageFragment extends Fragment {
                 adapter.put(VerticalSwipeableExampleActivity.class, R.string.activity_title_demo_s_vertical);
                 adapter.put(ViewPagerSwipeableExampleActivity.class, R.string.activity_title_demo_s_viewpager);
                 break;
-            case 2:
+            case PAGE_EXPAND:
                 // Expand
                 adapter.put(MinimalExpandableExampleActivity.class, R.string.activity_title_demo_e_minimal);
                 adapter.put(ExpandableExampleActivity.class, R.string.activity_title_demo_e_basic);
                 adapter.put(AddRemoveExpandableExampleActivity.class, R.string.activity_title_demo_e_add_remove);
                 adapter.put(AlreadyExpandedGroupsExpandableExampleActivity.class, R.string.activity_title_demo_e_already_expanded);
                 break;
-            case 3:
+            case PAGE_HEADER:
+                // Headers/Footers
+                adapter.put(MinimalHeaderFooterExampleActivity.class, R.string.activity_title_demo_hf_minimal);
+                adapter.put(ExpandableWithHeaderFooterExampleActivity.class, R.string.activity_title_demo_hf_e);
+                adapter.put(AddRemoveHeaderFooterExampleActivity.class, R.string.activity_title_demo_hf_add_remove);
+                break;
+            case PAGE_ADAPTER:
+                // Adapter
+                adapter.put(CompositionAllExampleActivity.class, R.string.activity_title_demo_composition_all);
+                adapter.put(CustomInsertionWrapperAdapterExampleActivity.class, R.string.activity_title_demo_wa_insertion);
+                adapter.put(CustomFilteringWrapperAdapterExampleActivity.class, R.string.activity_title_demo_wa_filtering);
+                break;
+            case PAGE_ADVANCED:
                 // Advanced
                 adapter.put(DraggableSwipeableExampleActivity.class, R.string.activity_title_demo_ds);
                 adapter.put(ExpandableDraggableSwipeableExampleActivity.class, R.string.activity_title_demo_eds);

@@ -52,29 +52,32 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
         mReturnToDefaultPositionInterpolator = interpolator;
     }
 
-    protected void moveToDefaultPosition(View targetView, boolean animate) {
-        final int curTranslationX = (int) (ViewCompat.getTranslationX(targetView));
-        final int curTranslationY = (int) (ViewCompat.getTranslationY(targetView));
-        final int halfItemWidth = targetView.getWidth() / 2;
-        final int halfItemHeight = targetView.getHeight() / 2;
-        final float translationProportionX = (halfItemWidth > 0) ? Math.abs((float) curTranslationX / halfItemWidth) : 0;
-        final float translationProportionY = (halfItemHeight > 0) ? Math.abs((float) curTranslationY / halfItemHeight) : 0;
-        final float tx = 1.0f - Math.min(translationProportionX, 1.0f);
-        final float ty = 1.0f - Math.min(translationProportionY, 1.0f);
-        final int animDurationX = (int) (mReturnToDefaultPositionDuration * (1.0f - (tx * tx)) + 0.5f);
-        final int animDurationY = (int) (mReturnToDefaultPositionDuration * (1.0f - (ty * ty)) + 0.5f);
-        final int animDuration = Math.max(animDurationX, animDurationY);
-        final int maxAbsTranslation = Math.max(Math.abs(curTranslationX), Math.abs(curTranslationY));
+    protected void moveToDefaultPosition(View targetView, float initialScale, float initialRotation, float initialAlpha, boolean animate) {
+        final float initialTranslationZ = ViewCompat.getTranslationZ(targetView);
 
-        if (supportsViewPropertyAnimation() && animate &&
-                (animDuration > RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC) &&
-                (maxAbsTranslation > mReturnToDefaultPositionAnimateThreshold)) {
-            final ViewPropertyAnimatorCompat animator = ViewCompat.animate(targetView);
+        final float durationFactor = determineMoveToDefaultPositionAnimationDurationFactor(targetView, initialScale, initialRotation, initialAlpha);
+        final int animDuration = (int) (mReturnToDefaultPositionDuration * durationFactor);
+
+        if (supportsViewPropertyAnimation() && animate && (animDuration > RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC)) {
+            ViewPropertyAnimatorCompat animator = ViewCompat.animate(targetView);
+
+            ViewCompat.setScaleX(targetView, initialScale);
+            ViewCompat.setScaleY(targetView, initialScale);
+            ViewCompat.setRotation(targetView, initialRotation);
+            ViewCompat.setAlpha(targetView, initialAlpha);
+            ViewCompat.setTranslationZ(targetView, initialTranslationZ + 1); // to render on top of other items
+
             animator.cancel();
             animator.setDuration(animDuration);
             animator.setInterpolator(mReturnToDefaultPositionInterpolator);
             animator.translationX(0.0f);
             animator.translationY(0.0f);
+            animator.translationZ(initialTranslationZ);
+            animator.alpha(1.0f);
+            animator.rotation(0);
+            animator.scaleX(1.0f);
+            animator.scaleY(1.0f);
+
             animator.setListener(new ViewPropertyAnimatorListener() {
                 @Override
                 public void onAnimationStart(View view) {
@@ -82,9 +85,9 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
 
                 @Override
                 public void onAnimationEnd(View view) {
+                    ViewPropertyAnimatorCompat animator = ViewCompat.animate(view);
                     animator.setListener(null);
-                    ViewCompat.setTranslationX(view, 0);
-                    ViewCompat.setTranslationY(view, 0);
+                    resetDraggingItemViewEffects(view, initialTranslationZ);
 
                     // invalidate explicitly to refresh other decorations
                     if (view.getParent() instanceof RecyclerView) {
@@ -98,9 +101,41 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
             });
             animator.start();
         } else {
-            ViewCompat.setTranslationX(targetView, 0);
-            ViewCompat.setTranslationY(targetView, 0);
+            resetDraggingItemViewEffects(targetView, initialTranslationZ);
         }
+    }
+
+    protected float determineMoveToDefaultPositionAnimationDurationFactor(View targetView, float initialScale, float initialRotation, float initialAlpha) {
+        final float curTranslationX = ViewCompat.getTranslationX(targetView);
+        final float curTranslationY = ViewCompat.getTranslationY(targetView);
+        final int halfItemWidth = targetView.getWidth() / 2;
+        final int halfItemHeight = targetView.getHeight() / 2;
+        final float translationXProportion = (halfItemWidth > 0) ? Math.abs(curTranslationX / halfItemWidth) : 0;
+        final float translationYProportion = (halfItemHeight > 0) ? Math.abs(curTranslationY / halfItemHeight) : 0;
+        final float scaleProportion = Math.abs(initialScale - 1.0f);
+        final float rotationProportion = Math.abs(initialRotation * (1.0f / 30));
+        final float alphaProportion = Math.abs(initialAlpha - 1.0f);
+
+        float factor = 0;
+
+        factor = Math.max(factor, translationXProportion);
+        factor = Math.max(factor, translationYProportion);
+        factor = Math.max(factor, scaleProportion);
+        factor = Math.max(factor, rotationProportion);
+        factor = Math.max(factor, alphaProportion);
+        factor = Math.min(factor, 1.0f);
+
+        return factor;
+    }
+
+    protected static void resetDraggingItemViewEffects(View view, float initialTranslationZ) {
+        ViewCompat.setTranslationX(view, 0);
+        ViewCompat.setTranslationY(view, 0);
+        ViewCompat.setTranslationZ(view, initialTranslationZ);
+        ViewCompat.setAlpha(view, 1.0f);
+        ViewCompat.setRotation(view, 0);
+        ViewCompat.setScaleX(view, 1.0f);
+        ViewCompat.setScaleY(view, 1.0f);
     }
 
     protected static void setItemTranslation(RecyclerView rv, RecyclerView.ViewHolder holder, float x, float y) {

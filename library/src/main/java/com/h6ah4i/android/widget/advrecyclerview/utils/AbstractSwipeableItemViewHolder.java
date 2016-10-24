@@ -21,7 +21,7 @@ import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemViewHolder;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemReactions;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemAfterReactions;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemStateFlags;
 
@@ -30,7 +30,7 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     private int mSwipeStateFlags;
     @SwipeableItemResults
     private int mSwipeResult = RecyclerViewSwipeManager.RESULT_NONE;
-    @SwipeableItemReactions
+    @SwipeableItemAfterReactions
     private int mAfterSwipeReaction = RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
     private boolean mIsProportionalAmountModeEnabled = true;
     private float mHorizontalSwipeAmount;
@@ -67,13 +67,13 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     }
 
     @Override
-    @SwipeableItemReactions
+    @SwipeableItemAfterReactions
     public int getAfterSwipeReaction() {
         return mAfterSwipeReaction;
     }
 
     @Override
-    public void setAfterSwipeReaction(@SwipeableItemReactions int reaction) {
+    public void setAfterSwipeReaction(@SwipeableItemAfterReactions int reaction) {
         mAfterSwipeReaction = reaction;
     }
 

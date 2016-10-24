@@ -42,6 +42,12 @@
     <string name="activity_title_demo_e_already_expanded">Expandable (Groups already expanded)</string>
     <string name="activity_title_demo_s_vertical">Swipeable (Vertical)</string>
     <string name="activity_title_demo_s_viewpager">Swipeable with ViewPager</string>
+    <string name="activity_title_demo_hf_minimal">Header/Footer (Minimal)</string>
+    <string name="activity_title_demo_hf_e">Expandable with Header/Footer</string>
+    <string name="activity_title_demo_hf_add_remove">Header/Footer (Add/Remove items)</string>
+    <string name="activity_title_demo_wa_insertion">Insertion custom adapter</string>
+    <string name="activity_title_demo_wa_filtering">Filtering custom adapter</string>
+    <string name="activity_title_demo_composition_all">Composition All</string>
 
     <string name="snack_bar_text_item_removed">1 item removed</string>
     <string name="snack_bar_text_group_item_removed">1 group item removed</string>

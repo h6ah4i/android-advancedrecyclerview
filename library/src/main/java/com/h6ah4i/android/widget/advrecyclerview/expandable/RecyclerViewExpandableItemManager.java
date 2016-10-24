@@ -29,6 +29,9 @@ import android.view.View;
 import android.view.ViewConfiguration;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
+import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.List;
 
@@ -75,7 +78,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     private SavedState mSavedState;
 
     private RecyclerView mRecyclerView;
-    private ExpandableRecyclerViewWrapperAdapter mAdapter;
+    private ExpandableRecyclerViewWrapperAdapter mWrapperAdapter;
     private RecyclerView.OnItemTouchListener mInternalUseOnItemTouchListener;
     private OnGroupExpandListener mOnGroupExpandListener;
     private OnGroupCollapseListener mOnGroupCollapseListener;
@@ -170,23 +173,23 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
             throw new IllegalArgumentException("The passed adapter does not support stable IDs");
         }
 
-        if (mAdapter != null) {
+        if (mWrapperAdapter != null) {
             throw new IllegalStateException("already have a wrapped adapter");
         }
 
         long[] adapterSavedState = (mSavedState != null) ? mSavedState.adapterSavedState : null;
         mSavedState = null;
 
-        mAdapter = new ExpandableRecyclerViewWrapperAdapter(this, adapter, adapterSavedState);
+        mWrapperAdapter = new ExpandableRecyclerViewWrapperAdapter(this, adapter, adapterSavedState);
 
         // move listeners to wrapper adapter
-        mAdapter.setOnGroupExpandListener(mOnGroupExpandListener);
+        mWrapperAdapter.setOnGroupExpandListener(mOnGroupExpandListener);
         mOnGroupExpandListener = null;
 
-        mAdapter.setOnGroupCollapseListener(mOnGroupCollapseListener);
+        mWrapperAdapter.setOnGroupCollapseListener(mOnGroupCollapseListener);
         mOnGroupCollapseListener = null;
 
-        return mAdapter;
+        return mWrapperAdapter;
     }
 
     /**
@@ -198,15 +201,15 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     public Parcelable getSavedState() {
         long[] adapterSavedState = null;
 
-        if (mAdapter != null) {
-            adapterSavedState = mAdapter.getExpandedItemsSavedStateArray();
+        if (mWrapperAdapter != null) {
+            adapterSavedState = mWrapperAdapter.getExpandedItemsSavedStateArray();
         }
 
         return new SavedState(adapterSavedState);
     }
 
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        if (mAdapter == null) {
+        if (mWrapperAdapter == null) {
             return false;
         }
 
@@ -270,9 +273,12 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
             return false;
         }
 
-        final int position = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
+        final RecyclerView.Adapter rootAdapter = mRecyclerView.getAdapter();
+        final int rootItemPosition = CustomRecyclerViewUtils.getSynchronizedPosition(holder);
 
-        if (position == RecyclerView.NO_POSITION) {
+        final int wrappedItemPosition = WrapperAdapterUtils.unwrapPosition(rootAdapter, mWrapperAdapter, rootItemPosition);
+
+        if (wrappedItemPosition == RecyclerView.NO_POSITION) {
             return false;
         }
 
@@ -282,7 +288,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
         final int viewX = touchX - (view.getLeft() + translateX);
         final int viewY = touchY - (view.getTop() + translateY);
 
-        return mAdapter.onTapItem(holder, position, viewX, viewY);
+        return mWrapperAdapter.onTapItem(holder, wrappedItemPosition, viewX, viewY);
     }
 
     /**
@@ -290,8 +296,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * <p>Note that this method does not invoke the {@link OnGroupExpandListener#onGroupExpand(int, boolean)} callback.</p>
      */
     public void expandAll() {
-        if (mAdapter != null) {
-            mAdapter.expandAll();
+        if (mWrapperAdapter != null) {
+            mWrapperAdapter.expandAll();
         }
     }
 
@@ -300,8 +306,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * <p>Note that this method does not invoke the {@link OnGroupCollapseListener#onGroupCollapse(int, boolean)} callback.</p>
      */
     public void collapseAll() {
-        if (mAdapter != null) {
-            mAdapter.collapseAll();
+        if (mWrapperAdapter != null) {
+            mWrapperAdapter.collapseAll();
         }
     }
 
@@ -312,7 +318,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return True if the group was expanded, false otherwise  (If the group was already expanded, this will return false)
      */
     public boolean expandGroup(int groupPosition) {
-        return (mAdapter != null) && mAdapter.expandGroup(groupPosition, false);
+        return (mWrapperAdapter != null) && mWrapperAdapter.expandGroup(groupPosition, false);
     }
 
     /**
@@ -322,7 +328,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return True if the group was collapsed, false otherwise  (If the group was already collapsed, this will return false)
      */
     public boolean collapseGroup(int groupPosition) {
-        return (mAdapter != null) && mAdapter.collapseGroup(groupPosition, false);
+        return (mWrapperAdapter != null) && mWrapperAdapter.collapseGroup(groupPosition, false);
     }
 
     /**
@@ -333,10 +339,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return The group and/or child position for the given flat position in packed position representation.
      */
     public long getExpandablePosition(int flatPosition) {
-        if (mAdapter == null) {
+        if (mWrapperAdapter == null) {
             return ExpandableAdapterHelper.NO_EXPANDABLE_POSITION;
         }
-        return mAdapter.getExpandablePosition(flatPosition);
+        return mWrapperAdapter.getExpandablePosition(flatPosition);
     }
 
     /**
@@ -346,10 +352,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return The group and/or child position for the given flat position in packed position representation.
      */
     public int getFlatPosition(long packedPosition) {
-        if (mAdapter == null) {
+        if (mWrapperAdapter == null) {
             return RecyclerView.NO_POSITION;
         }
-        return mAdapter.getFlatPosition(packedPosition);
+        return mWrapperAdapter.getFlatPosition(packedPosition);
     }
 
     /**
@@ -406,34 +412,34 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return Whether the group is currently expanded
      */
     public boolean isGroupExpanded(int groupPosition) {
-        return (mAdapter != null) && mAdapter.isGroupExpanded(groupPosition);
+        return (mWrapperAdapter != null) && mWrapperAdapter.isGroupExpanded(groupPosition);
     }
 
     /**
      * <p>Gets combined ID for child item.</p>
-     * <p>bit 0-31: Lower 32 bits of the childId
-     * bit 32-62: Lower 31 bits of the groupId
-     * bit 63: reserved</p>
+     * <p>bit 0-27: Lower 28 bits of the childId
+     * bit 28-55: Lower 28 bits of the groupId
+     * bit 56-61: reserved</p>
      *
      * @param groupId The ID of the group that contains the child.
      * @param childId The ID of the child.
      * @return The unique ID of the child across all groups and children in the list
      */
     public static long getCombinedChildId(long groupId, long childId) {
-        return ExpandableAdapterHelper.getCombinedChildId(groupId, childId);
+        return ItemIdComposer.composeExpandableChildId(groupId, childId);
     }
 
     /**
      * <p>Gets combined ID for child item.</p>
-     * <p>bit 0-31: all bits are set to 1
-     * bit 32-62: Lower 31 bits of the groupId
-     * bit 63: reserved</p>
+     * <p>bit 0-27: all bits are set to 1
+     * bit 28-55: Lower 28 bits of the groupId
+     * bit 56-61: reserved</p>
      *
      * @param groupId The ID of the group that contains the child.
      * @return The unique ID of the child across all groups and children in the list
      */
     public static long getCombinedGroupId(long groupId) {
-        return ExpandableAdapterHelper.getCombinedGroupId(groupId);
+        return ItemIdComposer.composeExpandableGroupId(groupId);
     }
 
     /**
@@ -443,7 +449,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return True for the a group view type, otherwise false
      */
     public static boolean isGroupViewType(int rawViewType) {
-        return ExpandableAdapterHelper.isGroupViewType(rawViewType);
+        return ItemViewTypeComposer.isExpandableGroup(rawViewType);
     }
 
     /**
@@ -453,7 +459,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return Group view type for the given raw view type.
      */
     public static int getGroupViewType(int rawViewType) {
-        return ExpandableAdapterHelper.getGroupViewType(rawViewType);
+        return ItemViewTypeComposer.extractWrappedViewTypePart(rawViewType);
     }
 
     /**
@@ -463,7 +469,37 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return Child view type for the given raw view type.
      */
     public static int getChildViewType(int rawViewType) {
-        return ExpandableAdapterHelper.getChildViewType(rawViewType);
+        return ItemViewTypeComposer.extractWrappedViewTypePart(rawViewType);
+    }
+
+    /**
+     * Checks whether the passed item ID is a group's one.
+     *
+     * @param rawId raw item ID value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemId()})
+     * @return True for the a group view type, otherwise false
+     */
+    public static boolean isGroupItemId(long rawId) {
+        return ItemIdComposer.isExpandableGroup(rawId);
+    }
+
+    /**
+     * Gets group item ID from a raw ID.
+     *
+     * @param rawId raw item ID value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemId()})
+     * @return Group item ID for the given raw item ID.
+     */
+    public static long getGroupItemId(long rawId) {
+        return ItemIdComposer.extractExpandableGroupIdPart(rawId);
+    }
+
+    /**
+     * Gets child item ID from a raw ID.
+     *
+     * @param rawId raw item ID value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemId()})
+     * @return Child item ID for the given raw item ID.
+     */
+    public static long getChildItemId(long rawId) {
+        return ItemIdComposer.extractExpandableChildIdPart(rawId);
     }
 
     /**
@@ -472,8 +508,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param listener The callback that will be invoked.
      */
     public void setOnGroupExpandListener(@Nullable OnGroupExpandListener listener) {
-        if (mAdapter != null) {
-            mAdapter.setOnGroupExpandListener(listener);
+        if (mWrapperAdapter != null) {
+            mWrapperAdapter.setOnGroupExpandListener(listener);
         } else {
             // pending
             mOnGroupExpandListener = listener;
@@ -486,8 +522,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param listener The callback that will be invoked.
      */
     public void setOnGroupCollapseListener(@Nullable OnGroupCollapseListener listener) {
-        if (mAdapter != null) {
-            mAdapter.setOnGroupCollapseListener(listener);
+        if (mWrapperAdapter != null) {
+            mWrapperAdapter.setOnGroupCollapseListener(listener);
         } else {
             // pending
             mOnGroupCollapseListener = listener;
@@ -524,11 +560,11 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
             throw new IllegalArgumentException("Illegal saved state object passed");
         }
 
-        if (!((mAdapter != null) && (mRecyclerView != null))) {
+        if (!((mWrapperAdapter != null) && (mRecyclerView != null))) {
             throw new IllegalStateException("RecyclerView has not been attached");
         }
 
-        mAdapter.restoreState(((SavedState) savedState).adapterSavedState, callHooks, callListeners);
+        mWrapperAdapter.restoreState(((SavedState) savedState).adapterSavedState, callHooks, callListeners);
     }
 
     /**
@@ -543,7 +579,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupAndChildrenItemsChanged(int)
      */
     public void notifyGroupItemChanged(int groupPosition) {
-        mAdapter.notifyGroupItemChanged(groupPosition, null);
+        mWrapperAdapter.notifyGroupItemChanged(groupPosition, null);
     }
 
     /**
@@ -571,7 +607,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupAndChildrenItemsChanged(int, Object)
      */
     public void notifyGroupItemChanged(int groupPosition, Object payload) {
-        mAdapter.notifyGroupItemChanged(groupPosition, payload);
+        mWrapperAdapter.notifyGroupItemChanged(groupPosition, payload);
     }
 
     /**
@@ -585,7 +621,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildrenOfGroupItemChanged(int)
      */
     public void notifyGroupAndChildrenItemsChanged(int groupPosition) {
-        mAdapter.notifyGroupAndChildrenItemsChanged(groupPosition, null);
+        mWrapperAdapter.notifyGroupAndChildrenItemsChanged(groupPosition, null);
     }
 
     /**
@@ -601,7 +637,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupAndChildrenItemsChanged(int)
      */
     public void notifyGroupAndChildrenItemsChanged(int groupPosition, Object payload) {
-        mAdapter.notifyGroupAndChildrenItemsChanged(groupPosition, payload);
+        mWrapperAdapter.notifyGroupAndChildrenItemsChanged(groupPosition, payload);
     }
 
     /**
@@ -616,7 +652,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupAndChildrenItemsChanged(int)
      */
     public void notifyChildrenOfGroupItemChanged(int groupPosition) {
-        mAdapter.notifyChildrenOfGroupItemChanged(groupPosition, null);
+        mWrapperAdapter.notifyChildrenOfGroupItemChanged(groupPosition, null);
     }
 
     /**
@@ -632,7 +668,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupAndChildrenItemsChanged(int)
      */
     public void notifyChildrenOfGroupItemChanged(int groupPosition, Object payload) {
-        mAdapter.notifyChildrenOfGroupItemChanged(groupPosition, payload);
+        mWrapperAdapter.notifyChildrenOfGroupItemChanged(groupPosition, payload);
     }
 
     /**
@@ -646,7 +682,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildItemRangeChanged(int, int, int)
      */
     public void notifyChildItemChanged(int groupPosition, int childPosition) {
-        mAdapter.notifyChildItemChanged(groupPosition, childPosition, null);
+        mWrapperAdapter.notifyChildItemChanged(groupPosition, childPosition, null);
     }
 
     /**
@@ -661,7 +697,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildItemRangeChanged(int, int, int)
      */
     public void notifyChildItemChanged(int groupPosition, int childPosition, Object payload) {
-        mAdapter.notifyChildItemChanged(groupPosition, childPosition, payload);
+        mWrapperAdapter.notifyChildItemChanged(groupPosition, childPosition, payload);
     }
 
     /**
@@ -677,7 +713,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildItemChanged(int, int)
      */
     public void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount) {
-        mAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount, null);
+        mWrapperAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount, null);
     }
 
     /**
@@ -694,7 +730,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildItemChanged(int, int)
      */
     public void notifyChildItemRangeChanged(int groupPosition, int childPositionStart, int itemCount, Object payload) {
-        mAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount, payload);
+        mWrapperAdapter.notifyChildItemRangeChanged(groupPosition, childPositionStart, itemCount, payload);
     }
 
     /**
@@ -729,7 +765,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupItemRangeInserted(int, int, boolean)
      */
     public void notifyGroupItemInserted(int groupPosition, boolean expanded) {
-        mAdapter.notifyGroupItemInserted(groupPosition, expanded);
+        mWrapperAdapter.notifyGroupItemInserted(groupPosition, expanded);
     }
 
     /**
@@ -768,7 +804,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupItemRangeInserted(int, int)
      */
     public void notifyGroupItemRangeInserted(int groupPositionStart, int itemCount, boolean expanded) {
-        mAdapter.notifyGroupItemRangeInserted(groupPositionStart, itemCount, expanded);
+        mWrapperAdapter.notifyGroupItemRangeInserted(groupPositionStart, itemCount, expanded);
     }
 
     /**
@@ -784,7 +820,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildItemRangeInserted(int, int, int)
      */
     public void notifyChildItemInserted(int groupPosition, int childPosition) {
-        mAdapter.notifyChildItemInserted(groupPosition, childPosition);
+        mWrapperAdapter.notifyChildItemInserted(groupPosition, childPosition);
     }
 
     /**
@@ -802,7 +838,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyChildItemInserted(int, int)
      */
     public void notifyChildItemRangeInserted(int groupPosition, int childPositionStart, int itemCount) {
-        mAdapter.notifyChildItemRangeInserted(groupPosition, childPositionStart, itemCount);
+        mWrapperAdapter.notifyChildItemRangeInserted(groupPosition, childPositionStart, itemCount);
     }
 
     /**
@@ -817,7 +853,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupItemRangeRemoved(int, int)
      */
     public void notifyGroupItemRemoved(int groupPosition) {
-        mAdapter.notifyGroupItemRemoved(groupPosition);
+        mWrapperAdapter.notifyGroupItemRemoved(groupPosition);
     }
 
     /**
@@ -833,7 +869,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param itemCount          Number of group items removed from the data set
      */
     public void notifyGroupItemRangeRemoved(int groupPositionStart, int itemCount) {
-        mAdapter.notifyGroupItemRangeRemoved(groupPositionStart, itemCount);
+        mWrapperAdapter.notifyGroupItemRangeRemoved(groupPositionStart, itemCount);
     }
 
     /**
@@ -849,7 +885,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @see #notifyGroupItemRangeRemoved(int, int)
      */
     public void notifyChildItemRemoved(int groupPosition, int childPosition) {
-        mAdapter.notifyChildItemRemoved(groupPosition, childPosition);
+        mWrapperAdapter.notifyChildItemRemoved(groupPosition, childPosition);
     }
 
     /**
@@ -866,7 +902,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param itemCount          Number of child items removed from the data set
      */
     public void notifyChildItemRangeRemoved(int groupPosition, int childPositionStart, int itemCount) {
-        mAdapter.notifyChildItemRangeRemoved(groupPosition, childPositionStart, itemCount);
+        mWrapperAdapter.notifyChildItemRangeRemoved(groupPosition, childPositionStart, itemCount);
     }
 
     /**
@@ -879,7 +915,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param toGroupPosition New position of the group item.
      */
     public void notifyGroupItemMoved(int fromGroupPosition, int toGroupPosition) {
-        mAdapter.notifyGroupItemMoved(fromGroupPosition, toGroupPosition);
+        mWrapperAdapter.notifyGroupItemMoved(fromGroupPosition, toGroupPosition);
     }
 
     /**
@@ -893,7 +929,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param toChildPosition New child position of the child item.
      */
     public void notifyChildItemMoved(int groupPosition, int fromChildPosition, int toChildPosition) {
-        mAdapter.notifyChildItemMoved(groupPosition, fromChildPosition, toChildPosition);
+        mWrapperAdapter.notifyChildItemMoved(groupPosition, fromChildPosition, toChildPosition);
     }
 
     /**
@@ -908,7 +944,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param toChildPosition New child position of the child item.
      */
     public void notifyChildItemMoved(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition) {
-        mAdapter.notifyChildItemMoved(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
+        mWrapperAdapter.notifyChildItemMoved(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
     }
 
     /**
@@ -917,7 +953,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return the number of groups
      */
     public int getGroupCount() {
-        return mAdapter.getGroupCount();
+        return mWrapperAdapter.getGroupCount();
     }
 
     /**
@@ -927,7 +963,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return the number of children
      */
     public int getChildCount(int groupPosition) {
-        return mAdapter.getChildCount(groupPosition);
+        return mWrapperAdapter.getChildCount(groupPosition);
     }
 
     /**
@@ -1011,7 +1047,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return the number of expanded groups
      */
     public int getExpandedGroupsCount() {
-        return mAdapter.getExpandedGroupsCount();
+        return mWrapperAdapter.getExpandedGroupsCount();
     }
 
     /**
@@ -1020,7 +1056,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return the number of collapsed groups
      */
     public int getCollapsedGroupsCount() {
-        return mAdapter.getCollapsedGroupsCount();
+        return mWrapperAdapter.getCollapsedGroupsCount();
     }
 
     /**
@@ -1029,7 +1065,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return True if there is at least 1 group exists and every groups are expanded, otherwise false.
      */
     public boolean isAllGroupsExpanded() {
-        return mAdapter.isAllGroupsExpanded();
+        return mWrapperAdapter.isAllGroupsExpanded();
     }
 
     /**
@@ -1038,7 +1074,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return True if no group exists or every groups are collapsed, otherwise false.
      */
     public boolean isAllGroupsCollapsed() {
-        return mAdapter.isAllGroupsCollapsed();
+        return mWrapperAdapter.isAllGroupsCollapsed();
     }
 
     /**

@@ -305,9 +305,9 @@ public interface SwipeableItemConstants {
 
     /**
      * <p>After-reaction type used for the {@link SwipeableItemViewHolder#setAfterSwipeReaction(int)} and {@link SwipeableItemViewHolder#getAfterSwipeReaction()} methods.</p>
-     * <p>Represents perform nothing.</p>
+     * <p>Represents moving the item back to its original position.</p>
      */
-    int AFTER_SWIPE_REACTION_DEFAULT = 0;
+    int AFTER_SWIPE_REACTION_MOVE_TO_ORIGIN = 0;
 
     /**
      * <p>After-reaction type used for the {@link SwipeableItemViewHolder#setAfterSwipeReaction(int)} and {@link SwipeableItemViewHolder#getAfterSwipeReaction()} methods.</p>
@@ -320,6 +320,18 @@ public interface SwipeableItemConstants {
      * <p>Represents that the item moved to swiped direction.</p>
      */
     int AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION = 2;
+
+    /**
+     * <p>After-reaction type used for the {@link SwipeableItemViewHolder#setAfterSwipeReaction(int)} and {@link SwipeableItemViewHolder#getAfterSwipeReaction()} methods.</p>
+     * <p>Represents performing no action on the item.</p>
+     */
+    int AFTER_SWIPE_REACTION_DO_NOTHING = 3;
+
+    /**
+     * <p>After-reaction type used for the {@link SwipeableItemViewHolder#setAfterSwipeReaction(int)} and {@link SwipeableItemViewHolder#getAfterSwipeReaction()} methods.</p>
+     * <p>Represents moving the item back to its original position. (Alias of the {@link #AFTER_SWIPE_REACTION_MOVE_TO_ORIGIN})</p>
+     */
+    int AFTER_SWIPE_REACTION_DEFAULT = AFTER_SWIPE_REACTION_MOVE_TO_ORIGIN;
 
     // ---
     /**

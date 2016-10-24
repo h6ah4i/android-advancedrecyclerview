@@ -16,8 +16,12 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
+import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
 
 import java.util.List;
 
@@ -46,6 +50,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param groupPosition the position of the group for which the ID is wanted
      * @return the ID associated with the group
      */
+    @IntRange(from = ItemIdComposer.MIN_GROUP_ID, to = ItemIdComposer.MAX_GROUP_ID)
     long getGroupId(int groupPosition);
 
     /**
@@ -58,6 +63,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param childPosition the position of the child within the group for which the ID is wanted
      * @return the ID associated with the child
      */
+    @IntRange(from = ItemIdComposer.MIN_CHILD_ID, to = ItemIdComposer.MAX_CHILD_ID)
     long getChildId(int groupPosition, int childPosition);
 
     /**
@@ -66,6 +72,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param groupPosition the position of the group for which the view type is wanted
      * @return integer value identifying the type of the view needed to represent the group item at position. Type codes need positive number but not be contiguous.
      */
+    @IntRange(from = ItemViewTypeComposer.MIN_WRAPPED_VIEW_TYPE, to = ItemViewTypeComposer.MAX_WRAPPED_VIEW_TYPE)
     int getGroupItemViewType(int groupPosition);
 
     /**
@@ -75,6 +82,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param childPosition the position of the child within the group for which the view type is wanted
      * @return integer value identifying the type of the view needed to represent the group item at position. Type codes need positive number but not be contiguous.
      */
+    @IntRange(from = ItemViewTypeComposer.MIN_WRAPPED_VIEW_TYPE, to = ItemViewTypeComposer.MAX_WRAPPED_VIEW_TYPE)
     int getChildItemViewType(int groupPosition, int childPosition);
 
     /**
@@ -84,7 +92,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param viewType The view type of the new View
      * @return A new group ViewHolder that holds a View of the given view type
      */
-    GVH onCreateGroupViewHolder(ViewGroup parent, int viewType);
+    GVH onCreateGroupViewHolder(ViewGroup parent, @IntRange(from = ItemViewTypeComposer.MIN_WRAPPED_VIEW_TYPE, to = ItemViewTypeComposer.MAX_WRAPPED_VIEW_TYPE) int viewType);
 
     /**
      * Called when RecyclerView needs a new {@link CVH} of the given type to represent a child item.
@@ -93,7 +101,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param viewType The view type of the new View
      * @return A new child ViewHolder that holds a View of the given view type
      */
-    CVH onCreateChildViewHolder(ViewGroup parent, int viewType);
+    CVH onCreateChildViewHolder(ViewGroup parent, @IntRange(from = ItemViewTypeComposer.MIN_WRAPPED_VIEW_TYPE, to = ItemViewTypeComposer.MAX_WRAPPED_VIEW_TYPE) int viewType);
 
     /**
      * Called by RecyclerView to display the group data at the specified position.
@@ -104,7 +112,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param groupPosition The position of the group item within the adapter's data set
      * @param viewType      The view type code
      */
-    void onBindGroupViewHolder(GVH holder, int groupPosition, int viewType);
+    void onBindGroupViewHolder(GVH holder, int groupPosition, @IntRange(from = ItemViewTypeComposer.MIN_WRAPPED_VIEW_TYPE, to = ItemViewTypeComposer.MAX_WRAPPED_VIEW_TYPE) int viewType);
 
     /**
      * Called by RecyclerView to display the group data at the specified position.
@@ -116,7 +124,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param viewType      The view type code
      * @param payloads      A non-null list of merged payloads. Can be empty list if requires full update.
      */
-    void onBindGroupViewHolder(GVH holder, int groupPosition, int viewType, List<Object> payloads);
+    void onBindGroupViewHolder(GVH holder, int groupPosition, @IntRange(from = ItemViewTypeComposer.MIN_WRAPPED_VIEW_TYPE, to = ItemViewTypeComposer.MAX_WRAPPED_VIEW_TYPE) int viewType, List<Object> payloads);
 
     /**
      * Called by RecyclerView to display the child data at the specified position.
@@ -129,7 +137,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param viewType      The view type code
      * @param payloads      A non-null list of merged payloads. Can be empty list if requires full update.
      */
-    void onBindChildViewHolder(CVH holder, int groupPosition, int childPosition, int viewType, List<Object> payloads);
+    void onBindChildViewHolder(CVH holder, int groupPosition, int childPosition, @IntRange(from = ItemViewTypeComposer.MIN_WRAPPED_VIEW_TYPE, to = ItemViewTypeComposer.MAX_WRAPPED_VIEW_TYPE) int viewType, List<Object> payloads);
 
     /**
      * Called by RecyclerView to display the child data at the specified position.
@@ -141,7 +149,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @param childPosition The position of the child item within the group
      * @param viewType      The view type code
      */
-    void onBindChildViewHolder(CVH holder, int groupPosition, int childPosition, int viewType);
+    void onBindChildViewHolder(CVH holder, int groupPosition, int childPosition, @IntRange(from = ItemViewTypeComposer.MIN_WRAPPED_VIEW_TYPE, to = ItemViewTypeComposer.MAX_WRAPPED_VIEW_TYPE) int viewType);
 
     /**
      * <p>Called when a user attempt to expand/collapse a group item by tapping.</p>

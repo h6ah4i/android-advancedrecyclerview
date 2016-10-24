@@ -37,10 +37,7 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT} or
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      *
-     * @return Reaction type of after swiping.
-     *          One of the {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT},
-     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION} or
-     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_REMOVE_ITEM}.
+     * @return {@link SwipeResultAction} object.
      */
     SwipeResultAction onSwipeGroupItem(GVH holder, int groupPosition, int result);
 
@@ -59,10 +56,7 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_RIGHT} or
      *              {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#RESULT_SWIPED_DOWN}
      *
-     * @return Reaction type of after swiping.
-     *          One of the {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT},
-     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION} or
-     *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_REMOVE_ITEM}.
+     * @return {@link SwipeResultAction} object.
      */
     SwipeResultAction onSwipeChildItem(CVH holder, int groupPosition, int childPosition, int result);
 }
