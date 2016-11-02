@@ -92,7 +92,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
             swipeableHolder.setProportionalSwipeAmountModeEnabled(true);
 
-            View containerView = swipeableHolder.getSwipeableContainerView();
+            View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(swipeableHolder);
 
             if (containerView != null) {
                 ViewCompat.animate(containerView).cancel();
