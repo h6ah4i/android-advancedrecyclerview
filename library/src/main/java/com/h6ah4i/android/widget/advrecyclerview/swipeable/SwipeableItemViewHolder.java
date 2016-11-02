@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemAfterReactions;
@@ -221,6 +222,7 @@ public interface SwipeableItemViewHolder {
      *
      * @return The container view instance.
      */
+    @Nullable
     View getSwipeableContainerView();
 
     /**
