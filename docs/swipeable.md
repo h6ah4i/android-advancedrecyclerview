@@ -1,7 +1,7 @@
 ![Block Diagram - Swipeable](/images/block-diagram-swipe.png)
 
 
-## 1. Make the adapter supports stable ID
+# 1. Make the adapter supports stable ID
 
 **This step is very important. If adapter does not return stable & unique ID, it will cause weird behaviors (wrong animation, NPE, etc...)**
 
@@ -21,7 +21,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 ```
 
 
-## 2. Implement the `SwipeableItemAdapter` interface
+# 2. Implement the `SwipeableItemAdapter` interface
 
 ```java
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -68,7 +68,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
 }
 ```
 
-## 3. Extend the `AbstractSwipeableItemViewHolder` instead of the `RecyclerView.ViewHolder`
+# 3. Extend the `AbstractSwipeableItemViewHolder` instead of the `RecyclerView.ViewHolder`
 
 ```java
 class MyAdapter ... {
@@ -110,7 +110,7 @@ class MyAdapter ... {
 }
 ```
 
-## 4. Modify layout file of item views
+# 4. Modify layout file of item views
 ```xml
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -144,7 +144,7 @@ class MyAdapter ... {
 </FrameLayout>
 ```
 
-## 5. Update ViewHolder
+# 5. Update ViewHolder
 
 ```java
 class MyAdapter ... {
@@ -193,7 +193,7 @@ class MyAdapter ... {
 }
 ```
 
-## 6. Update Adapter
+# 6. Update Adapter
 
 ```java
 class MyAdapter ... {
@@ -281,7 +281,7 @@ class MyAdapter ... {
 }
 ```
 
-## 7. Modify initialization of RecyclerView in Activity (or in Fragment)
+# 7. Modify initialization of RecyclerView in Activity (or in Fragment)
 
 ```java
 void onCreate() {
@@ -315,6 +315,6 @@ void onCreate() {
 }
 ```
 
-## 8. Custom more and details of the implementation
+# 8. Custom more and details of the implementation
 
 Please refer to [the example app implementation]({{< github_repo_url >}}/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic).

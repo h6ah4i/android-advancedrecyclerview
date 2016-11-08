@@ -18,7 +18,7 @@ repo_url: 'https://github.com/h6ah4i/android-advancedrecyclerview'
 copyright: 'Copyright (c) 2016 Haruki Hasegawa'
 
 extra:
-  version: '0.9.3'
+  version: '0.10.0'
   palette:
     primary: 'blue-grey'
     accent: 'orange'
@@ -44,6 +44,7 @@ pages:
 - Getting Started: 'getting-started.md'
 - Adapter:
     - Wrapper Adapter: 'wrapper-adapter/index.md'
+    - Support adapter wrapping: 'wrapper-adapter/migrate-to-wrapped-adapter.md'
     - ComposedAdapter: 'wrapper-adapter/composed-adapter.md'
     - Headers & Footers: 'wrapper-adapter/headers-footers.md'
     - Insertion & Filtering: 'wrapper-adapter/insertion-filtering.md'

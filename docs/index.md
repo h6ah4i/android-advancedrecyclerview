@@ -1,10 +1,10 @@
 **Advanded RecyclerView** is an extension library of the [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html).
 
-## Demo app
+# Demo app
 
 <a href='https://play.google.com/store/apps/details?id=com.h6ah4i.android.example.advrecyclerview'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="200" /></a>
 
-## Phirosophies
+# Phirosophies
 
 - **Never inherit `RecyclerView` class**
     - 👉 &nbsp; Reduces library conflictions, easy to integrate with existing code
@@ -14,7 +14,7 @@
     - 👉 &nbsp; Looks difficult at a glance, but gives great flexibility like original `RecyclerView`
 
 
-## Features
+# Features
 
 - **Swipe**
     - Swipe dismiss and swipe pinning operation. (like Google's Inbox app)

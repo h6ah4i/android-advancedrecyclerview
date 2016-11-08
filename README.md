@@ -19,10 +19,10 @@ This branch contains GitHub Pages source of Advanced RecyclerView.
 1. Run Hugo server
 
   ```bash
-  hugo server
+  mkdocs serve
   ```
 
-2. Open `http://localhost:1313/android-advancedrecyclerview/` in your browser
+2. Open `http://127.0.0.1:8000/` in your browser
 
 3. Modify files in the `/content` directory.
 
@@ -30,5 +30,5 @@ This branch contains GitHub Pages source of Advanced RecyclerView.
 ## How to deploy?
 
 ```bash
-./deploy.sh "commit message"
+mkdocs gh-deploy
 ```

@@ -1,9 +1,9 @@
 When creating headers & footers, the `AbstractHeaderFooterWrapperAdapter` can be a good alternative to the `ComposedAdapter`. This class provides simple way to creating a wrapper crass for headers & footers by implementing small number of methods.
 
 
-## Quick quide
+# Quick quide
 
-### Usage
+## Usage
 
 ```java
 MyAdapter adapter = new MyAdapter();
@@ -13,7 +13,7 @@ recyclerView.setAdapter(wrappedAdapter);
 
 ```
 
-### Implementation of headers & footers wrapper adapter
+## Implementation of headers & footers wrapper adapter
 
 ```java
 class MyHeadFootAdapter 

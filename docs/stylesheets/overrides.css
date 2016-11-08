@@ -21,7 +21,7 @@
 }
 
 .article .admonition.methods {
-    background: transparent;
+    background: #ffe082;
     border-top: 1px solid rgba(0,0,0,0.1);
     border-bottom: 1px solid rgba(0,0,0,0.1);
     color: rgba(0,0,0,0.46);
