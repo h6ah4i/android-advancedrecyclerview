@@ -1,7 +1,11 @@
 ![Block Diagram - Swipeable](/images/block-diagram-swipe.png)
 
 
-# 1. Make the adapter supports stable ID
+[TOC]
+
+# Tutorial
+
+## Step 1. Make the adapter supports stable ID
 
 **This step is very important. If adapter does not return stable & unique ID, it will cause weird behaviors (wrong animation, NPE, etc...)**
 
@@ -21,18 +25,18 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 ```
 
 
-# 2. Implement the `SwipeableItemAdapter` interface
+## Step 2. Implement the `SwipeableItemAdapter` interface
 
 ```java
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    ...
     static class MyViewHolder extends RecyclerView.ViewHolder {
         ...
     }
+    ...
 }
 ```
 
-:arrow_down: :arrow_down: :arrow_down:
+⏬ &nbsp; ⏬ &nbsp; ⏬
 
 ```java
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> 
@@ -42,8 +46,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
     // NOTE: Make accessible with short name
     private interface Swipeable extends SwipeableItemConstants {
     }
-
-    ...
 
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
@@ -68,50 +70,41 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
 }
 ```
 
-# 3. Extend the `AbstractSwipeableItemViewHolder` instead of the `RecyclerView.ViewHolder`
+## Step 3. Extend the `AbstractSwipeableItemViewHolder` instead of the `RecyclerView.ViewHolder`
 
 ```java
 class MyAdapter ... {
-    ...
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        ...
-
-        public MyViewHolder(View v) {
+        MyViewHolder(View v) {
             super(v);
-            ...
         }
-
-        ...
     }
+    ...
 }
 ```
 
-:arrow_down: :arrow_down: :arrow_down:
+⏬ &nbsp; ⏬ &nbsp; ⏬
 
 ```java
 class MyAdapter ... {
-    ...
- public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
-　　　　　...
-
-        public MyViewHolder(View v) {
+    static class MyViewHolder extends AbstractSwipeableItemViewHolder {
+        MyViewHolder(View v) {
             super(v);
-            ...
         }
 
         @Override
-        public View getSwipeableContainerView() {
+        View getSwipeableContainerView() {
             // TODO implement here later
             return null;
         }
-
-        ...
     }
 }
 ```
 
-# 4. Modify layout file of item views
+## Step 4. Modify layout file of item views
+
 ```xml
+<!-- Content View -->
 <TextView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
@@ -120,19 +113,22 @@ class MyAdapter ... {
     android:gravity="center"/>
 ```
 
-:arrow_down: :arrow_down: :arrow_down: 
+⏬ &nbsp; ⏬ &nbsp; ⏬ 
 
 ```xml
+<!-- for itemView -->
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="56dp">
 
+    <!-- for getSwipeableContainerView() -->
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Content View -->
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
@@ -144,12 +140,11 @@ class MyAdapter ... {
 </FrameLayout>
 ```
 
-# 5. Update ViewHolder
+## Step 5. Update ViewHolder
 
 ```java
 class MyAdapter ... {
-    ...
- public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
+    static class MyViewHolder extends AbstractSwipeableItemViewHolder {
         TextView mText;
 
         public MyViewHolder(View v) {
@@ -159,27 +154,23 @@ class MyAdapter ... {
 
         @Override
         public View getSwipeableContainerView() {
-            // TODO implement here later
             return null;
         }
-
-        ...
     }
 }
 ```
 
-:arrow_down: :arrow_down: :arrow_down:
+⏬ &nbsp; ⏬ &nbsp; ⏬
 
 ```java
 class MyAdapter ... {
-    ...
- public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
-        TextView mTextView;
+    static class MyViewHolder extends AbstractSwipeableItemViewHolder {
+        TextView mText;
         FrameLayout mContainer;
 
         public MyViewHolder(View v) {
             super(v);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mText = (TextView) v.findViewById(android.R.id.text1);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
         }
 
@@ -187,47 +178,31 @@ class MyAdapter ... {
         public View getSwipeableContainerView() {
             return mContainer;
         }
-
-        ...
     }
 }
 ```
 
-# 6. Update Adapter
+## Step 6. Update Adapter
 
 ```java
 class MyAdapter ... {
 
-    ...
+    @Override
+    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) { ... }
 
     @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
-        ...
-    }
+    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) { ... }
 
     @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
-        ...
-    }
-
-    @Override
-    public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, int result) {
-        ...
-    }
-
-    static class MyViewHolder ... {
-        ...
-    }
+    public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, int result) { ... }
 }
 ```
 
-:arrow_down: :arrow_down: :arrow_down: 
+⏬ &nbsp; ⏬ &nbsp; ⏬ 
 
 ```java
 
 class MyAdapter ... {
-
-    ...
 
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
@@ -237,7 +212,7 @@ class MyAdapter ... {
 
     @Override
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
-        // You can set background color to holder.itemView.
+        // You can set background color/resource to holder.itemView.
         
         // The argument "type" can be one of the followings;
         // - Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND
@@ -245,6 +220,12 @@ class MyAdapter ... {
         // (- Swipeable.DRAWABLE_SWIPE_UP_BACKGROUND)
         // (- Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND)
         // (- Swipeable.DRAWABLE_SWIPE_DOWN_BACKGROUND)
+
+        if (type == Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND) {
+            holder.itemView.setBackgroundColor(Color.YELLOW);
+        } else {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     @Override
@@ -254,6 +235,7 @@ class MyAdapter ... {
         // - SwipeResultActionDefault
         // - SwipeResultActionMoveToSwipedDirection
         // - SwipeResultActionRemoveItem
+        // - SwipeResultActionDoNothing
 
         // The argument "result" can be one of the followings;
         // 
@@ -265,23 +247,19 @@ class MyAdapter ... {
 
         if (result == Swipeable.RESULT_LEFT) {
             return new SwipeResultActionMoveToSwipedDirection() {
-                // You can override these three methods
+                // Optionally, you can override these three methods
                 // - void onPerformAction()
                 // - void onSlideAnimationEnd()
                 // - void onCleanUp()
             };
         } else {
-            return new SwipeResultActionDefault();
+            return new SwipeResultActionDoNothing();
         }
-    }
-
-    static class MyViewHolder ... {
-        ...
     }
 }
 ```
 
-# 7. Modify initialization of RecyclerView in Activity (or in Fragment)
+## Step 7. Modify initialization process of RecyclerView in Activity / Fragment
 
 ```java
 void onCreate() {
@@ -295,7 +273,7 @@ void onCreate() {
 }
 ```
 
-:arrow_down: :arrow_down: :arrow_down: 
+⏬ &nbsp; ⏬ &nbsp; ⏬ 
 
 ```java
 void onCreate() {
@@ -315,6 +293,6 @@ void onCreate() {
 }
 ```
 
-# 8. Custom more and details of the implementation
+## Step 8. Custom more and details of the implementation
 
-Please refer to [the example app implementation]({{< github_repo_url >}}/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic).
+Please refer to [the demo app implementation](https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic) for more details.
