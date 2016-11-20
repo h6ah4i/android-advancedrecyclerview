@@ -5,6 +5,22 @@ Because `WrapperAdapter` modifies **item positions**, **item IDs** and **item vi
 
 [TOC]
 
+## If overriding Adapter.getItemId()
+
+**The available range of item ID value is limited, so you cannot use full range of 64-bit integer value.** Must return a value greather than or equals to `-(2^55)` and less than or equals to `2^55 - 1`.
+
+!!! note
+    This limitation is due to how [`ItemIdComposer`](/wrapper-adapter/composed-adapter/#itemidcomposer) packs other information into 64-bits integer value.
+
+
+## If overriding Adapter.getItemViewType()
+
+**The available range of item view type value is limited, so you cannot use full range of 32-bit integer value.** Must return a value greather than or equals to `-(2^23)` and less than or equals to `2^23 - 1`.
+
+!!! note
+    This limitation is due to how [`ItemViewTypeComposer`](/wrapper-adapter/composed-adapter/#itemviewtypecomposer) packs other information into 32-bits integer value.
+
+
 ## If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())
 
 👉 &nbsp; Use `WrapperAdapterUtils.unwrapPosition()`.
