@@ -27,8 +27,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
-    <link rel="icon" type="image/x-icon" href="../../favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <style>
       @font-face {
       	font-family: 'Icon';
@@ -146,7 +146,7 @@
         <strong>
           Advanced RecyclerView
           <span class="version">
-            0.9.3
+            0.10.0
           </span>
         </strong>
         
@@ -162,7 +162,7 @@
         <ul class="repo">
           <li class="repo-download">
             
-            <a href="https://github.com/h6ah4i/android-advancedrecyclerview/archive/0.9.3.zip" target="_blank" title="Download" data-action="download">
+            <a href="https://github.com/h6ah4i/android-advancedrecyclerview/archive/0.10.0.zip" target="_blank" title="Download" data-action="download">
               <i class="icon icon-download"></i> Download
             </a>
           </li>
@@ -205,6 +205,15 @@
   <li>
     <a class="" title="Wrapper Adapter" href="../wrapper-adapter/">
       Wrapper Adapter
+    </a>
+    
+  </li>
+
+      
+        
+  <li>
+    <a class="" title="Support adapter wrapping" href="../wrapper-adapter/migrate-to-wrapped-adapter/">
+      Support adapter wrapping
     </a>
     
   </li>
@@ -257,54 +266,56 @@
     </a>
     
       
+        
+      
       
         <ul>
           
             <li class="anchor">
-              <a title="1. Make the adapter supports stable ID" href="#1-make-the-adapter-supports-stable-id">
-                1. Make the adapter supports stable ID
+              <a title="Step 1. Make the adapter supports stable ID" href="#step-1-make-the-adapter-supports-stable-id">
+                Step 1. Make the adapter supports stable ID
               </a>
             </li>
           
             <li class="anchor">
-              <a title="2. Implement the SwipeableItemAdapter interface" href="#2-implement-the-swipeableitemadapter-interface">
-                2. Implement the SwipeableItemAdapter interface
+              <a title="Step 2. Implement the SwipeableItemAdapter interface" href="#step-2-implement-the-swipeableitemadapter-interface">
+                Step 2. Implement the SwipeableItemAdapter interface
               </a>
             </li>
           
             <li class="anchor">
-              <a title="3. Extend the AbstractSwipeableItemViewHolder instead of the RecyclerView.ViewHolder" href="#3-extend-the-abstractswipeableitemviewholder-instead-of-the-recyclerviewviewholder">
-                3. Extend the AbstractSwipeableItemViewHolder instead of the RecyclerView.ViewHolder
+              <a title="Step 3. Extend the AbstractSwipeableItemViewHolder instead of the RecyclerView.ViewHolder" href="#step-3-extend-the-abstractswipeableitemviewholder-instead-of-the-recyclerviewviewholder">
+                Step 3. Extend the AbstractSwipeableItemViewHolder instead of the RecyclerView.ViewHolder
               </a>
             </li>
           
             <li class="anchor">
-              <a title="4. Modify layout file of item views" href="#4-modify-layout-file-of-item-views">
-                4. Modify layout file of item views
+              <a title="Step 4. Modify layout file of item views" href="#step-4-modify-layout-file-of-item-views">
+                Step 4. Modify layout file of item views
               </a>
             </li>
           
             <li class="anchor">
-              <a title="5. Update ViewHolder" href="#5-update-viewholder">
-                5. Update ViewHolder
+              <a title="Step 5. Update ViewHolder" href="#step-5-update-viewholder">
+                Step 5. Update ViewHolder
               </a>
             </li>
           
             <li class="anchor">
-              <a title="6. Update Adapter" href="#6-update-adapter">
-                6. Update Adapter
+              <a title="Step 6. Update Adapter" href="#step-6-update-adapter">
+                Step 6. Update Adapter
               </a>
             </li>
           
             <li class="anchor">
-              <a title="7. Modify initialization of RecyclerView in Activity (or in Fragment)" href="#7-modify-initialization-of-recyclerview-in-activity-or-in-fragment">
-                7. Modify initialization of RecyclerView in Activity (or in Fragment)
+              <a title="Step 7. Modify initialization process of RecyclerView in Activity / Fragment" href="#step-7-modify-initialization-process-of-recyclerview-in-activity-fragment">
+                Step 7. Modify initialization process of RecyclerView in Activity / Fragment
               </a>
             </li>
           
             <li class="anchor">
-              <a title="8. Custom more and details of the implementation" href="#8-custom-more-and-details-of-the-implementation">
-                8. Custom more and details of the implementation
+              <a title="Step 8. Custom more and details of the implementation" href="#step-8-custom-more-and-details-of-the-implementation">
+                Step 8. Custom more and details of the implementation
               </a>
             </li>
           
@@ -381,10 +392,24 @@
       <article class="article">
         <div class="wrapper">
           
-            <h1>Swipeable</h1>
-          
           <p><img alt="Block Diagram - Swipeable" src="../images/block-diagram-swipe.png" /></p>
-<h2 id="1-make-the-adapter-supports-stable-id">1. Make the adapter supports stable ID<a class="headerlink" href="#1-make-the-adapter-supports-stable-id" title="Permanent link">#</a></h2>
+<div class="toc">
+<ul>
+<li><a href="#tutorial">Tutorial</a><ul>
+<li><a href="#step-1-make-the-adapter-supports-stable-id">Step 1. Make the adapter supports stable ID</a></li>
+<li><a href="#step-2-implement-the-swipeableitemadapter-interface">Step 2. Implement the SwipeableItemAdapter interface</a></li>
+<li><a href="#step-3-extend-the-abstractswipeableitemviewholder-instead-of-the-recyclerviewviewholder">Step 3. Extend the AbstractSwipeableItemViewHolder instead of the RecyclerView.ViewHolder</a></li>
+<li><a href="#step-4-modify-layout-file-of-item-views">Step 4. Modify layout file of item views</a></li>
+<li><a href="#step-5-update-viewholder">Step 5. Update ViewHolder</a></li>
+<li><a href="#step-6-update-adapter">Step 6. Update Adapter</a></li>
+<li><a href="#step-7-modify-initialization-process-of-recyclerview-in-activity-fragment">Step 7. Modify initialization process of RecyclerView in Activity / Fragment</a></li>
+<li><a href="#step-8-custom-more-and-details-of-the-implementation">Step 8. Custom more and details of the implementation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="tutorial">Tutorial<a class="headerlink" href="#tutorial" title="Permanent link">#</a></h1>
+<h2 id="step-1-make-the-adapter-supports-stable-id">Step 1. Make the adapter supports stable ID<a class="headerlink" href="#step-1-make-the-adapter-supports-stable-id" title="Permanent link">#</a></h2>
 <p><strong>This step is very important. If adapter does not return stable &amp; unique ID, it will cause weird behaviors (wrong animation, NPE, etc...)</strong></p>
 <pre class="code"><code class="language-java">class MyAdapter extends RecyclerView.Adapter&lt;MyAdapter.MyViewHolder&gt; {
     MyAdapter() {
@@ -400,16 +425,16 @@
 }</code></pre>
 
 
-<h2 id="2-implement-the-swipeableitemadapter-interface">2. Implement the <code>SwipeableItemAdapter</code> interface<a class="headerlink" href="#2-implement-the-swipeableitemadapter-interface" title="Permanent link">#</a></h2>
+<h2 id="step-2-implement-the-swipeableitemadapter-interface">Step 2. Implement the <code>SwipeableItemAdapter</code> interface<a class="headerlink" href="#step-2-implement-the-swipeableitemadapter-interface" title="Permanent link">#</a></h2>
 <pre class="code"><code class="language-java">class MyAdapter extends RecyclerView.Adapter&lt;MyAdapter.MyViewHolder&gt; {
-    ...
     static class MyViewHolder extends RecyclerView.ViewHolder {
         ...
     }
+    ...
 }</code></pre>
 
 
-<p>:arrow_down: :arrow_down: :arrow_down:</p>
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬</p>
 <pre class="code"><code class="language-java">class MyAdapter extends RecyclerView.Adapter&lt;MyAdapter.MyViewHolder&gt; 
         extends RecyclerView.Adapter&lt;MyAdapter.MyViewHolder&gt;
         implements SwipeableItemAdapter&lt;MyAdapter.MyViewHolder&gt; {
@@ -417,8 +442,6 @@
     // NOTE: Make accessible with short name
     private interface Swipeable extends SwipeableItemConstants {
     }
-
-    ...
 
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
@@ -443,46 +466,36 @@
 }</code></pre>
 
 
-<h2 id="3-extend-the-abstractswipeableitemviewholder-instead-of-the-recyclerviewviewholder">3. Extend the <code>AbstractSwipeableItemViewHolder</code> instead of the <code>RecyclerView.ViewHolder</code><a class="headerlink" href="#3-extend-the-abstractswipeableitemviewholder-instead-of-the-recyclerviewviewholder" title="Permanent link">#</a></h2>
+<h2 id="step-3-extend-the-abstractswipeableitemviewholder-instead-of-the-recyclerviewviewholder">Step 3. Extend the <code>AbstractSwipeableItemViewHolder</code> instead of the <code>RecyclerView.ViewHolder</code><a class="headerlink" href="#step-3-extend-the-abstractswipeableitemviewholder-instead-of-the-recyclerviewviewholder" title="Permanent link">#</a></h2>
 <pre class="code"><code class="language-java">class MyAdapter ... {
-    ...
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        ...
-
-        public MyViewHolder(View v) {
+        MyViewHolder(View v) {
             super(v);
-            ...
         }
-
-        ...
     }
+    ...
 }</code></pre>
 
 
-<p>:arrow_down: :arrow_down: :arrow_down:</p>
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬</p>
 <pre class="code"><code class="language-java">class MyAdapter ... {
-    ...
- public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
-　　　　　...
-
-        public MyViewHolder(View v) {
+    static class MyViewHolder extends AbstractSwipeableItemViewHolder {
+        MyViewHolder(View v) {
             super(v);
-            ...
         }
 
         @Override
-        public View getSwipeableContainerView() {
+        View getSwipeableContainerView() {
             // TODO implement here later
             return null;
         }
-
-        ...
     }
 }</code></pre>
 
 
-<h2 id="4-modify-layout-file-of-item-views">4. Modify layout file of item views<a class="headerlink" href="#4-modify-layout-file-of-item-views" title="Permanent link">#</a></h2>
-<pre class="code"><code class="language-xml">&lt;TextView
+<h2 id="step-4-modify-layout-file-of-item-views">Step 4. Modify layout file of item views<a class="headerlink" href="#step-4-modify-layout-file-of-item-views" title="Permanent link">#</a></h2>
+<pre class="code"><code class="language-xml">&lt;!-- Content View --&gt;
+&lt;TextView
     xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
     android:id=&quot;@android:id/text1&quot;
     android:layout_width=&quot;match_parent&quot;
@@ -490,17 +503,20 @@
     android:gravity=&quot;center&quot;/&gt;</code></pre>
 
 
-<p>:arrow_down: :arrow_down: :arrow_down: </p>
-<pre class="code"><code class="language-xml">&lt;FrameLayout
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬ </p>
+<pre class="code"><code class="language-xml">&lt;!-- for itemView --&gt;
+&lt;FrameLayout
     xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
     android:layout_width=&quot;match_parent&quot;
     android:layout_height=&quot;56dp&quot;&gt;
 
+    &lt;!-- for getSwipeableContainerView() --&gt;
     &lt;FrameLayout
         android:id=&quot;@+id/container&quot;
         android:layout_width=&quot;match_parent&quot;
         android:layout_height=&quot;match_parent&quot;&gt;
 
+        &lt;!-- Content View --&gt;
         &lt;TextView
             android:id=&quot;@android:id/text1&quot;
             android:layout_width=&quot;match_parent&quot;
@@ -512,10 +528,9 @@
 &lt;/FrameLayout&gt;</code></pre>
 
 
-<h2 id="5-update-viewholder">5. Update ViewHolder<a class="headerlink" href="#5-update-viewholder" title="Permanent link">#</a></h2>
+<h2 id="step-5-update-viewholder">Step 5. Update ViewHolder<a class="headerlink" href="#step-5-update-viewholder" title="Permanent link">#</a></h2>
 <pre class="code"><code class="language-java">class MyAdapter ... {
-    ...
- public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
+    static class MyViewHolder extends AbstractSwipeableItemViewHolder {
         TextView mText;
 
         public MyViewHolder(View v) {
@@ -525,25 +540,21 @@
 
         @Override
         public View getSwipeableContainerView() {
-            // TODO implement here later
             return null;
         }
-
-        ...
     }
 }</code></pre>
 
 
-<p>:arrow_down: :arrow_down: :arrow_down:</p>
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬</p>
 <pre class="code"><code class="language-java">class MyAdapter ... {
-    ...
- public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
-        TextView mTextView;
+    static class MyViewHolder extends AbstractSwipeableItemViewHolder {
+        TextView mText;
         FrameLayout mContainer;
 
         public MyViewHolder(View v) {
             super(v);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mText = (TextView) v.findViewById(android.R.id.text1);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
         }
 
@@ -551,42 +562,26 @@
         public View getSwipeableContainerView() {
             return mContainer;
         }
-
-        ...
     }
 }</code></pre>
 
 
-<h2 id="6-update-adapter">6. Update Adapter<a class="headerlink" href="#6-update-adapter" title="Permanent link">#</a></h2>
+<h2 id="step-6-update-adapter">Step 6. Update Adapter<a class="headerlink" href="#step-6-update-adapter" title="Permanent link">#</a></h2>
 <pre class="code"><code class="language-java">class MyAdapter ... {
 
-    ...
+    @Override
+    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) { ... }
 
     @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
-        ...
-    }
+    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) { ... }
 
     @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
-        ...
-    }
-
-    @Override
-    public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, int result) {
-        ...
-    }
-
-    static class MyViewHolder ... {
-        ...
-    }
+    public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, int result) { ... }
 }</code></pre>
 
 
-<p>:arrow_down: :arrow_down: :arrow_down: </p>
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬ </p>
 <pre class="code"><code class="language-java">class MyAdapter ... {
-
-    ...
 
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
@@ -596,7 +591,7 @@
 
     @Override
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
-        // You can set background color to holder.itemView.
+        // You can set background color/resource to holder.itemView.
 
         // The argument &quot;type&quot; can be one of the followings;
         // - Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND
@@ -604,6 +599,12 @@
         // (- Swipeable.DRAWABLE_SWIPE_UP_BACKGROUND)
         // (- Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND)
         // (- Swipeable.DRAWABLE_SWIPE_DOWN_BACKGROUND)
+
+        if (type == Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND) {
+            holder.itemView.setBackgroundColor(Color.YELLOW);
+        } else {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
     }
 
     @Override
@@ -613,6 +614,7 @@
         // - SwipeResultActionDefault
         // - SwipeResultActionMoveToSwipedDirection
         // - SwipeResultActionRemoveItem
+        // - SwipeResultActionDoNothing
 
         // The argument &quot;result&quot; can be one of the followings;
         // 
@@ -624,23 +626,19 @@
 
         if (result == Swipeable.RESULT_LEFT) {
             return new SwipeResultActionMoveToSwipedDirection() {
-                // You can override these three methods
+                // Optionally, you can override these three methods
                 // - void onPerformAction()
                 // - void onSlideAnimationEnd()
                 // - void onCleanUp()
             };
         } else {
-            return new SwipeResultActionDefault();
+            return new SwipeResultActionDoNothing();
         }
-    }
-
-    static class MyViewHolder ... {
-        ...
     }
 }</code></pre>
 
 
-<h2 id="7-modify-initialization-of-recyclerview-in-activity-or-in-fragment">7. Modify initialization of RecyclerView in Activity (or in Fragment)<a class="headerlink" href="#7-modify-initialization-of-recyclerview-in-activity-or-in-fragment" title="Permanent link">#</a></h2>
+<h2 id="step-7-modify-initialization-process-of-recyclerview-in-activity-fragment">Step 7. Modify initialization process of RecyclerView in Activity / Fragment<a class="headerlink" href="#step-7-modify-initialization-process-of-recyclerview-in-activity-fragment" title="Permanent link">#</a></h2>
 <pre class="code"><code class="language-java">void onCreate() {
     ...
 
@@ -652,7 +650,7 @@
 }</code></pre>
 
 
-<p>:arrow_down: :arrow_down: :arrow_down: </p>
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬ </p>
 <pre class="code"><code class="language-java">void onCreate() {
     ...
 
@@ -670,8 +668,8 @@
 }</code></pre>
 
 
-<h2 id="8-custom-more-and-details-of-the-implementation">8. Custom more and details of the implementation<a class="headerlink" href="#8-custom-more-and-details-of-the-implementation" title="Permanent link">#</a></h2>
-<p>Please refer to <a href="../{{&lt; github_repo_url &gt;}}/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic">the example app implementation</a>.</p>
+<h2 id="step-8-custom-more-and-details-of-the-implementation">Step 8. Custom more and details of the implementation<a class="headerlink" href="#step-8-custom-more-and-details-of-the-implementation" title="Permanent link">#</a></h2>
+<p>Please refer to <a href="https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic">the demo app implementation</a> for more details.</p>
           <aside class="copyright" role="note">
             
               Copyright (c) 2016 Haruki Hasegawa &ndash;
