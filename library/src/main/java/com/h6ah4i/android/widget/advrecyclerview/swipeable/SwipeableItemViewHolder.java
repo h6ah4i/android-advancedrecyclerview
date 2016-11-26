@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemAfterReactions;
@@ -215,9 +216,13 @@ public interface SwipeableItemViewHolder {
 
     /**
      * Gets the container view for the swipeable area.
+     * <p>NOTE: Please DO NOT return <code>itemView</code> for this method.
+     * An IllegalArgumentException with massage "Tmp detached view should be removed from RecyclerView before it can be recycled"
+     * will be raised by RecyclerView.Recycler.</p>
      *
      * @return The container view instance.
      */
+    @Nullable
     View getSwipeableContainerView();
 
     /**

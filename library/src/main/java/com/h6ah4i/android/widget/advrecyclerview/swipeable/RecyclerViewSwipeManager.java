@@ -422,7 +422,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
             final boolean horizontal = mSwipeHorizontal;
             final SwipeableItemViewHolder holder = (SwipeableItemViewHolder) mSwipingItem;
-            final View containerView = holder.getSwipeableContainerView();
+            final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
             final int containerSize = (horizontal) ? containerView.getWidth() : containerView.getHeight();
             final float distance = (horizontal) ? (mLastTouchX - mInitialTouchX) : (mLastTouchY - mInitialTouchY);
             final float absDistance = Math.abs(distance);
@@ -883,7 +883,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
             float prevAmount, float amount, boolean proportionalAmount,
             boolean horizontal, boolean shouldAnimate, boolean isSwiping) {
         final SwipeableItemViewHolder holder2 = (SwipeableItemViewHolder) holder;
-        final View containerView = holder2.getSwipeableContainerView();
+        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder2);
 
         if (containerView == null) {
             return;
@@ -970,7 +970,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         float destAmount = srcAmount;
 
         if ((isSrcProportional ^ isDestProportional) && (srcAmount != 0.0f) && !isSpecialSwipeAmountValue(srcAmount)) {
-            View v = holder.getSwipeableContainerView();
+            View v = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
             float d = (horizontal) ? v.getWidth() : v.getHeight();
 
             if (isDestProportional) {

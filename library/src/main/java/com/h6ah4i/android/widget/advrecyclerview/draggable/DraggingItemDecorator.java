@@ -409,21 +409,32 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     }
 
     private Bitmap createDraggingItemImage(View v, NinePatchDrawable shadow) {
-        int width = v.getWidth() + mShadowPadding.left + mShadowPadding.right;
-        int height = v.getHeight() + mShadowPadding.top + mShadowPadding.bottom;
+        int viewTop = v.getTop();
+        int viewLeft = v.getLeft();
+        int viewWidth = v.getWidth();
+        int viewHeight = v.getHeight();
 
-        final Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        int canvasWidth = viewWidth + mShadowPadding.left + mShadowPadding.right;
+        int canvasHeight = viewHeight + mShadowPadding.top + mShadowPadding.bottom;
+
+        v.measure(
+                View.MeasureSpec.makeMeasureSpec(viewWidth, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(viewHeight, View.MeasureSpec.EXACTLY));
+
+        v.layout(viewTop, viewLeft, viewLeft + viewWidth, viewTop + viewHeight);
+
+        final Bitmap bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
 
         final Canvas canvas = new Canvas(bitmap);
 
         if (shadow != null) {
-            shadow.setBounds(0, 0, width, height);
+            shadow.setBounds(0, 0, canvasWidth, canvasHeight);
             shadow.draw(canvas);
         }
 
         final int savedCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
         // NOTE: Explicitly set clipping rect. This is required on Gingerbread.
-        canvas.clipRect(mShadowPadding.left, mShadowPadding.top, width - mShadowPadding.right, height - mShadowPadding.bottom);
+        canvas.clipRect(mShadowPadding.left, mShadowPadding.top, canvasWidth - mShadowPadding.right, canvasHeight - mShadowPadding.bottom);
         canvas.translate(mShadowPadding.left, mShadowPadding.top);
         v.draw(canvas);
         canvas.restoreToCount(savedCount);

@@ -149,7 +149,7 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     }
 
     public void start() {
-        final View containerView = ((SwipeableItemViewHolder) mSwipingItem).getSwipeableContainerView();
+        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(mSwipingItem);
 
         ViewCompat.animate(containerView).cancel();
 
