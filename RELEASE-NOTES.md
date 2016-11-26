@@ -1,3 +1,12 @@
+## 0.10.1
+[Improvements]
+- Updated support library to v25.0.1
+
+[Bug fixes]
+- Backport official DefaultItemAnimator fixes to RefactoredDefaultAnimator (issue #324)
+- Improve dragging item image bitmap creation process (issue #319)
+
+
 ## 0.10.0
 [New features]
 - Introduced ComposedAdapter
