@@ -80,7 +80,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
 
         @Override
         public boolean addPendingAnimation(RecyclerView.ViewHolder item) {
-            endAnimation(item);
+            resetAnimation(item);
 
             ViewCompat.setAlpha(item.itemView, 0);
 
@@ -127,7 +127,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
 
         @Override
         public boolean addPendingAnimation(RecyclerView.ViewHolder holder) {
-            endAnimation(holder);
+            resetAnimation(holder);
 
             enqueuePendingAnimationInfo(new RemoveAnimationInfo(holder));
             return true;
@@ -193,7 +193,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
             final float prevTranslationY = ViewCompat.getTranslationY(oldHolder.itemView);
             final float prevAlpha = ViewCompat.getAlpha(oldHolder.itemView);
 
-            endAnimation(oldHolder);
+            resetAnimation(oldHolder);
 
             final int deltaX = (int) (toX - fromX - prevTranslationX);
             final int deltaY = (int) (toY - fromY - prevTranslationY);
@@ -205,7 +205,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
 
             if (newHolder != null) {
                 // carry over translation values
-                endAnimation(newHolder);
+                resetAnimation(newHolder);
                 ViewCompat.setTranslationX(newHolder.itemView, -deltaX);
                 ViewCompat.setTranslationY(newHolder.itemView, -deltaY);
                 ViewCompat.setAlpha(newHolder.itemView, 0);
@@ -285,7 +285,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
             fromX += ViewCompat.getTranslationX(item.itemView);
             fromY += ViewCompat.getTranslationY(item.itemView);
 
-            endAnimation(item);
+            resetAnimation(item);
 
             final int deltaX = toX - fromX;
             final int deltaY = toY - fromY;
