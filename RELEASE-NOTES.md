@@ -1,3 +1,7 @@
+## 0.10.2
+[Bug fixes]
+- Fix createDraggingItemImage() method regression (issue #325)
+
 ## 0.10.1
 [Improvements]
 - Updated support library to v25.0.1
