@@ -40,7 +40,7 @@ Getting started
 
 This library is published on jCenter. Just add these lines to `build.gradle`.
 
-```groovy
+```gradle
 dependencies {
     compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.10.1@aar'){
         transitive=true
