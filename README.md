@@ -32,7 +32,7 @@ Target platforms
 Latest version
 ---
 
-- Version 0.10.1  (November 27, 2016)   ([RELEASE NOTES](./RELEASE-NOTES.md))
+- Version 0.10.2  (November 27, 2016)   ([RELEASE NOTES](./RELEASE-NOTES.md))
 
 
 Getting started
@@ -40,9 +40,9 @@ Getting started
 
 This library is published on jCenter. Just add these lines to `build.gradle`.
 
-```groovy
+```gradle
 dependencies {
-    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.10.1@aar'){
+    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.10.2@aar'){
         transitive=true
     }
 }

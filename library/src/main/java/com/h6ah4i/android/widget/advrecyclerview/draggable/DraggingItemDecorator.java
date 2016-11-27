@@ -421,7 +421,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
                 View.MeasureSpec.makeMeasureSpec(viewWidth, View.MeasureSpec.EXACTLY),
                 View.MeasureSpec.makeMeasureSpec(viewHeight, View.MeasureSpec.EXACTLY));
 
-        v.layout(viewTop, viewLeft, viewLeft + viewWidth, viewTop + viewHeight);
+        v.layout(viewLeft, viewTop, viewLeft + viewWidth, viewTop + viewHeight);
 
         final Bitmap bitmap = Bitmap.createBitmap(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888);
 
