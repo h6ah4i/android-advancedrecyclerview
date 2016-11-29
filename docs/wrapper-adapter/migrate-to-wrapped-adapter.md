@@ -85,7 +85,7 @@ void onClick(View v) {
 
 👉 &nbsp; Implement the `WrappedAdapter` interface and use the `viewType` parameter instead of using `ViewHolder.getItemViewType()`
 
-This step is only required when you are overriding the following methods;
+This step is only required in case of the adapter overrides the following methods;
 
 - `onViewAttachedToWindow()`
 - `onViewDetachedFromWindow()`

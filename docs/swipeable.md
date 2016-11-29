@@ -7,7 +7,7 @@
 
 ## Step 1. Make the adapter supports stable ID
 
-**This step is very important. If adapter does not return stable & unique ID, it will cause weird behaviors (wrong animation, NPE, etc...)**
+**This step is very important. If adapter does not return stable & unique ID, that will cause some weird behaviors (wrong animations, NPE, etc...)**
 
 ```java
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -24,93 +24,23 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 }
 ```
 
+## Step 2. Modify layout file of item views
 
-## Step 2. Implement the `SwipeableItemAdapter` interface
-
-```java
-class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-    static class MyViewHolder extends RecyclerView.ViewHolder {
-        ...
-    }
-    ...
-}
-```
-
-⏬ &nbsp; ⏬ &nbsp; ⏬
-
-```java
-class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> 
-        extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
-        implements SwipeableItemAdapter<MyAdapter.MyViewHolder> {
-
-    // NOTE: Make accessible with short name
-    private interface Swipeable extends SwipeableItemConstants {
-    }
-
-    @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
-        // TODO implement here later
-        return Swipeable.REACTION_CAN_NOT_SWIPE_ANY;
-    }
-
-    @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
-        // TODO implement here later
-    }
-
-    @Override
-    public SwipeResultAction onSwipeItem(MyViewHolder holder, final int position, int result) {
-        // TODO implement here later
-        return new SwipeResultActionDefault();
-    }
-
-    static class MyViewHolder extends RecyclerView.ViewHolder {
-        ...
-    }
-}
-```
-
-## Step 3. Extend the `AbstractSwipeableItemViewHolder` instead of the `RecyclerView.ViewHolder`
-
-```java
-class MyAdapter ... {
-    static class MyViewHolder extends RecyclerView.ViewHolder {
-        MyViewHolder(View v) {
-            super(v);
-        }
-    }
-    ...
-}
-```
-
-⏬ &nbsp; ⏬ &nbsp; ⏬
-
-```java
-class MyAdapter ... {
-    static class MyViewHolder extends AbstractSwipeableItemViewHolder {
-        MyViewHolder(View v) {
-            super(v);
-        }
-
-        @Override
-        View getSwipeableContainerView() {
-            // TODO implement here later
-            return null;
-        }
-    }
-}
-```
-
-## Step 4. Modify layout file of item views
+Wrap content views with another `FrameLayout` whitch has `@+id/container` ID.
 
 ```xml
-<!-- Content View -->
-<TextView
+<!-- for itemView -->
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
-    android:gravity="center"/>
+    android:layout_height="56dp">
+    <!-- Content View(s) -->
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"/>
+</FrameLayout>
 ```
 
 ⏬ &nbsp; ⏬ &nbsp; ⏬ 
@@ -128,35 +58,37 @@ class MyAdapter ... {
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Content View -->
+        <!-- Content View(s) -->
         <TextView
             android:id="@android:id/text1"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_gravity="top|left"
+            android:layout_height="match_parent"
             android:gravity="center"/>
 
     </FrameLayout>
 </FrameLayout>
 ```
 
-## Step 5. Update ViewHolder
+## Step 3. Modify ViewHolder
+
+1. Change parent class to `AbstractSwipeableItemViewHolder`.
+2. Implement `getSwipeableContainerView()` method
+
+
+!!! note
+    The [`AbstractSwipeableItemViewHolder`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java) class is a convenience class which implements boilerplace methods of [`SwipeableItemViewHolder`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemViewHolder.java).
+
 
 ```java
 class MyAdapter ... {
-    static class MyViewHolder extends AbstractSwipeableItemViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mText;
-
-        public MyViewHolder(View v) {
+        MyViewHolder(View v) {
             super(v);
-            mText = (TextView) v;
-        }
-
-        @Override
-        public View getSwipeableContainerView() {
-            return null;
+            mText = (TextView) v.findViewById(android.R.id.text1);
         }
     }
+    ...
 }
 ```
 
@@ -182,27 +114,22 @@ class MyAdapter ... {
 }
 ```
 
-## Step 6. Update Adapter
+## Step 4. Implement the `SwipeableItemAdapter` interface
 
 ```java
-class MyAdapter ... {
-
-    @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) { ... }
-
-    @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) { ... }
-
-    @Override
-    public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, int result) { ... }
+class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+    ...
 }
 ```
 
-⏬ &nbsp; ⏬ &nbsp; ⏬ 
+⏬ &nbsp; ⏬ &nbsp; ⏬
+
 
 ```java
 
-class MyAdapter ... {
+class MyAdapter
+        extends RecyclerView.Adapter<MyAdapter.MyViewHolder>
+        implements SwipeableItemAdapter<MyAdapter.MyViewHolder> {
 
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
@@ -231,7 +158,8 @@ class MyAdapter ... {
     @Override
     public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, int result) {
         // Return sub class of the SwipeResultAction.
-        // Base (abstract) classes are
+        //
+        // Available base (abstract) classes are;
         // - SwipeResultActionDefault
         // - SwipeResultActionMoveToSwipedDirection
         // - SwipeResultActionRemoveItem
@@ -259,7 +187,15 @@ class MyAdapter ... {
 }
 ```
 
-## Step 7. Modify initialization process of RecyclerView in Activity / Fragment
+## Step 5. Modify initialization process of RecyclerView
+
+
+Put some additional initialization process in your Activity / Fragment.
+
+1. Instantiate `RecyclerViewSwipeManager`
+2. Create a wrapped adapter and set it to `RecyclerView`
+3. Attach `RecyclerView` to `RecyclerViewSwipeManager`
+
 
 ```java
 void onCreate() {
@@ -293,6 +229,6 @@ void onCreate() {
 }
 ```
 
-## Step 8. Custom more and details of the implementation
+## Step 6. Custom more and details of the implementation
 
 Please refer to [the demo app implementation](https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic) for more details.
