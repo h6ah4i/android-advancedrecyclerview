@@ -21,13 +21,14 @@
 }
 
 .article .admonition code {
+    color: #fff;
+    font-weight: bold;
+}
+
+.article .admonition a code {
     padding: 3px;
     background: rgba(0,0,0,0.1);
     border-radius: 3px;
-    color: #fff;
-    font-weight: bold;
-    margin-left: 3px;
-    margin-right: 3px;
 }
 
 .article .admonition.methods {
