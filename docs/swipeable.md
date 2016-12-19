@@ -5,9 +5,9 @@
 
 # Tutorial
 
-## Step 1. Make the adapter supports stable ID
+## Step 1. Make the adapter supports stable IDs
 
-**This step is very important. If adapter does not return stable & unique ID, that will cause some weird behaviors (wrong animations, NPE, etc...)**
+**This step is very important. If adapter does not return stable & unique IDs, that will cause some weird behaviors (wrong animations, NPE, etc...)**
 
 ```java
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -43,7 +43,7 @@ Wrap content views with another `FrameLayout` whitch has `@+id/container` ID.
 </FrameLayout>
 ```
 
-⏬ &nbsp; ⏬ &nbsp; ⏬ 
+⏬ &nbsp; ⏬ &nbsp; ⏬
 
 ```xml
 <!-- for itemView -->
@@ -71,7 +71,7 @@ Wrap content views with another `FrameLayout` whitch has `@+id/container` ID.
 
 ## Step 3. Modify ViewHolder
 
-1. Change parent class to `AbstractSwipeableItemViewHolder`.
+1. Change parent class to [`AbstractSwipeableItemViewHolder`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java).
 2. Implement `getSwipeableContainerView()` method
 
 
@@ -82,10 +82,10 @@ Wrap content views with another `FrameLayout` whitch has `@+id/container` ID.
 ```java
 class MyAdapter ... {
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView mText;
+        TextView textView;
         MyViewHolder(View v) {
             super(v);
-            mText = (TextView) v.findViewById(android.R.id.text1);
+            textView = (TextView) v.findViewById(android.R.id.text1);
         }
     }
     ...
@@ -97,18 +97,18 @@ class MyAdapter ... {
 ```java
 class MyAdapter ... {
     static class MyViewHolder extends AbstractSwipeableItemViewHolder {
-        TextView mText;
-        FrameLayout mContainer;
+        TextView textView;
+        FrameLayout containerView;
 
         public MyViewHolder(View v) {
             super(v);
-            mText = (TextView) v.findViewById(android.R.id.text1);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            textView = (TextView) v.findViewById(android.R.id.text1);
+            containerView = (FrameLayout) v.findViewById(R.id.container);
         }
 
         @Override
         public View getSwipeableContainerView() {
-            return mContainer;
+            return containerView;
         }
     }
 }
@@ -209,7 +209,7 @@ void onCreate() {
 }
 ```
 
-⏬ &nbsp; ⏬ &nbsp; ⏬ 
+⏬ &nbsp; ⏬ &nbsp; ⏬
 
 ```java
 void onCreate() {
@@ -218,12 +218,14 @@ void onCreate() {
     RecyclerView recyclerView = findViewById(R.id.recyclerView);
     RecyclerViewSwipeManager swipeManager = new RecyclerViewSwipeManager();
 
-
     MyAdapter adapter = new MyAdapter();
     RecyclerView.Adapter wrappedAdapter = swipeManager.createWrappedAdapter(adapter);
 
     recyclerView.setAdapter(wrappedAdapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    // disable change animations
+    ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
     swipeManager.attachRecyclerView(recyclerView);
 }
