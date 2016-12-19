@@ -527,7 +527,7 @@
 <h3 id="implement-oncheckcanstartdrag">Implement <code>onCheckCanStartDrag()</code><a class="headerlink" href="#implement-oncheckcanstartdrag" title="Permanent link">#</a></h3>
 <p>This method is invoked by the library <strong>whether to check the touched finger position is inside of the <code>dragHandle</code> view</strong>.</p>
 <p>Return <code>true</code> if the specified position <code>x</code> and <code>y</code> is inside of the <code>dragHandle</code> view. Note that the offset parameter <code>x</code> and <code>y</code> are measured from top-left of <code>itemView</code>.</p>
-<p><img src="/images/drag-drop-on-check-can-start-drag.png" alt="onCheckCanStartDrag() parameters" style="max-height: 200px" /></p>
+<p><img alt="onCheckCanStartDrag() parameters" src="../images/drag-drop-on-check-can-start-drag.png" /></p>
 <p><strong>Basic implementation:</strong></p>
 <pre class="code"><code class="language-java">boolean onCheckCanStartDrag(MyAdapter.MyViewHolder holder, int position, int x, int y) {
     View itemView = holder.itemView;
