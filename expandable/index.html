@@ -275,6 +275,24 @@
     </a>
     
       
+        
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Step 1. Extend AbstractExpandableItemAdapter instead of RecyclerView.Adapter" href="#step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter">
+                Step 1. Extend AbstractExpandableItemAdapter instead of RecyclerView.Adapter
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Step 2. Implement each method of AbstractExpandableItemAdapter" href="#step-2-implement-each-method-of-abstractexpandableitemadapter">
+                Step 2. Implement each method of AbstractExpandableItemAdapter
+              </a>
+            </li>
+          
+        </ul>
       
     
   </li>
@@ -338,9 +356,130 @@
       <article class="article">
         <div class="wrapper">
           
-            <h1>Expandable</h1>
-          
           <p><img alt="Block Diagram - Expandable" src="../images/block-diagram-expand.png" /></p>
+<div class="toc">
+<ul>
+<li><a href="#tutorial">Tutorial</a><ul>
+<li><a href="#step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter">Step 1. Extend AbstractExpandableItemAdapter instead of RecyclerView.Adapter</a></li>
+<li><a href="#step-2-implement-each-method-of-abstractexpandableitemadapter">Step 2. Implement each method of AbstractExpandableItemAdapter</a><ul>
+<li><a href="#implement-getgroupcount-getchildcount">Implement getGroupCount() / getChildCount()</a></li>
+<li><a href="#implement-getgroupid-getchildid">Implement getGroupId() / getChildId()</a></li>
+<li><a href="#implement-oncreategroupviewholder-oncreatechildviewholder">Implement onCreateGroupViewHolder() / onCreateChildViewHolder()</a></li>
+<li><a href="#implement-onbindgroupviewholder-onbindchildviewholder">Implement onBindGroupViewHolder() / onBindChildViewHolder()</a></li>
+<li><a href="#implement-oncheckcanexpandorcollapsegroup">Implement onCheckCanExpandOrCollapseGroup()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="tutorial">Tutorial<a class="headerlink" href="#tutorial" title="Permanent link">#</a></h1>
+<h2 id="step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter">Step 1. Extend <code>AbstractExpandableItemAdapter</code> instead of <code>RecyclerView.Adapter</code><a class="headerlink" href="#step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter" title="Permanent link">#</a></h2>
+<p>First, you need to extend <code>AbstractExpandableItemAdapter</code> to use expandable items feature. This class implements <code>RecyclerView.Adapter</code>'s methods and some of them are sealed via <code>final</code> keyword. Instead, it provides some <code>Group</code> / <code>Child</code> prefixed version of `RecyclerView.Adapter' methods.</p>
+<pre class="code"><code class="language-java">class MyChildItem {
+    public long id;
+}
+
+class MyGroupItem {
+    public long id;
+    List&lt;MyChildItem&gt; children;
+}
+
+class MyAdapter extends AbstractExpandableItemAdapter&lt;MyAdapter.MyGroupVH, MyAdapter.MyChildVH&gt; {
+    List&lt;MyGroupItem&gt; items;
+
+    public MyAdapter() {
+        setHasStableIds(true); // this is required for expandable feature.
+    }
+
+    @Override
+    public int getGroupCount() { ... }
+
+    @Override
+    public int getChildCount(int groupPosition) { ... }
+
+    @Override
+    public long getGroupId(int groupPosition) { ... }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) { ... }
+
+    @Override
+    public MyGroupVH onCreateGroupViewHolder(ViewGroup parent, int viewType) { ... }
+
+    @Override
+    public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) { ... }
+
+    @Override
+    public void onBindGroupViewHolder(MyGroupVH holder, int groupPosition, int viewType) { ... }
+
+    @Override
+    public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) { ... }
+
+    @Override
+    public boolean onCheckCanExpandOrCollapseGroup(MyGroupVH holder, int groupPosition, int x, int y, boolean expand) { ... }
+}</code></pre>
+
+
+<h2 id="step-2-implement-each-method-of-abstractexpandableitemadapter">Step 2. Implement each method of <code>AbstractExpandableItemAdapter</code><a class="headerlink" href="#step-2-implement-each-method-of-abstractexpandableitemadapter" title="Permanent link">#</a></h2>
+<h3 id="implement-getgroupcount-getchildcount">Implement <code>getGroupCount()</code> / <code>getChildCount()</code><a class="headerlink" href="#implement-getgroupcount-getchildcount" title="Permanent link">#</a></h3>
+<p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#getItemCount()"><code>getItemCount()</code></a>.</p>
+<pre class="code"><code class="language-java">@Override
+public int getGroupCount() {
+    return items.size();
+}
+
+@Override
+public int getChildCount(int groupPosition) {
+    reuturn items.get(groupPosition).size();
+}</code></pre>
+
+
+<h3 id="implement-getgroupid-getchildid">Implement <code>getGroupId()</code> / <code>getChildId()</code><a class="headerlink" href="#implement-getgroupid-getchildid" title="Permanent link">#</a></h3>
+<p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#getItemId(int)"><code>getItemId()</code></a>.</p>
+<pre class="code"><code class="language-java">@Override
+public int getGroupId(int groupPosition) {
+    return items.get(groupPosition).id;
+}
+
+@Override
+public int getChildId(int groupPosition, int childPosition) {
+    reuturn items.get(groupPosition).children.get(childPosition).id;
+}</code></pre>
+
+
+<h3 id="implement-oncreategroupviewholder-oncreatechildviewholder">Implement <code>onCreateGroupViewHolder()</code> / <code>onCreateChildViewHolder()</code><a class="headerlink" href="#implement-oncreategroupviewholder-oncreatechildviewholder" title="Permanent link">#</a></h3>
+<p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onCreateViewHolder(android.view.ViewGroup, int)"><code>onCreateViewHolder()</code></a>.</p>
+<pre class="code"><code class="language-java">@Override
+public MyGroupVH onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+    View v = LayoutInfrater.from(parent.getContext()).inflate(R.layout.item_group, parent, false);
+    return new MyGroupVH(v);
+}
+
+@Override
+public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    View v = LayoutInfrater.from(parent.getContext()).inflate(R.layout.item_child, parent, false);
+    return new MyChildVH(v);
+}</code></pre>
+
+
+<h3 id="implement-onbindgroupviewholder-onbindchildviewholder">Implement <code>onBindGroupViewHolder()</code> / <code>onBindChildViewHolder()</code><a class="headerlink" href="#implement-onbindgroupviewholder-onbindchildviewholder" title="Permanent link">#</a></h3>
+<p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onBindViewHolder(VH, int)"><code>onBindViewHolder()</code></a>.</p>
+<pre class="code"><code class="language-java">@Override
+public void onBindGroupViewHolder(MyGroupVH holder, int groupPosition, int viewType) {
+    MyGroupItem item = items.get(groupPosition);
+    holder.text.setText(...);
+}
+
+@Override
+public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
+    MyChildItem item = items.get(groupPosition).children.get(childPosition);
+    holder.text.setText(...);
+}</code></pre>
+
+
+<h3 id="implement-oncheckcanexpandorcollapsegroup">Implement <code>onCheckCanExpandOrCollapseGroup()</code><a class="headerlink" href="#implement-oncheckcanexpandorcollapsegroup" title="Permanent link">#</a></h3>
+<p>TODO</p>
           <aside class="copyright" role="note">
             
               Copyright (c) 2016 Haruki Hasegawa &ndash;

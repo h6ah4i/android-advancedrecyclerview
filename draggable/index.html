@@ -257,6 +257,48 @@
     </a>
     
       
+        
+      
+      
+        <ul>
+          
+            <li class="anchor">
+              <a title="Step 1. Make the adapter supports stable IDs" href="#step-1-make-the-adapter-supports-stable-ids">
+                Step 1. Make the adapter supports stable IDs
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Step 2. Modify layout file of item views" href="#step-2-modify-layout-file-of-item-views">
+                Step 2. Modify layout file of item views
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Step 3. Modify ViewHolder" href="#step-3-modify-viewholder">
+                Step 3. Modify ViewHolder
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Step 4. Implement the DraggableItemAdapter interface" href="#step-4-implement-the-draggableitemadapter-interface">
+                Step 4. Implement the DraggableItemAdapter interface
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Step 5. Modify initialization process of RecyclerView" href="#step-5-modify-initialization-process-of-recyclerview">
+                Step 5. Modify initialization process of RecyclerView
+              </a>
+            </li>
+          
+            <li class="anchor">
+              <a title="Step 6. Custom more and details of the implementation" href="#step-6-custom-more-and-details-of-the-implementation">
+                Step 6. Custom more and details of the implementation
+              </a>
+            </li>
+          
+        </ul>
       
     
   </li>
@@ -338,9 +380,227 @@
       <article class="article">
         <div class="wrapper">
           
-            <h1>Drag & Drop</h1>
-          
           <p><img alt="Block Diagram - Draggable" src="../images/block-diagram-drag-drop.png" /></p>
+<div class="toc">
+<ul>
+<li><a href="#tutorial">Tutorial</a><ul>
+<li><a href="#step-1-make-the-adapter-supports-stable-ids">Step 1. Make the adapter supports stable IDs</a></li>
+<li><a href="#step-2-modify-layout-file-of-item-views">Step 2. Modify layout file of item views</a></li>
+<li><a href="#step-3-modify-viewholder">Step 3. Modify ViewHolder</a></li>
+<li><a href="#step-4-implement-the-draggableitemadapter-interface">Step 4. Implement the DraggableItemAdapter interface</a><ul>
+<li><a href="#implement-oncheckcanstartdrag">Implement onCheckCanStartDrag()</a></li>
+<li><a href="#implement-onmoveitem">Implement onMoveItem()</a></li>
+</ul>
+</li>
+<li><a href="#step-5-modify-initialization-process-of-recyclerview">Step 5. Modify initialization process of RecyclerView</a></li>
+<li><a href="#step-6-custom-more-and-details-of-the-implementation">Step 6. Custom more and details of the implementation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="tutorial">Tutorial<a class="headerlink" href="#tutorial" title="Permanent link">#</a></h1>
+<h2 id="step-1-make-the-adapter-supports-stable-ids">Step 1. Make the adapter supports stable IDs<a class="headerlink" href="#step-1-make-the-adapter-supports-stable-ids" title="Permanent link">#</a></h2>
+<p><strong>This step is very important. If adapter does not return stable &amp; unique IDs, that will cause some weird behaviors (wrong animations, NPE, etc...)</strong></p>
+<pre class="code"><code class="language-java">class MyAdapter extends RecyclerView.Adapter&lt;MyAdapter.MyViewHolder&gt; {
+    MyAdapter() {
+        setHasStableIds(true);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        // requires static value, it means need to keep the same value
+        // even if the item position has been changed.
+        return mItems.get(position).getId();
+    }
+}</code></pre>
+
+
+<h2 id="step-2-modify-layout-file-of-item-views">Step 2. Modify layout file of item views<a class="headerlink" href="#step-2-modify-layout-file-of-item-views" title="Permanent link">#</a></h2>
+<p>Put a drag handle view to the layout XML of item view.</p>
+<pre class="code"><code class="language-xml">&lt;!-- for itemView --&gt;
+&lt;FrameLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;56dp&quot;&gt;
+    &lt;!-- Content View(s) --&gt;
+    &lt;TextView
+        android:id=&quot;@android:id/text1&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:gravity=&quot;center&quot;/&gt;
+&lt;/FrameLayout&gt;</code></pre>
+
+
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬</p>
+<pre class="code"><code class="language-xml">&lt;!-- for itemView --&gt;
+&lt;FrameLayout
+    xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;56dp&quot;&gt;
+
+    &lt;!-- Content View(s) --&gt;
+    &lt;TextView
+        android:id=&quot;@android:id/text1&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:gravity=&quot;center&quot;/&gt;
+
+    &lt;!-- Drag handle --&gt;
+    &lt;View
+        android:id=&quot;@+id/drag_handle&quot;
+        android:layout_width=&quot;32dp&quot;
+        android:layout_height=&quot;match_parent&quot; /&gt;
+&lt;/FrameLayout&gt;</code></pre>
+
+
+<h2 id="step-3-modify-viewholder">Step 3. Modify ViewHolder<a class="headerlink" href="#step-3-modify-viewholder" title="Permanent link">#</a></h2>
+<ol>
+<li>Change parent class to <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractDraggableItemViewHolder.java"><code>AbstractDraggableItemViewHolder</code></a>.</li>
+<li>Implement <code>getSwipeableContainerView()</code> method</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java"><code>AbstractSwipeableItemViewHolder</code></a> class is a convenience class which implements boilerplace methods of <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.java"><code>DraggableItemViewHolder</code></a>.</p>
+</div>
+<pre class="code"><code class="language-java">class MyAdapter ... {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView textView;
+        MyViewHolder(View v) {
+            super(v);
+            textView = (TextView) v.findViewById(android.R.id.text1);
+        }
+    }
+    ...
+}</code></pre>
+
+
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬</p>
+<pre class="code"><code class="language-java">class MyAdapter ... {
+    static class MyViewHolder extends AbstractDraggableItemViewHolder {
+        TextView textView;
+        View dragHandle;
+
+        public MyViewHolder(View v) {
+            super(v);
+            textView = (TextView) v.findViewById(android.R.id.text1);
+            dragHandle = v.findViewById(R.id.drag_hanle);
+        }
+    }
+}</code></pre>
+
+
+<h2 id="step-4-implement-the-draggableitemadapter-interface">Step 4. Implement the <code>DraggableItemAdapter</code> interface<a class="headerlink" href="#step-4-implement-the-draggableitemadapter-interface" title="Permanent link">#</a></h2>
+<pre class="code"><code class="language-java">class MyAdapter extends RecyclerView.Adapter&lt;MyAdapter.MyViewHolder&gt; {
+    ...
+}</code></pre>
+
+
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬</p>
+<pre class="code"><code class="language-java">class MyAdapter
+        extends RecyclerView.Adapter&lt;MyAdapter.MyViewHolder&gt;
+        implements DraggableItemAdapter&lt;MyAdapter.MyViewHolder&gt; {
+
+    @Override
+    boolean onCheckCanStartDrag(MyAdapter.MyViewHolder holder, int position, int x, int y) {
+        // see the sub-section for details
+    }
+
+    @Override
+    void onMoveItem(int fromPosition, int toPosition) {
+        // see the sub-section for details
+    }
+
+    @Override
+    ItemDraggableRange onGetItemDraggableRange(MyAdapter.MyViewHolder holder, int position) {
+        // just return null for default behavior
+        return null;
+    }
+
+    @Override
+    boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
+        // this method is not used unless calling `RecyclerViewDragDropManager.setCheckCanDropEnabled(true)` explicitly.
+        return true;
+    }
+}</code></pre>
+
+
+<h3 id="implement-oncheckcanstartdrag">Implement <code>onCheckCanStartDrag()</code><a class="headerlink" href="#implement-oncheckcanstartdrag" title="Permanent link">#</a></h3>
+<p>This method is invoked by the library <strong>whether to check the touched finger position is inside of the <code>dragHandle</code> view</strong>.</p>
+<p>Return <code>true</code> if the specified position <code>x</code> and <code>y</code> is inside of the <code>dragHandle</code> view. Note that the offset parameter <code>x</code> and <code>y</code> are measured from top-left of <code>itemView</code>.</p>
+<p><img src="/images/drag-drop-on-check-can-start-drag.png" alt="onCheckCanStartDrag() parameters" style="max-height: 200px" /></p>
+<p><strong>Basic implementation:</strong></p>
+<pre class="code"><code class="language-java">boolean onCheckCanStartDrag(MyAdapter.MyViewHolder holder, int position, int x, int y) {
+    View itemView = holder.itemView;
+    View dragHandle = holder.dragHandle;
+
+    int handleWidth = dragHandle.getWidth();
+    int handleHeight = dragHandle.getHeight();
+    int handleLeft = dragHandle.getLeft();
+    int handleTop = dragHnadle.getTop();
+
+    return (x &gt;= handleLeft) &amp;&amp; (x &lt; handleLeft + handleWidth) &amp;&amp;
+           (x &gt;= handleTop) &amp;&amp; (x &lt; handleTop + handleHeight);
+}</code></pre>
+
+
+<h3 id="implement-onmoveitem">Implement <code>onMoveItem()</code><a class="headerlink" href="#implement-onmoveitem" title="Permanent link">#</a></h3>
+<p>This method is invoked by the library when finished dragging. Basic implemtation will be like the follwing;</p>
+<pre class="code"><code class="language-java">List&lt;MyItem&gt; items;
+
+@Override
+void onMoveItem(int fromPosition, int toPosition) {
+    MyItem removed = items.remove(fromPosition);
+    items.add(toPosition, removed);
+
+    notifyItemMoved(fromPosition, toPosition);
+}</code></pre>
+
+
+<h2 id="step-5-modify-initialization-process-of-recyclerview">Step 5. Modify initialization process of RecyclerView<a class="headerlink" href="#step-5-modify-initialization-process-of-recyclerview" title="Permanent link">#</a></h2>
+<p>Put some additional initialization process in your Activity / Fragment.</p>
+<ol>
+<li>Instantiate <code>RecyclerViewDragManager</code></li>
+<li>Create a wrapped adapter and set it to <code>RecyclerView</code></li>
+<li>Attach <code>RecyclerView</code> to <code>RecyclerViewDragManager</code></li>
+</ol>
+<pre class="code"><code class="language-java">void onCreate() {
+    ...
+
+    RecyclerView recyclerView = findViewById(R.id.recyclerView);
+    MyAdapter adapter = new MyAdapter();
+
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+}</code></pre>
+
+
+<p>⏬ &nbsp; ⏬ &nbsp; ⏬</p>
+<pre class="code"><code class="language-java">void onCreate() {
+    ...
+
+    RecyclerView recyclerView = findViewById(R.id.recyclerView);
+    RecyclerViewDragManager dragDropManager = new RecyclerViewDragManager();
+
+    MyAdapter adapter = new MyAdapter();
+    RecyclerView.Adapter wrappedAdapter = dragDropManager.createWrappedAdapter(adapter);
+
+    recyclerView.setAdapter(wrappedAdapter);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    // disable change animations
+    ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+
+    // [OPTIONAL]
+    // dragDropManager.setInitiateOnTouch(true);
+    // dragDropManager.setInitiateOnLongPress(true);
+    // dragDropManager.setInitiateOnMove(true);
+
+    dragDropManager.attachRecyclerView(recyclerView);
+}</code></pre>
+
+
+<h2 id="step-6-custom-more-and-details-of-the-implementation">Step 6. Custom more and details of the implementation<a class="headerlink" href="#step-6-custom-more-and-details-of-the-implementation" title="Permanent link">#</a></h2>
+<p>Please refer to <a href="https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_basic">the demo app implementation</a> for more details.</p>
           <aside class="copyright" role="note">
             
               Copyright (c) 2016 Haruki Hasegawa &ndash;
