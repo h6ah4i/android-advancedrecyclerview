@@ -176,7 +176,7 @@ boolean onCheckCanStartDrag(MyAdapter.MyViewHolder holder, int position, int x, 
     int handleTop = dragHnadle.getTop();
 
     return (x >= handleLeft) && (x < handleLeft + handleWidth) &&
-           (x >= handleTop) && (x < handleTop + handleHeight);
+           (y >= handleTop) && (y < handleTop + handleHeight);
 }
 ```
 
