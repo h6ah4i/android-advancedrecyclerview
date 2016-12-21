@@ -172,7 +172,7 @@ public class MyDraggableSwipeableSelectableItemAdapter
 
         // set swiping properties
         holder.setSwipeItemSlideAmount(
-                item.isPinnedToSwipeLeft() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
+                item.isPinned() ? RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_LEFT : 0);
     }
 
     @Override
@@ -248,7 +248,7 @@ public class MyDraggableSwipeableSelectableItemAdapter
         switch (result) {
             // swipe right
             case RecyclerViewSwipeManager.RESULT_SWIPED_RIGHT:
-                if (mProvider.getItem(position).isPinnedToSwipeLeft()) {
+                if (mProvider.getItem(position).isPinned()) {
                     // pinned --- back to default position
                     return RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_DEFAULT;
                 } else {
@@ -279,14 +279,14 @@ public class MyDraggableSwipeableSelectableItemAdapter
                 mEventListener.onItemRemoved(position);
             }
         } else if (reaction == RecyclerViewSwipeManager.AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION) {
-            item.setPinnedToSwipeLeft(true);
+            item.setPinned(true);
             notifyItemChanged(position);
 
             if (mEventListener != null) {
                 mEventListener.onItemPinned(position);
             }
         } else {
-            item.setPinnedToSwipeLeft(false);
+            item.setPinned(false);
         }
     }
 

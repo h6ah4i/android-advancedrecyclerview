@@ -60,7 +60,7 @@ public class StatesRecyclerViewAdapter extends BaseWrapperAdapter<RecyclerView.V
     @State
     private int state = STATE_NORMAL;
 
-    public StatesRecyclerViewAdapter(@NonNull RecyclerView.Adapter wrapped, @Nullable View loadingView, @Nullable View emptyView, @Nullable View errorView) {
+    public StatesRecyclerViewAdapter(@NonNull RecyclerView.Adapter<RecyclerView.ViewHolder> wrapped, @Nullable View loadingView, @Nullable View emptyView, @Nullable View errorView) {
         super(wrapped);
         this.vLoadingView = loadingView;
         this.vEmptyView = emptyView;

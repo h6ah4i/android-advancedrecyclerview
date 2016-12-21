@@ -230,7 +230,7 @@ public class RecyclerViewSelectionManager {
         return wrapperAdapter!=null && mAdapter!=null && mAdapter.equals(wrapperAdapter);
     }
 
-    private static SelectableItemWrapperAdapter getSelectableItemWrapperAdapter(RecyclerView rv) {
+    private static SelectableItemWrapperAdapter<RecyclerView.ViewHolder> getSelectableItemWrapperAdapter(RecyclerView rv) {
         return WrapperAdapterUtils.findWrappedAdapter(rv.getAdapter(), SelectableItemWrapperAdapter.class);
     }
 
