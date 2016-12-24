@@ -20,13 +20,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="64dp"
-    android:background="@drawable/bg_swipe_item_neutral">
+    android:layout_height="64dp">
 
     <RelativeLayout
+        android:id="@+id/behind_views"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#888888">
+        android:background="@color/bg_swipe_item_gray"
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <Button
             android:id="@android:id/button1"
@@ -45,7 +47,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="@color/bg_item_normal_state"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground"
         tools:visibility="invisible">
