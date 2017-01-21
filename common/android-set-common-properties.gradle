@@ -18,9 +18,9 @@ android {
     compileSdkVersion 25
 
     if (System.getenv("JITPACK") == "true") {
-        buildToolsVersion '25.0.1'
+        buildToolsVersion '25.0.2'
     } else {
-        buildToolsVersion '25.0.1'
+        buildToolsVersion '25.0.2'
     }
 
     compileOptions {
