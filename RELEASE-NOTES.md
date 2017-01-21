@@ -1,6 +1,17 @@
 ## 0.10.2
 [Bug fixes]
-- Fix createDraggingItemImage() method regression (issue #325)
+- Fixed IllegalStateException on touching a group item while RecyclerView is calculating layout (issue #339)
+- Fixed onBindGroupViewHolder()/onBindChildViewHolder() method with palyloads parameter not used bug
+
+[Improvements]
+- Reduce overdraws of "Button under swipeable item" (PR #331, thx. @AnirudhaAgashe)
+- Updated support library to v25.1.0
+
+
+## 0.10.2
+[Bug fixes]
+- Fixed createDraggingItemImage() method regression (issue #325)
+
 
 ## 0.10.1
 [Improvements]

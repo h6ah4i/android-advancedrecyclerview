@@ -160,18 +160,13 @@ public class RecyclerViewTouchActionGuardManager {
 
             final int distance = mLastTouchY - mInitialTouchY;
 
-            if (mInterceptScrollingWhileAnimationRunning && (Math.abs(distance) > mTouchSlop) && isAnimationRunning(rv)) {
+            if (mInterceptScrollingWhileAnimationRunning && (Math.abs(distance) > mTouchSlop) && rv.isAnimating()) {
                 // intercept vertical move touch events while animation is running
                 mGuarding = true;
             }
         }
 
         return mGuarding;
-    }
-
-    private static boolean isAnimationRunning(RecyclerView rv) {
-        final RecyclerView.ItemAnimator itemAnimator = rv.getItemAnimator();
-        return (itemAnimator != null) && (itemAnimator.isRunning());
     }
 
     private void handleActionUpOrCancel() {

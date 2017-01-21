@@ -40,6 +40,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
     private static final String TAG = "ARVExpandableWrapper";
 
+    //
     // NOTE: Make accessible with short name
     private interface Constants extends ExpandableItemConstants {
     }
@@ -196,9 +197,9 @@ class ExpandableRecyclerViewWrapperAdapter
         correctItemDragStateFlags(holder, groupPosition, childPosition);
 
         if (childPosition == RecyclerView.NO_POSITION) {
-            mExpandableItemAdapter.onBindGroupViewHolder(holder, groupPosition, viewType);
+            mExpandableItemAdapter.onBindGroupViewHolder(holder, groupPosition, viewType, payloads);
         } else {
-            mExpandableItemAdapter.onBindChildViewHolder(holder, groupPosition, childPosition, viewType);
+            mExpandableItemAdapter.onBindChildViewHolder(holder, groupPosition, childPosition, viewType, payloads);
         }
     }
 

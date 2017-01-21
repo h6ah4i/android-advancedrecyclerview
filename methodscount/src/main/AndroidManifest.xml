@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
-       Copyright (C) 2015 Haruki Hasegawa
+       Copyright (C) 2016 Haruki Hasegawa
 
        Licensed under the Apache License, Version 2.0 (the "License");
        you may not use this file except in compliance with the License.
@@ -14,7 +13,6 @@
        See the License for the specific language governing permissions and
        limitations under the License.
 -->
-<resources>
-    <!-- NOTE: requires non transparent color to cast item shadows -->
-    <color name="bg_swipe_item_neutral">@android:color/transparent</color>
-</resources>
+<manifest
+    package="methodscount">
+</manifest>
