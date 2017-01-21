@@ -48,7 +48,7 @@ function file_size() {
       ${STAT:-stat} --printf="%s" "$1" 2>/dev/null ||
       ${STAT:-stat} -f%z "$1" 2>/dev/null ||
       ${WC:-wc} -c <"$1" 2>/dev/null
-    )
+    ) | awk '{print $1}'
 }
 
 LIBRARY_AAR="./methodscount/build/dependencies/library-release.aar"
