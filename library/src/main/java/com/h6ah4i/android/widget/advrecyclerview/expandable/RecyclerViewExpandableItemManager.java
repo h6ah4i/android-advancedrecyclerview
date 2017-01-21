@@ -257,6 +257,10 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
             return false;
         }
 
+        if (mRecyclerView.isComputingLayout()) {
+            return false;
+        }
+
         final int touchX = (int) (e.getX() + 0.5f);
         final int touchY = (int) (e.getY() + 0.5f);
 
