@@ -1,4 +1,4 @@
-## 0.10.2
+## 0.10.3
 [Bug fixes]
 - Fixed IllegalStateException on touching a group item while RecyclerView is calculating layout (issue #339)
 - Fixed onBindGroupViewHolder()/onBindChildViewHolder() method with palyloads parameter not used bug
