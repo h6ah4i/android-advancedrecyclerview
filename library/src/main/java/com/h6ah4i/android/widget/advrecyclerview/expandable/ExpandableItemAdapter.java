@@ -184,4 +184,13 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @return Whether the group can be collapsed. If returns false, the group keeps expanded.
      */
     boolean onHookGroupCollapse(int groupPosition, boolean fromUser);
+
+    /**
+     * Gets initial expanded state of the group item. This method is called when initially creating
+     * a wrapper adapter and also when the data set is changed.
+     *
+     * @param groupPosition The position of the group
+     * @return True for expanded, otherwise false.
+     */
+    boolean getInitialGroupExpandedState(int groupPosition);
 }

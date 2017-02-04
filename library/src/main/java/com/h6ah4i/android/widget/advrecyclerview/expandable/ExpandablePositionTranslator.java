@@ -21,6 +21,10 @@ import android.support.v7.widget.RecyclerView;
 import java.util.Arrays;
 
 class ExpandablePositionTranslator {
+    public static final int BUILD_OPTION_DEFAULT = 0;
+    public static final int BUILD_OPTION_EXPANDED_ALL = 1;
+    public static final int BUILD_OPTION_COLLAPSED_ALL = 2;
+
     private final static int ALLOCATE_UNIT = 256;
 
     private final static long FLAG_EXPANDED = 0x0000000080000000L;
@@ -49,19 +53,31 @@ class ExpandablePositionTranslator {
     public ExpandablePositionTranslator() {
     }
 
-    public void build(ExpandableItemAdapter adapter, boolean allExpanded) {
+    public void build(ExpandableItemAdapter adapter, int option, boolean defaultExpandedState) {
         final int groupCount = adapter.getGroupCount();
 
         enlargeArraysIfNeeded(groupCount, false);
 
         final long[] info = mCachedGroupPosInfo;
         final int[] ids = mCachedGroupId;
+        int expandedGroupCount = 0;
+        int expandedChildCount = 0;
         int totalChildCount = 0;
         for (int i = 0; i < groupCount; i++) {
             final long groupId = adapter.getGroupId(i);
             final int childCount = adapter.getChildCount(i);
 
-            if (allExpanded) {
+            boolean expanded;
+
+            if (option == BUILD_OPTION_EXPANDED_ALL) {
+                expanded = true;
+            } else if (option == BUILD_OPTION_COLLAPSED_ALL) {
+                expanded = false;
+            } else {
+                expanded = defaultExpandedState || adapter.getInitialGroupExpandedState(i);
+            }
+
+            if (expanded) {
                 info[i] = (((long) (i + totalChildCount) << 32) | childCount) | FLAG_EXPANDED;
             } else {
                 info[i] = (((long) i << 32) | childCount);
@@ -69,12 +85,17 @@ class ExpandablePositionTranslator {
             ids[i] = (int) (groupId & LOWER_32BIT_MASK);
 
             totalChildCount += childCount;
+
+            if (expanded) {
+                expandedGroupCount += 1;
+                expandedChildCount += childCount;
+            }
         }
 
         mAdapter = adapter;
         mGroupCount = groupCount;
-        mExpandedGroupCount = (allExpanded) ? groupCount : 0;
-        mExpandedChildCount = (allExpanded) ? totalChildCount : 0;
+        mExpandedGroupCount = expandedGroupCount;
+        mExpandedChildCount = expandedChildCount;
         mEndOfCalculatedOffsetGroupPosition = Math.max(0, groupCount - 1);
     }
 
