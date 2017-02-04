@@ -65,7 +65,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
         mExpandableItemAdapter = getExpandableItemAdapter(adapter);
         if (mExpandableItemAdapter == null) {
-            throw new IllegalArgumentException("adapter does not implement RecyclerViewExpandableListManager");
+            throw new IllegalArgumentException("adapter does not implement ExpandableItemAdapter");
         }
 
         if (manager == null) {
