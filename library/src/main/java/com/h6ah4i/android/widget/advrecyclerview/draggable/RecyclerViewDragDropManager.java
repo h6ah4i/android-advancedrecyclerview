@@ -27,18 +27,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPath;
-import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
+import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.lang.annotation.Retention;
@@ -235,6 +237,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     private DraggingItemInfo mDraggingItemInfo;
     private DraggingItemDecorator mDraggingItemDecorator;
     private SwapTargetItemOperator mSwapTargetItemOperator;
+    private NestedScrollView mNestedScrollView;
+    private int mNestedScrollViewScrollX;
+    private int mNestedScrollViewScrollY;
     private int mLastTouchX;
     private int mLastTouchY;
     private int mDragStartTouchX;
@@ -730,11 +735,21 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDraggableRange = range;
         mRootDraggableRange = convertToRootAdapterRange(path, mDraggableRange);
 
+        NestedScrollView nestedScrollView = findAncestorNestedScrollView(mRecyclerView);
+        if (nestedScrollView != null && !mRecyclerView.isNestedScrollingEnabled()) {
+            mNestedScrollView = nestedScrollView;
+        } else {
+            mNestedScrollView = null;
+        }
+
         mOrigOverScrollMode = rv.getOverScrollMode();
         rv.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         mLastTouchX = (int) (e.getX() + 0.5f);
         mLastTouchY = (int) (e.getY() + 0.5f);
+
+        mNestedScrollViewScrollX = (mNestedScrollView != null) ? mNestedScrollView.getScrollX() : 0;
+        mNestedScrollViewScrollY = (mNestedScrollView != null) ? mNestedScrollView.getScrollY() : 0;
 
         // disable auto scrolling until user moves the item
         mDragStartTouchY = mDragMinTouchY = mDragMaxTouchY = mLastTouchY;
@@ -756,7 +771,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDraggingItemDecorator = new DraggingItemDecorator(mRecyclerView, holder, mRootDraggableRange);
         mDraggingItemDecorator.setShadowDrawable(mShadowDrawable);
         mDraggingItemDecorator.setupDraggingItemEffects(mDraggingItemEffectsInfo);
-        mDraggingItemDecorator.start(e, mDraggingItemInfo);
+        mDraggingItemDecorator.start(mDraggingItemInfo, mLastTouchX, mLastTouchY);
 
         final int layoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
@@ -866,9 +881,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mDraggingItemViewHolder = null;
         mDraggingItemInfo = null;
         mComposedAdapterTag = null;
+        mNestedScrollView = null;
 
         mLastTouchX = 0;
         mLastTouchY = 0;
+        mNestedScrollViewScrollX = 0;
+        mNestedScrollViewScrollY = 0;
         mDragStartTouchX = 0;
         mDragStartTouchY = 0;
         mDragMinTouchX = 0;
@@ -1048,6 +1066,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         mLastTouchX = (int) (e.getX() + 0.5f);
         mLastTouchY = (int) (e.getY() + 0.5f);
 
+        mNestedScrollViewScrollX = (mNestedScrollView != null) ? mNestedScrollView.getScrollX() : 0;
+        mNestedScrollViewScrollY = (mNestedScrollView != null) ? mNestedScrollView.getScrollY() : 0;
+
         mDragMinTouchX = Math.min(mDragMinTouchX, mLastTouchX);
         mDragMinTouchY = Math.min(mDragMinTouchY, mLastTouchY);
         mDragMaxTouchX = Math.max(mDragMaxTouchX, mLastTouchX);
@@ -1057,7 +1078,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         updateDragDirectionMask();
 
         // update decorators
-        final boolean updated = mDraggingItemDecorator.update(e, false);
+        final boolean updated = mDraggingItemDecorator.update(getLastTouchX(), getLastTouchY(), false);
 
         if (updated) {
             if (mSwapTargetItemOperator != null) {
@@ -1072,25 +1093,52 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     private void updateDragDirectionMask() {
-        if (CustomRecyclerViewUtils.getOrientation(mRecyclerView) == CustomRecyclerViewUtils.ORIENTATION_VERTICAL) {
-            if (((mDragStartTouchY - mDragMinTouchY) > mScrollTouchSlop) ||
-                    ((mDragMaxTouchY - mLastTouchY) > mScrollTouchSlop)) {
-                mScrollDirMask |= SCROLL_DIR_UP;
+        switch (CustomRecyclerViewUtils.getOrientation(mRecyclerView)) {
+            case CustomRecyclerViewUtils.ORIENTATION_VERTICAL: {
+                int lastTouchY = getLastTouchY();
+                if (((mDragStartTouchY - mDragMinTouchY) > mScrollTouchSlop) ||
+                        ((mDragMaxTouchY - lastTouchY) > mScrollTouchSlop)) {
+                    mScrollDirMask |= SCROLL_DIR_UP;
+                }
+                if (((mDragMaxTouchY - mDragStartTouchY) > mScrollTouchSlop) ||
+                        ((lastTouchY - mDragMinTouchY) > mScrollTouchSlop)) {
+                    mScrollDirMask |= SCROLL_DIR_DOWN;
+                }
+                break;
             }
-            if (((mDragMaxTouchY - mDragStartTouchY) > mScrollTouchSlop) ||
-                    ((mLastTouchY - mDragMinTouchY) > mScrollTouchSlop)) {
-                mScrollDirMask |= SCROLL_DIR_DOWN;
-            }
-        } else if (CustomRecyclerViewUtils.getOrientation(mRecyclerView) == CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL) {
-            if (((mDragStartTouchX - mDragMinTouchX) > mScrollTouchSlop) ||
-                    ((mDragMaxTouchX - mLastTouchX) > mScrollTouchSlop)) {
-                mScrollDirMask |= SCROLL_DIR_LEFT;
-            }
-            if (((mDragMaxTouchX - mDragStartTouchX) > mScrollTouchSlop) ||
-                    ((mLastTouchX - mDragMinTouchX) > mScrollTouchSlop)) {
-                mScrollDirMask |= SCROLL_DIR_RIGHT;
+            case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL: {
+                int lastTouchX = getLastTouchX();
+                if (((mDragStartTouchX - mDragMinTouchX) > mScrollTouchSlop) ||
+                        ((mDragMaxTouchX - lastTouchX) > mScrollTouchSlop)) {
+                    mScrollDirMask |= SCROLL_DIR_LEFT;
+                }
+                if (((mDragMaxTouchX - mDragStartTouchX) > mScrollTouchSlop) ||
+                        ((lastTouchX - mDragMinTouchX) > mScrollTouchSlop)) {
+                    mScrollDirMask |= SCROLL_DIR_RIGHT;
+                }
+                break;
             }
         }
+    }
+
+    private int getLastTouchX() {
+        int touchX = mLastTouchX;
+
+        if (mNestedScrollView != null) {
+            touchX += (mNestedScrollView.getScrollX() - mNestedScrollViewScrollX);
+        }
+
+        return touchX;
+    }
+
+    private int getLastTouchY() {
+        int touchY = mLastTouchY;
+
+        if (mNestedScrollView != null) {
+            touchY += (mNestedScrollView.getScrollY() - mNestedScrollViewScrollY);
+        }
+
+        return touchY;
     }
 
     /*package*/ void checkItemSwapping(RecyclerView rv) {
@@ -1098,7 +1146,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         final FindSwapTargetContext fc = mFindSwapTargetContext;
 
-        fc.setup(rv, mDraggingItemViewHolder, mDraggingItemInfo, mLastTouchX, mLastTouchY, mDraggableRange, mRootDraggableRange, mCheckCanDrop);
+        fc.setup(rv, mDraggingItemViewHolder, mDraggingItemInfo, getLastTouchX(), getLastTouchY(), mDraggableRange, mRootDraggableRange, mCheckCanDrop);
 
         final int draggingItemInitialPosition = mWrapperAdapter.getDraggingItemInitialPosition();
         final int draggingItemCurrentPosition = mWrapperAdapter.getDraggingItemCurrentPosition();
@@ -1156,18 +1204,91 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
     /*package*/ void handleScrollOnDragging() {
         final RecyclerView rv = mRecyclerView;
+        boolean horizontal;
 
         switch (CustomRecyclerViewUtils.getOrientation(rv)) {
             case CustomRecyclerViewUtils.ORIENTATION_VERTICAL:
-                handleScrollOnDraggingInternal(rv, false);
+                horizontal = false;
                 break;
             case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL:
-                handleScrollOnDraggingInternal(rv, true);
+                horizontal = true;
                 break;
+            default:
+                return;
+        }
+
+        if (mNestedScrollView != null) {
+            handleScrollOnDraggingInternalWithNestedScrollView(rv, horizontal);
+        } else {
+            handleScrollOnDraggingInternalWithRecyclerView(rv, horizontal);
         }
     }
 
-    private void handleScrollOnDraggingInternal(RecyclerView rv, boolean horizontal) {
+    private void handleScrollOnDraggingInternalWithNestedScrollView(RecyclerView rv, boolean horizontal) {
+        NestedScrollView nestedScrollView = mNestedScrollView;
+
+        int nestedScrollViewScrollOffsetX = nestedScrollView.getScrollX();
+        int nestedScrollViewScrollOffsetY = nestedScrollView.getScrollY();
+
+        Rect rect = new Rect();
+
+        rect.left = rect.right = getLastTouchX();
+        rect.top = rect.bottom = getLastTouchY();
+
+        offsetDescendantRectToAncestorCoords(mRecyclerView, nestedScrollView, rect);
+
+        int nestedScrollViewTouchX = rect.left - nestedScrollViewScrollOffsetX;
+        int nestedScrollViewTouchY = rect.top - nestedScrollViewScrollOffsetY;
+
+        final int edge = (horizontal) ? nestedScrollView.getWidth() : nestedScrollView.getHeight();
+        final float invEdge = (1.0f / edge);
+        final float normalizedTouchPos = (horizontal ? nestedScrollViewTouchX : nestedScrollViewTouchY) * invEdge;
+        final float threshold = SCROLL_THRESHOLD;
+        final float invThreshold = (1.0f / threshold);
+        final float centerOffset = normalizedTouchPos - 0.5f;
+        final float absCenterOffset = Math.abs(centerOffset);
+        final float acceleration = Math.max(0.0f, threshold - (0.5f - absCenterOffset)) * invThreshold;
+        final int mask = mScrollDirMask;
+
+        int scrollAmount = (int) Math.signum(centerOffset) * (int) (SCROLL_AMOUNT_COEFF * mDragEdgeScrollSpeed * mDisplayDensity * acceleration + 0.5f);
+
+        // apply mask
+        if (scrollAmount > 0) {
+            if ((mask & (horizontal ? SCROLL_DIR_RIGHT : SCROLL_DIR_DOWN)) == 0) {
+                scrollAmount = 0;
+            }
+        } else if (scrollAmount < 0) {
+            if ((mask & (horizontal ? SCROLL_DIR_LEFT : SCROLL_DIR_UP)) == 0) {
+                scrollAmount = 0;
+            }
+        }
+
+        // scroll
+        if (scrollAmount != 0) {
+            safeEndAnimationsIfRequired(rv);
+
+            if (horizontal) {
+                nestedScrollView.scrollBy(scrollAmount, 0);
+            } else {
+                nestedScrollView.scrollBy(0, scrollAmount);
+            }
+        }
+
+        final boolean updated = mDraggingItemDecorator.update(getLastTouchX(), getLastTouchY(), false);
+
+        if (updated) {
+            if (mSwapTargetItemOperator != null) {
+                mSwapTargetItemOperator.update(mDraggingItemDecorator.getDraggingItemTranslationX(), mDraggingItemDecorator.getDraggingItemTranslationY());
+            }
+
+            // check swapping
+            checkItemSwapping(rv);
+
+            onItemMoveDistanceUpdated();
+        }
+    }
+
+    private void handleScrollOnDraggingInternalWithRecyclerView(RecyclerView rv, boolean horizontal) {
         final int edge = (horizontal) ? rv.getWidth() : rv.getHeight();
 
         if (edge == 0) {
@@ -1175,7 +1296,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         final float invEdge = (1.0f / edge);
-        final float normalizedTouchPos = (horizontal ? mLastTouchX : mLastTouchY) * invEdge;
+        final float normalizedTouchPos = (horizontal ? getLastTouchX() : getLastTouchY()) * invEdge;
         final float threshold = SCROLL_THRESHOLD;
         final float invThreshold = (1.0f / threshold);
         final float centerOffset = normalizedTouchPos - 0.5f;
@@ -1324,6 +1445,37 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
     };
 
+    private static NestedScrollView findAncestorNestedScrollView(View v) {
+        ViewParent target = v.getParent();
+        while (target != null) {
+            if (target instanceof NestedScrollView) {
+                return (NestedScrollView) target;
+            }
+            target = target.getParent();
+        }
+
+        return null;
+    }
+
+    private static boolean offsetDescendantRectToAncestorCoords(View descendant, View ancestor, Rect rect) {
+        View view = descendant;
+        ViewParent parent;
+
+        do {
+            parent = view.getParent();
+
+            if (!(parent instanceof ViewGroup)) {
+                return false;
+            }
+
+            ((ViewGroup) parent).offsetDescendantRectToMyCoords(view, rect);
+
+            view = (View) parent;
+        } while (parent != ancestor);
+
+        return true;
+    }
+
     private int scrollByYAndGetScrolledAmount(int ry) {
         // NOTE: mActualScrollByAmount --- Hackish! To detect over scrolling.
 
@@ -1400,7 +1552,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 final int right = Math.max(v1.getRight() + m1.right, v2.getRight() + m2.right);
 
                 final float midPointOfTheItems = left + ((right - left) * 0.5f);
-                final float midPointOfTheOverlaidItem = (mLastTouchX - mDraggingItemInfo.grabbedPositionX) + (mDraggingItemInfo.width * 0.5f);
+                final float midPointOfTheOverlaidItem = (getLastTouchX() - mDraggingItemInfo.grabbedPositionX) + (mDraggingItemInfo.width * 0.5f);
 
                 if (toPosition < fromPosition) {
                     if (midPointOfTheOverlaidItem < midPointOfTheItems) {
@@ -1420,7 +1572,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                 final int bottom = Math.max(v1.getBottom() + m1.bottom, v2.getBottom() + m2.bottom);
 
                 final float midPointOfTheItems = top + ((bottom - top) * 0.5f);
-                final float midPointOfTheOverlaidItem = (mLastTouchY - mDraggingItemInfo.grabbedPositionY) + (mDraggingItemInfo.height * 0.5f);
+                final float midPointOfTheOverlaidItem = (getLastTouchY() - mDraggingItemInfo.grabbedPositionY) + (mDraggingItemInfo.height * 0.5f);
 
                 if (toPosition < fromPosition) {
                     if (midPointOfTheOverlaidItem < midPointOfTheItems) {
