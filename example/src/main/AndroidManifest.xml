@@ -15,8 +15,8 @@
        limitations under the License.
 -->
 <manifest
-    package="com.h6ah4i.android.example.advrecyclerview"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.h6ah4i.android.example.advrecyclerview"
     >
 
     <application
@@ -29,10 +29,6 @@
         <activity
             android:name=".launcher.MainActivity"
             android:label="@string/activity_title_launcher">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
 
         <activity
@@ -77,7 +73,12 @@
 
         <activity
             android:name=".demo_e_minimal.MinimalExpandableExampleActivity"
-            android:label="@string/activity_title_demo_e_minimal"/>
+            android:label="@string/activity_title_demo_e_minimal">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".demo_e_basic.ExpandableExampleActivity"
@@ -142,6 +143,7 @@
         <activity
             android:name=".about.AboutActivity"
             android:label="@string/activity_title_about"/>
+
     </application>
 
 </manifest>

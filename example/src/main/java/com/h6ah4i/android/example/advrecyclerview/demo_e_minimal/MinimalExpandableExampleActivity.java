@@ -16,7 +16,12 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_e_minimal;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.util.LongSparseArray;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,17 +29,19 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
-import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -42,6 +49,188 @@ import java.util.List;
  * Please refer to other examples for more advanced usages. Thanks!
  */
 public class MinimalExpandableExampleActivity extends AppCompatActivity {
+
+    private static class FillExpandingAnimationGapDecoration extends RecyclerView.ItemDecoration
+            implements RecyclerViewExpandableItemManager.OnGroupExpandListener,
+            RecyclerViewExpandableItemManager.OnGroupCollapseListener {
+
+        private Paint mPaint;
+        private GroupItemInfo[] mGroupItemInfo;
+        private RecyclerView mRecyclerView;
+        private RecyclerViewExpandableItemManager mExpMgr;
+        private Interpolator mExpandInterpolator = new AccelerateInterpolator();
+        private Interpolator mCollapseInterpolator = new AccelerateDecelerateInterpolator();
+        LongSparseArray<GapFillAnimationRequest> mGapFillRequests = new LongSparseArray<>();
+
+        public void setup(RecyclerView recyclerView, RecyclerViewExpandableItemManager expMgr) {
+            mRecyclerView = recyclerView;
+            mExpMgr = expMgr;
+
+            mPaint = new Paint();
+            mPaint.setColor(ContextCompat.getColor(recyclerView.getContext(), R.color.bg_group_item_normal_state));
+
+            mGroupItemInfo = new GroupItemInfo[20]; // XXX must be larger than count of group items placed on the screen
+            for (int i = 0; i < mGroupItemInfo.length; i++) {
+                mGroupItemInfo[i] = new GroupItemInfo();
+            }
+
+            recyclerView.addItemDecoration(this);
+            expMgr.setOnGroupCollapseListener(this);
+            expMgr.setOnGroupExpandListener(this);
+        }
+
+        @Override
+        public void onGroupExpand(int groupPosition, boolean fromUser) {
+            putGapFillRequest(groupPosition, true);
+        }
+
+        @Override
+        public void onGroupCollapse(int groupPosition, boolean fromUser) {
+            putGapFillRequest(groupPosition, false);
+        }
+
+        @Override
+        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            if (mGapFillRequests.size() > 0) {
+                boolean needsInvalidate = drawGapFills(c, parent);
+
+                if (needsInvalidate) {
+                    ViewCompat.postInvalidateOnAnimation(parent);
+                }
+            }
+
+            super.onDraw(c, parent, state);
+        }
+
+        private boolean drawGapFills(Canvas c, RecyclerView parent) {
+            long currentTime = AnimationUtils.currentAnimationTimeMillis();
+
+            int childViewCount = parent.getChildCount();
+            int groupItemCount = 0;
+
+            for (int i = 0; i < childViewCount; i++) {
+                View v = parent.getChildAt(i);
+                RecyclerView.ViewHolder vh = parent.getChildViewHolder(v);
+                if (!(vh instanceof MyGroupViewHolder))
+                    continue;
+
+                mGroupItemInfo[groupItemCount].fromViewHolder(vh);
+
+                groupItemCount += 1;
+            }
+
+            mGroupItemInfo[groupItemCount].bottomSentry(parent);
+            groupItemCount += 1;
+
+            Arrays.sort(mGroupItemInfo, 0, groupItemCount);
+
+            for (int i = 0; i < groupItemCount - 1; i++) {
+                GroupItemInfo group = mGroupItemInfo[i];
+                GroupItemInfo nextGroup = mGroupItemInfo[i + 1];
+                GapFillAnimationRequest ai = mGapFillRequests.get(group.id, null);
+
+                if (ai == null) {
+                    continue;
+                }
+
+                if ((nextGroup.top + nextGroup.ty) > (group.bottom + group.ty)) {
+                    float progress = (float) (currentTime - ai.startTime) / ai.duration;
+                    progress = Math.min(Math.max(progress, 0.0f), 1.0f);
+                    progress = ((ai.expand) ? mExpandInterpolator : mCollapseInterpolator).getInterpolation(progress);
+
+                    float alpha = (ai.expand) ? (1.0f - progress) : progress;
+
+                    mPaint.setAlpha((int) (255 * alpha));
+
+                    c.drawRect(
+                            Math.min(group.left, nextGroup.left),
+                            (group.bottom + group.ty),
+                            Math.max(group.right, nextGroup.right),
+                            (nextGroup.top + nextGroup.ty),
+                            mPaint);
+                }
+            }
+
+            cleanUpGapFillRequests(currentTime);
+
+            return mGapFillRequests.size() > 0;
+        }
+
+        private void putGapFillRequest(int groupPosition, boolean expand) {
+            int flatPosition = mExpMgr.getFlatPosition(RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition));
+
+            RecyclerView.ItemAnimator animator = mRecyclerView.getItemAnimator();
+            long itemId = mRecyclerView.getAdapter().getItemId(flatPosition);
+
+            long currentTime = AnimationUtils.currentAnimationTimeMillis();
+            long duration;
+
+            duration = animator.getMoveDuration();
+            duration += (expand) ? animator.getAddDuration() : animator.getRemoveDuration();
+            duration += 150; // additional time
+
+            mGapFillRequests.put(itemId, new GapFillAnimationRequest(currentTime, duration, expand));
+
+            ViewCompat.postInvalidateOnAnimation(mRecyclerView);
+        }
+
+        private void cleanUpGapFillRequests(long currentTime) {
+            for (int i = mGapFillRequests.size() - 1; i >= 0; i--) {
+                GapFillAnimationRequest ai = mGapFillRequests.valueAt(i);
+
+                if (currentTime >= (ai.startTime + ai.duration)) {
+                    mGapFillRequests.removeAt(i);
+                }
+            }
+        }
+
+
+        static class GroupItemInfo implements Comparable {
+            long id;
+            int ty;
+            int top;
+            int bottom;
+            int left;
+            int right;
+
+            void fromViewHolder(RecyclerView.ViewHolder vh) {
+                View v = vh.itemView;
+                this.id = vh.getItemId();
+                this.ty = (int) (ViewCompat.getTranslationY(v) + 0.5f);
+                this.top = v.getTop();
+                this.bottom = v.getBottom();
+                this.left = v.getLeft();
+                this.right = v.getRight();
+            }
+
+            void bottomSentry(RecyclerView rv) {
+                this.id = RecyclerView.NO_ID;
+                this.ty = 0;
+                this.top = rv.getHeight();
+                this.bottom = rv.getHeight();
+                this.left = rv.getPaddingLeft();
+                this.right = rv.getWidth() - rv.getPaddingRight();
+            }
+
+            @Override
+            public int compareTo(Object o) {
+                GroupItemInfo target = ((GroupItemInfo) o);
+                return (this.top + this.ty) - (target.top + target.ty);
+            }
+        }
+
+        static class GapFillAnimationRequest {
+            private final long startTime;
+            private final long duration;
+            private final boolean expand;
+
+            public GapFillAnimationRequest(long startTime, long duration, boolean expand) {
+                this.startTime = startTime;
+                this.duration = duration;
+                this.expand = expand;
+            }
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +245,13 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(expMgr.createWrappedAdapter(new MyAdapter()));
+
+//        recyclerView.getItemAnimator().setMoveDuration(300);
+//        recyclerView.getItemAnimator().setAddDuration(300);
+//        recyclerView.getItemAnimator().setRemoveDuration(300);
+
+        FillExpandingAnimationGapDecoration gapDecoration = new FillExpandingAnimationGapDecoration();
+        gapDecoration.setup(recyclerView, expMgr);
 
         // NOTE: need to disable change animations to ripple effect work properly
         ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
