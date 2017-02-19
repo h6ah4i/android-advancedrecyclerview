@@ -62,7 +62,7 @@ class ExpandablePositionTranslator {
         final int[] ids = mCachedGroupId;
         int expandedGroupCount = 0;
         int expandedChildCount = 0;
-        int totalChildCount = 0;
+
         for (int i = 0; i < groupCount; i++) {
             final long groupId = adapter.getGroupId(i);
             final int childCount = adapter.getChildCount(i);
@@ -77,14 +77,8 @@ class ExpandablePositionTranslator {
                 expanded = defaultExpandedState || adapter.getInitialGroupExpandedState(i);
             }
 
-            if (expanded) {
-                info[i] = (((long) (i + totalChildCount) << 32) | childCount) | FLAG_EXPANDED;
-            } else {
-                info[i] = (((long) i << 32) | childCount);
-            }
+            info[i] = (((long) (i + expandedChildCount) << 32) | childCount) | (expanded ? FLAG_EXPANDED : 0);
             ids[i] = (int) (groupId & LOWER_32BIT_MASK);
-
-            totalChildCount += childCount;
 
             if (expanded) {
                 expandedGroupCount += 1;
