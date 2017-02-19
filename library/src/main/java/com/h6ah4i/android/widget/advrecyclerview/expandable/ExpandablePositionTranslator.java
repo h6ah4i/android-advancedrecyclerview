@@ -121,18 +121,18 @@ class ExpandablePositionTranslator {
                     index = j + 1;
 
                     if (expanded) {
-                        if (adapter == null || adapter.onHookGroupExpand(position, fromUser)) {
+                        if (adapter == null || adapter.onHookGroupExpand(position, fromUser, null)) {
                             if (expandGroup(position)) {
                                 if (expandListener != null) {
-                                    expandListener.onGroupExpand(position, fromUser);
+                                    expandListener.onGroupExpand(position, fromUser, null);
                                 }
                             }
                         }
                     } else {
-                        if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {
+                        if (adapter == null || adapter.onHookGroupCollapse(position, fromUser, null)) {
                             if (collapseGroup(position)) {
                                 if (collapseListener != null) {
-                                    collapseListener.onGroupCollapse(position, fromUser);
+                                    collapseListener.onGroupCollapse(position, fromUser, null);
                                 }
                             }
                         }

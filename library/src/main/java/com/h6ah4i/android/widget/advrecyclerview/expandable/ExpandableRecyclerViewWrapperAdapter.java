@@ -691,9 +691,9 @@ class ExpandableRecyclerViewWrapperAdapter
         }
 
         if (expand) {
-            expandGroup(groupPosition, true);
+            expandGroup(groupPosition, true, null);
         } else {
-            collapseGroup(groupPosition, true);
+            collapseGroup(groupPosition, true, null);
         }
 
         return true;
@@ -713,13 +713,13 @@ class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
-    /*package*/ boolean collapseGroup(int groupPosition, boolean fromUser) {
+    /*package*/ boolean collapseGroup(int groupPosition, boolean fromUser, Object payload) {
         if (!mPositionTranslator.isGroupExpanded(groupPosition)) {
             return false;
         }
 
         // call hook method
-        if (!mExpandableItemAdapter.onHookGroupCollapse(groupPosition, fromUser)) {
+        if (!mExpandableItemAdapter.onHookGroupCollapse(groupPosition, fromUser, payload)) {
             return false;
         }
 
@@ -736,24 +736,24 @@ class ExpandableRecyclerViewWrapperAdapter
             final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
             final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
 
-            notifyItemChanged(flatPosition);
+            notifyItemChanged(flatPosition, payload);
         }
 
         // raise onGroupCollapse() event
         if (mOnGroupCollapseListener != null) {
-            mOnGroupCollapseListener.onGroupCollapse(groupPosition, fromUser);
+            mOnGroupCollapseListener.onGroupCollapse(groupPosition, fromUser, payload);
         }
 
         return true;
     }
 
-    /*package*/ boolean expandGroup(int groupPosition, boolean fromUser) {
+    /*package*/ boolean expandGroup(int groupPosition, boolean fromUser, Object payload) {
         if (mPositionTranslator.isGroupExpanded(groupPosition)) {
             return false;
         }
 
         // call hook method
-        if (!mExpandableItemAdapter.onHookGroupExpand(groupPosition, fromUser)) {
+        if (!mExpandableItemAdapter.onHookGroupExpand(groupPosition, fromUser, payload)) {
             return false;
         }
 
@@ -769,12 +769,12 @@ class ExpandableRecyclerViewWrapperAdapter
             final long packedPosition = ExpandableAdapterHelper.getPackedPositionForGroup(groupPosition);
             final int flatPosition = mPositionTranslator.getFlatPosition(packedPosition);
 
-            notifyItemChanged(flatPosition);
+            notifyItemChanged(flatPosition, payload);
         }
 
         // raise onGroupExpand() event
         if (mOnGroupExpandListener != null) {
-            mOnGroupExpandListener.onGroupExpand(groupPosition, fromUser);
+            mOnGroupExpandListener.onGroupExpand(groupPosition, fromUser, payload);
         }
 
         return true;
@@ -923,7 +923,7 @@ class ExpandableRecyclerViewWrapperAdapter
             notifyItemInserted(flatPosition);
 
             // raise onGroupExpand() event
-            raiseOnGroupExpandedSequentially(groupPosition, 1, false);
+            raiseOnGroupExpandedSequentially(groupPosition, 1, false, null);
         }
     }
 
@@ -935,7 +935,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
             notifyItemRangeInserted(flatPosition, insertedCount);
 
-            raiseOnGroupExpandedSequentially(groupPositionStart, count, false);
+            raiseOnGroupExpandedSequentially(groupPositionStart, count, false, null);
         }
     }
 
@@ -977,10 +977,10 @@ class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
-    private void raiseOnGroupExpandedSequentially(int groupPositionStart, int count, boolean fromUser) {
+    private void raiseOnGroupExpandedSequentially(int groupPositionStart, int count, boolean fromUser, Object payload) {
         if (mOnGroupExpandListener != null) {
             for (int i = 0; i < count; i++) {
-                mOnGroupExpandListener.onGroupExpand(groupPositionStart + i, fromUser);
+                mOnGroupExpandListener.onGroupExpand(groupPositionStart + i, fromUser, payload);
             }
         }
     }
