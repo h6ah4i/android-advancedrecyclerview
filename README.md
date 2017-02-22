@@ -5,7 +5,7 @@ This RecyclerView extension library provides Google's Inbox app like swiping, Pl
 
 [ ![Download](https://api.bintray.com/packages/h6ah4i/maven/android-advancedrecyclerview/images/download.svg) ](https://bintray.com/h6ah4i/maven/android-advancedrecyclerview/_latestVersion)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Advanced%20RecyclerView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1432)
-
+[![Method Count](https://img.shields.io/badge/Methods and size-core: 1684 | deps: 21547 | 230 KB-e91e63.svg) ](http://www.methodscount.com/?lib=com.h6ah4i.android.widget.advrecyclerview%3Aadvrecyclerview%3A0.10.3)
 ---
 
 ### Download the example app
@@ -32,7 +32,7 @@ Target platforms
 Latest version
 ---
 
-- Version 0.9.3  (July 31, 2016)   ([RELEASE NOTES](./RELEASE-NOTES.md))
+- Version 0.10.3  (January 21, 2017)   ([RELEASE NOTES](./RELEASE-NOTES.md))
 
 
 Getting started
@@ -40,9 +40,9 @@ Getting started
 
 This library is published on jCenter. Just add these lines to `build.gradle`.
 
-```groovy
+```gradle
 dependencies {
-    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.9.3@aar'){
+    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.10.3@aar'){
         transitive=true
     }
 }
@@ -79,6 +79,16 @@ Please check the implementation of the simple examples.
 - [Viewpager](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_viewpager/)
 - [Swipe on long press](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_longpress/)
 
+### Headers and Footers examples
+- [Minimal](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_hf_minimal)
+- [Expandable with Header/Footer](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_hf_e)
+- [Add & Remove Header/Footer items](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_hf_add_remove)
+
+### WrapperAdapter examples
+- [Composition of All Features](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_composition_all)
+- [Insertion items](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_wa_insertion)
+- [Filtering items](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_wa_filtering)
+
 ### Hybrid examples
 
 - [Draggable & Swiping](example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_ds/)
@@ -90,6 +100,15 @@ Please check the implementation of the simple examples.
 Primary classes/interfaces
 ---
 
+### WrapperAdapter related classes/interfaces
+
+| Class/Interface name                  | Description                                              |
+|---------------------------------------|----------------------------------------------------------|
+| [`WrapperAdapter`<VH>](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/WrapperAdapter.java)         | Adds several methods to RecyclerView.Adapter to manage with wrapped adapters                       |
+| [`ItemIdComposer`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.java)             | Utility class for handling packed item IDs |
+| [`ItemViewTypeComposer`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.java) | Utility class for handling packed item view types |
+| [`SimpleWrapperAdapter<VH>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/SimpleWrapperAdapter.java) | Base implementation of WrapperAdapter which wraps one adapter |
+
 ### Drag & Drop related classes/interfaces
 
 | Class/Interface name                  | Description                                              |
@@ -98,6 +117,7 @@ Primary classes/interfaces
 | [`DraggableItemAdapter<T>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.java)             | Implement this interface on your RecyclerView.Adapter    |
 | [`DraggableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.java)             | Implement this interface on your RecyclerView.ViewHolder |
 | [`DraggableItemConstants`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.java)               | Constant values area decleared in this interface |
+| [`DraggableItemAnimator`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/animator/DraggableItemAnimator.java)
 
 
 ### Swiping related classes/interfaces
@@ -108,6 +128,7 @@ Primary classes/interfaces
 | [`SwipeableItemAdapter<T>`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemAdapter.java)             | Implement this interface on your RecyclerView.Adapter    |
 | [`SwipeableItemViewHolder`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemViewHolder.java)             | Implement this interface on your RecyclerView.ViewHolder |
 | [`SwipeableItemConstants`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemConstants.java)               | Constant values area decleared in this interface |
+| [`SwipeDismissItemAnimator`](library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/animator/SwipeDismissItemAnimator.java)
 
 
 ### Expandable item related classes/interfaces

@@ -1,5 +1,5 @@
 /*
- *    Copyright (C) 2015 Haruki Hasegawa
+ *    Copyright (C) 2016 Haruki Hasegawa
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -13,20 +13,18 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-
-package com.h6ah4i.android.widget.advrecyclerview.swipeable;
+package com.h6ah4i.android.widget.advrecyclerview.composedadapter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
-
-public class SwipeableItemInternalUtils {
-    private SwipeableItemInternalUtils() {
-    }
-
-    @SuppressWarnings("unchecked")
-    public static SwipeResultAction invokeOnSwipeItem(
-            BaseSwipeableItemAdapter<?> adapter, RecyclerView.ViewHolder holder, int position, int result) {
-        return ((SwipeableItemAdapter) adapter).onSwipeItem(holder, position, result);
+/**
+ * Returned value of the {@link ComposedAdapter#addAdapter(RecyclerView.Adapter)} method.
+ *
+ * @see {@link ComposedAdapter#addAdapter(RecyclerView.Adapter)}
+ * @see {@link ComposedAdapter#addAdapter(RecyclerView.Adapter, int)}
+ * @see {@link ComposedAdapter#removeAdapter(ComposedChildAdapterTag)}
+ */
+public class ComposedChildAdapterTag {
+    ComposedChildAdapterTag() {
     }
 }

@@ -16,6 +16,8 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager;
 
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -130,6 +132,11 @@ class ViewPagerSwipeableExampleAdapter
 
     @Override
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
+        if (type == Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND) {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        } else {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.bg_swipe_item_gray));
+        }
     }
 
     @Override

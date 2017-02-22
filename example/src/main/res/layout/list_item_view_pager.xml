@@ -20,14 +20,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
-    android:background="#999999">
+    android:layout_height="@dimen/list_item_height">
 
     <com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager.PagerSwipeItemFrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff"
+        android:background="@color/bg_item_normal_state"
         android:clickable="true"
         android:foreground="?attr/selectableItemBackground">
 

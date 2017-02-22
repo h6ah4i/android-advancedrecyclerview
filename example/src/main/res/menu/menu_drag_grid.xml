@@ -19,6 +19,6 @@
     <item
         android:id="@+id/menu_switch_swap_mode"
         android:title="OFF: Normal, ON: Swap"
-        app:actionLayout="@layout/menu_appbar_switch"
+        app:actionLayout="@layout/menu_appbar_mode_switch"
         app:showAsAction="always"/>
 </menu>

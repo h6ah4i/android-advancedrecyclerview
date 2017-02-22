@@ -17,7 +17,7 @@
 <manifest
     package="com.h6ah4i.android.example.advrecyclerview"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
 
     <application
         android:allowBackup="true"
@@ -114,6 +114,30 @@
         <activity
             android:name=".demo_s_viewpager.ViewPagerSwipeableExampleActivity"
             android:label="@string/activity_title_demo_s_viewpager"/>
+
+        <activity
+            android:name=".demo_hf_minimal.MinimalHeaderFooterExampleActivity"
+            android:label="@string/activity_title_demo_hf_minimal"/>
+
+        <activity
+            android:name=".demo_hf_e.ExpandableWithHeaderFooterExampleActivity"
+            android:label="@string/activity_title_demo_hf_e"/>
+
+        <activity
+            android:name=".demo_hf_add_remove.AddRemoveHeaderFooterExampleActivity"
+            android:label="@string/activity_title_demo_hf_add_remove"/>
+
+        <activity
+            android:name=".demo_wa_insertion.CustomInsertionWrapperAdapterExampleActivity"
+            android:label="@string/activity_title_demo_wa_insertion"/>
+
+        <activity
+            android:name=".demo_wa_filtering.CustomFilteringWrapperAdapterExampleActivity"
+            android:label="@string/activity_title_demo_wa_filtering"/>
+
+        <activity
+            android:name=".demo_composition_all.CompositionAllExampleActivity"
+            android:label="@string/activity_title_demo_composition_all"/>
 
         <activity
             android:name=".about.AboutActivity"

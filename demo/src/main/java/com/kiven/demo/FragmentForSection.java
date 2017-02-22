@@ -59,7 +59,7 @@ public class FragmentForSection extends Fragment implements RecyclerViewExpandab
                 super.handleMessage(msg);
 
                 myAdapter.gruopCount = 4;
-                myAdapter.childCount = 1;
+                myAdapter.childCount = 2;
                 myAdapter.notifyDataSetChanged();
             }
         };

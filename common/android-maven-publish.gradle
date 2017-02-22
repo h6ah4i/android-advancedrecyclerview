@@ -26,15 +26,36 @@ def repoDir = project.mavenPublishDestDir
 def dataProps = new Properties()
 dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
 
+def doclavaProjPath =  project.path + ':doclava'
+def optUseDoclava = project.useDoclava
+
 task cleanDocsOutDir(type: Delete) {
     delete project.docsDir
 }
 
-task androidJavadocs(type: Javadoc) {
+task androidJavadocs(
+        type: Javadoc,
+        dependsOn: [ cleanDocsOutDir ]) {
+
     source = android.sourceSets.main.java.srcDirs
     excludes += '**/BuildConfig.java'
     excludes += '**/R.java'
     options.encoding "utf-8"
+
+    if (optUseDoclava) {
+        title = ""  // This is required to avoid Doclava error: "javadoc: error - invalid flag: -doctitle"
+
+        options.bootClasspath new File(System.getenv('JAVA_HOME') + "/jre/lib/rt.jar")
+        options.docletpath = [ project.rootProject.file('./doclava/doclava-1.0.6.jar') ]
+        options.doclet 'com.google.doclava.Doclava'
+        options.addStringOption 'hdf project.name', 'Advanced RecyclerView'
+        options.addStringOption 'templatedir', project.rootProject.file('./doclava/template').absolutePath
+    }
+}
+
+afterEvaluate {
+    androidJavadocs.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    androidJavadocs.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
 }
 
 task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
@@ -45,11 +66,6 @@ task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
 task androidSourcesJar(type: Jar) {
     classifier = 'sources'
     from android.sourceSets.main.java.srcDirs
-}
-
-afterEvaluate {
-    androidJavadocs.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    androidJavadocs.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
 }
 
 signing {

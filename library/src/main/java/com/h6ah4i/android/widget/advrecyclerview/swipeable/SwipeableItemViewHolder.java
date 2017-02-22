@@ -16,7 +16,10 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
+import android.support.annotation.Nullable;
 import android.view.View;
+
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemAfterReactions;
 
 /**
  * Interface which provides required information for swiping item.
@@ -75,19 +78,24 @@ public interface SwipeableItemViewHolder {
      *
      * @param reaction After-reaction type. One of these values;
      *                 - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT}
+     *                 - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_MOVE_TO_ORIGIN}
      *                 - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_REMOVE_ITEM}
      *                 - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION}
+     *                 - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DO_NOTHING}
      */
-    void setAfterSwipeReaction(int reaction);
+    void setAfterSwipeReaction(@SwipeableItemAfterReactions int reaction);
 
     /**
      * Gets the reaction type of after swiping item.
      *
      * @return After-reaction type. One of these values;
      * - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DEFAULT}
+     * - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_MOVE_TO_ORIGIN}
      * - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_REMOVE_ITEM}
      * - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION}
+     * - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager#AFTER_SWIPE_REACTION_DO_NOTHING}
      */
+    @SwipeableItemAfterReactions
     int getAfterSwipeReaction();
 
     /**
@@ -208,9 +216,13 @@ public interface SwipeableItemViewHolder {
 
     /**
      * Gets the container view for the swipeable area.
+     * <p>NOTE: Please DO NOT return <code>itemView</code> for this method.
+     * An IllegalArgumentException with massage "Tmp detached view should be removed from RecyclerView before it can be recycled"
+     * will be raised by RecyclerView.Recycler.</p>
      *
      * @return The container view instance.
      */
+    @Nullable
     View getSwipeableContainerView();
 
     /**

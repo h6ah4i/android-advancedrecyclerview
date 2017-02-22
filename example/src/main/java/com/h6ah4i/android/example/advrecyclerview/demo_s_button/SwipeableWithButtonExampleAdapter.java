@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
@@ -60,12 +61,14 @@ class SwipeableWithButtonExampleAdapter
 
     public static class MyViewHolder extends AbstractSwipeableItemViewHolder {
         public FrameLayout mContainer;
+        public RelativeLayout mBehindViews;
         public TextView mTextView;
         public Button mButton;
 
         public MyViewHolder(View v) {
             super(v);
             mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mBehindViews = (RelativeLayout) v.findViewById(R.id.behind_views);
             mTextView = (TextView) v.findViewById(android.R.id.text1);
             mButton = (Button) v.findViewById(android.R.id.button1);
         }
@@ -188,20 +191,11 @@ class SwipeableWithButtonExampleAdapter
 
     @Override
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
-        int bgRes = 0;
-        switch (type) {
-            case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
-                bgRes = R.drawable.bg_swipe_item_neutral;
-                break;
-            case Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND:
-                bgRes = R.drawable.bg_swipe_item_left;
-                break;
-            case Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND:
-                bgRes = R.drawable.bg_swipe_item_right;
-                break;
+        if (type == Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND) {
+            holder.mBehindViews.setVisibility(View.GONE);
+        } else {
+            holder.mBehindViews.setVisibility(View.VISIBLE);
         }
-
-        holder.itemView.setBackgroundResource(bgRes);
     }
 
     @Override

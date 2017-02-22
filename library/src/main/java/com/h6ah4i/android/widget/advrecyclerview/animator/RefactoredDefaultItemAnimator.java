@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator;
 
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,8 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.impl.ItemRemoveAnimati
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.MoveAnimationInfo;
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo;
 
+import java.util.List;
+
 public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
 
     @Override
@@ -43,6 +46,27 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
     @Override
     protected void onSchedulePendingAnimations() {
         schedulePendingAnimationsByDefaultRule();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * If the payload list is not empty, RefactoredDefaultItemAnimator returns <code>true</code>.
+     * When this is the case:
+     * <ul>
+     * <li>If you override {@link #animateChange(RecyclerView.ViewHolder, RecyclerView.ViewHolder, int, int, int, int)}, both
+     * ViewHolder arguments will be the same instance.
+     * </li>
+     * <li>
+     * If you are not overriding {@link #animateChange(RecyclerView.ViewHolder, RecyclerView.ViewHolder, int, int, int, int)},
+     * then RefactoredDefaultItemAnimator will call {@link #animateMove(RecyclerView.ViewHolder, int, int, int, int)} and
+     * run a move animation instead.
+     * </li>
+     * </ul>
+     */
+    @Override
+    public boolean canReuseUpdatedViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, @NonNull List<Object> payloads) {
+        return !payloads.isEmpty() || super.canReuseUpdatedViewHolder(viewHolder, payloads);
     }
 
     /**
@@ -80,7 +104,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
 
         @Override
         public boolean addPendingAnimation(RecyclerView.ViewHolder item) {
-            endAnimation(item);
+            resetAnimation(item);
 
             ViewCompat.setAlpha(item.itemView, 0);
 
@@ -127,7 +151,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
 
         @Override
         public boolean addPendingAnimation(RecyclerView.ViewHolder holder) {
-            endAnimation(holder);
+            resetAnimation(holder);
 
             enqueuePendingAnimationInfo(new RemoveAnimationInfo(holder));
             return true;
@@ -193,7 +217,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
             final float prevTranslationY = ViewCompat.getTranslationY(oldHolder.itemView);
             final float prevAlpha = ViewCompat.getAlpha(oldHolder.itemView);
 
-            endAnimation(oldHolder);
+            resetAnimation(oldHolder);
 
             final int deltaX = (int) (toX - fromX - prevTranslationX);
             final int deltaY = (int) (toY - fromY - prevTranslationY);
@@ -205,7 +229,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
 
             if (newHolder != null) {
                 // carry over translation values
-                endAnimation(newHolder);
+                resetAnimation(newHolder);
                 ViewCompat.setTranslationX(newHolder.itemView, -deltaX);
                 ViewCompat.setTranslationY(newHolder.itemView, -deltaY);
                 ViewCompat.setAlpha(newHolder.itemView, 0);
@@ -285,7 +309,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
             fromX += ViewCompat.getTranslationX(item.itemView);
             fromY += ViewCompat.getTranslationY(item.itemView);
 
-            endAnimation(item);
+            resetAnimation(item);
 
             final int deltaX = toX - fromX;
             final int deltaY = toY - fromY;
