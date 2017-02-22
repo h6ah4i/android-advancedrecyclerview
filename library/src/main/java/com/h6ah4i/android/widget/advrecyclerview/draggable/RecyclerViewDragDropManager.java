@@ -2067,7 +2067,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
                     mHolder.handleOnLongPress(mDownMotionEvent);
                     break;
                 case MSG_DEFERRED_CANCEL_DRAG:
-                    mHolder.cancelDrag(true);
+                    if (mHolder != null) mHolder.cancelDrag(true);
                     break;
                 case MSG_CHECK_ITEM_VIEW_SIZE_UPDATE:
                     mHolder.handleOnCheckItemViewSizeUpdate();
