@@ -2056,7 +2056,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         public void release() {
-            removeCallbacks(null);
+            removeCallbacksAndMessages(null);
             mHolder = null;
         }
 

@@ -1006,7 +1006,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         public void release() {
-            removeCallbacks(null);
+            removeCallbacksAndMessages(null);
             mHolder = null;
         }
 
