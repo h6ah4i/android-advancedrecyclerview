@@ -178,7 +178,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mAlphaInterpolator = info.alphaInterpolator;
     }
 
-    public void start(MotionEvent e, DraggingItemInfo draggingItemInfo) {
+    public void start(DraggingItemInfo draggingItemInfo, int touchX, int touchY) {
         if (mStarted) {
             return;
         }
@@ -199,7 +199,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         // hide
         itemView.setVisibility(View.INVISIBLE);
 
-        update(e, true);
+        update(touchX, touchY, true);
 
         mRecyclerView.addItemDecoration(this);
         mStartMillis = System.currentTimeMillis();
@@ -263,9 +263,9 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mStarted = false;
     }
 
-    public boolean update(MotionEvent e, boolean force) {
-        mTouchPositionX = (int) (e.getX() + 0.5f);
-        mTouchPositionY = (int) (e.getY() + 0.5f);
+    public boolean update(int touchX, int touchY, boolean force) {
+        mTouchPositionX = touchX;
+        mTouchPositionY = touchY;
 
         return refresh(force);
     }

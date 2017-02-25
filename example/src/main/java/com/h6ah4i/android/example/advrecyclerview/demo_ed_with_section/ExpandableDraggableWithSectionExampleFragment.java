@@ -185,11 +185,11 @@ public class ExpandableDraggableWithSectionExampleFragment extends Fragment
     }
 
     @Override
-    public void onGroupCollapse(int groupPosition, boolean fromUser) {
+    public void onGroupCollapse(int groupPosition, boolean fromUser, Object payload) {
     }
 
     @Override
-    public void onGroupExpand(int groupPosition, boolean fromUser) {
+    public void onGroupExpand(int groupPosition, boolean fromUser, Object payload) {
         if (fromUser) {
             adjustScrollPositionOnGroupExpanded(groupPosition);
         }
