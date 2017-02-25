@@ -1,5 +1,8 @@
 #! /usr/bin/env bash
 
+
+rm -rf "./methodscount/build/dependencies"
+
 # assemble fat-aar and copy dependencies
 ./gradlew :methodscount:copyDependencies > /dev/null
 
@@ -29,6 +32,7 @@ function jar-method-counts() {
     local jar_basename=$(basename $jar_file '.jar')
     local jar_dir_dest="/tmp/jar-method-counts/$jar_basename"
 
+    rm -rf "$jar_dir_dest"
     mkdir -p "$jar_dir_dest"
 
     "$BUILD_TOOOLS_DIR/dx"\
