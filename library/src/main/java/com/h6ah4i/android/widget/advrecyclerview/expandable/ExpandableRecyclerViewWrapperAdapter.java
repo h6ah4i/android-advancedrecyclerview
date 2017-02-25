@@ -75,7 +75,10 @@ class ExpandableRecyclerViewWrapperAdapter
         mExpandableListManager = manager;
 
         mPositionTranslator = new ExpandablePositionTranslator();
-        mPositionTranslator.build(mExpandableItemAdapter, mExpandableListManager.getDefaultGroupsExpandedState());
+        mPositionTranslator.build(
+                mExpandableItemAdapter,
+                ExpandablePositionTranslator.BUILD_OPTION_DEFAULT,
+                mExpandableListManager.getDefaultGroupsExpandedState());
 
         if (expandedItemsSavedState != null) {
             // NOTE: do not call hook routines and listener methods
@@ -206,7 +209,10 @@ class ExpandableRecyclerViewWrapperAdapter
     private void rebuildPositionTranslator() {
         if (mPositionTranslator != null) {
             long[] savedState = mPositionTranslator.getSavedStateArray();
-            mPositionTranslator.build(mExpandableItemAdapter, mExpandableListManager.getDefaultGroupsExpandedState());
+            mPositionTranslator.build(
+                    mExpandableItemAdapter,
+                    ExpandablePositionTranslator.BUILD_OPTION_DEFAULT,
+                    mExpandableListManager.getDefaultGroupsExpandedState());
 
             // NOTE: do not call hook routines and listener methods
             mPositionTranslator.restoreExpandedGroupItems(savedState, null, null, null);
@@ -701,14 +707,20 @@ class ExpandableRecyclerViewWrapperAdapter
 
     /*package*/ void expandAll() {
         if (!mPositionTranslator.isEmpty() && !mPositionTranslator.isAllExpanded()) {
-            mPositionTranslator.build(mExpandableItemAdapter, true);
+            mPositionTranslator.build(
+                    mExpandableItemAdapter,
+                    ExpandablePositionTranslator.BUILD_OPTION_EXPANDED_ALL,
+                    mExpandableListManager.getDefaultGroupsExpandedState());
             notifyDataSetChanged();
         }
     }
 
     /*package*/ void collapseAll() {
         if (!mPositionTranslator.isEmpty() && !mPositionTranslator.isAllCollapsed()) {
-            mPositionTranslator.build(mExpandableItemAdapter, false);
+            mPositionTranslator.build(
+                    mExpandableItemAdapter,
+                    ExpandablePositionTranslator.BUILD_OPTION_COLLAPSED_ALL,
+                    mExpandableListManager.getDefaultGroupsExpandedState());
             notifyDataSetChanged();
         }
     }
