@@ -137,4 +137,12 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
     public boolean onHookGroupCollapse(int groupPosition, boolean fromUser) {
         return true;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean getInitialGroupExpandedState(int groupPosition) {
+        return false;
+    }
 }
