@@ -61,7 +61,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
     compile 'com.android.support:design:25.2.0'
-    compile ('com.h6ah4i.android.tablayouthelper:tablayouthelper:0.7.0') {
+    compile ('com.h6ah4i.android.tablayouthelper:tablayouthelper:0.8.0') {
         exclude group: 'com.android.support'
     }
 }
