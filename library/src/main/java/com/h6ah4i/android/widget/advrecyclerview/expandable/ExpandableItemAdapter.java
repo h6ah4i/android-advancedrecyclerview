@@ -177,6 +177,17 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
 
     /**
      * Called when a group attempt to expand by user operation or by
+     * {@link com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager#expandGroup(int)} method.
+     *
+     * @param groupPosition The position of the group item within the adapter's data set
+     * @param fromUser      Whether the expand request is issued by a user operation
+     * @param payload       Optional parameter, use null to identify a "full" update the group item
+     * @return Whether the group can be expanded. If returns false, the group keeps collapsed.
+     */
+    boolean onHookGroupExpand(int groupPosition, boolean fromUser, Object payload);
+
+    /**
+     * Called when a group attempt to expand by user operation or by
      * {@link com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager#collapseGroup(int)} method.
      *
      * @param groupPosition The position of the group item within the adapter's data set
@@ -184,6 +195,17 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
      * @return Whether the group can be collapsed. If returns false, the group keeps expanded.
      */
     boolean onHookGroupCollapse(int groupPosition, boolean fromUser);
+
+    /**
+     * Called when a group attempt to expand by user operation or by
+     * {@link com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager#collapseGroup(int)} method.
+     *
+     * @param groupPosition The position of the group item within the adapter's data set
+     * @param fromUser      Whether the collapse request is issued by a user operation
+     * @param payload       Optional parameter, use null to identify a "full" update the group item
+     * @return Whether the group can be collapsed. If returns false, the group keeps expanded.
+     */
+    boolean onHookGroupCollapse(int groupPosition, boolean fromUser, Object payload);
 
     /**
      * Gets initial expanded state of the group item. This method is called when initially creating

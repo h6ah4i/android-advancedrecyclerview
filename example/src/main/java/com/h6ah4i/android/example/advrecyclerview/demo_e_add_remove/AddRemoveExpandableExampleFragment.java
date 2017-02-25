@@ -164,11 +164,11 @@ public class AddRemoveExpandableExampleFragment
     }
 
     @Override
-    public void onGroupCollapse(int groupPosition, boolean fromUser) {
+    public void onGroupCollapse(int groupPosition, boolean fromUser, Object payload) {
     }
 
     @Override
-    public void onGroupExpand(int groupPosition, boolean fromUser) {
+    public void onGroupExpand(int groupPosition, boolean fromUser, Object payload) {
         // NOTE: fromUser is false because explicitly calling the
         // RecyclerViewExpandableItemManager.expand() method in adapter
         adjustScrollPositionOnGroupExpanded(groupPosition);
