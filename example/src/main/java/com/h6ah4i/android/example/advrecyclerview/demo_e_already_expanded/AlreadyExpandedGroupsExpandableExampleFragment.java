@@ -72,6 +72,9 @@ public class AlreadyExpandedGroupsExpandableExampleFragment extends Fragment {
         mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
 
         // Expand all group items by default. This method must be called before creating a wrapper adapter.
+        //
+        // FYI: AbstractExpandableItemAdapter.getInitialGroupExpandedState() can also be used if you
+        // need fine control of initial group items' state.
         mRecyclerViewExpandableItemManager.setDefaultGroupsExpandedState(true);
 
         //adapter

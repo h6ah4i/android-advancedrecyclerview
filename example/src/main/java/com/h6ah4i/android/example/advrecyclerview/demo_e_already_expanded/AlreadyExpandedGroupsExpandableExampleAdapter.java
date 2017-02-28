@@ -182,6 +182,14 @@ class AlreadyExpandedGroupsExpandableExampleAdapter
         return true;
     }
 
+    @Override
+    public boolean getInitialGroupExpandedState(int groupPosition) {
+        // NOTE:
+        // This method can also be used to control initial state of group items.
+        // Make sure to call `setDefaultGroupsExpandedState(false)` to take effect.
+        return false;
+    }
+
     // NOTE: This method is called from Fragment
     public void addGroupAndChildItemsBottom(int groupCount, int childCount) {
         int groupPosition = mProvider.getGroupCount();

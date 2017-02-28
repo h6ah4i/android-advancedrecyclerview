@@ -21,6 +21,10 @@ import android.support.v7.widget.RecyclerView;
 import java.util.Arrays;
 
 class ExpandablePositionTranslator {
+    public static final int BUILD_OPTION_DEFAULT = 0;
+    public static final int BUILD_OPTION_EXPANDED_ALL = 1;
+    public static final int BUILD_OPTION_COLLAPSED_ALL = 2;
+
     private final static int ALLOCATE_UNIT = 256;
 
     private final static long FLAG_EXPANDED = 0x0000000080000000L;
@@ -49,32 +53,43 @@ class ExpandablePositionTranslator {
     public ExpandablePositionTranslator() {
     }
 
-    public void build(ExpandableItemAdapter adapter, boolean allExpanded) {
+    public void build(ExpandableItemAdapter adapter, int option, boolean defaultExpandedState) {
         final int groupCount = adapter.getGroupCount();
 
         enlargeArraysIfNeeded(groupCount, false);
 
         final long[] info = mCachedGroupPosInfo;
         final int[] ids = mCachedGroupId;
-        int totalChildCount = 0;
+        int expandedGroupCount = 0;
+        int expandedChildCount = 0;
+
         for (int i = 0; i < groupCount; i++) {
             final long groupId = adapter.getGroupId(i);
             final int childCount = adapter.getChildCount(i);
 
-            if (allExpanded) {
-                info[i] = (((long) (i + totalChildCount) << 32) | childCount) | FLAG_EXPANDED;
+            boolean expanded;
+
+            if (option == BUILD_OPTION_EXPANDED_ALL) {
+                expanded = true;
+            } else if (option == BUILD_OPTION_COLLAPSED_ALL) {
+                expanded = false;
             } else {
-                info[i] = (((long) i << 32) | childCount);
+                expanded = defaultExpandedState || adapter.getInitialGroupExpandedState(i);
             }
+
+            info[i] = (((long) (i + expandedChildCount) << 32) | childCount) | (expanded ? FLAG_EXPANDED : 0);
             ids[i] = (int) (groupId & LOWER_32BIT_MASK);
 
-            totalChildCount += childCount;
+            if (expanded) {
+                expandedGroupCount += 1;
+                expandedChildCount += childCount;
+            }
         }
 
         mAdapter = adapter;
         mGroupCount = groupCount;
-        mExpandedGroupCount = (allExpanded) ? groupCount : 0;
-        mExpandedChildCount = (allExpanded) ? totalChildCount : 0;
+        mExpandedGroupCount = expandedGroupCount;
+        mExpandedChildCount = expandedChildCount;
         mEndOfCalculatedOffsetGroupPosition = Math.max(0, groupCount - 1);
     }
 
@@ -121,18 +136,18 @@ class ExpandablePositionTranslator {
                     index = j + 1;
 
                     if (expanded) {
-                        if (adapter == null || adapter.onHookGroupExpand(position, fromUser)) {
+                        if (adapter == null || adapter.onHookGroupExpand(position, fromUser, null)) {
                             if (expandGroup(position)) {
                                 if (expandListener != null) {
-                                    expandListener.onGroupExpand(position, fromUser);
+                                    expandListener.onGroupExpand(position, fromUser, null);
                                 }
                             }
                         }
                     } else {
-                        if (adapter == null || adapter.onHookGroupCollapse(position, fromUser)) {
+                        if (adapter == null || adapter.onHookGroupCollapse(position, fromUser, null)) {
                             if (collapseGroup(position)) {
                                 if (collapseListener != null) {
-                                    collapseListener.onGroupCollapse(position, fromUser);
+                                    collapseListener.onGroupCollapse(position, fromUser, null);
                                 }
                             }
                         }

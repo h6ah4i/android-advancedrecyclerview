@@ -1,3 +1,23 @@
+## 0.10.4
+[BREAKING CHANGE]
+- The `payload` parameter is added to `OnGroupExpandListener` and `OnGroupCollapseListener` (issue #350)
+  (commit: 353406ea43657dead1ba65207b95e9067e457f6d)
+
+[New features]
+- Added fine control of initial state of group items by
+  `ExpandableItemAdapter.getInitialGroupExpandedState()`  (issue #346)
+- Added variants of `expandGroup()`/`collapseGroup()` methods which has a `payload` parameter (issue #350)
+
+[Bug fixes]
+- Fixed NullPointerException issue (issue #358 & PR #362, thanks @polyak01 !)
+- Fix swipe amount not applied before laid out item views in proportional mode (issue #361)
+
+[Improvements]
+- Added scrolling support while dragging in NestedScrollView (issue #351)
+- Updated support library to v25.2.0
+
+
+
 ## 0.10.3
 [Bug fixes]
 - Fixed IllegalStateException on touching a group item while RecyclerView is calculating layout (issue #339)
@@ -25,7 +45,7 @@
 ## 0.10.0
 [New features]
 - Introduced ComposedAdapter
-- Introudced Headers and Footers support
+- Introduced Headers and Footers support
 - Added new demos for new adapter related features
 - Made dragging item appearance controllable (issue #193, #292)
 - Added AFTER_SWIPE_REACTION_DO_NOTHING (pull request #308)
