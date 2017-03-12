@@ -18,6 +18,7 @@ function aar-method-counts() {
     rm -rf "$aar_unzip_dest"
     mkdir -p "$aar_unzip_dest"
 
+    echo unzip "$aar_file" -d "$aar_unzip_dest"
     unzip "$aar_file" -d "$aar_unzip_dest" > /dev/null
     "$BUILD_TOOOLS_DIR/dx"\
         --dex --no-optimize \
@@ -55,32 +56,34 @@ function file_size() {
     ) | awk '{print $1}'
 }
 
-LIBRARY_AAR="./methodscount/build/dependencies/library-release.aar"
-DEPENDENCIES_AARS=$(find ./methodscount/build/dependencies -type f -name '*.aar' | grep -v 'library-release.aar')
-DEPENDENCIES_JARS=$(find ./methodscount/build/dependencies -type f -name '*.jar')
+LIBRARY_AAR="./methodscount/build/outputs/aar/methodscount-release.aar"
+#DEPENDENCIES_AARS=$(find ./methodscount/build/dependencies -type f -name '*.aar' | grep -v 'library-release.aar')
+#DEPENDENCIES_JARS=$(find ./methodscount/build/dependencies -type f -name '*.jar')
 
 #
 # count library's method counts
 #
-lib_method_counts=$(aar-method-counts "$LIBRARY_AAR")
+aar-method-counts "$LIBRARY_AAR"
+#lib_method_counts=$(aar-method-counts "$LIBRARY_AAR")
+exit
 
 #
 # count dependencies' method counts
 #
 deps_method_counts=0
-IFS=$'\n'
-for dep_aar in $(echo "$DEPENDENCIES_AARS"); do
-    count=$(aar-method-counts "$dep_aar")
-    deps_method_counts=$(($deps_method_counts + $count))
-    # echo "$(basename $dep_aar) $deps_method_counts  $count"
-done
+#IFS=$'\n'
+#for dep_aar in $(echo "$DEPENDENCIES_AARS"); do
+#    count=$(aar-method-counts "$dep_aar")
+#    deps_method_counts=$(($deps_method_counts + $count))
+#    # echo "$(basename $dep_aar) $deps_method_counts  $count"
+#done
 
-for dep_jar in $(echo "$DEPENDENCIES_JARS"); do
-    count=$(jar-method-counts "$dep_jar")
-    deps_method_counts=$(($deps_method_counts + $count))
-    # echo "$(basename $dep_jar) $deps_method_counts  $count"
-done
-unset IFS
+#for dep_jar in $(echo "$DEPENDENCIES_JARS"); do
+#    count=$(jar-method-counts "$dep_jar")
+#    deps_method_counts=$(($deps_method_counts + $count))
+#    # echo "$(basename $dep_jar) $deps_method_counts  $count"
+#done
+#unset IFS
 
 #
 # library version
