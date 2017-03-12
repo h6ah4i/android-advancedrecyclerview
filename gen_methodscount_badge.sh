@@ -1,10 +1,10 @@
 #! /usr/bin/env bash
 
-
-rm -rf "./methodscount/build/dependencies"
+# assemble library
+./gradlew :library:assembleRelease > /dev/null
 
 # assemble fat-aar and copy dependencies
-./gradlew :methodscount:copyDependencies > /dev/null
+./gradlew :methodscount:assembleRelease > /dev/null
 
 BUILD_TOOOLS_VERSION=$(ls $ANDROID_HOME/build-tools/ | sort -n -r | head -n 1)
 BUILD_TOOOLS_DIR="$ANDROID_HOME/build-tools/$BUILD_TOOOLS_VERSION"
@@ -19,12 +19,31 @@ function aar-method-counts() {
     mkdir -p "$aar_unzip_dest"
 
     unzip "$aar_file" -d "$aar_unzip_dest" > /dev/null
-    "$BUILD_TOOOLS_DIR/dx"\
-        --dex --no-optimize \
-        --output="$aar_unzip_dest/classes.dex" \
-        "$aar_unzip_dest/classes.jar"
-    
-    dex-method-counts "$aar_unzip_dest/classes.dex" | grep 'Overall method count:' | sed -E 's/Overall method count: ([0-9]+)/\1/g'
+    jar-method-counts "$aar_unzip_dest/classes.jar"
+}
+
+function aar-deps-method-counts() {
+    local aar_file=$1
+    local aar_basename=$(basename $aar_file '.aar')
+    local aar_unzip_dest="/tmp/aar-deps-method-counts/$aar_basename"
+
+    rm -rf "$aar_unzip_dest"
+    mkdir -p "$aar_unzip_dest"
+
+    unzip "$aar_file" -d "$aar_unzip_dest" > /dev/null
+
+    DEPS_JARS=$(find "$aar_unzip_dest/libs" -type f -name '*.jar' | grep -v 'library-unspecified.jar')
+    deps_method_counts=0
+
+    IFS=$'\n'
+    for dep_jar in $(echo "$DEPS_JARS"); do
+       count=$(jar-method-counts "$dep_jar")
+       deps_method_counts=$(($deps_method_counts + $count))
+       # echo "$(basename $dep_jar) $deps_method_counts  $count"
+    done
+    unset IFS
+
+    echo "$deps_method_counts"
 }
 
 function jar-method-counts() {
@@ -55,9 +74,8 @@ function file_size() {
     ) | awk '{print $1}'
 }
 
-LIBRARY_AAR="./methodscount/build/dependencies/library-release.aar"
-DEPENDENCIES_AARS=$(find ./methodscount/build/dependencies -type f -name '*.aar' | grep -v 'library-release.aar')
-DEPENDENCIES_JARS=$(find ./methodscount/build/dependencies -type f -name '*.jar')
+LIBRARY_AAR="./library/build/outputs/aar/library-release.aar"
+DEPS_LIBRARY_AAR="./methodscount/build/outputs/aar/methodscount-release.aar"
 
 #
 # count library's method counts
@@ -67,20 +85,7 @@ lib_method_counts=$(aar-method-counts "$LIBRARY_AAR")
 #
 # count dependencies' method counts
 #
-deps_method_counts=0
-IFS=$'\n'
-for dep_aar in $(echo "$DEPENDENCIES_AARS"); do
-    count=$(aar-method-counts "$dep_aar")
-    deps_method_counts=$(($deps_method_counts + $count))
-    # echo "$(basename $dep_aar) $deps_method_counts  $count"
-done
-
-for dep_jar in $(echo "$DEPENDENCIES_JARS"); do
-    count=$(jar-method-counts "$dep_jar")
-    deps_method_counts=$(($deps_method_counts + $count))
-    # echo "$(basename $dep_jar) $deps_method_counts  $count"
-done
-unset IFS
+deps_method_counts=$(aar-deps-method-counts "$DEPS_LIBRARY_AAR")
 
 #
 # library version
@@ -95,6 +100,8 @@ lib_file_size_kb=$(( ($lib_file_size + 999) / 1000 ))
 
 methodscount_site_url="http://www.methodscount.com/?lib=com.h6ah4i.android.widget.advrecyclerview%3Aadvrecyclerview%3A$lib_version"
 methodscount_badge_url="https://img.shields.io/badge/Methods and size-core: $lib_method_counts | deps: $deps_method_counts | $lib_file_size_kb KB-e91e63.svg"
+methodscount_badge_url=$(echo "$methodscount_badge_url" | sed -E 's/ /%20/g' | sed 's/|/%7C/g')
 
 # echo "<a href=\"$methodscount_site_url\"><img src=\"$methodscount_badge_url\"/></a>"
 echo "[![Method Count]($methodscount_badge_url) ]($methodscount_site_url)"
+
