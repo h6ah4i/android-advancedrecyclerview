@@ -16,7 +16,7 @@
 
 apply plugin: 'com.android.library'
 
-apply from: 'https://raw.githubusercontent.com/adwiv/android-fat-aar/master/fat-aar.gradle'
+apply plugin: 'me.vigi.fat-aar'
 
 // Common configurations
 apply from: '../common/android-set-common-properties.gradle'
@@ -36,15 +36,12 @@ android {
         debug {
         }
     }
-}
 
-task copyDependencies(type: Copy) {
-    dependsOn build
-    from configurations.compile
-    into "${project.projectDir}/build/dependencies"
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-  embedded project(':library')
+  embed project(':library')
 }
-

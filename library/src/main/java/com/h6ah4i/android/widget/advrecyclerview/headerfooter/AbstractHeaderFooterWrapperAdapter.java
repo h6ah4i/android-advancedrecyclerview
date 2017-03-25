@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
 import com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedAdapter;
@@ -80,9 +81,9 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
         mFooterAdapter.setHasStableIds(hasStableIds);
         setHasStableIds(hasStableIds);
 
-        addAdapter(mHeaderAdapter);
-        addAdapter(mWrappedAdapter);
-        addAdapter(mFooterAdapter);
+        mHeaderAdapterTag = addAdapter(mHeaderAdapter);
+        mWrappedAdapterTag = addAdapter(mWrappedAdapter);
+        mFooterAdapterTag = addAdapter(mFooterAdapter);
 
         return this;
     }
@@ -143,6 +144,34 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      */
     public RecyclerView.Adapter getWrappedAdapter() {
         return mWrappedAdapter;
+    }
+
+
+    /**
+     * Returns the path segment for the underlying adapter.
+     *
+     * @return AdapterPathSegment for the wrapped adapter
+     */
+    public AdapterPathSegment getWrappedAdapterSegment() {
+      return new AdapterPathSegment(mWrappedAdapter, mWrappedAdapterTag);
+    }
+
+    /**
+     * Returns the path segment for the header adapter.
+     *
+     * @return AdapterPathSegment for the header adapter
+     */
+    public AdapterPathSegment getHeaderSegment() {
+      return new AdapterPathSegment(mHeaderAdapter, mHeaderAdapterTag);
+    }
+
+    /**
+     * Returns the path segment for the footer adapter.
+     *
+     * @return AdapterPathSegment for the footer adapter
+     */
+    public AdapterPathSegment getFooterSegment() {
+      return new AdapterPathSegment(mFooterAdapter, mFooterAdapterTag);
     }
 
     /**
