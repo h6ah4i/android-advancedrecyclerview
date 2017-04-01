@@ -578,7 +578,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         switch (action) {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                handleActionUpOrCancel(action, true);
+                handled = handleActionUpOrCancel(action, true);
                 break;
 
             case MotionEvent.ACTION_DOWN:
@@ -922,6 +922,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
     private boolean handleActionUpOrCancel(int action, boolean invokeFinish) {
         final boolean result = (action == MotionEvent.ACTION_UP);
+        final boolean handled = isDragging();
 
         if (mHandler != null) {
             mHandler.cancelLongPressDetection();
@@ -951,7 +952,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             finishDragging(result);
         }
 
-        return true;
+        return handled;
     }
 
     private boolean handleActionMoveWhileNotDragging(RecyclerView rv, MotionEvent e) {
