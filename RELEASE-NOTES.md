@@ -1,3 +1,12 @@
+## 0.10.5
+[Bug fixes]
+- Fixed View.OVER_SCROLL_NEVER not work when dragging (issue #374)
+
+[Improvements]
+- Expose path segments for header footer adapter (PR #368, #373)
+- Updated support library to v25.3.0
+
+
 ## 0.10.4
 [BREAKING CHANGE]
 - The `payload` parameter is added to `OnGroupExpandListener` and `OnGroupCollapseListener` (issue #350)

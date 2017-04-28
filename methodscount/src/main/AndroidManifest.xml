@@ -14,5 +14,10 @@
        limitations under the License.
 -->
 <manifest
-    package="methodscount">
+    package="methodscount"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!---
+      NOTE: xmlns:tools is required to workaround the following issue:
+      https://github.com/Vigi0303/fat-aar-plugin/issues/2
+    -->
 </manifest>

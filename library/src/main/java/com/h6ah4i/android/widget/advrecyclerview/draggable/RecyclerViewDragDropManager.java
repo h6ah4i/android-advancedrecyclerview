@@ -1372,36 +1372,37 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
             decorator.setIsScrolling(false);
         }
 
-        final boolean actualIsScrolling = (actualScrolledAmount != 0);
-
-
         if (mEdgeEffectDecorator != null) {
-            final float edgeEffectStrength = 0.005f;
-
-            final int draggingItemTopLeft = (horizontal) ? decorator.getTranslatedItemPositionLeft() : decorator.getTranslatedItemPositionTop();
-            final int draggingItemBottomRight = (horizontal) ? decorator.getTranslatedItemPositionRight() : decorator.getTranslatedItemPositionBottom();
-            final int draggingItemCenter = (draggingItemTopLeft + draggingItemBottomRight) / 2;
-            final int nearEdgePosition;
-
-            if (firstVisibleChild == 0 && lastVisibleChild == 0) {
-                // has only 1 item
-                nearEdgePosition = (scrollAmount < 0) ? draggingItemTopLeft : draggingItemBottomRight;
-            } else {
-                nearEdgePosition = (draggingItemCenter < (edge / 2)) ? draggingItemTopLeft : draggingItemBottomRight;
-            }
-
-            final float nearEdgeOffset = (nearEdgePosition * invEdge) - 0.5f;
-            final float absNearEdgeOffset = Math.abs(nearEdgeOffset);
             float edgeEffectPullDistance = 0;
 
-            if ((absNearEdgeOffset > 0.4f) && (scrollAmount != 0) && !actualIsScrolling) {
-                if (nearEdgeOffset < 0) {
-                    if (horizontal ? decorator.isReachedToLeftLimit() : decorator.isReachedToTopLimit()) {
-                        edgeEffectPullDistance = -mDisplayDensity * edgeEffectStrength;
-                    }
+            if (mOrigOverScrollMode != View.OVER_SCROLL_NEVER) {
+                final boolean actualIsScrolling = (actualScrolledAmount != 0);
+                final float edgeEffectStrength = 0.005f;
+
+                final int draggingItemTopLeft = (horizontal) ? decorator.getTranslatedItemPositionLeft() : decorator.getTranslatedItemPositionTop();
+                final int draggingItemBottomRight = (horizontal) ? decorator.getTranslatedItemPositionRight() : decorator.getTranslatedItemPositionBottom();
+                final int draggingItemCenter = (draggingItemTopLeft + draggingItemBottomRight) / 2;
+                final int nearEdgePosition;
+
+                if (firstVisibleChild == 0 && lastVisibleChild == 0) {
+                    // has only 1 item
+                    nearEdgePosition = (scrollAmount < 0) ? draggingItemTopLeft : draggingItemBottomRight;
                 } else {
-                    if (horizontal ? decorator.isReachedToRightLimit() : decorator.isReachedToBottomLimit()) {
-                        edgeEffectPullDistance = mDisplayDensity * edgeEffectStrength;
+                    nearEdgePosition = (draggingItemCenter < (edge / 2)) ? draggingItemTopLeft : draggingItemBottomRight;
+                }
+
+                final float nearEdgeOffset = (nearEdgePosition * invEdge) - 0.5f;
+                final float absNearEdgeOffset = Math.abs(nearEdgeOffset);
+
+                if ((absNearEdgeOffset > 0.4f) && (scrollAmount != 0) && !actualIsScrolling) {
+                    if (nearEdgeOffset < 0) {
+                        if (horizontal ? decorator.isReachedToLeftLimit() : decorator.isReachedToTopLimit()) {
+                            edgeEffectPullDistance = -mDisplayDensity * edgeEffectStrength;
+                        }
+                    } else {
+                        if (horizontal ? decorator.isReachedToRightLimit() : decorator.isReachedToBottomLimit()) {
+                            edgeEffectPullDistance = mDisplayDensity * edgeEffectStrength;
+                        }
                     }
                 }
             }
