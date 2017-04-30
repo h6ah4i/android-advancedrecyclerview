@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_d_grid;
 
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,18 +33,47 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstant
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
+import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
+
+import java.util.List;
 
 class DraggableGridExampleAdapter
         extends RecyclerView.Adapter<DraggableGridExampleAdapter.MyViewHolder>
-        implements DraggableItemAdapter<DraggableGridExampleAdapter.MyViewHolder> {
+        implements DraggableItemAdapter<DraggableGridExampleAdapter.MyViewHolder>, View.OnClickListener {
     private static final String TAG = "MyDraggableItemAdapter";
     private int mItemMoveMode = RecyclerViewDragDropManager.ITEM_MOVE_MODE_DEFAULT;
+
+    private final Object PAYLOAD_DRAGGABLE_ITEM_CHANGED = new Object();
+
+    @Override
+    public void onClick(View v) {
+        RecyclerView.ViewHolder vh = RecyclerViewAdapterUtils.getViewHolder(v);
+        int clickedItemPosition = vh.getAdapterPosition();
+
+        if (clickedItemPosition < 0) {
+            return;
+        }
+
+        int prevDraggableItemPosition = mDraggableItemPosition;
+
+        if (mDraggableItemPosition == clickedItemPosition) {
+            mDraggableItemPosition = -1;
+        } else {
+            mDraggableItemPosition = clickedItemPosition;
+        }
+
+        if (prevDraggableItemPosition >= 0) {
+            notifyItemChanged(prevDraggableItemPosition, PAYLOAD_DRAGGABLE_ITEM_CHANGED);
+        }
+        notifyItemChanged(mDraggableItemPosition, PAYLOAD_DRAGGABLE_ITEM_CHANGED);
+    }
 
     // NOTE: Make accessible with short name
     private interface Draggable extends DraggableItemConstants {
     }
 
     private AbstractDataProvider mProvider;
+    private int mDraggableItemPosition = -1;
 
     public static class MyViewHolder extends AbstractDraggableItemViewHolder {
         public FrameLayout mContainer;
@@ -84,11 +114,18 @@ class DraggableGridExampleAdapter
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_grid_item, parent, false);
-        return new MyViewHolder(v);
+        MyViewHolder vh = new MyViewHolder(v);
+        vh.mContainer.setOnClickListener(this);
+        return vh;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
+        throw new IllegalStateException();
+    }
+
+    @Override
+    public void onBindViewHolder(MyViewHolder holder, int position, List<Object> payloads) {
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         // set text
@@ -96,8 +133,9 @@ class DraggableGridExampleAdapter
 
         // set background resource (target view ID: container)
         final int dragState = holder.getDragStateFlags();
+        boolean draggableChanged = payloads.contains(PAYLOAD_DRAGGABLE_ITEM_CHANGED);
 
-        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (draggableChanged || ((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
 
             if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
@@ -113,6 +151,28 @@ class DraggableGridExampleAdapter
 
             holder.mContainer.setBackgroundResource(bgResId);
         }
+
+        if ((((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) || (dragState & Draggable.STATE_FLAG_DRAGGING) == 0)
+                && (position == mDraggableItemPosition)) {
+            holder.mContainer.setBackgroundResource(R.drawable.bg_item_dragging_active_state);
+            ViewCompat.setScaleX(holder.itemView, 1.2f);
+            ViewCompat.setScaleY(holder.itemView, 1.2f);
+            ViewCompat.setTranslationZ(holder.itemView, 2.0f);
+        } else {
+            ViewCompat.setScaleX(holder.itemView, 1.0f);
+            ViewCompat.setScaleY(holder.itemView, 1.0f);
+            ViewCompat.setTranslationZ(holder.itemView, 0.0f);
+        }
+    }
+
+    @Override
+    public void onViewRecycled(MyViewHolder holder) {
+        super.onViewRecycled(holder);
+
+        holder.mContainer.setBackgroundResource(R.drawable.bg_item_normal_state);
+        ViewCompat.setScaleX(holder.itemView, 1.0f);
+        ViewCompat.setScaleY(holder.itemView, 1.0f);
+        ViewCompat.setTranslationZ(holder.itemView, 0.0f);
     }
 
     @Override
@@ -128,6 +188,8 @@ class DraggableGridExampleAdapter
             return;
         }
 
+        mDraggableItemPosition = -1;
+
         if (mItemMoveMode == RecyclerViewDragDropManager.ITEM_MOVE_MODE_DEFAULT) {
             mProvider.moveItem(fromPosition, toPosition);
             notifyItemMoved(fromPosition, toPosition);
@@ -139,12 +201,12 @@ class DraggableGridExampleAdapter
 
     @Override
     public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
-        return true;
+        return position == mDraggableItemPosition;
     }
 
     @Override
     public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
-        // no drag-sortable range specified
+//        return new ItemDraggableRange(0, getItemCount() - 2);
         return null;
     }
 

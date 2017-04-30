@@ -35,6 +35,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.common.adapter.DemoHeaderFooterAdapter;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
@@ -77,21 +78,23 @@ public class DraggableGridExampleFragment extends Fragment {
         mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
                 (NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z3));
         // Start dragging after long press
-        mRecyclerViewDragDropManager.setInitiateOnLongPress(true);
-        mRecyclerViewDragDropManager.setInitiateOnMove(false);
+//        mRecyclerViewDragDropManager.setInitiateOnLongPress(true);
+        mRecyclerViewDragDropManager.setInitiateOnMove(true);
         mRecyclerViewDragDropManager.setLongPressTimeout(750);
 
         // setup dragging item effects (NOTE: DraggableItemAnimator is required)
         mRecyclerViewDragDropManager.setDragStartItemAnimationDuration(250);
-        mRecyclerViewDragDropManager.setDraggingItemAlpha(0.8f);
-        mRecyclerViewDragDropManager.setDraggingItemScale(1.3f);
-        mRecyclerViewDragDropManager.setDraggingItemRotation(15.0f);
+//        mRecyclerViewDragDropManager.setDraggingItemAlpha(0.8f);
+        mRecyclerViewDragDropManager.setDraggingItemScale(1.2f);
+//        mRecyclerViewDragDropManager.setDraggingItemRotation(15.0f);
 
         //adapter
         final DraggableGridExampleAdapter myItemAdapter = new DraggableGridExampleAdapter(getDataProvider());
         mAdapter = myItemAdapter;
 
-        mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(myItemAdapter);      // wrap for dragging
+        mWrappedAdapter = myItemAdapter;
+//        mWrappedAdapter = new DemoHeaderFooterAdapter(mWrappedAdapter);
+        mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(mWrappedAdapter);      // wrap for dragging
 
         GeneralItemAnimator animator = new DraggableItemAnimator(); // DraggableItemAnimator is required to make item animations properly.
 
