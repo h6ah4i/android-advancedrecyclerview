@@ -287,13 +287,13 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
     }
 
     @Override
-    public void onViewRecycled(VH holder) {
+    public void onViewRecycled(VH holder, int viewType) {
         if (isDragging()) {
             mDragDropManager.onItemViewRecycled(holder);
             mDraggingItemViewHolder = mDragDropManager.getDraggingItemViewHolder();
         }
 
-        super.onViewRecycled(holder);
+        super.onViewRecycled(holder, viewType);
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
