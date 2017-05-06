@@ -4,7 +4,7 @@
 ./gradlew :library:assembleRelease > /dev/null
 
 # assemble fat-aar and copy dependencies
-./gradlew :methodscount:assembleRelease > /dev/null
+USE_METHOD_COUNT=1 ./gradlew :methodscount:assembleRelease > /dev/null
 
 BUILD_TOOOLS_VERSION=$(ls $ANDROID_HOME/build-tools/ | sort -n -r | head -n 1)
 BUILD_TOOOLS_DIR="$ANDROID_HOME/build-tools/$BUILD_TOOOLS_VERSION"

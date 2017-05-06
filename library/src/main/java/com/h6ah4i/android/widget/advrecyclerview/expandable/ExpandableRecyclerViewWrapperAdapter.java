@@ -220,12 +220,12 @@ class ExpandableRecyclerViewWrapperAdapter
     }
 
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+    public void onViewRecycled(RecyclerView.ViewHolder holder, int viewType) {
         if (holder instanceof ExpandableItemViewHolder) {
             ((ExpandableItemViewHolder) holder).setExpandStateFlags(STATE_FLAG_INITIAL_VALUE);
         }
 
-        super.onViewRecycled(holder);
+        super.onViewRecycled(holder, viewType);
     }
 
     @Override
