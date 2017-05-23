@@ -28,6 +28,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPath;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
@@ -1001,7 +1002,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param childItemHeight Height of each child item height
      */
     public void scrollToGroup(int groupPosition, int childItemHeight) {
-        scrollToGroup(groupPosition, childItemHeight, 0, 0);
+        scrollToGroup(groupPosition, childItemHeight, 0, 0, null);
     }
 
     /**
@@ -1014,7 +1015,21 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      */
     public void scrollToGroup(int groupPosition, int childItemHeight, int topMargin, int bottomMargin) {
         int totalChildrenHeight = getChildCount(groupPosition) * childItemHeight;
-        scrollToGroupWithTotalChildrenHeight(groupPosition, totalChildrenHeight, topMargin, bottomMargin);
+        scrollToGroupWithTotalChildrenHeight(groupPosition, totalChildrenHeight, topMargin, bottomMargin, null);
+    }
+
+    /**
+     * Scroll to a group.
+     *
+     * @param groupPosition   Position of the group item
+     * @param childItemHeight Height of each child item height
+     * @param topMargin       Top margin
+     * @param bottomMargin    Bottom margin
+     * @param path            Adapter path for the wrapped adapter returned by the {@link #createWrappedAdapter(RecyclerView.Adapter)}.
+     */
+    public void scrollToGroup(int groupPosition, int childItemHeight, int topMargin, int bottomMargin, AdapterPath path) {
+        int totalChildrenHeight = getChildCount(groupPosition) * childItemHeight;
+        scrollToGroupWithTotalChildrenHeight(groupPosition, totalChildrenHeight, topMargin, bottomMargin, path);
     }
 
     /**
@@ -1025,10 +1040,27 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param topMargin           Top margin
      * @param bottomMargin        Bottom margin
      */
-    @SuppressWarnings("StatementWithEmptyBody")
     public void scrollToGroupWithTotalChildrenHeight(int groupPosition, int totalChildrenHeight, int topMargin, int bottomMargin) {
+        scrollToGroupWithTotalChildrenHeight(groupPosition, totalChildrenHeight, topMargin, bottomMargin, null);
+    }
+
+    /**
+     * Scroll to a group with specifying total children height.
+     *
+     * @param groupPosition       Position of the group item
+     * @param totalChildrenHeight Total height of children items
+     * @param topMargin           Top margin
+     * @param bottomMargin        Bottom margin
+     * @param path            Adapter path for the wrapped adapter returned by the {@link #createWrappedAdapter(RecyclerView.Adapter)}.
+     */
+    @SuppressWarnings("StatementWithEmptyBody")
+    public void scrollToGroupWithTotalChildrenHeight(int groupPosition, int totalChildrenHeight, int topMargin, int bottomMargin, AdapterPath path) {
         long packedPosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
         int flatPosition = getFlatPosition(packedPosition);
+
+        if (path != null) {
+            flatPosition = WrapperAdapterUtils.wrapPosition(path, mWrapperAdapter, mRecyclerView.getAdapter(), flatPosition);
+        }
 
         RecyclerView.ViewHolder vh = mRecyclerView.findViewHolderForLayoutPosition(flatPosition);
 
