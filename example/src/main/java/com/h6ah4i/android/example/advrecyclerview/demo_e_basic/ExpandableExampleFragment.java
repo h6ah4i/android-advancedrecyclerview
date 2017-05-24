@@ -30,7 +30,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.common.adapter.DemoHeaderFooterAdapter;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPath;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.RefactoredDefaultItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
@@ -46,7 +49,11 @@ public class ExpandableExampleFragment
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mWrappedAdapter;
+    private ExpandableExampleAdapter mAdapter;
+    private RecyclerView.Adapter mExpandableWrappedAdapter;
+    private DemoHeaderFooterAdapter mHeaderFooterAdapter1;
+    private DemoHeaderFooterAdapter mHeaderFooterAdapter2;
+    private DemoHeaderFooterAdapter mHeaderFooterAdapter3;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
 
     public ExpandableExampleFragment() {
@@ -72,9 +79,12 @@ public class ExpandableExampleFragment
         mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
 
         //adapter
-        final ExpandableExampleAdapter myItemAdapter = new ExpandableExampleAdapter(getDataProvider());
+        mAdapter = new ExpandableExampleAdapter(getDataProvider());
 
-        mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(myItemAdapter);       // wrap for expanding
+        mExpandableWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(mAdapter);       // wrap for expanding
+        mHeaderFooterAdapter1 = new DemoHeaderFooterAdapter(mExpandableWrappedAdapter);
+        mHeaderFooterAdapter2 = new DemoHeaderFooterAdapter(mHeaderFooterAdapter1);
+        mHeaderFooterAdapter3 = new DemoHeaderFooterAdapter(mHeaderFooterAdapter2);
 
         final GeneralItemAnimator animator = new RefactoredDefaultItemAnimator();
 
@@ -83,7 +93,7 @@ public class ExpandableExampleFragment
         animator.setSupportsChangeAnimations(false);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mWrappedAdapter);  // requires *wrapped* adapter
+        mRecyclerView.setAdapter(mHeaderFooterAdapter3);  // requires *wrapped* adapter
         mRecyclerView.setItemAnimator(animator);
         mRecyclerView.setHasFixedSize(false);
 
@@ -124,9 +134,9 @@ public class ExpandableExampleFragment
             mRecyclerView = null;
         }
 
-        if (mWrappedAdapter != null) {
-            WrapperAdapterUtils.releaseAll(mWrappedAdapter);
-            mWrappedAdapter = null;
+        if (mExpandableWrappedAdapter != null) {
+            WrapperAdapterUtils.releaseAll(mExpandableWrappedAdapter);
+            mExpandableWrappedAdapter = null;
         }
         mLayoutManager = null;
 
@@ -149,7 +159,14 @@ public class ExpandableExampleFragment
         int topMargin = (int) (getActivity().getResources().getDisplayMetrics().density * 16); // top-spacing: 16dp
         int bottomMargin = topMargin; // bottom-spacing: 16dp
 
-        mRecyclerViewExpandableItemManager.scrollToGroup(groupPosition, childItemHeight, topMargin, bottomMargin);
+        AdapterPath path = new AdapterPath();
+
+        path.append(new AdapterPathSegment(mRecyclerView.getAdapter(), null));
+        path.append(mHeaderFooterAdapter3.getWrappedAdapterSegment());
+        path.append(mHeaderFooterAdapter2.getWrappedAdapterSegment());
+        path.append(mHeaderFooterAdapter1.getWrappedAdapterSegment());
+
+        mRecyclerViewExpandableItemManager.scrollToGroup(groupPosition, childItemHeight, topMargin, bottomMargin, path);
     }
 
     private boolean supportsViewElevation() {
