@@ -267,7 +267,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
         mSwipingItemId = id;
 
-        notifyDataSetChanged();
+        notifyItemChanged(holder.getAdapterPosition());
     }
 
     // NOTE: This method is called from RecyclerViewSwipeManager
@@ -299,7 +299,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
         resultAction.performAction();
 
-        notifyDataSetChanged();
+        notifyItemChanged(holder.getAdapterPosition());
     }
 
     protected boolean isSwiping() {
