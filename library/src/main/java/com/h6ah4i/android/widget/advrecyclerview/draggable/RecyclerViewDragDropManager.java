@@ -1613,7 +1613,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         final View fromView = (draggingItemHolder != null) ? draggingItemHolder.itemView : null;
         final View toView = swapTargetHolder.itemView;
         final View firstView = CustomRecyclerViewUtils.findViewByPosition(layoutManager, firstVisible);
-        final int rootFromPosition = draggingItemHolder.getLayoutPosition();
+        final int rootFromPosition = (draggingItemHolder != null) ? draggingItemHolder.getLayoutPosition() : RecyclerView.NO_POSITION;
         final int rootToPosition = swapTargetHolder.getLayoutPosition();
         final Integer fromOrigin = getItemViewOrigin(fromView, isVertical);
         final Integer toOrigin = getItemViewOrigin(toView, isVertical);
@@ -1798,44 +1798,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManagerInternal1(FindSwapTargetContext fc) {
-        final int gap = (int) (fc.rv.getContext().getResources().getDisplayMetrics().density * 4);
-
-        int cx = fc.overlayItemLeftNotClipped;
-        int cy = fc.overlayItemTopNotClipped;
-
-        cx += (int) (fc.draggingItemInfo.width * 0.5f);
-        cy += (int) (fc.draggingItemInfo.height * 0.5f);
-
-        if (fc.vertical) {
-            cx = Math.max(cx, fc.rv.getPaddingLeft() + (2 * gap) + 1);
-            cx = Math.min(cx, fc.rv.getWidth() - fc.rv.getPaddingRight() - (2 * gap) - 1);
-        } else {
-            cy = Math.max(cy, fc.rv.getPaddingTop() + (2 * gap) + 1);
-            cy = Math.min(cy, fc.rv.getHeight() - fc.rv.getPaddingBottom() - (2 * gap) - 1);
-        }
-
-        RecyclerView.ViewHolder vh1 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx - gap, cy - gap);
-        if (vh1 == null || vh1 == fc.draggingItem) {
-            return vh1;
-        }
-        RecyclerView.ViewHolder vh2 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx + gap, cy - gap);
-        if (vh2 == null || vh2 == fc.draggingItem) {
-            return vh2;
-        }
-        RecyclerView.ViewHolder vh3 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx - gap, cy + gap);
-        if (vh3 == null || vh3 == fc.draggingItem) {
-            return vh3;
-        }
-        RecyclerView.ViewHolder vh4 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx + gap, cy + gap);
-        if (vh4 == null || vh4 == fc.draggingItem) {
-            return vh4;
-        }
-
-        if (!(vh1 == vh2 && vh1 == vh3 && vh1 == vh4)) {
-            return null;
-        }
-
-        return vh1;
+        return CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, fc.lastTouchX, fc.lastTouchY);
     }
 
     private static RecyclerView.ViewHolder findSwapTargetItemForGridLayoutManagerInternal2(FindSwapTargetContext fc) {
@@ -1850,19 +1813,26 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         final int columnWidth = (width - paddingLeft - paddingRight) / spanCount;
         final int rowHeight = (height - paddingTop - paddingBottom) / spanCount;
 
-        final int cx = fc.overlayItemLeft + fc.draggingItemInfo.width / 2;
-        final int cy = fc.overlayItemTop + fc.draggingItemInfo.height / 2;
+        final int cx = fc.lastTouchX;
+        final int cy = fc.lastTouchY;
 
-        for (int i = spanCount - 1; i >= 0; i--) {
+        final int rangeStartIndex = fc.rootAdapterRange.getStart();
+        final int rangeEndIndex = fc.rootAdapterRange.getEnd();
+        int scanStartIndex = (int) ((fc.vertical)
+                ? (float) (cx - paddingLeft) / columnWidth
+                : (float) (cy - paddingTop) / rowHeight);
+
+        scanStartIndex = Math.min(Math.max(scanStartIndex, 0), (spanCount - 1));
+
+        for (int i = scanStartIndex; i >= 0; i--) {
             final int cx2 = (fc.vertical) ? (paddingLeft + (columnWidth * i) + (columnWidth / 2)) : cx;
             final int cy2 = (!fc.vertical) ? (paddingTop + (rowHeight * i) + (rowHeight / 2)) : cy;
             final RecyclerView.ViewHolder vh2 = CustomRecyclerViewUtils.findChildViewHolderUnderWithoutTranslation(fc.rv, cx2, cy2);
 
             if (vh2 != null) {
-                final int rangeEndIndex = fc.rootAdapterRange.getEnd();
                 final int pos = vh2.getAdapterPosition();
 
-                if ((pos != RecyclerView.NO_POSITION) && pos == rangeEndIndex) {
+                if ((pos != RecyclerView.NO_POSITION) && pos >= rangeStartIndex && pos <= rangeEndIndex) {
                     return vh2;
                 }
                 break;
