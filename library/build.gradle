@@ -56,8 +56,9 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.android.support:recyclerview-v7:25.3.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
