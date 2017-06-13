@@ -16,12 +16,12 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
-import android.support.v4.animation.AnimatorCompatHelper;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.Interpolator;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
 
@@ -158,8 +158,22 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
     }
 
     protected void resetAnimation(RecyclerView.ViewHolder holder) {
-        AnimatorCompatHelper.clearInterpolator(holder.itemView);
+        clearInterpolator(holder.itemView);
         endAnimation(holder);
+    }
+
+    protected void clearInterpolator(View v) {
+        ViewCompat.setAlpha(v, 1.0F);
+        ViewCompat.setScaleY(v, 1.0F);
+        ViewCompat.setScaleX(v, 1.0F);
+        ViewCompat.setTranslationY(v, 0.0F);
+        ViewCompat.setTranslationX(v, 0.0F);
+        ViewCompat.setRotation(v, 0.0F);
+        ViewCompat.setRotationY(v, 0.0F);
+        ViewCompat.setRotationX(v, 0.0F);
+        //v.setPivotY((float)(v.getMeasuredHeight() / 2));
+        ViewCompat.setPivotX(v, (float) (v.getMeasuredWidth() / 2));
+        ViewCompat.animate(v).setInterpolator((Interpolator) null);
     }
 
     protected void dispatchFinishedWhenDone() {
