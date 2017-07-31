@@ -21,9 +21,6 @@ apply from: '../common/android-set-common-properties.gradle'
 apply from: '../common/android-signing-utils.gradle'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
-
     defaultConfig {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
         minSdkVersion 14
