@@ -65,7 +65,7 @@ class ViewPagerSwipeableExampleAdapter
         @Override
         public void onSlideAmountUpdated(float horizontalAmount, float verticalAmount, boolean isSwiping) {
             float alpha = 1.0f - Math.min(Math.max(Math.abs(horizontalAmount), 0.0f), 1.0f);
-            ViewCompat.setAlpha(mContainer, alpha);
+            mContainer.setAlpha(alpha);
         }
     }
 
@@ -108,7 +108,7 @@ class ViewPagerSwipeableExampleAdapter
     @Override
     public void onViewRecycled(MyViewHolder holder) {
         super.onViewRecycled(holder);
-        ViewCompat.setAlpha(holder.mContainer, 1.0f);
+        holder.mContainer.setAlpha(1.0f);
     }
 
     @Override
