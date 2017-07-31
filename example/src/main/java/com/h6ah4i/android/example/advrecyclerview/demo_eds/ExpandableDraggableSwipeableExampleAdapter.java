@@ -319,7 +319,7 @@ class ExpandableDraggableSwipeableExampleAdapter
         final View dragHandleView = holder.mDragHandle;
 
         final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return !ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -331,7 +331,7 @@ class ExpandableDraggableSwipeableExampleAdapter
         final View dragHandleView = holder.mDragHandle;
 
         final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -343,7 +343,7 @@ class ExpandableDraggableSwipeableExampleAdapter
         final View dragHandleView = holder.mDragHandle;
 
         final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }

@@ -147,9 +147,9 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
         final int h2 = swapItemView.getHeight() + m2.top + m2.bottom + d2.top + d2.bottom;
         final int w2 = swapItemView.getWidth() + m2.left + m2.right + d2.left + d2.right;
 
-        final float offsetXPx = draggingItem.itemView.getLeft() - mTranslationX; // == -(ViewCompat.getTranslationY(draggingItem.itemView)
+        final float offsetXPx = draggingItem.itemView.getLeft() - mTranslationX; // == -(draggingItem.itemView.getTranslationY()
         final float phaseX = (w2 != 0) ? (offsetXPx / w2) : 0.0f;
-        final float offsetYPx = draggingItem.itemView.getTop() - mTranslationY; // == -(ViewCompat.getTranslationY(draggingItem.itemView)
+        final float offsetYPx = draggingItem.itemView.getTop() - mTranslationY; // == -(draggingItem.itemView.getTranslationY()
         final float phaseY = (h2 != 0) ? (offsetYPx / h2) : 0.0f;
 
         float translationPhase = 0.0f;
