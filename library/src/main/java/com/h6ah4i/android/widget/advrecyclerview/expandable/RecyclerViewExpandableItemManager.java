@@ -216,7 +216,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
             return false;
         }
 
-        final int action = MotionEventCompat.getActionMasked(e);
+        final int action = e.getActionMasked();
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -256,7 +256,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
         mInitialTouchX = 0;
         mInitialTouchY = 0;
 
-        if (!((touchedItemId != RecyclerView.NO_ID) && (MotionEventCompat.getActionMasked(e) == MotionEvent.ACTION_UP))) {
+        if (!((touchedItemId != RecyclerView.NO_ID) && (e.getActionMasked() == MotionEvent.ACTION_UP))) {
             return false;
         }
 
@@ -290,8 +290,8 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
         }
 
         final View view = holder.itemView;
-        final int translateX = (int) (ViewCompat.getTranslationX(view) + 0.5f);
-        final int translateY = (int) (ViewCompat.getTranslationY(view) + 0.5f);
+        final int translateX = (int) (view.getTranslationX() + 0.5f);
+        final int translateY = (int) (view.getTranslationY() + 0.5f);
         final int viewX = touchX - (view.getLeft() + translateX);
         final int viewY = touchY - (view.getTop() + translateY);
 

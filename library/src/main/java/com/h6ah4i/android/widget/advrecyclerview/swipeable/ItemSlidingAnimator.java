@@ -337,8 +337,8 @@ public class ItemSlidingAnimator {
 
         final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
         ViewCompat.animate(containerView).cancel();
-        ViewCompat.setTranslationX(containerView, translationX);
-        ViewCompat.setTranslationY(containerView, translationY);
+        containerView.setTranslationX(translationX);
+        containerView.setTranslationY(translationY);
     }
 
     private boolean animateSlideInternal(
@@ -351,13 +351,13 @@ public class ItemSlidingAnimator {
 
         final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
 
-        final int prevTranslationX = (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int prevTranslationY = (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int prevTranslationX = (int) (containerView.getTranslationX() + 0.5f);
+        final int prevTranslationY = (int) (containerView.getTranslationY() + 0.5f);
 
         endAnimation(holder);
 
-        final int curTranslationX = (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int curTranslationY = (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int curTranslationX = (int) (containerView.getTranslationX() + 0.5f);
+        final int curTranslationY = (int) (containerView.getTranslationY() + 0.5f);
         //noinspection UnnecessaryLocalVariable
         final int toX = translationX;
         //noinspection UnnecessaryLocalVariable
@@ -366,14 +366,14 @@ public class ItemSlidingAnimator {
         if ((duration == 0) ||
                 (curTranslationX == toX && curTranslationY == toY) ||
                 (Math.max(Math.abs(toX - prevTranslationX), Math.abs(toY - prevTranslationY)) <= mImmediatelySetTranslationThreshold)) {
-            ViewCompat.setTranslationX(containerView, toX);
-            ViewCompat.setTranslationY(containerView, toY);
+            containerView.setTranslationX(toX);
+            containerView.setTranslationY(toY);
 
             return false;
         }
 
-        ViewCompat.setTranslationX(containerView, prevTranslationX);
-        ViewCompat.setTranslationY(containerView, prevTranslationY);
+        containerView.setTranslationX(prevTranslationX);
+        containerView.setTranslationY(prevTranslationY);
 
         SlidingAnimatorListenerObject listener = new SlidingAnimatorListenerObject(
                 mAdapter, mActive, holder, toX, toY, duration, horizontal, interpolator,
@@ -430,7 +430,7 @@ public class ItemSlidingAnimator {
     public int getSwipeContainerViewTranslationX(RecyclerView.ViewHolder holder) {
         if (supportsViewPropertyAnimator()) {
             final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-            return (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
+            return (int) (containerView.getTranslationX() + 0.5f);
         } else {
             return getTranslationXPreHoneycomb(holder);
         }
@@ -439,7 +439,7 @@ public class ItemSlidingAnimator {
     public int getSwipeContainerViewTranslationY(RecyclerView.ViewHolder holder) {
         if (supportsViewPropertyAnimator()) {
             final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-            return (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+            return (int) (containerView.getTranslationY() + 0.5f);
         } else {
             return getTranslationYPreHoneycomb(holder);
         }
@@ -559,7 +559,7 @@ public class ItemSlidingAnimator {
 
         @Override
         public void onAnimationUpdate(View view) {
-            float translation = mHorizontal ? ViewCompat.getTranslationX(view) : ViewCompat.getTranslationY(view);
+            float translation = mHorizontal ? view.getTranslationX() : view.getTranslationY();
             float amount = translation * mInvSize;
 
             mAdapter.onUpdateSlideAmount(mViewHolder, mViewHolder.getLayoutPosition(), amount, true, mHorizontal, false);
@@ -581,8 +581,8 @@ public class ItemSlidingAnimator {
                 mAnimator.setUpdateListener(null);
             }
 
-            ViewCompat.setTranslationX(view, mToX);
-            ViewCompat.setTranslationY(view, mToY);
+            view.setTranslationX(mToX);
+            view.setTranslationY(mToY);
 
 
             mActive.remove(mViewHolder);
