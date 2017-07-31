@@ -135,7 +135,7 @@ class DragOnLongPressExampleAdapter
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
         final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
