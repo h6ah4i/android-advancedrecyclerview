@@ -5,6 +5,9 @@ buildscript {
         jcenter()
         maven {
             url  "http://dl.bintray.com/vigidroid/maven"
+            maven {
+                url "https://maven.google.com"
+            }
         }
     }
     dependencies {
