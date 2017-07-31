@@ -70,8 +70,8 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
                 continue;
             }
 
-            final int tx = (int) (ViewCompat.getTranslationX(child) + 0.5f);
-            final int ty = (int) (ViewCompat.getTranslationY(child) + 0.5f);
+            final int tx = (int) (child.getTranslationX() + 0.5f);
+            final int ty = (int) (child.getTranslationY() + 0.5f);
 
             final int left = child.getLeft() - mShadowPadding.left;
             final int right = child.getRight() + mShadowPadding.right;
@@ -87,7 +87,7 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
         if (child.getVisibility() != View.VISIBLE) {
             return false;
         }
-        if (ViewCompat.getAlpha(child) != 1.0f) {
+        if (child.getAlpha() != 1.0f) {
             return false;
         }
 

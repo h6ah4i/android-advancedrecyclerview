@@ -23,10 +23,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
-
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 
 class DraggingItemDecorator extends BaseDraggableItemDecorator {
@@ -196,8 +194,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mLayoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
         mLayoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
-        mInitialDraggingItemScaleX = ViewCompat.getScaleX(itemView);
-        mInitialDraggingItemScaleY = ViewCompat.getScaleX(itemView);
+        mInitialDraggingItemScaleX = itemView.getScaleX();
+        mInitialDraggingItemScaleY = itemView.getScaleX();
 
         mLastDraggingItemScaleX = 1.0f;
         mLastDraggingItemScaleY = 1.0f;
@@ -490,8 +488,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     public void invalidateDraggingItem() {
         if (mDraggingItemViewHolder != null) {
-            ViewCompat.setTranslationX(mDraggingItemViewHolder.itemView, 0);
-            ViewCompat.setTranslationY(mDraggingItemViewHolder.itemView, 0);
+            mDraggingItemViewHolder.itemView.setTranslationX(0);
+            mDraggingItemViewHolder.itemView.setTranslationY(0);
             mDraggingItemViewHolder.itemView.setVisibility(View.VISIBLE);
         }
 

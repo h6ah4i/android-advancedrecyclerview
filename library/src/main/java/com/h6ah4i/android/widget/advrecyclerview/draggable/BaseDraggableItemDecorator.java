@@ -62,10 +62,10 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
         if (supportsViewPropertyAnimation() && animate && (animDuration > RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC)) {
             ViewPropertyAnimatorCompat animator = ViewCompat.animate(targetView);
 
-            ViewCompat.setScaleX(targetView, initialScaleX);
-            ViewCompat.setScaleY(targetView, initialScaleY);
-            ViewCompat.setRotation(targetView, initialRotation);
-            ViewCompat.setAlpha(targetView, initialAlpha);
+            targetView.setScaleX(initialScaleX);
+            targetView.setScaleY(initialScaleY);
+            targetView.setRotation(initialRotation);
+            targetView.setAlpha(initialAlpha);
             ViewCompat.setTranslationZ(targetView, initialTranslationZ + 1); // to render on top of other items
 
             animator.cancel();
@@ -108,8 +108,8 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
 
     protected float determineMoveToDefaultPositionAnimationDurationFactor(
             View targetView, float initialScaleX, float initialScaleY, float initialRotation, float initialAlpha) {
-        final float curTranslationX = ViewCompat.getTranslationX(targetView);
-        final float curTranslationY = ViewCompat.getTranslationY(targetView);
+        final float curTranslationX = targetView.getTranslationX();
+        final float curTranslationY = targetView.getTranslationY();
         final int halfItemWidth = targetView.getWidth() / 2;
         final int halfItemHeight = targetView.getHeight() / 2;
         final float translationXProportion = (halfItemWidth > 0) ? Math.abs(curTranslationX / halfItemWidth) : 0;
@@ -131,13 +131,13 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
     }
 
     protected static void resetDraggingItemViewEffects(View view, float initialTranslationZ) {
-        ViewCompat.setTranslationX(view, 0);
-        ViewCompat.setTranslationY(view, 0);
+        view.setTranslationX(0);
+        view.setTranslationY(0);
         ViewCompat.setTranslationZ(view, initialTranslationZ);
-        ViewCompat.setAlpha(view, 1.0f);
-        ViewCompat.setRotation(view, 0);
-        ViewCompat.setScaleX(view, 1.0f);
-        ViewCompat.setScaleY(view, 1.0f);
+        view.setAlpha(1.0f);
+        view.setRotation(0);
+        view.setScaleX(1.0f);
+        view.setScaleY(1.0f);
     }
 
     protected static void setItemTranslation(RecyclerView rv, RecyclerView.ViewHolder holder, float x, float y) {
@@ -145,8 +145,8 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
         if (itemAnimator != null) {
             itemAnimator.endAnimation(holder);
         }
-        ViewCompat.setTranslationX(holder.itemView, x);
-        ViewCompat.setTranslationY(holder.itemView, y);
+        holder.itemView.setTranslationX(x);
+        holder.itemView.setTranslationY(y);
     }
 
     private static boolean supportsViewPropertyAnimation() {
