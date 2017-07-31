@@ -34,12 +34,16 @@ android {
         release
     }
 
+    flavorDimensions "minSdk"
+
     productFlavors {
         // for saving build time during debugging
         lollipop {
+            dimension "minSdk"
             minSdkVersion 21
         }
-        gb {
+        ics {
+            dimension "minSdk"
         }
     }
 
