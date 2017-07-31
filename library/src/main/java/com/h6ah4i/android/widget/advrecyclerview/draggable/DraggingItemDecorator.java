@@ -148,7 +148,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         if (scaleX > 0.0f && scaleY > 0.0f && alpha > 0.0f) {
             mPaint.setAlpha((int) (alpha * 255));
 
-            int savedCount = c.save(Canvas.MATRIX_SAVE_FLAG);
+            int savedCount = c.save();
 
             c.translate(mTranslationX + mDraggingItemInfo.grabbedPositionX, mTranslationY + mDraggingItemInfo.grabbedPositionY);
             c.scale(scaleX, scaleY);
@@ -441,7 +441,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             shadow.draw(canvas);
         }
 
-        final int savedCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
+        final int savedCount = canvas.save();
         // NOTE: Explicitly set clipping rect. This is required on Gingerbread.
         canvas.clipRect(mShadowPadding.left, mShadowPadding.top, canvasWidth - mShadowPadding.right, canvasHeight - mShadowPadding.bottom);
         canvas.translate(mShadowPadding.left, mShadowPadding.top);
