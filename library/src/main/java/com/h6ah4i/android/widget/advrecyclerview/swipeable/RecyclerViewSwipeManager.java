@@ -20,6 +20,7 @@ import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MotionEventCompat;
@@ -34,6 +35,7 @@ import android.view.ViewConfiguration;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
@@ -759,6 +761,73 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
     public void cancelSwipe() {
         cancelSwipe(false);
+    }
+
+    /**
+     * Perform fake swiping.
+     *
+     * @param holder Target ViewHolder.
+     * @param result swipe result code
+     * @return true for successful, otherwise false.
+     */
+    public boolean performFakeSwipe(RecyclerView.ViewHolder holder, int result) {
+        if (!(holder instanceof SwipeableItemViewHolder)) {
+            return false;
+        }
+
+        if (isSwiping()) {
+            return false;
+        }
+
+        switch (result) {
+            case RESULT_SWIPED_LEFT:
+            case RESULT_SWIPED_RIGHT:
+                if (!mSwipeHorizontal) {
+                    return false;
+                }
+                break;
+            case RESULT_SWIPED_UP:
+            case RESULT_SWIPED_DOWN:
+                if (mSwipeHorizontal) {
+                    return false;
+                }
+                break;
+            case RESULT_CANCELED:
+                break;
+            default:
+                return false;
+        }
+
+        final int wrappedItemPosition = getWrappedItemPosition(holder);
+
+        if (wrappedItemPosition == RecyclerView.NO_POSITION) {
+            return false;
+        }
+
+        MotionEvent fakeMotionEvent = MotionEvent.obtain(
+                SystemClock.uptimeMillis(), SystemClock.uptimeMillis(),
+                MotionEvent.ACTION_DOWN, 0, 0, 0);
+
+        startSwiping(fakeMotionEvent, holder, wrappedItemPosition);
+
+        fakeMotionEvent.recycle();
+
+        // swipe 1px to apply background
+        int direction = 0;
+        if (result == RESULT_SWIPED_LEFT || result == RESULT_SWIPED_UP) {
+            direction = -1;
+        } else if (result == RESULT_SWIPED_RIGHT || result == RESULT_SWIPED_DOWN) {
+            direction = 1;
+        }
+
+        applySlideItem(
+                holder, wrappedItemPosition,
+                0, direction,
+                false, mSwipeHorizontal, false, true);
+
+        finishSwiping(result);
+
+        return true;
     }
 
     /*package*/ void cancelSwipe(boolean immediately) {

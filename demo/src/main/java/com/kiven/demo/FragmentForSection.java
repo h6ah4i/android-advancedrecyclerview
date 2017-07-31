@@ -67,9 +67,9 @@ public class FragmentForSection extends Fragment implements RecyclerViewExpandab
         handler.sendEmptyMessageDelayed(0, 7000);
     }
     @Override
-    public void onGroupCollapse(int groupPosition, boolean fromUser) {}
+    public void onGroupCollapse(int groupPosition, boolean fromUser, Object payload) {}
     @Override
-    public void onGroupExpand(int groupPosition, boolean fromUser) {}
+    public void onGroupExpand(int groupPosition, boolean fromUser, Object payload) {}
 
     static class MyViewHolder extends AbstractExpandableItemViewHolder {
         TextView textView;

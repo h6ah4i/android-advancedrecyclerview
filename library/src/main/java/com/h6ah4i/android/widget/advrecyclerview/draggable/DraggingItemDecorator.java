@@ -56,10 +56,13 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private float mTargetDraggingItemScale = 1.0f;
     private float mTargetDraggingItemRotation = 0.0f;
     private float mTargetDraggingItemAlpha = 1.0f;
+    private float mInitialDraggingItemScaleX;
+    private float mInitialDraggingItemScaleY;
     private Interpolator mScaleInterpolator = null;
     private Interpolator mRotationInterpolator = null;
     private Interpolator mAlphaInterpolator = null;
-    private float mLastDraggingItemScale;
+    private float mLastDraggingItemScaleX;
+    private float mLastDraggingItemScaleY;
     private float mLastDraggingItemRotation;
     private float mLastDraggingItemAlpha;
 
@@ -137,22 +140,23 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
         final int elapsedMillis = (int) Math.min(System.currentTimeMillis() - mStartMillis, mStartAnimationDurationMillis);
         final float t = (mStartAnimationDurationMillis > 0) ? ((float) elapsedMillis / mStartAnimationDurationMillis) : 1.0f;
-        final float scale = getInterpolation(mScaleInterpolator, t) * (mTargetDraggingItemScale - 1.0f) + 1.0f;
+        final float tScale = getInterpolation(mScaleInterpolator, t);
+        final float scaleX = tScale * (mTargetDraggingItemScale - mInitialDraggingItemScaleX) + mInitialDraggingItemScaleX;
+        final float scaleY = tScale * (mTargetDraggingItemScale - mInitialDraggingItemScaleY) + mInitialDraggingItemScaleY;
         final float alpha = getInterpolation(mAlphaInterpolator, t) * (mTargetDraggingItemAlpha - 1.0f) + 1.0f;
         final float rotation = getInterpolation(mRotationInterpolator, t) * mTargetDraggingItemRotation;
 
-        if (scale > 0.0f && alpha > 0.0f) {
+        if (scaleX > 0.0f && scaleY > 0.0f && alpha > 0.0f) {
             final int w = mDraggingItemImage.getWidth();
             final int h = mDraggingItemImage.getHeight();
             final int iw = w - mShadowPadding.left - mShadowPadding.right;
             final int ih = h - mShadowPadding.top - mShadowPadding.bottom;
-            final float invScale = 1.0f / scale;
 
             mPaint.setAlpha((int) (alpha * 255));
 
             int savedCount = c.save(Canvas.MATRIX_SAVE_FLAG);
-            c.scale(scale, scale);
-            c.translate((mTranslationX + 0.5f * iw) * invScale, (mTranslationY + 0.5f * ih) * invScale);
+            c.scale(scaleX, scaleY);
+            c.translate((mTranslationX + 0.5f * iw) / scaleX, (mTranslationY + 0.5f * ih) / scaleY);
             c.rotate(rotation);
             c.translate(-(0.5f * w), -(0.5f * h));
             c.drawBitmap(mDraggingItemImage, 0, 0, mPaint);
@@ -163,7 +167,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             ViewCompat.postInvalidateOnAnimation(mRecyclerView);
         }
 
-        mLastDraggingItemScale = scale;
+        mLastDraggingItemScaleX = scaleX;
+        mLastDraggingItemScaleY = scaleY;
         mLastDraggingItemRotation = rotation;
         mLastDraggingItemAlpha = alpha;
     }
@@ -192,7 +197,11 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationTopLimit = mRecyclerView.getPaddingTop();
         mLayoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
 
-        mLastDraggingItemScale = 1.0f;
+        mInitialDraggingItemScaleX = ViewCompat.getScaleX(itemView);
+        mInitialDraggingItemScaleY = ViewCompat.getScaleX(itemView);
+
+        mLastDraggingItemScaleX = 1.0f;
+        mLastDraggingItemScaleY = 1.0f;
         mLastDraggingItemRotation = 0.0f;
         mLastDraggingItemAlpha = 1.0f;
 
@@ -236,7 +245,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         if (mDraggingItemViewHolder != null) {
             moveToDefaultPosition(
                     mDraggingItemViewHolder.itemView,
-                    mLastDraggingItemScale, mLastDraggingItemRotation, mLastDraggingItemAlpha,
+                    mLastDraggingItemScaleX, mLastDraggingItemScaleY,
+                    mLastDraggingItemRotation, mLastDraggingItemAlpha,
                     animate);
         }
 

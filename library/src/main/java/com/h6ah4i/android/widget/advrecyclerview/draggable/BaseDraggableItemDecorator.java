@@ -52,17 +52,18 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
         mReturnToDefaultPositionInterpolator = interpolator;
     }
 
-    protected void moveToDefaultPosition(View targetView, float initialScale, float initialRotation, float initialAlpha, boolean animate) {
+    protected void moveToDefaultPosition(View targetView, float initialScaleX, float initialScaleY, float initialRotation, float initialAlpha, boolean animate) {
         final float initialTranslationZ = ViewCompat.getTranslationZ(targetView);
 
-        final float durationFactor = determineMoveToDefaultPositionAnimationDurationFactor(targetView, initialScale, initialRotation, initialAlpha);
+        final float durationFactor = determineMoveToDefaultPositionAnimationDurationFactor(
+                targetView, initialScaleX, initialScaleY, initialRotation, initialAlpha);
         final int animDuration = (int) (mReturnToDefaultPositionDuration * durationFactor);
 
         if (supportsViewPropertyAnimation() && animate && (animDuration > RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC)) {
             ViewPropertyAnimatorCompat animator = ViewCompat.animate(targetView);
 
-            ViewCompat.setScaleX(targetView, initialScale);
-            ViewCompat.setScaleY(targetView, initialScale);
+            ViewCompat.setScaleX(targetView, initialScaleX);
+            ViewCompat.setScaleY(targetView, initialScaleY);
             ViewCompat.setRotation(targetView, initialRotation);
             ViewCompat.setAlpha(targetView, initialAlpha);
             ViewCompat.setTranslationZ(targetView, initialTranslationZ + 1); // to render on top of other items
@@ -105,14 +106,15 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
         }
     }
 
-    protected float determineMoveToDefaultPositionAnimationDurationFactor(View targetView, float initialScale, float initialRotation, float initialAlpha) {
+    protected float determineMoveToDefaultPositionAnimationDurationFactor(
+            View targetView, float initialScaleX, float initialScaleY, float initialRotation, float initialAlpha) {
         final float curTranslationX = ViewCompat.getTranslationX(targetView);
         final float curTranslationY = ViewCompat.getTranslationY(targetView);
         final int halfItemWidth = targetView.getWidth() / 2;
         final int halfItemHeight = targetView.getHeight() / 2;
         final float translationXProportion = (halfItemWidth > 0) ? Math.abs(curTranslationX / halfItemWidth) : 0;
         final float translationYProportion = (halfItemHeight > 0) ? Math.abs(curTranslationY / halfItemHeight) : 0;
-        final float scaleProportion = Math.abs(initialScale - 1.0f);
+        final float scaleProportion = Math.abs(Math.max(initialScaleX, initialScaleY) - 1.0f);
         final float rotationProportion = Math.abs(initialRotation * (1.0f / 30));
         final float alphaProportion = Math.abs(initialAlpha - 1.0f);
 

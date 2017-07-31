@@ -1,3 +1,15 @@
+## 0.10.6
+[Bug fixes]
+- Fixed some internal wrapper adapter's onViewRecycled() method is not invoked (issue #376)
+- Fixed unexpected onClick() event fired after finished dragging item (issue #378)
+
+[New features]
+- Added RecyclerViewSwipeManager.performFakeSwiping (issue #372)
+
+[Improvements]
+- Changed to preserve item scaling when starts dragging (issue #384)
+
+
 ## 0.10.5
 [Bug fixes]
 - Fixed View.OVER_SCROLL_NEVER not work when dragging (issue #374)
