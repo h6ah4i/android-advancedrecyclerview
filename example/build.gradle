@@ -62,10 +62,10 @@ if (loadSigningConfigFromPropertiesFile(
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':library')
-    compile 'com.android.support:design:26.0.0'
-    compile ('com.h6ah4i.android.tablayouthelper:tablayouthelper:0.8.0') {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':library')
+    implementation 'com.android.support:design:26.0.0'
+    implementation ('com.h6ah4i.android.tablayouthelper:tablayouthelper:0.8.0') {
         exclude group: 'com.android.support'
     }
 }
