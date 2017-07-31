@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
@@ -24,8 +23,6 @@ import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -33,7 +30,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.FrameLayout;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 
@@ -253,11 +249,7 @@ public class ItemSlidingAnimator {
             SwipeFinishInfo swipeFinish) {
         boolean result;
 
-        if (supportsViewPropertyAnimator()) {
-            result = animateSlideInternal(holder, horizontal, translationX, translationY, duration, interpolator, swipeFinish);
-        } else {
-            result = slideInternalPreHoneycomb(holder, horizontal, translationX, translationY);
-        }
+        result = animateSlideInternal(holder, horizontal, translationX, translationY, duration, interpolator, swipeFinish);
 
         // if ((swipeFinish != null) && !result) {
         // NOTE: Have to invoke the onSwipeSlideItemAnimationEnd() method in caller context
@@ -267,68 +259,9 @@ public class ItemSlidingAnimator {
     }
 
     static void slideInternalCompat(RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY) {
-        if (supportsViewPropertyAnimator()) {
-            slideInternal(holder, horizontal, translationX, translationY);
-        } else {
-            slideInternalPreHoneycomb(holder, horizontal, translationX, translationY);
-        }
+        slideInternal(holder, horizontal, translationX, translationY);
     }
 
-    @SuppressLint("RtlHardcoded")
-    private static boolean slideInternalPreHoneycomb(
-            RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY) {
-        if (!(holder instanceof SwipeableItemViewHolder)) {
-            return false;
-        }
-
-        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-
-        final ViewGroup.LayoutParams lp = containerView.getLayoutParams();
-        if (lp instanceof ViewGroup.MarginLayoutParams) {
-            final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
-
-            mlp.leftMargin = translationX;
-            mlp.rightMargin = -translationX;
-            mlp.topMargin = translationY;
-            mlp.bottomMargin = -translationY;
-
-            if (lp instanceof FrameLayout.LayoutParams) {
-                ((FrameLayout.LayoutParams) lp).gravity = Gravity.TOP | Gravity.LEFT;
-            }
-
-            containerView.setLayoutParams(mlp);
-        } else {
-            Log.w(TAG, "should use MarginLayoutParams supported view for compatibility on Android 2.3");
-        }
-
-        return false;
-    }
-
-    private static int getTranslationXPreHoneycomb(RecyclerView.ViewHolder holder) {
-        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-
-        final ViewGroup.LayoutParams lp = containerView.getLayoutParams();
-        if (lp instanceof ViewGroup.MarginLayoutParams) {
-            final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
-            return mlp.leftMargin;
-        } else {
-            Log.w(TAG, "should use MarginLayoutParams supported view for compatibility on Android 2.3");
-            return 0;
-        }
-    }
-
-    private static int getTranslationYPreHoneycomb(RecyclerView.ViewHolder holder) {
-        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-
-        final ViewGroup.LayoutParams lp = containerView.getLayoutParams();
-        if (lp instanceof ViewGroup.MarginLayoutParams) {
-            final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
-            return mlp.topMargin;
-        } else {
-            Log.w(TAG, "should use MarginLayoutParams supported view for compatibility on Android 2.3");
-            return 0;
-        }
-    }
 
     private static void slideInternal(final RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY) {
         if (!(holder instanceof SwipeableItemViewHolder)) {
@@ -423,26 +356,14 @@ public class ItemSlidingAnimator {
         mImmediatelySetTranslationThreshold = threshold;
     }
 
-    private static boolean supportsViewPropertyAnimator() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-
     public int getSwipeContainerViewTranslationX(RecyclerView.ViewHolder holder) {
-        if (supportsViewPropertyAnimator()) {
-            final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-            return (int) (containerView.getTranslationX() + 0.5f);
-        } else {
-            return getTranslationXPreHoneycomb(holder);
-        }
+        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
+        return (int) (containerView.getTranslationX() + 0.5f);
     }
 
     public int getSwipeContainerViewTranslationY(RecyclerView.ViewHolder holder) {
-        if (supportsViewPropertyAnimator()) {
-            final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-            return (int) (containerView.getTranslationY() + 0.5f);
-        } else {
-            return getTranslationYPreHoneycomb(holder);
-        }
+        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
+        return (int) (containerView.getTranslationY() + 0.5f);
     }
 
     private static abstract class ViewHolderDeferredProcess implements Runnable {

@@ -59,7 +59,7 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
                 targetView, initialScaleX, initialScaleY, initialRotation, initialAlpha);
         final int animDuration = (int) (mReturnToDefaultPositionDuration * durationFactor);
 
-        if (supportsViewPropertyAnimation() && animate && (animDuration > RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC)) {
+        if (animate && (animDuration > RETURN_TO_DEFAULT_POS_ANIMATE_THRESHOLD_MSEC)) {
             ViewPropertyAnimatorCompat animator = ViewCompat.animate(targetView);
 
             targetView.setScaleX(initialScaleX);
@@ -147,9 +147,5 @@ abstract class BaseDraggableItemDecorator extends RecyclerView.ItemDecoration {
         }
         holder.itemView.setTranslationX(x);
         holder.itemView.setTranslationY(y);
-    }
-
-    private static boolean supportsViewPropertyAnimation() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 }

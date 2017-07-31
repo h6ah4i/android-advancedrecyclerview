@@ -775,7 +775,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         final int layoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
-        if (supportsViewTranslation() && !mCheckCanDrop && CustomRecyclerViewUtils.isLinearLayout(layoutType)) {
+        if (!mCheckCanDrop && CustomRecyclerViewUtils.isLinearLayout(layoutType)) {
             mSwapTargetItemOperator = new SwapTargetItemOperator(mRecyclerView, holder, mDraggingItemInfo);
             mSwapTargetItemOperator.setSwapTargetTranslationInterpolator(mSwapTargetTranslationInterpolator);
             mSwapTargetItemOperator.start();
@@ -1538,7 +1538,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         final boolean isLinearLayout = CustomRecyclerViewUtils.isLinearLayout(CustomRecyclerViewUtils.getLayoutType(rv));
-        final boolean swapNextItemSmoothlyInLinearLayout = isLinearLayout && (!supportsViewTranslation() || !mCheckCanDrop);
+        final boolean swapNextItemSmoothlyInLinearLayout = isLinearLayout && (!mCheckCanDrop);
 
         //noinspection StatementWithEmptyBody
         if (diffPosition == 0) {
@@ -1669,10 +1669,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
     private static boolean supportsEdgeEffect() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
-    }
-
-    private static boolean supportsViewTranslation() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
     private static void safeEndAnimation(RecyclerView rv, RecyclerView.ViewHolder holder) {
