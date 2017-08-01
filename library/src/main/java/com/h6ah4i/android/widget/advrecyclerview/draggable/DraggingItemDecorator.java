@@ -195,7 +195,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mLayoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
         mInitialDraggingItemScaleX = itemView.getScaleX();
-        mInitialDraggingItemScaleY = itemView.getScaleX();
+        mInitialDraggingItemScaleY = itemView.getScaleY();
 
         mLastDraggingItemScaleX = 1.0f;
         mLastDraggingItemScaleY = 1.0f;
