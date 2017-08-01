@@ -16,6 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
@@ -26,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
+    private static TimeInterpolator sDefaultInterpolator;
+
     protected final BaseItemAnimator mItemAnimator;
     protected final List<T> mPending;
     protected final List<List<T>> mDeferredReadySets;
@@ -155,22 +159,11 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
     }
 
     protected void resetAnimation(RecyclerView.ViewHolder holder) {
-        clearInterpolator(holder.itemView);
+        if (sDefaultInterpolator == null) {
+            sDefaultInterpolator = new ValueAnimator().getInterpolator();
+        }
+        holder.itemView.animate().setInterpolator(sDefaultInterpolator);
         endAnimation(holder);
-    }
-
-    protected void clearInterpolator(View view) {
-        view.setAlpha(1.0f);
-        view.setScaleY(1.0f);
-        view.setScaleX(1.0f);
-        view.setTranslationY(0.0f);
-        view.setTranslationX(0.0f);
-        view.setRotation(0.0f);
-        view.setRotationY(0.0f);
-        view.setRotationX(0.0f);
-        //view.setPivotY((float)(view.getMeasuredHeight() / 2));
-        view.setPivotX((float) (view.getMeasuredWidth() / 2));
-        ViewCompat.animate(view).setInterpolator(null);
     }
 
     protected void dispatchFinishedWhenDone() {
