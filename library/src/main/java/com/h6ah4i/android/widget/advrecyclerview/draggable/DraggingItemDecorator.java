@@ -48,6 +48,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private boolean mIsScrolling;
     private ItemDraggableRange mRange;
     private int mLayoutOrientation;
+    private int mLayoutType;
     private DraggingItemInfo mDraggingItemInfo;
     private Paint mPaint;
     private long mStartMillis;
@@ -147,18 +148,15 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         final float rotation = getInterpolation(mRotationInterpolator, t) * mTargetDraggingItemRotation;
 
         if (scaleX > 0.0f && scaleY > 0.0f && alpha > 0.0f) {
-            final int w = mDraggingItemImage.getWidth();
-            final int h = mDraggingItemImage.getHeight();
-            final int iw = w - mShadowPadding.left - mShadowPadding.right;
-            final int ih = h - mShadowPadding.top - mShadowPadding.bottom;
-
             mPaint.setAlpha((int) (alpha * 255));
 
             int savedCount = c.save(Canvas.MATRIX_SAVE_FLAG);
+
+            c.translate(mTranslationX + mDraggingItemInfo.grabbedPositionX, mTranslationY + mDraggingItemInfo.grabbedPositionY);
             c.scale(scaleX, scaleY);
-            c.translate((mTranslationX + 0.5f * iw) / scaleX, (mTranslationY + 0.5f * ih) / scaleY);
             c.rotate(rotation);
-            c.translate(-(0.5f * w), -(0.5f * h));
+            c.translate(-(mShadowPadding.left + mDraggingItemInfo.grabbedPositionX), -(mShadowPadding.top + mDraggingItemInfo.grabbedPositionY));
+
             c.drawBitmap(mDraggingItemImage, 0, 0, mPaint);
             c.restoreToCount(savedCount);
         }
@@ -196,6 +194,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationLeftLimit = mRecyclerView.getPaddingLeft();
         mTranslationTopLimit = mRecyclerView.getPaddingTop();
         mLayoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
+        mLayoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
         mInitialDraggingItemScaleX = ViewCompat.getScaleX(itemView);
         mInitialDraggingItemScaleY = ViewCompat.getScaleY(itemView);
@@ -391,8 +390,10 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationX = mTouchPositionX - mDraggingItemInfo.grabbedPositionX;
         mTranslationY = mTouchPositionY - mDraggingItemInfo.grabbedPositionY;
 
-        mTranslationX = clip(mTranslationX, mTranslationLeftLimit, mTranslationRightLimit);
-        mTranslationY = clip(mTranslationY, mTranslationTopLimit, mTranslationBottomLimit);
+        if (CustomRecyclerViewUtils.isLinearLayout(mLayoutType)) {
+            mTranslationX = clip(mTranslationX, mTranslationLeftLimit, mTranslationRightLimit);
+            mTranslationY = clip(mTranslationY, mTranslationTopLimit, mTranslationBottomLimit);
+        }
     }
 
     private static int toSpanAlignedPosition(int position, int spanCount) {
