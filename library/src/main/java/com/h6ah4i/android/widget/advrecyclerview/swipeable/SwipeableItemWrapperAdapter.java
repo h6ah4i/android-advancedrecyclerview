@@ -96,8 +96,8 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
             if (containerView != null) {
                 ViewCompat.animate(containerView).cancel();
-                ViewCompat.setTranslationX(containerView, 0.0f);
-                ViewCompat.setTranslationY(containerView, 0.0f);
+                containerView.setTranslationX(0.0f);
+                containerView.setTranslationY(0.0f);
             }
         }
     }

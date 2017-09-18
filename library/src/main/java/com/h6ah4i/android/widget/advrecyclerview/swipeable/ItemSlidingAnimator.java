@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Build;
 import android.support.v4.view.ViewCompat;
@@ -24,8 +23,6 @@ import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -33,7 +30,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.FrameLayout;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 
@@ -253,11 +249,7 @@ public class ItemSlidingAnimator {
             SwipeFinishInfo swipeFinish) {
         boolean result;
 
-        if (supportsViewPropertyAnimator()) {
-            result = animateSlideInternal(holder, horizontal, translationX, translationY, duration, interpolator, swipeFinish);
-        } else {
-            result = slideInternalPreHoneycomb(holder, horizontal, translationX, translationY);
-        }
+        result = animateSlideInternal(holder, horizontal, translationX, translationY, duration, interpolator, swipeFinish);
 
         // if ((swipeFinish != null) && !result) {
         // NOTE: Have to invoke the onSwipeSlideItemAnimationEnd() method in caller context
@@ -267,68 +259,9 @@ public class ItemSlidingAnimator {
     }
 
     static void slideInternalCompat(RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY) {
-        if (supportsViewPropertyAnimator()) {
-            slideInternal(holder, horizontal, translationX, translationY);
-        } else {
-            slideInternalPreHoneycomb(holder, horizontal, translationX, translationY);
-        }
+        slideInternal(holder, horizontal, translationX, translationY);
     }
 
-    @SuppressLint("RtlHardcoded")
-    private static boolean slideInternalPreHoneycomb(
-            RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY) {
-        if (!(holder instanceof SwipeableItemViewHolder)) {
-            return false;
-        }
-
-        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-
-        final ViewGroup.LayoutParams lp = containerView.getLayoutParams();
-        if (lp instanceof ViewGroup.MarginLayoutParams) {
-            final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
-
-            mlp.leftMargin = translationX;
-            mlp.rightMargin = -translationX;
-            mlp.topMargin = translationY;
-            mlp.bottomMargin = -translationY;
-
-            if (lp instanceof FrameLayout.LayoutParams) {
-                ((FrameLayout.LayoutParams) lp).gravity = Gravity.TOP | Gravity.LEFT;
-            }
-
-            containerView.setLayoutParams(mlp);
-        } else {
-            Log.w(TAG, "should use MarginLayoutParams supported view for compatibility on Android 2.3");
-        }
-
-        return false;
-    }
-
-    private static int getTranslationXPreHoneycomb(RecyclerView.ViewHolder holder) {
-        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-
-        final ViewGroup.LayoutParams lp = containerView.getLayoutParams();
-        if (lp instanceof ViewGroup.MarginLayoutParams) {
-            final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
-            return mlp.leftMargin;
-        } else {
-            Log.w(TAG, "should use MarginLayoutParams supported view for compatibility on Android 2.3");
-            return 0;
-        }
-    }
-
-    private static int getTranslationYPreHoneycomb(RecyclerView.ViewHolder holder) {
-        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-
-        final ViewGroup.LayoutParams lp = containerView.getLayoutParams();
-        if (lp instanceof ViewGroup.MarginLayoutParams) {
-            final ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) lp;
-            return mlp.topMargin;
-        } else {
-            Log.w(TAG, "should use MarginLayoutParams supported view for compatibility on Android 2.3");
-            return 0;
-        }
-    }
 
     private static void slideInternal(final RecyclerView.ViewHolder holder, boolean horizontal, int translationX, int translationY) {
         if (!(holder instanceof SwipeableItemViewHolder)) {
@@ -337,8 +270,8 @@ public class ItemSlidingAnimator {
 
         final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
         ViewCompat.animate(containerView).cancel();
-        ViewCompat.setTranslationX(containerView, translationX);
-        ViewCompat.setTranslationY(containerView, translationY);
+        containerView.setTranslationX(translationX);
+        containerView.setTranslationY(translationY);
     }
 
     private boolean animateSlideInternal(
@@ -351,13 +284,13 @@ public class ItemSlidingAnimator {
 
         final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
 
-        final int prevTranslationX = (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int prevTranslationY = (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int prevTranslationX = (int) (containerView.getTranslationX() + 0.5f);
+        final int prevTranslationY = (int) (containerView.getTranslationY() + 0.5f);
 
         endAnimation(holder);
 
-        final int curTranslationX = (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int curTranslationY = (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int curTranslationX = (int) (containerView.getTranslationX() + 0.5f);
+        final int curTranslationY = (int) (containerView.getTranslationY() + 0.5f);
         //noinspection UnnecessaryLocalVariable
         final int toX = translationX;
         //noinspection UnnecessaryLocalVariable
@@ -366,14 +299,14 @@ public class ItemSlidingAnimator {
         if ((duration == 0) ||
                 (curTranslationX == toX && curTranslationY == toY) ||
                 (Math.max(Math.abs(toX - prevTranslationX), Math.abs(toY - prevTranslationY)) <= mImmediatelySetTranslationThreshold)) {
-            ViewCompat.setTranslationX(containerView, toX);
-            ViewCompat.setTranslationY(containerView, toY);
+            containerView.setTranslationX(toX);
+            containerView.setTranslationY(toY);
 
             return false;
         }
 
-        ViewCompat.setTranslationX(containerView, prevTranslationX);
-        ViewCompat.setTranslationY(containerView, prevTranslationY);
+        containerView.setTranslationX(prevTranslationX);
+        containerView.setTranslationY(prevTranslationY);
 
         SlidingAnimatorListenerObject listener = new SlidingAnimatorListenerObject(
                 mAdapter, mActive, holder, toX, toY, duration, horizontal, interpolator,
@@ -423,26 +356,14 @@ public class ItemSlidingAnimator {
         mImmediatelySetTranslationThreshold = threshold;
     }
 
-    private static boolean supportsViewPropertyAnimator() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-
     public int getSwipeContainerViewTranslationX(RecyclerView.ViewHolder holder) {
-        if (supportsViewPropertyAnimator()) {
-            final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-            return (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        } else {
-            return getTranslationXPreHoneycomb(holder);
-        }
+        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
+        return (int) (containerView.getTranslationX() + 0.5f);
     }
 
     public int getSwipeContainerViewTranslationY(RecyclerView.ViewHolder holder) {
-        if (supportsViewPropertyAnimator()) {
-            final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
-            return (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
-        } else {
-            return getTranslationYPreHoneycomb(holder);
-        }
+        final View containerView = SwipeableViewHolderUtils.getSwipeableContainerView(holder);
+        return (int) (containerView.getTranslationY() + 0.5f);
     }
 
     private static abstract class ViewHolderDeferredProcess implements Runnable {
@@ -559,7 +480,7 @@ public class ItemSlidingAnimator {
 
         @Override
         public void onAnimationUpdate(View view) {
-            float translation = mHorizontal ? ViewCompat.getTranslationX(view) : ViewCompat.getTranslationY(view);
+            float translation = mHorizontal ? view.getTranslationX() : view.getTranslationY();
             float amount = translation * mInvSize;
 
             mAdapter.onUpdateSlideAmount(mViewHolder, mViewHolder.getLayoutPosition(), amount, true, mHorizontal, false);
@@ -581,8 +502,8 @@ public class ItemSlidingAnimator {
                 mAnimator.setUpdateListener(null);
             }
 
-            ViewCompat.setTranslationX(view, mToX);
-            ViewCompat.setTranslationY(view, mToY);
+            view.setTranslationX(mToX);
+            view.setTranslationY(mToY);
 
 
             mActive.remove(mViewHolder);

@@ -23,8 +23,8 @@ apply from: '../common/android-signing-utils.gradle'
 android {
     defaultConfig {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
-        minSdkVersion 9
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 26
         versionCode 28
         versionName "0.10.6"
         vectorDrawables.useSupportLibrary = true
@@ -34,12 +34,16 @@ android {
         release
     }
 
+    flavorDimensions "minSdk"
+
     productFlavors {
         // for saving build time during debugging
         lollipop {
+            dimension "minSdk"
             minSdkVersion 21
         }
-        gb {
+        ics {
+            dimension "minSdk"
         }
     }
 
@@ -58,10 +62,8 @@ if (loadSigningConfigFromPropertiesFile(
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':library')
-    compile 'com.android.support:design:25.3.0'
-    compile ('com.h6ah4i.android.tablayouthelper:tablayouthelper:0.8.0') {
-        exclude group: 'com.android.support'
-    }
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':library')
+    implementation 'com.android.support:design:26.1.0'
+    implementation ('com.h6ah4i.android.tablayouthelper:tablayouthelper:0.9.0')
 }

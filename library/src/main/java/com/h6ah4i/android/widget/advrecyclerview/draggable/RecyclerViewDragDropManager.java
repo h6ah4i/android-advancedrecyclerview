@@ -568,7 +568,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        final int action = MotionEventCompat.getActionMasked(e);
+        final int action = e.getActionMasked();
         boolean handled = false;
 
         if (LOCAL_LOGV) {
@@ -603,7 +603,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /*package*/ void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        final int action = MotionEventCompat.getActionMasked(e);
+        final int action = e.getActionMasked();
 
         if (LOCAL_LOGV) {
             Log.v(TAG, "onTouchEvent() action = " + action);
@@ -775,7 +775,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         final int layoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
-        if (supportsViewTranslation() && !mCheckCanDrop && CustomRecyclerViewUtils.isLinearLayout(layoutType)) {
+        if (!mCheckCanDrop && CustomRecyclerViewUtils.isLinearLayout(layoutType)) {
             mSwapTargetItemOperator = new SwapTargetItemOperator(mRecyclerView, holder, mDraggingItemInfo);
             mSwapTargetItemOperator.setSwapTargetTranslationInterpolator(mSwapTargetTranslationInterpolator);
             mSwapTargetItemOperator.start();
@@ -1026,8 +1026,8 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         final View view = holder.itemView;
-        final int translateX = (int) (ViewCompat.getTranslationX(view) + 0.5f);
-        final int translateY = (int) (ViewCompat.getTranslationY(view) + 0.5f);
+        final int translateX = (int) (view.getTranslationX() + 0.5f);
+        final int translateY = (int) (view.getTranslationY() + 0.5f);
         final int viewX = touchX - (view.getLeft() + translateX);
         final int viewY = touchY - (view.getTop() + translateY);
 
@@ -1538,7 +1538,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         }
 
         final boolean isLinearLayout = CustomRecyclerViewUtils.isLinearLayout(CustomRecyclerViewUtils.getLayoutType(rv));
-        final boolean swapNextItemSmoothlyInLinearLayout = isLinearLayout && (!supportsViewTranslation() || !mCheckCanDrop);
+        final boolean swapNextItemSmoothlyInLinearLayout = isLinearLayout && (!mCheckCanDrop);
 
         //noinspection StatementWithEmptyBody
         if (diffPosition == 0) {
@@ -1669,10 +1669,6 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
     private static boolean supportsEdgeEffect() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
-    }
-
-    private static boolean supportsViewTranslation() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
     private static void safeEndAnimation(RecyclerView rv, RecyclerView.ViewHolder holder) {

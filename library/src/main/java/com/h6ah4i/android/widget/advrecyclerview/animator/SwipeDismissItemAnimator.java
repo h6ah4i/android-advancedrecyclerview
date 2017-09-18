@@ -97,10 +97,10 @@ public class SwipeDismissItemAnimator extends DraggableItemAnimator {
             final View view = item.itemView;
 
             if (isSwipeDismissed(info)) {
-                ViewCompat.setTranslationX(view, 0);
-                ViewCompat.setTranslationY(view, 0);
+                view.setTranslationX(0);
+                view.setTranslationY(0);
             } else {
-                ViewCompat.setAlpha(view, 1);
+                view.setAlpha(1);
             }
         }
 
@@ -109,10 +109,10 @@ public class SwipeDismissItemAnimator extends DraggableItemAnimator {
             final View view = item.itemView;
 
             if (isSwipeDismissed(info)) {
-                ViewCompat.setTranslationX(view, 0);
-                ViewCompat.setTranslationY(view, 0);
+                view.setTranslationX(0);
+                view.setTranslationY(0);
             } else {
-                ViewCompat.setAlpha(view, 1);
+                view.setAlpha(1);
             }
         }
 
@@ -124,13 +124,13 @@ public class SwipeDismissItemAnimator extends DraggableItemAnimator {
         public boolean addPendingAnimation(RecyclerView.ViewHolder holder) {
             if (isSwipeDismissed(holder)) {
                 final View itemView = holder.itemView;
-                final int prevItemX = (int) (ViewCompat.getTranslationX(itemView) + 0.5f);
-                final int prevItemY = (int) (ViewCompat.getTranslationY(itemView) + 0.5f);
+                final int prevItemX = (int) (itemView.getTranslationX() + 0.5f);
+                final int prevItemY = (int) (itemView.getTranslationY() + 0.5f);
 
                 endAnimation(holder);
 
-                ViewCompat.setTranslationX(itemView, prevItemX);
-                ViewCompat.setTranslationY(itemView, prevItemY);
+                itemView.setTranslationX(prevItemX);
+                itemView.setTranslationY(prevItemY);
 
                 enqueuePendingAnimationInfo(new SwipeDismissRemoveAnimationInfo(holder));
 

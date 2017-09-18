@@ -23,10 +23,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
-
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 
 class DraggingItemDecorator extends BaseDraggableItemDecorator {
@@ -150,7 +148,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         if (scaleX > 0.0f && scaleY > 0.0f && alpha > 0.0f) {
             mPaint.setAlpha((int) (alpha * 255));
 
-            int savedCount = c.save(Canvas.MATRIX_SAVE_FLAG);
+            int savedCount = c.save();
 
             c.translate(mTranslationX + mDraggingItemInfo.grabbedPositionX, mTranslationY + mDraggingItemInfo.grabbedPositionY);
             c.scale(scaleX, scaleY);
@@ -196,8 +194,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mLayoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
         mLayoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
-        mInitialDraggingItemScaleX = ViewCompat.getScaleX(itemView);
-        mInitialDraggingItemScaleY = ViewCompat.getScaleY(itemView);
+        mInitialDraggingItemScaleX = itemView.getScaleX();
+        mInitialDraggingItemScaleY = itemView.getScaleY();
 
         mLastDraggingItemScaleX = 1.0f;
         mLastDraggingItemScaleY = 1.0f;
@@ -443,7 +441,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             shadow.draw(canvas);
         }
 
-        final int savedCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
+        final int savedCount = canvas.save();
         // NOTE: Explicitly set clipping rect. This is required on Gingerbread.
         canvas.clipRect(mShadowPadding.left, mShadowPadding.top, canvasWidth - mShadowPadding.right, canvasHeight - mShadowPadding.bottom);
         canvas.translate(mShadowPadding.left, mShadowPadding.top);
@@ -490,8 +488,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     public void invalidateDraggingItem() {
         if (mDraggingItemViewHolder != null) {
-            ViewCompat.setTranslationX(mDraggingItemViewHolder.itemView, 0);
-            ViewCompat.setTranslationY(mDraggingItemViewHolder.itemView, 0);
+            mDraggingItemViewHolder.itemView.setTranslationX(0);
+            mDraggingItemViewHolder.itemView.setTranslationY(0);
             mDraggingItemViewHolder.itemView.setVisibility(View.VISIBLE);
         }
 

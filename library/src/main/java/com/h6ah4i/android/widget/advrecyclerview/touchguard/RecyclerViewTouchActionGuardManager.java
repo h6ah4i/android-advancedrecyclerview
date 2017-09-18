@@ -109,7 +109,7 @@ public class RecyclerViewTouchActionGuardManager {
             return false;
         }
 
-        final int action = MotionEventCompat.getActionMasked(e);
+        final int action = e.getActionMasked();
 
         if (LOCAL_LOGV) {
             Log.v(TAG, "onInterceptTouchEvent() action = " + action);
@@ -140,7 +140,7 @@ public class RecyclerViewTouchActionGuardManager {
             return;
         }
 
-        final int action = MotionEventCompat.getActionMasked(e);
+        final int action = e.getActionMasked();
 
         if (LOCAL_LOGV) {
             Log.v(TAG, "onTouchEvent() action = " + action);

@@ -82,10 +82,10 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
             }
 
             // check if the next item is placed at the bottom or right
-            final float childBottom = child.getBottom() + ViewCompat.getTranslationY(child);
-            final float nextChildTop = nextChild.getTop() + ViewCompat.getTranslationY(nextChild);
-            final float childRight = child.getRight() + ViewCompat.getTranslationX(child);
-            final float nextChildLeft = nextChild.getLeft() + ViewCompat.getTranslationX(nextChild);
+            final float childBottom = child.getBottom() + child.getTranslationY();
+            final float nextChildTop = nextChild.getTop() + nextChild.getTranslationY();
+            final float childRight = child.getRight() + child.getTranslationX();
+            final float nextChildLeft = nextChild.getLeft() + nextChild.getTranslationX();
 
             if (!(((mHorizontalDividerHeight != 0) && (Math.abs(nextChildTop - childBottom) < yPositionThreshold)) ||
                     ((mVerticalDividerWidth != 0) && (Math.abs(nextChildLeft - childRight) < xPositionThreshold)))) {
@@ -100,11 +100,11 @@ public class SimpleListDividerDecorator extends RecyclerView.ItemDecoration {
                 continue;
             }
 
-            final float childAlpha = ViewCompat.getAlpha(child);
-            final float nextChildAlpha = ViewCompat.getAlpha(nextChild);
+            final float childAlpha = child.getAlpha();
+            final float nextChildAlpha = nextChild.getAlpha();
 
-            final int tx = (int) (ViewCompat.getTranslationX(child) + 0.5f);
-            final int ty = (int) (ViewCompat.getTranslationY(child) + 0.5f);
+            final int tx = (int) (child.getTranslationX() + 0.5f);
+            final int ty = (int) (child.getTranslationY() + 0.5f);
 
             if (mHorizontalDividerHeight != 0) {
                 final int left = child.getLeft();
