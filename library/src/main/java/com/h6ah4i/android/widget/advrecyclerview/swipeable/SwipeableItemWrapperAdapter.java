@@ -42,6 +42,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     private SwipeableItemAdapter mSwipeableItemAdapter;
     private RecyclerViewSwipeManager mSwipeManager;
     private long mSwipingItemId = RecyclerView.NO_ID;
+    private boolean mCallingSwipeStarted;
 
     public SwipeableItemWrapperAdapter(RecyclerViewSwipeManager manager, RecyclerView.Adapter<VH> adapter) {
         super(adapter);
@@ -153,7 +154,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
 
     @Override
     protected void onHandleWrappedAdapterChanged() {
-        if (isSwiping()) {
+        if (isSwiping() && !mCallingSwipeStarted) {
             cancelSwipe();
         }
         super.onHandleWrappedAdapterChanged();
@@ -260,14 +261,16 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     }
 
     // NOTE: This method is called from RecyclerViewSwipeManager
-    /*package*/ void onSwipeItemStarted(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder holder, long id) {
+    /*package*/ void onSwipeItemStarted(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder holder, int position, long id) {
         if (LOCAL_LOGD) {
-            Log.d(TAG, "onSwipeItemStarted(holder = " + holder + ", id = " + id + ")");
+            Log.d(TAG, "onSwipeItemStarted(holder = " + holder + ", position = " + position + ", id = " + id + ")");
         }
 
         mSwipingItemId = id;
 
-        notifyDataSetChanged();
+        mCallingSwipeStarted = true;
+        mSwipeableItemAdapter.onSwipeItemStarted(holder, position);
+        mCallingSwipeStarted = false;
     }
 
     // NOTE: This method is called from RecyclerViewSwipeManager

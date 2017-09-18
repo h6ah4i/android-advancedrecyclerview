@@ -131,6 +131,11 @@ class ViewPagerSwipeableExampleAdapter
     }
 
     @Override
+    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
         if (type == Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND) {
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);

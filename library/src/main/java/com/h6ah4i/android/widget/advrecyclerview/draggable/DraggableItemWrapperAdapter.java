@@ -437,6 +437,18 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
         return swipeableItemAdapter.onGetSwipeReactionType(holder, correctedPosition, x, y);
     }
 
+    @Override
+    public void onSwipeItemStarted(VH holder, int position) {
+        RecyclerView.Adapter adapter = getWrappedAdapter();
+        if (!(adapter instanceof SwipeableItemAdapter)) {
+            return;
+        }
+
+        int correctedPosition = getOriginalPosition(position);
+
+        ((SwipeableItemAdapter) adapter).onSwipeItemStarted(holder, correctedPosition);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
     public void onSetSwipeBackground(VH holder, int position, int type) {

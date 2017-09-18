@@ -228,6 +228,11 @@ class DraggableSwipeableExampleAdapter
     }
 
     @Override
+    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
         int bgRes = 0;
         switch (type) {

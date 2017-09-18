@@ -628,6 +628,28 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
+    public void onSwipeItemStarted(RecyclerView.ViewHolder holder, int position) {
+        if (!(mExpandableItemAdapter instanceof BaseExpandableSwipeableItemAdapter)) {
+            return;
+        }
+
+        final BaseExpandableSwipeableItemAdapter adapter = (BaseExpandableSwipeableItemAdapter) mExpandableItemAdapter;
+
+        //noinspection UnnecessaryLocalVariable
+        final int flatPosition = position;
+        final long expandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
+        final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(expandablePosition);
+        final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(expandablePosition);
+
+        if (childPosition == RecyclerView.NO_POSITION) {
+            adapter.onSwipeGroupItemStarted(holder, groupPosition);
+        } else {
+            adapter.onSwipeChildItemStarted(holder, groupPosition, childPosition);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
     public void onSetSwipeBackground(RecyclerView.ViewHolder holder, int position, int type) {
         if (!(mExpandableItemAdapter instanceof BaseExpandableSwipeableItemAdapter)) {
             return;

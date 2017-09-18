@@ -163,6 +163,11 @@ class SwipeableExampleAdapter
     }
 
     @Override
+    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
         return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
     }
