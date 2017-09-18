@@ -26,7 +26,7 @@ This RecyclerView extension library provides Google's Inbox app like swiping, Pl
 Target platforms
 ---
 
-- API level 9 or later  (However, some animations are not supported on Gingerbread.)
+- API level 14 or later
 
 
 Latest version
@@ -36,6 +36,8 @@ Latest version
 
 
 **Recent Breaking Change Info**
+
+- **v0.11.0:**  Since official support libraries have dropped support older API levels than v14, this library does also dropped support them since v0.11.0. If you still need to support API level v9, please continue to use v0.10.6.
 
 - **v0.10.4:** `OnGroupExpandListener` and `OnGroupCollapseListener` takes `payload` parameter. (related: [issue #350](https://github.com/h6ah4i/android-advancedrecyclerview/issues/350))
 
