@@ -110,6 +110,11 @@ class MySwipeableAdapter
     }
 
     @Override
+    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, @SwipeableItemResults int result) {
         if (result == Swipeable.RESULT_CANCELED) {
             return new SwipeResultActionDefault();

@@ -399,6 +399,16 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
+    public void onSwipeGroupItemStarted(MyGroupViewHolder holder, int groupPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSwipeChildItemStarted(MyChildViewHolder holder, int groupPosition, int childPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public void onSetGroupItemSwipeBackground(MyGroupViewHolder holder, int groupPosition, int type) {
         int bgResId = 0;
         switch (type) {
