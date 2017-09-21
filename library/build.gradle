@@ -28,14 +28,13 @@ ext {
 // Common configurations
 apply from: '../common/android-set-common-properties.gradle'
 
+def dataProps = new Properties()
+dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
+
 android {
     defaultConfig {
         minSdkVersion 9
         targetSdkVersion 25
-
-
-        def dataProps = new Properties()
-        dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
 
         //noinspection GroovyAssignabilityCheck
         versionCode dataProps.VERSION_CODE.toInteger()
@@ -64,9 +63,20 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.1.2'
 }
 
+group = 'com.h6ah4i.android.widget.advrecyclerview'
+version = dataProps.VERSION_NAME
+uploadArchives {
+    repositories {
+        flatDir {
+            name 'pcLocal'
+            dir "$parent.rootDir/maven/aars"
+        }
+    }
+}
+
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
 }
 
 // NOTE: this line should be place at end of the file
-apply from: '../common/android-maven-publish.gradle'
+//apply from: '../common/android-maven-publish.gradle'
