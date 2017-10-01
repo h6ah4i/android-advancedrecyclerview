@@ -369,6 +369,26 @@ class ExpandableDraggableWithSectionExampleAdapter
         mProvider.moveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
     }
 
+    @Override
+    public void onGroupDragStarted(int groupPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildDragStarted(int groupPosition, int childPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onGroupDragFinished(int fromGroupPosition, int toGroupPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildDragFinished(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
     private int findFirstSectionItem(int position) {
         AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(position);
 

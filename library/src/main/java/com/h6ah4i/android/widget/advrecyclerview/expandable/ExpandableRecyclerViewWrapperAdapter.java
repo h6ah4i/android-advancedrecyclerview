@@ -57,6 +57,11 @@ class ExpandableRecyclerViewWrapperAdapter
     private int mDraggingItemChildRangeStart = RecyclerView.NO_POSITION;
     private int mDraggingItemChildRangeEnd = RecyclerView.NO_POSITION;
 
+    private int mSavedFromGroupPosition = RecyclerView.NO_POSITION;
+    private int mSavedFromChildPosition = RecyclerView.NO_POSITION;
+    private int mSavedToGroupPosition = RecyclerView.NO_POSITION;
+    private int mSavedToChildPosition = RecyclerView.NO_POSITION;
+
     private RecyclerViewExpandableItemManager.OnGroupExpandListener mOnGroupExpandListener;
     private RecyclerViewExpandableItemManager.OnGroupCollapseListener mOnGroupCollapseListener;
 
@@ -478,6 +483,71 @@ class ExpandableRecyclerViewWrapperAdapter
         }
     }
 
+    @Override
+    public void onItemDragStarted(int position) {
+        if (!(mExpandableItemAdapter instanceof ExpandableDraggableItemAdapter)) {
+            return;
+        }
+
+        final ExpandableDraggableItemAdapter adapter = (ExpandableDraggableItemAdapter) mExpandableItemAdapter;
+
+        //noinspection UnnecessaryLocalVariable
+        final int flatPosition = position;
+        final long draggingExpandablePosition = mPositionTranslator.getExpandablePosition(flatPosition);
+        final int groupPosition = ExpandableAdapterHelper.getPackedPositionGroup(draggingExpandablePosition);
+        final int childPosition = ExpandableAdapterHelper.getPackedPositionChild(draggingExpandablePosition);
+
+        if (childPosition == RecyclerView.NO_POSITION) {
+            // group
+            adapter.onGroupDragStarted(groupPosition);
+        } else {
+            // child
+            adapter.onChildDragStarted(groupPosition, childPosition);
+        }
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        int fromGroupPosition = mSavedFromGroupPosition;
+        int fromChildPosition = mSavedFromChildPosition;
+        int toGroupPosition = mSavedToGroupPosition;
+        int toChildPosition = mSavedToChildPosition;
+
+        mDraggingItemGroupRangeStart = RecyclerView.NO_POSITION;
+        mDraggingItemGroupRangeEnd = RecyclerView.NO_POSITION;
+        mDraggingItemChildRangeStart = RecyclerView.NO_POSITION;
+        mDraggingItemChildRangeEnd = RecyclerView.NO_POSITION;
+
+        mSavedFromGroupPosition = RecyclerView.NO_POSITION;
+        mSavedFromChildPosition = RecyclerView.NO_POSITION;
+        mSavedToGroupPosition = RecyclerView.NO_POSITION;
+        mSavedToChildPosition = RecyclerView.NO_POSITION;
+
+        if (!(mExpandableItemAdapter instanceof ExpandableDraggableItemAdapter)) {
+            return;
+        }
+
+        if (fromGroupPosition == RecyclerView.NO_POSITION && fromChildPosition == RecyclerView.NO_POSITION) {
+            // onMoveItem is not called, so in this case we can safely use the mPositionTranslator here.
+            final long fromDraggingExpandablePosition = mPositionTranslator.getExpandablePosition(fromPosition);
+            fromGroupPosition = ExpandableAdapterHelper.getPackedPositionGroup(fromDraggingExpandablePosition);
+            fromChildPosition = ExpandableAdapterHelper.getPackedPositionChild(fromDraggingExpandablePosition);
+
+            toGroupPosition = fromGroupPosition;
+            toChildPosition = fromChildPosition;
+        }
+
+        final ExpandableDraggableItemAdapter adapter = (ExpandableDraggableItemAdapter) mExpandableItemAdapter;
+
+        if (fromChildPosition == RecyclerView.NO_POSITION) {
+            // group
+            adapter.onGroupDragFinished(fromGroupPosition, toGroupPosition, result);
+        } else {
+            // child
+            adapter.onChildDragFinished(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition, result);
+        }
+    }
+
     private static boolean isGroupPositionRange(ItemDraggableRange range) {
         if (range.getClass().equals(GroupPositionItemDraggableRange.class)) {
             return true;
@@ -498,11 +568,6 @@ class ExpandableRecyclerViewWrapperAdapter
             return;
         }
 
-        mDraggingItemGroupRangeStart = RecyclerView.NO_POSITION;
-        mDraggingItemGroupRangeEnd = RecyclerView.NO_POSITION;
-        mDraggingItemChildRangeStart = RecyclerView.NO_POSITION;
-        mDraggingItemChildRangeEnd = RecyclerView.NO_POSITION;
-
         if (fromPosition == toPosition) {
             return;
         }
@@ -519,6 +584,8 @@ class ExpandableRecyclerViewWrapperAdapter
 
         final boolean fromIsGroup = (fromChildPosition == RecyclerView.NO_POSITION);
         final boolean toIsGroup = (toChildPosition == RecyclerView.NO_POSITION);
+        int modToChildPosition = toChildPosition;
+        int modToGroupPosition = toGroupPosition;
 
         int actualToFlatPosition = fromPosition;
 
@@ -527,12 +594,8 @@ class ExpandableRecyclerViewWrapperAdapter
             mPositionTranslator.moveGroupItem(fromGroupPosition, toGroupPosition);
             actualToFlatPosition = toPosition;
         } else if (!fromIsGroup && !toIsGroup) {
-            int modToChildPosition;
-
             // correct child position
-            if (fromGroupPosition == toGroupPosition) {
-                modToChildPosition = toChildPosition;
-            } else {
+            if (fromGroupPosition != toGroupPosition) {
                 if (fromPosition < toPosition) {
                     modToChildPosition = toChildPosition + 1;
                 } else {
@@ -546,9 +609,6 @@ class ExpandableRecyclerViewWrapperAdapter
             adapter.onMoveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, modToChildPosition);
             mPositionTranslator.moveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, modToChildPosition);
         } else if (!fromIsGroup /*&& toIsGroup NOTE: toIsGroup is always true here*/) {
-            int modToGroupPosition;
-            int modToChildPosition;
-
             if (toPosition < fromPosition) {
                 if (toGroupPosition == 0) {
                     // insert at the top
@@ -602,6 +662,12 @@ class ExpandableRecyclerViewWrapperAdapter
                 notifyItemRemoved(fromPosition);
             }
         }
+
+        // save from & to positions for onItemDragFinished
+        mSavedFromGroupPosition = fromGroupPosition;
+        mSavedFromChildPosition = fromChildPosition;
+        mSavedToGroupPosition = modToGroupPosition;
+        mSavedToChildPosition = modToChildPosition;
     }
 
     @SuppressWarnings("unchecked")

@@ -115,4 +115,47 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
      * @return Whether can be dropped to the specified position.
      */
     boolean onCheckChildCanDrop(int draggingGroupPosition, int draggingChildPosition, int dropGroupPosition, int dropChildPosition);
+
+    /**
+     * Callback method to be invoked when started dragging a group item.
+     *
+     * Call the {@link RecyclerView.Adapter#notifyDataSetChanged()} method in this callback to get the same behavior with v0.10.x or before.
+     *
+     * @param groupPosition The position of the group item.
+     */
+    void onGroupDragStarted(int groupPosition);
+
+    /**
+     * Callback method to be invoked when started dragging a child item.
+     *
+     * Call the {@link RecyclerView.Adapter#notifyDataSetChanged()} method in this callback to get the same behavior with v0.10.x or before.
+     *
+     * @param groupPosition The group position of the item.
+     * @param childPosition The child position of the item.
+     */
+    void onChildDragStarted(int groupPosition, int childPosition);
+
+    /**
+     * Callback method to be invoked when finished dragging a group item.
+     *
+     * Call the {@link RecyclerView.Adapter#notifyDataSetChanged()} method in this callback to get the same behavior with v0.10.x or before.
+     *
+     * @param fromGroupPosition Previous position of the group item.
+     * @param toGroupPosition   New position of the group item.
+     * @param result       Indicates whether the dragging operation was succeeded.
+     */
+    void onGroupDragFinished(int fromGroupPosition, int toGroupPosition, boolean result);
+
+    /**
+     * Callback method to be invoked when finished dragging a child item.
+     *
+     * Call the {@link RecyclerView.Adapter#notifyDataSetChanged()} method in this callback to get the same behavior with v0.10.x or before.
+     *
+     * @param fromGroupPosition Previous group position of the item.
+     * @param fromChildPosition Previous child position of the item.
+     * @param toGroupPosition   New group position of the item.
+     * @param toChildPosition   New child position of the item.
+     * @param result       Indicates whether the dragging operation was succeeded.
+     */
+    void onChildDragFinished(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition, boolean result);
 }

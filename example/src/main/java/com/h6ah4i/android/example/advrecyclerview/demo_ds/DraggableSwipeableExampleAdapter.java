@@ -219,6 +219,16 @@ class DraggableSwipeableExampleAdapter
     }
 
     @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
         if (onCheckCanStartDrag(holder, position, x, y)) {
             return Swipeable.REACTION_CAN_NOT_SWIPE_BOTH_H;
