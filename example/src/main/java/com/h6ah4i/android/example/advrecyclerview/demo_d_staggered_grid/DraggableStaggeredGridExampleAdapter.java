@@ -216,6 +216,16 @@ class DraggableStaggeredGridExampleAdapter
         return true;
     }
 
+    @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
     static int getHeaderItemCount() {
         return (USE_DUMMY_HEADER) ? 1 : 0;
     }

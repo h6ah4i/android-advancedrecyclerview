@@ -381,6 +381,26 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
+    public void onGroupDragStarted(int groupPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildDragStarted(int groupPosition, int childPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onGroupDragFinished(int fromGroupPosition, int toGroupPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildDragFinished(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public int onGetGroupItemSwipeReactionType(MyGroupViewHolder holder, int groupPosition, int x, int y) {
         if (onCheckGroupCanStartDrag(holder, groupPosition, x, y)) {
             return Swipeable.REACTION_CAN_NOT_SWIPE_BOTH_H;

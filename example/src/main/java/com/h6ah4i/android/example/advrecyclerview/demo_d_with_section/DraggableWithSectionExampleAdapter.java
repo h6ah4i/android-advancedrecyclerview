@@ -196,6 +196,16 @@ class DraggableWithSectionExampleAdapter
         return true;
     }
 
+    @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
     private int findFirstSectionItem(int position) {
         AbstractDataProvider.Data item = mProvider.getItem(position);
 

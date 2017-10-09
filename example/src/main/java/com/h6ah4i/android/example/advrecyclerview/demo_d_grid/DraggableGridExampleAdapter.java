@@ -152,4 +152,14 @@ class DraggableGridExampleAdapter
     public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
         return true;
     }
+
+    @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
+    }
 }

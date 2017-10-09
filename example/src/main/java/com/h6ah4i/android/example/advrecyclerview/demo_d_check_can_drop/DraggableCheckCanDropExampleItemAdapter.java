@@ -151,4 +151,14 @@ class DraggableCheckCanDropExampleItemAdapter
     public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
         return (draggingPosition % 2) == (dropPosition % 2);
     }
+
+    @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
+    }
 }

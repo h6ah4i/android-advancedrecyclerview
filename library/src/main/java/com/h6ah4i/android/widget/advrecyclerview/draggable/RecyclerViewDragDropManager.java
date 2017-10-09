@@ -762,8 +762,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         startScrollOnDraggingProcess();
 
-        // raise onDragItemStarted() event
-        mWrapperAdapter.onDragItemStarted(mDraggingItemInfo, holder, mDraggableRange, wrappedItemPosition, mCurrentItemMoveMode);
+        mWrapperAdapter.startDraggingItem(mDraggingItemInfo, holder, mDraggableRange, wrappedItemPosition, mCurrentItemMoveMode);
 
         // setup decorators
         mWrapperAdapter.onBindViewHolder(holder, wrappedItemPosition);
@@ -785,6 +784,9 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         if (mEdgeEffectDecorator != null) {
             mEdgeEffectDecorator.reorderToTop();
         }
+
+        // raise onDragItemStarted() event
+        mWrapperAdapter.onDragItemStarted();
 
         if (mItemDragEventListener != null) {
             mItemDragEventListener.onItemDragStarted(mWrapperAdapter.getDraggingItemInitialPosition());
@@ -905,7 +907,10 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         if (mWrapperAdapter != null) {
             draggingItemInitialPosition = mWrapperAdapter.getDraggingItemInitialPosition();
             draggingItemCurrentPosition = mWrapperAdapter.getDraggingItemCurrentPosition();
-            mWrapperAdapter.onDragItemFinished(result);
+            mWrapperAdapter.onDragItemFinished(
+                    draggingItemInitialPosition,
+                    draggingItemCurrentPosition,
+                    result);
         }
 
 //        if (draggedItem != null) {
