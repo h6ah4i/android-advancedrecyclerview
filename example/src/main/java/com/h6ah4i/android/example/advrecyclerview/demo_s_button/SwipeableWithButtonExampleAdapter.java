@@ -67,10 +67,10 @@ class SwipeableWithButtonExampleAdapter
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mBehindViews = (RelativeLayout) v.findViewById(R.id.behind_views);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
-            mButton = (Button) v.findViewById(android.R.id.button1);
+            mContainer = v.findViewById(R.id.container);
+            mBehindViews = v.findViewById(R.id.behind_views);
+            mTextView = v.findViewById(android.R.id.text1);
+            mButton = v.findViewById(android.R.id.button1);
         }
 
         @Override

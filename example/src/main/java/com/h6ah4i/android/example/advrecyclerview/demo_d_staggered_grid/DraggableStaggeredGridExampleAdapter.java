@@ -69,9 +69,9 @@ class DraggableStaggeredGridExampleAdapter
 
         public NormalItemViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mTextView = v.findViewById(android.R.id.text1);
         }
     }
 
@@ -199,10 +199,7 @@ class DraggableStaggeredGridExampleAdapter
 
     @Override
     public boolean onCheckCanStartDrag(BaseViewHolder holder, int position, int x, int y) {
-        if (isHeader(position)) {
-            return false;
-        }
-        return true;
+        return !isHeader(position);
     }
 
     @Override

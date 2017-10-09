@@ -129,8 +129,8 @@ public class AboutActivity extends AppCompatActivity {
             public TextView mLicenseNotice;
 
             public ViewHolder(View v) {
-                mName = (TextView) v.findViewById(R.id.textLibraryName);
-                mLicenseNotice = (TextView) v.findViewById(R.id.textLicenseNotice);
+                mName = v.findViewById(R.id.textLibraryName);
+                mLicenseNotice = v.findViewById(R.id.textLicenseNotice);
             }
         }
     }

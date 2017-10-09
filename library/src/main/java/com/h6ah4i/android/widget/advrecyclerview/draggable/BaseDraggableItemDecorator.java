@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
-import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;

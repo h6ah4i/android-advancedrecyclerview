@@ -59,8 +59,8 @@ class VerticalSwipeableExampleAdapter
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mContainer = v.findViewById(R.id.container);
+            mTextView = v.findViewById(android.R.id.text1);
         }
 
         @Override

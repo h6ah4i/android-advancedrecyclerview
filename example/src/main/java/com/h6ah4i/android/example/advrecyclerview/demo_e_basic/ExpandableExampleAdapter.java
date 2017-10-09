@@ -45,8 +45,8 @@ class ExpandableExampleAdapter
 
         public MyBaseViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mContainer = v.findViewById(R.id.container);
+            mTextView = v.findViewById(android.R.id.text1);
         }
     }
 
@@ -55,7 +55,7 @@ class ExpandableExampleAdapter
 
         public MyGroupViewHolder(View v) {
             super(v);
-            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
+            mIndicator = v.findViewById(R.id.indicator);
         }
     }
 

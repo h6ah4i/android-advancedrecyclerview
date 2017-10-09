@@ -21,22 +21,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.OnListItemClickMessageListener;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.SimpleDemoItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.headerfooter.AbstractHeaderFooterWrapperAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
-import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /*
  * This example shows very very minimal implementation of header and footer feature.
@@ -60,7 +51,7 @@ public class AddRemoveHeaderFooterExampleActivity extends AppCompatActivity {
             }
         };
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         RecyclerView.Adapter adapter;
 

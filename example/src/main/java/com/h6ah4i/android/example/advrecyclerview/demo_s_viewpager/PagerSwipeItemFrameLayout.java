@@ -43,12 +43,8 @@ public class PagerSwipeItemFrameLayout extends FrameLayout {
             // return true to avoid view pager consume swipe left (= scroll right) touch events
             return true;
         }
-        if (mCanSwipeRight && direction < 0) {
-            // return true to avoid view pager consume swipe right (= scroll left) touch events
-            return true;
-        }
+        return mCanSwipeRight && direction < 0;
 
-        return false;
     }
 
     public void setCanSwipeLeft(boolean canSwipeLeft) {

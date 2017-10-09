@@ -47,7 +47,7 @@ public class MinimalDraggableExampleActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_demo_minimal);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         // Setup D&D feature and RecyclerView
         RecyclerViewDragDropManager dragMgr = new RecyclerViewDragDropManager();
@@ -78,7 +78,7 @@ public class MinimalDraggableExampleActivity extends AppCompatActivity {
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView = itemView.findViewById(android.R.id.text1);
         }
     }
 

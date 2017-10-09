@@ -18,7 +18,6 @@ package com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager;
 
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,8 +52,8 @@ class ViewPagerSwipeableExampleAdapter
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (PagerSwipeItemFrameLayout) v.findViewById(R.id.container);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mContainer = v.findViewById(R.id.container);
+            mTextView = v.findViewById(android.R.id.text1);
         }
 
         @Override

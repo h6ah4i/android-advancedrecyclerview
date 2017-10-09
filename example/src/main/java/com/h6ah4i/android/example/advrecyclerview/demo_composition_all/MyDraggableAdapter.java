@@ -46,7 +46,7 @@ class MyDraggableAdapter
             super(itemView);
             containerView = itemView.findViewById(R.id.container);
             dragHandle = itemView.findViewById(R.id.drag_handle);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView = itemView.findViewById(android.R.id.text1);
         }
     }
 

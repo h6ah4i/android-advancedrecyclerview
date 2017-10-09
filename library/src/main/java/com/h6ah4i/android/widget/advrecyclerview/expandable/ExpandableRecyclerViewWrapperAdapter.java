@@ -19,6 +19,8 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
@@ -27,8 +29,6 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
-import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
-import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.List;

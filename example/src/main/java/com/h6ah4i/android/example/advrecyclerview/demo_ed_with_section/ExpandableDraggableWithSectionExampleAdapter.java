@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section;
 
-import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,9 +64,9 @@ class ExpandableDraggableWithSectionExampleAdapter
 
         public MyBaseViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mTextView = v.findViewById(android.R.id.text1);
         }
 
         @Override
@@ -86,7 +85,7 @@ class ExpandableDraggableWithSectionExampleAdapter
 
         public MyGroupViewHolder(View v) {
             super(v);
-            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
+            mIndicator = v.findViewById(R.id.indicator);
         }
     }
 
@@ -217,11 +216,7 @@ class ExpandableDraggableWithSectionExampleAdapter
                 bgResId = R.drawable.bg_group_item_normal_state;
             }
 
-            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
-                isExpanded = true;
-            } else {
-                isExpanded = false;
-            }
+            isExpanded = (expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0;
 
             holder.mContainer.setBackgroundResource(bgResId);
             holder.mIndicator.setExpandedState(isExpanded, animateIndicator);

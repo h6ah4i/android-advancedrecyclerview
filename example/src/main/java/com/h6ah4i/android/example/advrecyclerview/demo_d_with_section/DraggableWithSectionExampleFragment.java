@@ -58,7 +58,7 @@ public class DraggableWithSectionExampleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //noinspection ConstantConditions
-        mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
+        mRecyclerView = getView().findViewById(R.id.recycler_view);
         mLayoutManager = new LinearLayoutManager(getContext());
 
         // drag & drop manager

@@ -27,8 +27,6 @@ import com.h6ah4i.android.widget.advrecyclerview.headerfooter.AbstractHeaderFoot
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
-import java.util.List;
-
 public class DemoHeaderFooterAdapter
         extends AbstractHeaderFooterWrapperAdapter<DemoHeaderFooterAdapter.HeaderViewHolder, DemoHeaderFooterAdapter.FooterViewHolder>
         implements View.OnClickListener {

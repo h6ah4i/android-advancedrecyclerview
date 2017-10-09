@@ -22,10 +22,10 @@ import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.BridgeAdapterDataObserver;
-import com.h6ah4i.android.widget.advrecyclerview.adapter.UnwrapPositionResult;
-import com.h6ah4i.android.widget.advrecyclerview.adapter.WrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.UnwrapPositionResult;
+import com.h6ah4i.android.widget.advrecyclerview.adapter.WrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrappedAdapterUtils;
 
 import java.util.List;

@@ -17,14 +17,11 @@
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -32,12 +29,11 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
-import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 /**
@@ -193,7 +189,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mTouchSlop = vc.getScaledTouchSlop();
         mMinFlingVelocity = vc.getScaledMinimumFlingVelocity();
         mMaxFlingVelocity = vc.getScaledMaximumFlingVelocity();
-        mSwipeThresholdDistance = (int) (mTouchSlop * MIN_DISTANCE_TOUCH_SLOP_MUL);
+        mSwipeThresholdDistance = mTouchSlop * MIN_DISTANCE_TOUCH_SLOP_MUL;
 
         mItemSlideAnimator = new ItemSlidingAnimator(mWrapperAdapter);
         mItemSlideAnimator.setImmediatelySetTranslationThreshold(

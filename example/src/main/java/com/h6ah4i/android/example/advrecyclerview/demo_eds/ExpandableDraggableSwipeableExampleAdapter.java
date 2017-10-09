@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,9 +87,9 @@ class ExpandableDraggableSwipeableExampleAdapter
 
         public MyBaseViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mTextView = v.findViewById(android.R.id.text1);
         }
 
         @Override
@@ -114,7 +113,7 @@ class ExpandableDraggableSwipeableExampleAdapter
 
         public MyGroupViewHolder(View v) {
             super(v);
-            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
+            mIndicator = v.findViewById(R.id.indicator);
         }
     }
 
@@ -243,11 +242,7 @@ class ExpandableDraggableSwipeableExampleAdapter
                 bgResId = R.drawable.bg_group_item_normal_state;
             }
 
-            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
-                isExpanded = true;
-            } else {
-                isExpanded = false;
-            }
+            isExpanded = (expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0;
 
             holder.mContainer.setBackgroundResource(bgResId);
             holder.mIndicator.setExpandedState(isExpanded, animateIndicator);

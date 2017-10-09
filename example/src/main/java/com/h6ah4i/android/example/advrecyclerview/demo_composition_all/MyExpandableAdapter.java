@@ -70,7 +70,7 @@ class MyExpandableAdapter
         public MyBaseViewHolder(View itemView) {
             super(itemView);
             containerView = itemView.findViewById(R.id.container);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView = itemView.findViewById(android.R.id.text1);
         }
     }
 
@@ -79,7 +79,7 @@ class MyExpandableAdapter
 
         public MyGroupViewHolder(View itemView) {
             super(itemView);
-            indicator = (ExpandableItemIndicator) itemView.findViewById(R.id.indicator);
+            indicator = itemView.findViewById(R.id.indicator);
         }
     }
 

@@ -59,8 +59,8 @@ class MySwipeableAdapter
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            containerView = (FrameLayout) itemView.findViewById(R.id.container);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            containerView = itemView.findViewById(R.id.container);
+            textView = itemView.findViewById(android.R.id.text1);
         }
 
         @Override

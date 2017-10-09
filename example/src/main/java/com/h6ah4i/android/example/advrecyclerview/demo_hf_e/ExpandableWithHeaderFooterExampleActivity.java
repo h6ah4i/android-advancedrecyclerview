@@ -25,9 +25,9 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+import com.h6ah4i.android.example.advrecyclerview.common.adapter.DemoHeaderFooterAdapter;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.OnListItemClickMessageListener;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.SimpleDemoExpandableItemAdapter;
-import com.h6ah4i.android.example.advrecyclerview.common.adapter.DemoHeaderFooterAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 
 /*
@@ -50,7 +50,7 @@ public class ExpandableWithHeaderFooterExampleActivity extends AppCompatActivity
             }
         };
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         // Setup expandable feature and RecyclerView
         RecyclerViewExpandableItemManager expMgr = new RecyclerViewExpandableItemManager(null);
