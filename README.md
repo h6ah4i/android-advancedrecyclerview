@@ -5,21 +5,28 @@ Documentation source of Advanced RecyclerView library
 
 This branch contains GitHub Pages source of Advanced RecyclerView.
 
+## Prerequisites
+
+- `pipenv`
+
 ## Setup
 
-1. Install [Hugo](https://gohugo.io/).
+1. Install prerequisite softwares
 2. Clone this repository.
 
   ```bash
   git clone -b gh-pages-source --recurse-submodules git@github.com:h6ah4i/android-advancedrecyclerview.git android-advancedrecyclerview-gh-page
   ```
+3. Install python packages
+  ```bash
+  ./scripts/setup.sh
+  ```
 
 ## How to develop the page contents?
 
-1. Run Hugo server
-
+1. Run mkdocs in server mode
   ```bash
-  mkdocs serve
+  ./scripts/dev.sh
   ```
 
 2. Open `http://127.0.0.1:8000/` in your browser
@@ -30,5 +37,5 @@ This branch contains GitHub Pages source of Advanced RecyclerView.
 ## How to deploy?
 
 ```bash
-mkdocs gh-deploy
+./scripts/deploy.sh
 ```
