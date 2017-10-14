@@ -15,7 +15,7 @@ repo_url: 'https://github.com/h6ah4i/android-advancedrecyclerview'
 
 
 # Copyright
-copyright: 'Copyright (c) 2016 Haruki Hasegawa'
+copyright: 'Copyright &copy; 2017 Haruki Hasegawa'
 
 extra:
   version: '0.10.0'
