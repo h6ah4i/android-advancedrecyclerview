@@ -28,7 +28,7 @@ extra:
 
 # Extensions
 markdown_extensions:
-  - codehilite(css_class=code)
+  - codehilite
   - admonition
   - toc:
       permalink: '#'
