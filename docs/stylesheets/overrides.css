@@ -9,3 +9,10 @@
         max-width: 80%;
     }
 }
+
+.md-header-nav__button img {
+    width: 32px;
+    height: 32px;
+    margin-top: -4px;
+    margin-bottom: -4px;
+}

@@ -2,7 +2,7 @@
 site_name: 'Advanced RecyclerView'
 site_description: 'Documentation site for Advanced RecyclerView (https://github.com/h6ah4i/android-advancedrecyclerview)'
 site_author: 'Haruki Hasegawa'
-site_url: 'https://h6a.h4i.github.io/android-advancedrecyclerview'
+site_url: 'https://advancedrecyclerview.h6ah4i.com/'
 site_favicon: 'favicon.ico'
 
 # Documentation and theme
@@ -25,6 +25,7 @@ extra:
   author:
     github: 'h6ah4i'
     twitter: 'h6a_h4i'
+  logo: 'images/header-logo.png'
 
 # Extensions
 markdown_extensions:
