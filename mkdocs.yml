@@ -8,6 +8,7 @@ site_favicon: 'favicon.ico'
 # Documentation and theme
 docs_dir: 'docs'
 theme: 'material'
+theme_dir: 'theme'
 
 # Repository
 repo_name: 'GitHub'
@@ -32,6 +33,7 @@ markdown_extensions:
   - codehilite
   - admonition
   - toc(permalink=true)
+  - meta
 
 # Customizations
 extra_css: ['stylesheets/overrides.css']
@@ -54,3 +56,4 @@ pages:
 - Advanced Examples: 'advanced-examples.md'
 - FAQ: 'faq.md'
 - License: 'license.md'
+- Javadoc: 'javadoc/index.md'
