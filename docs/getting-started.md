@@ -3,7 +3,7 @@
 Add the following lines of code into your `build.gradle`.
 
 
-```gradle
+```groovy
 dependencies {
     compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:[VERSION_CODES_GOES_HERE]@aar'){
         transitive=true
@@ -14,7 +14,7 @@ dependencies {
 **NOTE:**
 This library is served on [jCenter](https://bintray.com/h6ah4i/maven/android-advancedrecyclerview/). If the above gradle setting not getting work, try adding the following lines.
 
-```gradle
+```groovy
 repositories {
     jcenter()
 }
