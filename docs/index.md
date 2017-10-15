@@ -1,3 +1,5 @@
+<img src="./images/appicon.png" width="160" />
+
 **Advanded RecyclerView** is an extension library of the [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html).
 
 ## Demo app
