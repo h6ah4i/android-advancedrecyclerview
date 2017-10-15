@@ -1,4 +1,4 @@
-![Block Diagram - Draggable](/images/block-diagram-drag-drop.png)
+![Block Diagram - Draggable](./images/block-diagram-drag-drop.png)
 
 
 ## Tutorial
@@ -157,7 +157,7 @@ This method is invoked by the library **whether to check the touched finger posi
 
 Return `true` if the specified position `x` and `y` is inside of the `dragHandle` view. Note that the offset parameter `x` and `y` are measured from top-left of `itemView`.
 
-![onCheckCanStartDrag() parameters](/images/drag-drop-on-check-can-start-drag.png)
+![onCheckCanStartDrag() parameters](./images/drag-drop-on-check-can-start-drag.png)
 
 
 

@@ -3,7 +3,7 @@
 
 The `ComposedAdapter` is an adapter which aggregates multiple adapters into one.
 
-![Basic usage of ComposedAdapter](/images/block-diagram-composed-adapter.png)
+![Basic usage of ComposedAdapter](../images/block-diagram-composed-adapter.png)
 
 ```java
 dataSet = new DataSet();
@@ -22,7 +22,7 @@ composedAdapter.addAdapter(new AdapterC(new DataSet()));
 
 The `ComposedAdapter` can hold the same child adapter instance multiple times like this;
 
-![ComposedAdapter can hold the same child adapter instance multiple times](/images/block-diagram-composed-adapter-2.png)
+![ComposedAdapter can hold the same child adapter instance multiple times](../images/block-diagram-composed-adapter-2.png)
 
 ```java
 dataSet = new DataSet();
@@ -39,7 +39,7 @@ composedAdapter.addAdapter(adapterA2);
 
 The `ComposedAdapter` calls each child adapters as **segment**, also child adapter's local item position are called as **offset**.
 
-![Segments and Offsets](/images/block-diagram-composed-adapter-3.png)
+![Segments and Offsets](../images/block-diagram-composed-adapter-3.png)
 
 !!! methods "Methods"
     - `int ComposedAdapter.getSegment(ComposedChildAdapterTag tag)`

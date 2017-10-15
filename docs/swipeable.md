@@ -1,4 +1,4 @@
-![Block Diagram - Swipeable](/images/block-diagram-swipe.png)
+![Block Diagram - Swipeable](./images/block-diagram-swipe.png)
 
 
 ## Tutorial
