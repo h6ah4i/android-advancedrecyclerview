@@ -1,7 +1,7 @@
 
 ## What's `ComposedAdapter`?
 
-The `ComposedAdapter` is an adapter which aggregates multiple adapters into one.
+The [`ComposedAdapter`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java) is an adapter which aggregates multiple adapters into one.
 
 ![Basic usage of ComposedAdapter](../images/block-diagram-composed-adapter.png)
 
@@ -13,11 +13,13 @@ composedAdapter.addAdapter(new AdapterB(new DataSet()));
 composedAdapter.addAdapter(new AdapterC(new DataSet()));
 ```
 
+!!! info ""
+    :octocat: Check the [`ComposedAdapter` implementation on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java)
 
-!!! methods "Methods"
-    - `ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter)`
-    - `ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter, int position)`
-    - `boolean ComposedAdapter.addAdapter(ComposedChildAdapterTag tag)`
+!!! summary "Related methods"
+    - [:blue_book: `ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#addAdapter(android.support.v7.widget.RecyclerView.Adapter))
+    - [:blue_book: `ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter, int position)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#addAdapter(android.support.v7.widget.RecyclerView.Adapter, int))
+    - [:blue_book: `boolean ComposedAdapter.removeAdapter(ComposedChildAdapterTag tag)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#removeAdapter(com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag))
 
 
 The `ComposedAdapter` can hold the same child adapter instance multiple times like this;
@@ -41,16 +43,16 @@ The `ComposedAdapter` calls each child adapters as **segment**, also child adapt
 
 ![Segments and Offsets](../images/block-diagram-composed-adapter-3.png)
 
-!!! methods "Methods"
-    - `int ComposedAdapter.getSegment(ComposedChildAdapterTag tag)`
-    - `long ComposedAdapter.getSegmentedPosition(int flatPosition)`
-    - `int ComposedAdapter.extractSegmentPart(long segmentedPosition)`
-    - `int ComposedAdapter.extractSegmentOffsetPart(long segmentedPosition)`
+!!! summary "Related methods"
+    - [:blue_book: `int ComposedAdapter.getSegment(ComposedChildAdapterTag tag)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#getSegment(com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag))
+    - [:blue_book: `long ComposedAdapter.getSegmentedPosition(int flatPosition)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#getSegmentedPosition(int))
+    - [:blue_book: `int ComposedAdapter.extractSegmentPart(long segmentedPosition)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#extractSegmentPart(long))
+    - [:blue_book: `int ComposedAdapter.extractSegmentOffsetPart(long segmentedPosition)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#extractSegmentOffsetPart(long))
 
 
 ## Item ID and ViewType handling
 
-When merging adapters, we must take care about item IDs. They have to be unique in entire the dataset, but the problem is child datasets may contains the duplicated IDs. The `ItemIdComposer` is used to manage this problem.
+When merging adapters, we must take care about item IDs. They have to be unique in entire the dataset, but the problem is child datasets may contains the duplicated IDs. The [`ItemIdComposer`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.java) is used to manage this problem.
 
 ### ItemIdComposer
 
@@ -65,15 +67,19 @@ Item IDs are expressed by 64 bits length integer in RecyclerView, so it can be e
 | bit 55-28  | Group ID          |
 | bit 27-0   | Child ID          |
 
-!!! methods "Methods"
-    - `long ItemIdComposer.composeSegment(int segment, long wrappedId)`
-    - `int ItemIdComposer.extractSegmentPart(long composedId)`
-    - `long ItemIdComposer.extractExpandableGroupIdPart(long composedId)`
-    - `long ItemIdComposer.extractExpandableChildIdPart(long composedId)`
-    - `long ItemIdComposer.extractWrappedIdPart(long composedId)`
-    - `boolean ItemIdComposer.isExpandableGroup(long composedId)`
-    - `long ItemIdComposer.composeExpandableChildId(long groupId, long childId)`
-    - `long ItemIdComposer.composeExpandableGroupId(long groupId)`
+
+!!! info ""
+    :octocat: Check the [`ItemIdComposer` implementation on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.java)
+
+!!! summary "Related methods"
+    - [:blue_book: `long ItemIdComposer.composeSegment(int segment, long wrappedId)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#composeSegment(int, long))
+    - [:blue_book: `int ItemIdComposer.extractSegmentPart(long composedId)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractSegmentPart(long))
+    - [:blue_book: `long ItemIdComposer.extractExpandableGroupIdPart(long composedId)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractExpandableGroupIdPart(long))
+    - [:blue_book: `long ItemIdComposer.extractExpandableChildIdPart(long composedId)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractExpandableChildIdPart(long))
+    - [:blue_book: `long ItemIdComposer.extractWrappedIdPart(long composedId)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractWrappedIdPart(long))
+    - [:blue_book: `boolean ItemIdComposer.isExpandableGroup(long composedId)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#isExpandableGroup(long))
+    - [:blue_book: `long ItemIdComposer.composeExpandableGroupId(long groupId)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#composeExpandableGroupId(long))
+    - [:blue_book: `long ItemIdComposer.composeExpandableChildId(long groupId, long childId)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#composeExpandableChildId(long, long))
 
 
 
@@ -90,11 +96,15 @@ Item view types are expressed by 32 bits integer in RecyclerView, and `ItemViewT
 | bit 30-24  | View type segment      |
 | bit 27-0   | Wrapped view type code |
 
-!!! methods "Methods"
-    - `int ItemViewTypeComposer.composeSegment(int segment, int wrappedViewType)`
-    - `int ItemViewTypeComposer.extractSegmentPart(int composedViewType)`
-    - `int ItemViewTypeComposer.extractWrappedViewTypePart(int composedViewType)`
-    - `boolean ItemViewTypeComposer.isExpandableGroup(int composedViewType)`
+
+!!! info ""
+    :octocat: Check the [`ItemViewTypeComposer` implementation on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.java)
+
+!!! summary "Related methods"
+    - [:blue_book: `int ItemViewTypeComposer.composeSegment(int segment, int wrappedViewType)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#composeSegment(int, int))
+    - [:blue_book: `int ItemViewTypeComposer.extractSegmentPart(int composedViewType)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#extractSegmentPart(int))
+    - [:blue_book: `int ItemViewTypeComposer.extractWrappedViewTypePart(int composedViewType)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#extractWrappedViewTypePart(int))
+    - [:blue_book: `boolean ItemViewTypeComposer.isExpandableGroup(int composedViewType)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#isExpandableGroup(int))
 
 
 ## How to migrate to **WRAPPED** adapter?

@@ -3,7 +3,7 @@
 Need to tweak several things in your adapter implemtation to *support wrapping adapter mechanism*.
 Because `WrapperAdapter` modifies **item positions**, **item IDs** and **item view types** internally.
 
-### If overriding Adapter.getItemId()
+### &raquo; If overriding Adapter.getItemId()
 
 **The available range of item ID value is limited, so you cannot use full range of 64-bit integer value.** Must return a value greather than or equals to `-(2^55)` and less than or equals to `2^55 - 1`.
 
@@ -11,7 +11,7 @@ Because `WrapperAdapter` modifies **item positions**, **item IDs** and **item vi
     This limitation is due to how [`ItemIdComposer`](/wrapper-adapter/composed-adapter/#itemidcomposer) packs other information into 64-bits integer value.
 
 
-### If overriding Adapter.getItemViewType()
+### &raquo; If overriding Adapter.getItemViewType()
 
 **The available range of item view type value is limited, so you cannot use full range of 32-bit integer value.** Must return a value greather than or equals to `-(2^23)` and less than or equals to `2^23 - 1`.
 
@@ -19,9 +19,9 @@ Because `WrapperAdapter` modifies **item positions**, **item IDs** and **item vi
     This limitation is due to how [`ItemViewTypeComposer`](/wrapper-adapter/composed-adapter/#itemviewtypecomposer) packs other information into 32-bits integer value.
 
 
-### If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())
+### &raquo; If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())
 
-👉 &nbsp; Use `WrapperAdapterUtils.unwrapPosition()`.
+:point_right: Use [`WrapperAdapterUtils.unwrapPosition()`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/utils/WrapperAdapterUtils.html#unwrapPosition(android.support.v7.widget.RecyclerView.Adapter, int)).
 
 ```java
 @Overfides
@@ -43,9 +43,9 @@ void onClick(View v) {
 }
 ```
 
-### If using ViewHolder.getItemViewType()
+### &raquo; If using ViewHolder.getItemViewType()
 
-👉 &nbsp; Use `ItemViewTypeComposer.extractWrappedViewTypePart()`.
+:point_right: Use [`ItemViewTypeComposer.extractWrappedViewTypePart()`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#extractWrappedViewTypePart(int)).
 
 ```java
 @Overfides
@@ -61,9 +61,9 @@ void onClick(View v) {
 ```
 
 
-### If using ViewHolder.getItemId()
+### &raquo; If using ViewHolder.getItemId()
 
-👉 &nbsp; Use `ItemIdComposer.extractWrappedIdPart()`.
+:point_right: Use [`ItemIdComposer.extractWrappedIdPart()`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractWrappedIdPart(long)).
 
 ```java
 @Overfides
@@ -79,16 +79,16 @@ void onClick(View v) {
 ```
 
 
-### If your adapter overrides optional methods of RecyclerView.Adapter
+### &raquo; If your adapter overrides optional methods of RecyclerView.Adapter
 
-👉 &nbsp; Implement the `WrappedAdapter` interface and use the `viewType` parameter instead of using `ViewHolder.getItemViewType()`
+:point_right: Implement the [`WrappedAdapter` :octocat:](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/WrappedAdapter.java) interface and use the `viewType` parameter instead of using `ViewHolder.getItemViewType()`
 
 This step is only required in case of the adapter overrides the following methods;
 
-- `onViewAttachedToWindow()`
-- `onViewDetachedFromWindow()`
-- `onViewRecycled()`
-- `onFailedToRecycleView()`
+- [`onViewAttachedToWindow()`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onAttachedToRecyclerView(android.support.v7.widget.RecyclerView))
+- [`onViewDetachedFromWindow()`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onViewDetachedFromWindow(VH))
+- [`onViewRecycled()`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onViewRecycled(VH))
+- [`onFailedToRecycleView()`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onFailedToRecycleView(VH))
 
 ```java
 class MyInnerAdapter<VH> implements WrappedAdapter<VH> {

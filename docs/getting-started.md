@@ -22,7 +22,7 @@ repositories {
 
 ## What's next?
 
-First, I recommend you to learn about plain [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html). Basic knowledges about `RecyclerView` is required before using this library. The following tutorial is good for starting point;
+First, I recommend you to learn about plain [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html). Basic knowledges about `RecyclerView` are required before using this library. The following tutorial is good for starting point;
 
 - [Creating Lists and Cards | Android Developers - Training](https://developer.android.com/training/material/lists-cards.html)
 
@@ -51,5 +51,5 @@ If you've already know well about plain `RecyclerView`, proceed to each sections
     - [Issues - Advanced RecyclerView --- GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/issues)
 
 - **Javadoc**
-    - [Javadoc - Advanced RecyclerView](/javadoc/latest)
+    - [Javadoc - Advanced RecyclerView](/javadoc)
 

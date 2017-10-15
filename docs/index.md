@@ -4,20 +4,33 @@ title: Advanced RecyclerView
 
 <img src="./images/appicon.png" width="160" />
 
-**Advanded RecyclerView** is an extension library of the [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html).
+**Advanded RecyclerView** is an extension library of the [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html) which brings powerful features, such as Drag & Drop, Swipe, Expand, combining Adapters, etc...
 
 ## Demo app
 
 <a href='https://play.google.com/store/apps/details?id=com.h6ah4i.android.example.advrecyclerview'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width="200" /></a>
 
+<iframe width="853" height="480" src="https://www.youtube.com/embed/S7cSwMArjUQ" frameborder="0" allowfullscreen></iframe>
+
+!!! attention ""
+    The above demo video was taken with a very old version of this library *(v0.6 - Feb 2, 2015)*. Now the app contains **26 demos**! [Let's give it a try :wink:](https://play.google.com/store/apps/details?id=com.h6ah4i.android.example.advrecyclerview)
+
 ## Phirosophies
 
 - **Never inherit `RecyclerView` class**
-    - 👉 &nbsp; Reduces library conflictions, easy to integrate with existing code
+
+    !!! tip ""
+        Reduces library conflictions, easy to integrate with existing code
+
 - **Implement each features as separated modules**
-    - 👉 &nbsp; Pick features only what you need
+
+    !!! tip ""
+        Pick features only what you need
+
 - **Primitive API set rather than user-friendly huge API sets**
-    - 👉 &nbsp; Looks difficult at a glance, but gives great flexibility like original `RecyclerView`
+
+    !!! tip ""
+        Looks difficult at a glance, but gives great flexibility like original `RecyclerView`
 
 
 ## Features

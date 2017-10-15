@@ -7,6 +7,9 @@ name = "pypi"
 
 [packages]
 
+mkdocs = "*"
+mkdocs-material = "*"
+pymdown-extensions = "*"
 
 
 [dev-packages]

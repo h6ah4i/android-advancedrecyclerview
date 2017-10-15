@@ -1,5 +1,8 @@
-When creating headers & footers, the `AbstractHeaderFooterWrapperAdapter` can be a good alternative to the `ComposedAdapter`. This class provides simple way to creating a wrapper crass for headers & footers by implementing small number of methods.
+When creating headers & footers, the [`AbstractHeaderFooterWrapperAdapter`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/headerfooter/AbstractHeaderFooterWrapperAdapter.java) can be a good alternative to the `ComposedAdapter`. This class provides simple way to creating a wrapper crass for headers & footers by implementing small number of methods.
 
+
+!!! tip "Just looking for a sample code?"
+    :octocat: Check the [minimal header/footer sample code on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_hf_minimal/MinimalHeaderFooterExampleActivity.java).
 
 ## Quick quide
 
@@ -62,7 +65,7 @@ class MyHeadFootAdapter
 
 ### Click event handling
 
-The `AbstractHeaderFooterWrapperAdapter` extends `ComposedAdapter` so the same click event hadling approach is required.
+The `AbstractHeaderFooterWrapperAdapter` extends `ComposedAdapter` so the same click event handling approach is required.
 
 ```java
 class MyHeadFootAdapter 
@@ -108,7 +111,7 @@ class MyHeadFootAdapter
 
 ### Multipe view type handling
 
-Just same as `ComposedAdapter`, so need to use `ItemViewTypeComposer.extractWrappedViewTypePart()` when using view type.
+Just same as `ComposedAdapter`, so need to use [`ItemViewTypeComposer.extractWrappedViewTypePart()`](http://localhost:8000/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#extractWrappedViewTypePart(int)) when using view type.
 
 ```java
 @Override

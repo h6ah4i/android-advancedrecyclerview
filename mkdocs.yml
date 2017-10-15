@@ -34,6 +34,8 @@ markdown_extensions:
   - admonition
   - toc(permalink=true)
   - meta
+  - pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.gemoji
 
 # Customizations
 extra_css: ['stylesheets/overrides.css']

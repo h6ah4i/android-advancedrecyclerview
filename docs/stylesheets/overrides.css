@@ -1,7 +1,22 @@
-.md-typeset iframe, .md-typeset img {
+.md-typeset iframe,
+.md-typeset img:not(.gemoji) {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+img.gemoji {
+    width: 1em;
+    height: 1em;
+    vertical-align: baseline;
+    margin-bottom: -0.2em;
+}
+
+.admonition img.gemoji {
+    width: 1.3em;
+    height: 1.3em;
+    vertical-align: baseline;
+    margin-bottom: -0.3em !important;
 }
 
 @media screen and (min-width: 800px) {

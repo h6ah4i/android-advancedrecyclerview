@@ -1,5 +1,8 @@
 ![Block Diagram - Expandable](./images/block-diagram-expand.png)
 
+!!! tip "Just looking for a sample code?"
+    :octocat: Check the [minimal expand & collapse sample code on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_minimal/MinimalExpandableExampleActivity.java).
+
 ## Tutorial
 
 ### Step 1. Extend `AbstractExpandableItemAdapter` instead of `RecyclerView.Adapter`

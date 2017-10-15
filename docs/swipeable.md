@@ -1,11 +1,14 @@
 ![Block Diagram - Swipeable](./images/block-diagram-swipe.png)
 
+!!! tip "Just looking for a sample code?"
+    :octocat: Check the [minimal drag & drop sample code on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_minimal/MinimalSwipeableExampleActivity.java).
 
 ## Tutorial
 
 ### Step 1. Make the adapter supports stable IDs
 
-**This step is very important. If adapter does not return stable & unique IDs, that will cause some weird behaviors (wrong animations, NPE, etc...)**
+!!! attention
+    **This step is very important. If adapter does not return stable & unique IDs, that will cause some weird behaviors (wrong animations, NPE, etc...)**
 
 ```java
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -41,7 +44,6 @@ Wrap content views with another `FrameLayout` whitch has `@+id/container` ID.
 </FrameLayout>
 ```
 
-⏬ &nbsp; ⏬ &nbsp; ⏬
 
 ```xml
 <!-- for itemView -->
@@ -90,7 +92,6 @@ class MyAdapter ... {
 }
 ```
 
-⏬ &nbsp; ⏬ &nbsp; ⏬
 
 ```java
 class MyAdapter ... {
@@ -120,7 +121,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 }
 ```
 
-⏬ &nbsp; ⏬ &nbsp; ⏬
 
 
 ```java
@@ -207,7 +207,7 @@ void onCreate() {
 }
 ```
 
-⏬ &nbsp; ⏬ &nbsp; ⏬
+:arrow_down_small: :arrow_down_small: :arrow_down_small:
 
 ```java
 void onCreate() {
@@ -231,4 +231,4 @@ void onCreate() {
 
 ### Step 6. Custom more and details of the implementation
 
-Please refer to [the demo app implementation](https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic) for more details.
+Please refer to [the demo app implementation :octocat:](https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic) for more details.

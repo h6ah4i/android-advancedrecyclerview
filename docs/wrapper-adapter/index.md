@@ -9,6 +9,6 @@ The `WrapperAdapter` is an interface and it is indended to be combined with `Rec
 
 **Subclasses:**
 
-- `ComposedAdapter`
-- `SimpleWrapperAdapter`
-- `AbstractHeaderFooterWrapperAdapter`
+- [:octocat: `ComposedAdapter`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java)
+- [:octocat: `SimpleWrapperAdapter`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/SimpleWrapperAdapter.java)
+- [:octocat: `AbstractHeaderFooterWrapperAdapter`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/headerfooter/AbstractHeaderFooterWrapperAdapter.java)
