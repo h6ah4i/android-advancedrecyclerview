@@ -8,7 +8,7 @@
 
 - **Never inherit `RecyclerView` class**
     - 👉 &nbsp; Reduces library conflictions, easy to integrate with existing code
-- **Implement each features ass separated modules**
+- **Implement each features as separated modules**
     - 👉 &nbsp; Pick features only what you need
 - **Primitive API set rather than user-friendly huge API sets**
     - 👉 &nbsp; Looks difficult at a glance, but gives great flexibility like original `RecyclerView`
