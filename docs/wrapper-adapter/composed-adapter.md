@@ -99,4 +99,4 @@ Item view types are expressed by 32 bits integer in RecyclerView, and `ItemViewT
 
 ## How to migrate to **WRAPPED** adapter?
 
-Need to change several things to use `ComposedAdapter`. Refer to the [Tweak your Adapter to support adapter wrapping](/wrapper-adapter/migrate-to-wrapped-adapter) page for more details.
+Need to change several things to use your adapter wrapped with `ComposedAdapter`. Refer to the [Tweak your Adapter to support adapter wrapping](/wrapper-adapter/migrate-to-wrapped-adapter) page for more details.

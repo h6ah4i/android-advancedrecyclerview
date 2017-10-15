@@ -1,6 +1,6 @@
 ## Tweak your Adapter to support adapter wrapping
 
-Need to tweak several things in your adapter implemtation to support wrapping adapter mechanism.
+Need to tweak several things in your adapter implemtation to *support wrapping adapter mechanism*.
 Because `WrapperAdapter` modifies **item positions**, **item IDs** and **item view types** internally.
 
 ### If overriding Adapter.getItemId()
