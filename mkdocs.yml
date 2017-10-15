@@ -20,8 +20,8 @@ copyright: 'Copyright &copy; 2017 Haruki Hasegawa'
 extra:
   version: '0.10.0'
   palette:
-    primary: 'blue-grey'
-    accent: 'orange'
+    primary: 'teal'
+    accent: 'deep-orange'
   author:
     github: 'h6ah4i'
     twitter: 'h6a_h4i'
