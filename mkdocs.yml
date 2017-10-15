@@ -12,7 +12,7 @@ theme: 'material'
 # Repository
 repo_name: 'GitHub'
 repo_url: 'https://github.com/h6ah4i/android-advancedrecyclerview'
-
+edit_uri: tree/gh-pages-source/docs
 
 # Copyright
 copyright: 'Copyright &copy; 2017 Haruki Hasegawa'
