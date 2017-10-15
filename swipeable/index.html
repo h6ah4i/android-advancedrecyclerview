@@ -22,7 +22,7 @@
     
     
       
-        <title>Swipeable - Advanced RecyclerView</title>
+        <title>Overview - Advanced RecyclerView</title>
       
     
     
@@ -89,8 +89,12 @@
           
             
               
+                <span class="md-header-nav__parent">
+                  Swipeable
+                </span>
+              
             
-            Swipeable
+            Overview
           
         </span>
       </div>
@@ -257,18 +261,6 @@
 
 
   <li class="md-nav__item">
-    <a href="../wrapper-adapter/migrate-to-wrapped-adapter/" title="Support adapter wrapping" class="md-nav__link">
-      Support adapter wrapping
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
     <a href="../wrapper-adapter/composed-adapter/" title="ComposedAdapter" class="md-nav__link">
       ComposedAdapter
     </a>
@@ -299,6 +291,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../wrapper-adapter/migrate-to-wrapped-adapter/" title="Support adapter wrapping" class="md-nav__link">
+      Support adapter wrapping
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -309,10 +313,46 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="../draggable/" title="Drag & Drop" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
       Drag & Drop
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Drag & Drop
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../draggable/" title="Overview" class="md-nav__link">
+      Overview
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../draggable/tutorial/" title="Tutorial" class="md-nav__link">
+      Tutorial
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -323,17 +363,38 @@
   
 
 
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      Swipeable
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        Swipeable
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
   <li class="md-nav__item md-nav__item--active">
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
     
       <label class="md-nav__link md-nav__link--active" for="toc">
-        Swipeable
+        Overview
       </label>
     
-    <a href="./" title="Swipeable" class="md-nav__link md-nav__link--active">
-      Swipeable
+    <a href="./" title="Overview" class="md-nav__link md-nav__link--active">
+      Overview
     </a>
     
       
@@ -345,57 +406,16 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#tutorial" title="Tutorial" class="md-nav__link">
-    Tutorial
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-make-the-adapter-supports-stable-ids" title="Step 1. Make the adapter supports stable IDs" class="md-nav__link">
-    Step 1. Make the adapter supports stable IDs
+  <a href="#block-diagram" title="Block diagram" class="md-nav__link">
+    Block diagram
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-modify-layout-file-of-item-views" title="Step 2. Modify layout file of item views" class="md-nav__link">
-    Step 2. Modify layout file of item views
+      
+        <li class="md-nav__item">
+  <a href="#classes-interfaces" title="Classes / Interfaces" class="md-nav__link">
+    Classes / Interfaces
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-modify-viewholder" title="Step 3. Modify ViewHolder" class="md-nav__link">
-    Step 3. Modify ViewHolder
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-4-implement-the-swipeableitemadapter-interface" title="Step 4. Implement the SwipeableItemAdapter interface" class="md-nav__link">
-    Step 4. Implement the SwipeableItemAdapter interface
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-5-modify-initialization-process-of-recyclerview" title="Step 5. Modify initialization process of RecyclerView" class="md-nav__link">
-    Step 5. Modify initialization process of RecyclerView
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-6-custom-more-and-details-of-the-implementation" title="Step 6. Custom more and details of the implementation" class="md-nav__link">
-    Step 6. Custom more and details of the implementation
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -407,16 +427,69 @@
     
   </li>
 
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="tutorial/" title="Tutorial" class="md-nav__link">
+      Tutorial
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
     
       
       
       
 
 
-  <li class="md-nav__item">
-    <a href="../expandable/" title="Expandable" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
       Expandable
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-6">
+        Expandable
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../expandable/" title="Overview" class="md-nav__link">
+      Overview
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../expandable/tutorial/" title="Tutorial" class="md-nav__link">
+      Tutorial
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -487,57 +560,16 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#tutorial" title="Tutorial" class="md-nav__link">
-    Tutorial
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#step-1-make-the-adapter-supports-stable-ids" title="Step 1. Make the adapter supports stable IDs" class="md-nav__link">
-    Step 1. Make the adapter supports stable IDs
+  <a href="#block-diagram" title="Block diagram" class="md-nav__link">
+    Block diagram
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#step-2-modify-layout-file-of-item-views" title="Step 2. Modify layout file of item views" class="md-nav__link">
-    Step 2. Modify layout file of item views
+      
+        <li class="md-nav__item">
+  <a href="#classes-interfaces" title="Classes / Interfaces" class="md-nav__link">
+    Classes / Interfaces
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-3-modify-viewholder" title="Step 3. Modify ViewHolder" class="md-nav__link">
-    Step 3. Modify ViewHolder
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-4-implement-the-swipeableitemadapter-interface" title="Step 4. Implement the SwipeableItemAdapter interface" class="md-nav__link">
-    Step 4. Implement the SwipeableItemAdapter interface
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-5-modify-initialization-process-of-recyclerview" title="Step 5. Modify initialization process of RecyclerView" class="md-nav__link">
-    Step 5. Modify initialization process of RecyclerView
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#step-6-custom-more-and-details-of-the-implementation" title="Step 6. Custom more and details of the implementation" class="md-nav__link">
-    Step 6. Custom more and details of the implementation
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -555,230 +587,50 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/tree/gh-pages-source/docs/swipeable.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/tree/gh-pages-source/docs/swipeable/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                  <h1>Swipeable</h1>
+                  <h1>Overview</h1>
                 
-                <p><img alt="Block Diagram - Swipeable" src="../images/block-diagram-swipe.png" /></p>
-<div class="admonition tip">
-<p class="admonition-title">Just looking for a sample code?</p>
-<p><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> Check the <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_minimal/MinimalSwipeableExampleActivity.java">minimal drag &amp; drop sample code on GitHub</a>.</p>
-</div>
-<h2 id="tutorial">Tutorial<a class="headerlink" href="#tutorial" title="Permanent link">&para;</a></h2>
-<h3 id="step-1-make-the-adapter-supports-stable-ids">Step 1. Make the adapter supports stable IDs<a class="headerlink" href="#step-1-make-the-adapter-supports-stable-ids" title="Permanent link">&para;</a></h3>
-<div class="admonition attention">
-<p class="admonition-title">Attention</p>
-<p><strong>This step is very important. If adapter does not return stable &amp; unique IDs, that will cause some weird behaviors (wrong animations, NPE, etc...)</strong></p>
-</div>
-<div class="codehilite"><pre><span></span><span class="kd">class</span> <span class="nc">MyAdapter</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">MyAdapter</span><span class="o">.</span><span class="na">MyViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="n">MyAdapter</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">setHasStableIds</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">long</span> <span class="nf">getItemId</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// requires static value, it means need to keep the same value</span>
-        <span class="c1">// even if the item position has been changed.</span>
-        <span class="k">return</span> <span class="n">mItems</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">position</span><span class="o">).</span><span class="na">getId</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<h3 id="step-2-modify-layout-file-of-item-views">Step 2. Modify layout file of item views<a class="headerlink" href="#step-2-modify-layout-file-of-item-views" title="Permanent link">&para;</a></h3>
-<p>Wrap content views with another <code>FrameLayout</code> whitch has <code>@+id/container</code> ID.</p>
-<div class="codehilite"><pre><span></span><span class="c">&lt;!-- for itemView --&gt;</span>
-<span class="nt">&lt;FrameLayout</span>
-    <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
-    <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
-    <span class="na">android:layout_height=</span><span class="s">&quot;56dp&quot;</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- Content View(s) --&gt;</span>
-    <span class="nt">&lt;TextView</span>
-        <span class="na">android:id=</span><span class="s">&quot;@android:id/text1&quot;</span>
-        <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
-        <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
-        <span class="na">android:gravity=</span><span class="s">&quot;center&quot;</span><span class="nt">/&gt;</span>
-<span class="nt">&lt;/FrameLayout&gt;</span>
-</pre></div>
-
-
-<div class="codehilite"><pre><span></span><span class="c">&lt;!-- for itemView --&gt;</span>
-<span class="nt">&lt;FrameLayout</span>
-    <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
-    <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
-    <span class="na">android:layout_height=</span><span class="s">&quot;56dp&quot;</span><span class="nt">&gt;</span>
-
-    <span class="c">&lt;!-- for getSwipeableContainerView() --&gt;</span>
-    <span class="nt">&lt;FrameLayout</span>
-        <span class="na">android:id=</span><span class="s">&quot;@+id/container&quot;</span>
-        <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
-        <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span><span class="nt">&gt;</span>
-
-        <span class="c">&lt;!-- Content View(s) --&gt;</span>
-        <span class="nt">&lt;TextView</span>
-            <span class="na">android:id=</span><span class="s">&quot;@android:id/text1&quot;</span>
-            <span class="na">android:layout_width=</span><span class="s">&quot;match_parent&quot;</span>
-            <span class="na">android:layout_height=</span><span class="s">&quot;match_parent&quot;</span>
-            <span class="na">android:gravity=</span><span class="s">&quot;center&quot;</span><span class="nt">/&gt;</span>
-
-    <span class="nt">&lt;/FrameLayout&gt;</span>
-<span class="nt">&lt;/FrameLayout&gt;</span>
-</pre></div>
-
-
-<h3 id="step-3-modify-viewholder">Step 3. Modify ViewHolder<a class="headerlink" href="#step-3-modify-viewholder" title="Permanent link">&para;</a></h3>
-<ol>
-<li>Change parent class to <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java"><code>AbstractSwipeableItemViewHolder</code></a>.</li>
-<li>Implement <code>getSwipeableContainerView()</code> method</li>
-</ol>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java"><code>AbstractSwipeableItemViewHolder</code></a> class is a convenience class which implements boilerplace methods of <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemViewHolder.java"><code>SwipeableItemViewHolder</code></a>.</p>
-</div>
-<div class="codehilite"><pre><span></span><span class="kd">class</span> <span class="nc">MyAdapter</span> <span class="o">...</span> <span class="o">{</span>
-    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyViewHolder</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">ViewHolder</span> <span class="o">{</span>
-        <span class="n">TextView</span> <span class="n">textView</span><span class="o">;</span>
-        <span class="n">MyViewHolder</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">super</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
-            <span class="n">textView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">v</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">text1</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="o">...</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<div class="codehilite"><pre><span></span><span class="kd">class</span> <span class="nc">MyAdapter</span> <span class="o">...</span> <span class="o">{</span>
-    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">MyViewHolder</span> <span class="kd">extends</span> <span class="n">AbstractSwipeableItemViewHolder</span> <span class="o">{</span>
-        <span class="n">TextView</span> <span class="n">textView</span><span class="o">;</span>
-        <span class="n">FrameLayout</span> <span class="n">containerView</span><span class="o">;</span>
-
-        <span class="kd">public</span> <span class="nf">MyViewHolder</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">super</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
-            <span class="n">textView</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextView</span><span class="o">)</span> <span class="n">v</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">android</span><span class="o">.</span><span class="na">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">text1</span><span class="o">);</span>
-            <span class="n">containerView</span> <span class="o">=</span> <span class="o">(</span><span class="n">FrameLayout</span><span class="o">)</span> <span class="n">v</span><span class="o">.</span><span class="na">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">container</span><span class="o">);</span>
-        <span class="o">}</span>
-
-        <span class="nd">@Override</span>
-        <span class="kd">public</span> <span class="n">View</span> <span class="nf">getSwipeableContainerView</span><span class="o">()</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="n">containerView</span><span class="o">;</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<h3 id="step-4-implement-the-swipeableitemadapter-interface">Step 4. Implement the <code>SwipeableItemAdapter</code> interface<a class="headerlink" href="#step-4-implement-the-swipeableitemadapter-interface" title="Permanent link">&para;</a></h3>
-<div class="codehilite"><pre><span></span><span class="kd">class</span> <span class="nc">MyAdapter</span> <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">MyAdapter</span><span class="o">.</span><span class="na">MyViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
-    <span class="o">...</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<div class="codehilite"><pre><span></span><span class="kd">class</span> <span class="nc">MyAdapter</span>
-        <span class="kd">extends</span> <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span><span class="o">&lt;</span><span class="n">MyAdapter</span><span class="o">.</span><span class="na">MyViewHolder</span><span class="o">&gt;</span>
-        <span class="kd">implements</span> <span class="n">SwipeableItemAdapter</span><span class="o">&lt;</span><span class="n">MyAdapter</span><span class="o">.</span><span class="na">MyViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">onGetSwipeReactionType</span><span class="o">(</span><span class="n">MyViewHolder</span> <span class="n">holder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// Make swipeable to LEFT direction</span>
-        <span class="k">return</span> <span class="n">Swipeable</span><span class="o">.</span><span class="na">REACTION_CAN_SWIPE_LEFT</span><span class="o">;</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onSetSwipeBackground</span><span class="o">(</span><span class="n">MyViewHolder</span> <span class="n">holder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">int</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// You can set background color/resource to holder.itemView.</span>
-
-        <span class="c1">// The argument &quot;type&quot; can be one of the followings;</span>
-        <span class="c1">// - Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND</span>
-        <span class="c1">// - Swipeable.DRAWABLE_SWIPE_LEFT_BACKGROUND</span>
-        <span class="c1">// (- Swipeable.DRAWABLE_SWIPE_UP_BACKGROUND)</span>
-        <span class="c1">// (- Swipeable.DRAWABLE_SWIPE_RIGHT_BACKGROUND)</span>
-        <span class="c1">// (- Swipeable.DRAWABLE_SWIPE_DOWN_BACKGROUND)</span>
-
-        <span class="k">if</span> <span class="o">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">Swipeable</span><span class="o">.</span><span class="na">DRAWABLE_SWIPE_LEFT_BACKGROUND</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">holder</span><span class="o">.</span><span class="na">itemView</span><span class="o">.</span><span class="na">setBackgroundColor</span><span class="o">(</span><span class="n">Color</span><span class="o">.</span><span class="na">YELLOW</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="n">holder</span><span class="o">.</span><span class="na">itemView</span><span class="o">.</span><span class="na">setBackgroundColor</span><span class="o">(</span><span class="n">Color</span><span class="o">.</span><span class="na">TRANSPARENT</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">SwipeResultAction</span> <span class="nf">onSwipeItem</span><span class="o">(</span><span class="n">MyViewHolder</span> <span class="n">holder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">int</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
-        <span class="c1">// Return sub class of the SwipeResultAction.</span>
-        <span class="c1">//</span>
-        <span class="c1">// Available base (abstract) classes are;</span>
-        <span class="c1">// - SwipeResultActionDefault</span>
-        <span class="c1">// - SwipeResultActionMoveToSwipedDirection</span>
-        <span class="c1">// - SwipeResultActionRemoveItem</span>
-        <span class="c1">// - SwipeResultActionDoNothing</span>
-
-        <span class="c1">// The argument &quot;result&quot; can be one of the followings;</span>
-        <span class="c1">// </span>
-        <span class="c1">// - Swipeable.RESULT_CANCELED</span>
-        <span class="c1">// - Swipeable.RESULT_SWIPED_LEFT</span>
-        <span class="c1">// (- Swipeable.RESULT_SWIPED_UP)</span>
-        <span class="c1">// (- Swipeable.RESULT_SWIPED_RIGHT)</span>
-        <span class="c1">// (- Swipeable.RESULT_SWIPED_DOWN)</span>
-
-        <span class="k">if</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="n">Swipeable</span><span class="o">.</span><span class="na">RESULT_LEFT</span><span class="o">)</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="n">SwipeResultActionMoveToSwipedDirection</span><span class="o">()</span> <span class="o">{</span>
-                <span class="c1">// Optionally, you can override these three methods</span>
-                <span class="c1">// - void onPerformAction()</span>
-                <span class="c1">// - void onSlideAnimationEnd()</span>
-                <span class="c1">// - void onCleanUp()</span>
-            <span class="o">};</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-            <span class="k">return</span> <span class="k">new</span> <span class="n">SwipeResultActionDoNothing</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<h3 id="step-5-modify-initialization-process-of-recyclerview">Step 5. Modify initialization process of RecyclerView<a class="headerlink" href="#step-5-modify-initialization-process-of-recyclerview" title="Permanent link">&para;</a></h3>
-<p>Put some additional initialization process in your Activity / Fragment.</p>
-<ol>
-<li>Instantiate <code>RecyclerViewSwipeManager</code></li>
-<li>Create a wrapped adapter and set it to <code>RecyclerView</code></li>
-<li>Attach <code>RecyclerView</code> to <code>RecyclerViewSwipeManager</code></li>
-</ol>
-<div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
-    <span class="o">...</span>
-
-    <span class="n">RecyclerView</span> <span class="n">recyclerView</span> <span class="o">=</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">recyclerView</span><span class="o">);</span>
-    <span class="n">MyAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyAdapter</span><span class="o">();</span>
-
-    <span class="n">recyclerView</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">adapter</span><span class="o">);</span>
-    <span class="n">recyclerView</span><span class="o">.</span><span class="na">setLayoutManager</span><span class="o">(</span><span class="k">new</span> <span class="n">LinearLayoutManager</span><span class="o">(</span><span class="k">this</span><span class="o">));</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<p><img alt="🔽" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f53d.png" title=":arrow_down_small:" /> <img alt="🔽" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f53d.png" title=":arrow_down_small:" /> <img alt="🔽" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f53d.png" title=":arrow_down_small:" /></p>
-<div class="codehilite"><pre><span></span><span class="kt">void</span> <span class="nf">onCreate</span><span class="o">()</span> <span class="o">{</span>
-    <span class="o">...</span>
-
-    <span class="n">RecyclerView</span> <span class="n">recyclerView</span> <span class="o">=</span> <span class="n">findViewById</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">recyclerView</span><span class="o">);</span>
-    <span class="n">RecyclerViewSwipeManager</span> <span class="n">swipeManager</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RecyclerViewSwipeManager</span><span class="o">();</span>
-
-    <span class="n">MyAdapter</span> <span class="n">adapter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyAdapter</span><span class="o">();</span>
-    <span class="n">RecyclerView</span><span class="o">.</span><span class="na">Adapter</span> <span class="n">wrappedAdapter</span> <span class="o">=</span> <span class="n">swipeManager</span><span class="o">.</span><span class="na">createWrappedAdapter</span><span class="o">(</span><span class="n">adapter</span><span class="o">);</span>
-
-    <span class="n">recyclerView</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">wrappedAdapter</span><span class="o">);</span>
-    <span class="n">recyclerView</span><span class="o">.</span><span class="na">setLayoutManager</span><span class="o">(</span><span class="k">new</span> <span class="n">LinearLayoutManager</span><span class="o">(</span><span class="k">this</span><span class="o">));</span>
-
-    <span class="c1">// disable change animations</span>
-    <span class="o">((</span><span class="n">SimpleItemAnimator</span><span class="o">)</span> <span class="n">mRecyclerView</span><span class="o">.</span><span class="na">getItemAnimator</span><span class="o">()).</span><span class="na">setSupportsChangeAnimations</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
-
-    <span class="n">swipeManager</span><span class="o">.</span><span class="na">attachRecyclerView</span><span class="o">(</span><span class="n">recyclerView</span><span class="o">);</span>
-<span class="o">}</span>
-</pre></div>
-
-
-<h3 id="step-6-custom-more-and-details-of-the-implementation">Step 6. Custom more and details of the implementation<a class="headerlink" href="#step-6-custom-more-and-details-of-the-implementation" title="Permanent link">&para;</a></h3>
-<p>Please refer to <a href="https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic">the demo app implementation <img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /></a> for more details.</p>
+                <h2 id="block-diagram">Block diagram<a class="headerlink" href="#block-diagram" title="Permanent link">&para;</a></h2>
+<p><img alt="Block Diagram - Swipeable" src="./../images/block-diagram-swipe.png" /></p>
+<h2 id="classes-interfaces">Classes / Interfaces<a class="headerlink" href="#classes-interfaces" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Class/Interface name</th>
+<th>Javadoc</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/RecyclerViewSwipeManager.java"><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> <code>RecyclerViewSwipeManager</code></a></td>
+<td><a href="../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/swipeable/RecyclerViewSwipeManager.html"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> View</a></td>
+<td>Provides Swipe operation</td>
+</tr>
+<tr>
+<td><a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemAdapter.java"><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> <code>SwipeableItemAdapter&lt;T&gt;</code></a></td>
+<td><a href="../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemAdapter.html"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> View</a></td>
+<td>Implement this interface on your RecyclerView.Adapter</td>
+</tr>
+<tr>
+<td><a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemViewHolder.java"><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> <code>SwipeableItemViewHolder</code></a></td>
+<td><a href="../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemViewHolder.html"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> View</a></td>
+<td>Implement this interface on your RecyclerView.ViewHolder</td>
+</tr>
+<tr>
+<td><a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemConstants.java"><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> <code>SwipeableItemConstants</code></a></td>
+<td><a href="../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemConstants.html"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> View</a></td>
+<td>Constant values area decleared in this interface</td>
+</tr>
+<tr>
+<td><a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/animator/SwipeDismissItemAnimator.java"><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> <code>SwipeDismissItemAnimator</code></a></td>
+<td><a href="../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/animator/SwipeDismissItemAnimator.html"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> View</a></td>
+<td>An ItemAnimator implements swipe dismiss animation</td>
+</tr>
+</tbody>
+</table>
                 
                   
                 
@@ -797,7 +649,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../draggable/" title="Drag & Drop" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../draggable/tutorial/" title="Tutorial" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -806,19 +658,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Drag & Drop
+                Tutorial
               </span>
             </div>
           </a>
         
         
-          <a href="../expandable/" title="Expandable" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="tutorial/" title="Tutorial" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Expandable
+                Tutorial
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
