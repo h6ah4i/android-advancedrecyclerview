@@ -1,7 +1,5 @@
-![Block Diagram - Swipeable](./images/block-diagram-swipe.png)
-
 !!! tip "Just looking for a sample code?"
-    :octocat: Check the [minimal drag & drop sample code on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_minimal/MinimalSwipeableExampleActivity.java).
+    :octocat: Check the [minimal swipe sample code on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_minimal/MinimalSwipeableExampleActivity.java).
 
 ## Tutorial
 

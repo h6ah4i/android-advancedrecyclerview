@@ -1,5 +1,3 @@
-![Block Diagram - Draggable](./images/block-diagram-drag-drop.png)
-
 !!! tip "Just looking for a sample code?"
     :octocat: Check the [minimal drag & drop sample code on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_minimal/MinimalDraggableExampleActivity.java).
 
@@ -157,7 +155,7 @@ This method is invoked by the library **whether to check the touched finger posi
 
 Return `true` if the specified position `x` and `y` is inside of the `dragHandle` view. Note that the offset parameter `x` and `y` are measured from top-left of `itemView`.
 
-![onCheckCanStartDrag() parameters](./images/drag-drop-on-check-can-start-drag.png)
+![onCheckCanStartDrag() parameters](../images/drag-drop-on-check-can-start-drag.png)
 
 
 

@@ -31,3 +31,7 @@ img.gemoji {
     margin-top: -4px;
     margin-bottom: -4px;
 }
+
+img.gemoji + code {
+    word-break: break-all;
+}
