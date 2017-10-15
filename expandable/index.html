@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation site for Advanced RecyclerView (https://github.com/h6ah4i/android-advancedrecyclerview)">
       
       
-        <link rel="canonical" href="https://h6a.h4i.github.io/android-advancedrecyclerview/expandable/">
+        <link rel="canonical" href="https://advancedrecyclerview.h6ah4i.com/expandable/">
       
       
         <meta name="author" content="Haruki Hasegawa">
@@ -47,15 +47,15 @@
     
       <link rel="stylesheet" href="../stylesheets/overrides.css">
     
-      <link rel="stylesheet" href="../vendor/highlight/styles/github.css">
     
-    
+  
+
   </head>
   
   
   
   
-    <body data-md-color-primary="blue-grey" data-md-color-accent="orange">
+    <body data-md-color-primary="teal" data-md-color-accent="deep-orange">
   
     <svg class="md-svg">
       <defs>
@@ -73,9 +73,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://h6a.h4i.github.io/android-advancedrecyclerview" title="Advanced RecyclerView" class="md-header-nav__button md-logo">
+        <a href="https://advancedrecyclerview.h6ah4i.com/" title="Advanced RecyclerView" class="md-header-nav__button md-logo">
           
-            <i class="md-icon md-icon--home"></i>
+            
+              <img src="../images/header-logo.png" width="24" height="24">
+            
           
         </a>
       </div>
@@ -162,7 +164,9 @@
   <label class="md-nav__title md-nav__title--site" for="drawer">
     <div class="md-nav__button md-logo">
       
-        <i class="md-icon md-icon--home"></i>
+        
+          <img src="../images/header-logo.png">
+        
       
     </div>
     Advanced RecyclerView
@@ -335,8 +339,6 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
-      
-    
     
       <label class="md-nav__link md-nav__link--active" for="toc">
         Expandable
@@ -350,26 +352,31 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tutorial" title="Tutorial" class="md-nav__link">
+    Tutorial
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter" title="Step 1. Extend AbstractExpandableItemAdapter instead of RecyclerView.Adapter" class="md-nav__link">
     Step 1. Extend AbstractExpandableItemAdapter instead of RecyclerView.Adapter
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#step-2-implement-each-method-of-abstractexpandableitemadapter" title="Step 2. Implement each method of AbstractExpandableItemAdapter" class="md-nav__link">
     Step 2. Implement each method of AbstractExpandableItemAdapter
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#implement-getgroupcount-getchildcount" title="Implement getGroupCount() / getChildCount()" class="md-nav__link">
@@ -456,6 +463,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../javadoc/" title="Javadoc" class="md-nav__link">
+      Javadoc
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -470,26 +489,31 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#tutorial" title="Tutorial" class="md-nav__link">
+    Tutorial
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter" title="Step 1. Extend AbstractExpandableItemAdapter instead of RecyclerView.Adapter" class="md-nav__link">
     Step 1. Extend AbstractExpandableItemAdapter instead of RecyclerView.Adapter
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#step-2-implement-each-method-of-abstractexpandableitemadapter" title="Step 2. Implement each method of AbstractExpandableItemAdapter" class="md-nav__link">
     Step 2. Implement each method of AbstractExpandableItemAdapter
   </a>
   
-    <nav class="md-nav">
-      <ul class="md-nav__list">
+</li>
         
           <li class="md-nav__item">
   <a href="#implement-getgroupcount-getchildcount" title="Implement getGroupCount() / getChildCount()" class="md-nav__link">
@@ -545,30 +569,20 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/edit/master/docs/expandable.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/tree/gh-pages-source/docs/expandable.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
+                
+                  <h1>Expandable</h1>
                 
                 <p><img alt="Block Diagram - Expandable" src="../images/block-diagram-expand.png" /></p>
-<div class="toc">
-<ul>
-<li><a href="#tutorial">Tutorial</a><ul>
-<li><a href="#step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter">Step 1. Extend AbstractExpandableItemAdapter instead of RecyclerView.Adapter</a></li>
-<li><a href="#step-2-implement-each-method-of-abstractexpandableitemadapter">Step 2. Implement each method of AbstractExpandableItemAdapter</a><ul>
-<li><a href="#implement-getgroupcount-getchildcount">Implement getGroupCount() / getChildCount()</a></li>
-<li><a href="#implement-getgroupid-getchildid">Implement getGroupId() / getChildId()</a></li>
-<li><a href="#implement-oncreategroupviewholder-oncreatechildviewholder">Implement onCreateGroupViewHolder() / onCreateChildViewHolder()</a></li>
-<li><a href="#implement-onbindgroupviewholder-onbindchildviewholder">Implement onBindGroupViewHolder() / onBindChildViewHolder()</a></li>
-<li><a href="#implement-oncheckcanexpandorcollapsegroup">Implement onCheckCanExpandOrCollapseGroup()</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+<div class="admonition tip">
+<p class="admonition-title">Just looking for a sample code?</p>
+<p><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> Check the <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_e_minimal/MinimalExpandableExampleActivity.java">minimal expand &amp; collapse sample code on GitHub</a>.</p>
 </div>
-<h1 id="tutorial">Tutorial<a class="headerlink" href="#tutorial" title="Permanent link">#</a></h1>
-<h2 id="step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter">Step 1. Extend <code>AbstractExpandableItemAdapter</code> instead of <code>RecyclerView.Adapter</code><a class="headerlink" href="#step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter" title="Permanent link">#</a></h2>
+<h2 id="tutorial">Tutorial<a class="headerlink" href="#tutorial" title="Permanent link">&para;</a></h2>
+<h3 id="step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter">Step 1. Extend <code>AbstractExpandableItemAdapter</code> instead of <code>RecyclerView.Adapter</code><a class="headerlink" href="#step-1-extend-abstractexpandableitemadapter-instead-of-recyclerviewadapter" title="Permanent link">&para;</a></h3>
 <p>First, you need to extend <code>AbstractExpandableItemAdapter</code> to use expandable items feature. This class implements <code>RecyclerView.Adapter</code>'s methods and some of them are sealed via <code>final</code> keyword. Instead, it provides some <code>Group</code> / <code>Child</code> prefixed version of `RecyclerView.Adapter' methods.</p>
-<div class="code"><pre><span></span><span class="kd">class</span> <span class="nc">MyChildItem</span> <span class="o">{</span>
+<div class="codehilite"><pre><span></span><span class="kd">class</span> <span class="nc">MyChildItem</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">long</span> <span class="n">id</span><span class="o">;</span>
 <span class="o">}</span>
 
@@ -614,10 +628,10 @@
 </pre></div>
 
 
-<h2 id="step-2-implement-each-method-of-abstractexpandableitemadapter">Step 2. Implement each method of <code>AbstractExpandableItemAdapter</code><a class="headerlink" href="#step-2-implement-each-method-of-abstractexpandableitemadapter" title="Permanent link">#</a></h2>
-<h3 id="implement-getgroupcount-getchildcount">Implement <code>getGroupCount()</code> / <code>getChildCount()</code><a class="headerlink" href="#implement-getgroupcount-getchildcount" title="Permanent link">#</a></h3>
+<h3 id="step-2-implement-each-method-of-abstractexpandableitemadapter">Step 2. Implement each method of <code>AbstractExpandableItemAdapter</code><a class="headerlink" href="#step-2-implement-each-method-of-abstractexpandableitemadapter" title="Permanent link">&para;</a></h3>
+<h3 id="implement-getgroupcount-getchildcount">Implement <code>getGroupCount()</code> / <code>getChildCount()</code><a class="headerlink" href="#implement-getgroupcount-getchildcount" title="Permanent link">&para;</a></h3>
 <p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#getItemCount()"><code>getItemCount()</code></a>.</p>
-<div class="code"><pre><span></span><span class="nd">@Override</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Override</span>
 <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getGroupCount</span><span class="o">()</span> <span class="o">{</span>
     <span class="k">return</span> <span class="n">items</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
 <span class="o">}</span>
@@ -629,9 +643,9 @@
 </pre></div>
 
 
-<h3 id="implement-getgroupid-getchildid">Implement <code>getGroupId()</code> / <code>getChildId()</code><a class="headerlink" href="#implement-getgroupid-getchildid" title="Permanent link">#</a></h3>
+<h3 id="implement-getgroupid-getchildid">Implement <code>getGroupId()</code> / <code>getChildId()</code><a class="headerlink" href="#implement-getgroupid-getchildid" title="Permanent link">&para;</a></h3>
 <p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#getItemId(int)"><code>getItemId()</code></a>.</p>
-<div class="code"><pre><span></span><span class="nd">@Override</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Override</span>
 <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getGroupId</span><span class="o">(</span><span class="kt">int</span> <span class="n">groupPosition</span><span class="o">)</span> <span class="o">{</span>
     <span class="k">return</span> <span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">groupPosition</span><span class="o">).</span><span class="na">id</span><span class="o">;</span>
 <span class="o">}</span>
@@ -643,9 +657,9 @@
 </pre></div>
 
 
-<h3 id="implement-oncreategroupviewholder-oncreatechildviewholder">Implement <code>onCreateGroupViewHolder()</code> / <code>onCreateChildViewHolder()</code><a class="headerlink" href="#implement-oncreategroupviewholder-oncreatechildviewholder" title="Permanent link">#</a></h3>
+<h3 id="implement-oncreategroupviewholder-oncreatechildviewholder">Implement <code>onCreateGroupViewHolder()</code> / <code>onCreateChildViewHolder()</code><a class="headerlink" href="#implement-oncreategroupviewholder-oncreatechildviewholder" title="Permanent link">&para;</a></h3>
 <p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onCreateViewHolder(android.view.ViewGroup, int)"><code>onCreateViewHolder()</code></a>.</p>
-<div class="code"><pre><span></span><span class="nd">@Override</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Override</span>
 <span class="kd">public</span> <span class="n">MyGroupVH</span> <span class="nf">onCreateGroupViewHolder</span><span class="o">(</span><span class="n">ViewGroup</span> <span class="n">parent</span><span class="o">,</span> <span class="kt">int</span> <span class="n">viewType</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">View</span> <span class="n">v</span> <span class="o">=</span> <span class="n">LayoutInfrater</span><span class="o">.</span><span class="na">from</span><span class="o">(</span><span class="n">parent</span><span class="o">.</span><span class="na">getContext</span><span class="o">()).</span><span class="na">inflate</span><span class="o">(</span><span class="n">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">item_group</span><span class="o">,</span> <span class="n">parent</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
     <span class="k">return</span> <span class="k">new</span> <span class="n">MyGroupVH</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
@@ -659,9 +673,9 @@
 </pre></div>
 
 
-<h3 id="implement-onbindgroupviewholder-onbindchildviewholder">Implement <code>onBindGroupViewHolder()</code> / <code>onBindChildViewHolder()</code><a class="headerlink" href="#implement-onbindgroupviewholder-onbindchildviewholder" title="Permanent link">#</a></h3>
+<h3 id="implement-onbindgroupviewholder-onbindchildviewholder">Implement <code>onBindGroupViewHolder()</code> / <code>onBindChildViewHolder()</code><a class="headerlink" href="#implement-onbindgroupviewholder-onbindchildviewholder" title="Permanent link">&para;</a></h3>
 <p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onBindViewHolder(VH, int)"><code>onBindViewHolder()</code></a>.</p>
-<div class="code"><pre><span></span><span class="nd">@Override</span>
+<div class="codehilite"><pre><span></span><span class="nd">@Override</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onBindGroupViewHolder</span><span class="o">(</span><span class="n">MyGroupVH</span> <span class="n">holder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">groupPosition</span><span class="o">,</span> <span class="kt">int</span> <span class="n">viewType</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">MyGroupItem</span> <span class="n">item</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">groupPosition</span><span class="o">);</span>
     <span class="n">holder</span><span class="o">.</span><span class="na">text</span><span class="o">.</span><span class="na">setText</span><span class="o">(...);</span>
@@ -675,7 +689,7 @@
 </pre></div>
 
 
-<h3 id="implement-oncheckcanexpandorcollapsegroup">Implement <code>onCheckCanExpandOrCollapseGroup()</code><a class="headerlink" href="#implement-oncheckcanexpandorcollapsegroup" title="Permanent link">#</a></h3>
+<h3 id="implement-oncheckcanexpandorcollapsegroup">Implement <code>onCheckCanExpandOrCollapseGroup()</code><a class="headerlink" href="#implement-oncheckcanexpandorcollapsegroup" title="Permanent link">&para;</a></h3>
 <p>TODO</p>
                 
                   
@@ -732,7 +746,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright (c) 2016 Haruki Hasegawa
+            Copyright &copy; 2017 Haruki Hasegawa
           </div>
         
         powered by
@@ -754,10 +768,6 @@
       
       
       <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../vendor/highlight/highlight.pack.js"></script>
-      
-        <script src="../javascripts/application.js"></script>
       
     
     

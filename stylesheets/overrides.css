@@ -1,43 +1,33 @@
-.article code {
-    background: transparent;
+.md-typeset iframe,
+.md-typeset img:not(.gemoji) {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.article p > img {
-    margin: 0 auto;
-    display: block;
-    max-height: 420px;
-    max-width: 100%;
+img.gemoji {
+    width: 1em;
+    height: 1em;
+    vertical-align: baseline;
+    margin-bottom: -0.2em;
+}
+
+.admonition img.gemoji {
+    width: 1.3em;
+    height: 1.3em;
+    vertical-align: baseline;
+    margin-bottom: -0.3em !important;
 }
 
 @media screen and (min-width: 800px) {
-    .article p > img {
+    .md-typeset iframe, .md-typeset img {
         max-width: 80%;
     }
 }
 
-.article pre code {
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.article .admonition code {
-    color: #fff;
-    font-weight: bold;
-}
-
-.article .admonition a code {
-    padding: 3px;
-    background: rgba(0,0,0,0.1);
-    border-radius: 3px;
-}
-
-.article .admonition.methods {
-    background: #ffe082;
-    border-top: 1px solid rgba(0,0,0,0.1);
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    color: rgba(0,0,0,0.46);
-}
-
-.article .admonition.methods > ul {
-    margin-top: 0;
+.md-header-nav__button img {
+    width: 32px;
+    height: 32px;
+    margin-top: -4px;
+    margin-bottom: -4px;
 }

@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation site for Advanced RecyclerView (https://github.com/h6ah4i/android-advancedrecyclerview)">
       
       
-        <link rel="canonical" href="https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/composed-adapter/">
+        <link rel="canonical" href="https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/composed-adapter/">
       
       
         <meta name="author" content="Haruki Hasegawa">
@@ -47,15 +47,15 @@
     
       <link rel="stylesheet" href="../../stylesheets/overrides.css">
     
-      <link rel="stylesheet" href="../../vendor/highlight/styles/github.css">
     
-    
+  
+
   </head>
   
   
   
   
-    <body data-md-color-primary="blue-grey" data-md-color-accent="orange">
+    <body data-md-color-primary="teal" data-md-color-accent="deep-orange">
   
     <svg class="md-svg">
       <defs>
@@ -73,9 +73,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://h6a.h4i.github.io/android-advancedrecyclerview" title="Advanced RecyclerView" class="md-header-nav__button md-logo">
+        <a href="https://advancedrecyclerview.h6ah4i.com/" title="Advanced RecyclerView" class="md-header-nav__button md-logo">
           
-            <i class="md-icon md-icon--home"></i>
+            
+              <img src="../../images/header-logo.png" width="24" height="24">
+            
           
         </a>
       </div>
@@ -166,7 +168,9 @@
   <label class="md-nav__title md-nav__title--site" for="drawer">
     <div class="md-nav__button md-logo">
       
-        <i class="md-icon md-icon--home"></i>
+        
+          <img src="../../images/header-logo.png">
+        
       
     </div>
     Advanced RecyclerView
@@ -276,12 +280,76 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
-      
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        ComposedAdapter
+      </label>
     
     <a href="./" title="ComposedAdapter" class="md-nav__link md-nav__link--active">
       ComposedAdapter
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whats-composedadapter" title="What's ComposedAdapter?" class="md-nav__link">
+    What's ComposedAdapter?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#item-position-handling" title="Item position handling" class="md-nav__link">
+    Item position handling
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#item-id-and-viewtype-handling" title="Item ID and ViewType handling" class="md-nav__link">
+    Item ID and ViewType handling
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#itemidcomposer" title="ItemIdComposer" class="md-nav__link">
+    ItemIdComposer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#itemviewtypecomposer" title="ItemViewTypeComposer" class="md-nav__link">
+    ItemViewTypeComposer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-migrate-to-wrapped-adapter" title="How to migrate to WRAPPED adapter?" class="md-nav__link">
+    How to migrate to WRAPPED adapter?
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -387,6 +455,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../javadoc/" title="Javadoc" class="md-nav__link">
+      Javadoc
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -401,8 +481,61 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#whats-composedadapter" title="What's ComposedAdapter?" class="md-nav__link">
+    What's ComposedAdapter?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#item-position-handling" title="Item position handling" class="md-nav__link">
+    Item position handling
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#item-id-and-viewtype-handling" title="Item ID and ViewType handling" class="md-nav__link">
+    Item ID and ViewType handling
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#itemidcomposer" title="ItemIdComposer" class="md-nav__link">
+    ItemIdComposer
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#itemviewtypecomposer" title="ItemViewTypeComposer" class="md-nav__link">
+    ItemViewTypeComposer
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-migrate-to-wrapped-adapter" title="How to migrate to WRAPPED adapter?" class="md-nav__link">
+    How to migrate to WRAPPED adapter?
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
   
 </nav>
                   </div>
@@ -414,26 +547,15 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/edit/master/docs/wrapper-adapter/composed-adapter.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/tree/gh-pages-source/docs/wrapper-adapter/composed-adapter.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <div class="toc">
-<ul>
-<li><a href="#whats-composedadapter">What's ComposedAdapter?</a></li>
-<li><a href="#item-position-handling">Item position handling</a></li>
-<li><a href="#item-id-and-viewtype-handling">Item ID and ViewType handling</a><ul>
-<li><a href="#itemidcomposer">ItemIdComposer</a></li>
-<li><a href="#itemviewtypecomposer">ItemViewTypeComposer</a></li>
-</ul>
-</li>
-<li><a href="#how-to-migrate-to-wrapped-adapter">How to migrate to WRAPPED adapter?</a></li>
-</ul>
-</div>
-<hr />
-<h1 id="whats-composedadapter">What's <code>ComposedAdapter</code>?<a class="headerlink" href="#whats-composedadapter" title="Permanent link">#</a></h1>
-<p>The <code>ComposedAdapter</code> is an adapter which aggregates multiple adapters into one.</p>
+                  <h1>ComposedAdapter</h1>
+                
+                <h2 id="whats-composedadapter">What's <code>ComposedAdapter</code>?<a class="headerlink" href="#whats-composedadapter" title="Permanent link">&para;</a></h2>
+<p>The <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java"><code>ComposedAdapter</code></a> is an adapter which aggregates multiple adapters into one.</p>
 <p><img alt="Basic usage of ComposedAdapter" src="../../images/block-diagram-composed-adapter.png" /></p>
-<div class="code"><pre><span></span><span class="n">dataSet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DataSet</span><span class="o">();</span>
+<div class="codehilite"><pre><span></span><span class="n">dataSet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DataSet</span><span class="o">();</span>
 
 <span class="n">composedAdapter</span><span class="o">.</span><span class="na">addAdapter</span><span class="o">(</span><span class="k">new</span> <span class="n">AdapterA</span><span class="o">(</span><span class="k">new</span> <span class="n">DataSet</span><span class="o">()));</span>
 <span class="n">composedAdapter</span><span class="o">.</span><span class="na">addAdapter</span><span class="o">(</span><span class="k">new</span> <span class="n">AdapterB</span><span class="o">(</span><span class="k">new</span> <span class="n">DataSet</span><span class="o">()));</span>
@@ -441,17 +563,20 @@
 </pre></div>
 
 
-<div class="admonition methods">
-<p class="admonition-title">Methods</p>
+<div class="admonition info">
+<p><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> Check the <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java"><code>ComposedAdapter</code> implementation on GitHub</a></p>
+</div>
+<div class="admonition summary">
+<p class="admonition-title">Related methods</p>
 <ul>
-<li><code>ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter)</code></li>
-<li><code>ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter, int position)</code></li>
-<li><code>boolean ComposedAdapter.addAdapter(ComposedChildAdapterTag tag)</code></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#addAdapter(android.support.v7.widget.RecyclerView.Adapter)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#addAdapter(android.support.v7.widget.RecyclerView.Adapter, int)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter, int position)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#removeAdapter(com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>boolean ComposedAdapter.removeAdapter(ComposedChildAdapterTag tag)</code></a></li>
 </ul>
 </div>
 <p>The <code>ComposedAdapter</code> can hold the same child adapter instance multiple times like this;</p>
 <p><img alt="ComposedAdapter can hold the same child adapter instance multiple times" src="../../images/block-diagram-composed-adapter-2.png" /></p>
-<div class="code"><pre><span></span><span class="n">dataSet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DataSet</span><span class="o">();</span>
+<div class="codehilite"><pre><span></span><span class="n">dataSet</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DataSet</span><span class="o">();</span>
 
 <span class="n">adapterA</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AdapterA</span><span class="o">(</span><span class="n">dataSet</span><span class="o">);</span>
 <span class="n">composedAdapter</span><span class="o">.</span><span class="na">addAdapter</span><span class="o">(</span><span class="n">adapterA</span><span class="o">);</span>
@@ -462,21 +587,21 @@
 </pre></div>
 
 
-<h1 id="item-position-handling">Item position handling<a class="headerlink" href="#item-position-handling" title="Permanent link">#</a></h1>
+<h2 id="item-position-handling">Item position handling<a class="headerlink" href="#item-position-handling" title="Permanent link">&para;</a></h2>
 <p>The <code>ComposedAdapter</code> calls each child adapters as <strong>segment</strong>, also child adapter's local item position are called as <strong>offset</strong>.</p>
 <p><img alt="Segments and Offsets" src="../../images/block-diagram-composed-adapter-3.png" /></p>
-<div class="admonition methods">
-<p class="admonition-title">Methods</p>
+<div class="admonition summary">
+<p class="admonition-title">Related methods</p>
 <ul>
-<li><code>int ComposedAdapter.getSegment(ComposedChildAdapterTag tag)</code></li>
-<li><code>long ComposedAdapter.getSegmentedPosition(int flatPosition)</code></li>
-<li><code>int ComposedAdapter.extractSegmentPart(long segmentedPosition)</code></li>
-<li><code>int ComposedAdapter.extractSegmentOffsetPart(long segmentedPosition)</code></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#getSegment(com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>int ComposedAdapter.getSegment(ComposedChildAdapterTag tag)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#getSegmentedPosition(int)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>long ComposedAdapter.getSegmentedPosition(int flatPosition)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#extractSegmentPart(long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>int ComposedAdapter.extractSegmentPart(long segmentedPosition)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#extractSegmentOffsetPart(long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>int ComposedAdapter.extractSegmentOffsetPart(long segmentedPosition)</code></a></li>
 </ul>
 </div>
-<h1 id="item-id-and-viewtype-handling">Item ID and ViewType handling<a class="headerlink" href="#item-id-and-viewtype-handling" title="Permanent link">#</a></h1>
-<p>When merging adapters, we must take care about item IDs. They have to be unique in entire the dataset, but the problem is child datasets may contains the duplicated IDs. The <code>ItemIdComposer</code> is used to manage this problem.</p>
-<h2 id="itemidcomposer">ItemIdComposer<a class="headerlink" href="#itemidcomposer" title="Permanent link">#</a></h2>
+<h2 id="item-id-and-viewtype-handling">Item ID and ViewType handling<a class="headerlink" href="#item-id-and-viewtype-handling" title="Permanent link">&para;</a></h2>
+<p>When merging adapters, we must take care about item IDs. They have to be unique in entire the dataset, but the problem is child datasets may contains the duplicated IDs. The <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.java"><code>ItemIdComposer</code></a> is used to manage this problem.</p>
+<h3 id="itemidcomposer">ItemIdComposer<a class="headerlink" href="#itemidcomposer" title="Permanent link">&para;</a></h3>
 <p>This utility class provides several static methods to handle the <em>packed</em> item ID value.</p>
 <p>Item IDs are expressed by 64 bits length integer in RecyclerView, so it can be embed multiple information by using bit operation technique. <code>ItemIdComposer</code> divides 64 bits into four chunks; <em>view type segment</em>, <em>group ID</em>, <em>child ID</em> and <em>reserved bit</em>.</p>
 <table>
@@ -505,20 +630,23 @@
 </tr>
 </tbody>
 </table>
-<div class="admonition methods">
-<p class="admonition-title">Methods</p>
+<div class="admonition info">
+<p><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> Check the <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.java"><code>ItemIdComposer</code> implementation on GitHub</a></p>
+</div>
+<div class="admonition summary">
+<p class="admonition-title">Related methods</p>
 <ul>
-<li><code>long ItemIdComposer.composeSegment(int segment, long wrappedId)</code></li>
-<li><code>int ItemIdComposer.extractSegmentPart(long composedId)</code></li>
-<li><code>long ItemIdComposer.extractExpandableGroupIdPart(long composedId)</code></li>
-<li><code>long ItemIdComposer.extractExpandableChildIdPart(long composedId)</code></li>
-<li><code>long ItemIdComposer.extractWrappedIdPart(long composedId)</code></li>
-<li><code>boolean ItemIdComposer.isExpandableGroup(long composedId)</code></li>
-<li><code>long ItemIdComposer.composeExpandableChildId(long groupId, long childId)</code></li>
-<li><code>long ItemIdComposer.composeExpandableGroupId(long groupId)</code></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#composeSegment(int, long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>long ItemIdComposer.composeSegment(int segment, long wrappedId)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractSegmentPart(long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>int ItemIdComposer.extractSegmentPart(long composedId)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractExpandableGroupIdPart(long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>long ItemIdComposer.extractExpandableGroupIdPart(long composedId)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractExpandableChildIdPart(long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>long ItemIdComposer.extractExpandableChildIdPart(long composedId)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractWrappedIdPart(long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>long ItemIdComposer.extractWrappedIdPart(long composedId)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#isExpandableGroup(long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>boolean ItemIdComposer.isExpandableGroup(long composedId)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#composeExpandableGroupId(long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>long ItemIdComposer.composeExpandableGroupId(long groupId)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#composeExpandableChildId(long, long)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>long ItemIdComposer.composeExpandableChildId(long groupId, long childId)</code></a></li>
 </ul>
 </div>
-<h2 id="itemviewtypecomposer">ItemViewTypeComposer<a class="headerlink" href="#itemviewtypecomposer" title="Permanent link">#</a></h2>
+<h3 id="itemviewtypecomposer">ItemViewTypeComposer<a class="headerlink" href="#itemviewtypecomposer" title="Permanent link">&para;</a></h3>
 <p>Item view type has similar problem like item ID. The <code>ItemViewTypeCompser</code> manages packed item view type value that <code>ItemIdComposer</code> doing it for item ID.</p>
 <p>Item view types are expressed by 32 bits integer in RecyclerView, and <code>ItemViewTypeCompser</code> divides it into three chunks; <em>expandable group flag</em>, <em>view type segment</em> and <em>wrapped view type code</em>.</p>
 <table>
@@ -543,17 +671,20 @@
 </tr>
 </tbody>
 </table>
-<div class="admonition methods">
-<p class="admonition-title">Methods</p>
+<div class="admonition info">
+<p><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> Check the <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.java"><code>ItemViewTypeComposer</code> implementation on GitHub</a></p>
+</div>
+<div class="admonition summary">
+<p class="admonition-title">Related methods</p>
 <ul>
-<li><code>int ItemViewTypeComposer.composeSegment(int segment, int wrappedViewType)</code></li>
-<li><code>int ItemViewTypeComposer.extractSegmentPart(int composedViewType)</code></li>
-<li><code>int ItemViewTypeComposer.extractWrappedViewTypePart(int composedViewType)</code></li>
-<li><code>boolean ItemViewTypeComposer.isExpandableGroup(int composedViewType)</code></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#composeSegment(int, int)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>int ItemViewTypeComposer.composeSegment(int segment, int wrappedViewType)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#extractSegmentPart(int)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>int ItemViewTypeComposer.extractSegmentPart(int composedViewType)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#extractWrappedViewTypePart(int)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>int ItemViewTypeComposer.extractWrappedViewTypePart(int composedViewType)</code></a></li>
+<li><a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#isExpandableGroup(int)"><img alt="📘" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f4d8.png" title=":blue_book:" /> <code>boolean ItemViewTypeComposer.isExpandableGroup(int composedViewType)</code></a></li>
 </ul>
 </div>
-<h1 id="how-to-migrate-to-wrapped-adapter">How to migrate to <strong>WRAPPED</strong> adapter?<a class="headerlink" href="#how-to-migrate-to-wrapped-adapter" title="Permanent link">#</a></h1>
-<p>Need to change several things to use <code>ComposedAdapter</code>. Refer to the <a href="../../wrapper-adapter/migrate-to-wrapped-adapter">Tweak your Adapter to support adapter wrapping</a> page for more details.</p>
+<h2 id="how-to-migrate-to-wrapped-adapter">How to migrate to <strong>WRAPPED</strong> adapter?<a class="headerlink" href="#how-to-migrate-to-wrapped-adapter" title="Permanent link">&para;</a></h2>
+<p>Need to change several things to use your adapter wrapped with <code>ComposedAdapter</code>. Refer to the <a href="../../wrapper-adapter/migrate-to-wrapped-adapter">Tweak your Adapter to support adapter wrapping</a> page for more details.</p>
                 
                   
                 
@@ -609,7 +740,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright (c) 2016 Haruki Hasegawa
+            Copyright &copy; 2017 Haruki Hasegawa
           </div>
         
         powered by
@@ -631,10 +762,6 @@
       
       
       <script>app.initialize({url:{base:"../.."}})</script>
-      
-        <script src="../../vendor/highlight/highlight.pack.js"></script>
-      
-        <script src="../../javascripts/application.js"></script>
       
     
     

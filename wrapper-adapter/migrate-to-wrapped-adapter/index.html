@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation site for Advanced RecyclerView (https://github.com/h6ah4i/android-advancedrecyclerview)">
       
       
-        <link rel="canonical" href="https://h6a.h4i.github.io/android-advancedrecyclerview/wrapper-adapter/migrate-to-wrapped-adapter/">
+        <link rel="canonical" href="https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/migrate-to-wrapped-adapter/">
       
       
         <meta name="author" content="Haruki Hasegawa">
@@ -47,15 +47,15 @@
     
       <link rel="stylesheet" href="../../stylesheets/overrides.css">
     
-      <link rel="stylesheet" href="../../vendor/highlight/styles/github.css">
     
-    
+  
+
   </head>
   
   
   
   
-    <body data-md-color-primary="blue-grey" data-md-color-accent="orange">
+    <body data-md-color-primary="teal" data-md-color-accent="deep-orange">
   
     <svg class="md-svg">
       <defs>
@@ -73,9 +73,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://h6a.h4i.github.io/android-advancedrecyclerview" title="Advanced RecyclerView" class="md-header-nav__button md-logo">
+        <a href="https://advancedrecyclerview.h6ah4i.com/" title="Advanced RecyclerView" class="md-header-nav__button md-logo">
           
-            <i class="md-icon md-icon--home"></i>
+            
+              <img src="../../images/header-logo.png" width="24" height="24">
+            
           
         </a>
       </div>
@@ -166,7 +168,9 @@
   <label class="md-nav__title md-nav__title--site" for="drawer">
     <div class="md-nav__button md-logo">
       
-        <i class="md-icon md-icon--home"></i>
+        
+          <img src="../../images/header-logo.png">
+        
       
     </div>
     Advanced RecyclerView
@@ -264,8 +268,6 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
-      
-    
     
       <label class="md-nav__link md-nav__link--active" for="toc">
         Support adapter wrapping
@@ -279,51 +281,62 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#if-overriding-adaptergetitemid" title="If overriding Adapter.getItemId()" class="md-nav__link">
-    If overriding Adapter.getItemId()
+  <a href="#tweak-your-adapter-to-support-adapter-wrapping" title="Tweak your Adapter to support adapter wrapping" class="md-nav__link">
+    Tweak your Adapter to support adapter wrapping
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if-overriding-adaptergetitemid" title="&raquo; If overriding Adapter.getItemId()" class="md-nav__link">
+    &raquo; If overriding Adapter.getItemId()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-overriding-adaptergetitemviewtype" title="If overriding Adapter.getItemViewType()" class="md-nav__link">
-    If overriding Adapter.getItemViewType()
+        
+          <li class="md-nav__item">
+  <a href="#if-overriding-adaptergetitemviewtype" title="&raquo; If overriding Adapter.getItemViewType()" class="md-nav__link">
+    &raquo; If overriding Adapter.getItemViewType()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-using-viewholdergetadaperposition-viewholdergetlayoutposition" title="If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())" class="md-nav__link">
-    If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())
+        
+          <li class="md-nav__item">
+  <a href="#if-using-viewholdergetadaperposition-viewholdergetlayoutposition" title="&raquo; If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())" class="md-nav__link">
+    &raquo; If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-using-viewholdergetitemviewtype" title="If using ViewHolder.getItemViewType()" class="md-nav__link">
-    If using ViewHolder.getItemViewType()
+        
+          <li class="md-nav__item">
+  <a href="#if-using-viewholdergetitemviewtype" title="&raquo; If using ViewHolder.getItemViewType()" class="md-nav__link">
+    &raquo; If using ViewHolder.getItemViewType()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-using-viewholdergetitemid" title="If using ViewHolder.getItemId()" class="md-nav__link">
-    If using ViewHolder.getItemId()
+        
+          <li class="md-nav__item">
+  <a href="#if-using-viewholdergetitemid" title="&raquo; If using ViewHolder.getItemId()" class="md-nav__link">
+    &raquo; If using ViewHolder.getItemId()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-your-adapter-overrides-optional-methods-of-recyclerviewadapter" title="If your adapter overrides optional methods of RecyclerView.Adapter" class="md-nav__link">
-    If your adapter overrides optional methods of RecyclerView.Adapter
+        
+          <li class="md-nav__item">
+  <a href="#if-your-adapter-overrides-optional-methods-of-recyclerviewadapter" title="&raquo; If your adapter overrides optional methods of RecyclerView.Adapter" class="md-nav__link">
+    &raquo; If your adapter overrides optional methods of RecyclerView.Adapter
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -449,6 +462,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../javadoc/" title="Javadoc" class="md-nav__link">
+      Javadoc
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -463,51 +488,62 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
-  
   
     <label class="md-nav__title" for="toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#if-overriding-adaptergetitemid" title="If overriding Adapter.getItemId()" class="md-nav__link">
-    If overriding Adapter.getItemId()
+  <a href="#tweak-your-adapter-to-support-adapter-wrapping" title="Tweak your Adapter to support adapter wrapping" class="md-nav__link">
+    Tweak your Adapter to support adapter wrapping
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if-overriding-adaptergetitemid" title="&raquo; If overriding Adapter.getItemId()" class="md-nav__link">
+    &raquo; If overriding Adapter.getItemId()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-overriding-adaptergetitemviewtype" title="If overriding Adapter.getItemViewType()" class="md-nav__link">
-    If overriding Adapter.getItemViewType()
+        
+          <li class="md-nav__item">
+  <a href="#if-overriding-adaptergetitemviewtype" title="&raquo; If overriding Adapter.getItemViewType()" class="md-nav__link">
+    &raquo; If overriding Adapter.getItemViewType()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-using-viewholdergetadaperposition-viewholdergetlayoutposition" title="If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())" class="md-nav__link">
-    If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())
+        
+          <li class="md-nav__item">
+  <a href="#if-using-viewholdergetadaperposition-viewholdergetlayoutposition" title="&raquo; If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())" class="md-nav__link">
+    &raquo; If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-using-viewholdergetitemviewtype" title="If using ViewHolder.getItemViewType()" class="md-nav__link">
-    If using ViewHolder.getItemViewType()
+        
+          <li class="md-nav__item">
+  <a href="#if-using-viewholdergetitemviewtype" title="&raquo; If using ViewHolder.getItemViewType()" class="md-nav__link">
+    &raquo; If using ViewHolder.getItemViewType()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-using-viewholdergetitemid" title="If using ViewHolder.getItemId()" class="md-nav__link">
-    If using ViewHolder.getItemId()
+        
+          <li class="md-nav__item">
+  <a href="#if-using-viewholdergetitemid" title="&raquo; If using ViewHolder.getItemId()" class="md-nav__link">
+    &raquo; If using ViewHolder.getItemId()
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#if-your-adapter-overrides-optional-methods-of-recyclerviewadapter" title="If your adapter overrides optional methods of RecyclerView.Adapter" class="md-nav__link">
-    If your adapter overrides optional methods of RecyclerView.Adapter
+        
+          <li class="md-nav__item">
+  <a href="#if-your-adapter-overrides-optional-methods-of-recyclerviewadapter" title="&raquo; If your adapter overrides optional methods of RecyclerView.Adapter" class="md-nav__link">
+    &raquo; If your adapter overrides optional methods of RecyclerView.Adapter
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -525,40 +561,29 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/edit/master/docs/wrapper-adapter/migrate-to-wrapped-adapter.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/tree/gh-pages-source/docs/wrapper-adapter/migrate-to-wrapped-adapter.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="tweak-your-adapter-to-support-adapter-wrapping">Tweak your Adapter to support adapter wrapping<a class="headerlink" href="#tweak-your-adapter-to-support-adapter-wrapping" title="Permanent link">#</a></h1>
-<p>Need to tweak several things in your adapter implemtation to support wrapping adapter mechanism.
+                  <h1>Support adapter wrapping</h1>
+                
+                <h2 id="tweak-your-adapter-to-support-adapter-wrapping">Tweak your Adapter to support adapter wrapping<a class="headerlink" href="#tweak-your-adapter-to-support-adapter-wrapping" title="Permanent link">&para;</a></h2>
+<p>Need to tweak several things in your adapter implemtation to <em>support wrapping adapter mechanism</em>.
 Because <code>WrapperAdapter</code> modifies <strong>item positions</strong>, <strong>item IDs</strong> and <strong>item view types</strong> internally.</p>
-<div class="toc">
-<ul>
-<li><a href="#tweak-your-adapter-to-support-adapter-wrapping">Tweak your Adapter to support adapter wrapping</a><ul>
-<li><a href="#if-overriding-adaptergetitemid">If overriding Adapter.getItemId()</a></li>
-<li><a href="#if-overriding-adaptergetitemviewtype">If overriding Adapter.getItemViewType()</a></li>
-<li><a href="#if-using-viewholdergetadaperposition-viewholdergetlayoutposition">If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())</a></li>
-<li><a href="#if-using-viewholdergetitemviewtype">If using ViewHolder.getItemViewType()</a></li>
-<li><a href="#if-using-viewholdergetitemid">If using ViewHolder.getItemId()</a></li>
-<li><a href="#if-your-adapter-overrides-optional-methods-of-recyclerviewadapter">If your adapter overrides optional methods of RecyclerView.Adapter</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<h2 id="if-overriding-adaptergetitemid">If overriding Adapter.getItemId()<a class="headerlink" href="#if-overriding-adaptergetitemid" title="Permanent link">#</a></h2>
+<h3 id="if-overriding-adaptergetitemid">&raquo; If overriding Adapter.getItemId()<a class="headerlink" href="#if-overriding-adaptergetitemid" title="Permanent link">&para;</a></h3>
 <p><strong>The available range of item ID value is limited, so you cannot use full range of 64-bit integer value.</strong> Must return a value greather than or equals to <code>-(2^55)</code> and less than or equals to <code>2^55 - 1</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This limitation is due to how <a href="../../wrapper-adapter/composed-adapter/#itemidcomposer"><code>ItemIdComposer</code></a> packs other information into 64-bits integer value.</p>
 </div>
-<h2 id="if-overriding-adaptergetitemviewtype">If overriding Adapter.getItemViewType()<a class="headerlink" href="#if-overriding-adaptergetitemviewtype" title="Permanent link">#</a></h2>
+<h3 id="if-overriding-adaptergetitemviewtype">&raquo; If overriding Adapter.getItemViewType()<a class="headerlink" href="#if-overriding-adaptergetitemviewtype" title="Permanent link">&para;</a></h3>
 <p><strong>The available range of item view type value is limited, so you cannot use full range of 32-bit integer value.</strong> Must return a value greather than or equals to <code>-(2^23)</code> and less than or equals to <code>2^23 - 1</code>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This limitation is due to how <a href="../../wrapper-adapter/composed-adapter/#itemviewtypecomposer"><code>ItemViewTypeComposer</code></a> packs other information into 32-bits integer value.</p>
 </div>
-<h2 id="if-using-viewholdergetadaperposition-viewholdergetlayoutposition">If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())<a class="headerlink" href="#if-using-viewholdergetadaperposition-viewholdergetlayoutposition" title="Permanent link">#</a></h2>
-<p>👉 &nbsp; Use <code>WrapperAdapterUtils.unwrapPosition()</code>.</p>
-<div class="code"><pre><span></span><span class="nd">@Overfides</span>
+<h3 id="if-using-viewholdergetadaperposition-viewholdergetlayoutposition">&raquo; If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())<a class="headerlink" href="#if-using-viewholdergetadaperposition-viewholdergetlayoutposition" title="Permanent link">&para;</a></h3>
+<p><img alt="👉" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f449.png" title=":point_right:" /> Use <a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/utils/WrapperAdapterUtils.html#unwrapPosition(android.support.v7.widget.RecyclerView.Adapter, int)"><code>WrapperAdapterUtils.unwrapPosition()</code></a>.</p>
+<div class="codehilite"><pre><span></span><span class="nd">@Overfides</span>
 <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">RecyclerView</span> <span class="n">rv</span> <span class="o">=</span> <span class="n">RecyclerViewAdapterUtils</span><span class="o">.</span><span class="na">getParentRecyclerView</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
     <span class="n">RecyclerView</span><span class="o">.</span><span class="na">ViewHolder</span> <span class="n">vh</span> <span class="o">=</span> <span class="n">rv</span><span class="o">.</span><span class="na">findContainingViewHolder</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
@@ -578,9 +603,9 @@ Because <code>WrapperAdapter</code> modifies <strong>item positions</strong>, <s
 </pre></div>
 
 
-<h2 id="if-using-viewholdergetitemviewtype">If using ViewHolder.getItemViewType()<a class="headerlink" href="#if-using-viewholdergetitemviewtype" title="Permanent link">#</a></h2>
-<p>👉 &nbsp; Use <code>ItemViewTypeComposer.extractWrappedViewTypePart()</code>.</p>
-<div class="code"><pre><span></span><span class="nd">@Overfides</span>
+<h3 id="if-using-viewholdergetitemviewtype">&raquo; If using ViewHolder.getItemViewType()<a class="headerlink" href="#if-using-viewholdergetitemviewtype" title="Permanent link">&para;</a></h3>
+<p><img alt="👉" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f449.png" title=":point_right:" /> Use <a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#extractWrappedViewTypePart(int)"><code>ItemViewTypeComposer.extractWrappedViewTypePart()</code></a>.</p>
+<div class="codehilite"><pre><span></span><span class="nd">@Overfides</span>
 <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">RecyclerView</span><span class="o">.</span><span class="na">ViewHolder</span> <span class="n">vh</span> <span class="o">=</span> <span class="n">recyclerView</span><span class="o">.</span><span class="na">findContainingViewHolder</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
 
@@ -593,9 +618,9 @@ Because <code>WrapperAdapter</code> modifies <strong>item positions</strong>, <s
 </pre></div>
 
 
-<h2 id="if-using-viewholdergetitemid">If using ViewHolder.getItemId()<a class="headerlink" href="#if-using-viewholdergetitemid" title="Permanent link">#</a></h2>
-<p>👉 &nbsp; Use <code>ItemIdComposer.extractWrappedIdPart()</code>.</p>
-<div class="code"><pre><span></span><span class="nd">@Overfides</span>
+<h3 id="if-using-viewholdergetitemid">&raquo; If using ViewHolder.getItemId()<a class="headerlink" href="#if-using-viewholdergetitemid" title="Permanent link">&para;</a></h3>
+<p><img alt="👉" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f449.png" title=":point_right:" /> Use <a href="../../javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#extractWrappedIdPart(long)"><code>ItemIdComposer.extractWrappedIdPart()</code></a>.</p>
+<div class="codehilite"><pre><span></span><span class="nd">@Overfides</span>
 <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">RecyclerView</span><span class="o">.</span><span class="na">ViewHolder</span> <span class="n">vh</span> <span class="o">=</span> <span class="n">recyclerView</span><span class="o">.</span><span class="na">findContainingViewHolder</span><span class="o">(</span><span class="n">v</span><span class="o">);</span>
 
@@ -608,16 +633,16 @@ Because <code>WrapperAdapter</code> modifies <strong>item positions</strong>, <s
 </pre></div>
 
 
-<h2 id="if-your-adapter-overrides-optional-methods-of-recyclerviewadapter">If your adapter overrides optional methods of RecyclerView.Adapter<a class="headerlink" href="#if-your-adapter-overrides-optional-methods-of-recyclerviewadapter" title="Permanent link">#</a></h2>
-<p>👉 &nbsp; Implement the <code>WrappedAdapter</code> interface and use the <code>viewType</code> parameter instead of using <code>ViewHolder.getItemViewType()</code></p>
+<h3 id="if-your-adapter-overrides-optional-methods-of-recyclerviewadapter">&raquo; If your adapter overrides optional methods of RecyclerView.Adapter<a class="headerlink" href="#if-your-adapter-overrides-optional-methods-of-recyclerviewadapter" title="Permanent link">&para;</a></h3>
+<p><img alt="👉" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f449.png" title=":point_right:" /> Implement the <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/WrappedAdapter.java"><code>WrappedAdapter</code> <img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /></a> interface and use the <code>viewType</code> parameter instead of using <code>ViewHolder.getItemViewType()</code></p>
 <p>This step is only required in case of the adapter overrides the following methods;</p>
 <ul>
-<li><code>onViewAttachedToWindow()</code></li>
-<li><code>onViewDetachedFromWindow()</code></li>
-<li><code>onViewRecycled()</code></li>
-<li><code>onFailedToRecycleView()</code></li>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onAttachedToRecyclerView(android.support.v7.widget.RecyclerView)"><code>onViewAttachedToWindow()</code></a></li>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onViewDetachedFromWindow(VH)"><code>onViewDetachedFromWindow()</code></a></li>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onViewRecycled(VH)"><code>onViewRecycled()</code></a></li>
+<li><a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onFailedToRecycleView(VH)"><code>onFailedToRecycleView()</code></a></li>
 </ul>
-<div class="code"><pre><span></span><span class="kd">class</span> <span class="nc">MyInnerAdapter</span><span class="o">&lt;</span><span class="n">VH</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">WrappedAdapter</span><span class="o">&lt;</span><span class="n">VH</span><span class="o">&gt;</span> <span class="o">{</span>
+<div class="codehilite"><pre><span></span><span class="kd">class</span> <span class="nc">MyInnerAdapter</span><span class="o">&lt;</span><span class="n">VH</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">WrappedAdapter</span><span class="o">&lt;</span><span class="n">VH</span><span class="o">&gt;</span> <span class="o">{</span>
     <span class="c1">// the following four methods are provided by WrappedAdapter interface</span>
     <span class="nd">@Overrides</span>
     <span class="kt">void</span> <span class="nf">onViewAttachedToWindow</span><span class="o">(</span><span class="n">VH</span> <span class="n">holder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">viewType</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span> <span class="o">}</span>
@@ -708,7 +733,7 @@ Because <code>WrapperAdapter</code> modifies <strong>item positions</strong>, <s
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright (c) 2016 Haruki Hasegawa
+            Copyright &copy; 2017 Haruki Hasegawa
           </div>
         
         powered by
@@ -730,10 +755,6 @@ Because <code>WrapperAdapter</code> modifies <strong>item positions</strong>, <s
       
       
       <script>app.initialize({url:{base:"../.."}})</script>
-      
-        <script src="../../vendor/highlight/highlight.pack.js"></script>
-      
-        <script src="../../javascripts/application.js"></script>
       
     
     

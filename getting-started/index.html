@@ -10,7 +10,7 @@
         <meta name="description" content="Documentation site for Advanced RecyclerView (https://github.com/h6ah4i/android-advancedrecyclerview)">
       
       
-        <link rel="canonical" href="https://h6a.h4i.github.io/android-advancedrecyclerview/getting-started/">
+        <link rel="canonical" href="https://advancedrecyclerview.h6ah4i.com/getting-started/">
       
       
         <meta name="author" content="Haruki Hasegawa">
@@ -47,15 +47,15 @@
     
       <link rel="stylesheet" href="../stylesheets/overrides.css">
     
-      <link rel="stylesheet" href="../vendor/highlight/styles/github.css">
     
-    
+  
+
   </head>
   
   
   
   
-    <body data-md-color-primary="blue-grey" data-md-color-accent="orange">
+    <body data-md-color-primary="teal" data-md-color-accent="deep-orange">
   
     <svg class="md-svg">
       <defs>
@@ -73,9 +73,11 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://h6a.h4i.github.io/android-advancedrecyclerview" title="Advanced RecyclerView" class="md-header-nav__button md-logo">
+        <a href="https://advancedrecyclerview.h6ah4i.com/" title="Advanced RecyclerView" class="md-header-nav__button md-logo">
           
-            <i class="md-icon md-icon--home"></i>
+            
+              <img src="../images/header-logo.png" width="24" height="24">
+            
           
         </a>
       </div>
@@ -162,7 +164,9 @@
   <label class="md-nav__title md-nav__title--site" for="drawer">
     <div class="md-nav__button md-logo">
       
-        <i class="md-icon md-icon--home"></i>
+        
+          <img src="../images/header-logo.png">
+        
       
     </div>
     Advanced RecyclerView
@@ -215,12 +219,49 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="toc">
     
-      
     
+      <label class="md-nav__link md-nav__link--active" for="toc">
+        Getting Started
+      </label>
     
     <a href="./" title="Getting Started" class="md-nav__link md-nav__link--active">
       Getting Started
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" title="Installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" title="What's next?" class="md-nav__link">
+    What's next?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-references" title="Other references" class="md-nav__link">
+    Other references
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -381,6 +422,18 @@
   </li>
 
     
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../javadoc/" title="Javadoc" class="md-nav__link">
+      Javadoc
+    </a>
+  </li>
+
+    
   </ul>
 </nav>
                   </div>
@@ -395,8 +448,34 @@
 <nav class="md-nav md-nav--secondary">
   
   
-    
   
+    <label class="md-nav__title" for="toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" title="Installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" title="What's next?" class="md-nav__link">
+    What's next?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-references" title="Other references" class="md-nav__link">
+    Other references
+  </a>
+  
+</li>
+      
+      
+      
+    </ul>
   
 </nav>
                   </div>
@@ -408,29 +487,31 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/edit/master/docs/getting-started.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/h6ah4i/android-advancedrecyclerview/tree/gh-pages-source/docs/getting-started.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">#</a></h1>
+                  <h1>Getting Started</h1>
+                
+                <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>Add the following lines of code into your <code>build.gradle</code>.</p>
-<div class="code"><pre><span></span>dependencies {
-    compile (&#39;com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:[VERSION_CODES_GOES_HERE]@aar&#39;){
-        transitive=true
-    }
-}
+<div class="codehilite"><pre><span></span><span class="n">dependencies</span> <span class="o">{</span>
+    <span class="n">compile</span> <span class="o">(</span><span class="s1">&#39;com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:[VERSION_CODE_GOES_HERE]@aar&#39;</span><span class="o">){</span>
+        <span class="n">transitive</span><span class="o">=</span><span class="kc">true</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </pre></div>
 
 
 <p><strong>NOTE:</strong>
 This library is served on <a href="https://bintray.com/h6ah4i/maven/android-advancedrecyclerview/">jCenter</a>. If the above gradle setting not getting work, try adding the following lines.</p>
-<div class="code"><pre><span></span>repositories {
-    jcenter()
-}
+<div class="codehilite"><pre><span></span><span class="n">repositories</span> <span class="o">{</span>
+    <span class="n">jcenter</span><span class="o">()</span>
+<span class="o">}</span>
 </pre></div>
 
 
-<h1 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">#</a></h1>
-<p>First, I recommend you to learn about plain <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html"><code>RecyclerView</code></a>. Basic knowledges about <code>RecyclerView</code> is required before using this library. The following tutorial is good for starting point;</p>
+<h2 id="whats-next">What's next?<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
+<p>First, I recommend you to learn about plain <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html"><code>RecyclerView</code></a>. Basic knowledges about <code>RecyclerView</code> are required before using this library. The following tutorial is good for starting point;</p>
 <ul>
 <li><a href="https://developer.android.com/training/material/lists-cards.html">Creating Lists and Cards | Android Developers - Training</a></li>
 </ul>
@@ -446,7 +527,7 @@ This library is served on <a href="https://bintray.com/h6ah4i/maven/android-adva
 <li><a href="../swipeable">Swipeable</a></li>
 <li><a href="../expandable">Expandable</a></li>
 </ul>
-<h1 id="other-references">Other references<a class="headerlink" href="#other-references" title="Permanent link">#</a></h1>
+<h2 id="other-references">Other references<a class="headerlink" href="#other-references" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p><strong>Demo app code</strong></p>
@@ -471,7 +552,7 @@ This library is served on <a href="https://bintray.com/h6ah4i/maven/android-adva
 <li>
 <p><strong>Javadoc</strong></p>
 <ul>
-<li><a href="../javadoc/latest">Javadoc - Advanced RecyclerView</a></li>
+<li><a href="../javadoc">Javadoc - Advanced RecyclerView</a></li>
 </ul>
 </li>
 </ul>
@@ -530,7 +611,7 @@ This library is served on <a href="https://bintray.com/h6ah4i/maven/android-adva
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright (c) 2016 Haruki Hasegawa
+            Copyright &copy; 2017 Haruki Hasegawa
           </div>
         
         powered by
@@ -552,10 +633,6 @@ This library is served on <a href="https://bintray.com/h6ah4i/maven/android-adva
       
       
       <script>app.initialize({url:{base:".."}})</script>
-      
-        <script src="../vendor/highlight/highlight.pack.js"></script>
-      
-        <script src="../javascripts/application.js"></script>
       
     
     

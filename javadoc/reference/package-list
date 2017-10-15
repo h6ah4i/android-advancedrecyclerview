@@ -1,0 +1,14 @@
+com.h6ah4i.android.widget.advrecyclerview.adapter
+com.h6ah4i.android.widget.advrecyclerview.animator
+com.h6ah4i.android.widget.advrecyclerview.animator.impl
+com.h6ah4i.android.widget.advrecyclerview.composedadapter
+com.h6ah4i.android.widget.advrecyclerview.decoration
+com.h6ah4i.android.widget.advrecyclerview.draggable
+com.h6ah4i.android.widget.advrecyclerview.event
+com.h6ah4i.android.widget.advrecyclerview.expandable
+com.h6ah4i.android.widget.advrecyclerview.headerfooter
+com.h6ah4i.android.widget.advrecyclerview.swipeable
+com.h6ah4i.android.widget.advrecyclerview.swipeable.action
+com.h6ah4i.android.widget.advrecyclerview.touchguard
+com.h6ah4i.android.widget.advrecyclerview.utils
+
