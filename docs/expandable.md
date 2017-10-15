@@ -1,10 +1,8 @@
 ![Block Diagram - Expandable](/images/block-diagram-expand.png)
 
-[TOC]
+## Tutorial
 
-# Tutorial
-
-## Step 1. Extend `AbstractExpandableItemAdapter` instead of `RecyclerView.Adapter`
+### Step 1. Extend `AbstractExpandableItemAdapter` instead of `RecyclerView.Adapter`
 
 First, you need to extend `AbstractExpandableItemAdapter` to use expandable items feature. This class implements `RecyclerView.Adapter`'s methods and some of them are sealed via `final` keyword. Instead, it provides some `Group` / `Child` prefixed version of `RecyclerView.Adapter' methods.
 
@@ -54,7 +52,7 @@ class MyAdapter extends AbstractExpandableItemAdapter<MyAdapter.MyGroupVH, MyAda
 }
 ```
 
-## Step 2. Implement each method of `AbstractExpandableItemAdapter`
+### Step 2. Implement each method of `AbstractExpandableItemAdapter`
 
 
 ### Implement `getGroupCount()` / `getChildCount()`

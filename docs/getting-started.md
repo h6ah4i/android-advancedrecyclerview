@@ -1,4 +1,4 @@
-# Installation
+## Installation
 
 Add the following lines of code into your `build.gradle`.
 
@@ -20,7 +20,7 @@ repositories {
 }
 ```
 
-# What's next?
+## What's next?
 
 First, I recommend you to learn about plain [`RecyclerView`](https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html). Basic knowledges about `RecyclerView` is required before using this library. The following tutorial is good for starting point;
 
@@ -37,7 +37,7 @@ If you've already know well about plain `RecyclerView`, proceed to each sections
 - [Swipeable](/swipeable)
 - [Expandable](/expandable)
 
-# Other references
+## Other references
 
 - **Demo app code**
     - [Install the demo app from Google Play](https://play.google.com/store/apps/details?id=com.h6ah4i.android.example.advrecyclerview)

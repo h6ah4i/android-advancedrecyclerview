@@ -1,9 +1,5 @@
 TODO
 
-[TOC]
-
-# FAQs
-
 ## Drag & Drop
 
 ## Swipeable

@@ -1,11 +1,9 @@
-# Tweak your Adapter to support adapter wrapping
+## Tweak your Adapter to support adapter wrapping
 
 Need to tweak several things in your adapter implemtation to support wrapping adapter mechanism.
 Because `WrapperAdapter` modifies **item positions**, **item IDs** and **item view types** internally.
 
-[TOC]
-
-## If overriding Adapter.getItemId()
+### If overriding Adapter.getItemId()
 
 **The available range of item ID value is limited, so you cannot use full range of 64-bit integer value.** Must return a value greather than or equals to `-(2^55)` and less than or equals to `2^55 - 1`.
 
@@ -13,7 +11,7 @@ Because `WrapperAdapter` modifies **item positions**, **item IDs** and **item vi
     This limitation is due to how [`ItemIdComposer`](/wrapper-adapter/composed-adapter/#itemidcomposer) packs other information into 64-bits integer value.
 
 
-## If overriding Adapter.getItemViewType()
+### If overriding Adapter.getItemViewType()
 
 **The available range of item view type value is limited, so you cannot use full range of 32-bit integer value.** Must return a value greather than or equals to `-(2^23)` and less than or equals to `2^23 - 1`.
 
@@ -21,7 +19,7 @@ Because `WrapperAdapter` modifies **item positions**, **item IDs** and **item vi
     This limitation is due to how [`ItemViewTypeComposer`](/wrapper-adapter/composed-adapter/#itemviewtypecomposer) packs other information into 32-bits integer value.
 
 
-## If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())
+### If using ViewHolder.getAdaperPosition() / ViewHolder.getLayoutPosition())
 
 👉 &nbsp; Use `WrapperAdapterUtils.unwrapPosition()`.
 
@@ -45,7 +43,7 @@ void onClick(View v) {
 }
 ```
 
-## If using ViewHolder.getItemViewType()
+### If using ViewHolder.getItemViewType()
 
 👉 &nbsp; Use `ItemViewTypeComposer.extractWrappedViewTypePart()`.
 
@@ -63,7 +61,7 @@ void onClick(View v) {
 ```
 
 
-## If using ViewHolder.getItemId()
+### If using ViewHolder.getItemId()
 
 👉 &nbsp; Use `ItemIdComposer.extractWrappedIdPart()`.
 
@@ -81,7 +79,7 @@ void onClick(View v) {
 ```
 
 
-## If your adapter overrides optional methods of RecyclerView.Adapter
+### If your adapter overrides optional methods of RecyclerView.Adapter
 
 👉 &nbsp; Implement the `WrappedAdapter` interface and use the `viewType` parameter instead of using `ViewHolder.getItemViewType()`
 

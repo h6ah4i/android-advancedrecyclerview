@@ -1,9 +1,5 @@
 
-[TOC]
-
-----
-
-# What's `ComposedAdapter`?
+## What's `ComposedAdapter`?
 
 The `ComposedAdapter` is an adapter which aggregates multiple adapters into one.
 
@@ -39,7 +35,7 @@ adapterA2 = new AdapterA(dataSet);
 composedAdapter.addAdapter(adapterA2);
 ```
 
-# Item position handling
+## Item position handling
 
 The `ComposedAdapter` calls each child adapters as **segment**, also child adapter's local item position are called as **offset**.
 
@@ -52,11 +48,11 @@ The `ComposedAdapter` calls each child adapters as **segment**, also child adapt
     - `int ComposedAdapter.extractSegmentOffsetPart(long segmentedPosition)`
 
 
-# Item ID and ViewType handling
+## Item ID and ViewType handling
 
 When merging adapters, we must take care about item IDs. They have to be unique in entire the dataset, but the problem is child datasets may contains the duplicated IDs. The `ItemIdComposer` is used to manage this problem.
 
-## ItemIdComposer
+### ItemIdComposer
 
 This utility class provides several static methods to handle the *packed* item ID value.
 
@@ -81,7 +77,7 @@ Item IDs are expressed by 64 bits length integer in RecyclerView, so it can be e
 
 
 
-## ItemViewTypeComposer
+### ItemViewTypeComposer
 
 Item view type has similar problem like item ID. The `ItemViewTypeCompser` manages packed item view type value that `ItemIdComposer` doing it for item ID.
 
@@ -101,6 +97,6 @@ Item view types are expressed by 32 bits integer in RecyclerView, and `ItemViewT
     - `boolean ItemViewTypeComposer.isExpandableGroup(int composedViewType)`
 
 
-# How to migrate to **WRAPPED** adapter?
+## How to migrate to **WRAPPED** adapter?
 
 Need to change several things to use `ComposedAdapter`. Refer to the [Tweak your Adapter to support adapter wrapping](/wrapper-adapter/migrate-to-wrapped-adapter) page for more details.

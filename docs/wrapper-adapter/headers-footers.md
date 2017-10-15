@@ -1,9 +1,9 @@
 When creating headers & footers, the `AbstractHeaderFooterWrapperAdapter` can be a good alternative to the `ComposedAdapter`. This class provides simple way to creating a wrapper crass for headers & footers by implementing small number of methods.
 
 
-# Quick quide
+## Quick quide
 
-## Usage
+### Usage
 
 ```java
 MyAdapter adapter = new MyAdapter();
@@ -13,7 +13,7 @@ recyclerView.setAdapter(wrappedAdapter);
 
 ```
 
-## Implementation of headers & footers wrapper adapter
+### Implementation of headers & footers wrapper adapter
 
 ```java
 class MyHeadFootAdapter 
@@ -60,7 +60,7 @@ class MyHeadFootAdapter
 }
 ```
 
-## Click event handling
+### Click event handling
 
 The `AbstractHeaderFooterWrapperAdapter` extends `ComposedAdapter` so the same click event hadling approach is required.
 
@@ -106,7 +106,7 @@ class MyHeadFootAdapter
 
 ```
 
-## Multipe view type handling
+### Multipe view type handling
 
 Just same as `ComposedAdapter`, so need to use `ItemViewTypeComposer.extractWrappedViewTypePart()` when using view type.
 

@@ -1,11 +1,9 @@
 ![Block Diagram - Draggable](/images/block-diagram-drag-drop.png)
 
 
-[TOC]
+## Tutorial
 
-# Tutorial
-
-## Step 1. Make the adapter supports stable IDs
+### Step 1. Make the adapter supports stable IDs
 
 **This step is very important. If adapter does not return stable & unique IDs, that will cause some weird behaviors (wrong animations, NPE, etc...)**
 
@@ -24,7 +22,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 }
 ```
 
-## Step 2. Modify layout file of item views
+### Step 2. Modify layout file of item views
 
 Put a drag handle view to the layout XML of item view.
 
@@ -71,7 +69,7 @@ Put a drag handle view to the layout XML of item view.
 ```
 
 
-## Step 3. Modify ViewHolder
+### Step 3. Modify ViewHolder
 
 1. Change parent class to [`AbstractDraggableItemViewHolder`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractDraggableItemViewHolder.java).
 2. Implement `getSwipeableContainerView()` method
@@ -111,7 +109,7 @@ class MyAdapter ... {
 }
 ```
 
-## Step 4. Implement the `DraggableItemAdapter` interface
+### Step 4. Implement the `DraggableItemAdapter` interface
 
 
 ```java
@@ -198,7 +196,7 @@ void onMoveItem(int fromPosition, int toPosition) {
 ```
 
 
-## Step 5. Modify initialization process of RecyclerView
+### Step 5. Modify initialization process of RecyclerView
 
 Put some additional initialization process in your Activity / Fragment.
 
@@ -247,7 +245,7 @@ void onCreate() {
 ```
 
 
-## Step 6. Custom more and details of the implementation
+### Step 6. Custom more and details of the implementation
 
 Please refer to [the demo app implementation](https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_d_basic) for more details.
 
