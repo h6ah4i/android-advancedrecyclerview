@@ -378,6 +378,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../examples/" title="Examples" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -422,6 +434,18 @@
   <li class="md-nav__item">
     <a href="../../draggable/tutorial/" title="Tutorial" class="md-nav__link">
       Tutorial
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../draggable/examples/" title="Examples" class="md-nav__link">
+      Examples
     </a>
   </li>
 
@@ -474,6 +498,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../swipeable/examples/" title="Examples" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -522,6 +558,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../expandable/examples/" title="Examples" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -532,10 +580,58 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="../../advanced-examples/" title="Advanced Examples" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
       Advanced Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Advanced Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced-examples/draggable-swipeable/" title="Draggable + Swipeable" class="md-nav__link">
+      Draggable + Swipeable
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced-examples/expandable-draggable-swipeable/" title="Expandable + Draggable + Swipeable" class="md-nav__link">
+      Expandable + Draggable + Swipeable
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced-examples/expandable-draggable-section/" title="Expandable + Draggable with Section" class="md-nav__link">
+      Expandable + Draggable with Section
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -670,7 +766,6 @@
 <span class="n">composedAdapter</span><span class="o">.</span><span class="na">addAdapter</span><span class="o">(</span><span class="k">new</span> <span class="n">AdapterC</span><span class="o">(</span><span class="k">new</span> <span class="n">DataSet</span><span class="o">()));</span>
 </pre></div>
 
-
 <div class="admonition info">
 <p><img alt=":octocat:" class="gemoji" src="https://assets-cdn.github.com/images/icons/emoji/octocat.png" title=":octocat:" /> Check the <a href="https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java"><code>ComposedAdapter</code> implementation on GitHub</a></p>
 </div>
@@ -693,7 +788,6 @@
 <span class="n">adapterA2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">AdapterA</span><span class="o">(</span><span class="n">dataSet</span><span class="o">);</span>
 <span class="n">composedAdapter</span><span class="o">.</span><span class="na">addAdapter</span><span class="o">(</span><span class="n">adapterA2</span><span class="o">);</span>
 </pre></div>
-
 
 <h2 id="item-position-handling">Item position handling<a class="headerlink" href="#item-position-handling" title="Permanent link">&para;</a></h2>
 <p>The <code>ComposedAdapter</code> calls each child adapters as <strong>segment</strong>, also child adapter's local item position are called as <strong>offset</strong>.</p>

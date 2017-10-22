@@ -303,6 +303,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../wrapper-adapter/examples/" title="Examples" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -351,6 +363,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../draggable/examples/" title="Examples" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -395,6 +419,18 @@
   <li class="md-nav__item">
     <a href="../../swipeable/tutorial/" title="Tutorial" class="md-nav__link">
       Tutorial
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../swipeable/examples/" title="Examples" class="md-nav__link">
+      Examples
     </a>
   </li>
 
@@ -543,6 +579,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../examples/" title="Examples" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -553,10 +601,58 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="../../advanced-examples/" title="Advanced Examples" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
       Advanced Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Advanced Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced-examples/draggable-swipeable/" title="Draggable + Swipeable" class="md-nav__link">
+      Draggable + Swipeable
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced-examples/expandable-draggable-swipeable/" title="Expandable + Draggable + Swipeable" class="md-nav__link">
+      Expandable + Draggable + Swipeable
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced-examples/expandable-draggable-section/" title="Expandable + Draggable with Section" class="md-nav__link">
+      Expandable + Draggable with Section
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -754,7 +850,6 @@
 <span class="o">}</span>
 </pre></div>
 
-
 <h3 id="step-2-implement-each-method-of-abstractexpandableitemadapter">Step 2. Implement each method of <code>AbstractExpandableItemAdapter</code><a class="headerlink" href="#step-2-implement-each-method-of-abstractexpandableitemadapter" title="Permanent link">&para;</a></h3>
 <h3 id="step-3-implement-getgroupcount-getchildcount">Step 3. Implement <code>getGroupCount()</code> / <code>getChildCount()</code><a class="headerlink" href="#step-3-implement-getgroupcount-getchildcount" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
@@ -771,7 +866,6 @@
 <span class="o">}</span>
 </pre></div>
 
-
 <h3 id="step-4-implement-getgroupid-getchildid">Step 4. Implement <code>getGroupId()</code> / <code>getChildId()</code><a class="headerlink" href="#step-4-implement-getgroupid-getchildid" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
 <p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#getItemId(int)"><code>getItemId()</code></a>.</p>
@@ -786,7 +880,6 @@
     <span class="n">reuturn</span> <span class="n">items</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">groupPosition</span><span class="o">).</span><span class="na">children</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">childPosition</span><span class="o">).</span><span class="na">id</span><span class="o">;</span>
 <span class="o">}</span>
 </pre></div>
-
 
 <h3 id="step-5-implement-oncreategroupviewholder-oncreatechildviewholder">Step 5. Implement <code>onCreateGroupViewHolder()</code> / <code>onCreateChildViewHolder()</code><a class="headerlink" href="#step-5-implement-oncreategroupviewholder-oncreatechildviewholder" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
@@ -805,7 +898,6 @@
 <span class="o">}</span>
 </pre></div>
 
-
 <h3 id="step-6-implement-onbindgroupviewholder-onbindchildviewholder">Step 6. Implement <code>onBindGroupViewHolder()</code> / <code>onBindChildViewHolder()</code><a class="headerlink" href="#step-6-implement-onbindgroupviewholder-onbindchildviewholder" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
 <p>The corresponding <code>RecyclerView.Adapter</code>'s method is <a href="https://developer.android.com/reference/android/support/v7/widget/RecyclerView.Adapter.html#onBindViewHolder(VH, int)"><code>onBindViewHolder()</code></a>.</p>
@@ -823,7 +915,6 @@
 <span class="o">}</span>
 </pre></div>
 
-
 <h3 id="step-7-implement-oncheckcanexpandorcollapsegroup">Step 7. Implement <code>onCheckCanExpandOrCollapseGroup()</code><a class="headerlink" href="#step-7-implement-oncheckcanexpandorcollapsegroup" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
 <p>Just returns <code>true</code> for make group items automatically respond to click events.</p>
@@ -833,7 +924,6 @@
     <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
 <span class="o">}</span>
 </pre></div>
-
 
 <div class="admonition tip">
 <p class="admonition-title">[Tip] If you want to handle expand/colappse action manually</p>
@@ -876,13 +966,13 @@
           </a>
         
         
-          <a href="../../advanced-examples/" title="Advanced Examples" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../examples/" title="Examples" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Advanced Examples
+                Examples
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

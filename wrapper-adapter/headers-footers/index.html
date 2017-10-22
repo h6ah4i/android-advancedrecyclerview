@@ -371,6 +371,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../examples/" title="Examples" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -415,6 +427,18 @@
   <li class="md-nav__item">
     <a href="../../draggable/tutorial/" title="Tutorial" class="md-nav__link">
       Tutorial
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../draggable/examples/" title="Examples" class="md-nav__link">
+      Examples
     </a>
   </li>
 
@@ -467,6 +491,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../swipeable/examples/" title="Examples" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -515,6 +551,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../expandable/examples/" title="Examples" class="md-nav__link">
+      Examples
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -525,10 +573,58 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="../../advanced-examples/" title="Advanced Examples" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
       Advanced Examples
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-7">
+        Advanced Examples
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced-examples/draggable-swipeable/" title="Draggable + Swipeable" class="md-nav__link">
+      Draggable + Swipeable
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced-examples/expandable-draggable-swipeable/" title="Expandable + Draggable + Swipeable" class="md-nav__link">
+      Expandable + Draggable + Swipeable
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../advanced-examples/expandable-draggable-section/" title="Expandable + Draggable with Section" class="md-nav__link">
+      Expandable + Draggable with Section
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -659,7 +755,6 @@
 <span class="n">recyclerView</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">wrappedAdapter</span><span class="o">);</span>
 </pre></div>
 
-
 <h3 id="implementation-of-headers-footers-wrapper-adapter">Implementation of headers &amp; footers wrapper adapter<a class="headerlink" href="#implementation-of-headers-footers-wrapper-adapter" title="Permanent link">&para;</a></h3>
 <div class="codehilite"><pre><span></span><span class="kd">class</span> <span class="nc">MyHeadFootAdapter</span> 
     <span class="kd">extends</span> <span class="n">AbstractHeaderFooterWrapperAdapter</span><span class="o">&lt;</span><span class="n">MyHeadFootAdapter</span><span class="o">.</span><span class="na">HeaderVH</span><span class="o">,</span> <span class="n">MyHeadFootAdapter</span><span class="o">.</span><span class="na">FooterVH</span><span class="o">&gt;</span>
@@ -705,7 +800,6 @@
 <span class="o">}</span>
 </pre></div>
 
-
 <h3 id="click-event-handling">Click event handling<a class="headerlink" href="#click-event-handling" title="Permanent link">&para;</a></h3>
 <p>The <code>AbstractHeaderFooterWrapperAdapter</code> extends <code>ComposedAdapter</code> so the same click event handling approach is required.</p>
 <div class="codehilite"><pre><span></span><span class="kd">class</span> <span class="nc">MyHeadFootAdapter</span> 
@@ -747,7 +841,6 @@
     <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
-
 
 <h3 id="multipe-view-type-handling">Multipe view type handling<a class="headerlink" href="#multipe-view-type-handling" title="Permanent link">&para;</a></h3>
 <p>Just same as <code>ComposedAdapter</code>, so need to use <a href="http://localhost:8000/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#extractWrappedViewTypePart(int)"><code>ItemViewTypeComposer.extractWrappedViewTypePart()</code></a> when using view type.</p>
