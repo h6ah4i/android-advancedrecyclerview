@@ -36,6 +36,8 @@ markdown_extensions:
   - meta
   - pymdownx.emoji:
       emoji_index: !!python/name:pymdownx.emoji.gemoji
+  - pymdownx.superfences
+  - pymdownx.details
 
 # Customizations
 extra_css: ['stylesheets/overrides.css']
@@ -52,16 +54,23 @@ pages:
     - Headers & Footers: 'wrapper-adapter/headers-footers.md'
     - Insertion & Filtering: 'wrapper-adapter/insertion-filtering.md'
     - Support adapter wrapping: 'wrapper-adapter/migrate-to-wrapped-adapter.md'
+    - Examples: 'wrapper-adapter/examples.md'
 - Drag & Drop:
     - Overview: 'draggable/index.md'
     - Tutorial: 'draggable/tutorial.md'
+    - Examples: 'draggable/examples.md'
 - Swipeable:
     - Overview: 'swipeable/index.md'
     - Tutorial: 'swipeable/tutorial.md'
+    - Examples: 'swipeable/examples.md'
 - Expandable:
     - Overview: 'expandable/index.md'
     - Tutorial: 'expandable/tutorial.md'
-- Advanced Examples: 'advanced-examples.md'
+    - Examples: 'expandable/examples.md'
+- Advanced Examples:
+    - Draggable + Swipeable: 'advanced-examples/draggable-swipeable.md'
+    - Expandable + Draggable + Swipeable: 'advanced-examples/expandable-draggable-swipeable.md'
+    - Expandable + Draggable with Section: 'advanced-examples/expandable-draggable-section.md'
 - FAQ: 'faq.md'
 - License: 'license.md'
 - Javadoc: 'javadoc/index.md'
