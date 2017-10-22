@@ -37,8 +37,6 @@ import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 public class ExpandableDraggableWithSectionExampleFragment extends Fragment
@@ -53,8 +51,6 @@ public class ExpandableDraggableWithSectionExampleFragment extends Fragment
     private RecyclerView.Adapter mWrappedAdapter;
     private RecyclerViewExpandableItemManager mRecyclerViewExpandableItemManager;
     private RecyclerViewDragDropManager mRecyclerViewDragDropManager;
-    private RecyclerViewSwipeManager mRecyclerViewSwipeManager;
-    private RecyclerViewTouchActionGuardManager mRecyclerViewTouchActionGuardManager;
 
     public ExpandableDraggableWithSectionExampleFragment() {
         super();
@@ -78,18 +74,10 @@ public class ExpandableDraggableWithSectionExampleFragment extends Fragment
         mRecyclerViewExpandableItemManager.setOnGroupExpandListener(this);
         mRecyclerViewExpandableItemManager.setOnGroupCollapseListener(this);
 
-        // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
-        mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
-        mRecyclerViewTouchActionGuardManager.setInterceptVerticalScrollingWhileAnimationRunning(true);
-        mRecyclerViewTouchActionGuardManager.setEnabled(true);
-
         // drag & drop manager
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
         mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
                 (NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z3));
-
-        // swipe manager
-        mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
 
         //adapter
         final ExpandableDraggableWithSectionExampleAdapter myItemAdapter = new ExpandableDraggableWithSectionExampleAdapter(getDataProvider());
@@ -98,7 +86,6 @@ public class ExpandableDraggableWithSectionExampleFragment extends Fragment
 
         mWrappedAdapter = mRecyclerViewExpandableItemManager.createWrappedAdapter(myItemAdapter);       // wrap for expanding
         mWrappedAdapter = mRecyclerViewDragDropManager.createWrappedAdapter(mWrappedAdapter);           // wrap for dragging
-        mWrappedAdapter = mRecyclerViewSwipeManager.createWrappedAdapter(mWrappedAdapter);      // wrap for swiping
 
         mRecyclerViewDragDropManager.setCheckCanDropEnabled(ALLOW_ITEMS_MOVE_ACROSS_SECTIONS);
         myItemAdapter.setAllowItemsMoveAcrossSections(ALLOW_ITEMS_MOVE_ACROSS_SECTIONS);
@@ -127,9 +114,7 @@ public class ExpandableDraggableWithSectionExampleFragment extends Fragment
         // NOTE:
         // The initialization order is very important! This order determines the priority of touch event handling.
         //
-        // priority: TouchActionGuard > Swipe > DragAndDrop > ExpandableItem
-        mRecyclerViewTouchActionGuardManager.attachRecyclerView(mRecyclerView);
-        mRecyclerViewSwipeManager.attachRecyclerView(mRecyclerView);
+        // priority: DragAndDrop > ExpandableItem
         mRecyclerViewDragDropManager.attachRecyclerView(mRecyclerView);
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
     }
@@ -151,16 +136,6 @@ public class ExpandableDraggableWithSectionExampleFragment extends Fragment
         if (mRecyclerViewDragDropManager != null) {
             mRecyclerViewDragDropManager.release();
             mRecyclerViewDragDropManager = null;
-        }
-
-        if (mRecyclerViewSwipeManager != null) {
-            mRecyclerViewSwipeManager.release();
-            mRecyclerViewSwipeManager = null;
-        }
-
-        if (mRecyclerViewTouchActionGuardManager != null) {
-            mRecyclerViewTouchActionGuardManager.release();
-            mRecyclerViewTouchActionGuardManager = null;
         }
 
         if (mRecyclerViewExpandableItemManager != null) {
