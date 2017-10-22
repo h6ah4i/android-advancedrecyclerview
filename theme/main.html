@@ -5,3 +5,18 @@
     <meta http-equiv="refresh" content="{{ page.meta.http_equiv_refresh | first }}" />
   {% endif %}
 {% endblock %}
+
+
+{% block site_meta %}
+  {{ super() }}
+  {% if page and page.meta.title %}
+    <meta property="og:title" content="{{ page.meta.title | first }}" />
+  {% elif page and page.title and not page.is_homepage %}
+    <meta property="og:title" content="{{ page.title }} - {{ config.site_name }}" />
+  {% else %}
+    <meta property="og:title" content="{{ config.site_name }}" />
+  {% endif %}
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="{{ page.canonical_url }}" />
+  <meta property="og:image" content="{{ config.site_url }}images/ogp.png" />
+{% endblock %}
