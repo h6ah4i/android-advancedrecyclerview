@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
-import android.support.v4.animation.AnimatorCompatHelper;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
@@ -158,7 +157,16 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
     }
 
     protected void resetAnimation(RecyclerView.ViewHolder holder) {
-        AnimatorCompatHelper.clearInterpolator(holder.itemView);
+        ViewCompat.setAlpha(holder.itemView, 1.0F);
+        ViewCompat.setScaleY(holder.itemView, 1.0F);
+        ViewCompat.setScaleX(holder.itemView, 1.0F);
+        ViewCompat.setTranslationY(holder.itemView, 0.0F);
+        ViewCompat.setTranslationX(holder.itemView, 0.0F);
+        ViewCompat.setRotation(holder.itemView, 0.0F);
+        ViewCompat.setRotationY(holder.itemView, 0.0F);
+        ViewCompat.setRotationX(holder.itemView, 0.0F);
+        ViewCompat.setPivotX(holder.itemView, (float) (holder.itemView.getMeasuredWidth() / 2));
+        ViewCompat.animate(holder.itemView).setInterpolator(null);
         endAnimation(holder);
     }
 
