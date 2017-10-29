@@ -962,6 +962,16 @@
         <span class="c1">// this method is not used unless calling `RecyclerViewDragDropManager.setCheckCanDropEnabled(true)` explicitly.</span>
         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
     <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onItemDragStarted</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">notifyDataSetChanged</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onItemDragFinished</span><span class="o">(</span><span class="kt">int</span> <span class="n">fromPosition</span><span class="o">,</span> <span class="kt">int</span> <span class="n">toPosition</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">notifyDataSetChanged</span><span class="o">();</span>
+    <span class="o">}</span>
 <span class="o">}</span>
 </pre></div>
 
@@ -992,8 +1002,6 @@
 <span class="kt">void</span> <span class="nf">onMoveItem</span><span class="o">(</span><span class="kt">int</span> <span class="n">fromPosition</span><span class="o">,</span> <span class="kt">int</span> <span class="n">toPosition</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">MyItem</span> <span class="n">removed</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">fromPosition</span><span class="o">);</span>
     <span class="n">items</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">toPosition</span><span class="o">,</span> <span class="n">removed</span><span class="o">);</span>
-
-    <span class="n">notifyItemMoved</span><span class="o">(</span><span class="n">fromPosition</span><span class="o">,</span> <span class="n">toPosition</span><span class="o">);</span>
 <span class="o">}</span>
 </pre></div>
 

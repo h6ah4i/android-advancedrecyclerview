@@ -907,6 +907,11 @@
         <span class="kd">implements</span> <span class="n">SwipeableItemAdapter</span><span class="o">&lt;</span><span class="n">MyAdapter</span><span class="o">.</span><span class="na">MyViewHolder</span><span class="o">&gt;</span> <span class="o">{</span>
 
     <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onSwipeItemStarted</span><span class="o">(</span><span class="n">MyViewHolder</span> <span class="n">holder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">notifyDataSetChanged</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">onGetSwipeReactionType</span><span class="o">(</span><span class="n">MyViewHolder</span> <span class="n">holder</span><span class="o">,</span> <span class="kt">int</span> <span class="n">position</span><span class="o">,</span> <span class="kt">int</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
         <span class="c1">// Make swipeable to LEFT direction</span>
         <span class="k">return</span> <span class="n">Swipeable</span><span class="o">.</span><span class="na">REACTION_CAN_SWIPE_LEFT</span><span class="o">;</span>
