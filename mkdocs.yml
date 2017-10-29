@@ -38,6 +38,8 @@ markdown_extensions:
       emoji_index: !!python/name:pymdownx.emoji.gemoji
   - pymdownx.superfences
   - pymdownx.details
+  - pymdownx.magiclink
+
 
 # Customizations
 extra_css: ['stylesheets/overrides.css']

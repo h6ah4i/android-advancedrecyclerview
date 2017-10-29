@@ -1,13 +1,15 @@
 ## Drag & Drop
 
-### Unexpected item animations
+### Repeated animation problem
 
-#### [:octocat: Repeated animation problem #5](https://github.com/h6ah4i/android-advancedrecyclerview/issues/5)
-
-??? question "Question"
+!!! question ""
     After Drag&Drop the dragged cell restores to original position and starts the translation animation again to its dropped position. How can I fix this? Thank a lot.
 
-??? info "Answer"
+    ---
+
+    **Original question**: [:octocat: Repeated animation problem #5](https://github.com/h6ah4i/android-advancedrecyclerview/issues/5)
+
+!!! info "Answer"
      This library requires stable ID. If the getItemId() method is not implemented properly, will causes exceptions or will animates incorrectly. 
 
 
@@ -21,9 +23,9 @@
 
 ## Swipeable
 
-#### [:octocat: [HELP] Swipe animation not like example #199](https://github.com/h6ah4i/android-advancedrecyclerview/issues/199)
+### Swipe animation not like example
 
-??? question "Question"
+!!! question ""
     Hello !
     I implemented drag&drop Recycler View as in your example and I have some annoying problem. When I swipe some item RecyclerView animates position changing. It looks like playing back my drag gesture.
     
@@ -31,7 +33,11 @@
     
     Here you have a link for YouTube video with described effect : https://youtu.be/V3eBLiAkwws
 
-??? info "Answer"
+    ---
+
+    **Original question**: [:octocat: [HELP] Swipe animation not like example #199](https://github.com/h6ah4i/android-advancedrecyclerview/issues/199)
+
+!!! info "Answer"
     This library requires stable ID to work properly. Please call `setHasStableIds(true)` and implement the `getItemId()` method properly.
 
 
@@ -44,18 +50,20 @@
 
 ## Expandable
 
-### Click event handling
+### How to lock expanding of a specific group using onBindGroupViewHolder?
 
-#### [:octocat: [Expand Problem] : How to lock expanding of a specific group using onBindGroupViewHolder? #302](https://github.com/h6ah4i/android-advancedrecyclerview/issues/302)
-
-??? question "Question"
+!!! question ""
     Hi,
     
     i want to lock expanding of some specific groups (ie. if the group has only one child) and want to set the groups other click event listener in my custom ExpandableItemAdapter class.
     
     i think i need to implement in onBindGoupViewHolder, but how?
 
-??? check "Answer"
+    ---
+
+    **Original question**: [:octocat: [Expand Problem] : How to lock expanding of a specific group using onBindGroupViewHolder? #302](https://github.com/h6ah4i/android-advancedrecyclerview/issues/302)
+
+!!! info "Answer"
     If you want to custom click event handling, make the `onCheckCanExpandOrCollapseGroup()` method always returns false, then set click listener in `onCreateGroupViewHolder()` (or in `onBindGroupViewHolder()`). In the click event handler, `collapseGroup()` / `expandGroup()` methods can be used to control the group's expanded state.
     
     ```java
@@ -97,19 +105,20 @@
 
 ---
 
+### Position Changing Between List Item
 
-### Unexpected item animations
-
-#### [:octocat: Position Changing Between List Item #22](https://github.com/h6ah4i/android-advancedrecyclerview/issues/22)
-
-??? question "Question"
+!!! question ""
     Hi, I have problem implementing expandable list with fixed recyclerview. Please see the video https://www.youtube.com/watch?v=fkcmtkZz3zo
     
     The way I do it is to resize recyclerview and recalculate the height based on how much item is expanded.
     Do you think it's possible to fix this issue?
 
-??? info "Answer"
-    Hi. Have you implemented the `getGroupId()` and `getChildId()` methods properly that return stable IDs?
+    ---
+
+    **Original question**: [:octocat: Position Changing Between List Item #22](https://github.com/h6ah4i/android-advancedrecyclerview/issues/22)
+
+!!! info "Answer"
+    Please implement the `getGroupId()` and `getChildId()` methods properly that return stable IDs.
 
 
 !!! summary "Related issues"

@@ -7,7 +7,7 @@ This branch contains GitHub Pages source of Advanced RecyclerView.
 
 ## Prerequisites
 
-- `pipenv`
+- `docker`
 
 ## Setup
 
@@ -16,10 +16,6 @@ This branch contains GitHub Pages source of Advanced RecyclerView.
 
   ```bash
   git clone -b gh-pages-source --recurse-submodules git@github.com:h6ah4i/android-advancedrecyclerview.git android-advancedrecyclerview-gh-page
-  ```
-3. Install python packages
-  ```bash
-  ./scripts/setup.sh
   ```
 
 ## How to develop the page contents?
