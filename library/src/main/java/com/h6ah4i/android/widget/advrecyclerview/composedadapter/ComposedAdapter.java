@@ -207,7 +207,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@liheritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void setHasStableIds(boolean hasStableIds) {
@@ -247,7 +247,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getItemViewType(int position) {
@@ -262,7 +262,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -275,7 +275,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -289,7 +289,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -303,7 +303,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -314,7 +314,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
@@ -325,7 +325,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
@@ -333,7 +333,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void onViewAttachedToWindow(RecyclerView.ViewHolder holder, int viewType) {
@@ -346,7 +346,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
@@ -354,7 +354,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder, int viewType) {
@@ -367,7 +367,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {
@@ -375,7 +375,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder, int viewType) {
@@ -388,7 +388,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
@@ -396,7 +396,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder, int viewType) {
@@ -409,7 +409,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int getItemCount() {
@@ -417,7 +417,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public void unwrapPosition(@NonNull UnwrapPositionResult dest, int position) {
@@ -434,7 +434,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     public int wrapPosition(@NonNull AdapterPathSegment pathSegment, int position) {
@@ -449,7 +449,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -458,7 +458,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -467,7 +467,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -476,7 +476,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -485,7 +485,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -494,7 +494,7 @@ public class ComposedAdapter
     }
 
     /**
-     * {@lineritDoc}
+     * {@inheritDoc}
      */
     @Override
     @SuppressWarnings("unchecked")
