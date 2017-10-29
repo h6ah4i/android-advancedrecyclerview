@@ -1,3 +1,35 @@
+## 0.11.0
+[Breaking changes]
+- Changed minimum SDK level to v14
+- New callbacks are added to `SwipeableItemAdapter` and `DraggableItemAdapter`
+
+[New features & improvements]
+- Bumped Support libraries to v27.0.0
+- A new callback `onItemSwipeStarted()` is added to `SwipeableItemAdapter` to reduce implicitly calls of the `notifyDataSetChanged()` method.
+
+  Migration code:
+  ```java
+  @Override
+  public void onSwipeItemStarted(MyViewHolder holder, int position) {
+      notifyDataSetChanged(); // or you can implement better invalidation code here
+  }
+  ```
+
+- New callbacks `onItemDragStarted()` and `onItemDragFinished()` are added to `DraggableItemAdapter` to reduce implicitly calls of the `notifyDataSetChanged()` method.
+
+  Migration code:
+  ```java
+  @Override
+  public void onItemDragStarted(int position) {
+      notifyDataSetChanged(); // or you can implement better invalidation code here
+  }
+
+  @Override
+  public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+      notifyDataSetChanged(); // or you can implement better invalidation code here
+  }
+  ```
+
 ## 0.10.6
 [Bug fixes]
 - Fixed some internal wrapper adapter's onViewRecycled() method is not invoked (issue #376)
