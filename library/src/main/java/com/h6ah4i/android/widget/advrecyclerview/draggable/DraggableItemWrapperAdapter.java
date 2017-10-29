@@ -447,6 +447,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
         return swipeableItemAdapter.onGetSwipeReactionType(holder, correctedPosition, x, y);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onSwipeItemStarted(VH holder, int position) {
         RecyclerView.Adapter adapter = getWrappedAdapter();

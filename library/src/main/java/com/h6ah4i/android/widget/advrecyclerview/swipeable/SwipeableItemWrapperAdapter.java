@@ -261,7 +261,9 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     }
 
     // NOTE: This method is called from RecyclerViewSwipeManager
-    /*package*/ void onSwipeItemStarted(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder holder, int position, long id) {
+    /*package*/
+    @SuppressWarnings("unchecked")
+    void onSwipeItemStarted(RecyclerViewSwipeManager manager, RecyclerView.ViewHolder holder, int position, long id) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onSwipeItemStarted(holder = " + holder + ", position = " + position + ", id = " + id + ")");
         }
