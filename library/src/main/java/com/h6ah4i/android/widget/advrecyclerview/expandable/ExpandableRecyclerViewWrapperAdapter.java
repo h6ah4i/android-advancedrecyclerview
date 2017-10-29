@@ -568,10 +568,6 @@ class ExpandableRecyclerViewWrapperAdapter
             return;
         }
 
-        if (fromPosition == toPosition) {
-            return;
-        }
-
         final ExpandableDraggableItemAdapter adapter = (ExpandableDraggableItemAdapter) mExpandableItemAdapter;
 
         final long expandableFromPosition = mPositionTranslator.getExpandablePosition(fromPosition);

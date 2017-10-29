@@ -120,7 +120,6 @@ public class MinimalDraggableExampleActivity extends AppCompatActivity {
         public void onMoveItem(int fromPosition, int toPosition) {
             MyItem movedItem = mItems.remove(fromPosition);
             mItems.add(toPosition, movedItem);
-            notifyItemMoved(fromPosition, toPosition);
         }
 
         @Override

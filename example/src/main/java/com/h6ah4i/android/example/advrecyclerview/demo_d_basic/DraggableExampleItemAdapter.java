@@ -119,13 +119,7 @@ class DraggableExampleItemAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         Log.d(TAG, "onMoveItem(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ")");
 
-        if (fromPosition == toPosition) {
-            return;
-        }
-
         mProvider.moveItem(fromPosition, toPosition);
-
-        notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override

@@ -102,7 +102,6 @@ class MyDraggableAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         MyItem movedItem = mItems.remove(fromPosition);
         mItems.add(toPosition, movedItem);
-        notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override

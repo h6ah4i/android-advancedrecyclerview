@@ -185,16 +185,10 @@ class DraggableStaggeredGridExampleAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         Log.d(TAG, "onMoveItem(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ")");
 
-        if (fromPosition == toPosition) {
-            return;
-        }
-
         fromPosition = toNormalItemPosition(fromPosition);
         toPosition = toNormalItemPosition(toPosition);
 
         mProvider.moveItem(fromPosition, toPosition);
-
-        notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override
