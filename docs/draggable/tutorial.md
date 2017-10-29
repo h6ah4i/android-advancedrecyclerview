@@ -146,6 +146,16 @@ class MyAdapter
         // this method is not used unless calling `RecyclerViewDragDropManager.setCheckCanDropEnabled(true)` explicitly.
         return true;
     }
+
+    @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
+    }
 }
 ```
 

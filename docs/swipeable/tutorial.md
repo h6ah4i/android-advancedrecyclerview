@@ -128,6 +128,11 @@ class MyAdapter
         implements SwipeableItemAdapter<MyAdapter.MyViewHolder> {
 
     @Override
+    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
         // Make swipeable to LEFT direction
         return Swipeable.REACTION_CAN_SWIPE_LEFT;
