@@ -57,7 +57,7 @@ This library is published on jCenter. Just add these lines to `build.gradle`.
 
 ```gradle
 dependencies {
-    compile ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.11.0@aar'){
+    implementation ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.11.0@aar'){
         transitive=true
     }
 }
