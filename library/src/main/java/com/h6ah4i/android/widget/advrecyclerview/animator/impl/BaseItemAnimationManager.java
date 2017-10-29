@@ -16,7 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
-import android.support.v4.animation.AnimatorCompatHelper;
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
@@ -29,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
+    private static TimeInterpolator sDefaultInterpolator;
+
     protected final BaseItemAnimator mItemAnimator;
     protected final List<T> mPending;
     protected final List<List<T>> mDeferredReadySets;
@@ -158,7 +161,10 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
     }
 
     protected void resetAnimation(RecyclerView.ViewHolder holder) {
-        AnimatorCompatHelper.clearInterpolator(holder.itemView);
+        if (sDefaultInterpolator == null) {
+            sDefaultInterpolator = new ValueAnimator().getInterpolator();
+        }
+        holder.itemView.animate().setInterpolator(sDefaultInterpolator);
         endAnimation(holder);
     }
 
@@ -173,7 +179,8 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         mPending.add(info);
     }
 
-    protected void startActiveItemAnimation(T info, RecyclerView.ViewHolder holder, ViewPropertyAnimatorCompat animator) {
+    protected void startActiveItemAnimation(T info, RecyclerView.ViewHolder holder,
+            ViewPropertyAnimatorCompat animator) {
         animator.setListener(new BaseAnimatorListener(this, info, holder, animator));
         addActiveAnimationTarget(holder);
         animator.start();
@@ -196,14 +203,14 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
 
     protected abstract boolean endNotStartedAnimation(T info, RecyclerView.ViewHolder item);
 
-
     protected static class BaseAnimatorListener implements ViewPropertyAnimatorListener {
         private BaseItemAnimationManager mManager;
         private ItemAnimationInfo mAnimationInfo;
         private RecyclerView.ViewHolder mHolder;
         private ViewPropertyAnimatorCompat mAnimator;
 
-        public BaseAnimatorListener(BaseItemAnimationManager manager, ItemAnimationInfo info, RecyclerView.ViewHolder holder, ViewPropertyAnimatorCompat animator) {
+        public BaseAnimatorListener(BaseItemAnimationManager manager, ItemAnimationInfo info,
+                RecyclerView.ViewHolder holder, ViewPropertyAnimatorCompat animator) {
             mManager = manager;
             mAnimationInfo = info;
             mHolder = holder;

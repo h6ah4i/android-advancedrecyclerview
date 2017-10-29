@@ -15,12 +15,12 @@
  */
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
 
     if (System.getenv("JITPACK") == "true") {
-        buildToolsVersion '25.0.2'
+        buildToolsVersion '27.0.0'
     } else {
-        buildToolsVersion '25.0.2'
+        buildToolsVersion '27.0.0'
     }
 
     compileOptions {

@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,9 +87,9 @@ class ExpandableDraggableSwipeableExampleAdapter
 
         public MyBaseViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mTextView = v.findViewById(android.R.id.text1);
         }
 
         @Override
@@ -114,7 +113,7 @@ class ExpandableDraggableSwipeableExampleAdapter
 
         public MyGroupViewHolder(View v) {
             super(v);
-            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
+            mIndicator = v.findViewById(R.id.indicator);
         }
     }
 
@@ -243,11 +242,7 @@ class ExpandableDraggableSwipeableExampleAdapter
                 bgResId = R.drawable.bg_group_item_normal_state;
             }
 
-            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
-                isExpanded = true;
-            } else {
-                isExpanded = false;
-            }
+            isExpanded = (expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0;
 
             holder.mContainer.setBackgroundResource(bgResId);
             holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
@@ -318,8 +313,8 @@ class ExpandableDraggableSwipeableExampleAdapter
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return !ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -330,8 +325,8 @@ class ExpandableDraggableSwipeableExampleAdapter
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -342,8 +337,8 @@ class ExpandableDraggableSwipeableExampleAdapter
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -381,6 +376,26 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
+    public void onGroupDragStarted(int groupPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildDragStarted(int groupPosition, int childPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onGroupDragFinished(int fromGroupPosition, int toGroupPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildDragFinished(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public int onGetGroupItemSwipeReactionType(MyGroupViewHolder holder, int groupPosition, int x, int y) {
         if (onCheckGroupCanStartDrag(holder, groupPosition, x, y)) {
             return Swipeable.REACTION_CAN_NOT_SWIPE_BOTH_H;
@@ -396,6 +411,16 @@ class ExpandableDraggableSwipeableExampleAdapter
         }
 
         return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
+    }
+
+    @Override
+    public void onSwipeGroupItemStarted(MyGroupViewHolder holder, int groupPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onSwipeChildItemStarted(MyChildViewHolder holder, int groupPosition, int childPosition) {
+        notifyDataSetChanged();
     }
 
     @Override

@@ -51,7 +51,7 @@ public class CustomFilteringWrapperAdapterExampleActivity extends AppCompatActiv
             }
         };
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         RecyclerView.Adapter adapter;
 
@@ -73,7 +73,7 @@ public class CustomFilteringWrapperAdapterExampleActivity extends AppCompatActiv
 
         // setting up the filtering on/off switch
         MenuItem menuSwitchItem = menu.findItem(R.id.menu_switch_on_off);
-        CompoundButton actionView = (CompoundButton) MenuItemCompat.getActionView(menuSwitchItem).findViewById(R.id.switch_view);
+        CompoundButton actionView = MenuItemCompat.getActionView(menuSwitchItem).findViewById(R.id.switch_view);
 
         actionView.setChecked(mFilteringAdapter.isFilteringEnabled());
 

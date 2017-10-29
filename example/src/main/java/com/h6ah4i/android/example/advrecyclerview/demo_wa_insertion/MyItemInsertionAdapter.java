@@ -47,7 +47,7 @@ class MyItemInsertionAdapter extends SimpleWrapperAdapter implements View.OnClic
 
         public OddPosItemViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView = itemView.findViewById(android.R.id.text1);
         }
     }
 

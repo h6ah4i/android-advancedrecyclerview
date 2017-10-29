@@ -74,6 +74,27 @@ public interface BaseExpandableSwipeableItemAdapter<GVH extends RecyclerView.Vie
     int onGetChildItemSwipeReactionType(CVH holder, int groupPosition, int childPosition, int x, int y);
 
     /**
+     * Called when started swiping a group item.
+     *
+     * Call the {@link RecyclerView.Adapter#notifyDataSetChanged()} method in this callback to get the same behavior with v0.10.x or before.
+     *
+     * @param holder The ViewHolder that is associated the swiped item.
+     * @param groupPosition Group position.
+     */
+    void onSwipeGroupItemStarted(GVH holder, int groupPosition);
+
+    /**
+     * Called when started swiping a child item.
+     *
+     * Call the {@link RecyclerView.Adapter#notifyDataSetChanged()} method in this callback to get the same behavior with v0.10.x or before.
+     *
+     * @param holder The ViewHolder that is associated the swiped item.
+     * @param groupPosition Group position.
+     * @param childPosition Child position.
+     */
+    void onSwipeChildItemStarted(CVH holder, int groupPosition, int childPosition);
+
+    /**
      * Called when sets background of the swiping group item.
      *
      * @param holder The ViewHolder which is associated to the swiping item.

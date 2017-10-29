@@ -29,7 +29,7 @@ class MySectionHeaderAdapter extends RecyclerView.Adapter<MySectionHeaderAdapter
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView = itemView.findViewById(android.R.id.text1);
         }
     }
 

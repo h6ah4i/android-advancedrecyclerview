@@ -52,7 +52,7 @@ public class MinimalSwipeableExampleActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_demo_minimal);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         // Setup swiping feature and RecyclerView
         RecyclerViewSwipeManager swipeMgr = new RecyclerViewSwipeManager();
@@ -79,8 +79,8 @@ public class MinimalSwipeableExampleActivity extends AppCompatActivity {
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            containerView = (FrameLayout) itemView.findViewById(R.id.container);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            containerView = itemView.findViewById(R.id.container);
+            textView = itemView.findViewById(android.R.id.text1);
         }
 
         @Override
@@ -124,6 +124,11 @@ public class MinimalSwipeableExampleActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return mItems.size();
+        }
+
+        @Override
+        public void onSwipeItemStarted(MyViewHolder holder, int position) {
+            notifyDataSetChanged();
         }
 
         @Override

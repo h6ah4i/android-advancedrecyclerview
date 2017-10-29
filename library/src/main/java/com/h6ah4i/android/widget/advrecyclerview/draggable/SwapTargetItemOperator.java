@@ -54,8 +54,8 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
             ViewPropertyAnimatorCompat animator = ViewCompat.animate(view);
             animator.setListener(null);
 
-            ViewCompat.setTranslationX(view, 0);
-            ViewCompat.setTranslationY(view, 0);
+            view.setTranslationX(0);
+            view.setTranslationY(0);
         }
 
         @Override
@@ -147,9 +147,9 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
         final int h2 = swapItemView.getHeight() + m2.top + m2.bottom + d2.top + d2.bottom;
         final int w2 = swapItemView.getWidth() + m2.left + m2.right + d2.left + d2.right;
 
-        final float offsetXPx = draggingItem.itemView.getLeft() - mTranslationX; // == -(ViewCompat.getTranslationY(draggingItem.itemView)
+        final float offsetXPx = draggingItem.itemView.getLeft() - mTranslationX; // == -(draggingItem.itemView.getTranslationY()
         final float phaseX = (w2 != 0) ? (offsetXPx / w2) : 0.0f;
-        final float offsetYPx = draggingItem.itemView.getTop() - mTranslationY; // == -(ViewCompat.getTranslationY(draggingItem.itemView)
+        final float offsetYPx = draggingItem.itemView.getTop() - mTranslationY; // == -(draggingItem.itemView.getTranslationY()
         final float phaseY = (h2 != 0) ? (offsetYPx / h2) : 0.0f;
 
         float translationPhase = 0.0f;
@@ -197,19 +197,19 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
             case CustomRecyclerViewUtils.ORIENTATION_VERTICAL:
                 if (pos1 > pos2) {
                     // dragging item moving to upward
-                    ViewCompat.setTranslationY(swapItemView, translationPhase * h1);
+                    swapItemView.setTranslationY(translationPhase * h1);
                 } else {
                     // dragging item moving to downward
-                    ViewCompat.setTranslationY(swapItemView, (translationPhase - 1.0f) * h1);
+                    swapItemView.setTranslationY((translationPhase - 1.0f) * h1);
                 }
                 break;
             case CustomRecyclerViewUtils.ORIENTATION_HORIZONTAL:
                 if (pos1 > pos2) {
                     // dragging item moving to left
-                    ViewCompat.setTranslationX(swapItemView, translationPhase * w1);
+                    swapItemView.setTranslationX(translationPhase * w1);
                 } else {
                     // dragging item moving to right
-                    ViewCompat.setTranslationX(swapItemView, (translationPhase - 1.0f) * w1);
+                    swapItemView.setTranslationX((translationPhase - 1.0f) * w1);
                 }
                 break;
         }

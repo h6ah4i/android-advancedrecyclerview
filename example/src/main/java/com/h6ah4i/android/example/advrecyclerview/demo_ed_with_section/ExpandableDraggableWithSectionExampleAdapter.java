@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_ed_with_section;
 
-import android.support.v4.view.ViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,9 +64,9 @@ class ExpandableDraggableWithSectionExampleAdapter
 
         public MyBaseViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mTextView = v.findViewById(android.R.id.text1);
         }
 
         @Override
@@ -86,7 +85,7 @@ class ExpandableDraggableWithSectionExampleAdapter
 
         public MyGroupViewHolder(View v) {
             super(v);
-            mIndicator = (ExpandableItemIndicator) v.findViewById(R.id.indicator);
+            mIndicator = v.findViewById(R.id.indicator);
         }
     }
 
@@ -217,11 +216,7 @@ class ExpandableDraggableWithSectionExampleAdapter
                 bgResId = R.drawable.bg_group_item_normal_state;
             }
 
-            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
-                isExpanded = true;
-            } else {
-                isExpanded = false;
-            }
+            isExpanded = (expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0;
 
             holder.mContainer.setBackgroundResource(bgResId);
             holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
@@ -272,8 +267,8 @@ class ExpandableDraggableWithSectionExampleAdapter
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return !ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -289,8 +284,8 @@ class ExpandableDraggableWithSectionExampleAdapter
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -301,8 +296,8 @@ class ExpandableDraggableWithSectionExampleAdapter
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -367,6 +362,26 @@ class ExpandableDraggableWithSectionExampleAdapter
     @Override
     public void onMoveChildItem(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition) {
         mProvider.moveChildItem(fromGroupPosition, fromChildPosition, toGroupPosition, toChildPosition);
+    }
+
+    @Override
+    public void onGroupDragStarted(int groupPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildDragStarted(int groupPosition, int childPosition) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onGroupDragFinished(int fromGroupPosition, int toGroupPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onChildDragFinished(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition, boolean result) {
+        notifyDataSetChanged();
     }
 
     private int findFirstSectionItem(int position) {

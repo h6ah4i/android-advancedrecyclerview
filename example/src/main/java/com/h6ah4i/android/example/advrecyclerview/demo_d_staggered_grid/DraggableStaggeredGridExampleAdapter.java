@@ -69,9 +69,9 @@ class DraggableStaggeredGridExampleAdapter
 
         public NormalItemViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mTextView = v.findViewById(android.R.id.text1);
         }
     }
 
@@ -185,24 +185,15 @@ class DraggableStaggeredGridExampleAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         Log.d(TAG, "onMoveItem(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ")");
 
-        if (fromPosition == toPosition) {
-            return;
-        }
-
         fromPosition = toNormalItemPosition(fromPosition);
         toPosition = toNormalItemPosition(toPosition);
 
         mProvider.moveItem(fromPosition, toPosition);
-
-        notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override
     public boolean onCheckCanStartDrag(BaseViewHolder holder, int position, int x, int y) {
-        if (isHeader(position)) {
-            return false;
-        }
-        return true;
+        return !isHeader(position);
     }
 
     @Override
@@ -214,6 +205,16 @@ class DraggableStaggeredGridExampleAdapter
     @Override
     public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
         return true;
+    }
+
+    @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
     }
 
     static int getHeaderItemCount() {

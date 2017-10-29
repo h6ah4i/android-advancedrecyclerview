@@ -46,7 +46,7 @@ class MyDraggableAdapter
             super(itemView);
             containerView = itemView.findViewById(R.id.container);
             dragHandle = itemView.findViewById(R.id.drag_handle);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView = itemView.findViewById(android.R.id.text1);
         }
     }
 
@@ -102,7 +102,6 @@ class MyDraggableAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         MyItem movedItem = mItems.remove(fromPosition);
         mItems.add(toPosition, movedItem);
-        notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override
@@ -118,6 +117,16 @@ class MyDraggableAdapter
     @Override
     public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
         return true;
+    }
+
+    @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
     }
 
     @Override

@@ -26,7 +26,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableI
 public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
 
     /**
-     * Called when user is attempt to swipe the item.
+     * Called when the user is attempt to swipe an item.
      *
      * @param holder The ViewHolder which is associated to item user is attempt to start swiping.
      * @param position The position of the item within the adapter's data set.
@@ -51,6 +51,16 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
     int onGetSwipeReactionType(T holder, int position, int x, int y);
 
     /**
+     * Called when started swiping an item.
+     *
+     * Call the {@link RecyclerView.Adapter#notifyDataSetChanged()} method in this callback to get the same behavior with v0.10.x or before.
+     *
+     * @param holder The ViewHolder that is associated the swiped item.
+     * @param position The position of the item within the adapter's data set.
+     */
+    void onSwipeItemStarted(T holder, int position);
+
+    /**
      * Called when sets background of the swiping item.
      *
      * @param holder The ViewHolder which is associated to the swiping item.
@@ -65,7 +75,7 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
     void onSetSwipeBackground(T holder, int position, @SwipeableItemDrawableTypes int type);
 
     /**
-     * Called when item is swiped.
+     * Called when an item is swiped.
      *
      * *Note that do not change the data set and do not call notifyDataXXX() methods inside of this method.*
      *
