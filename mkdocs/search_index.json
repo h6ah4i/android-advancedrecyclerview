@@ -222,7 +222,7 @@
         }, 
         {
             "location": "/draggable/", 
-            "text": "Block diagram\n\n\n\n\nClasses / Interfaces\n\n\n\n\n\n\n\n\nClass/Interface name\n\n\nJavadoc\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n \nRecyclerViewDragDropManager\n\n\n View\n\n\nProvides Drag \n Drop sort operation\n\n\n\n\n\n\n \nDraggableItemAdapter\nT\n\n\n View\n\n\nImplement this interface on your RecyclerView.Adapter\n\n\n\n\n\n\n \nDraggableItemViewHolder\n\n\n View\n\n\nImplement this interface on your RecyclerView.ViewHolder\n\n\n\n\n\n\n \nDraggableItemConstants\n\n\n View\n\n\nConstant values area decleared in this interface\n\n\n\n\n\n\n \nDraggableItemAnimator\n\n\n View\n\n\nAn ItemAnimator which implements special drag \n drop effect", 
+            "text": "Block diagram\n\n\n\n\nClasses / Interfaces\n\n\n\n\n\n\n\n\nClass/Interface name\n\n\nJavadoc\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n \nRecyclerViewDragDropManager\n\n\n View\n\n\nProvides Drag \n Drop sort operation\n\n\n\n\n\n\n \nDraggableItemAdapter\nT\n\n\n View\n\n\nImplement this interface on your RecyclerView.Adapter\n\n\n\n\n\n\n \nDraggableItemViewHolder\n\n\n View\n\n\nImplement this interface on your RecyclerView.ViewHolder\n\n\n\n\n\n\n \nDraggableItemConstants\n\n\n View\n\n\nConstant values area declared in this interface\n\n\n\n\n\n\n \nDraggableItemAnimator\n\n\n View\n\n\nAn ItemAnimator which implements special drag \n drop effect", 
             "title": "Overview"
         }, 
         {
@@ -232,7 +232,7 @@
         }, 
         {
             "location": "/draggable/#classes-interfaces", 
-            "text": "Class/Interface name  Javadoc  Description        RecyclerViewDragDropManager   View  Provides Drag   Drop sort operation      DraggableItemAdapter T   View  Implement this interface on your RecyclerView.Adapter      DraggableItemViewHolder   View  Implement this interface on your RecyclerView.ViewHolder      DraggableItemConstants   View  Constant values area decleared in this interface      DraggableItemAnimator   View  An ItemAnimator which implements special drag   drop effect", 
+            "text": "Class/Interface name  Javadoc  Description        RecyclerViewDragDropManager   View  Provides Drag   Drop sort operation      DraggableItemAdapter T   View  Implement this interface on your RecyclerView.Adapter      DraggableItemViewHolder   View  Implement this interface on your RecyclerView.ViewHolder      DraggableItemConstants   View  Constant values area declared in this interface      DraggableItemAnimator   View  An ItemAnimator which implements special drag   drop effect", 
             "title": "Classes / Interfaces"
         }, 
         {
@@ -327,7 +327,7 @@
         }, 
         {
             "location": "/swipeable/", 
-            "text": "Block diagram\n\n\n\n\nClasses / Interfaces\n\n\n\n\n\n\n\n\nClass/Interface name\n\n\nJavadoc\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n \nRecyclerViewSwipeManager\n\n\n View\n\n\nProvides Swipe operation\n\n\n\n\n\n\n \nSwipeableItemAdapter\nT\n\n\n View\n\n\nImplement this interface on your RecyclerView.Adapter\n\n\n\n\n\n\n \nSwipeableItemViewHolder\n\n\n View\n\n\nImplement this interface on your RecyclerView.ViewHolder\n\n\n\n\n\n\n \nSwipeableItemConstants\n\n\n View\n\n\nConstant values area decleared in this interface\n\n\n\n\n\n\n \nSwipeDismissItemAnimator\n\n\n View\n\n\nAn ItemAnimator implements swipe dismiss animation", 
+            "text": "Block diagram\n\n\n\n\nClasses / Interfaces\n\n\n\n\n\n\n\n\nClass/Interface name\n\n\nJavadoc\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n \nRecyclerViewSwipeManager\n\n\n View\n\n\nProvides Swipe operation\n\n\n\n\n\n\n \nSwipeableItemAdapter\nT\n\n\n View\n\n\nImplement this interface on your RecyclerView.Adapter\n\n\n\n\n\n\n \nSwipeableItemViewHolder\n\n\n View\n\n\nImplement this interface on your RecyclerView.ViewHolder\n\n\n\n\n\n\n \nSwipeableItemConstants\n\n\n View\n\n\nConstant values area declared in this interface\n\n\n\n\n\n\n \nSwipeDismissItemAnimator\n\n\n View\n\n\nAn ItemAnimator implements swipe dismiss animation", 
             "title": "Overview"
         }, 
         {
@@ -337,7 +337,7 @@
         }, 
         {
             "location": "/swipeable/#classes-interfaces", 
-            "text": "Class/Interface name  Javadoc  Description        RecyclerViewSwipeManager   View  Provides Swipe operation      SwipeableItemAdapter T   View  Implement this interface on your RecyclerView.Adapter      SwipeableItemViewHolder   View  Implement this interface on your RecyclerView.ViewHolder      SwipeableItemConstants   View  Constant values area decleared in this interface      SwipeDismissItemAnimator   View  An ItemAnimator implements swipe dismiss animation", 
+            "text": "Class/Interface name  Javadoc  Description        RecyclerViewSwipeManager   View  Provides Swipe operation      SwipeableItemAdapter T   View  Implement this interface on your RecyclerView.Adapter      SwipeableItemViewHolder   View  Implement this interface on your RecyclerView.ViewHolder      SwipeableItemConstants   View  Constant values area declared in this interface      SwipeDismissItemAnimator   View  An ItemAnimator implements swipe dismiss animation", 
             "title": "Classes / Interfaces"
         }, 
         {
@@ -417,7 +417,7 @@
         }, 
         {
             "location": "/expandable/", 
-            "text": "Block diagram\n\n\n\n\nClasses / Interfaces\n\n\n\n\n\n\n\n\nClass/Interface name\n\n\nJavadoc\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n \nRecyclerViewExpandableItemManager\n\n\n View\n\n\nProvides Expandable item function\n\n\n\n\n\n\n \nExpandableItemViewHolder\n\n\n View\n\n\nImplement this interface on your RecyclerView.ViewHolder\n\n\n\n\n\n\n \nExpandableItemAdapter\nGVH, CVH\n\n\n View\n\n\nImplement this interface on your RecyclerView.Adapter\n\n\n\n\n\n\n \nExpandableDraggableItemAdapter\nGVH, CVH\n\n\n View\n\n\n(optional) Implement this interface on your RecyclerView.Adapter to support Drag \n Drop sort operation\n\n\n\n\n\n\n \nExpandableSwipeableItemAdapter\nGVH, CVH\n\n\n View\n\n\n(optional) Implement this interface on your RecyclerView.Adapter to support Swipe operation\n\n\n\n\n\n\n \nExpandableItemConstants\n\n\n View\n\n\nConstant values area decleared in this interface\n\n\n\n\n\n\n \nAbstractExpandableItemAdapter\nGVH, CVH\n\n\n View", 
+            "text": "Block diagram\n\n\n\n\nClasses / Interfaces\n\n\n\n\n\n\n\n\nClass/Interface name\n\n\nJavadoc\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n \nRecyclerViewExpandableItemManager\n\n\n View\n\n\nProvides Expandable item function\n\n\n\n\n\n\n \nExpandableItemViewHolder\n\n\n View\n\n\nImplement this interface on your RecyclerView.ViewHolder\n\n\n\n\n\n\n \nExpandableItemAdapter\nGVH, CVH\n\n\n View\n\n\nImplement this interface on your RecyclerView.Adapter\n\n\n\n\n\n\n \nExpandableDraggableItemAdapter\nGVH, CVH\n\n\n View\n\n\n(optional) Implement this interface on your RecyclerView.Adapter to support Drag \n Drop sort operation\n\n\n\n\n\n\n \nExpandableSwipeableItemAdapter\nGVH, CVH\n\n\n View\n\n\n(optional) Implement this interface on your RecyclerView.Adapter to support Swipe operation\n\n\n\n\n\n\n \nExpandableItemConstants\n\n\n View\n\n\nConstant values area declared in this interface\n\n\n\n\n\n\n \nAbstractExpandableItemAdapter\nGVH, CVH\n\n\n View", 
             "title": "Overview"
         }, 
         {
@@ -427,7 +427,7 @@
         }, 
         {
             "location": "/expandable/#classes-interfaces", 
-            "text": "Class/Interface name  Javadoc  Description        RecyclerViewExpandableItemManager   View  Provides Expandable item function      ExpandableItemViewHolder   View  Implement this interface on your RecyclerView.ViewHolder      ExpandableItemAdapter GVH, CVH   View  Implement this interface on your RecyclerView.Adapter      ExpandableDraggableItemAdapter GVH, CVH   View  (optional) Implement this interface on your RecyclerView.Adapter to support Drag   Drop sort operation      ExpandableSwipeableItemAdapter GVH, CVH   View  (optional) Implement this interface on your RecyclerView.Adapter to support Swipe operation      ExpandableItemConstants   View  Constant values area decleared in this interface      AbstractExpandableItemAdapter GVH, CVH   View", 
+            "text": "Class/Interface name  Javadoc  Description        RecyclerViewExpandableItemManager   View  Provides Expandable item function      ExpandableItemViewHolder   View  Implement this interface on your RecyclerView.ViewHolder      ExpandableItemAdapter GVH, CVH   View  Implement this interface on your RecyclerView.Adapter      ExpandableDraggableItemAdapter GVH, CVH   View  (optional) Implement this interface on your RecyclerView.Adapter to support Drag   Drop sort operation      ExpandableSwipeableItemAdapter GVH, CVH   View  (optional) Implement this interface on your RecyclerView.Adapter to support Swipe operation      ExpandableItemConstants   View  Constant values area declared in this interface      AbstractExpandableItemAdapter GVH, CVH   View", 
             "title": "Classes / Interfaces"
         }, 
         {
