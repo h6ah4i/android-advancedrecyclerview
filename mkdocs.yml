@@ -45,6 +45,10 @@ markdown_extensions:
 extra_css: ['stylesheets/overrides.css']
 extra_javascript: []
 
+# Google Analytics
+google_analytics:
+  - 'UA-58259997-3'
+  - 'auto'
 
 # Pages
 pages:
