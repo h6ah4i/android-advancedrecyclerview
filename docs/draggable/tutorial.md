@@ -188,8 +188,6 @@ List<MyItem> items;
 void onMoveItem(int fromPosition, int toPosition) {
     MyItem removed = items.remove(fromPosition);
     items.add(toPosition, removed);
-
-    notifyItemMoved(fromPosition, toPosition);
 }
 ```
 
