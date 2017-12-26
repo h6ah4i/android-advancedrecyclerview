@@ -20,11 +20,12 @@ import android.graphics.Canvas;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.EdgeEffectCompat;
 import android.support.v7.widget.RecyclerView;
+import android.widget.EdgeEffect;
 
 abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
     private RecyclerView mRecyclerView;
-    private EdgeEffectCompat mGlow1;
-    private EdgeEffectCompat mGlow2;
+    private EdgeEffect mGlow1;
+    private EdgeEffect mGlow2;
     private boolean mStarted;
     private int mGlow1Dir;
     private int mGlow2Dir;
@@ -58,7 +59,7 @@ abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
         }
     }
 
-    private static boolean drawGlow(Canvas c, RecyclerView parent, int dir, EdgeEffectCompat edge) {
+    private static boolean drawGlow(Canvas c, RecyclerView parent, int dir, EdgeEffect edge) {
         if (edge.isFinished()) {
             return false;
         }
@@ -127,29 +128,29 @@ abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
     public void pullFirstEdge(float deltaDistance) {
         ensureGlow1(mRecyclerView);
 
-        if (mGlow1.onPull(deltaDistance, 0.5f)) {
-            ViewCompat.postInvalidateOnAnimation(mRecyclerView);
-        }
+        EdgeEffectCompat.onPull(mGlow1, deltaDistance, 0.5f);
+        ViewCompat.postInvalidateOnAnimation(mRecyclerView);
     }
 
     public void pullSecondEdge(float deltaDistance) {
         ensureGlow2(mRecyclerView);
 
-        if (mGlow2.onPull(deltaDistance, 0.5f)) {
-            ViewCompat.postInvalidateOnAnimation(mRecyclerView);
-        }
+        EdgeEffectCompat.onPull(mGlow2, deltaDistance, 0.5f);
+        ViewCompat.postInvalidateOnAnimation(mRecyclerView);
     }
 
     public void releaseBothGlows() {
         boolean needsInvalidate = false;
 
         if (mGlow1 != null) {
+            mGlow1.onRelease();
             //noinspection ConstantConditions
-            needsInvalidate |= mGlow1.onRelease();
+            needsInvalidate |= mGlow1.isFinished();
         }
 
         if (mGlow2 != null) {
-            needsInvalidate |= mGlow2.onRelease();
+            mGlow2.onRelease();
+            needsInvalidate |= mGlow2.isFinished();
         }
 
         if (needsInvalidate) {
@@ -159,7 +160,7 @@ abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
 
     private void ensureGlow1(RecyclerView rv) {
         if (mGlow1 == null) {
-            mGlow1 = new EdgeEffectCompat(rv.getContext());
+            mGlow1 = new EdgeEffect(rv.getContext());
         }
 
         updateGlowSize(rv, mGlow1, mGlow1Dir);
@@ -167,12 +168,12 @@ abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
 
     private void ensureGlow2(RecyclerView rv) {
         if (mGlow2 == null) {
-            mGlow2 = new EdgeEffectCompat(rv.getContext());
+            mGlow2 = new EdgeEffect(rv.getContext());
         }
         updateGlowSize(rv, mGlow2, mGlow2Dir);
     }
 
-    private static void updateGlowSize(RecyclerView rv, EdgeEffectCompat glow, int dir) {
+    private static void updateGlowSize(RecyclerView rv, EdgeEffect glow, int dir) {
         int width = rv.getMeasuredWidth();
         int height = rv.getMeasuredHeight();
 

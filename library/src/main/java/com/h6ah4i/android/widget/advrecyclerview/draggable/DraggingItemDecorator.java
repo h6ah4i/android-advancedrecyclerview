@@ -23,7 +23,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.NinePatchDrawable;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Interpolator;
 
@@ -48,6 +47,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
     private boolean mIsScrolling;
     private ItemDraggableRange mRange;
     private int mLayoutOrientation;
+    private int mLayoutType;
     private DraggingItemInfo mDraggingItemInfo;
     private Paint mPaint;
     private long mStartMillis;
@@ -147,18 +147,15 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         final float rotation = getInterpolation(mRotationInterpolator, t) * mTargetDraggingItemRotation;
 
         if (scaleX > 0.0f && scaleY > 0.0f && alpha > 0.0f) {
-            final int w = mDraggingItemImage.getWidth();
-            final int h = mDraggingItemImage.getHeight();
-            final int iw = w - mShadowPadding.left - mShadowPadding.right;
-            final int ih = h - mShadowPadding.top - mShadowPadding.bottom;
-
             mPaint.setAlpha((int) (alpha * 255));
 
-            int savedCount = c.save(Canvas.MATRIX_SAVE_FLAG);
+            int savedCount = c.save();
+
+            c.translate(mTranslationX + mDraggingItemInfo.grabbedPositionX, mTranslationY + mDraggingItemInfo.grabbedPositionY);
             c.scale(scaleX, scaleY);
-            c.translate((mTranslationX + 0.5f * iw) / scaleX, (mTranslationY + 0.5f * ih) / scaleY);
             c.rotate(rotation);
-            c.translate(-(0.5f * w), -(0.5f * h));
+            c.translate(-(mShadowPadding.left + mDraggingItemInfo.grabbedPositionX), -(mShadowPadding.top + mDraggingItemInfo.grabbedPositionY));
+
             c.drawBitmap(mDraggingItemImage, 0, 0, mPaint);
             c.restoreToCount(savedCount);
         }
@@ -196,9 +193,10 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationLeftLimit = mRecyclerView.getPaddingLeft();
         mTranslationTopLimit = mRecyclerView.getPaddingTop();
         mLayoutOrientation = CustomRecyclerViewUtils.getOrientation(mRecyclerView);
+        mLayoutType = CustomRecyclerViewUtils.getLayoutType(mRecyclerView);
 
-        mInitialDraggingItemScaleX = ViewCompat.getScaleX(itemView);
-        mInitialDraggingItemScaleY = ViewCompat.getScaleX(itemView);
+        mInitialDraggingItemScaleX = itemView.getScaleX();
+        mInitialDraggingItemScaleY = itemView.getScaleY();
 
         mLastDraggingItemScaleX = 1.0f;
         mLastDraggingItemScaleY = 1.0f;
@@ -391,8 +389,10 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
         mTranslationX = mTouchPositionX - mDraggingItemInfo.grabbedPositionX;
         mTranslationY = mTouchPositionY - mDraggingItemInfo.grabbedPositionY;
 
-        mTranslationX = clip(mTranslationX, mTranslationLeftLimit, mTranslationRightLimit);
-        mTranslationY = clip(mTranslationY, mTranslationTopLimit, mTranslationBottomLimit);
+        if (CustomRecyclerViewUtils.isLinearLayout(mLayoutType)) {
+            mTranslationX = clip(mTranslationX, mTranslationLeftLimit, mTranslationRightLimit);
+            mTranslationY = clip(mTranslationY, mTranslationTopLimit, mTranslationBottomLimit);
+        }
     }
 
     private static int toSpanAlignedPosition(int position, int spanCount) {
@@ -442,7 +442,7 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
             shadow.draw(canvas);
         }
 
-        final int savedCount = canvas.save(Canvas.CLIP_SAVE_FLAG | Canvas.MATRIX_SAVE_FLAG);
+        final int savedCount = canvas.save();
         // NOTE: Explicitly set clipping rect. This is required on Gingerbread.
         canvas.clipRect(mShadowPadding.left, mShadowPadding.top, canvasWidth - mShadowPadding.right, canvasHeight - mShadowPadding.bottom);
         canvas.translate(mShadowPadding.left, mShadowPadding.top);
@@ -489,8 +489,8 @@ class DraggingItemDecorator extends BaseDraggableItemDecorator {
 
     public void invalidateDraggingItem() {
         if (mDraggingItemViewHolder != null) {
-            ViewCompat.setTranslationX(mDraggingItemViewHolder.itemView, 0);
-            ViewCompat.setTranslationY(mDraggingItemViewHolder.itemView, 0);
+            mDraggingItemViewHolder.itemView.setTranslationX(0);
+            mDraggingItemViewHolder.itemView.setTranslationY(0);
             mDraggingItemViewHolder.itemView.setVisibility(View.VISIBLE);
         }
 

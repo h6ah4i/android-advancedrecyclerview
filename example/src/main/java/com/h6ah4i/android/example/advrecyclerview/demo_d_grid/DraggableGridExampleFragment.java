@@ -69,7 +69,7 @@ public class DraggableGridExampleFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //noinspection ConstantConditions
-        mRecyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view);
+        mRecyclerView = getView().findViewById(R.id.recycler_view);
         mLayoutManager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
 
         // drag & drop manager
@@ -149,7 +149,7 @@ public class DraggableGridExampleFragment extends Fragment {
 
         // setting up the item move mode selection switch
         MenuItem menuSwitchItem = menu.findItem(R.id.menu_switch_swap_mode);
-        CompoundButton actionView = (CompoundButton) MenuItemCompat.getActionView(menuSwitchItem).findViewById(R.id.switch_view);
+        CompoundButton actionView = MenuItemCompat.getActionView(menuSwitchItem).findViewById(R.id.switch_view);
 
         actionView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

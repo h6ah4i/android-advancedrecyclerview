@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_d_on_longpress;
 
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,9 +51,9 @@ class DragOnLongPressExampleAdapter
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mTextView = v.findViewById(android.R.id.text1);
         }
     }
 
@@ -120,13 +119,7 @@ class DragOnLongPressExampleAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         Log.d(TAG, "onMoveItem(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ")");
 
-        if (fromPosition == toPosition) {
-            return;
-        }
-
         mProvider.moveItem(fromPosition, toPosition);
-
-        notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override
@@ -135,8 +128,8 @@ class DragOnLongPressExampleAdapter
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -150,5 +143,15 @@ class DragOnLongPressExampleAdapter
     @Override
     public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
         return true;
+    }
+
+    @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
     }
 }

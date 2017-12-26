@@ -51,6 +51,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
     private int mDraggingItemInitialPosition = RecyclerView.NO_POSITION;
     private int mDraggingItemCurrentPosition = RecyclerView.NO_POSITION;
     private int mItemMoveMode;
+    private boolean mCallingDragStarted;
 
     public DraggableItemWrapperAdapter(RecyclerViewDragDropManager manager, RecyclerView.Adapter<VH> adapter) {
         super(adapter);
@@ -223,7 +224,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
         if (DEBUG_BYPASS_MOVE_OPERATION_MODE) {
             return false;
         }
-        return isDragging();
+        return isDragging() && !mCallingDragStarted;
     }
 
     private void cancelDrag() {
@@ -233,7 +234,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ void onDragItemStarted(DraggingItemInfo draggingItemInfo, RecyclerView.ViewHolder holder, ItemDraggableRange range, int wrappedItemPosition, int itemMoveMode) {
+    /*package*/ void startDraggingItem(DraggingItemInfo draggingItemInfo, RecyclerView.ViewHolder holder, ItemDraggableRange range, int wrappedItemPosition, int itemMoveMode) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onDragItemStarted(holder = " + holder + ")");
         }
@@ -257,24 +258,28 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
         mDraggingItemViewHolder = holder;
         mDraggableRange = range;
         mItemMoveMode = itemMoveMode;
-
-        notifyDataSetChanged();
     }
 
     // NOTE: This method is called from RecyclerViewDragDropManager
-    /*package*/ void onDragItemFinished(boolean result) {
+    /*package*/ void onDragItemStarted() {
+        mCallingDragStarted = true;
+        mDraggableItemAdapter.onItemDragStarted(getDraggingItemInitialPosition());
+        mCallingDragStarted = false;
+    }
+
+    // NOTE: This method is called from RecyclerViewDragDropManager
+    /*package*/ void onDragItemFinished(
+            int draggingItemInitialPosition, int draggingItemCurrentPosition, boolean result) {
         if (LOCAL_LOGD) {
-            Log.d(TAG, "onDragItemFinished(result = " + result + ")");
+            Log.d(TAG, "onDragItemFinished(draggingItemInitialPosition = " + draggingItemInitialPosition +
+                    ", draggingItemCurrentPosition = " + draggingItemCurrentPosition + ", result = " + result + ")");
         }
 
         if (DEBUG_BYPASS_MOVE_OPERATION_MODE) {
             return;
         }
 
-        if (result && (mDraggingItemCurrentPosition != mDraggingItemInitialPosition)) {
-            // apply to wrapped adapter
-            mDraggableItemAdapter.onMoveItem(mDraggingItemInitialPosition, mDraggingItemCurrentPosition);
-        }
+        DraggableItemAdapter draggableItemAdapter = mDraggableItemAdapter;
 
         mDraggingItemInitialPosition = RecyclerView.NO_POSITION;
         mDraggingItemCurrentPosition = RecyclerView.NO_POSITION;
@@ -283,7 +288,12 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
         mDraggingItemViewHolder = null;
         mDraggableItemAdapter = null;
 
-        notifyDataSetChanged();
+        if (result && (draggingItemCurrentPosition != draggingItemInitialPosition)) {
+            // apply to wrapped adapter
+            draggableItemAdapter.onMoveItem(draggingItemInitialPosition, draggingItemCurrentPosition);
+        }
+
+        draggableItemAdapter.onItemDragFinished(draggingItemInitialPosition, draggingItemCurrentPosition, result);
     }
 
     @Override
@@ -435,6 +445,19 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
 
         SwipeableItemAdapter<VH> swipeableItemAdapter = (SwipeableItemAdapter<VH>) adapter;
         return swipeableItemAdapter.onGetSwipeReactionType(holder, correctedPosition, x, y);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public void onSwipeItemStarted(VH holder, int position) {
+        RecyclerView.Adapter adapter = getWrappedAdapter();
+        if (!(adapter instanceof SwipeableItemAdapter)) {
+            return;
+        }
+
+        int correctedPosition = getOriginalPosition(position);
+
+        ((SwipeableItemAdapter) adapter).onSwipeItemStarted(holder, correctedPosition);
     }
 
     @SuppressWarnings("unchecked")

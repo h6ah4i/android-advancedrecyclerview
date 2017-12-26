@@ -42,7 +42,7 @@ public class CompositionAllExampleActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_demo_minimal);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         OnListItemClickMessageListener clickListener = new OnListItemClickMessageListener() {
             @Override

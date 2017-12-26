@@ -52,9 +52,9 @@ class DraggableGridExampleAdapter
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mTextView = v.findViewById(android.R.id.text1);
         }
     }
 
@@ -124,16 +124,10 @@ class DraggableGridExampleAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         Log.d(TAG, "onMoveItem(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ")");
 
-        if (fromPosition == toPosition) {
-            return;
-        }
-
         if (mItemMoveMode == RecyclerViewDragDropManager.ITEM_MOVE_MODE_DEFAULT) {
             mProvider.moveItem(fromPosition, toPosition);
-            notifyItemMoved(fromPosition, toPosition);
         } else {
             mProvider.swapItem(fromPosition, toPosition);
-            notifyDataSetChanged();
         }
     }
 
@@ -151,5 +145,15 @@ class DraggableGridExampleAdapter
     @Override
     public boolean onCheckCanDrop(int draggingPosition, int dropPosition) {
         return true;
+    }
+
+    @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
     }
 }

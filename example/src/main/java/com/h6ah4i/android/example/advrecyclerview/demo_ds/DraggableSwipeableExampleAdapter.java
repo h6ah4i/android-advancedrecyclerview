@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_ds;
 
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -73,9 +72,9 @@ class DraggableSwipeableExampleAdapter
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
+            mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.drag_handle);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mTextView = v.findViewById(android.R.id.text1);
         }
 
         @Override
@@ -186,13 +185,7 @@ class DraggableSwipeableExampleAdapter
     public void onMoveItem(int fromPosition, int toPosition) {
         Log.d(TAG, "onMoveItem(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ")");
 
-        if (fromPosition == toPosition) {
-            return;
-        }
-
         mProvider.moveItem(fromPosition, toPosition);
-
-        notifyItemMoved(fromPosition, toPosition);
     }
 
     @Override
@@ -201,8 +194,8 @@ class DraggableSwipeableExampleAdapter
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
 
-        final int offsetX = containerView.getLeft() + (int) (ViewCompat.getTranslationX(containerView) + 0.5f);
-        final int offsetY = containerView.getTop() + (int) (ViewCompat.getTranslationY(containerView) + 0.5f);
+        final int offsetX = containerView.getLeft() + (int) (containerView.getTranslationX() + 0.5f);
+        final int offsetY = containerView.getTop() + (int) (containerView.getTranslationY() + 0.5f);
 
         return ViewUtils.hitTest(dragHandleView, x - offsetX, y - offsetY);
     }
@@ -219,12 +212,27 @@ class DraggableSwipeableExampleAdapter
     }
 
     @Override
+    public void onItemDragStarted(int position) {
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
         if (onCheckCanStartDrag(holder, position, x, y)) {
             return Swipeable.REACTION_CAN_NOT_SWIPE_BOTH_H;
         } else {
             return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
         }
+    }
+
+    @Override
+    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+        notifyDataSetChanged();
     }
 
     @Override

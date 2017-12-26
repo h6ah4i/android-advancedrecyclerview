@@ -54,7 +54,7 @@ public class DebugWrapperAdapterTest {
             debugAdapter.unwrapPosition(result, i);
 
             assertThat(result.isValid(), is(true));
-            assertThat(result.adapter, is(((RecyclerView.Adapter) adapter)));
+            assertThat(result.adapter, is(adapter));
             assertThat(result.position, is(i));
         }
     }

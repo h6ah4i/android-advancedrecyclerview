@@ -17,14 +17,11 @@
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -32,12 +29,11 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
-import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 /**
@@ -193,7 +189,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         mTouchSlop = vc.getScaledTouchSlop();
         mMinFlingVelocity = vc.getScaledMinimumFlingVelocity();
         mMaxFlingVelocity = vc.getScaledMaximumFlingVelocity();
-        mSwipeThresholdDistance = (int) (mTouchSlop * MIN_DISTANCE_TOUCH_SLOP_MUL);
+        mSwipeThresholdDistance = mTouchSlop * MIN_DISTANCE_TOUCH_SLOP_MUL;
 
         mItemSlideAnimator = new ItemSlidingAnimator(mWrapperAdapter);
         mItemSlideAnimator.setImmediatelySetTranslationThreshold(
@@ -271,7 +267,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        final int action = MotionEventCompat.getActionMasked(e);
+        final int action = e.getActionMasked();
 
         if (LOCAL_LOGV) {
             Log.v(TAG, "onInterceptTouchEvent() action = " + action);
@@ -308,7 +304,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
     }
 
     /*package*/ void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        final int action = MotionEventCompat.getActionMasked(e);
+        final int action = e.getActionMasked();
 
         if (LOCAL_LOGV) {
             Log.v(TAG, "onTouchEvent() action = " + action);
@@ -363,8 +359,8 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         final int touchY = (int) (e.getY() + 0.5f);
 
         final View view = holder.itemView;
-        final int translateX = (int) (ViewCompat.getTranslationX(view) + 0.5f);
-        final int translateY = (int) (ViewCompat.getTranslationY(view) + 0.5f);
+        final int translateX = (int) (view.getTranslationX() + 0.5f);
+        final int translateY = (int) (view.getTranslationY() + 0.5f);
         final int viewX = touchX - (view.getLeft() + translateX);
         final int viewY = touchY - (view.getTop() + translateY);
 
@@ -390,7 +386,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         int action = MotionEvent.ACTION_CANCEL;
 
         if (e != null) {
-            action = MotionEventCompat.getActionMasked(e);
+            action = e.getActionMasked();
             mLastTouchX = (int) (e.getX() + 0.5f);
             mLastTouchY = (int) (e.getY() + 0.5f);
         }
@@ -600,7 +596,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
         }
 
         // raise onSwipeItemStarted() event
-        mWrapperAdapter.onSwipeItemStarted(this, holder, mSwipingItemId);
+        mWrapperAdapter.onSwipeItemStarted(this, holder, itemPosition, mSwipingItemId);
     }
 
     private void finishSwiping(int result) {
@@ -673,15 +669,13 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
 
                 final long removeAnimationDuration = (itemAnimator != null) ? itemAnimator.getRemoveDuration() : 0;
 
-                if (supportsViewPropertyAnimator()) {
-                    final long moveAnimationDuration = (itemAnimator != null) ? itemAnimator.getMoveDuration() : 0;
+                final long moveAnimationDuration = (itemAnimator != null) ? itemAnimator.getMoveDuration() : 0;
 
-                    final RemovingItemDecorator decorator = new RemovingItemDecorator(
-                            mRecyclerView, swipingItem, result, removeAnimationDuration, moveAnimationDuration);
+                final RemovingItemDecorator decorator = new RemovingItemDecorator(
+                        mRecyclerView, swipingItem, result, removeAnimationDuration, moveAnimationDuration);
 
-                    decorator.setMoveAnimationInterpolator(SwipeDismissItemAnimator.MOVE_INTERPOLATOR);
-                    decorator.start();
-                }
+                decorator.setMoveAnimationInterpolator(SwipeDismissItemAnimator.MOVE_INTERPOLATOR);
+                decorator.start();
 
                 slideAnimated = mItemSlideAnimator.finishSwipeSlideToOutsideOfWindow(
                         swipingItem, slideDir, true, removeAnimationDuration,
@@ -1057,10 +1051,6 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
                 (amount == SwipeableItemConstants.OUTSIDE_OF_THE_WINDOW_RIGHT) ||
                 (amount == SwipeableItemConstants.OUTSIDE_OF_THE_WINDOW_TOP) ||
                 (amount == SwipeableItemConstants.OUTSIDE_OF_THE_WINDOW_BOTTOM);
-    }
-
-    private static boolean supportsViewPropertyAnimator() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
     private static class InternalHandler extends Handler {

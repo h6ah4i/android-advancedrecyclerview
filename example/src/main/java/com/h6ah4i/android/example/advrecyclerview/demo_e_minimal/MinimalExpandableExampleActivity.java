@@ -47,7 +47,7 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_demo_minimal);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         // Setup expandable feature and RecyclerView
         RecyclerViewExpandableItemManager expMgr = new RecyclerViewExpandableItemManager(null);
@@ -91,7 +91,7 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
 
         public MyBaseViewHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(android.R.id.text1);
+            textView = itemView.findViewById(android.R.id.text1);
         }
     }
 

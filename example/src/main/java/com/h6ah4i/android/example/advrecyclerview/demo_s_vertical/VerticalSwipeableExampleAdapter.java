@@ -59,8 +59,8 @@ class VerticalSwipeableExampleAdapter
 
         public MyViewHolder(View v) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mContainer = v.findViewById(R.id.container);
+            mTextView = v.findViewById(android.R.id.text1);
         }
 
         @Override
@@ -161,6 +161,11 @@ class VerticalSwipeableExampleAdapter
     @Override
     public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
         return RecyclerViewSwipeManager.REACTION_CAN_SWIPE_BOTH_V;
+    }
+
+    @Override
+    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+        notifyDataSetChanged();
     }
 
     @Override

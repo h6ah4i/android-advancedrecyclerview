@@ -62,4 +62,24 @@ public interface DraggableItemAdapter<T extends RecyclerView.ViewHolder> {
      * @return Whether can be dropped to the specified position.
      */
     boolean onCheckCanDrop(int draggingPosition, int dropPosition);
+
+    /**
+     * Callback method to be invoked when started dragging an item.
+     *
+     * Call the {@link RecyclerView.Adapter#notifyDataSetChanged()} method in this callback to get the same behavior with v0.10.x or before.
+     *
+     * @param position The position of the item.
+     */
+    void onItemDragStarted(int position);
+
+    /**
+     * Callback method to be invoked when finished dragging an item.
+     *
+     * Call the {@link RecyclerView.Adapter#notifyDataSetChanged()} method in this callback to get the same behavior with v0.10.x or before.
+     *
+     * @param fromPosition Previous position of the item.
+     * @param toPosition   New position of the item.
+     * @param result       Indicates whether the dragging operation was succeeded.
+     */
+    void onItemDragFinished(int fromPosition, int toPosition, boolean result);
 }

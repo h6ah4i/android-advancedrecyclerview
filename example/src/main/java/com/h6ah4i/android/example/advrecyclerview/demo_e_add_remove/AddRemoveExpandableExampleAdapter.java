@@ -55,8 +55,8 @@ class AddRemoveExpandableExampleAdapter
 
         public MyBaseViewHolder(View v, View.OnClickListener clickListener) {
             super(v);
-            mContainer = (FrameLayout) v.findViewById(R.id.container);
-            mTextView = (TextView) v.findViewById(android.R.id.text1);
+            mContainer = v.findViewById(R.id.container);
+            mTextView = v.findViewById(android.R.id.text1);
 
             mContainer.setOnClickListener(clickListener);
         }
@@ -77,16 +77,16 @@ class AddRemoveExpandableExampleAdapter
         public MyGroupViewHolder(View v, View.OnClickListener clickListener) {
             super(v, clickListener);
 
-            mButtonAddChildTop = (Button) v.findViewById(R.id.button_add_child_top);
-            mButtonAddChildBottom = (Button) v.findViewById(R.id.button_add_child_bottom);
-            mButtonAddChild2Bottom = (Button) v.findViewById(R.id.button_add_child_bottom_2);
-            mButtonRemoveChildTop = (Button) v.findViewById(R.id.button_remove_child_top);
-            mButtonRemoveChildBottom = (Button) v.findViewById(R.id.button_remove_child_bottom);
-            mButtonRemoveChild2Bottom = (Button) v.findViewById(R.id.button_remove_child_bottom_2);
-            mButtonAddGroupAbove = (Button) v.findViewById(R.id.button_add_group_above);
-            mButtonAddGroupBelow = (Button) v.findViewById(R.id.button_add_group_below);
-            mButtonRemoveGroup = (Button) v.findViewById(R.id.button_remove_group);
-            mButtonClearChildren = (Button) v.findViewById(R.id.button_clear_children);
+            mButtonAddChildTop = v.findViewById(R.id.button_add_child_top);
+            mButtonAddChildBottom = v.findViewById(R.id.button_add_child_bottom);
+            mButtonAddChild2Bottom = v.findViewById(R.id.button_add_child_bottom_2);
+            mButtonRemoveChildTop = v.findViewById(R.id.button_remove_child_top);
+            mButtonRemoveChildBottom = v.findViewById(R.id.button_remove_child_bottom);
+            mButtonRemoveChild2Bottom = v.findViewById(R.id.button_remove_child_bottom_2);
+            mButtonAddGroupAbove = v.findViewById(R.id.button_add_group_above);
+            mButtonAddGroupBelow = v.findViewById(R.id.button_add_group_below);
+            mButtonRemoveGroup = v.findViewById(R.id.button_remove_group);
+            mButtonClearChildren = v.findViewById(R.id.button_clear_children);
 
             mButtonAddChildTop.setOnClickListener(clickListener);
             mButtonAddChildBottom.setOnClickListener(clickListener);
@@ -108,9 +108,9 @@ class AddRemoveExpandableExampleAdapter
 
         public MyChildViewHolder(View v, View.OnClickListener clickListener) {
             super(v, clickListener);
-            mButtonAddChildAbove = (Button) v.findViewById(R.id.button_add_child_above);
-            mButtonAddChildBelow = (Button) v.findViewById(R.id.button_add_child_below);
-            mButtonRemoveChild = (Button) v.findViewById(R.id.button_remove_child);
+            mButtonAddChildAbove = v.findViewById(R.id.button_add_child_above);
+            mButtonAddChildBelow = v.findViewById(R.id.button_add_child_below);
+            mButtonRemoveChild = v.findViewById(R.id.button_remove_child);
 
             mButtonAddChildAbove.setOnClickListener(clickListener);
             mButtonAddChildBelow.setOnClickListener(clickListener);

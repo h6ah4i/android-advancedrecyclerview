@@ -102,6 +102,10 @@ public class WrapperAdapterUtils {
         return unwrapPosition(originAdapter, targetAdapter, targetAdapterTag, position, null);
     }
 
+    public static int unwrapPosition(RecyclerView.Adapter originAdapter, AdapterPathSegment targetAdapterPathSegment, int originPosition, @Nullable AdapterPath destPath) {
+        return unwrapPosition(originAdapter, targetAdapterPathSegment.adapter, targetAdapterPathSegment.tag, originPosition, destPath);
+    }
+
     public static int unwrapPosition(RecyclerView.Adapter originAdapter, RecyclerView.Adapter targetAdapter, Object targetAdapterTag, int originPosition, @Nullable AdapterPath destPath) {
         RecyclerView.Adapter wrapper = originAdapter;
         int wrappedPosition = originPosition;

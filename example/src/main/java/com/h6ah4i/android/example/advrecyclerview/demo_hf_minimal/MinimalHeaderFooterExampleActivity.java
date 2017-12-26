@@ -48,7 +48,7 @@ public class MinimalHeaderFooterExampleActivity extends AppCompatActivity {
             }
         };
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
         RecyclerView.Adapter adapter;
 
