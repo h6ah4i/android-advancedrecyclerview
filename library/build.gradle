@@ -55,8 +55,8 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:${parent.ext.libraryVersion}"
-    compile "com.android.support:recyclerview-v7:${parent.ext.libraryVersion}"
+    compileOnly "com.android.support:appcompat-v7:${parent.ext.libraryVersion}"
+    compileOnly "com.android.support:recyclerview-v7:${parent.ext.libraryVersion}"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
