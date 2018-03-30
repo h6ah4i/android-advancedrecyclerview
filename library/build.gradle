@@ -26,9 +26,11 @@ ext {
 }
 
 // Common configurations
-apply from: '../common/android-set-common-properties.gradle'
+//apply from: '../common/android-set-common-properties.gradle'
 
 android {
+    compileSdkVersion parent.ext.compileSdkVersion
+    buildToolsVersion parent.ext.buildToolsVersion
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion parent.ext.targetSdkVersion
