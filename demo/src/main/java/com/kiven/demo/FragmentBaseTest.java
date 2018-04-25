@@ -67,6 +67,17 @@ public class FragmentBaseTest extends Fragment {
 
     class MyAdapter extends RecyclerView.Adapter<MyViewHolder> implements DraggableItemAdapter<MyViewHolder> {
         List<MyItem> mItems;
+        
+        @Override
+        public void onItemDragStarted(int position) {
+
+        }
+
+        @Override
+        public void onItemDragFinished(int fromPosition, int toPosition, boolean result) {
+
+        }
+        
         public MyAdapter() {
             setHasStableIds(true);
 
