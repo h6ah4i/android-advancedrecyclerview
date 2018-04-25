@@ -1,4 +1,4 @@
-include ':library', ':example'
+include ':library', ':example', ':demo'
 
 if (System.env.USE_METHOD_COUNT == "1") {
     include ':methodscount'

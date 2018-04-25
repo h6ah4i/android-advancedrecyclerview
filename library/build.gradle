@@ -26,12 +26,14 @@ ext {
 }
 
 // Common configurations
-apply from: '../common/android-set-common-properties.gradle'
+//apply from: '../common/android-set-common-properties.gradle'
 
 android {
+    compileSdkVersion parent.ext.compileSdkVersion
+    buildToolsVersion parent.ext.buildToolsVersion
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion parent.ext.targetSdkVersion
 
         def dataProps = new Properties()
         dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
@@ -55,8 +57,8 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:appcompat-v7:27.0.0'
-    implementation 'com.android.support:recyclerview-v7:27.0.0'
+    compileOnly "com.android.support:appcompat-v7:${parent.ext.libraryVersion}"
+    compileOnly "com.android.support:recyclerview-v7:${parent.ext.libraryVersion}"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
