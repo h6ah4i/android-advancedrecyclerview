@@ -17,7 +17,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
 
-import android.support.annotation.IntRange;
+import androidx.annotation.IntRange;
 
 /**
  * Utility class providing "Composed item view type" related definitions and methods.

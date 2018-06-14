@@ -17,7 +17,7 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_wa_insertion;
 
 import android.graphics.Color;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
