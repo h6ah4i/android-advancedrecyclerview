@@ -16,7 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 class ExpandableAdapterHelper {
     public static final long NO_EXPANDABLE_POSITION = 0xffffffffffffffffL;

@@ -18,7 +18,7 @@ package com.h6ah4i.android.example.advrecyclerview.launcher;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.StringRes;
+import androidx.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

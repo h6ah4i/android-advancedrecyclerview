@@ -16,7 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemAfterReactions;
@@ -24,7 +24,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableI
 /**
  * Interface which provides required information for swiping item.
  * <p>
- * Implement this interface on your sub-class of the {@link android.support.v7.widget.RecyclerView.ViewHolder}.
+ * Implement this interface on your sub-class of the {@link androidx.appcompat.widget.RecyclerView.ViewHolder}.
  */
 public interface SwipeableItemViewHolder {
     /**

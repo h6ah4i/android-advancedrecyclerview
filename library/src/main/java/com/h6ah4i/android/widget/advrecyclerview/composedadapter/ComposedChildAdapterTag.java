@@ -15,7 +15,7 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.composedadapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Returned value of the {@link ComposedAdapter#addAdapter(RecyclerView.Adapter)} method.
