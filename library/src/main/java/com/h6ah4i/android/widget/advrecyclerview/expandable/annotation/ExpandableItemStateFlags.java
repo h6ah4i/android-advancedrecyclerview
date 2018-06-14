@@ -15,7 +15,7 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.expandable.annotation;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
 

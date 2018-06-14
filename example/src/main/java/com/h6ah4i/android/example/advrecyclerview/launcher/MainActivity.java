@@ -19,7 +19,7 @@ package com.h6ah4i.android.example.advrecyclerview.launcher;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.tablayouthelper.TabLayoutHelper;

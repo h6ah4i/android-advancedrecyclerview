@@ -16,8 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-import android.support.annotation.IntRange;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.IntRange;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Utility class providing "Composed item ID" related definitions and methods.

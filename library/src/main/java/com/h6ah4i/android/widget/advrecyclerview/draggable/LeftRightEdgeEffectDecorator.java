@@ -16,7 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 class LeftRightEdgeEffectDecorator extends BaseEdgeEffectDecorator {
     public LeftRightEdgeEffectDecorator(RecyclerView recyclerView) {

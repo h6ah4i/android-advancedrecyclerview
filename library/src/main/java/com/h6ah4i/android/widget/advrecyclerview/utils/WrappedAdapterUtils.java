@@ -16,8 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.WrappedAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.WrapperAdapter;

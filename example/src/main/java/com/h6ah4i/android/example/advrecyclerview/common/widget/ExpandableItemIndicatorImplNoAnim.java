@@ -17,8 +17,8 @@
 package com.h6ah4i.android.example.advrecyclerview.common.widget;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
-import android.support.v7.widget.AppCompatImageView;
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;

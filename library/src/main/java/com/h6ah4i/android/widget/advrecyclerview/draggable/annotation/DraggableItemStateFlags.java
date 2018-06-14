@@ -16,7 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable.annotation;
 
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
 

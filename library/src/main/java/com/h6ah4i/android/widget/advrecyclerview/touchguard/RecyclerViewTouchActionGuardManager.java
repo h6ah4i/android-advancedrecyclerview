@@ -16,8 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.touchguard;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
@@ -71,9 +71,9 @@ public class RecyclerViewTouchActionGuardManager {
     }
 
     /**
-     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
+     * Attaches {@link androidx.appcompat.widget.RecyclerView} instance.
      *
-     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     * @param rv The {@link androidx.appcompat.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
         if (isReleased()) {
@@ -91,7 +91,7 @@ public class RecyclerViewTouchActionGuardManager {
     }
 
     /**
-     * Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.
+     * Detach the {@link androidx.appcompat.widget.RecyclerView} instance and release internal field references.
      *
      * This method should be called in order to avoid memory leaks.
      */

@@ -16,8 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewParent;
 
@@ -46,7 +46,7 @@ public class RecyclerViewAdapterUtils {
     }
 
     /**
-     * Gets directly child of RecyclerView (== {@link android.support.v7.widget.RecyclerView.ViewHolder#itemView}})
+     * Gets directly child of RecyclerView (== {@link androidx.appcompat.widget.RecyclerView.ViewHolder#itemView}})
      * @param view Child view of the RecyclerView's item
      * @return Item view
      */
@@ -60,7 +60,7 @@ public class RecyclerViewAdapterUtils {
     }
 
     /**
-     * Gets {@link android.support.v7.widget.RecyclerView.ViewHolder}.
+     * Gets {@link androidx.appcompat.widget.RecyclerView.ViewHolder}.
      * @param view Child view of the RecyclerView's item
      * @return ViewHolder
      */
