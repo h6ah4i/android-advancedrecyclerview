@@ -15,7 +15,7 @@
  */
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
 
     if (System.getenv("JITPACK") == "true") {
         buildToolsVersion '28.0.1'
