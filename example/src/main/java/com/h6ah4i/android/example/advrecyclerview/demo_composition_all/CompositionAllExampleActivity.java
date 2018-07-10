@@ -18,12 +18,13 @@ package com.h6ah4i.android.example.advrecyclerview.demo_composition_all;
 
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
+
 import android.view.View;
 
 import com.h6ah4i.android.example.advrecyclerview.R;

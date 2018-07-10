@@ -18,10 +18,11 @@ package com.h6ah4i.android.example.advrecyclerview.common.fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.data.ExampleSectionExpandableDataProvider;
+
+import androidx.fragment.app.Fragment;
 
 public class ExampleSectionExpandableDataProviderFragment extends Fragment {
     private ExampleSectionExpandableDataProvider mDataProvider;

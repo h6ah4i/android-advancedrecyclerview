@@ -17,11 +17,12 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_s_vertical;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
+import com.google.android.material.snackbar.Snackbar;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+
 import android.view.View;
 
 import com.h6ah4i.android.example.advrecyclerview.R;

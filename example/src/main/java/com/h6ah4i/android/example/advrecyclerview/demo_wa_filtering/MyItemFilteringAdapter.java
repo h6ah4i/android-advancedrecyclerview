@@ -17,7 +17,8 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_wa_filtering;
 
 import androidx.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;

@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +43,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 class ExpandableDraggableSwipeableExampleAdapter
         extends AbstractExpandableItemAdapter<ExpandableDraggableSwipeableExampleAdapter.MyGroupViewHolder, ExpandableDraggableSwipeableExampleAdapter.MyChildViewHolder>

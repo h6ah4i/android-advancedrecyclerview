@@ -15,7 +15,6 @@
  */
 package com.h6ah4i.android.example.advrecyclerview.common.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,8 @@ import android.widget.TextView;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SimpleDemoItemAdapter extends RecyclerView.Adapter<SimpleDemoItemAdapter.MyViewHolder> implements View.OnClickListener {
     static class MyViewHolder extends RecyclerView.ViewHolder {

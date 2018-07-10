@@ -17,8 +17,8 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_e_add_remove;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
