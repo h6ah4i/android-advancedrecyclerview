@@ -105,7 +105,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
 
     /**
      * Called by RecyclerView to display the group data at the specified position.
-     * This method should update the contents of the {@link androidx.appcompat.widget.RecyclerView.ViewHolder#itemView}
+     * This method should update the contents of the {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#itemView}
      * to reflect the item at the given position.
      *
      * @param holder        The ViewHolder which should be updated to represent the contents of the item at the given position in the data set
@@ -116,7 +116,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
 
     /**
      * Called by RecyclerView to display the group data at the specified position.
-     * This method should update the contents of the {@link androidx.appcompat.widget.RecyclerView.ViewHolder#itemView}
+     * This method should update the contents of the {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#itemView}
      * to reflect the item at the given position.
      *
      * @param holder        The ViewHolder which should be updated to represent the contents of the item at the given position in the data set
@@ -128,7 +128,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
 
     /**
      * Called by RecyclerView to display the child data at the specified position.
-     * This method should update the contents of the {@link androidx.appcompat.widget.RecyclerView.ViewHolder#itemView}
+     * This method should update the contents of the {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#itemView}
      * to reflect the item at the given position.
      *
      * @param holder        The ViewHolder which should be updated to represent the contents of the item at the given position in the data set
@@ -141,7 +141,7 @@ public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH 
 
     /**
      * Called by RecyclerView to display the child data at the specified position.
-     * This method should update the contents of the {@link androidx.appcompat.widget.RecyclerView.ViewHolder#itemView}
+     * This method should update the contents of the {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#itemView}
      * to reflect the item at the given position.
      *
      * @param holder        The ViewHolder which should be updated to represent the contents of the item at the given position in the data set

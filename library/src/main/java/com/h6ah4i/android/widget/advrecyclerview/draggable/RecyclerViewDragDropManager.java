@@ -47,7 +47,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 
 /**
- * Provides item drag &amp; drop operation for {@link androidx.appcompat.widget.RecyclerView}
+ * Provides item drag &amp; drop operation for {@link androidx.recyclerview.widget.RecyclerView}
  */
 @SuppressWarnings("PointlessBitwiseExpression")
 public class RecyclerViewDragDropManager implements DraggableItemConstants {
@@ -333,12 +333,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /**
-     * <p>Attaches {@link androidx.appcompat.widget.RecyclerView} instance.</p>
-     * <p>Before calling this method, the target {@link androidx.appcompat.widget.RecyclerView} must set
+     * <p>Attaches {@link androidx.recyclerview.widget.RecyclerView} instance.</p>
+     * <p>Before calling this method, the target {@link androidx.recyclerview.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
-     * {@link #createWrappedAdapter(androidx.appcompat.widget.RecyclerView.Adapter)} method.</p>
+     * {@link #createWrappedAdapter(androidx.recyclerview.widget.RecyclerView.Adapter)} method.</p>
      *
-     * @param rv The {@link androidx.appcompat.widget.RecyclerView} instance
+     * @param rv The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
         if (isReleased()) {
@@ -376,7 +376,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /**
-     * <p>Detach the {@link androidx.appcompat.widget.RecyclerView} instance and release internal field references.</p>
+     * <p>Detach the {@link androidx.recyclerview.widget.RecyclerView} instance and release internal field references.</p>
      * <p>This method should be called in order to avoid memory leaks.</p>
      */
     public void release() {

@@ -33,7 +33,7 @@ public interface DraggableItemAdapter<T extends RecyclerView.ViewHolder> {
     boolean onCheckCanStartDrag(T holder, int position, int x, int y);
 
     /**
-     * Called after the {@link #onCheckCanStartDrag(androidx.appcompat.widget.RecyclerView.ViewHolder, int, int, int)} method returned true.
+     * Called after the {@link #onCheckCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int)} method returned true.
      *
      * @param holder The ViewHolder which is associated to item user is attempt to start dragging.
      * @param position The position of the item within the adapter's data set.

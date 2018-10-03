@@ -24,7 +24,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableI
 /**
  * Interface which provides required information for swiping item.
  * <p>
- * Implement this interface on your sub-class of the {@link androidx.appcompat.widget.RecyclerView.ViewHolder}.
+ * Implement this interface on your sub-class of the {@link androidx.recyclerview.widget.RecyclerView.ViewHolder}.
  */
 public interface SwipeableItemViewHolder {
     /**

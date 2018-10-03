@@ -20,7 +20,7 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.annotation.Expandabl
 
 /**
  * <p>Interface which provides required information for expanding item.</p>
- * <p>Implement this interface on your sub-class of the {@link androidx.appcompat.widget.RecyclerView.ViewHolder}.</p>
+ * <p>Implement this interface on your sub-class of the {@link androidx.recyclerview.widget.RecyclerView.ViewHolder}.</p>
  */
 public interface ExpandableItemViewHolder {
     /**

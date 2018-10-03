@@ -32,9 +32,9 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
     }
 
     /**
-     * Gets attached {@link androidx.appcompat.widget.RecyclerView}
+     * Gets attached {@link androidx.recyclerview.widget.RecyclerView}
      *
-     * @return The {@link androidx.appcompat.widget.RecyclerView} instance
+     * @return The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
@@ -63,9 +63,9 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
     }
 
     /**
-     * Attaches {@link androidx.appcompat.widget.RecyclerView} instance.
+     * Attaches {@link androidx.recyclerview.widget.RecyclerView} instance.
      *
-     * @param rv The {@link androidx.appcompat.widget.RecyclerView} instance
+     * @param rv The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
     public void attachRecyclerView(RecyclerView rv) {
         final String METHOD_NAME = "attachRecyclerView()";

@@ -48,7 +48,7 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
     boolean onCheckChildCanStartDrag(CVH holder, int groupPosition, int childPosition, int x, int y);
 
     /**
-     * Called after the {@link #onCheckGroupCanStartDrag(androidx.appcompat.widget.RecyclerView.ViewHolder, int, int, int)} method returned true.
+     * Called after the {@link #onCheckGroupCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int)} method returned true.
      *
      * @param holder The ViewHolder which is associated to item user is attempt to start dragging.
      * @param groupPosition Group position.
@@ -59,7 +59,7 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
     ItemDraggableRange onGetGroupItemDraggableRange(GVH holder, int groupPosition);
 
     /**
-     * Called after the {@link #onCheckChildCanStartDrag(androidx.appcompat.widget.RecyclerView.ViewHolder, int, int, int, int)} method returned true.
+     * Called after the {@link #onCheckChildCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int, int)} method returned true.
      *
      * @param holder The ViewHolder which is associated to item user is attempt to start dragging.
      * @param groupPosition Group position.

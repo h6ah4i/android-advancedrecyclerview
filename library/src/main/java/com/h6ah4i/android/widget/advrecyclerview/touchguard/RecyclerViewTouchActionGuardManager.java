@@ -71,9 +71,9 @@ public class RecyclerViewTouchActionGuardManager {
     }
 
     /**
-     * Attaches {@link androidx.appcompat.widget.RecyclerView} instance.
+     * Attaches {@link androidx.recyclerview.widget.RecyclerView} instance.
      *
-     * @param rv The {@link androidx.appcompat.widget.RecyclerView} instance
+     * @param rv The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
         if (isReleased()) {
@@ -91,7 +91,7 @@ public class RecyclerViewTouchActionGuardManager {
     }
 
     /**
-     * Detach the {@link androidx.appcompat.widget.RecyclerView} instance and release internal field references.
+     * Detach the {@link androidx.recyclerview.widget.RecyclerView} instance and release internal field references.
      *
      * This method should be called in order to avoid memory leaks.
      */
