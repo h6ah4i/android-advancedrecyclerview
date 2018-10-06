@@ -17,7 +17,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 

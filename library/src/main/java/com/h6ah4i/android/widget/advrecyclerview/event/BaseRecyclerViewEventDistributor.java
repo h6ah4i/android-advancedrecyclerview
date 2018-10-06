@@ -16,8 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,9 +32,9 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
     }
 
     /**
-     * Gets attached {@link android.support.v7.widget.RecyclerView}
+     * Gets attached {@link androidx.recyclerview.widget.RecyclerView}
      *
-     * @return The {@link android.support.v7.widget.RecyclerView} instance
+     * @return The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
@@ -63,9 +63,9 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
     }
 
     /**
-     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
+     * Attaches {@link androidx.recyclerview.widget.RecyclerView} instance.
      *
-     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     * @param rv The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
     public void attachRecyclerView(RecyclerView rv) {
         final String METHOD_NAME = "attachRecyclerView()";

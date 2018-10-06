@@ -18,10 +18,10 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -35,13 +35,13 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import java.util.List;
 
 /**
- * Provides item expansion operation for {@link android.support.v7.widget.RecyclerView}
+ * Provides item expansion operation for {@link androidx.recyclerview.widget.RecyclerView}
  */
 public class RecyclerViewExpandableItemManager implements ExpandableItemConstants {
     private static final String TAG = "ARVExpandableItemMgr";
 
     /**
-     * Packed position version of {@link android.support.v7.widget.RecyclerView#NO_POSITION}
+     * Packed position version of {@link androidx.recyclerview.widget.RecyclerView#NO_POSITION}
      */
     public static final long NO_EXPANDABLE_POSITION = ExpandableAdapterHelper.NO_EXPANDABLE_POSITION;
 
@@ -126,12 +126,12 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * <p>Attaches {@link android.support.v7.widget.RecyclerView} instance.</p>
-     * <p>Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
+     * <p>Attaches {@link androidx.recyclerview.widget.RecyclerView} instance.</p>
+     * <p>Before calling this method, the target {@link androidx.recyclerview.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
-     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.</p>
+     * {@link #createWrappedAdapter(androidx.recyclerview.widget.RecyclerView.Adapter)} method.</p>
      *
-     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     * @param rv The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
         if (isReleased()) {
@@ -148,7 +148,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     }
 
     /**
-     * <p>Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.</p>
+     * <p>Detach the {@link androidx.recyclerview.widget.RecyclerView} instance and release internal field references.</p>
      * <p>This method should be called in order to avoid memory leaks.</p>
      */
     public void release() {
@@ -391,7 +391,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * See {@link #getPackedPositionForChild(int, int)}.
      *
      * @param packedPosition The packed position from which the child position will be returned.
-     * @return The child position portion of the packed position. If this does not contain a child, returns {@link android.support.v7.widget.RecyclerView#NO_POSITION}.
+     * @return The child position portion of the packed position. If this does not contain a child, returns {@link androidx.recyclerview.widget.RecyclerView#NO_POSITION}.
      */
     public static int getPackedPositionChild(long packedPosition) {
         return ExpandableAdapterHelper.getPackedPositionChild(packedPosition);
@@ -426,7 +426,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * Gets the group position from a packed position. See {@link #getPackedPositionForChild(int, int)}.
      *
      * @param packedPosition The packed position from which the group position will be returned.
-     * @return THe group position of the packed position. If this does not contain a group, returns {@link android.support.v7.widget.RecyclerView#NO_POSITION}.
+     * @return THe group position of the packed position. If this does not contain a group, returns {@link androidx.recyclerview.widget.RecyclerView#NO_POSITION}.
      */
     public static int getPackedPositionGroup(long packedPosition) {
         return ExpandableAdapterHelper.getPackedPositionGroup(packedPosition);
@@ -472,7 +472,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     /**
      * Checks whether the passed view type is a group's one.
      *
-     * @param rawViewType raw view type value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemViewType()})
+     * @param rawViewType raw view type value (return value of {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#getItemViewType()})
      * @return True for the a group view type, otherwise false
      */
     public static boolean isGroupViewType(int rawViewType) {
@@ -482,7 +482,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     /**
      * Gets group view type from a raw view type.
      *
-     * @param rawViewType raw view type value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemViewType()})
+     * @param rawViewType raw view type value (return value of {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#getItemViewType()})
      * @return Group view type for the given raw view type.
      */
     public static int getGroupViewType(int rawViewType) {
@@ -492,7 +492,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     /**
      * Gets child view type from a raw view type.
      *
-     * @param rawViewType raw view type value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemViewType()})
+     * @param rawViewType raw view type value (return value of {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#getItemViewType()})
      * @return Child view type for the given raw view type.
      */
     public static int getChildViewType(int rawViewType) {
@@ -502,7 +502,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     /**
      * Checks whether the passed item ID is a group's one.
      *
-     * @param rawId raw item ID value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemId()})
+     * @param rawId raw item ID value (return value of {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#getItemId()})
      * @return True for the a group view type, otherwise false
      */
     public static boolean isGroupItemId(long rawId) {
@@ -512,7 +512,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     /**
      * Gets group item ID from a raw ID.
      *
-     * @param rawId raw item ID value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemId()})
+     * @param rawId raw item ID value (return value of {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#getItemId()})
      * @return Group item ID for the given raw item ID.
      */
     public static long getGroupItemId(long rawId) {
@@ -522,7 +522,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     /**
      * Gets child item ID from a raw ID.
      *
-     * @param rawId raw item ID value (return value of {@link android.support.v7.widget.RecyclerView.ViewHolder#getItemId()})
+     * @param rawId raw item ID value (return value of {@link androidx.recyclerview.widget.RecyclerView.ViewHolder#getItemId()})
      * @return Child item ID for the given raw item ID.
      */
     public static long getChildItemId(long rawId) {

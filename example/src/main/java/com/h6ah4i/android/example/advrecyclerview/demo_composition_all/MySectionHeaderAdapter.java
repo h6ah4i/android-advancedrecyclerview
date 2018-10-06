@@ -15,13 +15,14 @@
  */
 package com.h6ah4i.android.example.advrecyclerview.demo_composition_all;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 class MySectionHeaderAdapter extends RecyclerView.Adapter<MySectionHeaderAdapter.MyViewHolder> {
     static class MyViewHolder extends RecyclerView.ViewHolder {

@@ -21,7 +21,7 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.annotation.DraggableI
 /**
  * Interface which provides required information for dragging item.
  *
- * Implement this interface on your sub-class of the {@link android.support.v7.widget.RecyclerView.ViewHolder}.
+ * Implement this interface on your sub-class of the {@link androidx.recyclerview.widget.RecyclerView.ViewHolder}.
  */
 public interface DraggableItemViewHolder {
     /**

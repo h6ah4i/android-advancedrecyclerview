@@ -15,7 +15,6 @@
  */
 package com.h6ah4i.android.example.advrecyclerview.demo_composition_all;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +31,8 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 class MyDraggableAdapter
         extends RecyclerView.Adapter<MyDraggableAdapter.MyViewHolder>

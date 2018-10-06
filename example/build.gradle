@@ -24,7 +24,7 @@ android {
     defaultConfig {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 29
         versionName "0.11.0"
         vectorDrawables.useSupportLibrary = true
@@ -64,6 +64,6 @@ if (loadSigningConfigFromPropertiesFile(
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':library')
-    implementation 'com.android.support:design:27.0.0'
-    implementation ('com.h6ah4i.android.tablayouthelper:tablayouthelper:0.9.0')
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation ('com.h6ah4i.android.tablayouthelper:tablayouthelper:1.0.0')
 }

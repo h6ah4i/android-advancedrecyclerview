@@ -16,7 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
 
