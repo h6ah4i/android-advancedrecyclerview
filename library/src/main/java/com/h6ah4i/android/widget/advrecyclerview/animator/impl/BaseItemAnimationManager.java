@@ -69,9 +69,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
     }
 
     public void runPendingAnimations(boolean deferred, long deferredDelay) {
-        final List<T> ready = new ArrayList<>();
-
-        ready.addAll(mPending);
+        final List<T> ready = new ArrayList<>(mPending);
         mPending.clear();
 
         if (deferred) {
