@@ -74,7 +74,7 @@ public class CustomFilteringWrapperAdapterExampleActivity extends AppCompatActiv
 
         // setting up the filtering on/off switch
         MenuItem menuSwitchItem = menu.findItem(R.id.menu_switch_on_off);
-        CompoundButton actionView = MenuItemCompat.getActionView(menuSwitchItem).findViewById(R.id.switch_view);
+        CompoundButton actionView = menuSwitchItem.getActionView().findViewById(R.id.switch_view);
 
         actionView.setChecked(mFilteringAdapter.isFilteringEnabled());
 
