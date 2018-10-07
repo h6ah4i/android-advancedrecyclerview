@@ -16,6 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 
@@ -39,7 +41,7 @@ public abstract class ItemRemoveAnimationManager extends BaseItemAnimationManage
     }
 
     @Override
-    public void dispatchStarting(RemoveAnimationInfo info, RecyclerView.ViewHolder item) {
+    public void dispatchStarting(@NonNull RemoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         if (debugLogEnabled()) {
             Log.d(TAG, "dispatchRemoveStarting(" + item + ")");
         }
@@ -47,7 +49,7 @@ public abstract class ItemRemoveAnimationManager extends BaseItemAnimationManage
     }
 
     @Override
-    public void dispatchFinished(RemoveAnimationInfo info, RecyclerView.ViewHolder item) {
+    public void dispatchFinished(@NonNull RemoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         if (debugLogEnabled()) {
             Log.d(TAG, "dispatchRemoveFinished(" + item + ")");
         }
@@ -55,7 +57,7 @@ public abstract class ItemRemoveAnimationManager extends BaseItemAnimationManage
     }
 
     @Override
-    protected boolean endNotStartedAnimation(RemoveAnimationInfo info, RecyclerView.ViewHolder item) {
+    protected boolean endNotStartedAnimation(@NonNull RemoveAnimationInfo info, @Nullable RecyclerView.ViewHolder item) {
         if ((info.holder != null) && ((item == null) || (info.holder == item))) {
             onAnimationEndedBeforeStarted(info, info.holder);
             dispatchFinished(info, info.holder);

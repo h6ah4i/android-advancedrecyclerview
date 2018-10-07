@@ -16,6 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewPropertyAnimatorCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,12 +51,12 @@ public class SwipeDismissItemAnimator extends DraggableItemAnimator {
     protected static class SwipeDismissItemRemoveAnimationManager extends ItemRemoveAnimationManager {
         protected static final Interpolator DEFAULT_INTERPOLATOR = new AccelerateDecelerateInterpolator();
 
-        public SwipeDismissItemRemoveAnimationManager(BaseItemAnimator itemAnimator) {
+        public SwipeDismissItemRemoveAnimationManager(@NonNull BaseItemAnimator itemAnimator) {
             super(itemAnimator);
         }
 
         @Override
-        protected void onCreateAnimation(RemoveAnimationInfo info) {
+        protected void onCreateAnimation(@NonNull RemoveAnimationInfo info) {
             final ViewPropertyAnimatorCompat animator;
 
             if (isSwipeDismissed(info.holder)) {
@@ -93,7 +95,7 @@ public class SwipeDismissItemAnimator extends DraggableItemAnimator {
         }
 
         @Override
-        protected void onAnimationEndedSuccessfully(RemoveAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedSuccessfully(@NonNull RemoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
             final View view = item.itemView;
 
             if (isSwipeDismissed(info)) {
@@ -105,7 +107,7 @@ public class SwipeDismissItemAnimator extends DraggableItemAnimator {
         }
 
         @Override
-        protected void onAnimationEndedBeforeStarted(RemoveAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedBeforeStarted(@NonNull RemoveAnimationInfo info, @Nullable RecyclerView.ViewHolder item) {
             final View view = item.itemView;
 
             if (isSwipeDismissed(info)) {
@@ -117,11 +119,11 @@ public class SwipeDismissItemAnimator extends DraggableItemAnimator {
         }
 
         @Override
-        protected void onAnimationCancel(RemoveAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationCancel(@NonNull RemoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         }
 
         @Override
-        public boolean addPendingAnimation(RecyclerView.ViewHolder holder) {
+        public boolean addPendingAnimation(@NonNull RecyclerView.ViewHolder holder) {
             if (isSwipeDismissed(holder)) {
                 final View itemView = holder.itemView;
                 final int prevItemX = (int) (itemView.getTranslationX() + 0.5f);
@@ -146,7 +148,7 @@ public class SwipeDismissItemAnimator extends DraggableItemAnimator {
     }
 
     protected static class SwipeDismissRemoveAnimationInfo extends RemoveAnimationInfo {
-        public SwipeDismissRemoveAnimationInfo(RecyclerView.ViewHolder holder) {
+        public SwipeDismissRemoveAnimationInfo(@NonNull RecyclerView.ViewHolder holder) {
             super(holder);
         }
     }

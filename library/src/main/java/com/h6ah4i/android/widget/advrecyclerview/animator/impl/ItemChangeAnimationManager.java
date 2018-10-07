@@ -16,6 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 
@@ -29,7 +31,7 @@ public abstract class ItemChangeAnimationManager extends BaseItemAnimationManage
     }
 
     @Override
-    public void dispatchStarting(ChangeAnimationInfo info, RecyclerView.ViewHolder item) {
+    public void dispatchStarting(@NonNull ChangeAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         if (debugLogEnabled()) {
             Log.d(TAG, "dispatchChangeStarting(" + item + ")");
         }
@@ -37,7 +39,7 @@ public abstract class ItemChangeAnimationManager extends BaseItemAnimationManage
     }
 
     @Override
-    public void dispatchFinished(ChangeAnimationInfo info, RecyclerView.ViewHolder item) {
+    public void dispatchFinished(@NonNull ChangeAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         if (debugLogEnabled()) {
             Log.d(TAG, "dispatchChangeFinished(" + item + ")");
         }
@@ -55,7 +57,7 @@ public abstract class ItemChangeAnimationManager extends BaseItemAnimationManage
     }
 
     @Override
-    protected void onCreateAnimation(ChangeAnimationInfo info) {
+    protected void onCreateAnimation(@NonNull ChangeAnimationInfo info) {
         if (info.oldHolder != null) {
             onCreateChangeAnimationForOldItem(info);
         }
@@ -66,7 +68,7 @@ public abstract class ItemChangeAnimationManager extends BaseItemAnimationManage
     }
 
     @Override
-    protected boolean endNotStartedAnimation(ChangeAnimationInfo info, RecyclerView.ViewHolder item) {
+    protected boolean endNotStartedAnimation(@NonNull ChangeAnimationInfo info, @Nullable RecyclerView.ViewHolder item) {
         if ((info.oldHolder != null) && ((item == null) || (info.oldHolder == item))) {
             onAnimationEndedBeforeStarted(info, info.oldHolder);
             dispatchFinished(info, info.oldHolder);
