@@ -23,3 +23,12 @@ allprojects {
         google()
     }
 }
+
+project.ext {
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.2'
+    minSdkVersion = 14
+    targetSdkVersion = 28
+
+    recyclerViewVersion = '1.0.0'
+}

@@ -25,13 +25,18 @@ ext {
     useDoclava = true
 }
 
-// Common configurations
-apply from: '../common/android-set-common-properties.gradle'
-
 android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
 
         def dataProps = new Properties()
         dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
@@ -56,7 +61,7 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation "androidx.recyclerview:recyclerview:${rootProject.ext.recyclerViewVersion}"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
