@@ -182,9 +182,9 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      *                 a header adapter position.
      * @param viewType The view type of the new header View.
      * @return A new ViewHolder for the header that holds a View of the given view type.
-     * @see {@link RecyclerView.Adapter#onCreateViewHolder(ViewGroup, int)}
-     * @see {@link #getHeaderItemViewType(int)}
-     * @see {@link #onBindHeaderItemViewHolder(RecyclerView.ViewHolder, int)}
+     * @see RecyclerView.Adapter#onCreateViewHolder(ViewGroup, int)
+     * @see #getHeaderItemViewType(int)
+     * @see #onBindHeaderItemViewHolder(RecyclerView.ViewHolder, int)
      */
     public abstract HeaderVH onCreateHeaderItemViewHolder(ViewGroup parent, int viewType);
 
@@ -196,9 +196,9 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      *                 a footer adapter position.
      * @param viewType The view type of the new footer View.
      * @return A new ViewHolder for the footer that holds a View of the given view type.
-     * @see {@link RecyclerView.Adapter#onCreateViewHolder(ViewGroup, int)}
-     * @see {@link #getFooterItemViewType(int)}
-     * @see {@link #onBindFooterItemViewHolder(RecyclerView.ViewHolder, int)}
+     * @see RecyclerView.Adapter#onCreateViewHolder(ViewGroup, int)
+     * @see #getFooterItemViewType(int)
+     * @see #onBindFooterItemViewHolder(RecyclerView.ViewHolder, int)
      */
     public abstract FooterVH onCreateFooterItemViewHolder(ViewGroup parent, int viewType);
 
@@ -210,7 +210,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      * @param holder The ViewHolder which should be updated to represent the contents of the
      *        item at the given position in the data set.
      * @param localPosition The position of the item within the header adapter's data set.
-     * @see {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)}
+     * @see RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)
      */
     public abstract void onBindHeaderItemViewHolder(HeaderVH holder, int localPosition);
 
@@ -222,7 +222,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      * @param holder The ViewHolder which should be updated to represent the contents of the
      *        item at the given position in the data set.
      * @param localPosition The position of the item within the footer adapter's data set.
-     * @see {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)}
+     * @see RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)
      */
     public abstract void onBindFooterItemViewHolder(FooterVH holder, int localPosition);
 
@@ -236,7 +236,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      * @param localPosition The position of the item within the header adapter's data set.
      * @param payloads A non-null list of merged payloads. Can be empty list if requires full
      *                 update.
-     * @see {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int, List)}
+     * @see RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int, List)
      */
     public void onBindHeaderItemViewHolder(HeaderVH holder, int localPosition, List<Object> payloads) {
         onBindHeaderItemViewHolder(holder, localPosition);
@@ -252,7 +252,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      * @param localPosition The position of the item within the footer adapter's data set.
      * @param payloads A non-null list of merged payloads. Can be empty list if requires full
      *                 update.
-     * @see {@link RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int, List)}
+     * @see RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int, List)
      */
     public void onBindFooterItemViewHolder(FooterVH holder, int localPosition, List<Object> payloads) {
         onBindFooterItemViewHolder(holder, localPosition);
@@ -262,7 +262,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      * Returns the total number of items in the data set hold by the header adapter.
      *
      * @return The total number of items in the header adapter.
-     * @see {@link RecyclerView.Adapter#getItemCount()}
+     * @see RecyclerView.Adapter#getItemCount()
      */
     public abstract int getHeaderItemCount();
 
@@ -270,7 +270,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      * Returns the total number of items in the data set hold by the footer adapter.
      *
      * @return The total number of items in the footer adapter.
-     * @see {@link RecyclerView.Adapter#getItemCount()}
+     * @see RecyclerView.Adapter#getItemCount()
      */
     public abstract int getFooterItemCount();
 
@@ -280,7 +280,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      *
      * @param localPosition Header adapter position to query
      * @return the stable ID of the item at position
-     * @see {@link RecyclerView.Adapter#getItemId(int)}
+     * @see RecyclerView.Adapter#getItemId(int)
      */
     @IntRange(from = ItemIdComposer.MIN_WRAPPED_ID, to = ItemIdComposer.MAX_WRAPPED_ID)
     public long getHeaderItemId(int localPosition) {
@@ -296,7 +296,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      *
      * @param localPosition Footer adapter position to query
      * @return the stable ID of the item at position
-     * @see {@link RecyclerView.Adapter#getItemId(int)}
+     * @see RecyclerView.Adapter#getItemId(int)
      */
     @IntRange(from = ItemIdComposer.MIN_WRAPPED_ID, to = ItemIdComposer.MAX_WRAPPED_ID)
     public long getFooterItemId(int localPosition) {

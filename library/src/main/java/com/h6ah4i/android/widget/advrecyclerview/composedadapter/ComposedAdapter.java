@@ -108,7 +108,7 @@ public class ComposedAdapter
      *
      * @param adapter The adapter which to be managed by the ComposedAdapter
      * @return An instance of {@link ComposedChildAdapterTag}
-     * @see {@link #addAdapter(RecyclerView.Adapter, int)}
+     * @see #addAdapter(RecyclerView.Adapter, int)
      */
     public ComposedChildAdapterTag addAdapter(@NonNull RecyclerView.Adapter adapter) {
         return addAdapter(adapter, getChildAdapterCount());
@@ -120,7 +120,7 @@ public class ComposedAdapter
      * @param adapter  The adapter which to be managed by the ComposedAdapter
      * @param position The position inserting a child adapter
      * @return An instance of {@link ComposedChildAdapterTag}
-     * @see {@link #addAdapter(RecyclerView.Adapter)}
+     * @see #addAdapter(RecyclerView.Adapter)
      */
     public ComposedChildAdapterTag addAdapter(@NonNull RecyclerView.Adapter adapter, int position) {
         if (hasObservers() && hasStableIds()) {
@@ -179,8 +179,8 @@ public class ComposedAdapter
      *
      * @param flatPosition The normal flat position to be converted
      * @return Segmented Position
-     * @see {@link #extractSegmentPart(long)}
-     * @see {@link #extractSegmentOffsetPart(long)}
+     * @see #extractSegmentPart(long)
+     * @see #extractSegmentOffsetPart(long)
      */
     public long getSegmentedPosition(int flatPosition) {
         return mSegmentedPositionTranslator.getSegmentedPosition(flatPosition);

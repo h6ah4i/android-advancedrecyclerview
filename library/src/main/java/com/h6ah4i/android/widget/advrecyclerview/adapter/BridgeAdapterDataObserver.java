@@ -36,7 +36,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          *
          * @param source The source adapter
          * @param tag    The tag object
-         * @see {@link RecyclerView.AdapterDataObserver#onChanged()}
+         * @see RecyclerView.AdapterDataObserver#onChanged()
          */
         void onBridgedAdapterChanged(RecyclerView.Adapter source, Object tag);
 
@@ -47,7 +47,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param tag           The tag object
          * @param positionStart Position of the first item that has changed
          * @param itemCount     Number of items that have changed
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int)}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int)
          */
         void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount);
 
@@ -59,7 +59,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param positionStart Position of the first item that has changed
          * @param itemCount     Number of items that have changed
          * @param payload       Optional parameter, use null to identify a "full" update
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)
          */
         void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount, Object payload);
 
@@ -70,7 +70,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param tag           The tag object
          * @param positionStart Position of the first item that was inserted
          * @param itemCount     Number of items inserted
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeInserted(int, int)}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeInserted(int, int)
          */
         void onBridgedAdapterItemRangeInserted(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount);
 
@@ -81,7 +81,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param tag           The tag object
          * @param positionStart Previous position of the first item that was removed
          * @param itemCount     Number of items removed from the data set
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeRemoved(int, int)}}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeRemoved(int, int)
          */
         void onBridgedAdapterItemRangeRemoved(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount);
 
@@ -93,7 +93,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param fromPosition Previous position of the item.
          * @param toPosition   New position of the item.
          * @param itemCount    Number of items moved (NOTE: this parameter is not actually used, always 1.)
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)
          */
         void onBridgedAdapterRangeMoved(RecyclerView.Adapter source, Object tag, int fromPosition, int toPosition, int itemCount);
     }
