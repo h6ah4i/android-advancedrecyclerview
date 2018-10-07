@@ -249,25 +249,6 @@ public interface SwipeableItemConstants {
     int REACTION_CAN_SWIPE_BOTH_V =
             REACTION_CAN_SWIPE_UP | REACTION_CAN_SWIPE_DOWN;
 
-    // ---
-
-    /**
-     * @deprecated Use {@link #REACTION_CAN_NOT_SWIPE_ANY} directly.
-     */
-    int REACTION_CAN_NOT_SWIPE_BOTH = REACTION_CAN_NOT_SWIPE_ANY;
-
-    /**
-     * @deprecated Use {@link #REACTION_CAN_NOT_SWIPE_BOTH_H_WITH_RUBBER_BAND_EFFECT} directly.
-     */
-    int REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT = REACTION_CAN_NOT_SWIPE_BOTH_H_WITH_RUBBER_BAND_EFFECT;
-
-    /**
-     * @deprecated Use {@link #REACTION_CAN_SWIPE_BOTH_H} directly.
-     */
-    int REACTION_CAN_SWIPE_BOTH = REACTION_CAN_SWIPE_BOTH_H;
-
-    // ---
-
     /**
      * <p>Background drawable type used for the second argument of the
      * {@link SwipeableItemAdapter#onSetSwipeBackground(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int)} method.</p>
