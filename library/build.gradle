@@ -60,7 +60,6 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.recyclerViewVersion}"
 
     testImplementation 'junit:junit:4.12'
