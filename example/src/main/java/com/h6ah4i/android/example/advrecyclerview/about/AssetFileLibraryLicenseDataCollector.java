@@ -131,20 +131,11 @@ public class AssetFileLibraryLicenseDataCollector {
 
     // http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string
     private static String loadTextFile(AssetManager assets, String path) {
-        InputStream stream = null;
-        try {
-            stream = assets.open(path, AssetManager.ACCESS_STREAMING);
+        try (InputStream stream = assets.open(path, AssetManager.ACCESS_STREAMING)) {
             java.util.Scanner s = new java.util.Scanner(stream).useDelimiter("\\A");
             return s.hasNext() ? s.next().trim() : "";
         } catch (IOException e) {
             // just ignore
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException ignored) {
-                }
-            }
         }
         return null;
     }
