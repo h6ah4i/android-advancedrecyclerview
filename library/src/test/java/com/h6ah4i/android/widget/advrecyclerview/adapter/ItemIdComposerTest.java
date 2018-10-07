@@ -145,6 +145,7 @@ public class ItemIdComposerTest {
     @Test
     public void composeExpandableGroupId() throws Exception {
         // zero
+        //noinspection PointlessBitwiseExpression
         assertThat(ItemIdComposer.composeExpandableGroupId(0L), is((0L << ItemIdComposer.BIT_OFFSET_GROUP_ID) | ItemIdComposer.BIT_MASK_CHILD_ID));
 
         // one

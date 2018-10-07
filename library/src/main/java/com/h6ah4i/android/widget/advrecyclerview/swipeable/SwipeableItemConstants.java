@@ -23,6 +23,7 @@ public interface SwipeableItemConstants {
      * State flag for the {@link SwipeableItemViewHolder#setSwipeStateFlags(int)} and {@link SwipeableItemViewHolder#getSwipeStateFlags()} methods.
      * Indicates that currently performing swiping.
      */
+    @SuppressWarnings("PointlessBitwiseExpression")
     int STATE_FLAG_SWIPING = (1 << 0);
 
     /**
