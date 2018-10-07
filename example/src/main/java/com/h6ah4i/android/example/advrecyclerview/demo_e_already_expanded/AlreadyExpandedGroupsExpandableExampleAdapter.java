@@ -153,8 +153,6 @@ class AlreadyExpandedGroupsExpandableExampleAdapter
 
             holder.mContainer.setBackgroundResource(bgResId);
             holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
-        } else {
-            Log.d("TAG", "teste");
         }
     }
 
