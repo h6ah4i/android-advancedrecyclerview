@@ -80,6 +80,7 @@ public class ItemIdComposer {
     /**
      * Bit mask of the reserved sign flag part.
      */
+    @SuppressWarnings("NumericOverflow")
     public static final long BIT_MASK_RESERVED_SIGN_FLAG = ((1L << BIT_WIDTH_RESERVED_SIGN_FLAG) - 1) << BIT_OFFSET_RESERVED_SIGN_FLAG;
 
     /**
