@@ -167,7 +167,7 @@ class ExpandablePositionTranslator {
 
         for (int i = 0; i < mGroupCount; i++) {
             final long t = mCachedGroupPosInfo[i];
-            expandedGroups[i] = ((long) mCachedGroupId[i] << 32l) | (t & FLAG_EXPANDED);
+            expandedGroups[i] = ((long) mCachedGroupId[i] << 32L) | (t & FLAG_EXPANDED);
         }
 
         Arrays.sort(expandedGroups);
