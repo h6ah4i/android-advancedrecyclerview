@@ -96,7 +96,7 @@ public class ItemShadowDecorator extends RecyclerView.ItemDecoration {
         }
 
         if (!mCastShadowForTransparentBackgroundItem && (background instanceof ColorDrawable)) {
-            //noinspection RedundantCast
+            //noinspection RedundantCast,RedundantIfStatement
             if (((ColorDrawable) background).getAlpha() == 0) {
                 return false;
             }
