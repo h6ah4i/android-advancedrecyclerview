@@ -16,20 +16,21 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
-import com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.List;
 
-class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends BaseWrapperAdapter<VH> {
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends SimpleWrapperAdapter<VH> {
     private static final String TAG = "ARVSwipeableWrapper";
 
     private interface Constants extends SwipeableItemConstants {
