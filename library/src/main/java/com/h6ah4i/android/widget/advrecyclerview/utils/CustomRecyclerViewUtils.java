@@ -17,6 +17,9 @@
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
 import android.graphics.Rect;
+import android.view.View;
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
@@ -25,8 +28,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import android.view.View;
-import android.view.ViewGroup;
 
 public class CustomRecyclerViewUtils {
     public static final int ORIENTATION_UNKNOWN = -1;
@@ -245,7 +246,7 @@ public class CustomRecyclerViewUtils {
     private static View findOneVisibleChildIncludesPadding(
             LinearLayoutManager lm, int fromIndex, int toIndex,
             boolean completelyVisible, boolean acceptPartiallyVisible) {
-        boolean isVertical = (lm.getOrientation() == LinearLayoutManager.VERTICAL);
+        boolean isVertical = (lm.getOrientation() == RecyclerView.VERTICAL);
         final int start = 0;
         final int end = (isVertical) ? lm.getHeight() : lm.getWidth();
         final int next = toIndex > fromIndex ? 1 : -1;
