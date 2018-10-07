@@ -43,12 +43,9 @@ public class CustomFilteringWrapperAdapterExampleActivity extends AppCompatActiv
 
         setContentView(R.layout.activity_demo_minimal);
 
-        OnListItemClickMessageListener clickListener = new OnListItemClickMessageListener() {
-            @Override
-            public void onItemClicked(String message) {
-                View container = findViewById(R.id.container);
-                Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
-            }
+        OnListItemClickMessageListener clickListener = message -> {
+            View container = findViewById(R.id.container);
+            Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
         };
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -77,12 +74,7 @@ public class CustomFilteringWrapperAdapterExampleActivity extends AppCompatActiv
 
         actionView.setChecked(mFilteringAdapter.isFilteringEnabled());
 
-        actionView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mFilteringAdapter.setFilteringEnabled(!mFilteringAdapter.isFilteringEnabled());
-            }
-        });
+        actionView.setOnCheckedChangeListener((buttonView, isChecked) -> mFilteringAdapter.setFilteringEnabled(!mFilteringAdapter.isFilteringEnabled()));
 
         return true;
     }

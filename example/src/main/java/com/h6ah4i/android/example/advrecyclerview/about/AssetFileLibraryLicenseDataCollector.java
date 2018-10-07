@@ -56,26 +56,24 @@ public class AssetFileLibraryLicenseDataCollector {
 
             // sort numerically
             final Pattern p = Pattern.compile("^([0-9]+).*$");
-            Arrays.sort(dirs, new Comparator<String>() {
-                public int compare(String s1, String s2) {
-                    try {
-                        Matcher m1 = p.matcher(s1);
-                        Matcher m2 = p.matcher(s2);
-                        if (m1.find() && m2.find()) {
-                            int n1 = Integer.parseInt(m1.group(1));
-                            int n2 = Integer.parseInt(m2.group(1));
+            Arrays.sort(dirs, (s1, s2) -> {
+                try {
+                    Matcher m1 = p.matcher(s1);
+                    Matcher m2 = p.matcher(s2);
+                    if (m1.find() && m2.find()) {
+                        int n1 = Integer.parseInt(m1.group(1));
+                        int n2 = Integer.parseInt(m2.group(1));
 
-                            if (n1 == n2) {
-                                return s1.compareTo(s2);
-                            }
-
-                            return n1 - n2;
-                        } else {
+                        if (n1 == n2) {
                             return s1.compareTo(s2);
                         }
-                    } catch (RuntimeException e) {
+
+                        return n1 - n2;
+                    } else {
                         return s1.compareTo(s2);
                     }
+                } catch (RuntimeException e) {
+                    return s1.compareTo(s2);
                 }
             });
 

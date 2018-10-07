@@ -129,18 +129,8 @@ class ExpandableDraggableSwipeableExampleAdapter
             AbstractExpandableDataProvider dataProvider) {
         mExpandableItemManager = expandableItemManager;
         mProvider = dataProvider;
-        mItemViewOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemViewClick(v);
-            }
-        };
-        mSwipeableViewContainerOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSwipeableViewContainerClick(v);
-            }
-        };
+        mItemViewOnClickListener = v -> onItemViewClick(v);
+        mSwipeableViewContainerOnClickListener = v -> onSwipeableViewContainerClick(v);
 
         // ExpandableItemAdapter, ExpandableDraggableItemAdapter and ExpandableSwipeableItemAdapter
         // require stable ID, and also have to implement the getGroupItemId()/getChildItemId() methods appropriately.

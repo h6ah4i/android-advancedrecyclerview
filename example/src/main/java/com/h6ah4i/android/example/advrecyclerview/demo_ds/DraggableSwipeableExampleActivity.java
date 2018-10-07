@@ -61,12 +61,7 @@ public class DraggableSwipeableExampleActivity extends AppCompatActivity impleme
                 R.string.snack_bar_text_item_removed,
                 Snackbar.LENGTH_LONG);
 
-        snackbar.setAction(R.string.snack_bar_action_undo, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemUndoActionClicked();
-            }
-        });
+        snackbar.setAction(R.string.snack_bar_action_undo, v -> onItemUndoActionClicked());
         snackbar.setActionTextColor(ContextCompat.getColor(this, R.color.snackbar_action_color_done));
         snackbar.show();
     }

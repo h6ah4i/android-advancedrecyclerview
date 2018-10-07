@@ -64,7 +64,7 @@ public class ExampleSectionExpandableDataProvider extends AbstractExpandableData
                 }
             }
 
-            mData.add(new Pair<GroupData, List<ChildData>>(group, children));
+            mData.add(new Pair<>(group, children));
         }
     }
 

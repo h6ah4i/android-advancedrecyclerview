@@ -152,12 +152,7 @@ public class DraggableGridExampleFragment extends Fragment {
         MenuItem menuSwitchItem = menu.findItem(R.id.menu_switch_swap_mode);
         CompoundButton actionView = menuSwitchItem.getActionView().findViewById(R.id.switch_view);
 
-        actionView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                updateItemMoveMode(isChecked);
-            }
-        });
+        actionView.setOnCheckedChangeListener((buttonView, isChecked) -> updateItemMoveMode(isChecked));
     }
 
     private void updateItemMoveMode(boolean swapMode) {

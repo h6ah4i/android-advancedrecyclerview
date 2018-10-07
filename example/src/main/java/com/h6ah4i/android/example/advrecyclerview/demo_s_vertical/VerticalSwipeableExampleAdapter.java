@@ -73,18 +73,8 @@ class VerticalSwipeableExampleAdapter
 
     public VerticalSwipeableExampleAdapter(AbstractDataProvider dataProvider) {
         mProvider = dataProvider;
-        mItemViewOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemViewClick(v);
-            }
-        };
-        mSwipeableViewContainerOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSwipeableViewContainerClick(v);
-            }
-        };
+        mItemViewOnClickListener = v -> onItemViewClick(v);
+        mSwipeableViewContainerOnClickListener = v -> onSwipeableViewContainerClick(v);
 
         // SwipeableItemAdapter requires stable ID, and also
         // have to implement the getItemId() method appropriately.

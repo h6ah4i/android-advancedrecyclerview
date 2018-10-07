@@ -57,7 +57,7 @@ public class ExampleExpandableDataProvider extends AbstractExpandableDataProvide
                 children.add(new ConcreteChildData(childId, childText));
             }
 
-            mData.add(new Pair<GroupData, List<ChildData>>(group, children));
+            mData.add(new Pair<>(group, children));
         }
     }
 

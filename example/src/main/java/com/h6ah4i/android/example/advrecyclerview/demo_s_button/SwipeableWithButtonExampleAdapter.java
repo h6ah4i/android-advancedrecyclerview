@@ -85,18 +85,8 @@ class SwipeableWithButtonExampleAdapter
 
     public SwipeableWithButtonExampleAdapter(AbstractDataProvider dataProvider) {
         mProvider = dataProvider;
-        mSwipeableViewContainerOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSwipeableViewContainerClick(v);
-            }
-        };
-        mUnderSwipeableViewButtonOnClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onUnderSwipeableViewButtonClick(v);
-            }
-        };
+        mSwipeableViewContainerOnClickListener = v -> onSwipeableViewContainerClick(v);
+        mUnderSwipeableViewButtonOnClickListener = v -> onUnderSwipeableViewButtonClick(v);
 
         // SwipeableItemAdapter requires stable ID, and also
         // have to implement the getItemId() method appropriately.

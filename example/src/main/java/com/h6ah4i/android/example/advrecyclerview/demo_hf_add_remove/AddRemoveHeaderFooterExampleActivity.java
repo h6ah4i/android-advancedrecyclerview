@@ -44,12 +44,9 @@ public class AddRemoveHeaderFooterExampleActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_demo_minimal);
 
-        OnListItemClickMessageListener clickListener = new OnListItemClickMessageListener() {
-            @Override
-            public void onItemClicked(String message) {
-                View container = findViewById(R.id.container);
-                Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
-            }
+        OnListItemClickMessageListener clickListener = message -> {
+            View container = findViewById(R.id.container);
+            Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
         };
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);

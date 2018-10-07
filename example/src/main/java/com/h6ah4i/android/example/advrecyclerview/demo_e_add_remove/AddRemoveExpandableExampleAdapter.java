@@ -43,12 +43,7 @@ class AddRemoveExpandableExampleAdapter
 
     private RecyclerViewExpandableItemManager mExpandableItemManager;
     private AbstractAddRemoveExpandableDataProvider mProvider;
-    private View.OnClickListener mItemOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onClickItemView(v);
-        }
-    };
+    private View.OnClickListener mItemOnClickListener = v -> onClickItemView(v);
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
         public FrameLayout mContainer;
