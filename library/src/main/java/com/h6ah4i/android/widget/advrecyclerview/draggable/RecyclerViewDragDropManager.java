@@ -1021,6 +1021,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         return true;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean canStartDrag(RecyclerView.ViewHolder holder, int touchX, int touchY) {
         final int origRootPosition = holder.getAdapterPosition();
         final int wrappedItemPosition = WrapperAdapterUtils.unwrapPosition(mRecyclerView.getAdapter(), mWrapperAdapter, null, origRootPosition);
