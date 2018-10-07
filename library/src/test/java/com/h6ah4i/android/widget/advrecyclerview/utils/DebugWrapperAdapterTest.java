@@ -17,8 +17,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
 import android.os.Build;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,14 +30,17 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class, sdk = Build.VERSION_CODES.LOLLIPOP)
+@Config(manifest=Config.NONE, sdk = Build.VERSION_CODES.P)
+@RunWith(AndroidJUnit4.class)
 public class DebugWrapperAdapterTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();

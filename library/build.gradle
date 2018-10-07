@@ -63,8 +63,13 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:${rootProject.ext.recyclerViewVersion}"
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'androidx.test:rules:1.1.0-beta01'
+    testImplementation 'androidx.test:runner:1.1.0-beta01'
+    testImplementation ('androidx.test.ext:junit:1.0.0-beta01') {
+        exclude group: 'org.junit', module: 'junit' // is this a bug???
+    }
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
-    testImplementation "org.robolectric:robolectric:3.1.2"
+    testImplementation 'org.robolectric:robolectric:4.0-beta-1'
 }
 
 tasks.withType(JavaCompile) {
