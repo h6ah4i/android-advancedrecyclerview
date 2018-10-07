@@ -156,7 +156,7 @@ class ExpandableRecyclerViewWrapperAdapter
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (mExpandableItemAdapter == null) {
-            return null;
+            throw new IllegalStateException();
         }
 
         final int maskedViewType = (viewType & (~VIEW_TYPE_FLAG_IS_GROUP));

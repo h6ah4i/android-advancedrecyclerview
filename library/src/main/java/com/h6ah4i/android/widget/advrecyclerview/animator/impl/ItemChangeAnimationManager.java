@@ -56,11 +56,11 @@ public abstract class ItemChangeAnimationManager extends BaseItemAnimationManage
 
     @Override
     protected void onCreateAnimation(ChangeAnimationInfo info) {
-        if (info.oldHolder != null && info.oldHolder.itemView != null) {
+        if (info.oldHolder != null) {
             onCreateChangeAnimationForOldItem(info);
         }
 
-        if (info.newHolder != null && info.newHolder.itemView != null) {
+        if (info.newHolder != null) {
             onCreateChangeAnimationForNewItem(info);
         }
     }

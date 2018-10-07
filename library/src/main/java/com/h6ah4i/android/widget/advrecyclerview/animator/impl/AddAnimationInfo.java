@@ -33,9 +33,7 @@ public class AddAnimationInfo extends ItemAnimationInfo {
 
     @Override
     public void clear(RecyclerView.ViewHolder item) {
-        if (holder == null) {
-            holder = null;
-        }
+        holder = null;
     }
 
     @NonNull
