@@ -96,7 +96,7 @@ public class LauncherPageFragment extends Fragment {
         LauncherButtonsAdapter adapter = createAdapter(pageNo);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(adapter);
     }
 

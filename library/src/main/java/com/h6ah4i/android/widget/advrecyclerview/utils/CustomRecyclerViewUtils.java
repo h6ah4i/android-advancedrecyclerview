@@ -73,13 +73,13 @@ public class CustomRecyclerViewUtils {
 
     public static int getLayoutType(@Nullable RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof GridLayoutManager) {
-            if (((GridLayoutManager) layoutManager).getOrientation() == GridLayoutManager.HORIZONTAL) {
+            if (((GridLayoutManager) layoutManager).getOrientation() == RecyclerView.HORIZONTAL) {
                 return LAYOUT_TYPE_GRID_HORIZONTAL;
             } else {
                 return LAYOUT_TYPE_GRID_VERTICAL;
             }
         } else if (layoutManager instanceof LinearLayoutManager) {
-            if (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.HORIZONTAL) {
+            if (((LinearLayoutManager) layoutManager).getOrientation() == RecyclerView.HORIZONTAL) {
                 return LAYOUT_TYPE_LINEAR_HORIZONTAL;
             } else {
                 return LAYOUT_TYPE_LINEAR_VERTICAL;

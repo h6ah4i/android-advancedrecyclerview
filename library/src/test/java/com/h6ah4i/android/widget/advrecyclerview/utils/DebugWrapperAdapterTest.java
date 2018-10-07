@@ -32,7 +32,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 

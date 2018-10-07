@@ -64,7 +64,7 @@ public class VerticalSwipeableExampleFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext(),  LinearLayoutManager.HORIZONTAL, false);
+        mLayoutManager = new LinearLayoutManager(getContext(),  RecyclerView.HORIZONTAL, false);
 
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();

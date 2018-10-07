@@ -87,7 +87,7 @@ public class ViewPagerSwipeableExampleFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext(),  LinearLayoutManager.VERTICAL, false);
+        mLayoutManager = new LinearLayoutManager(getContext(),  RecyclerView.VERTICAL, false);
 
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
