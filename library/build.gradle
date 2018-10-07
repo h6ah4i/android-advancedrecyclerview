@@ -36,6 +36,7 @@ android {
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
+//        minSdkVersion 16 // TODO: android.test.ext:junit requires API level 16+
         targetSdkVersion rootProject.ext.targetSdkVersion
 
         def dataProps = new Properties()
@@ -44,7 +45,10 @@ android {
         //noinspection GroovyAssignabilityCheck
         versionCode dataProps.VERSION_CODE.toInteger()
         versionName dataProps.VERSION_NAME
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -70,6 +74,14 @@ dependencies {
     }
     testImplementation 'org.hamcrest:hamcrest-library:1.3'
     testImplementation 'org.robolectric:robolectric:4.0-beta-1'
+
+    androidTestImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:rules:1.1.0-beta01'
+    androidTestImplementation 'androidx.test:runner:1.1.0-beta01'
+    androidTestImplementation ('androidx.test.ext:junit:1.0.0-beta01') {
+        exclude group: 'org.junit', module: 'junit' // is this a bug???
+    }
+    androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
 }
 
 tasks.withType(JavaCompile) {
