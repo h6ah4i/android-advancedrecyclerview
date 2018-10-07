@@ -16,10 +16,11 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewParent;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewAdapterUtils {
     private RecyclerViewAdapterUtils() {

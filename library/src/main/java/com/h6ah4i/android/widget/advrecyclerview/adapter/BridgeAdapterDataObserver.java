@@ -15,11 +15,11 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
+import java.lang.ref.WeakReference;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.lang.ref.WeakReference;
 
 /**
  * This class behaves like a "proxy" which bridges

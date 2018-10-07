@@ -20,13 +20,14 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Animatable;
 import android.os.Build;
-import androidx.annotation.DrawableRes;
-import androidx.appcompat.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.widget.AppCompatImageView;
 
 // NOTE: AnimatedVectorDrawableCompat works on API level 11+
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)

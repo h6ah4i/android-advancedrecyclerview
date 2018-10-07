@@ -16,10 +16,11 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import androidx.annotation.Nullable;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemAfterReactions;
+
+import androidx.annotation.Nullable;
 
 /**
  * Interface which provides required information for swiping item.

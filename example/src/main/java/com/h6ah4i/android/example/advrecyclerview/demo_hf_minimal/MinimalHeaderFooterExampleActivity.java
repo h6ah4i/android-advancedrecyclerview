@@ -17,17 +17,17 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_hf_minimal;
 
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.DemoHeaderFooterAdapter;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.OnListItemClickMessageListener;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.SimpleDemoItemAdapter;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /*
  * This example shows very very minimal implementation of header and footer feature.

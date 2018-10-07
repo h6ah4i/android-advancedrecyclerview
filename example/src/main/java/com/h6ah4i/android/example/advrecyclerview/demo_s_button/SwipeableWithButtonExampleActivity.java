@@ -17,14 +17,15 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_s_button;
 
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataProviderFragment;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ItemPinnedMessageDialogFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 
 

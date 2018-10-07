@@ -19,12 +19,12 @@ package com.h6ah4i.android.widget.advrecyclerview.decoration;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
 
 /**
  * Item decoration which draws item divider between each items.

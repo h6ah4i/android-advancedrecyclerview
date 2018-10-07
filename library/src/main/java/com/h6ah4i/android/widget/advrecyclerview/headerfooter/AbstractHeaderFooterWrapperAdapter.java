@@ -15,9 +15,6 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.headerfooter;
 
-import androidx.annotation.IntRange;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
@@ -27,6 +24,10 @@ import com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedAdapter
 import com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag;
 
 import java.util.List;
+
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A simplified version of ComposedAdapter for creating headers and footers.

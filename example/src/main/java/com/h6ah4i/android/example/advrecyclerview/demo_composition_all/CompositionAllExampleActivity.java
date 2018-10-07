@@ -18,15 +18,9 @@ package com.h6ah4i.android.example.advrecyclerview.demo_composition_all;
 
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SimpleItemAnimator;
-
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.DemoHeaderFooterAdapter;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.OnListItemClickMessageListener;
@@ -34,6 +28,12 @@ import com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedAdapter
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 public class CompositionAllExampleActivity extends AppCompatActivity {
 

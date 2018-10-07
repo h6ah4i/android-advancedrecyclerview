@@ -17,22 +17,21 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_wa_filtering;
 
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.view.MenuItemCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.BuildConfig;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.OnListItemClickMessageListener;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.SimpleDemoItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.DebugWrapperAdapter;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class CustomFilteringWrapperAdapterExampleActivity extends AppCompatActivity {
 

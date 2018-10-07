@@ -15,12 +15,12 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.expandable.annotation;
 
-import androidx.annotation.IntDef;
-
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 @IntDef(flag = true, value = {
         ExpandableItemConstants.STATE_FLAG_IS_GROUP,

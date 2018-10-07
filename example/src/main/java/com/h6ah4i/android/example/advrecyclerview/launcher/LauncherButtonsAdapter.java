@@ -18,12 +18,6 @@ package com.h6ah4i.android.example.advrecyclerview.launcher;
 
 import android.app.Activity;
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.StringRes;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +28,11 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class LauncherButtonsAdapter
         extends RecyclerView.Adapter<LauncherButtonsAdapter.ViewHolder>

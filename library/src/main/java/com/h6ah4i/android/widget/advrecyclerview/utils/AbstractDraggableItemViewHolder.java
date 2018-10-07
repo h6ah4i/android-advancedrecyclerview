@@ -16,11 +16,12 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.annotation.DraggableItemStateFlags;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class AbstractDraggableItemViewHolder extends RecyclerView.ViewHolder implements DraggableItemViewHolder {
     @DraggableItemStateFlags

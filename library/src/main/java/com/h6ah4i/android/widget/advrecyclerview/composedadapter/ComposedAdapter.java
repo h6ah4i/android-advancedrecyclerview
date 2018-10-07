@@ -15,9 +15,6 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.composedadapter;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
@@ -29,6 +26,10 @@ import com.h6ah4i.android.widget.advrecyclerview.adapter.WrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrappedAdapterUtils;
 
 import java.util.List;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A wrapper adapter which can compose and manage several children adapters.

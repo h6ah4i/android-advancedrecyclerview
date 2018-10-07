@@ -16,11 +16,11 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

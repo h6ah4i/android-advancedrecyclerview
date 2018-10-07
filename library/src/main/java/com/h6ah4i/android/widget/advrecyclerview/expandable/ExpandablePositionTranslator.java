@@ -16,9 +16,9 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.Arrays;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 class ExpandablePositionTranslator {
     public static final int BUILD_OPTION_DEFAULT = 0;

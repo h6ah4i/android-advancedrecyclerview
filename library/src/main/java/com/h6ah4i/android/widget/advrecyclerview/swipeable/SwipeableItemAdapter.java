@@ -16,14 +16,14 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemDrawableTypes;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemReactions;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
 

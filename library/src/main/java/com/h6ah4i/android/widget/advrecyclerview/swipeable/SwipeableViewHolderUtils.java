@@ -15,8 +15,9 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 class SwipeableViewHolderUtils {
     public static View getSwipeableContainerView(RecyclerView.ViewHolder vh) {

@@ -16,12 +16,13 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class ItemChangeAnimationManager extends BaseItemAnimationManager<ChangeAnimationInfo> {
     private static final String TAG = "ARVItemChangeAnimMgr";

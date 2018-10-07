@@ -16,12 +16,12 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation;
 
-import androidx.annotation.IntDef;
-
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 @IntDef(flag = true, value = {
         SwipeableItemConstants.STATE_FLAG_SWIPING,

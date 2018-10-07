@@ -17,20 +17,20 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleExpandableDataProviderFragment;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExpandableItemPinnedMessageDialogFragment;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ExpandableDraggableSwipeableExampleActivity extends AppCompatActivity implements ExpandableItemPinnedMessageDialogFragment.EventListener {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";

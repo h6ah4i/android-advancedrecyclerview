@@ -17,18 +17,18 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_s_basic;
 
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataProviderFragment;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ItemPinnedMessageDialogFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 
 public class SwipeableExampleActivity extends AppCompatActivity implements ItemPinnedMessageDialogFragment.EventListener {

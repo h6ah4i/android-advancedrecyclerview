@@ -16,8 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
@@ -33,6 +31,9 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 class ExpandableRecyclerViewWrapperAdapter
         extends SimpleWrapperAdapter<RecyclerView.ViewHolder>

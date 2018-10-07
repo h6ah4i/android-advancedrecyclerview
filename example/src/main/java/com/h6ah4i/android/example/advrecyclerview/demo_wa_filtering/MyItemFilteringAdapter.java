@@ -16,9 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_wa_filtering;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
@@ -26,6 +23,9 @@ import com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.UnwrapPositionResult;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 class MyItemFilteringAdapter extends SimpleWrapperAdapter {
     private boolean mFilteringEnabled = true;

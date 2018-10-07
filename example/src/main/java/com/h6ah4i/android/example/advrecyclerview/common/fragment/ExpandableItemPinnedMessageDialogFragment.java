@@ -20,12 +20,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import com.h6ah4i.android.example.advrecyclerview.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.h6ah4i.android.example.advrecyclerview.R;
 
 public class ExpandableItemPinnedMessageDialogFragment extends DialogFragment {
     private static final String KEY_GROUP_ITEM_POSITION = "group_position";

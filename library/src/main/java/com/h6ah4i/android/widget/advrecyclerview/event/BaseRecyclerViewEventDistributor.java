@@ -16,11 +16,11 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BaseRecyclerViewEventDistributor<T> {
     protected boolean mReleased;

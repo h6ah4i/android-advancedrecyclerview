@@ -15,12 +15,12 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Adapter path. This class represents how nested {@link WrapperAdapter}s route items.

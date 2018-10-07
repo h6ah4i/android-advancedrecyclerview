@@ -18,11 +18,6 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.graphics.Rect;
 import android.os.Build;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.ViewPropertyAnimatorCompat;
-import androidx.core.view.ViewPropertyAnimatorListener;
-import androidx.core.view.ViewPropertyAnimatorUpdateListener;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -36,6 +31,12 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.core.view.ViewPropertyAnimatorListener;
+import androidx.core.view.ViewPropertyAnimatorUpdateListener;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemSlidingAnimator {
     private static final String TAG = "ItemSlidingAnimator";

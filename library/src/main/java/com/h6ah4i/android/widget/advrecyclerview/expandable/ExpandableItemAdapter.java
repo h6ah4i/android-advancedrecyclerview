@@ -16,14 +16,15 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import androidx.annotation.IntRange;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemIdComposer;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
 
 import java.util.List;
+
+import androidx.annotation.IntRange;
+import androidx.recyclerview.widget.RecyclerView;
 
 public interface ExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder> {
 

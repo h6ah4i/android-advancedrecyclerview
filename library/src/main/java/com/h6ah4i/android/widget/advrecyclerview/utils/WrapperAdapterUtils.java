@@ -16,10 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPath;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter;
@@ -28,6 +24,10 @@ import com.h6ah4i.android.widget.advrecyclerview.adapter.WrapperAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class WrapperAdapterUtils {
 

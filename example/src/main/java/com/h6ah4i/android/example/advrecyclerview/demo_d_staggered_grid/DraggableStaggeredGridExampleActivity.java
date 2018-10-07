@@ -17,12 +17,13 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_d_staggered_grid;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataProviderFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 public class DraggableStaggeredGridExampleActivity extends AppCompatActivity {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";

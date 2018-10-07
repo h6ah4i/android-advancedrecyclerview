@@ -16,11 +16,12 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.touchguard;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Hooks touch events to avoid unexpected scrolling.

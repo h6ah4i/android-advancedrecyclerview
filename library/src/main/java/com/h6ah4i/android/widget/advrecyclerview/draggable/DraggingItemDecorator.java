@@ -21,14 +21,14 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.NinePatchDrawable;
-
-import androidx.annotation.NonNull;
-import androidx.core.view.ViewCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
+
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 class DraggingItemDecorator extends BaseDraggableItemDecorator {
     @SuppressWarnings("unused")

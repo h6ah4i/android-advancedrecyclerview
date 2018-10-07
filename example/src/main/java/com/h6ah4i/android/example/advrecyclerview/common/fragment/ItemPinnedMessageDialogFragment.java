@@ -20,11 +20,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+
+import com.h6ah4i.android.example.advrecyclerview.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-
-import com.h6ah4i.android.example.advrecyclerview.R;
 
 public class ItemPinnedMessageDialogFragment extends DialogFragment {
     private static final String KEY_ITEM_POSITION = "position";

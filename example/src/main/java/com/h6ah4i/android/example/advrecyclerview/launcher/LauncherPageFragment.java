@@ -17,13 +17,6 @@
 package com.h6ah4i.android.example.advrecyclerview.launcher;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +48,12 @@ import com.h6ah4i.android.example.advrecyclerview.demo_s_vertical.VerticalSwipea
 import com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager.ViewPagerSwipeableExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_wa_filtering.CustomFilteringWrapperAdapterExampleActivity;
 import com.h6ah4i.android.example.advrecyclerview.demo_wa_insertion.CustomInsertionWrapperAdapterExampleActivity;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class LauncherPageFragment extends Fragment {
     private static final String ARG_PAGE_NO = "page no";

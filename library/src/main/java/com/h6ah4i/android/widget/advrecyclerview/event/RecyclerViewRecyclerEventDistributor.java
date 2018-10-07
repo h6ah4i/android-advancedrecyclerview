@@ -16,10 +16,10 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
+import java.lang.ref.WeakReference;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.lang.ref.WeakReference;
 
 public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventDistributor<RecyclerView.RecyclerListener> {
 

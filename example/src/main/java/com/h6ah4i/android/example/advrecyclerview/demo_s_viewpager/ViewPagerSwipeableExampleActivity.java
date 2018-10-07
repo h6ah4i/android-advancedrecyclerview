@@ -17,14 +17,15 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_s_viewpager;
 
 import android.os.Bundle;
-import com.google.android.material.tabs.TabLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.fragment.ExampleDataProviderFragment;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 
 public class ViewPagerSwipeableExampleActivity extends AppCompatActivity {
