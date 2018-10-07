@@ -315,8 +315,7 @@ public class CustomRecyclerViewUtils {
             final boolean isFullSpan = ((StaggeredGridLayoutManager.LayoutParams) lp).isFullSpan();
             if (isFullSpan) {
                 final RecyclerView rv = (RecyclerView) itemView.getParent();
-                final int spanCount = getSpanCount(rv);
-                return spanCount;
+                return getSpanCount(rv);
             } else {
                 return 1;
             }
