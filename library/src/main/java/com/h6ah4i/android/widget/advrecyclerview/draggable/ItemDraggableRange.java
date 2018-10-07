@@ -16,6 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
+import androidx.annotation.NonNull;
+
 public class ItemDraggableRange {
     private final int mStart;
     private final int mEnd;
@@ -45,6 +47,7 @@ public class ItemDraggableRange {
         return "ItemDraggableRange";
     }
 
+    @NonNull
     @Override
     public String toString() {
         return getClassName() + "{" +

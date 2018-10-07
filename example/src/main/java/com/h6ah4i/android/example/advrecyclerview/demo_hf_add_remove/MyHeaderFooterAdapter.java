@@ -30,6 +30,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 class MyHeaderFooterAdapter
@@ -120,16 +121,18 @@ class MyHeaderFooterAdapter
         return mFooterItems.get(localPosition).viewType;
     }
 
+    @NonNull
     @Override
-    public HeaderViewHolder onCreateHeaderItemViewHolder(ViewGroup parent, int viewType) {
+    public HeaderViewHolder onCreateHeaderItemViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_item, parent, false);
         HeaderViewHolder vh = new HeaderViewHolder(v);
         vh.itemView.setOnClickListener(this);
         return vh;
     }
 
+    @NonNull
     @Override
-    public FooterViewHolder onCreateFooterItemViewHolder(ViewGroup parent, int viewType) {
+    public FooterViewHolder onCreateFooterItemViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_item, parent, false);
         FooterViewHolder vh = new FooterViewHolder(v);
         vh.itemView.setOnClickListener(this);
@@ -137,14 +140,14 @@ class MyHeaderFooterAdapter
     }
 
     @Override
-    public void onBindHeaderItemViewHolder(HeaderViewHolder holder, int localPosition) {
+    public void onBindHeaderItemViewHolder(@NonNull HeaderViewHolder holder, int localPosition) {
         HeaderFooterItem item = mHeaderItems.get(localPosition);
         holder.textView.setText(item.text);
         holder.itemView.setBackgroundColor(item.bgColor);
     }
 
     @Override
-    public void onBindFooterItemViewHolder(FooterViewHolder holder, int localPosition) {
+    public void onBindFooterItemViewHolder(@NonNull FooterViewHolder holder, int localPosition) {
         HeaderFooterItem item = mFooterItems.get(localPosition);
         holder.textView.setText(item.text);
         holder.itemView.setBackgroundColor(item.bgColor);
@@ -185,7 +188,7 @@ class MyHeaderFooterAdapter
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         RecyclerView rv = RecyclerViewAdapterUtils.getParentRecyclerView(v);
         RecyclerView.ViewHolder vh = rv.findContainingViewHolder(v);
 

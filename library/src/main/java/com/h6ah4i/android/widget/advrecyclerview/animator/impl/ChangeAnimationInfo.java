@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ChangeAnimationInfo extends ItemAnimationInfo {
@@ -53,6 +54,7 @@ public class ChangeAnimationInfo extends ItemAnimationInfo {
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ChangeInfo{" +

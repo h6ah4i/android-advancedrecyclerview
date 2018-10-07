@@ -18,6 +18,8 @@ package com.h6ah4i.android.example.advrecyclerview.demo_d_minimal;
 
 import android.os.Bundle;
 import com.google.android.material.snackbar.Snackbar;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -100,14 +102,15 @@ public class MinimalDraggableExampleActivity extends AppCompatActivity {
             return mItems.get(position).id; // need to return stable (= not change even after reordered) value
         }
 
+        @NonNull
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_minimal, parent, false);
             return new MyViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             MyItem item = mItems.get(position);
             holder.textView.setText(item.text);
         }
@@ -124,12 +127,12 @@ public class MinimalDraggableExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
+        public boolean onCheckCanStartDrag(@NonNull MyViewHolder holder, int position, int x, int y) {
             return true;
         }
 
         @Override
-        public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
+        public ItemDraggableRange onGetItemDraggableRange(@NonNull MyViewHolder holder, int position) {
             return null;
         }
 

@@ -17,10 +17,12 @@
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
 import android.graphics.Canvas;
+import android.widget.EdgeEffect;
+
+import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.EdgeEffectCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import android.widget.EdgeEffect;
 
 abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
     private RecyclerView mRecyclerView;
@@ -43,7 +45,7 @@ abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
 
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         boolean needsInvalidate = false;
 
         if (mGlow1 != null) {

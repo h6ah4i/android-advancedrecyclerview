@@ -15,6 +15,7 @@
  */
 package com.h6ah4i.android.example.advrecyclerview.demo_composition_all;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,8 +92,9 @@ class MySwipeableAdapter
         return mItems.get(position).id; // need to return stable (= not change even after position changed) value
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         vh.containerView.setOnClickListener(this);
@@ -100,7 +102,7 @@ class MySwipeableAdapter
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         MyItem item = mItems.get(position);
         holder.textView.setText(item.text);
     }
@@ -111,12 +113,12 @@ class MySwipeableAdapter
     }
 
     @Override
-    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+    public void onSwipeItemStarted(@NonNull MyViewHolder holder, int position) {
         notifyDataSetChanged();
     }
 
     @Override
-    public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, @SwipeableItemResults int result) {
+    public SwipeResultAction onSwipeItem(@NonNull MyViewHolder holder, int position, @SwipeableItemResults int result) {
         if (result == Swipeable.RESULT_CANCELED) {
             return new SwipeResultActionDefault();
         } else {
@@ -125,18 +127,18 @@ class MySwipeableAdapter
     }
 
     @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
+    public int onGetSwipeReactionType(@NonNull MyViewHolder holder, int position, int x, int y) {
         return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
     }
 
     @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int position, @SwipeableItemDrawableTypes int type) {
+    public void onSetSwipeBackground(@NonNull MyViewHolder holder, int position, @SwipeableItemDrawableTypes int type) {
         int bgColor = ContextCompat.getColor(holder.itemView.getContext(), R.color.bg_swipe_item_gray);
         holder.itemView.setBackgroundColor(bgColor);
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         RecyclerView rv = RecyclerViewAdapterUtils.getParentRecyclerView(v);
         RecyclerView.ViewHolder vh = rv.findContainingViewHolder(v);
 

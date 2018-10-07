@@ -18,6 +18,8 @@ package com.h6ah4i.android.example.advrecyclerview.launcher;
 
 import android.app.Activity;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,8 +62,9 @@ public class LauncherButtonsAdapter
         mItems.add(new LauncherItem(activityClass, textRes));
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_item_launcher_button, parent, false);
         ViewHolder holder = new ViewHolder(v);
         holder.mButton.setOnClickListener(this);
@@ -69,7 +72,7 @@ public class LauncherButtonsAdapter
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LauncherItem item = mItems.get(position);
         holder.mButton.setText(item.mTextRes);
     }
@@ -80,7 +83,7 @@ public class LauncherButtonsAdapter
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         ViewHolder viewHolder = (ViewHolder) RecyclerViewAdapterUtils.getViewHolder(v);
         int position = viewHolder.getAdapterPosition();
 

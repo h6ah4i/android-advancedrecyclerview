@@ -18,6 +18,8 @@ package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
+
+import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewPropertyAnimatorCompat;
 import androidx.core.view.ViewPropertyAnimatorListener;
@@ -111,7 +113,7 @@ class SwapTargetItemOperator extends BaseDraggableItemDecorator {
     }
 
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         final RecyclerView.ViewHolder draggingItem = mDraggingItemViewHolder;
         final RecyclerView.ViewHolder swapTargetItem = mSwapTargetItem;
 

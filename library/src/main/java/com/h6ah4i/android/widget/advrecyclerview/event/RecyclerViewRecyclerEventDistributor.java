@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.lang.ref.WeakReference;
@@ -66,7 +67,7 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
         }
 
         @Override
-        public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
             final RecyclerViewRecyclerEventDistributor distributor = mRefDistributor.get();
             
             if (distributor != null) {

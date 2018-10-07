@@ -32,6 +32,8 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstant
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -102,8 +104,9 @@ class DraggableStaggeredGridExampleAdapter
         }
     }
 
+    @NonNull
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         switch (viewType) {
             case ITEM_VIEW_TYPE_HEADER: {
@@ -125,7 +128,7 @@ class DraggableStaggeredGridExampleAdapter
     }
 
     @Override
-    public void onBindViewHolder(BaseViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
         if (isHeader(position)) {
             onBindHeaderViewHolder((HeaderItemViewHolder) holder, position);
         } else {
@@ -193,12 +196,13 @@ class DraggableStaggeredGridExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanStartDrag(BaseViewHolder holder, int position, int x, int y) {
+    public boolean onCheckCanStartDrag(@NonNull BaseViewHolder holder, int position, int x, int y) {
         return !isHeader(position);
     }
 
+    @Nullable
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(BaseViewHolder holder, int position) {
+    public ItemDraggableRange onGetItemDraggableRange(@NonNull BaseViewHolder holder, int position) {
         int headerCount = getHeaderItemCount();
         return new ItemDraggableRange(headerCount, getItemCount() - 1);
     }

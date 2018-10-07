@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -151,8 +152,9 @@ class ExpandableRecyclerViewWrapperAdapter
         return (childPosition == RecyclerView.NO_POSITION) ? (type | VIEW_TYPE_FLAG_IS_GROUP) : (type);
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (mExpandableItemAdapter == null) {
             return null;
         }
@@ -177,7 +179,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
         if (mExpandableItemAdapter == null) {
             return;
         }
@@ -225,7 +227,7 @@ class ExpandableRecyclerViewWrapperAdapter
     }
 
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder, int viewType) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder, int viewType) {
         if (holder instanceof ExpandableItemViewHolder) {
             ((ExpandableItemViewHolder) holder).setExpandStateFlags(STATE_FLAG_INITIAL_VALUE);
         }
@@ -277,7 +279,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean onCheckCanStartDrag(RecyclerView.ViewHolder holder, int position, int x, int y) {
+    public boolean onCheckCanStartDrag(@NonNull RecyclerView.ViewHolder holder, int position, int x, int y) {
         if (!(mExpandableItemAdapter instanceof ExpandableDraggableItemAdapter)) {
             return false;
         }
@@ -307,7 +309,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(RecyclerView.ViewHolder holder, int position) {
+    public ItemDraggableRange onGetItemDraggableRange(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (!(mExpandableItemAdapter instanceof ExpandableDraggableItemAdapter)) {
             return null;
         }
@@ -668,7 +670,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public int onGetSwipeReactionType(RecyclerView.ViewHolder holder, int position, int x, int y) {
+    public int onGetSwipeReactionType(@NonNull RecyclerView.ViewHolder holder, int position, int x, int y) {
         if (!(mExpandableItemAdapter instanceof BaseExpandableSwipeableItemAdapter)) {
             return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_ANY;
         }
@@ -690,7 +692,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onSwipeItemStarted(RecyclerView.ViewHolder holder, int position) {
+    public void onSwipeItemStarted(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (!(mExpandableItemAdapter instanceof BaseExpandableSwipeableItemAdapter)) {
             return;
         }
@@ -712,7 +714,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onSetSwipeBackground(RecyclerView.ViewHolder holder, int position, int type) {
+    public void onSetSwipeBackground(@NonNull RecyclerView.ViewHolder holder, int position, int type) {
         if (!(mExpandableItemAdapter instanceof BaseExpandableSwipeableItemAdapter)) {
             return;
         }
@@ -734,7 +736,7 @@ class ExpandableRecyclerViewWrapperAdapter
 
     @SuppressWarnings("unchecked")
     @Override
-    public SwipeResultAction onSwipeItem(RecyclerView.ViewHolder holder, int position, int result) {
+    public SwipeResultAction onSwipeItem(@NonNull RecyclerView.ViewHolder holder, int position, int result) {
         if (!(mExpandableItemAdapter instanceof BaseExpandableSwipeableItemAdapter)) {
             return null;
         }
@@ -757,7 +759,7 @@ class ExpandableRecyclerViewWrapperAdapter
     // NOTE: This method is called from RecyclerViewExpandableItemManager
     /*package*/
     @SuppressWarnings("unchecked")
-    boolean onTapItem(RecyclerView.ViewHolder holder, int position, int x, int y) {
+    boolean onTapItem(@NonNull RecyclerView.ViewHolder holder, int position, int x, int y) {
         if (mExpandableItemAdapter == null) {
             return false;
         }

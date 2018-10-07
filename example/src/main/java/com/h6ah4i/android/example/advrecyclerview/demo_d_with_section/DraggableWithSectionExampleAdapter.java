@@ -33,6 +33,7 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstant
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 class DraggableWithSectionExampleAdapter
@@ -80,8 +81,9 @@ class DraggableWithSectionExampleAdapter
         return mProvider.getItem(position).getViewType();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         final View v;
@@ -100,7 +102,7 @@ class DraggableWithSectionExampleAdapter
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case ITEM_VIEW_TYPE_SECTION_HEADER:
                 onBindSectionHeaderViewHolder(holder, position);
@@ -160,7 +162,7 @@ class DraggableWithSectionExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
+    public boolean onCheckCanStartDrag(@NonNull MyViewHolder holder, int position, int x, int y) {
         // x, y --- relative from the itemView's top-left
 
         // return false if the item is a section header
@@ -178,7 +180,7 @@ class DraggableWithSectionExampleAdapter
     }
 
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
+    public ItemDraggableRange onGetItemDraggableRange(@NonNull MyViewHolder holder, int position) {
         final int start = findFirstSectionItem(position);
         final int end = findLastSectionItem(position);
 

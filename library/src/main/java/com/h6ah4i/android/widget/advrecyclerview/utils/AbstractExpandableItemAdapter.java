@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -36,9 +37,10 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * @param viewType not used
      * @return null
      */
+    @NonNull
     @Override
-    public final RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public final RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        throw new IllegalStateException("This method should not be called");
     }
 
     /**
@@ -101,7 +103,7 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * @param position not used
      */
     @Override
-    public final void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public final void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
     }
 
     /**

@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -69,7 +70,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     }
 
     @Override
-    public void onViewRecycled(VH holder, int viewType) {
+    public void onViewRecycled(@NonNull VH holder, int viewType) {
         super.onViewRecycled(holder, viewType);
 
         if ((mSwipingItemId != RecyclerView.NO_ID) && (mSwipingItemId == holder.getItemId())) {
@@ -103,8 +104,9 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
         }
     }
 
+    @NonNull
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final VH holder = super.onCreateViewHolder(parent, viewType);
 
         if (holder instanceof SwipeableItemViewHolder) {
@@ -115,7 +117,7 @@ class SwipeableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Ba
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(@NonNull VH holder, int position, @NonNull List<Object> payloads) {
         float prevSwipeItemSlideAmount = 0;
         SwipeableItemViewHolder swipeableHolder = (holder instanceof SwipeableItemViewHolder) ? (((SwipeableItemViewHolder) holder)) : null;
 

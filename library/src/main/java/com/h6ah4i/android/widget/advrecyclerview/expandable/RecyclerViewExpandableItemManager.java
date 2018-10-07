@@ -98,12 +98,12 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
     public RecyclerViewExpandableItemManager(@Nullable Parcelable savedState) {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
             @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 return RecyclerViewExpandableItemManager.this.onInterceptTouchEvent(rv, e);
             }
 
             @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
             }
 
             @Override

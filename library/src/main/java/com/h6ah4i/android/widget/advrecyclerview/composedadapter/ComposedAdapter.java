@@ -264,8 +264,9 @@ public class ComposedAdapter
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int origViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -279,7 +280,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final long segmentedPosition = getSegmentedPosition(position);
         final int segment = AdaptersSet.extractSegment(segmentedPosition);
         final int offset = AdaptersSet.extractSegmentOffset(segmentedPosition);
@@ -293,7 +294,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
         final long segmentedPosition = getSegmentedPosition(position);
         final int segment = AdaptersSet.extractSegment(segmentedPosition);
         final int offset = AdaptersSet.extractSegmentOffset(segmentedPosition);
@@ -306,7 +307,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         final List<RecyclerView.Adapter> adapters = mAdaptersSet.getUniqueAdaptersList();
         for (int i = 0; i < adapters.size(); i++) {
             adapters.get(i).onAttachedToRecyclerView(recyclerView);
@@ -317,7 +318,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         final List<RecyclerView.Adapter> adapters = mAdaptersSet.getUniqueAdaptersList();
         for (int i = 0; i < adapters.size(); i++) {
             adapters.get(i).onDetachedFromRecyclerView(recyclerView);
@@ -328,7 +329,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         onViewAttachedToWindow(holder, holder.getItemViewType());
     }
 
@@ -336,7 +337,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder, int viewType) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int wrappedViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -349,7 +350,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         onViewDetachedFromWindow(holder, holder.getItemViewType());
     }
 
@@ -357,7 +358,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder, int viewType) {
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int wrappedViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -370,7 +371,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         onViewRecycled(holder, holder.getItemViewType());
     }
 
@@ -378,7 +379,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder, int viewType) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int wrappedViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -391,7 +392,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+    public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
         return onFailedToRecycleView(holder, holder.getItemViewType());
     }
 
@@ -399,7 +400,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder, int viewType) {
+    public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int wrappedViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -453,7 +454,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterChanged(RecyclerView.Adapter source, Object tag) {
+    public void onBridgedAdapterChanged(@NonNull RecyclerView.Adapter source, Object tag) {
         onHandleWrappedAdapterChanged(source, (List<ComposedChildAdapterTag>) tag);
     }
 
@@ -462,7 +463,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
         onHandleWrappedAdapterItemRangeChanged(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount);
     }
 
@@ -471,7 +472,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount, Object payload) {
+    public void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, Object tag, int positionStart, int itemCount, Object payload) {
         onHandleWrappedAdapterItemRangeChanged(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount, payload);
     }
 
@@ -480,7 +481,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeInserted(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public void onBridgedAdapterItemRangeInserted(@NonNull RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
         onHandleWrappedAdapterItemRangeInserted(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount);
     }
 
@@ -489,7 +490,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeRemoved(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public void onBridgedAdapterItemRangeRemoved(@NonNull RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
         onHandleWrappedAdapterItemRangeRemoved(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount);
     }
 
@@ -498,7 +499,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterRangeMoved(RecyclerView.Adapter source, Object tag, int fromPosition, int toPosition, int itemCount) {
+    public void onBridgedAdapterRangeMoved(@NonNull RecyclerView.Adapter source, Object tag, int fromPosition, int toPosition, int itemCount) {
         onHandleWrappedAdapterRangeMoved(source, (List<ComposedChildAdapterTag>) tag, fromPosition, toPosition, itemCount);
     }
 

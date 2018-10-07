@@ -32,6 +32,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -147,13 +148,14 @@ public class DebugWrapperAdapterTest {
             return 0;
         }
 
+        @NonNull
         @Override
-        public TestViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public TestViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             throw new IllegalStateException("not implemented");
         }
 
         @Override
-        public void onBindViewHolder(TestViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
             throw new IllegalStateException("not implemented");
         }
     }

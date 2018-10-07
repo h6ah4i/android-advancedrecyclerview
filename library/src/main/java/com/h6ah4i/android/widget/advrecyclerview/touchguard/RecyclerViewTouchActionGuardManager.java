@@ -46,12 +46,12 @@ public class RecyclerViewTouchActionGuardManager {
     public RecyclerViewTouchActionGuardManager() {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
             @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 return RecyclerViewTouchActionGuardManager.this.onInterceptTouchEvent(rv, e);
             }
 
             @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 RecyclerViewTouchActionGuardManager.this.onTouchEvent(rv, e);
             }
 

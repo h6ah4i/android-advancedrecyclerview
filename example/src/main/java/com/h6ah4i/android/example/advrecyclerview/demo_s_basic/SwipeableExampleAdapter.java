@@ -34,6 +34,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 class SwipeableExampleAdapter
@@ -116,15 +117,16 @@ class SwipeableExampleAdapter
         return mProvider.getItem(position).getViewType();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_item, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         // set listeners
@@ -164,17 +166,17 @@ class SwipeableExampleAdapter
     }
 
     @Override
-    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+    public void onSwipeItemStarted(@NonNull MyViewHolder holder, int position) {
         notifyDataSetChanged();
     }
 
     @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
+    public int onGetSwipeReactionType(@NonNull MyViewHolder holder, int position, int x, int y) {
         return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
     }
 
     @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
+    public void onSetSwipeBackground(@NonNull MyViewHolder holder, int position, int type) {
         int bgRes = 0;
         switch (type) {
             case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
@@ -192,7 +194,7 @@ class SwipeableExampleAdapter
     }
 
     @Override
-    public SwipeResultAction onSwipeItem(MyViewHolder holder, final int position, int result) {
+    public SwipeResultAction onSwipeItem(@NonNull MyViewHolder holder, final int position, int result) {
         Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
         switch (result) {

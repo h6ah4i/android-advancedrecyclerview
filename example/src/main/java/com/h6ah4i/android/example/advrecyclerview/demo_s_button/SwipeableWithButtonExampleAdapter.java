@@ -36,6 +36,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 class SwipeableWithButtonExampleAdapter
@@ -125,15 +127,16 @@ class SwipeableWithButtonExampleAdapter
         return mProvider.getItem(position).getViewType();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_item_with_leave_behind_button, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         // set listeners
@@ -182,7 +185,7 @@ class SwipeableWithButtonExampleAdapter
     }
 
     @Override
-    public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
+    public int onGetSwipeReactionType(@NonNull MyViewHolder holder, int position, int x, int y) {
         if (ViewUtils.hitTest(holder.getSwipeableContainerView(), x, y)) {
             return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
         } else {
@@ -191,12 +194,12 @@ class SwipeableWithButtonExampleAdapter
     }
 
     @Override
-    public void onSwipeItemStarted(MyViewHolder holder, int position) {
+    public void onSwipeItemStarted(@NonNull MyViewHolder holder, int position) {
         notifyDataSetChanged();
     }
 
     @Override
-    public void onSetSwipeBackground(MyViewHolder holder, int position, int type) {
+    public void onSetSwipeBackground(@NonNull MyViewHolder holder, int position, int type) {
         if (type == Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND) {
             holder.mBehindViews.setVisibility(View.GONE);
         } else {
@@ -204,8 +207,9 @@ class SwipeableWithButtonExampleAdapter
         }
     }
 
+    @Nullable
     @Override
-    public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, int result) {
+    public SwipeResultAction onSwipeItem(@NonNull MyViewHolder holder, int position, int result) {
         Log.d(TAG, "onSwipeItem(position = " + position + ", result = " + result + ")");
 
         switch (result) {

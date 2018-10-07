@@ -16,6 +16,7 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -116,7 +117,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
     }
 
     @Override
-    public void endAnimation(RecyclerView.ViewHolder item) {
+    public void endAnimation(@NonNull RecyclerView.ViewHolder item) {
 
         // this will trigger end callback which should set properties to their target values.
         cancelAnimations(item);

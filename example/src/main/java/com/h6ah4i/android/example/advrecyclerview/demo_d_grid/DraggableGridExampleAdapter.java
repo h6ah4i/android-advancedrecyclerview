@@ -32,6 +32,7 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 class DraggableGridExampleAdapter
@@ -81,15 +82,16 @@ class DraggableGridExampleAdapter
         return mProvider.getItem(position).getViewType();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_grid_item, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         // set text
@@ -133,12 +135,12 @@ class DraggableGridExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
+    public boolean onCheckCanStartDrag(@NonNull MyViewHolder holder, int position, int x, int y) {
         return true;
     }
 
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
+    public ItemDraggableRange onGetItemDraggableRange(@NonNull MyViewHolder holder, int position) {
         // no drag-sortable range specified
         return null;
     }

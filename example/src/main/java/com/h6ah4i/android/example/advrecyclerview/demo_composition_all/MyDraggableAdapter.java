@@ -32,6 +32,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 class MyDraggableAdapter
@@ -80,8 +81,9 @@ class MyDraggableAdapter
         return mItems.get(position).id; // need to return stable (= not change even after reordered) value
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_draggable, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         vh.containerView.setOnClickListener(this);
@@ -89,7 +91,7 @@ class MyDraggableAdapter
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         MyItem item = mItems.get(position);
         holder.textView.setText(item.text);
     }
@@ -106,12 +108,12 @@ class MyDraggableAdapter
     }
 
     @Override
-    public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
+    public boolean onCheckCanStartDrag(@NonNull MyViewHolder holder, int position, int x, int y) {
         return ViewUtils.hitTest(holder.dragHandle, x, y);
     }
 
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
+    public ItemDraggableRange onGetItemDraggableRange(@NonNull MyViewHolder holder, int position) {
         return null;
     }
 
@@ -131,7 +133,7 @@ class MyDraggableAdapter
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         RecyclerView rv = RecyclerViewAdapterUtils.getParentRecyclerView(v);
         RecyclerView.ViewHolder vh = rv.findContainingViewHolder(v);
 

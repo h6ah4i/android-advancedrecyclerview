@@ -38,7 +38,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param tag    The tag object
          * @see RecyclerView.AdapterDataObserver#onChanged()
          */
-        void onBridgedAdapterChanged(RecyclerView.Adapter source, Object tag);
+        void onBridgedAdapterChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int)} event.
@@ -49,7 +49,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param itemCount     Number of items that have changed
          * @see RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int)
          */
-        void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount);
+        void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)} event.
@@ -61,7 +61,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param payload       Optional parameter, use null to identify a "full" update
          * @see RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)
          */
-        void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount, Object payload);
+        void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount, @Nullable Object payload);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeInserted(int, int)} event.
@@ -72,7 +72,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param itemCount     Number of items inserted
          * @see RecyclerView.AdapterDataObserver#onItemRangeInserted(int, int)
          */
-        void onBridgedAdapterItemRangeInserted(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount);
+        void onBridgedAdapterItemRangeInserted(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeRemoved(int, int)} event.
@@ -83,7 +83,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param itemCount     Number of items removed from the data set
          * @see RecyclerView.AdapterDataObserver#onItemRangeRemoved(int, int)
          */
-        void onBridgedAdapterItemRangeRemoved(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount);
+        void onBridgedAdapterItemRangeRemoved(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)} event.
@@ -95,7 +95,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param itemCount    Number of items moved (NOTE: this parameter is not actually used, always 1.)
          * @see RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)
          */
-        void onBridgedAdapterRangeMoved(RecyclerView.Adapter source, Object tag, int fromPosition, int toPosition, int itemCount);
+        void onBridgedAdapterRangeMoved(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int fromPosition, int toPosition, int itemCount);
     }
 
     private final WeakReference<Subscriber> mRefSubscriber;
@@ -155,7 +155,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
      * {@inheritDoc}
      */
     @Override
-    public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+    public void onItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload) {
         final Subscriber subscriber = mRefSubscriber.get();
         final RecyclerView.Adapter source = mRefSourceHolder.get();
         if (subscriber != null && source != null) {

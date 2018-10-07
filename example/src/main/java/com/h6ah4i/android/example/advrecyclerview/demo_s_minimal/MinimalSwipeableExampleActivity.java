@@ -17,6 +17,8 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_s_minimal;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -110,14 +112,15 @@ public class MinimalSwipeableExampleActivity extends AppCompatActivity {
             return mItems.get(position).id; // need to return stable (= not change even after position changed) value
         }
 
+        @NonNull
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_for_swipe_minimal, parent, false);
             return new MyViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             MyItem item = mItems.get(position);
             holder.textView.setText(item.text);
         }
@@ -128,12 +131,12 @@ public class MinimalSwipeableExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onSwipeItemStarted(MyViewHolder holder, int position) {
+        public void onSwipeItemStarted(@NonNull MyViewHolder holder, int position) {
             notifyDataSetChanged();
         }
 
         @Override
-        public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, @SwipeableItemResults int result) {
+        public SwipeResultAction onSwipeItem(@NonNull MyViewHolder holder, int position, @SwipeableItemResults int result) {
             if (result == Swipeable.RESULT_CANCELED) {
                 return new SwipeResultActionDefault();
             } else {
@@ -142,12 +145,12 @@ public class MinimalSwipeableExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
+        public int onGetSwipeReactionType(@NonNull MyViewHolder holder, int position, int x, int y) {
             return Swipeable.REACTION_CAN_SWIPE_BOTH_H;
         }
 
         @Override
-        public void onSetSwipeBackground(MyViewHolder holder, int position, @SwipeableItemDrawableTypes int type) {
+        public void onSetSwipeBackground(@NonNull MyViewHolder holder, int position, @SwipeableItemDrawableTypes int type) {
         }
 
         static class MySwipeResultActionRemoveItem extends SwipeResultActionRemoveItem {

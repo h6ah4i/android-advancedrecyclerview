@@ -270,12 +270,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     public RecyclerViewDragDropManager() {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
             @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 return RecyclerViewDragDropManager.this.onInterceptTouchEvent(rv, e);
             }
 
             @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 RecyclerViewDragDropManager.this.onTouchEvent(rv, e);
             }
 
@@ -287,12 +287,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         mInternalUseOnScrollListener = new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 RecyclerViewDragDropManager.this.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 RecyclerViewDragDropManager.this.onScrolled(recyclerView, dx, dy);
             }
         };
