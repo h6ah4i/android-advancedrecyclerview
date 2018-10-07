@@ -294,7 +294,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      * Return the stable ID for the item at <code>localPosition</code>. If {@link #hasStableIds()}
      * would return false this method should return {@link RecyclerView#NO_ID}.
      *
-     * @param localPosition Foote adapter position to query
+     * @param localPosition Footer adapter position to query
      * @return the stable ID of the item at position
      * @see {@link RecyclerView.Adapter#getItemId(int)}
      */
