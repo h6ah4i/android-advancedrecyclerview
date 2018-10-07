@@ -20,7 +20,6 @@ import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.h6ah4i.android.widget.advrecyclerview.BuildConfig;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPath;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter;
