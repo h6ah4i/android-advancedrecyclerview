@@ -17,6 +17,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MoveAnimationInfo extends ItemAnimationInfo {
@@ -26,7 +27,7 @@ public class MoveAnimationInfo extends ItemAnimationInfo {
     public final int toX;
     public final int toY;
 
-    public MoveAnimationInfo(RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY) {
+    public MoveAnimationInfo(@NonNull RecyclerView.ViewHolder holder, int fromX, int fromY, int toX, int toY) {
         this.holder = holder;
         this.fromX = fromX;
         this.fromY = fromY;
@@ -35,12 +36,13 @@ public class MoveAnimationInfo extends ItemAnimationInfo {
     }
 
     @Override
+    @Nullable
     public RecyclerView.ViewHolder getAvailableViewHolder() {
         return holder;
     }
 
     @Override
-    public void clear(RecyclerView.ViewHolder item) {
+    public void clear(@NonNull RecyclerView.ViewHolder item) {
         if (holder == item) {
             holder = null;
         }

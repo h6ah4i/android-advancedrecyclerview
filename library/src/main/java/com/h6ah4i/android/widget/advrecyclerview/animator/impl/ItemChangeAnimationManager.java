@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public abstract class ItemChangeAnimationManager extends BaseItemAnimationManager<ChangeAnimationInfo> {
     private static final String TAG = "ARVItemChangeAnimMgr";
 
-    public ItemChangeAnimationManager(BaseItemAnimator itemAnimator) {
+    public ItemChangeAnimationManager(@NonNull BaseItemAnimator itemAnimator) {
         super(itemAnimator);
     }
 

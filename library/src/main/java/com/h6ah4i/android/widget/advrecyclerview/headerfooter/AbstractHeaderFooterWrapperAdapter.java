@@ -69,6 +69,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      * @param adapter Wrapped contents adapter.
      */
     @SuppressWarnings("unchecked")
+    @NonNull
     public AbstractHeaderFooterWrapperAdapter setAdapter(@NonNull RecyclerView.Adapter<? extends RecyclerView.ViewHolder> adapter) {
         if (mWrappedAdapter != null) {
             throw new IllegalStateException("setAdapter() can call only once");

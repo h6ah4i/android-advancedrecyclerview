@@ -201,6 +201,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      *
      * @return The Parcelable object which stores information need to restore the internal states.
      */
+    @NonNull
     public Parcelable getSavedState() {
         long[] adapterSavedState = null;
 
@@ -1054,7 +1055,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @param path            Adapter path for the wrapped adapter returned by the {@link #createWrappedAdapter(RecyclerView.Adapter)}.
      */
     @SuppressWarnings("StatementWithEmptyBody")
-    public void scrollToGroupWithTotalChildrenHeight(int groupPosition, int totalChildrenHeight, int topMargin, int bottomMargin, AdapterPath path) {
+    public void scrollToGroupWithTotalChildrenHeight(int groupPosition, int totalChildrenHeight, int topMargin, int bottomMargin, @Nullable AdapterPath path) {
         long packedPosition = RecyclerViewExpandableItemManager.getPackedPositionForGroup(groupPosition);
         int flatPosition = getFlatPosition(packedPosition);
 

@@ -26,7 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
  * Adapter path. This class represents how nested {@link WrapperAdapter}s route items.
  */
 public class AdapterPath {
-    private List<AdapterPathSegment> mSegments = new ArrayList<>();
+    @NonNull
+    private final List<AdapterPathSegment> mSegments = new ArrayList<>();
 
     /**
      * Constructor.

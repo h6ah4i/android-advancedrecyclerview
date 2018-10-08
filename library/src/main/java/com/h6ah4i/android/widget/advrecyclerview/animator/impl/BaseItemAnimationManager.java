@@ -173,10 +173,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         mItemAnimator.dispatchFinishedWhenDone();
     }
 
-    protected void enqueuePendingAnimationInfo(T info) {
-        if (info == null) {
-            throw new IllegalStateException("info is null");
-        }
+    protected void enqueuePendingAnimationInfo(@NonNull T info) {
         mPending.add(info);
     }
 

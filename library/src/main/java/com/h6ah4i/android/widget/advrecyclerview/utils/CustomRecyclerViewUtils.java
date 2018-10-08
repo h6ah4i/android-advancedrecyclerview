@@ -114,7 +114,7 @@ public class CustomRecyclerViewUtils {
         return (child != null) ? rv.getChildViewHolder(child) : null;
     }
 
-    public static Rect getLayoutMargins(View v, Rect outMargins) {
+    public static Rect getLayoutMargins(@NonNull View v, @NonNull Rect outMargins) {
         final ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
         if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
             final ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) layoutParams;
@@ -128,7 +128,7 @@ public class CustomRecyclerViewUtils {
         return outMargins;
     }
 
-    public static Rect getDecorationOffsets(@NonNull RecyclerView.LayoutManager layoutManager, View view, Rect outDecorations) {
+    public static Rect getDecorationOffsets(@NonNull RecyclerView.LayoutManager layoutManager, @NonNull View view, @NonNull Rect outDecorations) {
         outDecorations.left = layoutManager.getLeftDecorationWidth(view);
         outDecorations.right = layoutManager.getRightDecorationWidth(view);
         outDecorations.top = layoutManager.getTopDecorationHeight(view);

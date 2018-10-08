@@ -20,23 +20,25 @@ import com.h6ah4i.android.widget.advrecyclerview.adapter.BridgeAdapterDataObserv
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 class ComposedChildAdapterDataObserver extends BridgeAdapterDataObserver {
-    public ComposedChildAdapterDataObserver(Subscriber subscriber, RecyclerView.Adapter sourceAdapter) {
+    public ComposedChildAdapterDataObserver(@NonNull Subscriber subscriber, @NonNull RecyclerView.Adapter sourceAdapter) {
         super(subscriber, sourceAdapter, new ArrayList<ComposedChildAdapterTag>());
     }
 
     @SuppressWarnings("unchecked")
+    @NonNull
     private List<ComposedChildAdapterTag> getChildAdapterTags() {
         return (List<ComposedChildAdapterTag>) getTag();
     }
 
-    public void registerChildAdapterTag(ComposedChildAdapterTag tag) {
+    public void registerChildAdapterTag(@NonNull ComposedChildAdapterTag tag) {
         getChildAdapterTags().add(tag);
     }
 
-    public void unregisterChildAdapterTag(ComposedChildAdapterTag tag) {
+    public void unregisterChildAdapterTag(@NonNull ComposedChildAdapterTag tag) {
         getChildAdapterTags().remove(tag);
     }
 
