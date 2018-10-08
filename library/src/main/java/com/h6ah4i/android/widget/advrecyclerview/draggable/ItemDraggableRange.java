@@ -43,6 +43,7 @@ public class ItemDraggableRange {
         return ((position >= mStart) && (position <= mEnd));
     }
 
+    @NonNull
     protected String getClassName() {
         return "ItemDraggableRange";
     }

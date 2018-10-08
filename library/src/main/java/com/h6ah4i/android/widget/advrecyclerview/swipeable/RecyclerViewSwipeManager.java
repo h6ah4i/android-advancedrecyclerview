@@ -137,6 +137,7 @@ public class RecyclerViewSwipeManager implements SwipeableItemConstants {
      * @return Wrapped adapter which is associated to this {@link RecyclerViewSwipeManager} instance.
      */
     @SuppressWarnings("unchecked")
+    @NonNull
     public RecyclerView.Adapter createWrappedAdapter(@NonNull RecyclerView.Adapter adapter) {
         if (!adapter.hasStableIds()) {
             throw new IllegalArgumentException("The passed adapter does not support stable IDs");

@@ -30,6 +30,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemVie
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -146,31 +147,33 @@ public class MinimalExpandableExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+        @NonNull
+        public MyGroupViewHolder onCreateGroupViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_group_item_for_expandable_minimal, parent, false);
             return new MyGroupViewHolder(v);
         }
 
         @Override
-        public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+        @NonNull
+        public MyChildViewHolder onCreateChildViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_child_item_for_expandable_minimal, parent, false);
             return new MyChildViewHolder(v);
         }
 
         @Override
-        public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
+        public void onBindGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition, int viewType) {
             MyGroupItem group = mItems.get(groupPosition);
             holder.textView.setText(group.text);
         }
 
         @Override
-        public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
+        public void onBindChildViewHolder(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
             MyChildItem child = mItems.get(groupPosition).children.get(childPosition);
             holder.textView.setText(child.text);
         }
 
         @Override
-        public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
+        public boolean onCheckCanExpandOrCollapseGroup(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
             return true;
         }
     }

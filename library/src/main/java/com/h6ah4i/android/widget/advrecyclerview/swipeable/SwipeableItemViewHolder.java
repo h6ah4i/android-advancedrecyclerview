@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemAfterReactions;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
@@ -223,7 +224,7 @@ public interface SwipeableItemViewHolder {
      *
      * @return The container view instance.
      */
-    @Nullable
+    @NonNull
     View getSwipeableContainerView();
 
     /**

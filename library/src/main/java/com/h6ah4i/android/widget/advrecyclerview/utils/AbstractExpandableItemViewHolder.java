@@ -21,13 +21,14 @@ import android.view.View;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.annotation.ExpandableItemStateFlags;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class AbstractExpandableItemViewHolder extends RecyclerView.ViewHolder implements ExpandableItemViewHolder {
     @ExpandableItemStateFlags
     private int mExpandStateFlags;
 
-    public AbstractExpandableItemViewHolder(View itemView) {
+    public AbstractExpandableItemViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 

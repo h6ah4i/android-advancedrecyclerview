@@ -278,7 +278,7 @@ public class CustomRecyclerViewUtils {
         return (holder != null) ? holder.getLayoutPosition() : RecyclerView.NO_POSITION;
     }
 
-    public static View findViewByPosition(RecyclerView.LayoutManager layoutManager, int position) {
+    public static View findViewByPosition(@NonNull RecyclerView.LayoutManager layoutManager, int position) {
         return (position != RecyclerView.NO_POSITION) ? layoutManager.findViewByPosition(position) : null;
     }
 

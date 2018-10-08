@@ -26,11 +26,13 @@ public class AdapterPathSegment {
     /**
      * Adapter
      */
+    @NonNull
     public final RecyclerView.Adapter adapter;
 
     /**
      * Tag object
      */
+    @Nullable
     public final Object tag;
 
     /**

@@ -24,6 +24,7 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableI
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemStateFlags;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewHolder implements SwipeableItemViewHolder {
@@ -41,7 +42,7 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     private float mMaxRightSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
     private float mMaxDownSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_BOTTOM;
 
-    public AbstractSwipeableItemViewHolder(View itemView) {
+    public AbstractSwipeableItemViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 
@@ -109,6 +110,7 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     }
 
     @Override
+    @NonNull
     public abstract View getSwipeableContainerView();
 
     @Override

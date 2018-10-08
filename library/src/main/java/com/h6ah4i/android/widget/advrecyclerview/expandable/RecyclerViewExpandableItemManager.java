@@ -170,6 +170,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
      * @return Wrapped adapter which is associated to this {@link RecyclerViewExpandableItemManager} instance.
      */
     @SuppressWarnings("unchecked")
+    @NonNull
     public RecyclerView.Adapter createWrappedAdapter(@NonNull RecyclerView.Adapter adapter) {
         if (!adapter.hasStableIds()) {
             throw new IllegalArgumentException("The passed adapter does not support stable IDs");
@@ -210,7 +211,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
         return new SavedState(adapterSavedState);
     }
 
-    /*package*/ boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+    /*package*/ boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         if (mWrapperAdapter == null) {
             return false;
         }
@@ -233,7 +234,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
         return false;
     }
 
-    private void handleActionDown(RecyclerView rv, MotionEvent e) {
+    private void handleActionDown(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         final RecyclerView.ViewHolder holder = CustomRecyclerViewUtils.findChildViewHolderUnderWithTranslation(rv, e.getX(), e.getY());
 
         mInitialTouchX = (int) (e.getX() + 0.5f);
@@ -246,7 +247,7 @@ public class RecyclerViewExpandableItemManager implements ExpandableItemConstant
         }
     }
 
-    private boolean handleActionUpOrCancel(RecyclerView rv, MotionEvent e) {
+    private boolean handleActionUpOrCancel(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
         final long touchedItemId = mTouchedItemId;
         final int initialTouchX = mInitialTouchX;
         final int initialTouchY = mInitialTouchY;

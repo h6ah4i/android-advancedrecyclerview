@@ -29,6 +29,7 @@ import java.util.List;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -111,6 +112,7 @@ public class ComposedAdapter
      * @return An instance of {@link ComposedChildAdapterTag}
      * @see #addAdapter(RecyclerView.Adapter, int)
      */
+    @NonNull
     public ComposedChildAdapterTag addAdapter(@NonNull RecyclerView.Adapter adapter) {
         return addAdapter(adapter, getChildAdapterCount());
     }
@@ -123,6 +125,7 @@ public class ComposedAdapter
      * @return An instance of {@link ComposedChildAdapterTag}
      * @see #addAdapter(RecyclerView.Adapter)
      */
+    @NonNull
     public ComposedChildAdapterTag addAdapter(@NonNull RecyclerView.Adapter adapter, int position) {
         if (hasObservers() && hasStableIds()) {
             if (!adapter.hasStableIds()) {
@@ -455,7 +458,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterChanged(@NonNull RecyclerView.Adapter source, Object tag) {
+    public void onBridgedAdapterChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag) {
         onHandleWrappedAdapterChanged(source, (List<ComposedChildAdapterTag>) tag);
     }
 
@@ -464,7 +467,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount) {
         onHandleWrappedAdapterItemRangeChanged(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount);
     }
 
@@ -473,7 +476,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, Object tag, int positionStart, int itemCount, Object payload) {
+    public void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount, Object payload) {
         onHandleWrappedAdapterItemRangeChanged(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount, payload);
     }
 
@@ -482,7 +485,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeInserted(@NonNull RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public void onBridgedAdapterItemRangeInserted(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount) {
         onHandleWrappedAdapterItemRangeInserted(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount);
     }
 
@@ -491,7 +494,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeRemoved(@NonNull RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public void onBridgedAdapterItemRangeRemoved(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount) {
         onHandleWrappedAdapterItemRangeRemoved(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount);
     }
 
@@ -500,16 +503,16 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterRangeMoved(@NonNull RecyclerView.Adapter source, Object tag, int fromPosition, int toPosition, int itemCount) {
+    public void onBridgedAdapterRangeMoved(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int fromPosition, int toPosition, int itemCount) {
         onHandleWrappedAdapterRangeMoved(source, (List<ComposedChildAdapterTag>) tag, fromPosition, toPosition, itemCount);
     }
 
-    protected void onHandleWrappedAdapterChanged(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags) {
+    protected void onHandleWrappedAdapterChanged(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags) {
         mSegmentedPositionTranslator.invalidateAll();
         notifyDataSetChanged();
     }
 
-    protected void onHandleWrappedAdapterItemRangeChanged(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
+    protected void onHandleWrappedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
         final int nTags = sourceTags.size();
         for (int i = 0; i < nTags; i++) {
             final int adapterSegment = mAdaptersSet.getAdapterSegment(sourceTags.get(i));
@@ -519,7 +522,7 @@ public class ComposedAdapter
         }
     }
 
-    protected void onHandleWrappedAdapterItemRangeChanged(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount, Object payload) {
+    protected void onHandleWrappedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount, Object payload) {
         final int nTags = sourceTags.size();
         for (int i = 0; i < nTags; i++) {
             final int adapterSegment = mAdaptersSet.getAdapterSegment(sourceTags.get(i));
@@ -529,7 +532,7 @@ public class ComposedAdapter
         }
     }
 
-    protected void onHandleWrappedAdapterItemRangeInserted(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
+    protected void onHandleWrappedAdapterItemRangeInserted(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
         if (itemCount <= 0) {
             return;
         }
@@ -554,7 +557,7 @@ public class ComposedAdapter
         }
     }
 
-    protected void onHandleWrappedAdapterItemRangeRemoved(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
+    protected void onHandleWrappedAdapterItemRangeRemoved(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
         if (itemCount <= 0) {
             return;
         }
@@ -579,7 +582,7 @@ public class ComposedAdapter
         }
     }
 
-    protected void onHandleWrappedAdapterRangeMoved(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localFromPosition, int localToPosition, int itemCount) {
+    protected void onHandleWrappedAdapterRangeMoved(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localFromPosition, int localToPosition, int itemCount) {
         if (itemCount != 1) {
             throw new IllegalStateException("itemCount should be always 1  (actual: " + itemCount + ")");
         }

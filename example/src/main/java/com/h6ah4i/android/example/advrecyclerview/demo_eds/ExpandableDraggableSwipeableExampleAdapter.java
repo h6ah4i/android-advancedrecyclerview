@@ -44,6 +44,7 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeabl
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 class ExpandableDraggableSwipeableExampleAdapter
@@ -104,6 +105,7 @@ class ExpandableDraggableSwipeableExampleAdapter
         }
 
         @Override
+        @NonNull
         public View getSwipeableContainerView() {
             return mContainer;
         }
@@ -180,21 +182,23 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyGroupViewHolder onCreateGroupViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_group_item_draggable, parent, false);
         return new MyGroupViewHolder(v);
     }
 
     @Override
-    public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyChildViewHolder onCreateChildViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_item_draggable, parent, false);
         return new MyChildViewHolder(v);
     }
 
     @Override
-    public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
+    public void onBindGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition, int viewType) {
         // group item
         final AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(groupPosition);
 
@@ -245,7 +249,7 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
+    public void onBindChildViewHolder(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
         // child item
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
@@ -289,7 +293,7 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
+    public boolean onCheckCanExpandOrCollapseGroup(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
         // check the item is *not* pinned
         if (mProvider.getGroupItem(groupPosition).isPinned()) {
             // return false to raise View.OnClickListener#onClick() event
@@ -311,7 +315,7 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public boolean onCheckGroupCanStartDrag(MyGroupViewHolder holder, int groupPosition, int x, int y) {
+    public boolean onCheckGroupCanStartDrag(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y) {
         // x, y --- relative from the itemView's top-left
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
@@ -323,7 +327,7 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public boolean onCheckChildCanStartDrag(MyChildViewHolder holder, int groupPosition, int childPosition, int x, int y) {
+    public boolean onCheckChildCanStartDrag(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int x, int y) {
         // x, y --- relative from the itemView's top-left
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
@@ -335,13 +339,13 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public ItemDraggableRange onGetGroupItemDraggableRange(MyGroupViewHolder holder, int groupPosition) {
+    public ItemDraggableRange onGetGroupItemDraggableRange(@NonNull MyGroupViewHolder holder, int groupPosition) {
         // no drag-sortable range specified
         return null;
     }
 
     @Override
-    public ItemDraggableRange onGetChildItemDraggableRange(MyChildViewHolder holder, int groupPosition, int childPosition) {
+    public ItemDraggableRange onGetChildItemDraggableRange(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition) {
         // no drag-sortable range specified
         return null;
     }
@@ -387,7 +391,7 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public int onGetGroupItemSwipeReactionType(MyGroupViewHolder holder, int groupPosition, int x, int y) {
+    public int onGetGroupItemSwipeReactionType(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y) {
         if (onCheckGroupCanStartDrag(holder, groupPosition, x, y)) {
             return Swipeable.REACTION_CAN_NOT_SWIPE_BOTH_H;
         }
@@ -396,7 +400,7 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public int onGetChildItemSwipeReactionType(MyChildViewHolder holder, int groupPosition, int childPosition, int x, int y) {
+    public int onGetChildItemSwipeReactionType(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int x, int y) {
         if (onCheckChildCanStartDrag(holder, groupPosition, childPosition, x, y)) {
             return Swipeable.REACTION_CAN_NOT_SWIPE_BOTH_H;
         }
@@ -405,17 +409,17 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public void onSwipeGroupItemStarted(MyGroupViewHolder holder, int groupPosition) {
+    public void onSwipeGroupItemStarted(@NonNull MyGroupViewHolder holder, int groupPosition) {
         notifyDataSetChanged();
     }
 
     @Override
-    public void onSwipeChildItemStarted(MyChildViewHolder holder, int groupPosition, int childPosition) {
+    public void onSwipeChildItemStarted(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition) {
         notifyDataSetChanged();
     }
 
     @Override
-    public void onSetGroupItemSwipeBackground(MyGroupViewHolder holder, int groupPosition, int type) {
+    public void onSetGroupItemSwipeBackground(@NonNull MyGroupViewHolder holder, int groupPosition, int type) {
         int bgResId = 0;
         switch (type) {
             case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
@@ -433,7 +437,7 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public void onSetChildItemSwipeBackground(MyChildViewHolder holder, int groupPosition, int childPosition, int type) {
+    public void onSetChildItemSwipeBackground(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int type) {
         int bgResId = 0;
         switch (type) {
             case Swipeable.DRAWABLE_SWIPE_NEUTRAL_BACKGROUND:
@@ -451,7 +455,7 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public SwipeResultAction onSwipeGroupItem(MyGroupViewHolder holder, int groupPosition, int result) {
+    public SwipeResultAction onSwipeGroupItem(@NonNull MyGroupViewHolder holder, int groupPosition, int result) {
         Log.d(TAG, "onSwipeGroupItem(groupPosition = " + groupPosition + ", result = " + result + ")");
 
         switch (result) {
@@ -479,7 +483,7 @@ class ExpandableDraggableSwipeableExampleAdapter
     }
 
     @Override
-    public SwipeResultAction onSwipeChildItem(MyChildViewHolder holder, int groupPosition, int childPosition, int result) {
+    public SwipeResultAction onSwipeChildItem(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int result) {
         Log.d(TAG, "onSwipeChildItem(groupPosition = " + groupPosition + ", childPosition = " + childPosition + ", result = " + result + ")");
 
         switch (result) {

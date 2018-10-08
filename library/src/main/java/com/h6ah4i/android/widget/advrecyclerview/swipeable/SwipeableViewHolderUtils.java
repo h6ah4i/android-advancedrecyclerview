@@ -17,10 +17,11 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 class SwipeableViewHolderUtils {
-    public static View getSwipeableContainerView(RecyclerView.ViewHolder vh) {
+    public static View getSwipeableContainerView(@Nullable RecyclerView.ViewHolder vh) {
         if (vh instanceof SwipeableItemViewHolder) {
             return getSwipeableContainerView((SwipeableItemViewHolder) vh);
         } else {
@@ -28,7 +29,7 @@ class SwipeableViewHolderUtils {
         }
     }
 
-    public static View getSwipeableContainerView(SwipeableItemViewHolder vh) {
+    public static View getSwipeableContainerView(@Nullable SwipeableItemViewHolder vh) {
         if (vh instanceof RecyclerView.ViewHolder) {
             View containerView = vh.getSwipeableContainerView();
             View itemView = ((RecyclerView.ViewHolder) vh).itemView;

@@ -37,6 +37,8 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandab
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 
+import androidx.annotation.NonNull;
+
 class ExpandableDraggableWithSectionExampleAdapter
         extends AbstractExpandableItemAdapter<ExpandableDraggableWithSectionExampleAdapter.MyGroupViewHolder, ExpandableDraggableWithSectionExampleAdapter.MyChildViewHolder>
         implements ExpandableDraggableItemAdapter<ExpandableDraggableWithSectionExampleAdapter.MyGroupViewHolder, ExpandableDraggableWithSectionExampleAdapter.MyChildViewHolder> {
@@ -140,7 +142,8 @@ class ExpandableDraggableWithSectionExampleAdapter
     }
 
     @Override
-    public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyGroupViewHolder onCreateGroupViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         final View v;
@@ -159,14 +162,15 @@ class ExpandableDraggableWithSectionExampleAdapter
     }
 
     @Override
-    public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyChildViewHolder onCreateChildViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_item_draggable, parent, false);
         return new MyChildViewHolder(v);
     }
 
     @Override
-    public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
+    public void onBindGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition, int viewType) {
         switch (viewType) {
             case GROUP_ITEM_VIEW_TYPE_SECTION_HEADER:
                 onbBindSectionHeaderGroupViewHolder(holder, groupPosition);
@@ -177,7 +181,7 @@ class ExpandableDraggableWithSectionExampleAdapter
         }
     }
 
-    private void onbBindSectionHeaderGroupViewHolder(MyGroupViewHolder holder, int groupPosition) {
+    private void onbBindSectionHeaderGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition) {
         // group item
         final AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(groupPosition);
 
@@ -185,7 +189,7 @@ class ExpandableDraggableWithSectionExampleAdapter
         holder.mTextView.setText(item.getText());
     }
 
-    private void onBindItemGroupViewHolder(MyGroupViewHolder holder, int groupPosition) {
+    private void onBindItemGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition) {
         // group item
         final AbstractExpandableDataProvider.GroupData item = mProvider.getGroupItem(groupPosition);
 
@@ -224,7 +228,7 @@ class ExpandableDraggableWithSectionExampleAdapter
     }
 
     @Override
-    public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
+    public void onBindChildViewHolder(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
         // child item
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
@@ -253,7 +257,7 @@ class ExpandableDraggableWithSectionExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
+    public boolean onCheckCanExpandOrCollapseGroup(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
         // check is normal item
         if (!isSectionHeader(holder)) {
             return false;
@@ -274,7 +278,7 @@ class ExpandableDraggableWithSectionExampleAdapter
     }
 
     @Override
-    public boolean onCheckGroupCanStartDrag(MyGroupViewHolder holder, int groupPosition, int x, int y) {
+    public boolean onCheckGroupCanStartDrag(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y) {
         // check is normal item
         if (!isSectionHeader(holder)) {
             return false;
@@ -291,7 +295,7 @@ class ExpandableDraggableWithSectionExampleAdapter
     }
 
     @Override
-    public boolean onCheckChildCanStartDrag(MyChildViewHolder holder, int groupPosition, int childPosition, int x, int y) {
+    public boolean onCheckChildCanStartDrag(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int x, int y) {
         // x, y --- relative from the itemView's top-left
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
@@ -303,7 +307,7 @@ class ExpandableDraggableWithSectionExampleAdapter
     }
 
     @Override
-    public ItemDraggableRange onGetGroupItemDraggableRange(MyGroupViewHolder holder, int groupPosition) {
+    public ItemDraggableRange onGetGroupItemDraggableRange(@NonNull MyGroupViewHolder holder, int groupPosition) {
         if (mAllowItemsMoveAcrossSections) {
             return null;
         } else {
@@ -316,7 +320,7 @@ class ExpandableDraggableWithSectionExampleAdapter
     }
 
     @Override
-    public ItemDraggableRange onGetChildItemDraggableRange(MyChildViewHolder holder, int groupPosition, int childPosition) {
+    public ItemDraggableRange onGetChildItemDraggableRange(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition) {
         if (mAllowItemsMoveAcrossSections) {
             return null;
         } else {

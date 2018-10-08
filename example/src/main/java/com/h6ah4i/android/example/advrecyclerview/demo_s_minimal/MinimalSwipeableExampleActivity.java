@@ -86,6 +86,7 @@ public class MinimalSwipeableExampleActivity extends AppCompatActivity {
         }
 
         @Override
+        @NonNull
         public View getSwipeableContainerView() {
             return containerView;
         }

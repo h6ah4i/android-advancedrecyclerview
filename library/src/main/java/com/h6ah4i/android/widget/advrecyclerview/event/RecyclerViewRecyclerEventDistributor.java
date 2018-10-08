@@ -32,7 +32,7 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
     }
 
     @Override
-    protected void onRecyclerViewAttached(RecyclerView rv) {
+    protected void onRecyclerViewAttached(@NonNull RecyclerView rv) {
         super.onRecyclerViewAttached(rv);
 
         rv.setRecyclerListener(mInternalRecyclerListener);
@@ -48,7 +48,7 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
         }
     }
 
-    /*package*/ void handleOnViewRecycled(RecyclerView.ViewHolder holder) {
+    /*package*/ void handleOnViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         if (mListeners == null) {
             return;
         }
@@ -61,7 +61,7 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
     private static class InternalRecyclerListener implements RecyclerView.RecyclerListener {
         private final WeakReference<RecyclerViewRecyclerEventDistributor> mRefDistributor;
 
-        public InternalRecyclerListener(RecyclerViewRecyclerEventDistributor distributor) {
+        public InternalRecyclerListener(@NonNull RecyclerViewRecyclerEventDistributor distributor) {
             super();
             mRefDistributor = new WeakReference<>(distributor);
         }

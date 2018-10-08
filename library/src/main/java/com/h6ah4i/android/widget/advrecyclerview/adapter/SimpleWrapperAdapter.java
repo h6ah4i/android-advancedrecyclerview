@@ -68,6 +68,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * Returns underlying adapter.
      * @return The underlying adapter instance
      */
+    @Nullable
     public RecyclerView.Adapter<VH> getWrappedAdapter() {
         return mWrappedAdapter;
     }

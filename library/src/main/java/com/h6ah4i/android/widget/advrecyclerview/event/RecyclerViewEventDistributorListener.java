@@ -16,7 +16,9 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
+import androidx.annotation.NonNull;
+
 public interface RecyclerViewEventDistributorListener {
-    void onAddedToEventDistributor(BaseRecyclerViewEventDistributor distributor);
-    void onRemovedFromEventDistributor(BaseRecyclerViewEventDistributor distributor);
+    void onAddedToEventDistributor(@NonNull BaseRecyclerViewEventDistributor distributor);
+    void onRemovedFromEventDistributor(@NonNull BaseRecyclerViewEventDistributor distributor);
 }

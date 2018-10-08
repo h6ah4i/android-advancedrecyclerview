@@ -23,6 +23,7 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemAdapte
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder>
@@ -111,7 +112,7 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * {@inheritDoc}
      */
     @Override
-    public void onBindGroupViewHolder(GVH holder, int groupPosition, int viewType, List<Object> payloads) {
+    public void onBindGroupViewHolder(@NonNull GVH holder, int groupPosition, int viewType, @NonNull List<Object> payloads) {
         onBindGroupViewHolder(holder, groupPosition, viewType);
     }
 
@@ -119,7 +120,7 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * {@inheritDoc}
      */
     @Override
-    public void onBindChildViewHolder(CVH holder, int groupPosition, int childPosition, int viewType, List<Object> payloads) {
+    public void onBindChildViewHolder(@NonNull CVH holder, int groupPosition, int childPosition, int viewType, @NonNull List<Object> payloads) {
         onBindChildViewHolder(holder, groupPosition, childPosition, viewType);
     }
 
@@ -137,7 +138,7 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * {@inheritDoc}
      */
     @Override
-    public boolean onHookGroupExpand(int groupPosition, boolean fromUser, Object payload) {
+    public boolean onHookGroupExpand(int groupPosition, boolean fromUser, @Nullable Object payload) {
         return onHookGroupExpand(groupPosition, fromUser);
     }
 
@@ -155,7 +156,7 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * {@inheritDoc}
      */
     @Override
-    public boolean onHookGroupCollapse(int groupPosition, boolean fromUser, Object payload) {
+    public boolean onHookGroupCollapse(int groupPosition, boolean fromUser, @Nullable Object payload) {
         return onHookGroupCollapse(groupPosition, fromUser);
     }
 

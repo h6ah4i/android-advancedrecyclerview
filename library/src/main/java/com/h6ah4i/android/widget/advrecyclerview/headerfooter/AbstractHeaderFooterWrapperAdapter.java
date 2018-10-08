@@ -27,6 +27,7 @@ import java.util.List;
 
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -126,6 +127,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      *
      * @return Adapter for the header items
      */
+    @Nullable
     public RecyclerView.Adapter getHeaderAdapter() {
         return mHeaderAdapter;
     }
@@ -135,6 +137,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      *
      * @return Adapter for the footer items
      */
+    @Nullable
     public RecyclerView.Adapter getFooterAdapter() {
         return mFooterAdapter;
     }
@@ -143,6 +146,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      * Returns underlying adapter.
      * @return The underlying adapter instance
      */
+    @Nullable
     public RecyclerView.Adapter getWrappedAdapter() {
         return mWrappedAdapter;
     }
@@ -153,6 +157,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      *
      * @return AdapterPathSegment for the wrapped adapter
      */
+    @NonNull
     public AdapterPathSegment getWrappedAdapterSegment() {
       return new AdapterPathSegment(mWrappedAdapter, mWrappedAdapterTag);
     }
@@ -162,6 +167,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      *
      * @return AdapterPathSegment for the header adapter
      */
+    @NonNull
     public AdapterPathSegment getHeaderSegment() {
       return new AdapterPathSegment(mHeaderAdapter, mHeaderAdapterTag);
     }
@@ -171,6 +177,7 @@ public abstract class AbstractHeaderFooterWrapperAdapter<HeaderVH extends Recycl
      *
      * @return AdapterPathSegment for the footer adapter
      */
+    @NonNull
     public AdapterPathSegment getFooterSegment() {
       return new AdapterPathSegment(mFooterAdapter, mFooterAdapterTag);
     }

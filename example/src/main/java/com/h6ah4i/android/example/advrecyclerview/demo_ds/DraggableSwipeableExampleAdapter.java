@@ -80,6 +80,7 @@ class DraggableSwipeableExampleAdapter
         }
 
         @Override
+        @NonNull
         public View getSwipeableContainerView() {
             return mContainer;
         }

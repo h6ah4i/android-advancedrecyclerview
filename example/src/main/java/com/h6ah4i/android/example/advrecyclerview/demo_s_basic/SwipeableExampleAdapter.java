@@ -70,6 +70,7 @@ class SwipeableExampleAdapter
         }
 
         @Override
+        @NonNull
         public View getSwipeableContainerView() {
             return mContainer;
         }

@@ -54,7 +54,7 @@ public class WrappedAdapterUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static void invokeOnViewDetachedFromWindow(RecyclerView.Adapter adapter, RecyclerView.ViewHolder holder, int viewType) {
+    public static void invokeOnViewDetachedFromWindow(@NonNull RecyclerView.Adapter adapter, @NonNull RecyclerView.ViewHolder holder, int viewType) {
         if (adapter instanceof WrappedAdapter) {
             ((WrappedAdapter) adapter).onViewDetachedFromWindow(holder, viewType);
         } else {

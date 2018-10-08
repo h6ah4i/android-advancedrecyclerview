@@ -37,7 +37,7 @@ abstract class BaseEdgeEffectDecorator extends RecyclerView.ItemDecoration {
     protected static final int EDGE_RIGHT = 2;
     protected static final int EDGE_BOTTOM = 3;
 
-    public BaseEdgeEffectDecorator(RecyclerView recyclerView) {
+    public BaseEdgeEffectDecorator(@NonNull RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
     }
 

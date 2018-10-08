@@ -29,6 +29,8 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConsta
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
 
+import androidx.annotation.NonNull;
+
 class ExpandableExampleAdapter
         extends AbstractExpandableItemAdapter<ExpandableExampleAdapter.MyGroupViewHolder, ExpandableExampleAdapter.MyChildViewHolder> {
     private static final String TAG = "MyExpandableItemAdapter";
@@ -104,21 +106,23 @@ class ExpandableExampleAdapter
     }
 
     @Override
-    public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyGroupViewHolder onCreateGroupViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_group_item, parent, false);
         return new MyGroupViewHolder(v);
     }
 
     @Override
-    public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyChildViewHolder onCreateChildViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_item, parent, false);
         return new MyChildViewHolder(v);
     }
 
     @Override
-    public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
+    public void onBindGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition, int viewType) {
         // child item
         final AbstractExpandableDataProvider.BaseData item = mProvider.getGroupItem(groupPosition);
 
@@ -150,7 +154,7 @@ class ExpandableExampleAdapter
     }
 
     @Override
-    public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
+    public void onBindChildViewHolder(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
         // group item
         final AbstractExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
@@ -164,7 +168,7 @@ class ExpandableExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
+    public boolean onCheckCanExpandOrCollapseGroup(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
         // check the item is *not* pinned
         if (mProvider.getGroupItem(groupPosition).isPinned()) {
             // return false to raise View.OnClickListener#onClick() event

@@ -73,25 +73,25 @@ public abstract class GeneralItemAnimatorTest {
         mDummyParent = getActivity().mContainer;
         mAnimator.setListener(new BaseItemAnimator.ItemAnimatorListener() {
             @Override
-            public void onRemoveFinished(RecyclerView.ViewHolder item) {
+            public void onRemoveFinished(@NonNull RecyclerView.ViewHolder item) {
                 assertTrue(mRemoveFinished.add(item));
                 onFinished();
             }
 
             @Override
-            public void onAddFinished(RecyclerView.ViewHolder item) {
+            public void onAddFinished(@NonNull RecyclerView.ViewHolder item) {
                 assertTrue(mAddFinished.add(item));
                 onFinished();
             }
 
             @Override
-            public void onMoveFinished(RecyclerView.ViewHolder item) {
+            public void onMoveFinished(@NonNull RecyclerView.ViewHolder item) {
                 assertTrue(mMoveFinished.add(item));
                 onFinished();
             }
 
             @Override
-            public void onChangeFinished(RecyclerView.ViewHolder item) {
+            public void onChangeFinished(@NonNull RecyclerView.ViewHolder item) {
                 assertTrue(mChangeFinished.add(item));
                 onFinished();
             }

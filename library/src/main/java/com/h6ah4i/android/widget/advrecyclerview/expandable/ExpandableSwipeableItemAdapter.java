@@ -18,6 +18,7 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder>
@@ -39,7 +40,7 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      *
      * @return {@link SwipeResultAction} object.
      */
-    SwipeResultAction onSwipeGroupItem(GVH holder, int groupPosition, int result);
+    SwipeResultAction onSwipeGroupItem(@NonNull GVH holder, int groupPosition, int result);
 
     /**
      * Called when child item is swiped.
@@ -58,5 +59,5 @@ public interface ExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHol
      *
      * @return {@link SwipeResultAction} object.
      */
-    SwipeResultAction onSwipeChildItem(CVH holder, int groupPosition, int childPosition, int result);
+    SwipeResultAction onSwipeChildItem(@NonNull CVH holder, int groupPosition, int childPosition, int result);
 }

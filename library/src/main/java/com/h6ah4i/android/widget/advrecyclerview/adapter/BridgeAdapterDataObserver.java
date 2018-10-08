@@ -120,6 +120,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
      *
      * @return The tag object
      */
+    @Nullable
     public Object getTag() {
         return mTag;
     }

@@ -66,6 +66,7 @@ class VerticalSwipeableExampleAdapter
         }
 
         @Override
+        @NonNull
         public View getSwipeableContainerView() {
             return mContainer;
         }

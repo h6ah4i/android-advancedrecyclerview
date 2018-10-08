@@ -310,6 +310,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      * @return Wrapped adapter which is associated to this {@link RecyclerViewDragDropManager} instance.
      */
     @SuppressWarnings("unchecked")
+    @NonNull
     public RecyclerView.Adapter createWrappedAdapter(@NonNull RecyclerView.Adapter adapter) {
         if (!adapter.hasStableIds()) {
             throw new IllegalArgumentException("The passed adapter does not support stable IDs");

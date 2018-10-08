@@ -19,6 +19,7 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder> {
@@ -32,7 +33,7 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
      *
      * @return Whether can start dragging.
      */
-    boolean onCheckGroupCanStartDrag(GVH holder, int groupPosition, int x, int y);
+    boolean onCheckGroupCanStartDrag(@NonNull GVH holder, int groupPosition, int x, int y);
 
     /**
      * Called when user is attempt to drag the child item.
@@ -45,7 +46,7 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
      *
      * @return Whether can start dragging.
      */
-    boolean onCheckChildCanStartDrag(CVH holder, int groupPosition, int childPosition, int x, int y);
+    boolean onCheckChildCanStartDrag(@NonNull CVH holder, int groupPosition, int childPosition, int x, int y);
 
     /**
      * Called after the {@link #onCheckGroupCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int)} method returned true.
@@ -56,7 +57,7 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
      * @return null: no constraints (= new ItemDraggableRange(0, getGroupCount() - 1)),
      *         otherwise: the range specified item can be drag-sortable.
      */
-    ItemDraggableRange onGetGroupItemDraggableRange(GVH holder, int groupPosition);
+    ItemDraggableRange onGetGroupItemDraggableRange(@NonNull GVH holder, int groupPosition);
 
     /**
      * Called after the {@link #onCheckChildCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int, int)} method returned true.
@@ -68,7 +69,7 @@ public interface ExpandableDraggableItemAdapter<GVH extends RecyclerView.ViewHol
      * @return null: no constraints (= new ItemDraggableRange(0, getGroupCount() - 1)),
      *         otherwise: the range specified item can be drag-sortable.
      */
-    ItemDraggableRange onGetChildItemDraggableRange(CVH holder, int groupPosition, int childPosition);
+    ItemDraggableRange onGetChildItemDraggableRange(@NonNull CVH holder, int groupPosition, int childPosition);
 
     /**
      * Called when group item is moved. Should apply the move operation result to data set.

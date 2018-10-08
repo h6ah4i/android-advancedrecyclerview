@@ -66,6 +66,7 @@ class MySwipeableAdapter
         }
 
         @Override
+        @NonNull
         public View getSwipeableContainerView() {
             return containerView;
         }

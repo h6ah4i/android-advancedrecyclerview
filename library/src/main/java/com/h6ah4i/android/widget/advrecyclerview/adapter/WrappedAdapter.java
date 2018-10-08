@@ -15,6 +15,7 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -28,7 +29,7 @@ public interface WrappedAdapter<VH extends RecyclerView.ViewHolder> {
      * @param viewType Unwrapped view type. Use this instead of #{{@link RecyclerView.ViewHolder#getItemViewType()}}.
      * @see androidx.recyclerview.widget.RecyclerView.Adapter#onViewAttachedToWindow(RecyclerView.ViewHolder)
      */
-    void onViewAttachedToWindow(VH holder, int viewType);
+    void onViewAttachedToWindow(@NonNull VH holder, int viewType);
 
     /**
      * onViewDetachedFromWindow() with unwrapped item view type parameter.
@@ -37,7 +38,7 @@ public interface WrappedAdapter<VH extends RecyclerView.ViewHolder> {
      * @param viewType Unwrapped view type. Use this instead of #{{@link RecyclerView.ViewHolder#getItemViewType()}}.
      * @see androidx.recyclerview.widget.RecyclerView.Adapter#onViewDetachedFromWindow(RecyclerView.ViewHolder)
      */
-    void onViewDetachedFromWindow(VH holder, int viewType);
+    void onViewDetachedFromWindow(@NonNull VH holder, int viewType);
 
     /**
      * onViewRecycled() with unwrapped item view type parameter.
@@ -46,7 +47,7 @@ public interface WrappedAdapter<VH extends RecyclerView.ViewHolder> {
      * @param viewType Unwrapped view type. Use this instead of #{{@link RecyclerView.ViewHolder#getItemViewType()}}.
      * @see androidx.recyclerview.widget.RecyclerView.Adapter#onViewRecycled(RecyclerView.ViewHolder)
      */
-    void onViewRecycled(VH holder, int viewType);
+    void onViewRecycled(@NonNull VH holder, int viewType);
 
 
     /**
@@ -62,5 +63,5 @@ public interface WrappedAdapter<VH extends RecyclerView.ViewHolder> {
      * Default implementation returns false.
      * @see androidx.recyclerview.widget.RecyclerView.Adapter#onFailedToRecycleView(RecyclerView.ViewHolder)
      */
-    boolean onFailedToRecycleView(VH holder, int viewType);
+    boolean onFailedToRecycleView(@NonNull VH holder, int viewType);
 }

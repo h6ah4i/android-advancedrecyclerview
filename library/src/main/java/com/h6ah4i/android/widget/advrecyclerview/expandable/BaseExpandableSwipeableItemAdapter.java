@@ -19,6 +19,7 @@ package com.h6ah4i.android.widget.advrecyclerview.expandable;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemDrawableTypes;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemReactions;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public interface BaseExpandableSwipeableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder> {
@@ -45,7 +46,7 @@ public interface BaseExpandableSwipeableItemAdapter<GVH extends RecyclerView.Vie
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#REACTION_CAN_SWIPE_DOWN}
      */
     @SwipeableItemReactions
-    int onGetGroupItemSwipeReactionType(GVH holder, int groupPosition, int x, int y);
+    int onGetGroupItemSwipeReactionType(@NonNull GVH holder, int groupPosition, int x, int y);
 
     /**
      * Called when user is attempt to swipe the child item.
@@ -71,7 +72,7 @@ public interface BaseExpandableSwipeableItemAdapter<GVH extends RecyclerView.Vie
      *         - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#REACTION_CAN_SWIPE_DOWN}
      */
     @SwipeableItemReactions
-    int onGetChildItemSwipeReactionType(CVH holder, int groupPosition, int childPosition, int x, int y);
+    int onGetChildItemSwipeReactionType(@NonNull CVH holder, int groupPosition, int childPosition, int x, int y);
 
     /**
      * Called when started swiping a group item.
@@ -81,7 +82,7 @@ public interface BaseExpandableSwipeableItemAdapter<GVH extends RecyclerView.Vie
      * @param holder The ViewHolder that is associated the swiped item.
      * @param groupPosition Group position.
      */
-    void onSwipeGroupItemStarted(GVH holder, int groupPosition);
+    void onSwipeGroupItemStarted(@NonNull GVH holder, int groupPosition);
 
     /**
      * Called when started swiping a child item.
@@ -92,7 +93,7 @@ public interface BaseExpandableSwipeableItemAdapter<GVH extends RecyclerView.Vie
      * @param groupPosition Group position.
      * @param childPosition Child position.
      */
-    void onSwipeChildItemStarted(CVH holder, int groupPosition, int childPosition);
+    void onSwipeChildItemStarted(@NonNull CVH holder, int groupPosition, int childPosition);
 
     /**
      * Called when sets background of the swiping group item.
@@ -106,7 +107,7 @@ public interface BaseExpandableSwipeableItemAdapter<GVH extends RecyclerView.Vie
      *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#DRAWABLE_SWIPE_RIGHT_BACKGROUND} or
      *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#DRAWABLE_SWIPE_DOWN_BACKGROUND}.
      */
-    void onSetGroupItemSwipeBackground(GVH holder, int groupPosition, @SwipeableItemDrawableTypes int type);
+    void onSetGroupItemSwipeBackground(@NonNull GVH holder, int groupPosition, @SwipeableItemDrawableTypes int type);
 
 
     /**
@@ -122,5 +123,5 @@ public interface BaseExpandableSwipeableItemAdapter<GVH extends RecyclerView.Vie
      *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#DRAWABLE_SWIPE_RIGHT_BACKGROUND} or
      *          {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#DRAWABLE_SWIPE_DOWN_BACKGROUND}.
      */
-    void onSetChildItemSwipeBackground(CVH holder, int groupPosition, int childPosition, @SwipeableItemDrawableTypes int type);
+    void onSetChildItemSwipeBackground(@NonNull CVH holder, int groupPosition, int childPosition, @SwipeableItemDrawableTypes int type);
 }

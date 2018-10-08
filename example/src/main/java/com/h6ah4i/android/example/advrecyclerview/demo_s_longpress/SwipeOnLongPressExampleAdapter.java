@@ -70,6 +70,7 @@ class SwipeOnLongPressExampleAdapter
         }
 
         @Override
+        @NonNull
         public View getSwipeableContainerView() {
             return mContainer;
         }
