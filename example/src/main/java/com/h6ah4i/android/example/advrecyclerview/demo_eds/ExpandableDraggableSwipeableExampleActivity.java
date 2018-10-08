@@ -17,7 +17,6 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_eds;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.R;
