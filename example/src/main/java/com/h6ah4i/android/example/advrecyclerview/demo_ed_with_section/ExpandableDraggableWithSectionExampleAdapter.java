@@ -30,7 +30,7 @@ import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIn
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.GroupPositionItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
@@ -49,17 +49,13 @@ class ExpandableDraggableWithSectionExampleAdapter
 
     private boolean mAllowItemsMoveAcrossSections;
 
-    // NOTE: Make accessible with short name
-    private interface Expandable extends ExpandableItemConstants {
-    }
-
     private AbstractExpandableDataProvider mProvider;
 
     public static abstract class MyBaseViewHolder extends AbstractDraggableItemViewHolder implements ExpandableItemViewHolder {
         public FrameLayout mContainer;
         public View mDragHandle;
         public TextView mTextView;
-        private int mExpandStateFlags;
+        private final ExpandableItemState mExpandState = new ExpandableItemState();
 
         public MyBaseViewHolder(View v) {
             super(v);
@@ -70,12 +66,18 @@ class ExpandableDraggableWithSectionExampleAdapter
 
         @Override
         public int getExpandStateFlags() {
-            return mExpandStateFlags;
+            return mExpandState.getFlags();
         }
 
         @Override
-        public void setExpandStateFlags(int flag) {
-            mExpandStateFlags = flag;
+        public void setExpandStateFlags(int flags) {
+            mExpandState.setFlags(flags);
+        }
+
+        @NonNull
+        @Override
+        public ExpandableItemState getExpandState() {
+            return mExpandState;
         }
     }
 
@@ -195,13 +197,11 @@ class ExpandableDraggableWithSectionExampleAdapter
 
         // set background resource (target view ID: container)
         final DraggableItemState dragState = holder.getDragState();
-        final int expandState = holder.getExpandStateFlags();
+        final ExpandableItemState expandState = holder.getExpandState();
 
-        if (dragState.isUpdated() ||
-                ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (dragState.isUpdated() || expandState.isUpdated()) {
             int bgResId;
-            boolean isExpanded;
-            boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
+            boolean animateIndicator = expandState.hasExpandedStateChanged();
 
             if (dragState.isActive()) {
                 bgResId = R.drawable.bg_group_item_dragging_active_state;
@@ -210,16 +210,14 @@ class ExpandableDraggableWithSectionExampleAdapter
                 DrawableUtils.clearState(holder.mContainer.getForeground());
             } else if (dragState.isDragging() && dragState.isInRange()) {
                 bgResId = R.drawable.bg_group_item_dragging_state;
-            } else if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
+            } else if (expandState.isExpanded()) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
             } else {
                 bgResId = R.drawable.bg_group_item_normal_state;
             }
 
-            isExpanded = (expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0;
-
             holder.mContainer.setBackgroundResource(bgResId);
-            holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
+            holder.mIndicator.setExpandedState(expandState.isExpanded(), animateIndicator);
         }
     }
 

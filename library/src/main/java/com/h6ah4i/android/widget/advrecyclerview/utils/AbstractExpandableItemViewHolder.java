@@ -18,6 +18,7 @@ package com.h6ah4i.android.widget.advrecyclerview.utils;
 
 import android.view.View;
 
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.annotation.ExpandableItemStateFlags;
 
@@ -25,21 +26,35 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class AbstractExpandableItemViewHolder extends RecyclerView.ViewHolder implements ExpandableItemViewHolder {
-    @ExpandableItemStateFlags
-    private int mExpandStateFlags;
+    private final ExpandableItemState mExpandState = new ExpandableItemState();
 
     public AbstractExpandableItemViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setExpandStateFlags(@ExpandableItemStateFlags int flags) {
-        mExpandStateFlags = flags;
+        mExpandState.setFlags(flags);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @ExpandableItemStateFlags
     public int getExpandStateFlags() {
-        return mExpandStateFlags;
+        return mExpandState.getFlags();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @NonNull
+    public ExpandableItemState getExpandState() {
+        return mExpandState;
     }
 }

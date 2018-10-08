@@ -25,7 +25,7 @@ import android.widget.TextView;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
-import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
@@ -38,10 +38,6 @@ class AlreadyExpandedGroupsExpandableExampleAdapter
 
     private AbstractAddRemoveExpandableDataProvider mProvider;
     private RecyclerViewExpandableItemManager mExpandableItemManager;
-
-    // NOTE: Make accessible with short name
-    private interface Expandable extends ExpandableItemConstants {
-    }
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
         public FrameLayout mContainer;
@@ -139,23 +135,20 @@ class AlreadyExpandedGroupsExpandableExampleAdapter
         holder.itemView.setClickable(true);
 
         // set background resource (target view ID: container)
-        final int expandState = holder.getExpandStateFlags();
+        final ExpandableItemState expandState = holder.getExpandState();
 
-        if ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0) {
+        if (expandState.isUpdated()) {
             int bgResId;
-            boolean isExpanded;
-            boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
+            boolean animateIndicator = expandState.hasExpandedStateChanged();
 
-            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
+            if (expandState.isExpanded()) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
-                isExpanded = true;
             } else {
                 bgResId = R.drawable.bg_group_item_normal_state;
-                isExpanded = false;
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
-            holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
+            holder.mIndicator.setExpandedState(expandState.isExpanded(), animateIndicator);
         }
     }
 

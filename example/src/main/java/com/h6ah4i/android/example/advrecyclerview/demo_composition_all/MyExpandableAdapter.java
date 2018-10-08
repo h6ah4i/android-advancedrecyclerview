@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.OnListItemClickMessageListener;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
-import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
@@ -154,13 +154,12 @@ class MyExpandableAdapter
     public void onBindGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition, int viewType) {
         MyGroupItem group = mItems.get(groupPosition);
         holder.textView.setText(group.text);
-        final int expandState = holder.getExpandStateFlags();
+        final ExpandableItemState expandState = holder.getExpandState();
 
-        if ((expandState & ExpandableItemConstants.STATE_FLAG_IS_UPDATED) != 0) {
-            boolean isExpanded = ((expandState & ExpandableItemConstants.STATE_FLAG_IS_EXPANDED) != 0);
-            boolean animateIndicator = ((expandState & ExpandableItemConstants.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
+        if (expandState.isUpdated()) {
+            boolean animateIndicator = expandState.hasExpandedStateChanged();
 
-            holder.indicator.setExpandedState(isExpanded, animateIndicator);
+            holder.indicator.setExpandedState(expandState.isExpanded(), animateIndicator);
         }
     }
 
