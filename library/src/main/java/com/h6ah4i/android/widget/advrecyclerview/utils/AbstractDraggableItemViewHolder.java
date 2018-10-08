@@ -18,6 +18,7 @@ package com.h6ah4i.android.widget.advrecyclerview.utils;
 
 import android.view.View;
 
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.annotation.DraggableItemStateFlags;
 
@@ -25,21 +26,35 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class AbstractDraggableItemViewHolder extends RecyclerView.ViewHolder implements DraggableItemViewHolder {
-    @DraggableItemStateFlags
-    private int mDragStateFlags;
+    private final DraggableItemState mDragState = new DraggableItemState();
 
     public AbstractDraggableItemViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setDragStateFlags(@DraggableItemStateFlags int flags) {
-        mDragStateFlags = flags;
+        mDragState.setFlags(flags);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @DraggableItemStateFlags
     public int getDragStateFlags() {
-        return mDragStateFlags;
+        return mDragState.getFlags();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @NonNull
+    public DraggableItemState getDragState() {
+        return mDragState;
     }
 }

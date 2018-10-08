@@ -27,7 +27,7 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
@@ -40,10 +40,6 @@ class DraggableGridExampleAdapter
         implements DraggableItemAdapter<DraggableGridExampleAdapter.MyViewHolder> {
     private static final String TAG = "MyDraggableItemAdapter";
     private int mItemMoveMode = RecyclerViewDragDropManager.ITEM_MOVE_MODE_DEFAULT;
-
-    // NOTE: Make accessible with short name
-    private interface Draggable extends DraggableItemConstants {
-    }
 
     private AbstractDataProvider mProvider;
 
@@ -98,17 +94,17 @@ class DraggableGridExampleAdapter
         holder.mTextView.setText(item.getText());
 
         // set background resource (target view ID: container)
-        final int dragState = holder.getDragStateFlags();
+        final DraggableItemState dragState = holder.getDragState();
 
-        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (dragState.isUpdated()) {
             int bgResId;
 
-            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
+            if (dragState.isActive()) {
                 bgResId = R.drawable.bg_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if ((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) {
+            } else if (dragState.isDragging()) {
                 bgResId = R.drawable.bg_item_dragging_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;

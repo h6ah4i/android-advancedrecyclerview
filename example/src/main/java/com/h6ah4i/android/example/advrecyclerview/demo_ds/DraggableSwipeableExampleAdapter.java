@@ -28,7 +28,7 @@ import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvid
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
@@ -49,8 +49,6 @@ class DraggableSwipeableExampleAdapter
     private static final String TAG = "MyDSItemAdapter";
 
     // NOTE: Make accessible with short name
-    private interface Draggable extends DraggableItemConstants {
-    }
     private interface Swipeable extends SwipeableItemConstants {
     }
 
@@ -140,19 +138,18 @@ class DraggableSwipeableExampleAdapter
         holder.mTextView.setText(item.getText());
 
         // set background resource (target view ID: container)
-        final int dragState = holder.getDragStateFlags();
+        final DraggableItemState dragState = holder.getDragState();
         final int swipeState = holder.getSwipeStateFlags();
 
-        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0) ||
-                ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (dragState.isUpdated() || (swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0) {
             int bgResId;
 
-            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
+            if (dragState.isActive()) {
                 bgResId = R.drawable.bg_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if ((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) {
+            } else if (dragState.isDragging()) {
                 bgResId = R.drawable.bg_item_dragging_state;
             } else if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
                 bgResId = R.drawable.bg_item_swiping_active_state;

@@ -27,7 +27,7 @@ import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractExpandable
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
@@ -51,9 +51,6 @@ class ExpandableDraggableWithSectionExampleAdapter
 
     // NOTE: Make accessible with short name
     private interface Expandable extends ExpandableItemConstants {
-    }
-
-    private interface Draggable extends DraggableItemConstants {
     }
 
     private AbstractExpandableDataProvider mProvider;
@@ -197,22 +194,21 @@ class ExpandableDraggableWithSectionExampleAdapter
         holder.mTextView.setText(item.getText());
 
         // set background resource (target view ID: container)
-        final int dragState = holder.getDragStateFlags();
+        final DraggableItemState dragState = holder.getDragState();
         final int expandState = holder.getExpandStateFlags();
 
-        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0) ||
+        if (dragState.isUpdated() ||
                 ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0)) {
             int bgResId;
             boolean isExpanded;
             boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
 
-            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
+            if (dragState.isActive()) {
                 bgResId = R.drawable.bg_group_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if (((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) &&
-                    ((dragState & Draggable.STATE_FLAG_IS_IN_RANGE) != 0)) {
+            } else if (dragState.isDragging() && dragState.isInRange()) {
                 bgResId = R.drawable.bg_group_item_dragging_state;
             } else if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
@@ -235,18 +231,17 @@ class ExpandableDraggableWithSectionExampleAdapter
         // set text
         holder.mTextView.setText(item.getText());
 
-        final int dragState = holder.getDragStateFlags();
+        final DraggableItemState dragState = holder.getDragState();
 
-        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (dragState.isUpdated()) {
             int bgResId;
 
-            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
+            if (dragState.isActive()) {
                 bgResId = R.drawable.bg_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if (((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) &&
-                    ((dragState & Draggable.STATE_FLAG_IS_IN_RANGE) != 0)) {
+            } else if (dragState.isDragging() && dragState.isInRange()) {
                 bgResId = R.drawable.bg_item_dragging_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;
