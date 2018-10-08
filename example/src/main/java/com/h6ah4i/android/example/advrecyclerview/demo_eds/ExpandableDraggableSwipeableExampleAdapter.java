@@ -36,6 +36,7 @@ import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemViewHo
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableSwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
@@ -208,11 +209,11 @@ class ExpandableDraggableSwipeableExampleAdapter
         // set background resource (target view ID: container)
         final DraggableItemState dragState = holder.getDragState();
         final int expandState = holder.getExpandStateFlags();
-        final int swipeState = holder.getSwipeStateFlags();
+        final SwipeableItemState swipeState = holder.getSwipeState();
 
         if (dragState.isUpdated() ||
                 ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0) ||
-                ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0)) {
+                swipeState.isUpdated()) {
             int bgResId;
             boolean isExpanded;
             boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
@@ -224,9 +225,9 @@ class ExpandableDraggableSwipeableExampleAdapter
                 DrawableUtils.clearState(holder.mContainer.getForeground());
             } else if (dragState.isDragging()) {
                 bgResId = R.drawable.bg_group_item_dragging_state;
-            } else if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
+            } else if (swipeState.isActive()) {
                 bgResId = R.drawable.bg_group_item_swiping_active_state;
-            } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
+            } else if (swipeState.isSwiping()) {
                 bgResId = R.drawable.bg_group_item_swiping_state;
             } else if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
@@ -260,10 +261,9 @@ class ExpandableDraggableSwipeableExampleAdapter
         holder.mTextView.setText(item.getText());
 
         final DraggableItemState dragState = holder.getDragState();
-        final int swipeState = holder.getSwipeStateFlags();
+        final SwipeableItemState swipeState = holder.getSwipeState();
 
-        if (dragState.isUpdated() ||
-                ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (dragState.isUpdated() || swipeState.isUpdated()) {
             int bgResId;
 
             if (dragState.isActive()) {
@@ -273,9 +273,9 @@ class ExpandableDraggableSwipeableExampleAdapter
                 DrawableUtils.clearState(holder.mContainer.getForeground());
             } else if (dragState.isDragging()) {
                 bgResId = R.drawable.bg_item_dragging_state;
-            } else if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
+            } else if (swipeState.isActive()) {
                 bgResId = R.drawable.bg_item_swiping_active_state;
-            } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
+            } else if (swipeState.isSwiping()) {
                 bgResId = R.drawable.bg_item_swiping_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;

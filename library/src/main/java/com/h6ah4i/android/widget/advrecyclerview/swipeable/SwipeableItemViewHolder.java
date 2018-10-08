@@ -21,7 +21,7 @@ import android.view.View;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemAfterReactions;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Interface which provides required information for swiping item.
@@ -36,18 +36,29 @@ public interface SwipeableItemViewHolder {
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_SWIPING}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_IS_ACTIVE}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_IS_UPDATED}
+     * @see #getSwipeState()
      */
     void setSwipeStateFlags(int flags);
 
     /**
-     * Gets the state flags value for swiping item
+     * Gets the state flags value for swiping item. You can access these flags more human friendly way through {@link #getSwipeState()}.
      *
      * @return Bitwise OR of these flags;
      * - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_SWIPING}
      * - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_IS_ACTIVE}
      * - {@link com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants#STATE_FLAG_IS_UPDATED}
+     * @see #getSwipeState()
      */
     int getSwipeStateFlags();
+
+    /**
+     * Gets the state object for swipeable item.
+     * This method can be used inside of the {@link androidx.recyclerview.widget.RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)}.
+     *
+     * @return {@link SwipeableItemState} object
+     */
+    @NonNull
+    SwipeableItemState getSwipeState();
 
     /**
      * Sets the result code of swiping item.

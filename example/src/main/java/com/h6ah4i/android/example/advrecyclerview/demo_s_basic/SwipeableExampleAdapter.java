@@ -27,6 +27,7 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvider;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionMoveToSwipedDirection;
@@ -130,14 +131,14 @@ class SwipeableExampleAdapter
         holder.mTextView.setText(item.getText());
 
         // set background resource (target view ID: container)
-        final int swipeState = holder.getSwipeStateFlags();
+        final SwipeableItemState swipeState = holder.getSwipeState();
 
-        if ((swipeState & Swipeable.STATE_FLAG_IS_UPDATED) != 0) {
+        if (swipeState.isUpdated()) {
             int bgResId;
 
-            if ((swipeState & Swipeable.STATE_FLAG_IS_ACTIVE) != 0) {
+            if (swipeState.isActive()) {
                 bgResId = R.drawable.bg_item_swiping_active_state;
-            } else if ((swipeState & Swipeable.STATE_FLAG_SWIPING) != 0) {
+            } else if (swipeState.isSwiping()) {
                 bgResId = R.drawable.bg_item_swiping_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;
