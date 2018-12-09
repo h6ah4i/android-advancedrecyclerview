@@ -15,7 +15,7 @@ This branch contains GitHub Pages source of Advanced RecyclerView.
 2. Clone this repository.
 
   ```bash
-  git clone -b gh-pages-source --recurse-submodules git@github.com:h6ah4i/android-advancedrecyclerview.git android-advancedrecyclerview-gh-page
+  git clone --single-branch -b gh-pages-source git@github.com:h6ah4i/android-advancedrecyclerview.git android-advancedrecyclerview-gh-page
   ```
 
 ## How to develop the page contents?
