@@ -1,3 +1,23 @@
+## 1.0.0
+[Breaking changes]
+- Migrated to AndroidX
+- Removed some deprecated features
+  - `BaseWrapperAdapter`
+  - `SwipeableItemConstants.REACTION_CAN_SWIPE_BOTH`
+  - `SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH`
+  - `SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT`
+- New `DraggableItemState getDragState()` method added to the `DraggableItemViewHolder` interface
+- New `SwipeableItemState getSwipeState()` method added to the `SwipeableItemViewHolder` interface
+- New `ExpandableItemState getExpandState()` method added to the `ExpandableItemViewHolder` interface
+
+[New features & improvements]
+- Introduced `DraggableItemState`, no more `DraggableItemConstants.STATE_FLAG_**` bit operations required anymore in user code
+- Introduced `SwipeableItemState`, no more `SwipeableItemConstants.STATE_FLAG_**` bit operations required anymore in user code
+- Introduced `ExpandableItemState`, no more `ExpandableItemConstants.STATE_FLAG_**` bit operations required anymore in user code
+- Annotated many public method with `@NonNull` or `@Nullable`
+
+
+
 ## 0.11.0
 [Breaking changes]
 - Changed minimum SDK level to v14

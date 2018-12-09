@@ -35,18 +35,23 @@ Target platforms
 Latest version
 ---
 
-- Version 0.11.0  (October 29, 2017)   ([RELEASE NOTES](./RELEASE-NOTES.md))
+- Version 1.0.0  (December 16, 2018)   ([RELEASE NOTES](./RELEASE-NOTES.md))
 
 
 **Recent Breaking Change Info**
 
-- **v0.11.0:**
-  - Since official support libraries have dropped support older API levels than v14, this library does also dropped support them since v0.11.0. If you still need to support API level v9, please continue to use v0.10.6.
-  - A new callback `onItemSwipeStarted()` is added to `SwipeableItemAdapter`. Users must invoke appropriate `notify*()` method in this method.
-  - A new callback `onItemDragStarted()` is added to `DraggableItemAdapter`. Users must invoke appropriate `notify*()` method in this method.
-  - A new callback `onItemDragFinished()` is added to `DraggableItemAdapter`. Users must invoke appropriate `notify*()` method in this method.
+- **v1.0.0:**
+  - Migrated to AndroidX (Use **v0.11.0** instead if your project uses support libraries)
+  - `BaseWrapperAdapter`
+  - Removed some deprecated features
+    - `SwipeableItemConstants.REACTION_CAN_SWIPE_BOTH`
+    - `SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH`
+    - `SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT`
+  - New `DraggableItemState getDragState()` method added to the `DraggableItemViewHolder` interface
+  - New `SwipeableItemState getSwipeState()` method added to the `SwipeableItemViewHolder` interface
+  - New `ExpandableItemState getExpandState()` method added to the `ExpandableItemViewHolder` interface
 
-- **v0.10.4:** `OnGroupExpandListener` and `OnGroupCollapseListener` takes `payload` parameter. (related: [issue #350](https://github.com/h6ah4i/android-advancedrecyclerview/issues/350))
+:point_right: [Migration guide from v0.11.0 to v1.0.0](https://advancedrecyclerview.h6ah4i.com/migration/)
 
 
 Getting started
@@ -56,9 +61,7 @@ This library is published on jCenter. Just add these lines to `build.gradle`.
 
 ```gradle
 dependencies {
-    implementation ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:0.11.0@aar'){
-        transitive=true
-    }
+    implementation 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0'
 }
 ```
 

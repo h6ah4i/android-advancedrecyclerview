@@ -26,8 +26,8 @@ android {
         applicationId "com.h6ah4i.android.example.advrecyclerview"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 29
-        versionName "0.11.0"
+        versionCode 30
+        versionName "1.0.0"
         vectorDrawables.useSupportLibrary = true
     }
 
