@@ -20,9 +20,6 @@ theme:
   name: 'material'
   custom_dir: 'theme'
   favicon: 'favicon.ico'
-
-extra:
-  version: '0.10.0'
   palette:
     primary: 'teal'
     accent: 'deep-orange'
@@ -30,6 +27,16 @@ extra:
     github: 'h6ah4i'
     twitter: 'h6a_h4i'
   logo: 'images/header-logo.png'
+
+extra:
+  library:
+    version: '0.10.0'
+    repo_tree_base: 'https://github.com/h6ah4i/android-advancedrecyclerview/tree/0.10.0'
+    repo_blob_base: 'https://github.com/h6ah4i/android-advancedrecyclerview/blob/0.10.0'
+
+# Plugins
+plugins:
+  - markdownextradata
 
 # Extensions
 markdown_extensions:

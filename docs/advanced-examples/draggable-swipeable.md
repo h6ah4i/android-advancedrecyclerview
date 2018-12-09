@@ -2,7 +2,7 @@ One of the most advanced example which uses Draggable and Swipeable features.
 
 
 !!! tip ""
-    [:octocat: See the source code on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_ds)
+    [:octocat: See the source code on GitHub]({{ library.repo_tree_base }}/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_ds)
 
 ## Block diagram
 

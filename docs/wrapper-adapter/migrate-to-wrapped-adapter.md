@@ -81,7 +81,7 @@ void onClick(View v) {
 
 ### &raquo; If your adapter overrides optional methods of RecyclerView.Adapter
 
-:point_right: Implement the [`WrappedAdapter` :octocat:](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/WrappedAdapter.java) interface and use the `viewType` parameter instead of using `ViewHolder.getItemViewType()`
+:point_right: Implement the [`WrappedAdapter` :octocat:]({{ library.repo_blob_base }}/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/WrappedAdapter.java) interface and use the `viewType` parameter instead of using `ViewHolder.getItemViewType()`
 
 This step is only required in case of the adapter overrides the following methods;
 

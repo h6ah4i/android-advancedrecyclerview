@@ -1,7 +1,7 @@
 
 ## What's `ComposedAdapter`?
 
-The [`ComposedAdapter`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java) is an adapter which aggregates multiple adapters into one.
+The [`ComposedAdapter`]({{ library.repo_blob_base }}/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java) is an adapter which aggregates multiple adapters into one.
 
 ![Basic usage of ComposedAdapter](../images/block-diagram-composed-adapter.png)
 
@@ -14,7 +14,7 @@ composedAdapter.addAdapter(new AdapterC(new DataSet()));
 ```
 
 !!! info ""
-    :octocat: Check the [`ComposedAdapter` implementation on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java)
+    :octocat: Check the [`ComposedAdapter` implementation on GitHub]({{ library.repo_blob_base }}/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.java)
 
 !!! summary "Related methods"
     - [:blue_book: `ComposedChildAdapterTag ComposedAdapter.addAdapter(RecyclerView.Adapter adapter)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/composedadapter/ComposedAdapter.html#addAdapter(android.support.v7.widget.RecyclerView.Adapter))
@@ -52,7 +52,7 @@ The `ComposedAdapter` calls each child adapters as **segment**, also child adapt
 
 ## Item ID and ViewType handling
 
-When merging adapters, we must take care about item IDs. They have to be unique in entire the dataset, but the problem is child datasets may contains the duplicated IDs. The [`ItemIdComposer`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.java) is used to manage this problem.
+When merging adapters, we must take care about item IDs. They have to be unique in entire the dataset, but the problem is child datasets may contains the duplicated IDs. The [`ItemIdComposer`]({{ library.repo_blob_base }}/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.java) is used to manage this problem.
 
 ### ItemIdComposer
 
@@ -69,7 +69,7 @@ Item IDs are expressed by 64 bits length integer in RecyclerView, so it can be e
 
 
 !!! info ""
-    :octocat: Check the [`ItemIdComposer` implementation on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.java)
+    :octocat: Check the [`ItemIdComposer` implementation on GitHub]({{ library.repo_blob_base }}/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.java)
 
 !!! summary "Related methods"
     - [:blue_book: `long ItemIdComposer.composeSegment(int segment, long wrappedId)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemIdComposer.html#composeSegment(int, long))
@@ -98,7 +98,7 @@ Item view types are expressed by 32 bits integer in RecyclerView, and `ItemViewT
 
 
 !!! info ""
-    :octocat: Check the [`ItemViewTypeComposer` implementation on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.java)
+    :octocat: Check the [`ItemViewTypeComposer` implementation on GitHub]({{ library.repo_blob_base }}/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.java)
 
 !!! summary "Related methods"
     - [:blue_book: `int ItemViewTypeComposer.composeSegment(int segment, int wrappedViewType)`](/javadoc/reference/com/h6ah4i/android/widget/advrecyclerview/adapter/ItemViewTypeComposer.html#composeSegment(int, int))

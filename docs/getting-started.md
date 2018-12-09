@@ -5,7 +5,7 @@ Add the following lines of code into your `build.gradle`.
 
 ```groovy
 dependencies {
-    implementation ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:[VERSION_CODE_GOES_HERE]@aar'){
+    implementation ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:{{ library.version }}@aar'){
         transitive=true
     }
 }
@@ -41,7 +41,7 @@ If you've already know well about plain `RecyclerView`, proceed to each sections
 
 - **Demo app code**
     - [Install the demo app from Google Play](https://play.google.com/store/apps/details?id=com.h6ah4i.android.example.advrecyclerview)
-    - [Check the demo app code on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview)
+    - [Check the demo app code on GitHub]({{ library.repo_tree_base }}/example/src/main/java/com/h6ah4i/android/example/advrecyclerview)
 
 - **Official RecyclerView reference**
     - [Creating Lists and Cards --- Android Developers - Training](https://developer.android.com/training/material/lists-cards.html)

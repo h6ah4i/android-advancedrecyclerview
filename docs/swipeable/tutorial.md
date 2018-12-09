@@ -1,5 +1,5 @@
 !!! tip "Just looking for a sample code?"
-    :octocat: Check the [minimal swipe sample code on GitHub](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_minimal/MinimalSwipeableExampleActivity.java).
+    :octocat: Check the [minimal swipe sample code on GitHub]({{ library.repo_blob_base }}/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_minimal/MinimalSwipeableExampleActivity.java).
 
 ## Tutorial
 
@@ -69,12 +69,12 @@ Wrap content views with another `FrameLayout` whitch has `@+id/container` ID.
 
 ### Step 3. Modify ViewHolder
 
-1. Change parent class to [`AbstractSwipeableItemViewHolder`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java).
+1. Change parent class to [`AbstractSwipeableItemViewHolder`]({{ library.repo_blob_base }}/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java).
 2. Implement `getSwipeableContainerView()` method
 
 
 !!! note
-    The [`AbstractSwipeableItemViewHolder`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java) class is a convenience class which implements boilerplace methods of [`SwipeableItemViewHolder`](https://github.com/h6ah4i/android-advancedrecyclerview/blob/master/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemViewHolder.java).
+    The [`AbstractSwipeableItemViewHolder`]({{ library.repo_blob_base }}/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/utils/AbstractSwipeableItemViewHolder.java) class is a convenience class which implements boilerplace methods of [`SwipeableItemViewHolder`]({{ library.repo_blob_base }}/library/src/main/java/com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemViewHolder.java).
 
 
 ```java
@@ -234,4 +234,4 @@ void onCreate() {
 
 ### Step 6. Custom more and details of the implementation
 
-Please refer to [the demo app implementation :octocat:](https://github.com/h6ah4i/android-advancedrecyclerview/tree/master/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic) for more details.
+Please refer to [the demo app implementation :octocat:]({{ library.repo_tree_base }}/example/src/main/java/com/h6ah4i/android/example/advrecyclerview/demo_s_basic) for more details.
