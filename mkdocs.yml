@@ -3,12 +3,9 @@ site_name: 'Advanced RecyclerView'
 site_description: 'Documentation site for Advanced RecyclerView (https://github.com/h6ah4i/android-advancedrecyclerview)'
 site_author: 'Haruki Hasegawa'
 site_url: 'https://advancedrecyclerview.h6ah4i.com/'
-site_favicon: 'favicon.ico'
 
 # Documentation and theme
 docs_dir: 'docs'
-theme: 'material'
-theme_dir: 'theme'
 
 # Repository
 repo_name: 'GitHub'
@@ -17,6 +14,12 @@ edit_uri: tree/gh-pages-source/docs
 
 # Copyright
 copyright: 'Copyright &copy; 2017 Haruki Hasegawa'
+
+# Theme
+theme:
+  name: 'material'
+  custom_dir: 'theme'
+  favicon: 'favicon.ico'
 
 extra:
   version: '0.10.0'
@@ -32,7 +35,8 @@ extra:
 markdown_extensions:
   - codehilite
   - admonition
-  - toc(permalink=true)
+  - toc:
+      permalink: true
   - meta
   - pymdownx.emoji:
       emoji_index: !!python/name:pymdownx.emoji.gemoji
@@ -50,8 +54,8 @@ google_analytics:
   - 'UA-58259997-3'
   - 'auto'
 
-# Pages
-pages:
+# Nav
+nav:
 - Home: 'index.md'
 - Getting Started: 'getting-started.md'
 - Adapter:
