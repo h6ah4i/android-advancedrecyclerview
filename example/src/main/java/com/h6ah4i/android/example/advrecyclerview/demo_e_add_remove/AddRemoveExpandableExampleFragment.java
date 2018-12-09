@@ -71,7 +71,7 @@ public class AddRemoveExpandableExampleFragment
 
         //noinspection ConstantConditions
         mRecyclerView = getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(requireContext());
 
         final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
         mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
@@ -101,9 +101,9 @@ public class AddRemoveExpandableExampleFragment
         if (supportsViewElevation()) {
             // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
         } else {
-            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
+            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.material_shadow_z1)));
         }
-        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(), R.drawable.list_divider_h), true));
+        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(requireContext(), R.drawable.list_divider_h), true));
 
         mRecyclerViewExpandableItemManager.attachRecyclerView(mRecyclerView);
     }

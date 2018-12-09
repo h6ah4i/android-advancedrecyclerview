@@ -71,12 +71,12 @@ public class DraggableGridExampleFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new GridLayoutManager(getContext(), 3, RecyclerView.VERTICAL, false);
+        mLayoutManager = new GridLayoutManager(requireContext(), 3, RecyclerView.VERTICAL, false);
 
         // drag & drop manager
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
         mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
-                (NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z3));
+                (NinePatchDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.material_shadow_z3));
         // Start dragging after long press
         mRecyclerViewDragDropManager.setInitiateOnLongPress(true);
         mRecyclerViewDragDropManager.setInitiateOnMove(false);
@@ -105,7 +105,7 @@ public class DraggableGridExampleFragment extends Fragment {
         if (supportsViewElevation()) {
             // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
         } else {
-            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
+            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.material_shadow_z1)));
         }
 
         mRecyclerViewDragDropManager.attachRecyclerView(mRecyclerView);

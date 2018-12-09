@@ -64,7 +64,7 @@ public class SwipeableExampleFragment extends Fragment {
 
         //noinspection ConstantConditions
         mRecyclerView = getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext(),  RecyclerView.VERTICAL, false);
+        mLayoutManager = new LinearLayoutManager(requireContext(),  RecyclerView.VERTICAL, false);
 
         // touch guard manager  (this class is required to suppress scrolling while swipe-dismiss animation is running)
         mRecyclerViewTouchActionGuardManager = new RecyclerViewTouchActionGuardManager();
@@ -112,9 +112,9 @@ public class SwipeableExampleFragment extends Fragment {
         if (supportsViewElevation()) {
             // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
         } else {
-            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
+            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.material_shadow_z1)));
         }
-        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(), R.drawable.list_divider_h), true));
+        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(requireContext(), R.drawable.list_divider_h), true));
 
         // NOTE:
         // The initialization order is very important! This order determines the priority of touch event handling.

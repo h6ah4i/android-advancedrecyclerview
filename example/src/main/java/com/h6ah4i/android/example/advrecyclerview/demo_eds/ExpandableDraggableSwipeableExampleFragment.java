@@ -72,7 +72,7 @@ public class ExpandableDraggableSwipeableExampleFragment extends Fragment
 
         //noinspection ConstantConditions
         mRecyclerView = getView().findViewById(R.id.recycler_view);
-        mLayoutManager = new LinearLayoutManager(getContext());
+        mLayoutManager = new LinearLayoutManager(requireContext());
 
         final Parcelable eimSavedState = (savedInstanceState != null) ? savedInstanceState.getParcelable(SAVED_STATE_EXPANDABLE_ITEM_MANAGER) : null;
         mRecyclerViewExpandableItemManager = new RecyclerViewExpandableItemManager(eimSavedState);
@@ -87,7 +87,7 @@ public class ExpandableDraggableSwipeableExampleFragment extends Fragment
         // drag & drop manager
         mRecyclerViewDragDropManager = new RecyclerViewDragDropManager();
         mRecyclerViewDragDropManager.setDraggingItemShadowDrawable(
-                (NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z3));
+                (NinePatchDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.material_shadow_z3));
 
         // swipe manager
         mRecyclerViewSwipeManager = new RecyclerViewSwipeManager();
@@ -147,9 +147,9 @@ public class ExpandableDraggableSwipeableExampleFragment extends Fragment
         if (supportsViewElevation()) {
             // Lollipop or later has native drop shadow feature. ItemShadowDecorator is not required.
         } else {
-            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(getContext(), R.drawable.material_shadow_z1)));
+            mRecyclerView.addItemDecoration(new ItemShadowDecorator((NinePatchDrawable) ContextCompat.getDrawable(requireContext(), R.drawable.material_shadow_z1)));
         }
-        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(getContext(), R.drawable.list_divider_h), true));
+        mRecyclerView.addItemDecoration(new SimpleListDividerDecorator(ContextCompat.getDrawable(requireContext(), R.drawable.list_divider_h), true));
 
 
         // NOTE:
