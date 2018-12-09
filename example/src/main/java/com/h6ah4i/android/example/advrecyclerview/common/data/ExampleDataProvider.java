@@ -126,13 +126,7 @@ public class ExampleDataProvider extends AbstractDataProvider {
         }
 
         private static String makeText(long id, String text, int swipeReaction) {
-            final StringBuilder sb = new StringBuilder();
-
-            sb.append(id);
-            sb.append(" - ");
-            sb.append(text);
-
-            return sb.toString();
+            return String.valueOf(id) + " - " + text;
         }
 
         @Override

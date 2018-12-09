@@ -16,6 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
+import android.annotation.SuppressLint;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 public interface SwipeableItemConstants {
@@ -302,6 +304,7 @@ public interface SwipeableItemConstants {
      * <p>After-reaction type used for the {@link SwipeableItemViewHolder#setAfterSwipeReaction(int)} and {@link SwipeableItemViewHolder#getAfterSwipeReaction()} methods.</p>
      * <p>Represents that the item moved to swiped direction.</p>
      */
+    @SuppressLint("ShiftFlags")
     int AFTER_SWIPE_REACTION_MOVE_TO_SWIPED_DIRECTION = 2;
 
     /**

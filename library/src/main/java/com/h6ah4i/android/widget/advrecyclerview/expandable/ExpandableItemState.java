@@ -1,7 +1,6 @@
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.annotation.ExpandableItemStateFlags;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 
 /**
  * Helper class for decoding {@link ExpandableItemViewHolder#getExpandStateFlags()} flag values.
