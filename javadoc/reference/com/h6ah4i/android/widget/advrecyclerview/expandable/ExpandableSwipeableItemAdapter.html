@@ -192,6 +192,7 @@
     <li><h2>Classes</h2>
       <ul>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ChildPositionItemDraggableRange.html">ChildPositionItemDraggableRange</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html">ExpandableItemState</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/GroupPositionItemDraggableRange.html">GroupPositionItemDraggableRange</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.html">RecyclerViewExpandableItemManager</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.SavedState.html">RecyclerViewExpandableItemManager.SavedState</a></li>
@@ -314,7 +315,7 @@ Summary:
 
     <tr>
          	
-        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableSwipeableItemAdapter&lt;GVH&nbsp;extends&nbsp;android.support.v7.widget.RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;android.support.v7.widget.RecyclerView.ViewHolder&gt;</td>
+        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableSwipeableItemAdapter&lt;GVH&nbsp;extends&nbsp;androidx.recyclerview.widget.RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</td>
     </tr>
     
 
@@ -524,6 +525,42 @@ From interface
         <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/BaseExpandableSwipeableItemAdapter.html#onSetGroupItemSwipeBackground(GVH, int, int)">onSetGroupItemSwipeBackground</a></span>(GVH holder, int groupPosition, int type)
         
         <div class="jd-descrdiv">Called when sets background of the swiping group item.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            abstract
+            
+            
+            
+            
+            void
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/BaseExpandableSwipeableItemAdapter.html#onSwipeChildItemStarted(CVH, int, int)">onSwipeChildItemStarted</a></span>(CVH holder, int groupPosition, int childPosition)
+        
+        <div class="jd-descrdiv">Called when started swiping a child item.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            abstract
+            
+            
+            
+            
+            void
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/BaseExpandableSwipeableItemAdapter.html#onSwipeGroupItemStarted(GVH, int)">onSwipeGroupItemStarted</a></span>(GVH holder, int groupPosition)
+        
+        <div class="jd-descrdiv">Called when started swiping a group item.</div>
   
   </td></tr>
 

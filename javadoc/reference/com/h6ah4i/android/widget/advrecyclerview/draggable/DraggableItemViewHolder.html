@@ -188,6 +188,7 @@
     <li><h2>Classes</h2>
       <ul>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/BasicSwapTargetTranslationInterpolator.html">BasicSwapTargetTranslationInterpolator</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemState.html">DraggableItemState</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggingItemInfo.html">DraggingItemInfo</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/ItemDraggableRange.html">ItemDraggableRange</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/RecyclerViewDragDropManager.html">RecyclerViewDragDropManager</a></li>
@@ -356,7 +357,7 @@ Summary:
 <h2>Class Overview</h2>
 <p>Interface which provides required information for dragging item.
 
- Implement this interface on your sub-class of the android.support.v7.widget.RecyclerView.ViewHolder.
+ Implement this interface on your sub-class of the androidx.recyclerview.widget.RecyclerView.ViewHolder.
 </p>
 
 
@@ -424,18 +425,36 @@ Summary:
             
             
             
-            int
+            <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemState.html">DraggableItemState</a>
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.html#getDragStateFlags()">getDragStateFlags</a></span>()
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.html#getDragState()">getDragState</a></span>()
         
-        <div class="jd-descrdiv">Gets the state flags value for dragging item</div>
+        <div class="jd-descrdiv">Gets the state object for dragging item.</div>
   
   </td></tr>
 
 
 	 
     <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            abstract
+            
+            
+            
+            
+            int
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.html#getDragStateFlags()">getDragStateFlags</a></span>()
+        
+        <div class="jd-descrdiv">Gets the state flags value for dragging item.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
         <td class="jd-typecol">
             abstract
             
@@ -500,6 +519,43 @@ Summary:
 
 
 
+<a id="getDragState()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemState.html">DraggableItemState</a>
+      </span>
+      <span class="sympad">getDragState</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Gets the state object for dragging item.
+ This method can be used inside of the <code><a href="null#onBindViewHolder(VH, int)">onBindViewHolder(RecyclerView.ViewHolder, int)</a></code>.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li><code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemState.html">DraggableItemState</a></code> object
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
 <a id="getDragStateFlags()"></a>
 
 <div class="jd-details api apilevel-"> 
@@ -525,15 +581,19 @@ Summary:
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Gets the state flags value for dragging item</p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Gets the state flags value for dragging item. You can access these flags more human friendly way through <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.html#getDragState()">getDragState()</a></code>.</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Returns</h5>
       <ul class="nolist"><li>Bitwise OR of these flags;
               - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_DRAGGING">STATE_FLAG_DRAGGING</a></code>
               - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_IS_ACTIVE">STATE_FLAG_IS_ACTIVE</a></code>
               - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_IS_IN_RANGE">STATE_FLAG_IS_IN_RANGE</a></code>
-              - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_IS_UPDATED">STATE_FLAG_IS_UPDATED</a></code>
-</li></ul>
+              - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_IS_UPDATED">STATE_FLAG_IS_UPDATED</a></code></li></ul>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">See Also</h5>
+      <ul class="nolist"><li><code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.html#getDragState()">getDragState()</a></code></li>
+      </ul>
   </div>
 
     </div>
@@ -575,10 +635,14 @@ Summary:
               - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_DRAGGING">STATE_FLAG_DRAGGING</a></code>
               - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_IS_ACTIVE">STATE_FLAG_IS_ACTIVE</a></code>
               - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_IS_IN_RANGE">STATE_FLAG_IS_IN_RANGE</a></code>
-              - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_IS_UPDATED">STATE_FLAG_IS_UPDATED</a></code>
-</td>
+              - <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemConstants.html#STATE_FLAG_IS_UPDATED">STATE_FLAG_IS_UPDATED</a></code></td>
         </tr>
       </table>
+  </div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">See Also</h5>
+      <ul class="nolist"><li><code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemViewHolder.html#getDragState()">getDragState()</a></code></li>
+      </ul>
   </div>
 
     </div>
