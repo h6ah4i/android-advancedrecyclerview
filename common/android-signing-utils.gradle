@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-def loadSigningConfigFromPropertiesFile(project, signingConfig, propFileName) {
+static def loadSigningConfigFromPropertiesFile(project, signingConfig, propFileName) {
     def props = new Properties()
     def propFile = project.file(propFileName)
 

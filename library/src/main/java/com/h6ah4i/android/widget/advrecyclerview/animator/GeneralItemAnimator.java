@@ -16,14 +16,16 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator;
 
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.ItemAddAnimationManager;
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.ItemChangeAnimationManager;
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.ItemMoveAnimationManager;
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.ItemRemoveAnimationManager;
+
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class GeneralItemAnimator extends BaseItemAnimator {
     private static final String TAG = "ARVGeneralItemAnimator";
@@ -116,7 +118,7 @@ public abstract class GeneralItemAnimator extends BaseItemAnimator {
     }
 
     @Override
-    public void endAnimation(RecyclerView.ViewHolder item) {
+    public void endAnimation(@NonNull RecyclerView.ViewHolder item) {
 
         // this will trigger end callback which should set properties to their target values.
         cancelAnimations(item);

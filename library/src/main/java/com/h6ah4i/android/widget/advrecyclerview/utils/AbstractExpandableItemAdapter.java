@@ -16,12 +16,15 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemAdapter;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.ViewHolder, CVH extends RecyclerView.ViewHolder>
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -36,9 +39,10 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * @param viewType not used
      * @return null
      */
+    @NonNull
     @Override
-    public final RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+    public final RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        throw new IllegalStateException("This method should not be called");
     }
 
     /**
@@ -101,14 +105,14 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * @param position not used
      */
     @Override
-    public final void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public final void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onBindGroupViewHolder(GVH holder, int groupPosition, int viewType, List<Object> payloads) {
+    public void onBindGroupViewHolder(@NonNull GVH holder, int groupPosition, int viewType, @NonNull List<Object> payloads) {
         onBindGroupViewHolder(holder, groupPosition, viewType);
     }
 
@@ -116,7 +120,7 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * {@inheritDoc}
      */
     @Override
-    public void onBindChildViewHolder(CVH holder, int groupPosition, int childPosition, int viewType, List<Object> payloads) {
+    public void onBindChildViewHolder(@NonNull CVH holder, int groupPosition, int childPosition, int viewType, @NonNull List<Object> payloads) {
         onBindChildViewHolder(holder, groupPosition, childPosition, viewType);
     }
 
@@ -134,7 +138,7 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * {@inheritDoc}
      */
     @Override
-    public boolean onHookGroupExpand(int groupPosition, boolean fromUser, Object payload) {
+    public boolean onHookGroupExpand(int groupPosition, boolean fromUser, @Nullable Object payload) {
         return onHookGroupExpand(groupPosition, fromUser);
     }
 
@@ -152,7 +156,7 @@ public abstract class AbstractExpandableItemAdapter<GVH extends RecyclerView.Vie
      * {@inheritDoc}
      */
     @Override
-    public boolean onHookGroupCollapse(int groupPosition, boolean fromUser, Object payload) {
+    public boolean onHookGroupCollapse(int groupPosition, boolean fromUser, @Nullable Object payload) {
         return onHookGroupCollapse(groupPosition, fromUser);
     }
 

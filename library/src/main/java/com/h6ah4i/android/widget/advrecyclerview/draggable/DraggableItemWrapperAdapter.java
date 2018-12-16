@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -29,6 +28,9 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends SimpleWrapperAdapter<VH> implements SwipeableItemAdapter<VH> {
     private static final String TAG = "ARVDraggableWrapper";
@@ -71,8 +73,9 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
         mDragDropManager = null;
     }
 
+    @NonNull
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final VH holder = super.onCreateViewHolder(parent, viewType);
 
         if (holder instanceof DraggableItemViewHolder) {
@@ -83,7 +86,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
     }
 
     @Override
-    public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(@NonNull VH holder, int position, @NonNull List<Object> payloads) {
         if (isDragging()) {
             final long draggingItemId = mDraggingItemInfo.id;
             final long itemId = holder.getItemId();
@@ -297,7 +300,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
     }
 
     @Override
-    public void onViewRecycled(VH holder, int viewType) {
+    public void onViewRecycled(@NonNull VH holder, int viewType) {
         if (isDragging()) {
             mDragDropManager.onItemViewRecycled(holder);
             mDraggingItemViewHolder = mDragDropManager.getDraggingItemViewHolder();
@@ -435,7 +438,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
     //
     @SuppressWarnings("unchecked")
     @Override
-    public int onGetSwipeReactionType(VH holder, int position, int x, int y) {
+    public int onGetSwipeReactionType(@NonNull VH holder, int position, int x, int y) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
         if (!(adapter instanceof SwipeableItemAdapter)) {
             return RecyclerViewSwipeManager.REACTION_CAN_NOT_SWIPE_ANY;
@@ -449,7 +452,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onSwipeItemStarted(VH holder, int position) {
+    public void onSwipeItemStarted(@NonNull VH holder, int position) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
         if (!(adapter instanceof SwipeableItemAdapter)) {
             return;
@@ -462,7 +465,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
 
     @SuppressWarnings("unchecked")
     @Override
-    public void onSetSwipeBackground(VH holder, int position, int type) {
+    public void onSetSwipeBackground(@NonNull VH holder, int position, int type) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
         if (!(adapter instanceof SwipeableItemAdapter)) {
             return;
@@ -476,7 +479,7 @@ class DraggableItemWrapperAdapter<VH extends RecyclerView.ViewHolder> extends Si
 
     @SuppressWarnings("unchecked")
     @Override
-    public SwipeResultAction onSwipeItem(VH holder, int position, int result) {
+    public SwipeResultAction onSwipeItem(@NonNull VH holder, int position, int result) {
         RecyclerView.Adapter adapter = getWrappedAdapter();
         if (!(adapter instanceof SwipeableItemAdapter)) {
             return new SwipeResultActionDefault();

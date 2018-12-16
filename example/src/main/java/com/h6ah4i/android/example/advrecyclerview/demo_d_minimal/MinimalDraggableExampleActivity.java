@@ -17,15 +17,12 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_d_minimal;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
@@ -34,6 +31,11 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemView
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /*
  * This example shows very very minimal implementation of draggable feature.
@@ -99,14 +101,15 @@ public class MinimalDraggableExampleActivity extends AppCompatActivity {
             return mItems.get(position).id; // need to return stable (= not change even after reordered) value
         }
 
+        @NonNull
         @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_minimal, parent, false);
             return new MyViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
             MyItem item = mItems.get(position);
             holder.textView.setText(item.text);
         }
@@ -123,12 +126,12 @@ public class MinimalDraggableExampleActivity extends AppCompatActivity {
         }
 
         @Override
-        public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
+        public boolean onCheckCanStartDrag(@NonNull MyViewHolder holder, int position, int x, int y) {
             return true;
         }
 
         @Override
-        public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
+        public ItemDraggableRange onGetItemDraggableRange(@NonNull MyViewHolder holder, int position) {
             return null;
         }
 

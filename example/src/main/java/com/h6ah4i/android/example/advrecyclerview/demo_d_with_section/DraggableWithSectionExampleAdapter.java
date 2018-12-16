@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_d_with_section;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,18 +29,17 @@ import com.h6ah4i.android.example.advrecyclerview.common.data.ExampleSectionData
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 class DraggableWithSectionExampleAdapter
         extends RecyclerView.Adapter<DraggableWithSectionExampleAdapter.MyViewHolder>
         implements DraggableItemAdapter<DraggableWithSectionExampleAdapter.MyViewHolder> {
     private static final String TAG = "MyDragSectionAdapter";
-
-    // NOTE: Make accessible with short name
-    private interface Draggable extends DraggableItemConstants {
-    }
 
     private static final int ITEM_VIEW_TYPE_SECTION_HEADER = ExampleSectionDataProvider.ITEM_VIEW_TYPE_SECTION_HEADER;
     private static final int ITEM_VIEW_TYPE_SECTION_ITEM = ExampleSectionDataProvider.ITEM_VIEW_TYPE_SECTION_ITEM;
@@ -79,8 +77,9 @@ class DraggableWithSectionExampleAdapter
         return mProvider.getItem(position).getViewType();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
         final View v;
@@ -99,7 +98,7 @@ class DraggableWithSectionExampleAdapter
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         switch (holder.getItemViewType()) {
             case ITEM_VIEW_TYPE_SECTION_HEADER:
                 onBindSectionHeaderViewHolder(holder, position);
@@ -124,19 +123,17 @@ class DraggableWithSectionExampleAdapter
         holder.mTextView.setText(item.getText());
 
         // set background resource (target view ID: container)
-        final int dragState = holder.getDragStateFlags();
+        final DraggableItemState dragState = holder.getDragState();
 
-        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (dragState.isUpdated()) {
             int bgResId;
 
-            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
+            if (dragState.isUpdated()) {
                 bgResId = R.drawable.bg_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if (
-                    ((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) &&
-                    ((dragState & Draggable.STATE_FLAG_IS_IN_RANGE) != 0)) {
+            } else if (dragState.isDragging() && dragState.isInRange()) {
                 bgResId = R.drawable.bg_item_dragging_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;
@@ -159,7 +156,7 @@ class DraggableWithSectionExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
+    public boolean onCheckCanStartDrag(@NonNull MyViewHolder holder, int position, int x, int y) {
         // x, y --- relative from the itemView's top-left
 
         // return false if the item is a section header
@@ -177,7 +174,7 @@ class DraggableWithSectionExampleAdapter
     }
 
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
+    public ItemDraggableRange onGetItemDraggableRange(@NonNull MyViewHolder holder, int position) {
         final int start = findFirstSectionItem(position);
         final int end = findLastSectionItem(position);
 

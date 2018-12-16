@@ -15,9 +15,6 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.composedadapter;
 
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
@@ -29,6 +26,11 @@ import com.h6ah4i.android.widget.advrecyclerview.adapter.WrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrappedAdapterUtils;
 
 import java.util.List;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A wrapper adapter which can compose and manage several children adapters.
@@ -108,8 +110,9 @@ public class ComposedAdapter
      *
      * @param adapter The adapter which to be managed by the ComposedAdapter
      * @return An instance of {@link ComposedChildAdapterTag}
-     * @see {@link #addAdapter(RecyclerView.Adapter, int)}
+     * @see #addAdapter(RecyclerView.Adapter, int)
      */
+    @NonNull
     public ComposedChildAdapterTag addAdapter(@NonNull RecyclerView.Adapter adapter) {
         return addAdapter(adapter, getChildAdapterCount());
     }
@@ -120,8 +123,9 @@ public class ComposedAdapter
      * @param adapter  The adapter which to be managed by the ComposedAdapter
      * @param position The position inserting a child adapter
      * @return An instance of {@link ComposedChildAdapterTag}
-     * @see {@link #addAdapter(RecyclerView.Adapter)}
+     * @see #addAdapter(RecyclerView.Adapter)
      */
+    @NonNull
     public ComposedChildAdapterTag addAdapter(@NonNull RecyclerView.Adapter adapter, int position) {
         if (hasObservers() && hasStableIds()) {
             if (!adapter.hasStableIds()) {
@@ -179,8 +183,8 @@ public class ComposedAdapter
      *
      * @param flatPosition The normal flat position to be converted
      * @return Segmented Position
-     * @see {@link #extractSegmentPart(long)}
-     * @see {@link #extractSegmentOffsetPart(long)}
+     * @see #extractSegmentPart(long)
+     * @see #extractSegmentOffsetPart(long)
      */
     public long getSegmentedPosition(int flatPosition) {
         return mSegmentedPositionTranslator.getSegmentedPosition(flatPosition);
@@ -264,8 +268,9 @@ public class ComposedAdapter
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int origViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -279,7 +284,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         final long segmentedPosition = getSegmentedPosition(position);
         final int segment = AdaptersSet.extractSegment(segmentedPosition);
         final int offset = AdaptersSet.extractSegmentOffset(segmentedPosition);
@@ -293,7 +298,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
         final long segmentedPosition = getSegmentedPosition(position);
         final int segment = AdaptersSet.extractSegment(segmentedPosition);
         final int offset = AdaptersSet.extractSegmentOffset(segmentedPosition);
@@ -306,7 +311,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         final List<RecyclerView.Adapter> adapters = mAdaptersSet.getUniqueAdaptersList();
         for (int i = 0; i < adapters.size(); i++) {
             adapters.get(i).onAttachedToRecyclerView(recyclerView);
@@ -317,7 +322,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         final List<RecyclerView.Adapter> adapters = mAdaptersSet.getUniqueAdaptersList();
         for (int i = 0; i < adapters.size(); i++) {
             adapters.get(i).onDetachedFromRecyclerView(recyclerView);
@@ -328,7 +333,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         onViewAttachedToWindow(holder, holder.getItemViewType());
     }
 
@@ -336,7 +341,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder, int viewType) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int wrappedViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -349,7 +354,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         onViewDetachedFromWindow(holder, holder.getItemViewType());
     }
 
@@ -357,7 +362,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder, int viewType) {
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int wrappedViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -370,7 +375,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         onViewRecycled(holder, holder.getItemViewType());
     }
 
@@ -378,7 +383,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder, int viewType) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int wrappedViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -391,7 +396,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder) {
+    public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder) {
         return onFailedToRecycleView(holder, holder.getItemViewType());
     }
 
@@ -399,7 +404,7 @@ public class ComposedAdapter
      * {@inheritDoc}
      */
     @Override
-    public boolean onFailedToRecycleView(RecyclerView.ViewHolder holder, int viewType) {
+    public boolean onFailedToRecycleView(@NonNull RecyclerView.ViewHolder holder, int viewType) {
         final long packedViewType = mViewTypeTranslator.unwrapViewType(viewType);
         final int segment = SegmentedViewTypeTranslator.extractWrapperSegment(packedViewType);
         final int wrappedViewType = SegmentedViewTypeTranslator.extractWrappedViewType(packedViewType);
@@ -453,7 +458,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterChanged(RecyclerView.Adapter source, Object tag) {
+    public void onBridgedAdapterChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag) {
         onHandleWrappedAdapterChanged(source, (List<ComposedChildAdapterTag>) tag);
     }
 
@@ -462,7 +467,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount) {
         onHandleWrappedAdapterItemRangeChanged(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount);
     }
 
@@ -471,7 +476,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount, Object payload) {
+    public void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount, Object payload) {
         onHandleWrappedAdapterItemRangeChanged(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount, payload);
     }
 
@@ -480,7 +485,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeInserted(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public void onBridgedAdapterItemRangeInserted(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount) {
         onHandleWrappedAdapterItemRangeInserted(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount);
     }
 
@@ -489,7 +494,7 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterItemRangeRemoved(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public void onBridgedAdapterItemRangeRemoved(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount) {
         onHandleWrappedAdapterItemRangeRemoved(source, (List<ComposedChildAdapterTag>) tag, positionStart, itemCount);
     }
 
@@ -498,16 +503,16 @@ public class ComposedAdapter
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void onBridgedAdapterRangeMoved(RecyclerView.Adapter source, Object tag, int fromPosition, int toPosition, int itemCount) {
+    public void onBridgedAdapterRangeMoved(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int fromPosition, int toPosition, int itemCount) {
         onHandleWrappedAdapterRangeMoved(source, (List<ComposedChildAdapterTag>) tag, fromPosition, toPosition, itemCount);
     }
 
-    protected void onHandleWrappedAdapterChanged(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags) {
+    protected void onHandleWrappedAdapterChanged(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags) {
         mSegmentedPositionTranslator.invalidateAll();
         notifyDataSetChanged();
     }
 
-    protected void onHandleWrappedAdapterItemRangeChanged(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
+    protected void onHandleWrappedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
         final int nTags = sourceTags.size();
         for (int i = 0; i < nTags; i++) {
             final int adapterSegment = mAdaptersSet.getAdapterSegment(sourceTags.get(i));
@@ -517,7 +522,7 @@ public class ComposedAdapter
         }
     }
 
-    protected void onHandleWrappedAdapterItemRangeChanged(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount, Object payload) {
+    protected void onHandleWrappedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount, Object payload) {
         final int nTags = sourceTags.size();
         for (int i = 0; i < nTags; i++) {
             final int adapterSegment = mAdaptersSet.getAdapterSegment(sourceTags.get(i));
@@ -527,7 +532,7 @@ public class ComposedAdapter
         }
     }
 
-    protected void onHandleWrappedAdapterItemRangeInserted(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
+    protected void onHandleWrappedAdapterItemRangeInserted(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
         if (itemCount <= 0) {
             return;
         }
@@ -552,7 +557,7 @@ public class ComposedAdapter
         }
     }
 
-    protected void onHandleWrappedAdapterItemRangeRemoved(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
+    protected void onHandleWrappedAdapterItemRangeRemoved(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localPositionStart, int itemCount) {
         if (itemCount <= 0) {
             return;
         }
@@ -577,7 +582,7 @@ public class ComposedAdapter
         }
     }
 
-    protected void onHandleWrappedAdapterRangeMoved(RecyclerView.Adapter sourceAdapter, List<ComposedChildAdapterTag> sourceTags, int localFromPosition, int localToPosition, int itemCount) {
+    protected void onHandleWrappedAdapterRangeMoved(@NonNull RecyclerView.Adapter sourceAdapter, @NonNull List<ComposedChildAdapterTag> sourceTags, int localFromPosition, int localToPosition, int itemCount) {
         if (itemCount != 1) {
             throw new IllegalStateException("itemCount should be always 1  (actual: " + itemCount + ")");
         }

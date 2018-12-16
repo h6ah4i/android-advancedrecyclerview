@@ -16,10 +16,11 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 class LeftRightEdgeEffectDecorator extends BaseEdgeEffectDecorator {
-    public LeftRightEdgeEffectDecorator(RecyclerView recyclerView) {
+    public LeftRightEdgeEffectDecorator(@NonNull RecyclerView recyclerView) {
         super(recyclerView);
     }
 

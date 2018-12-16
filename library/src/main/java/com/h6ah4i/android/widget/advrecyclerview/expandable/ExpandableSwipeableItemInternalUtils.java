@@ -16,9 +16,10 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 class ExpandableSwipeableItemInternalUtils {
     private ExpandableSwipeableItemInternalUtils() {
@@ -26,7 +27,8 @@ class ExpandableSwipeableItemInternalUtils {
 
     @SuppressWarnings("unchecked")
     public static SwipeResultAction invokeOnSwipeItem(
-            BaseExpandableSwipeableItemAdapter<?, ?> adapter, RecyclerView.ViewHolder holder,
+            @NonNull BaseExpandableSwipeableItemAdapter<?, ?> adapter,
+            @NonNull RecyclerView.ViewHolder holder,
             int groupPosition, int childPosition, int result) {
 
         if (childPosition == RecyclerView.NO_POSITION) {

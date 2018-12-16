@@ -16,10 +16,13 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class ItemAddAnimationManager extends BaseItemAnimationManager<AddAnimationInfo> {
     private static final String TAG = "ARVItemAddAnimMgr";
@@ -39,7 +42,7 @@ public abstract class ItemAddAnimationManager extends BaseItemAnimationManager<A
     }
 
     @Override
-    public void dispatchStarting(AddAnimationInfo info, RecyclerView.ViewHolder item) {
+    public void dispatchStarting(@NonNull AddAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         if (debugLogEnabled()) {
             Log.d(TAG, "dispatchAddStarting(" + item + ")");
         }
@@ -47,7 +50,7 @@ public abstract class ItemAddAnimationManager extends BaseItemAnimationManager<A
     }
 
     @Override
-    public void dispatchFinished(AddAnimationInfo info, RecyclerView.ViewHolder item) {
+    public void dispatchFinished(@NonNull AddAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         if (debugLogEnabled()) {
             Log.d(TAG, "dispatchAddFinished(" + item + ")");
         }
@@ -55,7 +58,7 @@ public abstract class ItemAddAnimationManager extends BaseItemAnimationManager<A
     }
 
     @Override
-    protected boolean endNotStartedAnimation(AddAnimationInfo info, RecyclerView.ViewHolder item) {
+    protected boolean endNotStartedAnimation(@NonNull AddAnimationInfo info, @Nullable RecyclerView.ViewHolder item) {
         if ((info.holder != null) && ((item == null) || (info.holder == item))) {
             onAnimationEndedBeforeStarted(info, info.holder);
             dispatchFinished(info, info.holder);

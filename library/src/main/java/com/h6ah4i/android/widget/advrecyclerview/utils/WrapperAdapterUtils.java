@@ -16,10 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPath;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter;
@@ -29,12 +25,16 @@ import com.h6ah4i.android.widget.advrecyclerview.adapter.WrapperAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class WrapperAdapterUtils {
 
     private WrapperAdapterUtils() {
     }
 
-    public static <T> T findWrappedAdapter(RecyclerView.Adapter adapter, Class<T> clazz) {
+    public static <T> T findWrappedAdapter(@Nullable RecyclerView.Adapter adapter, @NonNull Class<T> clazz) {
         if (clazz.isInstance(adapter)) {
             return clazz.cast(adapter);
         } else if (adapter instanceof SimpleWrapperAdapter) {
@@ -45,7 +45,7 @@ public class WrapperAdapterUtils {
         }
     }
 
-    public static <T> T findWrappedAdapter(RecyclerView.Adapter originAdapter, Class<T> clazz, int position) {
+    public static <T> T findWrappedAdapter(@Nullable RecyclerView.Adapter originAdapter, @NonNull Class<T> clazz, int position) {
         final AdapterPath path = new AdapterPath();
         final int wrappedPosition = unwrapPosition(originAdapter, null, null, position, path);
 
@@ -62,12 +62,12 @@ public class WrapperAdapterUtils {
         return null;
     }
 
-    public static RecyclerView.Adapter releaseAll(RecyclerView.Adapter adapter) {
+    public static RecyclerView.Adapter releaseAll(@Nullable RecyclerView.Adapter adapter) {
         return releaseCyclically(adapter);
     }
 
     @SuppressWarnings("unchecked")
-    private static RecyclerView.Adapter releaseCyclically(RecyclerView.Adapter adapter) {
+    private static RecyclerView.Adapter releaseCyclically(@Nullable RecyclerView.Adapter adapter) {
         if (!(adapter instanceof WrapperAdapter)) {
             return adapter;
         }
@@ -102,11 +102,11 @@ public class WrapperAdapterUtils {
         return unwrapPosition(originAdapter, targetAdapter, targetAdapterTag, position, null);
     }
 
-    public static int unwrapPosition(RecyclerView.Adapter originAdapter, AdapterPathSegment targetAdapterPathSegment, int originPosition, @Nullable AdapterPath destPath) {
+    public static int unwrapPosition(@Nullable RecyclerView.Adapter originAdapter, @Nullable AdapterPathSegment targetAdapterPathSegment, int originPosition, @Nullable AdapterPath destPath) {
         return unwrapPosition(originAdapter, targetAdapterPathSegment.adapter, targetAdapterPathSegment.tag, originPosition, destPath);
     }
 
-    public static int unwrapPosition(RecyclerView.Adapter originAdapter, RecyclerView.Adapter targetAdapter, Object targetAdapterTag, int originPosition, @Nullable AdapterPath destPath) {
+    public static int unwrapPosition(@Nullable RecyclerView.Adapter originAdapter, @Nullable RecyclerView.Adapter targetAdapter, @Nullable Object targetAdapterTag, int originPosition, @Nullable AdapterPath destPath) {
         RecyclerView.Adapter wrapper = originAdapter;
         int wrappedPosition = originPosition;
         final UnwrapPositionResult tmpResult = new UnwrapPositionResult();

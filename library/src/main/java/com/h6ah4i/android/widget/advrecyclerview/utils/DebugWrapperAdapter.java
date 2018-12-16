@@ -16,14 +16,14 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-
 import com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.UnwrapPositionResult;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.WrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.annotation.DebugWrapperAdapterSettingFlags;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A wrapper adapter for debugging purpose.

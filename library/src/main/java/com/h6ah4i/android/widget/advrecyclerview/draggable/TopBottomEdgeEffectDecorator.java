@@ -16,10 +16,11 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 class TopBottomEdgeEffectDecorator extends BaseEdgeEffectDecorator {
-    public TopBottomEdgeEffectDecorator(RecyclerView recyclerView) {
+    public TopBottomEdgeEffectDecorator(@NonNull RecyclerView recyclerView) {
         super(recyclerView);
     }
 

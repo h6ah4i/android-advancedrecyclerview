@@ -103,7 +103,7 @@ public class ItemViewTypeComposerTest {
         assertThat(ItemViewTypeComposer.extractWrappedViewTypePart(0), is(0));
 
         // one
-        assertThat(ItemViewTypeComposer.extractWrappedViewTypePart(1 << ItemViewTypeComposer.MIN_WRAPPED_VIEW_TYPE), is(1));
+        assertThat(ItemViewTypeComposer.extractWrappedViewTypePart(1 << ItemViewTypeComposer.BIT_OFFSET_WRAPPED_VIEW_TYPE), is(1));
 
         // full bits
         assertThat(ItemViewTypeComposer.extractWrappedViewTypePart(ItemViewTypeComposer.BIT_MASK_WRAPPED_VIEW_TYPE), is(-1));

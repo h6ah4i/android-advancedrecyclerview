@@ -57,6 +57,7 @@ class SegmentedViewTypeTranslator {
         }
 
         final int packedSegments = mUnwrapSegmentMap.valueAt(index);
+        //noinspection BooleanMethodIsAlwaysInverted
         final long packedViewType = (((long) packedSegments) << 32) | (((long) viewType) & 0xFFFFFFFFL);
 
         return packedViewType;

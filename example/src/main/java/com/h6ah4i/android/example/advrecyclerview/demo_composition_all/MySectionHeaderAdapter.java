@@ -15,13 +15,15 @@
  */
 package com.h6ah4i.android.example.advrecyclerview.demo_composition_all;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 class MySectionHeaderAdapter extends RecyclerView.Adapter<MySectionHeaderAdapter.MyViewHolder> {
     static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -44,14 +46,15 @@ class MySectionHeaderAdapter extends RecyclerView.Adapter<MySectionHeaderAdapter
         return 1;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_section_header, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.textView.setText(mSectionTitle);
     }
 }

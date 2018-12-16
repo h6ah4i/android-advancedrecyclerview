@@ -17,8 +17,6 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_wa_insertion;
 
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +31,9 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by hasegawa on 9/11/16.
@@ -91,8 +92,9 @@ class MyItemInsertionAdapter extends SimpleWrapperAdapter implements View.OnClic
         }
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (isInsertionEnabled()) {
             if (viewType != ODD_POS_ITEM_VIEW_TYPE) {
                 return super.onCreateViewHolder(parent, viewType);
@@ -108,7 +110,7 @@ class MyItemInsertionAdapter extends SimpleWrapperAdapter implements View.OnClic
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List payloads) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List payloads) {
         if (isInsertionEnabled()) {
             if ((position % 2) == 0) {
                 super.onBindViewHolder(holder, position / 2, payloads);
@@ -123,7 +125,7 @@ class MyItemInsertionAdapter extends SimpleWrapperAdapter implements View.OnClic
     }
 
     @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
         if (isInsertionEnabled()) {
             if (!(holder instanceof OddPosItemViewHolder)) {
                 super.onViewAttachedToWindow(holder);
@@ -134,7 +136,7 @@ class MyItemInsertionAdapter extends SimpleWrapperAdapter implements View.OnClic
     }
 
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         if (isInsertionEnabled()) {
             if (!(holder instanceof OddPosItemViewHolder)) {
                 super.onViewDetachedFromWindow(holder);
@@ -145,7 +147,7 @@ class MyItemInsertionAdapter extends SimpleWrapperAdapter implements View.OnClic
     }
 
     @Override
-    public void onViewRecycled(RecyclerView.ViewHolder holder) {
+    public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         if (isInsertionEnabled()) {
             if (!(holder instanceof OddPosItemViewHolder)) {
                 super.onViewRecycled(holder);

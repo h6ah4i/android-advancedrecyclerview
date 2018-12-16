@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 public class ExampleSectionDataProvider extends AbstractDataProvider {
     private List<ConcreteData> mData;
     private ConcreteData mLastRemovedData;
@@ -123,11 +125,12 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
 
         private final long mId;
         private final boolean mIsSectionHeader;
+        @NonNull
         private final String mText;
         private final int mViewType;
         private boolean mPinned;
 
-        ConcreteData(long id, boolean isSectionHeader, int viewType, String text) {
+        ConcreteData(long id, boolean isSectionHeader, int viewType, @NonNull String text) {
             mId = id;
             mIsSectionHeader = isSectionHeader;
             mViewType = viewType;
@@ -149,6 +152,7 @@ public class ExampleSectionDataProvider extends AbstractDataProvider {
             return mId;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return mText;

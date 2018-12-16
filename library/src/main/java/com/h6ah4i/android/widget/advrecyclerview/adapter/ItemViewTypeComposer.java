@@ -17,7 +17,7 @@
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
 
-import android.support.annotation.IntRange;
+import androidx.annotation.IntRange;
 
 /**
  * Utility class providing "Composed item view type" related definitions and methods.
@@ -67,6 +67,7 @@ public class ItemViewTypeComposer {
     /**
      * Bit mask of the expandable flag part.
      */
+    @SuppressWarnings("NumericOverflow")
     public static final int BIT_MASK_EXPANDABLE_FLAG = (1 << (BIT_WIDTH_EXPANDABLE_FLAG - 1)) << BIT_OFFSET_EXPANDABLE_FLAG;
 
     // ---

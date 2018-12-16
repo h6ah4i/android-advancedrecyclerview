@@ -16,11 +16,11 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-import android.support.v7.widget.RecyclerView;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -145,6 +145,7 @@ public class ItemIdComposerTest {
     @Test
     public void composeExpandableGroupId() throws Exception {
         // zero
+        //noinspection PointlessBitwiseExpression
         assertThat(ItemIdComposer.composeExpandableGroupId(0L), is((0L << ItemIdComposer.BIT_OFFSET_GROUP_ID) | ItemIdComposer.BIT_MASK_CHILD_ID));
 
         // one

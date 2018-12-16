@@ -15,18 +15,19 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Adapter path. This class represents how nested {@link WrapperAdapter}s route items.
  */
 public class AdapterPath {
-    private List<AdapterPathSegment> mSegments = new ArrayList<>();
+    @NonNull
+    private final List<AdapterPathSegment> mSegments = new ArrayList<>();
 
     /**
      * Constructor.
@@ -40,6 +41,7 @@ public class AdapterPath {
      * @param wrapResult The result object returned by {@link WrapperAdapter#wrapPosition(AdapterPathSegment, int)}.
      * @return {@link AdapterPath} instance itself.
      */
+    @NonNull
     public AdapterPath append(@NonNull UnwrapPositionResult wrapResult) {
         return append(wrapResult.adapter, wrapResult.tag);
     }
@@ -51,6 +53,7 @@ public class AdapterPath {
      * @param tag The tag object
      * @return {@link AdapterPath} instance itself.
      */
+    @NonNull
     public AdapterPath append(@NonNull RecyclerView.Adapter adapter, @Nullable Object tag) {
        return append(new AdapterPathSegment(adapter, tag));
     }
@@ -61,6 +64,7 @@ public class AdapterPath {
      * @param segment The path segment
      * @return {@link AdapterPath} instance itself.
      */
+    @NonNull
     public AdapterPath append(@NonNull AdapterPathSegment segment) {
         mSegments.add(segment);
         return this;
@@ -71,6 +75,7 @@ public class AdapterPath {
      *
      * @return {@link AdapterPath} instance itself.
      */
+    @NonNull
     public AdapterPath clear() {
         mSegments.clear();
         return this;
@@ -90,6 +95,7 @@ public class AdapterPath {
      *
      * @return The collection of path segments.
      */
+    @NonNull
     public List<AdapterPathSegment> segments() {
         return mSegments;
     }
@@ -99,6 +105,7 @@ public class AdapterPath {
      *
      * @return The first path segment.
      */
+    @Nullable
     public AdapterPathSegment firstSegment() {
         return (!mSegments.isEmpty()) ? (mSegments.get(0)) : null;
     }
@@ -108,6 +115,7 @@ public class AdapterPath {
      *
      * @return THe last path segment.
      */
+    @Nullable
     public AdapterPathSegment lastSegment() {
         return (!mSegments.isEmpty()) ? (mSegments.get(mSegments.size() - 1)) : null;
     }

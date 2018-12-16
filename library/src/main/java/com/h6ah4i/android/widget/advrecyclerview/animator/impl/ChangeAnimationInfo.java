@@ -16,7 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ChangeAnimationInfo extends ItemAnimationInfo {
     public RecyclerView.ViewHolder newHolder, oldHolder;
@@ -38,7 +39,7 @@ public class ChangeAnimationInfo extends ItemAnimationInfo {
     }
 
     @Override
-    public void clear(RecyclerView.ViewHolder item) {
+    public void clear(@NonNull RecyclerView.ViewHolder item) {
         if (oldHolder == item) {
             oldHolder = null;
         }
@@ -53,6 +54,7 @@ public class ChangeAnimationInfo extends ItemAnimationInfo {
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ChangeInfo{" +

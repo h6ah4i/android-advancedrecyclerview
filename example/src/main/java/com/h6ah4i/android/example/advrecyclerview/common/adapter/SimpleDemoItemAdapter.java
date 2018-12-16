@@ -15,7 +15,6 @@
  */
 package com.h6ah4i.android.example.advrecyclerview.common.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,9 @@ import android.widget.TextView;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SimpleDemoItemAdapter extends RecyclerView.Adapter<SimpleDemoItemAdapter.MyViewHolder> implements View.OnClickListener {
     static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -41,8 +43,9 @@ public class SimpleDemoItemAdapter extends RecyclerView.Adapter<SimpleDemoItemAd
         mOnItemClickListener = clickListener;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_minimal, parent, false);
         MyViewHolder vh = new MyViewHolder(v);
         vh.itemView.setOnClickListener(this);
@@ -50,7 +53,7 @@ public class SimpleDemoItemAdapter extends RecyclerView.Adapter<SimpleDemoItemAd
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.textView.setText("Item " + position);
     }
 
@@ -60,7 +63,7 @@ public class SimpleDemoItemAdapter extends RecyclerView.Adapter<SimpleDemoItemAd
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         RecyclerView rv = RecyclerViewAdapterUtils.getParentRecyclerView(v);
         RecyclerView.ViewHolder vh = rv.findContainingViewHolder(v);
 

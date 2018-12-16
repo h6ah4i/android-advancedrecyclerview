@@ -16,11 +16,12 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BaseRecyclerViewEventDistributor<T> {
     protected boolean mReleased;
@@ -32,10 +33,11 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
     }
 
     /**
-     * Gets attached {@link android.support.v7.widget.RecyclerView}
+     * Gets attached {@link androidx.recyclerview.widget.RecyclerView}
      *
-     * @return The {@link android.support.v7.widget.RecyclerView} instance
+     * @return The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
+    @Nullable
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
     }
@@ -63,16 +65,12 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
     }
 
     /**
-     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
+     * Attaches {@link androidx.recyclerview.widget.RecyclerView} instance.
      *
-     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     * @param rv The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
-    public void attachRecyclerView(RecyclerView rv) {
+    public void attachRecyclerView(@NonNull RecyclerView rv) {
         final String METHOD_NAME = "attachRecyclerView()";
-
-        if (rv == null) {
-            throw new IllegalArgumentException("RecyclerView cannot be null");
-        }
 
         verifyIsNotReleased(METHOD_NAME);
         verifyIsNotPerformingClearMethod(METHOD_NAME);
@@ -87,7 +85,7 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
      *
      * @return True if the listener object successfully added, otherwise false. Also returns true if have already been added.
      */
-    public boolean add(T listener) {
+    public boolean add(@NonNull T listener) {
         return add(listener, -1);
     }
 
@@ -227,17 +225,17 @@ public abstract class BaseRecyclerViewEventDistributor<T> {
         mPerformingClearMethod = false;
     }
 
-    protected void onRecyclerViewAttached(RecyclerView rv) {
+    protected void onRecyclerViewAttached(@NonNull RecyclerView rv) {
         mRecyclerView = rv;
     }
 
-    protected void verifyIsNotPerformingClearMethod(String methodName) {
+    protected void verifyIsNotPerformingClearMethod(@NonNull String methodName) {
         if (mPerformingClearMethod) {
             throw new IllegalStateException(methodName + " can not be called while performing the clear() method");
         }
     }
 
-    protected void verifyIsNotReleased(String methodName) {
+    protected void verifyIsNotReleased(@NonNull String methodName) {
         if (mReleased) {
             throw new IllegalStateException(methodName + " can not be called after release() method called");
         }

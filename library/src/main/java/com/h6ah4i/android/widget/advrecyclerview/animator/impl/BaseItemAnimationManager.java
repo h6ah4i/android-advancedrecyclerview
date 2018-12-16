@@ -18,16 +18,19 @@ package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
 import android.animation.TimeInterpolator;
 import android.animation.ValueAnimator;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.core.view.ViewPropertyAnimatorListener;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
     private static TimeInterpolator sDefaultInterpolator;
@@ -37,7 +40,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
     protected final List<List<T>> mDeferredReadySets;
     protected final List<RecyclerView.ViewHolder> mActive;
 
-    public BaseItemAnimationManager(BaseItemAnimator itemAnimator) {
+    public BaseItemAnimationManager(@NonNull BaseItemAnimator itemAnimator) {
         mItemAnimator = itemAnimator;
         mPending = new ArrayList<>();
         mActive = new ArrayList<>();
@@ -56,7 +59,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         return !mPending.isEmpty() || !mActive.isEmpty() || !mDeferredReadySets.isEmpty();
     }
 
-    public boolean removeFromActive(RecyclerView.ViewHolder item) {
+    public boolean removeFromActive(@NonNull RecyclerView.ViewHolder item) {
         return mActive.remove(item);
     }
 
@@ -69,9 +72,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
     }
 
     public void runPendingAnimations(boolean deferred, long deferredDelay) {
-        final List<T> ready = new ArrayList<>();
-
-        ready.addAll(mPending);
+        final List<T> ready = new ArrayList<>(mPending);
         mPending.clear();
 
         if (deferred) {
@@ -98,15 +99,15 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         }
     }
 
-    public abstract void dispatchStarting(T info, RecyclerView.ViewHolder item);
+    public abstract void dispatchStarting(@NonNull T info, @NonNull RecyclerView.ViewHolder item);
 
-    public abstract void dispatchFinished(T info, RecyclerView.ViewHolder item);
+    public abstract void dispatchFinished(@NonNull T info, @NonNull RecyclerView.ViewHolder item);
 
     public abstract long getDuration();
 
     public abstract void setDuration(long duration);
 
-    public void endPendingAnimations(RecyclerView.ViewHolder item) {
+    public void endPendingAnimations(@Nullable RecyclerView.ViewHolder item) {
         final List<T> pending = mPending;
 
         for (int i = pending.size() - 1; i >= 0; i--) {
@@ -126,7 +127,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         endPendingAnimations(null);
     }
 
-    public void endDeferredReadyAnimations(RecyclerView.ViewHolder item) {
+    public void endDeferredReadyAnimations(@Nullable RecyclerView.ViewHolder item) {
         for (int i = mDeferredReadySets.size() - 1; i >= 0; i--) {
             final List<T> ready = mDeferredReadySets.get(i);
 
@@ -152,15 +153,15 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         endDeferredReadyAnimations(null);
     }
 
-    /*package*/ void createAnimation(T info) {
+    /*package*/ void createAnimation(@NonNull T info) {
         onCreateAnimation(info);
     }
 
-    protected void endAnimation(RecyclerView.ViewHolder holder) {
+    protected void endAnimation(@NonNull RecyclerView.ViewHolder holder) {
         mItemAnimator.endAnimation(holder);
     }
 
-    protected void resetAnimation(RecyclerView.ViewHolder holder) {
+    protected void resetAnimation(@NonNull RecyclerView.ViewHolder holder) {
         if (sDefaultInterpolator == null) {
             sDefaultInterpolator = new ValueAnimator().getInterpolator();
         }
@@ -172,15 +173,12 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         mItemAnimator.dispatchFinishedWhenDone();
     }
 
-    protected void enqueuePendingAnimationInfo(T info) {
-        if (info == null) {
-            throw new IllegalStateException("info is null");
-        }
+    protected void enqueuePendingAnimationInfo(@NonNull T info) {
         mPending.add(info);
     }
 
-    protected void startActiveItemAnimation(T info, RecyclerView.ViewHolder holder,
-            ViewPropertyAnimatorCompat animator) {
+    protected void startActiveItemAnimation(@NonNull T info, @NonNull RecyclerView.ViewHolder holder,
+                                            @NonNull ViewPropertyAnimatorCompat animator) {
         animator.setListener(new BaseAnimatorListener(this, info, holder, animator));
         addActiveAnimationTarget(holder);
         animator.start();
@@ -193,15 +191,15 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
         mActive.add(item);
     }
 
-    protected abstract void onCreateAnimation(final T info);
+    protected abstract void onCreateAnimation(@NonNull T info);
 
-    protected abstract void onAnimationEndedSuccessfully(T info, RecyclerView.ViewHolder item);
+    protected abstract void onAnimationEndedSuccessfully(@NonNull T info, @NonNull RecyclerView.ViewHolder item);
 
-    protected abstract void onAnimationEndedBeforeStarted(T info, RecyclerView.ViewHolder item);
+    protected abstract void onAnimationEndedBeforeStarted(@NonNull T info, @NonNull RecyclerView.ViewHolder item);
 
-    protected abstract void onAnimationCancel(T info, RecyclerView.ViewHolder item);
+    protected abstract void onAnimationCancel(@NonNull T info, @NonNull RecyclerView.ViewHolder item);
 
-    protected abstract boolean endNotStartedAnimation(T info, RecyclerView.ViewHolder item);
+    protected abstract boolean endNotStartedAnimation(@NonNull T info, @NonNull RecyclerView.ViewHolder item);
 
     protected static class BaseAnimatorListener implements ViewPropertyAnimatorListener {
         private BaseItemAnimationManager mManager;
@@ -219,13 +217,13 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
 
         @SuppressWarnings("unchecked")
         @Override
-        public void onAnimationStart(View view) {
+        public void onAnimationStart(@NonNull View view) {
             mManager.dispatchStarting(mAnimationInfo, mHolder);
         }
 
         @SuppressWarnings("unchecked")
         @Override
-        public void onAnimationEnd(View view) {
+        public void onAnimationEnd(@NonNull View view) {
             final BaseItemAnimationManager manager = mManager;
             final ItemAnimationInfo info = mAnimationInfo;
             final RecyclerView.ViewHolder holder = mHolder;
@@ -245,7 +243,7 @@ public abstract class BaseItemAnimationManager<T extends ItemAnimationInfo> {
 
         @SuppressWarnings("unchecked")
         @Override
-        public void onAnimationCancel(View view) {
+        public void onAnimationCancel(@NonNull View view) {
             mManager.onAnimationCancel(mAnimationInfo, mHolder);
         }
     }

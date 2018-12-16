@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_e_add_remove;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,28 +25,22 @@ import android.widget.TextView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
-import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 class AddRemoveExpandableExampleAdapter
         extends AbstractExpandableItemAdapter<AddRemoveExpandableExampleAdapter.MyGroupViewHolder, AddRemoveExpandableExampleAdapter.MyChildViewHolder> {
     private static final String TAG = "MyExpandableItemAdapter";
 
-    // NOTE: Make accessible with short name
-    private interface Expandable extends ExpandableItemConstants {
-    }
-
     private RecyclerViewExpandableItemManager mExpandableItemManager;
     private AbstractAddRemoveExpandableDataProvider mProvider;
-    private View.OnClickListener mItemOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            onClickItemView(v);
-        }
-    };
+    private View.OnClickListener mItemOnClickListener = v -> onClickItemView(v);
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
         public FrameLayout mContainer;
@@ -161,21 +154,23 @@ class AddRemoveExpandableExampleAdapter
     }
 
     @Override
-    public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyGroupViewHolder onCreateGroupViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_group_item_with_add_remove_buttons, parent, false);
         return new MyGroupViewHolder(v, mItemOnClickListener);
     }
 
     @Override
-    public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyChildViewHolder onCreateChildViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_item_with_add_remove_buttons, parent, false);
         return new MyChildViewHolder(v, mItemOnClickListener);
     }
 
     @Override
-    public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
+    public void onBindGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition, int viewType) {
         // child item
         final AbstractAddRemoveExpandableDataProvider.BaseData item = mProvider.getGroupItem(groupPosition);
 
@@ -186,12 +181,12 @@ class AddRemoveExpandableExampleAdapter
         holder.itemView.setClickable(true);
 
         // set background resource (target view ID: container)
-        final int expandState = holder.getExpandStateFlags();
+        final ExpandableItemState expandState = holder.getExpandState();
 
-        if ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0) {
+        if (expandState.isUpdated()) {
             int bgResId;
 
-            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
+            if (expandState.isExpanded()) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
             } else {
                 bgResId = R.drawable.bg_group_item_normal_state;
@@ -202,7 +197,7 @@ class AddRemoveExpandableExampleAdapter
     }
 
     @Override
-    public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
+    public void onBindChildViewHolder(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
         // group item
         final AbstractAddRemoveExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
@@ -216,7 +211,7 @@ class AddRemoveExpandableExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
+    public boolean onCheckCanExpandOrCollapseGroup(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
         // NOTE: Handles all click events manually
         return false;
     }

@@ -16,9 +16,9 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.expandable;
 
-import android.support.v7.widget.RecyclerView;
-
 import java.util.Arrays;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 class ExpandablePositionTranslator {
     public static final int BUILD_OPTION_DEFAULT = 0;
@@ -167,7 +167,7 @@ class ExpandablePositionTranslator {
 
         for (int i = 0; i < mGroupCount; i++) {
             final long t = mCachedGroupPosInfo[i];
-            expandedGroups[i] = ((long) mCachedGroupId[i] << 32l) | (t & FLAG_EXPANDED);
+            expandedGroups[i] = ((long) mCachedGroupId[i] << 32L) | (t & FLAG_EXPANDED);
         }
 
         Arrays.sort(expandedGroups);

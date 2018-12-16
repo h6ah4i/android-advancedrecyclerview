@@ -16,9 +16,10 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.Interpolator;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 class SwipingItemOperator {
     @SuppressWarnings("unused")

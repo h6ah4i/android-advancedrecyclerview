@@ -16,10 +16,6 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator;
 
-import android.support.annotation.NonNull;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.AddAnimationInfo;
@@ -32,6 +28,12 @@ import com.h6ah4i.android.widget.advrecyclerview.animator.impl.MoveAnimationInfo
 import com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
 
@@ -74,12 +76,12 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
      */
     protected static class DefaultItemAddAnimationManager extends ItemAddAnimationManager {
 
-        public DefaultItemAddAnimationManager(BaseItemAnimator itemAnimator) {
+        public DefaultItemAddAnimationManager(@NonNull BaseItemAnimator itemAnimator) {
             super(itemAnimator);
         }
 
         @Override
-        protected void onCreateAnimation(AddAnimationInfo info) {
+        protected void onCreateAnimation(@NonNull AddAnimationInfo info) {
             final ViewPropertyAnimatorCompat animator = ViewCompat.animate(info.holder.itemView);
 
             animator.alpha(1);
@@ -89,21 +91,21 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
         }
 
         @Override
-        protected void onAnimationEndedSuccessfully(AddAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedSuccessfully(@NonNull AddAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         }
 
         @Override
-        protected void onAnimationEndedBeforeStarted(AddAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedBeforeStarted(@NonNull AddAnimationInfo info, @Nullable RecyclerView.ViewHolder item) {
             item.itemView.setAlpha(1);
         }
 
         @Override
-        protected void onAnimationCancel(AddAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationCancel(@NonNull AddAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
             item.itemView.setAlpha(1);
         }
 
         @Override
-        public boolean addPendingAnimation(RecyclerView.ViewHolder item) {
+        public boolean addPendingAnimation(@NonNull RecyclerView.ViewHolder item) {
             resetAnimation(item);
 
             item.itemView.setAlpha(0);
@@ -119,12 +121,12 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
      */
     protected static class DefaultItemRemoveAnimationManager extends ItemRemoveAnimationManager {
 
-        public DefaultItemRemoveAnimationManager(BaseItemAnimator itemAnimator) {
+        public DefaultItemRemoveAnimationManager(@NonNull BaseItemAnimator itemAnimator) {
             super(itemAnimator);
         }
 
         @Override
-        protected void onCreateAnimation(RemoveAnimationInfo info) {
+        protected void onCreateAnimation(@NonNull RemoveAnimationInfo info) {
             final ViewPropertyAnimatorCompat animator = ViewCompat.animate(info.holder.itemView);
 
             animator.setDuration(getDuration());
@@ -134,23 +136,23 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
         }
 
         @Override
-        protected void onAnimationEndedSuccessfully(RemoveAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedSuccessfully(@NonNull RemoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
             final View view = item.itemView;
             view.setAlpha(1);
         }
 
         @Override
-        protected void onAnimationEndedBeforeStarted(RemoveAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedBeforeStarted(@NonNull RemoveAnimationInfo info, @Nullable RecyclerView.ViewHolder item) {
             final View view = item.itemView;
             view.setAlpha(1);
         }
 
         @Override
-        protected void onAnimationCancel(RemoveAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationCancel(@NonNull RemoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         }
 
         @Override
-        public boolean addPendingAnimation(RecyclerView.ViewHolder holder) {
+        public boolean addPendingAnimation(@NonNull RecyclerView.ViewHolder holder) {
             resetAnimation(holder);
 
             enqueuePendingAnimationInfo(new RemoveAnimationInfo(holder));
@@ -162,12 +164,12 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
      * Item Animation manager for CHANGE operation  (Same behavior as DefaultItemAnimator class)
      */
     protected static class DefaultItemChangeAnimationManager extends ItemChangeAnimationManager {
-        public DefaultItemChangeAnimationManager(BaseItemAnimator itemAnimator) {
+        public DefaultItemChangeAnimationManager(@NonNull BaseItemAnimator itemAnimator) {
             super(itemAnimator);
         }
 
         @Override
-        protected void onCreateChangeAnimationForOldItem(ChangeAnimationInfo info) {
+        protected void onCreateChangeAnimationForOldItem(@NonNull ChangeAnimationInfo info) {
             final ViewPropertyAnimatorCompat animator = ViewCompat.animate(info.oldHolder.itemView);
 
             animator.setDuration(getDuration());
@@ -180,7 +182,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
 
 
         @Override
-        protected void onCreateChangeAnimationForNewItem(ChangeAnimationInfo info) {
+        protected void onCreateChangeAnimationForNewItem(@NonNull ChangeAnimationInfo info) {
             final ViewPropertyAnimatorCompat animator = ViewCompat.animate(info.newHolder.itemView);
 
             animator.translationX(0);
@@ -192,7 +194,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
         }
 
         @Override
-        protected void onAnimationEndedSuccessfully(ChangeAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedSuccessfully(@NonNull ChangeAnimationInfo info, @Nullable RecyclerView.ViewHolder item) {
             final View view = item.itemView;
             view.setAlpha(1);
             view.setTranslationX(0);
@@ -200,7 +202,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
         }
 
         @Override
-        protected void onAnimationEndedBeforeStarted(ChangeAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedBeforeStarted(@NonNull ChangeAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
             final View view = item.itemView;
             view.setAlpha(1);
             view.setTranslationX(0);
@@ -208,11 +210,11 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
         }
 
         @Override
-        protected void onAnimationCancel(ChangeAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationCancel(@NonNull ChangeAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         }
 
         @Override
-        public boolean addPendingAnimation(RecyclerView.ViewHolder oldHolder, RecyclerView.ViewHolder newHolder, int fromX, int fromY, int toX, int toY) {
+        public boolean addPendingAnimation(@NonNull RecyclerView.ViewHolder oldHolder, @Nullable RecyclerView.ViewHolder newHolder, int fromX, int fromY, int toX, int toY) {
             final float prevTranslationX = oldHolder.itemView.getTranslationX();
             final float prevTranslationY = oldHolder.itemView.getTranslationY();
             final float prevAlpha = oldHolder.itemView.getAlpha();
@@ -246,12 +248,12 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
      */
     protected static class DefaultItemMoveAnimationManager extends ItemMoveAnimationManager {
 
-        public DefaultItemMoveAnimationManager(BaseItemAnimator itemAnimator) {
+        public DefaultItemMoveAnimationManager(@NonNull BaseItemAnimator itemAnimator) {
             super(itemAnimator);
         }
 
         @Override
-        protected void onCreateAnimation(MoveAnimationInfo info) {
+        protected void onCreateAnimation(@NonNull MoveAnimationInfo info) {
             final View view = info.holder.itemView;
             final int deltaX = info.toX - info.fromX;
             final int deltaY = info.toY - info.fromY;
@@ -271,18 +273,18 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
         }
 
         @Override
-        protected void onAnimationEndedSuccessfully(MoveAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedSuccessfully(@NonNull MoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         }
 
         @Override
-        protected void onAnimationEndedBeforeStarted(MoveAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationEndedBeforeStarted(@NonNull MoveAnimationInfo info, @Nullable RecyclerView.ViewHolder item) {
             final View view = item.itemView;
             view.setTranslationY(0);
             view.setTranslationX(0);
         }
 
         @Override
-        protected void onAnimationCancel(MoveAnimationInfo info, RecyclerView.ViewHolder item) {
+        protected void onAnimationCancel(@NonNull MoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
             final View view = item.itemView;
             final int deltaX = info.toX - info.fromX;
             final int deltaY = info.toY - info.fromY;
@@ -303,7 +305,7 @@ public class RefactoredDefaultItemAnimator extends GeneralItemAnimator {
         }
 
         @Override
-        public boolean addPendingAnimation(RecyclerView.ViewHolder item, int fromX, int fromY, int toX, int toY) {
+        public boolean addPendingAnimation(@NonNull RecyclerView.ViewHolder item, int fromX, int fromY, int toX, int toY) {
             final View view = item.itemView;
 
             fromX += item.itemView.getTranslationX();

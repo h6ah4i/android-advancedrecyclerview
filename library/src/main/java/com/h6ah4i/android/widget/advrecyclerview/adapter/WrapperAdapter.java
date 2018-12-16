@@ -15,10 +15,10 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * An RecyclerView adapter which wraps another adapter(s).

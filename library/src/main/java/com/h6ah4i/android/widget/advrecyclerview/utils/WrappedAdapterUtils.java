@@ -16,11 +16,11 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-
 import com.h6ah4i.android.widget.advrecyclerview.adapter.WrappedAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.adapter.WrapperAdapter;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class WrappedAdapterUtils {
     private WrappedAdapterUtils() {
@@ -54,7 +54,7 @@ public class WrappedAdapterUtils {
     }
 
     @SuppressWarnings("unchecked")
-    public static void invokeOnViewDetachedFromWindow(RecyclerView.Adapter adapter, RecyclerView.ViewHolder holder, int viewType) {
+    public static void invokeOnViewDetachedFromWindow(@NonNull RecyclerView.Adapter adapter, @NonNull RecyclerView.ViewHolder holder, int viewType) {
         if (adapter instanceof WrappedAdapter) {
             ((WrappedAdapter) adapter).onViewDetachedFromWindow(holder, viewType);
         } else {

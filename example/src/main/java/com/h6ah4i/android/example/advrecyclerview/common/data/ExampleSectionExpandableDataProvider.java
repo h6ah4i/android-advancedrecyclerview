@@ -17,13 +17,13 @@
 package com.h6ah4i.android.example.advrecyclerview.common.data;
 
 
-import android.support.v4.util.Pair;
-
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import androidx.core.util.Pair;
 
 public class ExampleSectionExpandableDataProvider extends AbstractExpandableDataProvider {
     private List<Pair<GroupData, List<ChildData>>> mData;
@@ -64,7 +64,7 @@ public class ExampleSectionExpandableDataProvider extends AbstractExpandableData
                 }
             }
 
-            mData.add(new Pair<GroupData, List<ChildData>>(group, children));
+            mData.add(new Pair<>(group, children));
         }
     }
 

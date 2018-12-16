@@ -16,8 +16,10 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 public abstract class BaseItemAnimator extends SimpleItemAnimator {
     private ItemAnimatorListener mListener;
@@ -28,13 +30,13 @@ public abstract class BaseItemAnimator extends SimpleItemAnimator {
      * create directly.
      */
     public interface ItemAnimatorListener {
-        void onRemoveFinished(RecyclerView.ViewHolder item);
+        void onRemoveFinished(@NonNull RecyclerView.ViewHolder item);
 
-        void onAddFinished(RecyclerView.ViewHolder item);
+        void onAddFinished(@NonNull RecyclerView.ViewHolder item);
 
-        void onMoveFinished(RecyclerView.ViewHolder item);
+        void onMoveFinished(@NonNull RecyclerView.ViewHolder item);
 
-        void onChangeFinished(RecyclerView.ViewHolder item);
+        void onChangeFinished(@NonNull RecyclerView.ViewHolder item);
     }
 
     /**
@@ -45,7 +47,7 @@ public abstract class BaseItemAnimator extends SimpleItemAnimator {
      *
      * @param listener The listener that must be called.
      */
-    public void setListener(ItemAnimatorListener listener) {
+    public void setListener(@Nullable ItemAnimatorListener listener) {
         mListener = listener;
     }
 
@@ -106,35 +108,35 @@ public abstract class BaseItemAnimator extends SimpleItemAnimator {
     }
 
     @SuppressWarnings("EmptyMethod")
-    protected void onAddStartingImpl(RecyclerView.ViewHolder item) {
+    protected void onAddStartingImpl(@NonNull RecyclerView.ViewHolder item) {
     }
 
     @SuppressWarnings("EmptyMethod")
-    protected void onAddFinishedImpl(RecyclerView.ViewHolder item) {
+    protected void onAddFinishedImpl(@NonNull RecyclerView.ViewHolder item) {
     }
 
     @SuppressWarnings("EmptyMethod")
-    protected void onChangeStartingItem(RecyclerView.ViewHolder item, boolean oldItem) {
+    protected void onChangeStartingItem(@NonNull RecyclerView.ViewHolder item, boolean oldItem) {
     }
 
     @SuppressWarnings("EmptyMethod")
-    protected void onChangeFinishedImpl(RecyclerView.ViewHolder item, boolean oldItem) {
+    protected void onChangeFinishedImpl(@NonNull RecyclerView.ViewHolder item, boolean oldItem) {
     }
 
     @SuppressWarnings("EmptyMethod")
-    protected void onMoveStartingImpl(RecyclerView.ViewHolder item) {
+    protected void onMoveStartingImpl(@NonNull RecyclerView.ViewHolder item) {
     }
 
     @SuppressWarnings("EmptyMethod")
-    protected void onMoveFinishedImpl(RecyclerView.ViewHolder item) {
+    protected void onMoveFinishedImpl(@NonNull RecyclerView.ViewHolder item) {
     }
 
     @SuppressWarnings("EmptyMethod")
-    protected void onRemoveStartingImpl(RecyclerView.ViewHolder item) {
+    protected void onRemoveStartingImpl(@NonNull RecyclerView.ViewHolder item) {
     }
 
     @SuppressWarnings("EmptyMethod")
-    protected void onRemoveFinishedImpl(RecyclerView.ViewHolder item) {
+    protected void onRemoveFinishedImpl(@NonNull RecyclerView.ViewHolder item) {
     }
 
     public boolean dispatchFinishedWhenDone() {

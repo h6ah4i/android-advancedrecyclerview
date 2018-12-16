@@ -17,16 +17,17 @@
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
 import android.graphics.Rect;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class CustomRecyclerViewUtils {
     public static final int ORIENTATION_UNKNOWN = -1;
@@ -72,13 +73,13 @@ public class CustomRecyclerViewUtils {
 
     public static int getLayoutType(@Nullable RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof GridLayoutManager) {
-            if (((GridLayoutManager) layoutManager).getOrientation() == GridLayoutManager.HORIZONTAL) {
+            if (((GridLayoutManager) layoutManager).getOrientation() == RecyclerView.HORIZONTAL) {
                 return LAYOUT_TYPE_GRID_HORIZONTAL;
             } else {
                 return LAYOUT_TYPE_GRID_VERTICAL;
             }
         } else if (layoutManager instanceof LinearLayoutManager) {
-            if (((LinearLayoutManager) layoutManager).getOrientation() == LinearLayoutManager.HORIZONTAL) {
+            if (((LinearLayoutManager) layoutManager).getOrientation() == RecyclerView.HORIZONTAL) {
                 return LAYOUT_TYPE_LINEAR_HORIZONTAL;
             } else {
                 return LAYOUT_TYPE_LINEAR_VERTICAL;
@@ -113,7 +114,7 @@ public class CustomRecyclerViewUtils {
         return (child != null) ? rv.getChildViewHolder(child) : null;
     }
 
-    public static Rect getLayoutMargins(View v, Rect outMargins) {
+    public static Rect getLayoutMargins(@NonNull View v, @NonNull Rect outMargins) {
         final ViewGroup.LayoutParams layoutParams = v.getLayoutParams();
         if (layoutParams instanceof ViewGroup.MarginLayoutParams) {
             final ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) layoutParams;
@@ -127,7 +128,7 @@ public class CustomRecyclerViewUtils {
         return outMargins;
     }
 
-    public static Rect getDecorationOffsets(@NonNull RecyclerView.LayoutManager layoutManager, View view, Rect outDecorations) {
+    public static Rect getDecorationOffsets(@NonNull RecyclerView.LayoutManager layoutManager, @NonNull View view, @NonNull Rect outDecorations) {
         outDecorations.left = layoutManager.getLeftDecorationWidth(view);
         outDecorations.right = layoutManager.getRightDecorationWidth(view);
         outDecorations.top = layoutManager.getTopDecorationHeight(view);
@@ -245,7 +246,7 @@ public class CustomRecyclerViewUtils {
     private static View findOneVisibleChildIncludesPadding(
             LinearLayoutManager lm, int fromIndex, int toIndex,
             boolean completelyVisible, boolean acceptPartiallyVisible) {
-        boolean isVertical = (lm.getOrientation() == LinearLayoutManager.VERTICAL);
+        boolean isVertical = (lm.getOrientation() == RecyclerView.VERTICAL);
         final int start = 0;
         final int end = (isVertical) ? lm.getHeight() : lm.getWidth();
         final int next = toIndex > fromIndex ? 1 : -1;
@@ -277,7 +278,7 @@ public class CustomRecyclerViewUtils {
         return (holder != null) ? holder.getLayoutPosition() : RecyclerView.NO_POSITION;
     }
 
-    public static View findViewByPosition(RecyclerView.LayoutManager layoutManager, int position) {
+    public static View findViewByPosition(@NonNull RecyclerView.LayoutManager layoutManager, int position) {
         return (position != RecyclerView.NO_POSITION) ? layoutManager.findViewByPosition(position) : null;
     }
 
@@ -315,8 +316,7 @@ public class CustomRecyclerViewUtils {
             final boolean isFullSpan = ((StaggeredGridLayoutManager.LayoutParams) lp).isFullSpan();
             if (isFullSpan) {
                 final RecyclerView rv = (RecyclerView) itemView.getParent();
-                final int spanCount = getSpanCount(rv);
-                return spanCount;
+                return getSpanCount(rv);
             } else {
                 return 1;
             }

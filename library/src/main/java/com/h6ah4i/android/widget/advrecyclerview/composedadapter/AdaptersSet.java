@@ -15,13 +15,14 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.composedadapter;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-
 import com.h6ah4i.android.widget.advrecyclerview.adapter.BridgeAdapterDataObserver;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 class AdaptersSet {
     public static long NO_SEGMENTED_POSITION = -1L;
@@ -33,7 +34,7 @@ class AdaptersSet {
     private List<RecyclerView.Adapter> mUniqueAdapters;
     private List<ComposedChildAdapterDataObserver> mObservers;
 
-    public AdaptersSet(BridgeAdapterDataObserver.Subscriber bridgeSubscriber) {
+    public AdaptersSet(@NonNull BridgeAdapterDataObserver.Subscriber bridgeSubscriber) {
         mSubscriber = bridgeSubscriber;
         mAdapterTags = new ArrayList<>();
         mAdapters = new ArrayList<>();
@@ -41,6 +42,7 @@ class AdaptersSet {
         mObservers = new ArrayList<>();
     }
 
+    @NonNull
     public ComposedChildAdapterTag addAdapter(@NonNull RecyclerView.Adapter adapter, int position) {
         final ComposedChildAdapterTag tag = new ComposedChildAdapterTag();
 
@@ -66,6 +68,7 @@ class AdaptersSet {
         return tag;
     }
 
+    @Nullable
     public RecyclerView.Adapter removeAdapter(@NonNull ComposedChildAdapterTag tag) {
         final int segment = getAdapterSegment(tag);
 
@@ -94,7 +97,7 @@ class AdaptersSet {
         return adapter;
     }
 
-    public int getAdapterSegment(ComposedChildAdapterTag tag) {
+    public int getAdapterSegment(@NonNull ComposedChildAdapterTag tag) {
         return mAdapterTags.indexOf(tag);
     }
 
@@ -102,10 +105,12 @@ class AdaptersSet {
         return mAdapters.size();
     }
 
+    @NonNull
     public RecyclerView.Adapter getAdapter(int segment) {
         return mAdapters.get(segment);
     }
 
+    @NonNull
     public ComposedChildAdapterTag getTag(int segment) {
         return mAdapterTags.get(segment);
     }
@@ -137,6 +142,7 @@ class AdaptersSet {
         mObservers.clear();
     }
 
+    @NonNull
     public List<RecyclerView.Adapter> getUniqueAdaptersList() {
         return mUniqueAdapters;
     }

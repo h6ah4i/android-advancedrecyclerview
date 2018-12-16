@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 public class ExampleDataProvider extends AbstractDataProvider {
     private List<ConcreteData> mData;
     private ConcreteData mLastRemovedData;
@@ -112,24 +114,19 @@ public class ExampleDataProvider extends AbstractDataProvider {
     public static final class ConcreteData extends Data {
 
         private final long mId;
+        @NonNull
         private final String mText;
         private final int mViewType;
         private boolean mPinned;
 
-        ConcreteData(long id, int viewType, String text, int swipeReaction) {
+        ConcreteData(long id, int viewType, @NonNull String text, int swipeReaction) {
             mId = id;
             mViewType = viewType;
             mText = makeText(id, text, swipeReaction);
         }
 
         private static String makeText(long id, String text, int swipeReaction) {
-            final StringBuilder sb = new StringBuilder();
-
-            sb.append(id);
-            sb.append(" - ");
-            sb.append(text);
-
-            return sb.toString();
+            return String.valueOf(id) + " - " + text;
         }
 
         @Override
@@ -147,6 +144,7 @@ public class ExampleDataProvider extends AbstractDataProvider {
             return mId;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return mText;

@@ -16,9 +16,10 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.event;
 
-import android.support.v7.widget.RecyclerView;
-
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventDistributor<RecyclerView.RecyclerListener> {
 
@@ -31,7 +32,7 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
     }
 
     @Override
-    protected void onRecyclerViewAttached(RecyclerView rv) {
+    protected void onRecyclerViewAttached(@NonNull RecyclerView rv) {
         super.onRecyclerViewAttached(rv);
 
         rv.setRecyclerListener(mInternalRecyclerListener);
@@ -47,7 +48,7 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
         }
     }
 
-    /*package*/ void handleOnViewRecycled(RecyclerView.ViewHolder holder) {
+    /*package*/ void handleOnViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
         if (mListeners == null) {
             return;
         }
@@ -60,13 +61,13 @@ public class RecyclerViewRecyclerEventDistributor extends BaseRecyclerViewEventD
     private static class InternalRecyclerListener implements RecyclerView.RecyclerListener {
         private final WeakReference<RecyclerViewRecyclerEventDistributor> mRefDistributor;
 
-        public InternalRecyclerListener(RecyclerViewRecyclerEventDistributor distributor) {
+        public InternalRecyclerListener(@NonNull RecyclerViewRecyclerEventDistributor distributor) {
             super();
             mRefDistributor = new WeakReference<>(distributor);
         }
 
         @Override
-        public void onViewRecycled(RecyclerView.ViewHolder holder) {
+        public void onViewRecycled(@NonNull RecyclerView.ViewHolder holder) {
             final RecyclerViewRecyclerEventDistributor distributor = mRefDistributor.get();
             
             if (distributor != null) {

@@ -16,15 +16,18 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.animator.impl;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+
 public abstract class ItemMoveAnimationManager extends BaseItemAnimationManager<MoveAnimationInfo> {
     public static final String TAG = "ARVItemMoveAnimMgr";
 
-    public ItemMoveAnimationManager(BaseItemAnimator itemAnimator) {
+    public ItemMoveAnimationManager(@NonNull BaseItemAnimator itemAnimator) {
         super(itemAnimator);
     }
 
@@ -39,7 +42,7 @@ public abstract class ItemMoveAnimationManager extends BaseItemAnimationManager<
     }
 
     @Override
-    public void dispatchStarting(MoveAnimationInfo info, RecyclerView.ViewHolder item) {
+    public void dispatchStarting(@NonNull MoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         if (debugLogEnabled()) {
             Log.d(TAG, "dispatchMoveStarting(" + item + ")");
         }
@@ -47,7 +50,7 @@ public abstract class ItemMoveAnimationManager extends BaseItemAnimationManager<
     }
 
     @Override
-    public void dispatchFinished(MoveAnimationInfo info, RecyclerView.ViewHolder item) {
+    public void dispatchFinished(@NonNull MoveAnimationInfo info, @NonNull RecyclerView.ViewHolder item) {
         if (debugLogEnabled()) {
             Log.d(TAG, "dispatchMoveFinished(" + item + ")");
         }
@@ -55,7 +58,7 @@ public abstract class ItemMoveAnimationManager extends BaseItemAnimationManager<
     }
 
     @Override
-    protected boolean endNotStartedAnimation(MoveAnimationInfo info, RecyclerView.ViewHolder item) {
+    protected boolean endNotStartedAnimation(@NonNull MoveAnimationInfo info, @Nullable RecyclerView.ViewHolder item) {
         if ((info.holder != null) && ((item == null) || (info.holder == item))) {
             onAnimationEndedBeforeStarted(info, info.holder);
             dispatchFinished(info, info.holder);
@@ -66,5 +69,5 @@ public abstract class ItemMoveAnimationManager extends BaseItemAnimationManager<
         }
     }
 
-    public abstract boolean addPendingAnimation(RecyclerView.ViewHolder item, int fromX, int fromY, int toX, int toY);
+    public abstract boolean addPendingAnimation(@NonNull RecyclerView.ViewHolder item, int fromX, int fromY, int toX, int toY);
 }

@@ -21,13 +21,6 @@ import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.FloatRange;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,8 +39,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
- * Provides item drag &amp; drop operation for {@link android.support.v7.widget.RecyclerView}
+ * Provides item drag &amp; drop operation for {@link androidx.recyclerview.widget.RecyclerView}
  */
 @SuppressWarnings("PointlessBitwiseExpression")
 public class RecyclerViewDragDropManager implements DraggableItemConstants {
@@ -270,12 +271,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     public RecyclerViewDragDropManager() {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
             @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 return RecyclerViewDragDropManager.this.onInterceptTouchEvent(rv, e);
             }
 
             @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 RecyclerViewDragDropManager.this.onTouchEvent(rv, e);
             }
 
@@ -287,12 +288,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
 
         mInternalUseOnScrollListener = new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 RecyclerViewDragDropManager.this.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 RecyclerViewDragDropManager.this.onScrolled(recyclerView, dx, dy);
             }
         };
@@ -309,6 +310,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
      * @return Wrapped adapter which is associated to this {@link RecyclerViewDragDropManager} instance.
      */
     @SuppressWarnings("unchecked")
+    @NonNull
     public RecyclerView.Adapter createWrappedAdapter(@NonNull RecyclerView.Adapter adapter) {
         if (!adapter.hasStableIds()) {
             throw new IllegalArgumentException("The passed adapter does not support stable IDs");
@@ -333,12 +335,12 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /**
-     * <p>Attaches {@link android.support.v7.widget.RecyclerView} instance.</p>
-     * <p>Before calling this method, the target {@link android.support.v7.widget.RecyclerView} must set
+     * <p>Attaches {@link androidx.recyclerview.widget.RecyclerView} instance.</p>
+     * <p>Before calling this method, the target {@link androidx.recyclerview.widget.RecyclerView} must set
      * the wrapped adapter instance which is returned by the
-     * {@link #createWrappedAdapter(android.support.v7.widget.RecyclerView.Adapter)} method.</p>
+     * {@link #createWrappedAdapter(androidx.recyclerview.widget.RecyclerView.Adapter)} method.</p>
      *
-     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     * @param rv The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
         if (isReleased()) {
@@ -376,7 +378,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
     }
 
     /**
-     * <p>Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.</p>
+     * <p>Detach the {@link androidx.recyclerview.widget.RecyclerView} instance and release internal field references.</p>
      * <p>This method should be called in order to avoid memory leaks.</p>
      */
     public void release() {
@@ -1021,6 +1023,7 @@ public class RecyclerViewDragDropManager implements DraggableItemConstants {
         return true;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean canStartDrag(RecyclerView.ViewHolder holder, int touchX, int touchY) {
         final int origRootPosition = holder.getAdapterPosition();
         final int wrappedItemPosition = WrapperAdapterUtils.unwrapPosition(mRecyclerView.getAdapter(), mWrapperAdapter, null, origRootPosition);

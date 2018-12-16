@@ -18,14 +18,9 @@ package com.h6ah4i.android.example.advrecyclerview.demo_composition_all;
 
 import android.graphics.drawable.NinePatchDrawable;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.DemoHeaderFooterAdapter;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.OnListItemClickMessageListener;
@@ -33,6 +28,12 @@ import com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedAdapter
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 public class CompositionAllExampleActivity extends AppCompatActivity {
 
@@ -44,12 +45,9 @@ public class CompositionAllExampleActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
-        OnListItemClickMessageListener clickListener = new OnListItemClickMessageListener() {
-            @Override
-            public void onItemClicked(String message) {
-                View container = findViewById(R.id.container);
-                Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
-            }
+        OnListItemClickMessageListener clickListener = message -> {
+            View container = findViewById(R.id.container);
+            Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
         };
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

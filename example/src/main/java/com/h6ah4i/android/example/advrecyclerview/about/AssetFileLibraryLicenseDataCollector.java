@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -56,26 +55,24 @@ public class AssetFileLibraryLicenseDataCollector {
 
             // sort numerically
             final Pattern p = Pattern.compile("^([0-9]+).*$");
-            Arrays.sort(dirs, new Comparator<String>() {
-                public int compare(String s1, String s2) {
-                    try {
-                        Matcher m1 = p.matcher(s1);
-                        Matcher m2 = p.matcher(s2);
-                        if (m1.find() && m2.find()) {
-                            int n1 = Integer.parseInt(m1.group(1));
-                            int n2 = Integer.parseInt(m2.group(1));
+            Arrays.sort(dirs, (s1, s2) -> {
+                try {
+                    Matcher m1 = p.matcher(s1);
+                    Matcher m2 = p.matcher(s2);
+                    if (m1.find() && m2.find()) {
+                        int n1 = Integer.parseInt(m1.group(1));
+                        int n2 = Integer.parseInt(m2.group(1));
 
-                            if (n1 == n2) {
-                                return s1.compareTo(s2);
-                            }
-
-                            return n1 - n2;
-                        } else {
+                        if (n1 == n2) {
                             return s1.compareTo(s2);
                         }
-                    } catch (RuntimeException e) {
+
+                        return n1 - n2;
+                    } else {
                         return s1.compareTo(s2);
                     }
+                } catch (RuntimeException e) {
+                    return s1.compareTo(s2);
                 }
             });
 
@@ -131,20 +128,11 @@ public class AssetFileLibraryLicenseDataCollector {
 
     // http://stackoverflow.com/questions/309424/read-convert-an-inputstream-to-a-string
     private static String loadTextFile(AssetManager assets, String path) {
-        InputStream stream = null;
-        try {
-            stream = assets.open(path, AssetManager.ACCESS_STREAMING);
+        try (InputStream stream = assets.open(path, AssetManager.ACCESS_STREAMING)) {
             java.util.Scanner s = new java.util.Scanner(stream).useDelimiter("\\A");
             return s.hasNext() ? s.next().trim() : "";
         } catch (IOException e) {
             // just ignore
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException ignored) {
-                }
-            }
         }
         return null;
     }

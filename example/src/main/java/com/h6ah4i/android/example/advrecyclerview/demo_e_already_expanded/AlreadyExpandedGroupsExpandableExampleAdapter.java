@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_e_already_expanded;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,10 +25,12 @@ import android.widget.TextView;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractAddRemoveExpandableDataProvider;
 import com.h6ah4i.android.example.advrecyclerview.common.widget.ExpandableItemIndicator;
-import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractExpandableItemViewHolder;
+
+import androidx.annotation.NonNull;
 
 class AlreadyExpandedGroupsExpandableExampleAdapter
         extends AbstractExpandableItemAdapter<AlreadyExpandedGroupsExpandableExampleAdapter.MyGroupViewHolder, AlreadyExpandedGroupsExpandableExampleAdapter.MyChildViewHolder> {
@@ -37,10 +38,6 @@ class AlreadyExpandedGroupsExpandableExampleAdapter
 
     private AbstractAddRemoveExpandableDataProvider mProvider;
     private RecyclerViewExpandableItemManager mExpandableItemManager;
-
-    // NOTE: Make accessible with short name
-    private interface Expandable extends ExpandableItemConstants {
-    }
 
     public static abstract class MyBaseViewHolder extends AbstractExpandableItemViewHolder {
         public FrameLayout mContainer;
@@ -111,21 +108,23 @@ class AlreadyExpandedGroupsExpandableExampleAdapter
     }
 
     @Override
-    public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyGroupViewHolder onCreateGroupViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_group_item, parent, false);
         return new MyGroupViewHolder(v);
     }
 
     @Override
-    public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyChildViewHolder onCreateChildViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate(R.layout.list_item, parent, false);
         return new MyChildViewHolder(v);
     }
 
     @Override
-    public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
+    public void onBindGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition, int viewType) {
         // child item
         final AbstractAddRemoveExpandableDataProvider.BaseData item = mProvider.getGroupItem(groupPosition);
 
@@ -136,30 +135,25 @@ class AlreadyExpandedGroupsExpandableExampleAdapter
         holder.itemView.setClickable(true);
 
         // set background resource (target view ID: container)
-        final int expandState = holder.getExpandStateFlags();
+        final ExpandableItemState expandState = holder.getExpandState();
 
-        if ((expandState & Expandable.STATE_FLAG_IS_UPDATED) != 0) {
+        if (expandState.isUpdated()) {
             int bgResId;
-            boolean isExpanded;
-            boolean animateIndicator = ((expandState & Expandable.STATE_FLAG_HAS_EXPANDED_STATE_CHANGED) != 0);
+            boolean animateIndicator = expandState.hasExpandedStateChanged();
 
-            if ((expandState & Expandable.STATE_FLAG_IS_EXPANDED) != 0) {
+            if (expandState.isExpanded()) {
                 bgResId = R.drawable.bg_group_item_expanded_state;
-                isExpanded = true;
             } else {
                 bgResId = R.drawable.bg_group_item_normal_state;
-                isExpanded = false;
             }
 
             holder.mContainer.setBackgroundResource(bgResId);
-            holder.mIndicator.setExpandedState(isExpanded, animateIndicator);
-        } else {
-            Log.d("TAG", "teste");
+            holder.mIndicator.setExpandedState(expandState.isExpanded(), animateIndicator);
         }
     }
 
     @Override
-    public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
+    public void onBindChildViewHolder(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
         // group item
         final AbstractAddRemoveExpandableDataProvider.ChildData item = mProvider.getChildItem(groupPosition, childPosition);
 
@@ -173,7 +167,7 @@ class AlreadyExpandedGroupsExpandableExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
+    public boolean onCheckCanExpandOrCollapseGroup(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
         // check is enabled
         return holder.itemView.isEnabled() && holder.itemView.isClickable();
     }

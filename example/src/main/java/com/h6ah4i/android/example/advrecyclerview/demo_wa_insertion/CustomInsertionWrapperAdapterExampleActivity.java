@@ -17,21 +17,21 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_wa_insertion;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.BuildConfig;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.OnListItemClickMessageListener;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.SimpleDemoItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.DebugWrapperAdapter;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class CustomInsertionWrapperAdapterExampleActivity extends AppCompatActivity {
 
@@ -43,12 +43,9 @@ public class CustomInsertionWrapperAdapterExampleActivity extends AppCompatActiv
 
         setContentView(R.layout.activity_demo_minimal);
 
-        OnListItemClickMessageListener clickListener = new OnListItemClickMessageListener() {
-            @Override
-            public void onItemClicked(String message) {
-                View container = findViewById(R.id.container);
-                Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
-            }
+        OnListItemClickMessageListener clickListener = message -> {
+            View container = findViewById(R.id.container);
+            Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
         };
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -74,16 +71,11 @@ public class CustomInsertionWrapperAdapterExampleActivity extends AppCompatActiv
 
         // setting up the insertion on/off switch
         MenuItem menuSwitchItem = menu.findItem(R.id.menu_switch_on_off);
-        CompoundButton actionView = MenuItemCompat.getActionView(menuSwitchItem).findViewById(R.id.switch_view);
+        CompoundButton actionView = menuSwitchItem.getActionView().findViewById(R.id.switch_view);
 
         actionView.setChecked(mInsertionAdapter.isInsertionEnabled());
 
-        actionView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mInsertionAdapter.setInsertionEnabled(!mInsertionAdapter.isInsertionEnabled());
-            }
-        });
+        actionView.setOnCheckedChangeListener((buttonView, isChecked) -> mInsertionAdapter.setInsertionEnabled(!mInsertionAdapter.isInsertionEnabled()));
 
         return true;
     }

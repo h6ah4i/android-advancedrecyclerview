@@ -17,14 +17,14 @@
 package com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation;
 
 import android.annotation.SuppressLint;
-import android.support.annotation.IntDef;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-@SuppressWarnings("deprecation")
+import androidx.annotation.IntDef;
+
 @SuppressLint("UniqueConstants")
 @IntDef(flag = true, value = {
         SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_ANY,
@@ -50,9 +50,6 @@ import java.lang.annotation.RetentionPolicy;
         SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH_V,
         SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH_V_WITH_RUBBER_BAND_EFFECT,
         SwipeableItemConstants.REACTION_CAN_SWIPE_BOTH_V,
-        SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH,
-        SwipeableItemConstants.REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT,
-        SwipeableItemConstants.REACTION_CAN_SWIPE_BOTH,
         SwipeableItemConstants.REACTION_START_SWIPE_ON_LONG_PRESS,
 })
 @Retention(RetentionPolicy.SOURCE)

@@ -18,11 +18,6 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
 import android.graphics.Rect;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPropertyAnimatorCompat;
-import android.support.v4.view.ViewPropertyAnimatorListener;
-import android.support.v4.view.ViewPropertyAnimatorUpdateListener;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -36,6 +31,12 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAct
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewPropertyAnimatorCompat;
+import androidx.core.view.ViewPropertyAnimatorListener;
+import androidx.core.view.ViewPropertyAnimatorUpdateListener;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemSlidingAnimator {
     private static final String TAG = "ItemSlidingAnimator";
@@ -136,12 +137,12 @@ public class ItemSlidingAnimator {
                 final int translationX;
                 translationX = (int) ((proportional ? width * amount : amount) + 0.5f);
                 return animateSlideInternalCompat(
-                        holder, horizontal, translationX, 0, duration, interpolator, swipeFinish);
+                        holder, true, translationX, 0, duration, interpolator, swipeFinish);
             } else if (!horizontal && (!proportional || height != 0)) {
                 final int translationY;
                 translationY = (int) ((proportional ? height * amount : amount) + 0.5f);
                 return animateSlideInternalCompat(
-                        holder, horizontal, 0, translationY, duration, interpolator, swipeFinish);
+                        holder, false, 0, translationY, duration, interpolator, swipeFinish);
             } else {
                 if (swipeFinish != null) {
                     throw new IllegalStateException(
@@ -414,13 +415,13 @@ public class ItemSlidingAnimator {
                 final int translationX;
 
                 translationX = (int) (width * mPosition + 0.5f);
-                slideInternalCompat(holder, mHorizontal, translationX, 0);
+                slideInternalCompat(holder, true, translationX, 0);
             } else {
                 final int height = containerView.getHeight();
                 final int translationY;
 
                 translationY = (int) (height * mPosition + 0.5f);
-                slideInternalCompat(holder, mHorizontal, 0, translationY);
+                slideInternalCompat(holder, false, 0, translationY);
             }
         }
     }

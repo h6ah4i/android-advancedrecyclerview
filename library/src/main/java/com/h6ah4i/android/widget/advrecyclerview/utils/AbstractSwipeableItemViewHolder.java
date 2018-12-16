@@ -16,18 +16,20 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.utils;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
+import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemViewHolder;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemAfterReactions;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemStateFlags;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewHolder implements SwipeableItemViewHolder {
-    @SwipeableItemStateFlags
-    private int mSwipeStateFlags;
+    private SwipeableItemState mSwipeState = new SwipeableItemState();
     @SwipeableItemResults
     private int mSwipeResult = RecyclerViewSwipeManager.RESULT_NONE;
     @SwipeableItemAfterReactions
@@ -40,19 +42,25 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     private float mMaxRightSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_RIGHT;
     private float mMaxDownSwipeAmount = RecyclerViewSwipeManager.OUTSIDE_OF_THE_WINDOW_BOTTOM;
 
-    public AbstractSwipeableItemViewHolder(View itemView) {
+    public AbstractSwipeableItemViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 
     @Override
     public void setSwipeStateFlags(@SwipeableItemStateFlags int flags) {
-        mSwipeStateFlags = flags;
+        mSwipeState.setFlags(flags);
     }
 
     @Override
     @SwipeableItemStateFlags
     public int getSwipeStateFlags() {
-        return mSwipeStateFlags;
+        return mSwipeState.getFlags();
+    }
+
+    @Override
+    @NonNull
+    public SwipeableItemState getSwipeState() {
+        return mSwipeState;
     }
 
     @Override
@@ -108,6 +116,7 @@ public abstract class AbstractSwipeableItemViewHolder extends RecyclerView.ViewH
     }
 
     @Override
+    @NonNull
     public abstract View getSwipeableContainerView();
 
     @Override

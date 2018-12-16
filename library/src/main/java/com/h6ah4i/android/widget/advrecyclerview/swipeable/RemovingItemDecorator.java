@@ -19,14 +19,16 @@ package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.h6ah4i.android.widget.advrecyclerview.utils.CustomRecyclerViewUtils;
 
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     @SuppressWarnings("unused")
@@ -71,7 +73,7 @@ class RemovingItemDecorator extends RecyclerView.ItemDecoration {
     }
 
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         final long elapsedTime = getElapsedTime(mStartTime);
 
         final float scale = determineBackgroundScaleSwipeCompletedSuccessfully(elapsedTime);

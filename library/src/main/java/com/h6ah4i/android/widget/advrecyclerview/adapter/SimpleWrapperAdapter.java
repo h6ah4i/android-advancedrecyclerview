@@ -15,9 +15,6 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ViewGroup;
 
@@ -25,6 +22,11 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrappedAdapterUtils;
 
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * A simple wrapper class. It just bypasses all methods and events to the wrapped adapter.
@@ -66,6 +68,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * Returns underlying adapter.
      * @return The underlying adapter instance
      */
+    @Nullable
     public RecyclerView.Adapter<VH> getWrappedAdapter() {
         return mWrappedAdapter;
     }
@@ -99,7 +102,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         if (isWrappedAdapterAlive())
             mWrappedAdapter.onAttachedToRecyclerView(recyclerView);
     }
@@ -108,7 +111,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
         if (isWrappedAdapterAlive())
             mWrappedAdapter.onDetachedFromRecyclerView(recyclerView);
     }
@@ -117,7 +120,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onViewAttachedToWindow(VH holder) {
+    public void onViewAttachedToWindow(@NonNull VH holder) {
         onViewAttachedToWindow(holder, holder.getItemViewType());
     }
 
@@ -125,7 +128,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onViewAttachedToWindow(VH holder, int viewType) {
+    public void onViewAttachedToWindow(@NonNull VH holder, int viewType) {
         if (isWrappedAdapterAlive()) {
             WrappedAdapterUtils.invokeOnViewAttachedToWindow(mWrappedAdapter, holder, viewType);
         }
@@ -135,7 +138,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onViewDetachedFromWindow(VH holder) {
+    public void onViewDetachedFromWindow(@NonNull VH holder) {
         onViewDetachedFromWindow(holder, holder.getItemViewType());
     }
 
@@ -143,7 +146,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onViewDetachedFromWindow(VH holder, int viewType) {
+    public void onViewDetachedFromWindow(@NonNull VH holder, int viewType) {
         if (isWrappedAdapterAlive()) {
             WrappedAdapterUtils.invokeOnViewDetachedFromWindow(mWrappedAdapter, holder, viewType);
         }
@@ -153,7 +156,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onViewRecycled(VH holder) {
+    public void onViewRecycled(@NonNull VH holder) {
         onViewRecycled(holder, holder.getItemViewType());
     }
 
@@ -161,7 +164,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onViewRecycled(VH holder, int viewType) {
+    public void onViewRecycled(@NonNull VH holder, int viewType) {
         if (isWrappedAdapterAlive()) {
             WrappedAdapterUtils.invokeOnViewRecycled(mWrappedAdapter, holder, viewType);
         }
@@ -171,7 +174,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public boolean onFailedToRecycleView(VH holder) {
+    public boolean onFailedToRecycleView(@NonNull VH holder) {
         return onFailedToRecycleView(holder, holder.getItemViewType());
     }
 
@@ -179,7 +182,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public boolean onFailedToRecycleView(VH holder, int viewType) {
+    public boolean onFailedToRecycleView(@NonNull VH holder, int viewType) {
         boolean shouldBeRecycled = false;
 
         if (isWrappedAdapterAlive()) {
@@ -207,8 +210,9 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
     /**
      * {@inheritDoc}
      */
+    @NonNull
     @Override
-    public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return mWrappedAdapter.onCreateViewHolder(parent, viewType);
     }
 
@@ -216,7 +220,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onBindViewHolder(VH holder, int position) {
+    public void onBindViewHolder(@NonNull VH holder, int position) {
         onBindViewHolder(holder, position, FULL_UPDATE_PAYLOADS);
     }
 
@@ -224,7 +228,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
      * {@inheritDoc}
      */
     @Override
-    public void onBindViewHolder(VH holder, int position, List<Object> payloads) {
+    public void onBindViewHolder(@NonNull VH holder, int position, @NonNull List<Object> payloads) {
         if (isWrappedAdapterAlive())
             mWrappedAdapter.onBindViewHolder(holder, position, payloads);
     }
@@ -308,7 +312,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     @Override
-    public final void onBridgedAdapterChanged(RecyclerView.Adapter source, Object tag) {
+    public final void onBridgedAdapterChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onBridgedAdapterChanged");
         }
@@ -317,7 +321,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     @Override
-    public final void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount) {
+    public final void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onBridgedAdapterItemRangeChanged(positionStart = " + positionStart + ", itemCount = " + itemCount + ")");
         }
@@ -326,7 +330,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     @Override
-    public final void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter sourceAdapter, Object tag, int positionStart, int itemCount, Object payload) {
+    public final void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter sourceAdapter, @Nullable Object tag, int positionStart, int itemCount, Object payload) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onBridgedAdapterItemRangeChanged(positionStart = " + positionStart + ", itemCount = " + itemCount + ", payload = " + payload + ")");
         }
@@ -335,7 +339,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     @Override
-    public final void onBridgedAdapterItemRangeInserted(RecyclerView.Adapter sourceAdapter, Object tag, int positionStart, int itemCount) {
+    public final void onBridgedAdapterItemRangeInserted(@NonNull RecyclerView.Adapter sourceAdapter, @Nullable Object tag, int positionStart, int itemCount) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onBridgedAdapterItemRangeInserted(positionStart = " + positionStart + ", itemCount = " + itemCount + ")");
         }
@@ -344,7 +348,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     @Override
-    public final void onBridgedAdapterItemRangeRemoved(RecyclerView.Adapter sourceAdapter, Object tag, int positionStart, int itemCount) {
+    public final void onBridgedAdapterItemRangeRemoved(@NonNull RecyclerView.Adapter sourceAdapter, @Nullable Object tag, int positionStart, int itemCount) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onBridgedAdapterItemRangeRemoved(positionStart = " + positionStart + ", itemCount = " + itemCount + ")");
         }
@@ -353,7 +357,7 @@ public class SimpleWrapperAdapter<VH extends RecyclerView.ViewHolder>
     }
 
     @Override
-    public final void onBridgedAdapterRangeMoved(RecyclerView.Adapter sourceAdapter, Object tag, int fromPosition, int toPosition, int itemCount) {
+    public final void onBridgedAdapterRangeMoved(@NonNull RecyclerView.Adapter sourceAdapter, @Nullable Object tag, int fromPosition, int toPosition, int itemCount) {
         if (LOCAL_LOGD) {
             Log.d(TAG, "onBridgedAdapterRangeMoved(fromPosition = " + fromPosition + ", toPosition = " + toPosition + ", itemCount = " + itemCount + ")");
         }

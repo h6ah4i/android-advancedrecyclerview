@@ -16,7 +16,6 @@
 
 package com.h6ah4i.android.example.advrecyclerview.demo_d_on_longpress;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,18 +28,17 @@ import com.h6ah4i.android.example.advrecyclerview.common.data.AbstractDataProvid
 import com.h6ah4i.android.example.advrecyclerview.common.utils.DrawableUtils;
 import com.h6ah4i.android.example.advrecyclerview.common.utils.ViewUtils;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
+import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 class DragOnLongPressExampleAdapter
         extends RecyclerView.Adapter<DragOnLongPressExampleAdapter.MyViewHolder>
         implements DraggableItemAdapter<DragOnLongPressExampleAdapter.MyViewHolder> {
     private static final String TAG = "MyDraggableItemAdapter";
-
-    // NOTE: Make accessible with short name
-    private interface Draggable extends DraggableItemConstants {
-    }
 
     private AbstractDataProvider mProvider;
 
@@ -75,32 +73,33 @@ class DragOnLongPressExampleAdapter
         return mProvider.getItem(position).getViewType();
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         final View v = inflater.inflate((viewType == 0) ? R.layout.list_item_draggable : R.layout.list_item2_draggable, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
         // set text
         holder.mTextView.setText(item.getText());
 
         // set background resource (target view ID: container)
-        final int dragState = holder.getDragStateFlags();
+        final DraggableItemState dragState = holder.getDragState();
 
-        if (((dragState & Draggable.STATE_FLAG_IS_UPDATED) != 0)) {
+        if (dragState.isUpdated()) {
             int bgResId;
 
-            if ((dragState & Draggable.STATE_FLAG_IS_ACTIVE) != 0) {
+            if (dragState.isUpdated()) {
                 bgResId = R.drawable.bg_item_dragging_active_state;
 
                 // need to clear drawable state here to get correct appearance of the dragging item.
                 DrawableUtils.clearState(holder.mContainer.getForeground());
-            } else if ((dragState & Draggable.STATE_FLAG_DRAGGING) != 0) {
+            } else if (dragState.isDragging()) {
                 bgResId = R.drawable.bg_item_dragging_state;
             } else {
                 bgResId = R.drawable.bg_item_normal_state;
@@ -123,7 +122,7 @@ class DragOnLongPressExampleAdapter
     }
 
     @Override
-    public boolean onCheckCanStartDrag(MyViewHolder holder, int position, int x, int y) {
+    public boolean onCheckCanStartDrag(@NonNull MyViewHolder holder, int position, int x, int y) {
         // x, y --- relative from the itemView's top-left
         final View containerView = holder.mContainer;
         final View dragHandleView = holder.mDragHandle;
@@ -135,7 +134,7 @@ class DragOnLongPressExampleAdapter
     }
 
     @Override
-    public ItemDraggableRange onGetItemDraggableRange(MyViewHolder holder, int position) {
+    public ItemDraggableRange onGetItemDraggableRange(@NonNull MyViewHolder holder, int position) {
         // no drag-sortable range specified
         return null;
     }

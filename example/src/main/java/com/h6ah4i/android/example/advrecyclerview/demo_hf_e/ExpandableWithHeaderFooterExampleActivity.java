@@ -17,18 +17,19 @@
 package com.h6ah4i.android.example.advrecyclerview.demo_hf_e;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.DemoHeaderFooterAdapter;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.OnListItemClickMessageListener;
 import com.h6ah4i.android.example.advrecyclerview.common.adapter.SimpleDemoExpandableItemAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.expandable.RecyclerViewExpandableItemManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 /*
  * This example shows very very minimal implementation of expandable feature with header and footer.
@@ -42,12 +43,9 @@ public class ExpandableWithHeaderFooterExampleActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_demo_minimal);
 
-        OnListItemClickMessageListener clickListener = new OnListItemClickMessageListener() {
-            @Override
-            public void onItemClicked(String message) {
-                View container = findViewById(R.id.container);
-                Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
-            }
+        OnListItemClickMessageListener clickListener = message -> {
+            View container = findViewById(R.id.container);
+            Snackbar.make(container, message, Snackbar.LENGTH_SHORT).show();
         };
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);

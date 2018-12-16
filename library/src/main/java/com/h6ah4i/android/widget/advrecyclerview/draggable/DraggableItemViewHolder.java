@@ -18,10 +18,13 @@ package com.h6ah4i.android.widget.advrecyclerview.draggable;
 
 import com.h6ah4i.android.widget.advrecyclerview.draggable.annotation.DraggableItemStateFlags;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * Interface which provides required information for dragging item.
  *
- * Implement this interface on your sub-class of the {@link android.support.v7.widget.RecyclerView.ViewHolder}.
+ * Implement this interface on your sub-class of the {@link androidx.recyclerview.widget.RecyclerView.ViewHolder}.
  */
 public interface DraggableItemViewHolder {
     /**
@@ -32,18 +35,29 @@ public interface DraggableItemViewHolder {
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_ACTIVE}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_IN_RANGE}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_UPDATED}
+     * @see #getDragState()
      */
     void setDragStateFlags(@DraggableItemStateFlags int flags);
 
     /**
-     * Gets the state flags value for dragging item
+     * Gets the state flags value for dragging item. You can access these flags more human friendly way through {@link #getDragState()}.
      *
      * @return  Bitwise OR of these flags;
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_DRAGGING}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_ACTIVE}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_IN_RANGE}
      *              - {@link com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants#STATE_FLAG_IS_UPDATED}
+     * @see #getDragState()
      */
     @DraggableItemStateFlags
     int getDragStateFlags();
+
+    /**
+     * Gets the state object for dragging item.
+     * This method can be used inside of the {@link androidx.recyclerview.widget.RecyclerView.Adapter#onBindViewHolder(RecyclerView.ViewHolder, int)}.
+     *
+     * @return {@link DraggableItemState} object
+     */
+    @NonNull
+    DraggableItemState getDragState();
 }

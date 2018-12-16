@@ -16,12 +16,12 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.draggable.annotation;
 
-import android.support.annotation.IntDef;
-
 import com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemConstants;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import androidx.annotation.IntDef;
 
 @IntDef(flag = true, value = {
         DraggableItemConstants.STATE_FLAG_DRAGGING,

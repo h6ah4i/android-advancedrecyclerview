@@ -15,9 +15,6 @@
  */
 package com.h6ah4i.android.example.advrecyclerview.common.adapter;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +23,11 @@ import com.h6ah4i.android.example.advrecyclerview.R;
 import com.h6ah4i.android.widget.advrecyclerview.headerfooter.AbstractHeaderFooterWrapperAdapter;
 import com.h6ah4i.android.widget.advrecyclerview.utils.RecyclerViewAdapterUtils;
 import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class DemoHeaderFooterAdapter
         extends AbstractHeaderFooterWrapperAdapter<DemoHeaderFooterAdapter.HeaderViewHolder, DemoHeaderFooterAdapter.FooterViewHolder>
@@ -63,8 +65,9 @@ public class DemoHeaderFooterAdapter
         return 1;
     }
 
+    @NonNull
     @Override
-    public HeaderViewHolder onCreateHeaderItemViewHolder(ViewGroup parent, int viewType) {
+    public HeaderViewHolder onCreateHeaderItemViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.header_item, parent, false);
         HeaderViewHolder vh = new HeaderViewHolder(v);
         if (mOnItemClickListener != null) {
@@ -73,8 +76,9 @@ public class DemoHeaderFooterAdapter
         return vh;
     }
 
+    @NonNull
     @Override
-    public FooterViewHolder onCreateFooterItemViewHolder(ViewGroup parent, int viewType) {
+    public FooterViewHolder onCreateFooterItemViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.footer_item, parent, false);
         FooterViewHolder vh = new FooterViewHolder(v);
         if (mOnItemClickListener != null) {
@@ -84,7 +88,7 @@ public class DemoHeaderFooterAdapter
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(@NonNull View v) {
         RecyclerView rv = RecyclerViewAdapterUtils.getParentRecyclerView(v);
         RecyclerView.ViewHolder vh = rv.findContainingViewHolder(v);
 
@@ -120,19 +124,19 @@ public class DemoHeaderFooterAdapter
     // Set full-span for Grid layout and Staggered Grid layout
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
 
         setupFullSpanForGridLayoutManager(recyclerView);
     }
 
     @Override
-    public void onBindHeaderItemViewHolder(HeaderViewHolder holder, int localPosition) {
+    public void onBindHeaderItemViewHolder(@NonNull HeaderViewHolder holder, int localPosition) {
         applyFullSpanForStaggeredGridLayoutManager(holder);
     }
 
     @Override
-    public void onBindFooterItemViewHolder(FooterViewHolder holder, int localPosition) {
+    public void onBindFooterItemViewHolder(@NonNull FooterViewHolder holder, int localPosition) {
         applyFullSpanForStaggeredGridLayoutManager(holder);
     }
 

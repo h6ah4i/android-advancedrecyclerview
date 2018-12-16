@@ -19,14 +19,17 @@
 
 package com.h6ah4i.android.widget.advrecyclerview;
 
-import android.support.v7.widget.RecyclerView;
-import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.BaseItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -35,7 +38,19 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTestCase2<TestActivity> {
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.ActivityTestRule;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+@RunWith(AndroidJUnit4.class)
+@LargeTest
+public abstract class GeneralItemAnimatorTest {
 
     GeneralItemAnimator mAnimator;
     Adapter mAdapter;
@@ -47,38 +62,36 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
     final Set<RecyclerView.ViewHolder> mMoveFinished = new HashSet<>();
     final Set<RecyclerView.ViewHolder> mChangeFinished = new HashSet<>();
 
-    public GeneralItemAnimatorTest() {
-        super(TestActivity.class);
-    }
+    @Rule
+    public ActivityTestRule<TestActivity> mActivityRule = new ActivityTestRule(TestActivity.class);
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         mAnimator = onCreateTestTargetItemAnimator();
         mAnimator.setDebug(true);
         mAdapter = new Adapter(20);
         mDummyParent = getActivity().mContainer;
         mAnimator.setListener(new BaseItemAnimator.ItemAnimatorListener() {
             @Override
-            public void onRemoveFinished(RecyclerView.ViewHolder item) {
+            public void onRemoveFinished(@NonNull RecyclerView.ViewHolder item) {
                 assertTrue(mRemoveFinished.add(item));
                 onFinished();
             }
 
             @Override
-            public void onAddFinished(RecyclerView.ViewHolder item) {
+            public void onAddFinished(@NonNull RecyclerView.ViewHolder item) {
                 assertTrue(mAddFinished.add(item));
                 onFinished();
             }
 
             @Override
-            public void onMoveFinished(RecyclerView.ViewHolder item) {
+            public void onMoveFinished(@NonNull RecyclerView.ViewHolder item) {
                 assertTrue(mMoveFinished.add(item));
                 onFinished();
             }
 
             @Override
-            public void onChangeFinished(RecyclerView.ViewHolder item) {
+            public void onChangeFinished(@NonNull RecyclerView.ViewHolder item) {
                 assertTrue(mChangeFinished.add(item));
                 onFinished();
             }
@@ -93,12 +106,12 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
 
     protected abstract GeneralItemAnimator onCreateTestTargetItemAnimator();
 
-    void expectItems(int count) {
+    private void expectItems(int count) {
         mExpectedItems = new CountDownLatch(count);
     }
 
-    void runAndWait(int seconds) throws Throwable {
-        runTestOnUiThread(new Runnable() {
+    private void runAndWait(int seconds) throws Throwable {
+        runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mAnimator.runPendingAnimations();
@@ -107,11 +120,12 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         waitForItems(seconds);
     }
 
-    void waitForItems(int seconds) throws InterruptedException {
+    private void waitForItems(int seconds) throws InterruptedException {
         mExpectedItems.await(seconds, TimeUnit.SECONDS);
         assertEquals("all expected finish events should happen", 0, mExpectedItems.getCount());
     }
 
+    @Test
     public void testAnimateAdd() throws Throwable {
         ViewHolder vh = createViewHolder(1);
         expectItems(1);
@@ -120,6 +134,7 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         runAndWait(1);
     }
 
+    @Test
     public void testAnimateRemove() throws Throwable {
         ViewHolder vh = createViewHolder(1);
         expectItems(1);
@@ -128,6 +143,7 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         runAndWait(1);
     }
 
+    @Test
     public void testAnimateMove() throws Throwable {
         ViewHolder vh = createViewHolder(1);
         expectItems(1);
@@ -136,6 +152,7 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         runAndWait(1);
     }
 
+    @Test
     public void testAnimateChange() throws Throwable {
         ViewHolder vh = createViewHolder(1);
         ViewHolder vh2 = createViewHolder(2);
@@ -145,9 +162,9 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         runAndWait(1);
     }
 
-    boolean animateAdd(final RecyclerView.ViewHolder vh) throws Throwable {
+    private boolean animateAdd(final RecyclerView.ViewHolder vh) throws Throwable {
         final boolean[] result = new boolean[1];
-        runTestOnUiThread(new Runnable() {
+        runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 result[0] = mAnimator.animateAdd(vh);
@@ -156,9 +173,9 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         return result[0];
     }
 
-    boolean animateRemove(final RecyclerView.ViewHolder vh) throws Throwable {
+    private boolean animateRemove(final RecyclerView.ViewHolder vh) throws Throwable {
         final boolean[] result = new boolean[1];
-        runTestOnUiThread(new Runnable() {
+        runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 result[0] = mAnimator.animateRemove(vh);
@@ -167,10 +184,10 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         return result[0];
     }
 
-    boolean animateMove(final RecyclerView.ViewHolder vh, final int fromX, final int fromY,
+    private boolean animateMove(final RecyclerView.ViewHolder vh, final int fromX, final int fromY,
                         final int toX, final int toY) throws Throwable {
         final boolean[] result = new boolean[1];
-        runTestOnUiThread(new Runnable() {
+        runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 result[0] = mAnimator.animateMove(vh, fromX, fromY, toX, toY);
@@ -179,11 +196,11 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         return result[0];
     }
 
-    boolean animateChange(final RecyclerView.ViewHolder oldHolder,
+    private boolean animateChange(final RecyclerView.ViewHolder oldHolder,
                           final RecyclerView.ViewHolder newHolder,
                           final int fromX, final int fromY, final int toX, final int toY) throws Throwable {
         final boolean[] result = new boolean[1];
-        runTestOnUiThread(new Runnable() {
+        runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 result[0] = mAnimator.animateChange(oldHolder, newHolder, fromX, fromY, toX, toY);
@@ -194,7 +211,7 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
 
     private ViewHolder createViewHolder(final int pos) throws Throwable {
         final ViewHolder vh = mAdapter.createViewHolder(mDummyParent, 1);
-        runTestOnUiThread(new Runnable() {
+        runOnMainSync(new Runnable() {
             @Override
             public void run() {
                 mAdapter.bindViewHolder(vh, pos);
@@ -205,6 +222,13 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
         return vh;
     }
 
+    private TestActivity getActivity() {
+        return mActivityRule.getActivity();
+    }
+
+    public final void runOnMainSync(Runnable action) {
+        InstrumentationRegistry.getInstrumentation().runOnMainSync(action);
+    }
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
 
@@ -217,13 +241,14 @@ public abstract class GeneralItemAnimatorTest extends ActivityInstrumentationTes
             }
         }
 
+        @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             return new ViewHolder(new TextView(parent.getContext()));
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.bind(mItems.get(position));
         }
 

@@ -16,7 +16,8 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * The result object of {@link WrapperAdapter#unwrapPosition(UnwrapPositionResult, int)}.
@@ -26,6 +27,7 @@ public class UnwrapPositionResult {
     /**
      * Adapter
      */
+    @Nullable
     public RecyclerView.Adapter adapter;
 
     /**
@@ -34,6 +36,7 @@ public class UnwrapPositionResult {
      * <p>The tag object can be used to identify the path.
      * (e.g.: wrapper adapter can use a same child adapter multiple times)</p>
      */
+    @Nullable
     public Object tag;
 
     /**

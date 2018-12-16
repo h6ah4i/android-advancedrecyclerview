@@ -19,6 +19,13 @@ package com.h6ah4i.android.widget.advrecyclerview;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.SwipeDismissItemAnimator;
 
+import org.junit.runner.RunWith;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
+
+@RunWith(AndroidJUnit4.class)
+@LargeTest
 public class SwipeDismissItemAnimatorTest extends GeneralItemAnimatorTest {
     @Override
     protected GeneralItemAnimator onCreateTestTargetItemAnimator() {

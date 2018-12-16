@@ -15,7 +15,8 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * An interface provides better methods for wrapped adapters.
@@ -26,27 +27,27 @@ public interface WrappedAdapter<VH extends RecyclerView.ViewHolder> {
      *
      * @param holder   Holder of the view being attached
      * @param viewType Unwrapped view type. Use this instead of #{{@link RecyclerView.ViewHolder#getItemViewType()}}.
-     * @see {@link android.support.v7.widget.RecyclerView.Adapter#onViewAttachedToWindow(RecyclerView.ViewHolder)}
+     * @see androidx.recyclerview.widget.RecyclerView.Adapter#onViewAttachedToWindow(RecyclerView.ViewHolder)
      */
-    void onViewAttachedToWindow(VH holder, int viewType);
+    void onViewAttachedToWindow(@NonNull VH holder, int viewType);
 
     /**
      * onViewDetachedFromWindow() with unwrapped item view type parameter.
      *
      * @param holder   Holder of the view being detached
      * @param viewType Unwrapped view type. Use this instead of #{{@link RecyclerView.ViewHolder#getItemViewType()}}.
-     * @see {@link android.support.v7.widget.RecyclerView.Adapter#onViewDetachedFromWindow(RecyclerView.ViewHolder)}
+     * @see androidx.recyclerview.widget.RecyclerView.Adapter#onViewDetachedFromWindow(RecyclerView.ViewHolder)
      */
-    void onViewDetachedFromWindow(VH holder, int viewType);
+    void onViewDetachedFromWindow(@NonNull VH holder, int viewType);
 
     /**
      * onViewRecycled() with unwrapped item view type parameter.
      *
      * @param holder   The ViewHolder for the view being recycled
      * @param viewType Unwrapped view type. Use this instead of #{{@link RecyclerView.ViewHolder#getItemViewType()}}.
-     * @see {@link android.support.v7.widget.RecyclerView.Adapter#onViewRecycled(RecyclerView.ViewHolder)}
+     * @see androidx.recyclerview.widget.RecyclerView.Adapter#onViewRecycled(RecyclerView.ViewHolder)
      */
-    void onViewRecycled(VH holder, int viewType);
+    void onViewRecycled(@NonNull VH holder, int viewType);
 
 
     /**
@@ -60,7 +61,7 @@ public interface WrappedAdapter<VH extends RecyclerView.ViewHolder> {
      * the View and recycle it regardless. If this method returns <code>false</code>,
      * RecyclerView will check the View's transient state again before giving a final decision.
      * Default implementation returns false.
-     * @see {@link android.support.v7.widget.RecyclerView.Adapter#onFailedToRecycleView(RecyclerView.ViewHolder)}
+     * @see androidx.recyclerview.widget.RecyclerView.Adapter#onFailedToRecycleView(RecyclerView.ViewHolder)
      */
-    boolean onFailedToRecycleView(VH holder, int viewType);
+    boolean onFailedToRecycleView(@NonNull VH holder, int viewType);
 }

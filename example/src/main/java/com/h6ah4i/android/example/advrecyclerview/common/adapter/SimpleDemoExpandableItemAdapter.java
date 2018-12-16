@@ -15,7 +15,6 @@
  */
 package com.h6ah4i.android.example.advrecyclerview.common.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +29,9 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SimpleDemoExpandableItemAdapter extends AbstractExpandableItemAdapter<SimpleDemoExpandableItemAdapter.MyGroupViewHolder, SimpleDemoExpandableItemAdapter.MyChildViewHolder> implements View.OnClickListener {
     RecyclerViewExpandableItemManager mExpandableItemManager;
@@ -121,7 +123,8 @@ public class SimpleDemoExpandableItemAdapter extends AbstractExpandableItemAdapt
     }
 
     @Override
-    public MyGroupViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyGroupViewHolder onCreateGroupViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_group_item_for_expandable_minimal, parent, false);
         MyGroupViewHolder vh = new MyGroupViewHolder(v);
         vh.itemView.setOnClickListener(this);
@@ -129,7 +132,8 @@ public class SimpleDemoExpandableItemAdapter extends AbstractExpandableItemAdapt
     }
 
     @Override
-    public MyChildViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+    @NonNull
+    public MyChildViewHolder onCreateChildViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_child_item_for_expandable_minimal, parent, false);
         MyChildViewHolder vh = new MyChildViewHolder(v);
         vh.itemView.setOnClickListener(this);
@@ -137,19 +141,19 @@ public class SimpleDemoExpandableItemAdapter extends AbstractExpandableItemAdapt
     }
 
     @Override
-    public void onBindGroupViewHolder(MyGroupViewHolder holder, int groupPosition, int viewType) {
+    public void onBindGroupViewHolder(@NonNull MyGroupViewHolder holder, int groupPosition, int viewType) {
         MyGroupItem group = mItems.get(groupPosition);
         holder.textView.setText(group.text);
     }
 
     @Override
-    public void onBindChildViewHolder(MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
+    public void onBindChildViewHolder(@NonNull MyChildViewHolder holder, int groupPosition, int childPosition, int viewType) {
         MyChildItem child = mItems.get(groupPosition).children.get(childPosition);
         holder.textView.setText(child.text);
     }
 
     @Override
-    public boolean onCheckCanExpandOrCollapseGroup(MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
+    public boolean onCheckCanExpandOrCollapseGroup(@NonNull MyGroupViewHolder holder, int groupPosition, int x, int y, boolean expand) {
         // handles click event manually (to show Snackbar message)
         return false;
     }

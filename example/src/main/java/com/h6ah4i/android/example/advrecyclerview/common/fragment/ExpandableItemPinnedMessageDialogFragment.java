@@ -20,12 +20,13 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.RecyclerView;
 
 import com.h6ah4i.android.example.advrecyclerview.R;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ExpandableItemPinnedMessageDialogFragment extends DialogFragment {
     private static final String KEY_GROUP_ITEM_POSITION = "group_position";
@@ -64,18 +65,8 @@ public class ExpandableItemPinnedMessageDialogFragment extends DialogFragment {
         } else {
             builder.setMessage(getString(R.string.dialog_message_child_item_pinned, groupPosition, childPosition));
         }
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                notifyItemPinnedDialogDismissed(true);
-            }
-        });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> notifyItemPinnedDialogDismissed(true));
+        builder.setNegativeButton(android.R.string.cancel, (dialog, which) -> dialog.cancel());
         builder.setCancelable(true);
         return builder.create();
     }

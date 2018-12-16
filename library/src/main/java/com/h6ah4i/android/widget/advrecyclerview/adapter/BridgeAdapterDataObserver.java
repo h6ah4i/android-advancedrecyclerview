@@ -15,11 +15,11 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.adapter;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-
 import java.lang.ref.WeakReference;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * This class behaves like a "proxy" which bridges
@@ -36,9 +36,9 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          *
          * @param source The source adapter
          * @param tag    The tag object
-         * @see {@link RecyclerView.AdapterDataObserver#onChanged()}
+         * @see RecyclerView.AdapterDataObserver#onChanged()
          */
-        void onBridgedAdapterChanged(RecyclerView.Adapter source, Object tag);
+        void onBridgedAdapterChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int)} event.
@@ -47,9 +47,9 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param tag           The tag object
          * @param positionStart Position of the first item that has changed
          * @param itemCount     Number of items that have changed
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int)}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int)
          */
-        void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount);
+        void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)} event.
@@ -59,9 +59,9 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param positionStart Position of the first item that has changed
          * @param itemCount     Number of items that have changed
          * @param payload       Optional parameter, use null to identify a "full" update
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)
          */
-        void onBridgedAdapterItemRangeChanged(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount, Object payload);
+        void onBridgedAdapterItemRangeChanged(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount, @Nullable Object payload);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeInserted(int, int)} event.
@@ -70,9 +70,9 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param tag           The tag object
          * @param positionStart Position of the first item that was inserted
          * @param itemCount     Number of items inserted
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeInserted(int, int)}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeInserted(int, int)
          */
-        void onBridgedAdapterItemRangeInserted(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount);
+        void onBridgedAdapterItemRangeInserted(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeRemoved(int, int)} event.
@@ -81,9 +81,9 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param tag           The tag object
          * @param positionStart Previous position of the first item that was removed
          * @param itemCount     Number of items removed from the data set
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeRemoved(int, int)}}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeRemoved(int, int)
          */
-        void onBridgedAdapterItemRangeRemoved(RecyclerView.Adapter source, Object tag, int positionStart, int itemCount);
+        void onBridgedAdapterItemRangeRemoved(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int positionStart, int itemCount);
 
         /**
          * Routed {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)} event.
@@ -93,9 +93,9 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
          * @param fromPosition Previous position of the item.
          * @param toPosition   New position of the item.
          * @param itemCount    Number of items moved (NOTE: this parameter is not actually used, always 1.)
-         * @see {@link RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)}
+         * @see RecyclerView.AdapterDataObserver#onItemRangeChanged(int, int, Object)
          */
-        void onBridgedAdapterRangeMoved(RecyclerView.Adapter source, Object tag, int fromPosition, int toPosition, int itemCount);
+        void onBridgedAdapterRangeMoved(@NonNull RecyclerView.Adapter source, @Nullable Object tag, int fromPosition, int toPosition, int itemCount);
     }
 
     private final WeakReference<Subscriber> mRefSubscriber;
@@ -120,6 +120,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
      *
      * @return The tag object
      */
+    @Nullable
     public Object getTag() {
         return mTag;
     }
@@ -155,7 +156,7 @@ public class BridgeAdapterDataObserver extends RecyclerView.AdapterDataObserver 
      * {@inheritDoc}
      */
     @Override
-    public void onItemRangeChanged(int positionStart, int itemCount, Object payload) {
+    public void onItemRangeChanged(int positionStart, int itemCount, @Nullable Object payload) {
         final Subscriber subscriber = mRefSubscriber.get();
         final RecyclerView.Adapter source = mRefSourceHolder.get();
         if (subscriber != null && source != null) {

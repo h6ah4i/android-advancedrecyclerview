@@ -26,7 +26,6 @@ def repoDir = project.mavenPublishDestDir
 def dataProps = new Properties()
 dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
 
-def doclavaProjPath =  project.path + ':doclava'
 def optUseDoclava = project.useDoclava
 
 task cleanDocsOutDir(type: Delete) {

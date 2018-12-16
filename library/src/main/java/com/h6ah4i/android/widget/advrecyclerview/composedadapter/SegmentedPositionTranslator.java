@@ -15,11 +15,11 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.composedadapter;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.h6ah4i.android.widget.advrecyclerview.adapter.ItemViewTypeComposer;
 
 import java.util.Arrays;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 class SegmentedPositionTranslator {
     private static final int NO_CACHED_SEGMENT = 0;

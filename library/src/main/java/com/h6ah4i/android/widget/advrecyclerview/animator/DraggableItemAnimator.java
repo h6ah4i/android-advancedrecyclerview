@@ -15,7 +15,7 @@
  */
 package com.h6ah4i.android.widget.advrecyclerview.animator;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * ItemAnimator for Draggable item. This animator is required to work animations properly on drop an item.

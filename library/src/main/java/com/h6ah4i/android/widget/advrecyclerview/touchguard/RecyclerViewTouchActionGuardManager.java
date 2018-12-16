@@ -16,11 +16,12 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.touchguard;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Hooks touch events to avoid unexpected scrolling.
@@ -46,12 +47,12 @@ public class RecyclerViewTouchActionGuardManager {
     public RecyclerViewTouchActionGuardManager() {
         mInternalUseOnItemTouchListener = new RecyclerView.OnItemTouchListener() {
             @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 return RecyclerViewTouchActionGuardManager.this.onInterceptTouchEvent(rv, e);
             }
 
             @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
                 RecyclerViewTouchActionGuardManager.this.onTouchEvent(rv, e);
             }
 
@@ -71,9 +72,9 @@ public class RecyclerViewTouchActionGuardManager {
     }
 
     /**
-     * Attaches {@link android.support.v7.widget.RecyclerView} instance.
+     * Attaches {@link androidx.recyclerview.widget.RecyclerView} instance.
      *
-     * @param rv The {@link android.support.v7.widget.RecyclerView} instance
+     * @param rv The {@link androidx.recyclerview.widget.RecyclerView} instance
      */
     public void attachRecyclerView(@NonNull RecyclerView rv) {
         if (isReleased()) {
@@ -91,7 +92,7 @@ public class RecyclerViewTouchActionGuardManager {
     }
 
     /**
-     * Detach the {@link android.support.v7.widget.RecyclerView} instance and release internal field references.
+     * Detach the {@link androidx.recyclerview.widget.RecyclerView} instance and release internal field references.
      *
      * This method should be called in order to avoid memory leaks.
      */

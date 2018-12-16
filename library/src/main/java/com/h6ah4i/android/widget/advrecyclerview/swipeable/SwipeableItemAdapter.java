@@ -16,12 +16,14 @@
 
 package com.h6ah4i.android.widget.advrecyclerview.swipeable;
 
-import android.support.v7.widget.RecyclerView;
-
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemDrawableTypes;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemReactions;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
 
@@ -48,7 +50,7 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
      *         - {@link SwipeableItemConstants#REACTION_CAN_SWIPE_DOWN}
      */
     @SwipeableItemReactions
-    int onGetSwipeReactionType(T holder, int position, int x, int y);
+    int onGetSwipeReactionType(@NonNull T holder, int position, int x, int y);
 
     /**
      * Called when started swiping an item.
@@ -58,7 +60,7 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
      * @param holder The ViewHolder that is associated the swiped item.
      * @param position The position of the item within the adapter's data set.
      */
-    void onSwipeItemStarted(T holder, int position);
+    void onSwipeItemStarted(@NonNull T holder, int position);
 
     /**
      * Called when sets background of the swiping item.
@@ -72,7 +74,7 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
      *          {@link SwipeableItemConstants#DRAWABLE_SWIPE_RIGHT_BACKGROUND} or
      *          {@link SwipeableItemConstants#DRAWABLE_SWIPE_DOWN_BACKGROUND}.
      */
-    void onSetSwipeBackground(T holder, int position, @SwipeableItemDrawableTypes int type);
+    void onSetSwipeBackground(@NonNull T holder, int position, @SwipeableItemDrawableTypes int type);
 
     /**
      * Called when an item is swiped.
@@ -90,5 +92,6 @@ public interface SwipeableItemAdapter<T extends RecyclerView.ViewHolder> {
      *
      * @return {@link SwipeResultAction} object.
      */
-    SwipeResultAction onSwipeItem(T holder, int position, @SwipeableItemResults int result);
+    @Nullable
+    SwipeResultAction onSwipeItem(@NonNull T holder, int position, @SwipeableItemResults int result);
 }
