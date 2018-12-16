@@ -30,9 +30,9 @@ theme:
 
 extra:
   library:
-    version: '0.10.0'
-    repo_tree_base: 'https://github.com/h6ah4i/android-advancedrecyclerview/tree/0.10.0'
-    repo_blob_base: 'https://github.com/h6ah4i/android-advancedrecyclerview/blob/0.10.0'
+    version: '1.0.0'
+    repo_tree_base: 'https://github.com/h6ah4i/android-advancedrecyclerview/tree/1.0.0'
+    repo_blob_base: 'https://github.com/h6ah4i/android-advancedrecyclerview/blob/1.0.0'
 
 # Plugins
 plugins:
@@ -65,6 +65,7 @@ google_analytics:
 nav:
 - Home: 'index.md'
 - Getting Started: 'getting-started.md'
+- Migration Guide: 'migration.md'
 - Adapter:
     - Wrapper Adapter: 'wrapper-adapter/index.md'
     - ComposedAdapter: 'wrapper-adapter/composed-adapter.md'

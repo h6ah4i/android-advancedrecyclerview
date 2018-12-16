@@ -5,9 +5,7 @@ Add the following lines of code into your `build.gradle`.
 
 ```groovy
 dependencies {
-    implementation ('com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:{{ library.version }}@aar'){
-        transitive=true
-    }
+    implementation 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:{{ library.version }}'
 }
 ```
 
