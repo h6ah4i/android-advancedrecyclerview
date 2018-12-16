@@ -57,7 +57,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="../../../../../../favicon.ico" />
 <title>
 
-  SimpleListDividerDecorator
+  ExpandableItemState
 
 
 | Advanced RecyclerView
@@ -152,13 +152,13 @@
   <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/animator/impl/package-summary.html">com.h6ah4i.android.widget.advrecyclerview.animator.impl</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/composedadapter/package-summary.html">com.h6ah4i.android.widget.advrecyclerview.composedadapter</a></li>
-    <li class="selected api apilevel-">
+    <li class="api apilevel-">
   <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/decoration/package-summary.html">com.h6ah4i.android.widget.advrecyclerview.decoration</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/package-summary.html">com.h6ah4i.android.widget.advrecyclerview.draggable</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/event/package-summary.html">com.h6ah4i.android.widget.advrecyclerview.event</a></li>
-    <li class="api apilevel-">
+    <li class="selected api apilevel-">
   <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/package-summary.html">com.h6ah4i.android.widget.advrecyclerview.expandable</a></li>
     <li class="api apilevel-">
   <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/headerfooter/package-summary.html">com.h6ah4i.android.widget.advrecyclerview.headerfooter</a></li>
@@ -176,11 +176,26 @@
           <div id="classes-nav">
             <ul>
               
+    <li><h2>Interfaces</h2>
+      <ul>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/BaseExpandableSwipeableItemAdapter.html">BaseExpandableSwipeableItemAdapter</a>&lt;GVH&nbsp;extends&nbsp;RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;RecyclerView.ViewHolder&gt;</li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html">ExpandableDraggableItemAdapter</a>&lt;GVH&nbsp;extends&nbsp;RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;RecyclerView.ViewHolder&gt;</li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemAdapter.html">ExpandableItemAdapter</a>&lt;GVH&nbsp;extends&nbsp;RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;RecyclerView.ViewHolder&gt;</li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemConstants.html">ExpandableItemConstants</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemViewHolder.html">ExpandableItemViewHolder</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableSwipeableItemAdapter.html">ExpandableSwipeableItemAdapter</a>&lt;GVH&nbsp;extends&nbsp;RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;RecyclerView.ViewHolder&gt;</li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.OnGroupCollapseListener.html">RecyclerViewExpandableItemManager.OnGroupCollapseListener</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.OnGroupExpandListener.html">RecyclerViewExpandableItemManager.OnGroupExpandListener</a></li>
+      </ul>
+    </li>
               
     <li><h2>Classes</h2>
       <ul>
-          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/decoration/ItemShadowDecorator.html">ItemShadowDecorator</a></li>
-          <li class="selected api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/decoration/SimpleListDividerDecorator.html">SimpleListDividerDecorator</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ChildPositionItemDraggableRange.html">ChildPositionItemDraggableRange</a></li>
+          <li class="selected api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html">ExpandableItemState</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/GroupPositionItemDraggableRange.html">GroupPositionItemDraggableRange</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.html">RecyclerViewExpandableItemManager</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.SavedState.html">RecyclerViewExpandableItemManager.SavedState</a></li>
       </ul>
     </li>
               
@@ -223,13 +238,6 @@
 <div id="api-info-block">
 
 
-
-  
-   
-  
-  
-  
-  
 
   
    
@@ -286,16 +294,12 @@ Summary:
      
     
     class
-<h1>SimpleListDividerDecorator</h1>
+<h1>ExpandableItemState</h1>
 
 
 
   
-  
-  
-
-  
-    extends RecyclerView.ItemDecoration<br/>
+    extends Object<br/>
   
   
   
@@ -315,7 +319,7 @@ Summary:
 
     <tr>
          	
-        <td colspan="3" class="jd-inheritance-class-cell">java.lang.Object</td>
+        <td colspan="2" class="jd-inheritance-class-cell">java.lang.Object</td>
     </tr>
     
 
@@ -323,17 +327,7 @@ Summary:
         
             <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
          	
-        <td colspan="2" class="jd-inheritance-class-cell">androidx.recyclerview.widget.RecyclerView.ItemDecoration</td>
-    </tr>
-    
-
-    <tr>
-        
-            <td class="jd-inheritance-space">&nbsp;</td>
-        
-            <td class="jd-inheritance-space">&nbsp;&nbsp;&nbsp;&#x21b3;</td>
-         	
-        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator</td>
+        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState</td>
     </tr>
     
 
@@ -349,7 +343,7 @@ Summary:
 
 
 <h2>Class Overview</h2>
-<p>Item decoration which draws item divider between each items.
+<p>Helper class for decoding <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemViewHolder.html#getExpandStateFlags()">getExpandStateFlags()</a></code> flag values.
 </p>
 
 
@@ -416,28 +410,8 @@ Summary:
             
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/decoration/SimpleListDividerDecorator.html#SimpleListDividerDecorator(android.graphics.drawable.Drawable, boolean)">SimpleListDividerDecorator</a></span>(Drawable divider, boolean overlap)
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html#ExpandableItemState()">ExpandableItemState</a></span>()
         
-        <div class="jd-descrdiv">Constructor.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/decoration/SimpleListDividerDecorator.html#SimpleListDividerDecorator(android.graphics.drawable.Drawable, android.graphics.drawable.Drawable, boolean)">SimpleListDividerDecorator</a></span>(Drawable horizontalDivider, Drawable verticalDivider, boolean overlap)
-        
-        <div class="jd-descrdiv">Constructor.</div>
-  
   </td></tr>
 
 
@@ -462,11 +436,119 @@ Summary:
             
             
             
-            void
+            int
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/decoration/SimpleListDividerDecorator.html#getItemOffsets(android.graphics.Rect, android.view.View, androidx.recyclerview.widget.RecyclerView, androidx.recyclerview.widget.RecyclerView.State)">getItemOffsets</a></span>(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html#getFlags()">getFlags</a></span>()
         
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            boolean
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html#hasExpandedStateChanged()">hasExpandedStateChanged</a></span>()
+        
+        <div class="jd-descrdiv">Checks whether the expanded state is changed or not.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            boolean
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html#isChild()">isChild</a></span>()
+        
+        <div class="jd-descrdiv">Checks whether the item is a child item.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            boolean
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html#isExpanded()">isExpanded</a></span>()
+        
+        <div class="jd-descrdiv">Checks whether the group is expanded.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            boolean
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html#isGroup()">isGroup</a></span>()
+        
+        <div class="jd-descrdiv">Checks whether the item is a group item.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            boolean
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html#isSwiping()">isSwiping</a></span>()
+        
+        <div class="jd-descrdiv">Checks whether the swiping is currently performed.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            
+            
+            
+            
+            
+            boolean
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html#isUpdated()">isUpdated</a></span>()
+        
+        <div class="jd-descrdiv">Checks whether state flags are changed or not.</div>
+  
   </td></tr>
 
 
@@ -481,7 +563,7 @@ Summary:
             void
         </td>
         <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/decoration/SimpleListDividerDecorator.html#onDrawOver(android.graphics.Canvas, androidx.recyclerview.widget.RecyclerView, androidx.recyclerview.widget.RecyclerView.State)">onDrawOver</a></span>(Canvas c, RecyclerView parent, RecyclerView.State state)
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html#setFlags(int)">setFlags</a></span>(int flags)
         
   </td></tr>
 
@@ -499,128 +581,6 @@ Summary:
 <table id="inhmethods" class="jd-sumtable"><tr><th>
   <a href="#" class="toggle-all" onclick="return toggleAllInherited(this, null)">[Expand]</a>
   <div style="clear:left;">Inherited Methods</div></th></tr>
-
-
-<tr class="api apilevel-" >
-<td colspan="12">
-  <a href="#" onclick="return toggleInherited(this, null)" id="inherited-methods-androidx.recyclerview.widget.RecyclerView.ItemDecoration" class="jd-expando-trigger closed"
-          ><img id="inherited-methods-androidx.recyclerview.widget.RecyclerView.ItemDecoration-trigger"
-          src="../../../../../../../assets/images/triangle-closed.png"
-          class="jd-expando-trigger-img" /></a>
-From class
-
-  androidx.recyclerview.widget.RecyclerView.ItemDecoration
-
-<div id="inherited-methods-androidx.recyclerview.widget.RecyclerView.ItemDecoration">
-  <div id="inherited-methods-androidx.recyclerview.widget.RecyclerView.ItemDecoration-list"
-        class="jd-inheritedlinks">
-  </div>
-  <div id="inherited-methods-androidx.recyclerview.widget.RecyclerView.ItemDecoration-summary" style="display: none;">
-    <table class="jd-sumtable-expando">
-    
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad">getItemOffsets</span>(Rect arg0, View arg1, RecyclerView arg2, RecyclerView.State arg3)
-        
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad">getItemOffsets</span>(Rect arg0, int arg1, RecyclerView arg2)
-        
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad">onDraw</span>(Canvas arg0, RecyclerView arg1, RecyclerView.State arg2)
-        
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad">onDraw</span>(Canvas arg0, RecyclerView arg1)
-        
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad">onDrawOver</span>(Canvas arg0, RecyclerView arg1, RecyclerView.State arg2)
-        
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad">onDrawOver</span>(Canvas arg0, RecyclerView arg1)
-        
-  </td></tr>
-
-
-</table>
-  </div>
-</div>
-</td></tr>
-
 
 
 <tr class="api apilevel-" >
@@ -858,7 +818,7 @@ From class
 
 
 
-<a id="SimpleListDividerDecorator(android.graphics.drawable.Drawable, boolean)"></a>
+<a id="ExpandableItemState()"></a>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -870,8 +830,8 @@ From class
          
         
       </span>
-      <span class="sympad">SimpleListDividerDecorator</span>
-      <span class="normal">(Drawable divider, boolean overlap)</span>
+      <span class="sympad">ExpandableItemState</span>
+      <span class="normal">()</span>
     </h4>
       <div class="api-level">
         <div>
@@ -883,70 +843,7 @@ From class
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Constructor.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>divider</th>
-          <td>horizontal divider drawable</td>
-        </tr>
-        <tr>
-          <th>overlap</th>
-          <td>whether the divider is drawn overlapped on bottom of the item.
-</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
-<a id="SimpleListDividerDecorator(android.graphics.drawable.Drawable, android.graphics.drawable.Drawable, boolean)"></a>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-         
-         
-        
-      </span>
-      <span class="sympad">SimpleListDividerDecorator</span>
-      <span class="normal">(Drawable horizontalDivider, Drawable verticalDivider, boolean overlap)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p>Constructor.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>horizontalDivider</th>
-          <td>horizontal divider drawable</td>
-        </tr>
-        <tr>
-          <th>verticalDivider</th>
-          <td>vertical divider drawable</td>
-        </tr>
-        <tr>
-          <th>overlap</th>
-          <td>whether the divider is drawn overlapped on bottom (or right) of the item.
-</td>
-        </tr>
-      </table>
-  </div>
+  <div class="jd-tagdata jd-tagdescr"><p></p></div>
 
     </div>
 </div>
@@ -967,7 +864,7 @@ From class
 
 
 
-<a id="getItemOffsets(android.graphics.Rect, android.view.View, androidx.recyclerview.widget.RecyclerView, androidx.recyclerview.widget.RecyclerView.State)"></a>
+<a id="getFlags()"></a>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -977,10 +874,10 @@ From class
          
          
          
-        void
+        int
       </span>
-      <span class="sympad">getItemOffsets</span>
-      <span class="normal">(Rect outRect, View view, RecyclerView parent, RecyclerView.State state)</span>
+      <span class="sympad">getFlags</span>
+      <span class="normal">()</span>
     </h4>
       <div class="api-level">
         <div>
@@ -998,7 +895,223 @@ From class
 </div>
 
 
-<a id="onDrawOver(android.graphics.Canvas, androidx.recyclerview.widget.RecyclerView, androidx.recyclerview.widget.RecyclerView.State)"></a>
+<a id="hasExpandedStateChanged()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        boolean
+      </span>
+      <span class="sympad">hasExpandedStateChanged</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Checks whether the expanded state is changed or not. You can use this method to determine the group item indicator should animate.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>True if the group's expanded state has changed, otherwise false.
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<a id="isChild()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        boolean
+      </span>
+      <span class="sympad">isChild</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Checks whether the item is a child item.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>True if the associated item is a child item, otherwise false.
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<a id="isExpanded()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        boolean
+      </span>
+      <span class="sympad">isExpanded</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Checks whether the group is expanded.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>True if the expandable group is expanded, otherwise false.
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<a id="isGroup()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        boolean
+      </span>
+      <span class="sympad">isGroup</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Checks whether the item is a group item.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>True if the associated item is a child item, otherwise false.
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<a id="isSwiping()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        boolean
+      </span>
+      <span class="sympad">isSwiping</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Checks whether the swiping is currently performed.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>True if the user is swiping an item, otherwise else.
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<a id="isUpdated()"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+         
+         
+        boolean
+      </span>
+      <span class="sympad">isUpdated</span>
+      <span class="normal">()</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Checks whether state flags are changed or not.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Returns</h5>
+      <ul class="nolist"><li>True if flags are updated, otherwise false.
+</li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<a id="setFlags(int)"></a>
 
 <div class="jd-details api apilevel-"> 
     <h4 class="jd-details-title">
@@ -1010,8 +1123,8 @@ From class
          
         void
       </span>
-      <span class="sympad">onDrawOver</span>
-      <span class="normal">(Canvas c, RecyclerView parent, RecyclerView.State state)</span>
+      <span class="sympad">setFlags</span>
+      <span class="normal">(int flags)</span>
     </h4>
       <div class="api-level">
         <div>

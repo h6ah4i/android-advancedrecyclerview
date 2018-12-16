@@ -40,7 +40,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -129,13 +129,13 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
 </constructor>
 <field name="adapter"
- type="android.support.v7.widget.RecyclerView.Adapter"
+ type="androidx.recyclerview.widget.RecyclerView.Adapter"
  transient="false"
  volatile="false"
  static="false"
@@ -156,7 +156,7 @@
 </field>
 </class>
 <class name="BridgeAdapterDataObserver"
- extends="android.support.v7.widget.RecyclerView.AdapterDataObserver"
+ extends="androidx.recyclerview.widget.RecyclerView.AdapterDataObserver"
  abstract="false"
  static="false"
  final="false"
@@ -172,7 +172,7 @@
 >
 <parameter name="subscriber" type="com.h6ah4i.android.widget.advrecyclerview.adapter.BridgeAdapterDataObserver.Subscriber">
 </parameter>
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -206,7 +206,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -221,7 +221,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -240,7 +240,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -261,7 +261,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -280,7 +280,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -299,7 +299,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -855,7 +855,7 @@
 </field>
 </class>
 <class name="SimpleWrapperAdapter"
- extends="android.support.v7.widget.RecyclerView.Adapter"
+ extends="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  static="false"
  final="false"
@@ -873,7 +873,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter&lt;VH&gt;">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter&lt;VH&gt;">
 </parameter>
 </constructor>
 <method name="getItemCount"
@@ -888,7 +888,7 @@
 >
 </method>
 <method name="getWrappedAdapter"
- return="android.support.v7.widget.RecyclerView.Adapter&lt;VH&gt;"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter&lt;VH&gt;"
  abstract="false"
  native="false"
  synchronized="false"
@@ -908,7 +908,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapters" type="java.util.List&lt;android.support.v7.widget.RecyclerView.Adapter&gt;">
+<parameter name="adapters" type="java.util.List&lt;androidx.recyclerview.widget.RecyclerView.Adapter&gt;">
 </parameter>
 </method>
 <method name="isWrappedAdapterAlive"
@@ -947,7 +947,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -962,7 +962,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -981,7 +981,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -1002,7 +1002,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -1021,7 +1021,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -1040,7 +1040,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -1318,7 +1318,7 @@
 >
 </method>
 <field name="adapter"
- type="android.support.v7.widget.RecyclerView.Adapter"
+ type="androidx.recyclerview.widget.RecyclerView.Adapter"
  transient="false"
  volatile="false"
  static="false"
@@ -1435,7 +1435,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapters" type="java.util.List&lt;android.support.v7.widget.RecyclerView.Adapter&gt;">
+<parameter name="adapters" type="java.util.List&lt;androidx.recyclerview.widget.RecyclerView.Adapter&gt;">
 </parameter>
 </method>
 <method name="release"
@@ -1484,7 +1484,7 @@
 <package name="com.h6ah4i.android.widget.advrecyclerview.animator"
 >
 <class name="BaseItemAnimator"
- extends="android.support.v7.widget.SimpleItemAnimator"
+ extends="androidx.recyclerview.widget.SimpleItemAnimator"
  abstract="true"
  static="false"
  final="false"
@@ -1531,7 +1531,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAddFinishedImpl"
@@ -1544,7 +1544,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAddStarting"
@@ -1557,7 +1557,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAddStartingImpl"
@@ -1570,7 +1570,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onChangeFinished"
@@ -1583,7 +1583,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="oldItem" type="boolean">
 </parameter>
@@ -1598,7 +1598,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="oldItem" type="boolean">
 </parameter>
@@ -1613,7 +1613,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="oldItem" type="boolean">
 </parameter>
@@ -1628,7 +1628,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="oldItem" type="boolean">
 </parameter>
@@ -1643,7 +1643,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onMoveFinishedImpl"
@@ -1656,7 +1656,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onMoveStarting"
@@ -1669,7 +1669,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onMoveStartingImpl"
@@ -1682,7 +1682,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onRemoveFinished"
@@ -1695,7 +1695,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onRemoveFinishedImpl"
@@ -1708,7 +1708,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onRemoveStarting"
@@ -1721,7 +1721,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onRemoveStartingImpl"
@@ -1734,7 +1734,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="setListener"
@@ -1768,7 +1768,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onChangeFinished"
@@ -1781,7 +1781,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onMoveFinished"
@@ -1794,7 +1794,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onRemoveFinished"
@@ -1807,7 +1807,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 </interface>
@@ -1854,7 +1854,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="animateChange"
@@ -1867,9 +1867,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="oldHolder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="oldHolder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
-<parameter name="newHolder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="newHolder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="fromX" type="int">
 </parameter>
@@ -1890,7 +1890,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="fromX" type="int">
 </parameter>
@@ -1911,7 +1911,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="cancelAnimations"
@@ -1924,7 +1924,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endAnimation"
@@ -1937,7 +1937,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endAnimations"
@@ -2194,7 +2194,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationCancel"
@@ -2209,7 +2209,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.AddAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedBeforeStarted"
@@ -2224,7 +2224,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.AddAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedSuccessfully"
@@ -2239,7 +2239,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.AddAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onCreateAnimation"
@@ -2284,9 +2284,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="oldHolder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="oldHolder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
-<parameter name="newHolder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="newHolder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="fromX" type="int">
 </parameter>
@@ -2309,7 +2309,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.ChangeAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedBeforeStarted"
@@ -2324,7 +2324,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.ChangeAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedSuccessfully"
@@ -2339,7 +2339,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.ChangeAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onCreateChangeAnimationForNewItem"
@@ -2397,7 +2397,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="fromX" type="int">
 </parameter>
@@ -2420,7 +2420,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.MoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedBeforeStarted"
@@ -2435,7 +2435,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.MoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedSuccessfully"
@@ -2450,7 +2450,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.MoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onCreateAnimation"
@@ -2495,7 +2495,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationCancel"
@@ -2510,7 +2510,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedBeforeStarted"
@@ -2525,7 +2525,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedSuccessfully"
@@ -2540,7 +2540,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onCreateAnimation"
@@ -2612,7 +2612,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="isSwipeDismissed"
@@ -2625,7 +2625,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="isSwipeDismissed"
@@ -2653,7 +2653,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedBeforeStarted"
@@ -2668,7 +2668,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedSuccessfully"
@@ -2683,7 +2683,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onCreateAnimation"
@@ -2725,7 +2725,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </constructor>
 </class>
@@ -2747,7 +2747,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </constructor>
 <method name="clear"
@@ -2760,11 +2760,11 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getAvailableViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -2775,7 +2775,7 @@
 >
 </method>
 <field name="holder"
- type="android.support.v7.widget.RecyclerView.ViewHolder"
+ type="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  transient="false"
  volatile="false"
  static="false"
@@ -2837,7 +2837,7 @@
 >
 <parameter name="info" type="T">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="dispatchFinishedWhenDone"
@@ -2863,7 +2863,7 @@
 >
 <parameter name="info" type="T">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endAllDeferredReadyAnimations"
@@ -2898,7 +2898,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endDeferredReadyAnimations"
@@ -2911,7 +2911,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endNotStartedAnimation"
@@ -2926,7 +2926,7 @@
 >
 <parameter name="info" type="T">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endPendingAnimations"
@@ -2939,7 +2939,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="enqueuePendingAnimationInfo"
@@ -3000,7 +3000,7 @@
 >
 <parameter name="info" type="T">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedBeforeStarted"
@@ -3015,7 +3015,7 @@
 >
 <parameter name="info" type="T">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onAnimationEndedSuccessfully"
@@ -3030,7 +3030,7 @@
 >
 <parameter name="info" type="T">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onCreateAnimation"
@@ -3056,7 +3056,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="resetAnimation"
@@ -3069,7 +3069,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="runPendingAnimations"
@@ -3112,9 +3112,9 @@
 >
 <parameter name="info" type="T">
 </parameter>
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
-<parameter name="animator" type="android.support.v4.view.ViewPropertyAnimatorCompat">
+<parameter name="animator" type="androidx.core.view.ViewPropertyAnimatorCompat">
 </parameter>
 </method>
 <field name="mActive"
@@ -3166,7 +3166,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<implements name="android.support.v4.view.ViewPropertyAnimatorListener">
+<implements name="androidx.core.view.ViewPropertyAnimatorListener">
 </implements>
 <constructor name="BaseAnimatorListener"
  type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.BaseItemAnimationManager.BaseAnimatorListener"
@@ -3179,9 +3179,9 @@
 </parameter>
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.ItemAnimationInfo">
 </parameter>
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
-<parameter name="animator" type="android.support.v4.view.ViewPropertyAnimatorCompat">
+<parameter name="animator" type="androidx.core.view.ViewPropertyAnimatorCompat">
 </parameter>
 </constructor>
 <method name="onAnimationCancel"
@@ -3239,9 +3239,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="oldHolder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="oldHolder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
-<parameter name="newHolder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="newHolder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="fromX" type="int">
 </parameter>
@@ -3262,11 +3262,11 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getAvailableViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -3297,7 +3297,7 @@
 >
 </field>
 <field name="newHolder"
- type="android.support.v7.widget.RecyclerView.ViewHolder"
+ type="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  transient="false"
  volatile="false"
  static="false"
@@ -3307,7 +3307,7 @@
 >
 </field>
 <field name="oldHolder"
- type="android.support.v7.widget.RecyclerView.ViewHolder"
+ type="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  transient="false"
  volatile="false"
  static="false"
@@ -3365,7 +3365,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="dispatchFinished"
@@ -3380,7 +3380,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.AddAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="dispatchStarting"
@@ -3395,7 +3395,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.AddAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endNotStartedAnimation"
@@ -3410,7 +3410,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.AddAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getDuration"
@@ -3464,11 +3464,11 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getAvailableViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="true"
  native="false"
  synchronized="false"
@@ -3507,9 +3507,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="oldHolder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="oldHolder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
-<parameter name="newHolder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="newHolder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="fromX" type="int">
 </parameter>
@@ -3532,7 +3532,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.ChangeAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="dispatchStarting"
@@ -3547,7 +3547,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.ChangeAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endNotStartedAnimation"
@@ -3562,7 +3562,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.ChangeAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getDuration"
@@ -3657,7 +3657,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="fromX" type="int">
 </parameter>
@@ -3680,7 +3680,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.MoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="dispatchStarting"
@@ -3695,7 +3695,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.MoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endNotStartedAnimation"
@@ -3710,7 +3710,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.MoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getDuration"
@@ -3777,7 +3777,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="dispatchFinished"
@@ -3792,7 +3792,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="dispatchStarting"
@@ -3807,7 +3807,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endNotStartedAnimation"
@@ -3822,7 +3822,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.animator.impl.RemoveAnimationInfo">
 </parameter>
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getDuration"
@@ -3865,7 +3865,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="fromX" type="int">
 </parameter>
@@ -3886,11 +3886,11 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getAvailableViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -3921,7 +3921,7 @@
 >
 </field>
 <field name="holder"
- type="android.support.v7.widget.RecyclerView.ViewHolder"
+ type="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  transient="false"
  volatile="false"
  static="false"
@@ -3966,7 +3966,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </constructor>
 <method name="clear"
@@ -3979,11 +3979,11 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="item" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="item" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getAvailableViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -3994,7 +3994,7 @@
 >
 </method>
 <field name="holder"
- type="android.support.v7.widget.RecyclerView.ViewHolder"
+ type="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  transient="false"
  volatile="false"
  static="false"
@@ -4008,7 +4008,7 @@
 <package name="com.h6ah4i.android.widget.advrecyclerview.composedadapter"
 >
 <class name="ComposedAdapter"
- extends="android.support.v7.widget.RecyclerView.Adapter"
+ extends="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  static="false"
  final="false"
@@ -4037,7 +4037,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 </method>
 <method name="addAdapter"
@@ -4050,7 +4050,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -4139,7 +4139,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapters" type="java.util.List&lt;android.support.v7.widget.RecyclerView.Adapter&gt;">
+<parameter name="adapters" type="java.util.List&lt;androidx.recyclerview.widget.RecyclerView.Adapter&gt;">
 </parameter>
 </method>
 <method name="onBindViewHolder"
@@ -4152,7 +4152,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -4167,7 +4167,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -4184,7 +4184,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -4199,7 +4199,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -4218,7 +4218,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -4239,7 +4239,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -4258,7 +4258,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -4277,7 +4277,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="source" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="source" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="tag" type="java.lang.Object">
 </parameter>
@@ -4289,7 +4289,7 @@
 </parameter>
 </method>
 <method name="onCreateViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -4313,7 +4313,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onFailedToRecycleView"
@@ -4326,7 +4326,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="viewType" type="int">
 </parameter>
@@ -4341,7 +4341,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="sourceTags" type="java.util.List&lt;com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag&gt;">
 </parameter>
@@ -4356,7 +4356,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="sourceTags" type="java.util.List&lt;com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag&gt;">
 </parameter>
@@ -4375,7 +4375,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="sourceTags" type="java.util.List&lt;com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag&gt;">
 </parameter>
@@ -4396,7 +4396,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="sourceTags" type="java.util.List&lt;com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag&gt;">
 </parameter>
@@ -4415,7 +4415,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="sourceTags" type="java.util.List&lt;com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag&gt;">
 </parameter>
@@ -4434,7 +4434,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="sourceAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="sourceAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="sourceTags" type="java.util.List&lt;com.h6ah4i.android.widget.advrecyclerview.composedadapter.ComposedChildAdapterTag&gt;">
 </parameter>
@@ -4466,7 +4466,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onViewAttachedToWindow"
@@ -4479,7 +4479,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="viewType" type="int">
 </parameter>
@@ -4494,7 +4494,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onViewDetachedFromWindow"
@@ -4507,7 +4507,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="viewType" type="int">
 </parameter>
@@ -4522,7 +4522,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="onViewRecycled"
@@ -4535,7 +4535,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="viewType" type="int">
 </parameter>
@@ -4618,7 +4618,7 @@
 <package name="com.h6ah4i.android.widget.advrecyclerview.decoration"
 >
 <class name="ItemShadowDecorator"
- extends="android.support.v7.widget.RecyclerView.ItemDecoration"
+ extends="androidx.recyclerview.widget.RecyclerView.ItemDecoration"
  abstract="false"
  static="false"
  final="false"
@@ -4649,7 +4649,7 @@
 </constructor>
 </class>
 <class name="SimpleListDividerDecorator"
- extends="android.support.v7.widget.RecyclerView.ItemDecoration"
+ extends="androidx.recyclerview.widget.RecyclerView.ItemDecoration"
  abstract="false"
  static="false"
  final="false"
@@ -4784,6 +4784,36 @@
 <parameter name="position" type="int">
 </parameter>
 </method>
+<method name="onItemDragFinished"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="fromPosition" type="int">
+</parameter>
+<parameter name="toPosition" type="int">
+</parameter>
+<parameter name="result" type="boolean">
+</parameter>
+</method>
+<method name="onItemDragStarted"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="position" type="int">
+</parameter>
+</method>
 <method name="onMoveItem"
  return="void"
  abstract="true"
@@ -4852,6 +4882,91 @@
 >
 </field>
 </interface>
+<class name="DraggableItemState"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="DraggableItemState"
+ type="com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getFlags"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isActive"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isDragging"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isInRange"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isUpdated"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setFlags"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="flags" type="int">
+</parameter>
+</method>
+</class>
 <interface name="DraggableItemViewHolder"
  abstract="true"
  static="false"
@@ -4859,6 +4974,17 @@
  deprecated="not deprecated"
  visibility="public"
 >
+<method name="getDragState"
+ return="com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getDragStateFlags"
  return="int"
  abstract="true"
@@ -4899,9 +5025,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
-<parameter name="vh" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="vh" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="touchX" type="int">
 </parameter>
@@ -4920,7 +5046,7 @@
 >
 <parameter name="info" type="com.h6ah4i.android.widget.advrecyclerview.draggable.DraggingItemInfo">
 </parameter>
-<parameter name="vh" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="vh" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <field name="grabbedPositionX"
@@ -5109,7 +5235,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="cancelDrag"
@@ -5124,7 +5250,7 @@
 >
 </method>
 <method name="createWrappedAdapter"
- return="android.support.v7.widget.RecyclerView.Adapter"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  native="false"
  synchronized="false"
@@ -5133,7 +5259,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 </method>
 <method name="getDragEdgeScrollSpeed"
@@ -5796,7 +5922,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="clear"
@@ -5837,7 +5963,7 @@
 </parameter>
 </method>
 <method name="getRecyclerView"
- return="android.support.v7.widget.RecyclerView"
+ return="androidx.recyclerview.widget.RecyclerView"
  abstract="false"
  native="false"
  synchronized="false"
@@ -5868,7 +5994,7 @@
  deprecated="not deprecated"
  visibility="protected"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="onRelease"
@@ -5964,7 +6090,7 @@
 >
 </field>
 <field name="mRecyclerView"
- type="android.support.v7.widget.RecyclerView"
+ type="androidx.recyclerview.widget.RecyclerView"
  transient="false"
  volatile="false"
  static="false"
@@ -6121,6 +6247,38 @@
 <parameter name="type" type="int">
 </parameter>
 </method>
+<method name="onSwipeChildItemStarted"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="holder" type="CVH">
+</parameter>
+<parameter name="groupPosition" type="int">
+</parameter>
+<parameter name="childPosition" type="int">
+</parameter>
+</method>
+<method name="onSwipeGroupItemStarted"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="holder" type="GVH">
+</parameter>
+<parameter name="groupPosition" type="int">
+</parameter>
+</method>
 </interface>
 <class name="ChildPositionItemDraggableRange"
  extends="com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange"
@@ -6224,6 +6382,42 @@
 <parameter name="y" type="int">
 </parameter>
 </method>
+<method name="onChildDragFinished"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="fromGroupPosition" type="int">
+</parameter>
+<parameter name="fromChildPosition" type="int">
+</parameter>
+<parameter name="toGroupPosition" type="int">
+</parameter>
+<parameter name="toChildPosition" type="int">
+</parameter>
+<parameter name="result" type="boolean">
+</parameter>
+</method>
+<method name="onChildDragStarted"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="groupPosition" type="int">
+</parameter>
+<parameter name="childPosition" type="int">
+</parameter>
+</method>
 <method name="onGetChildItemDraggableRange"
  return="com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange"
  abstract="true"
@@ -6253,6 +6447,36 @@
 >
 <parameter name="holder" type="GVH">
 </parameter>
+<parameter name="groupPosition" type="int">
+</parameter>
+</method>
+<method name="onGroupDragFinished"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="fromGroupPosition" type="int">
+</parameter>
+<parameter name="toGroupPosition" type="int">
+</parameter>
+<parameter name="result" type="boolean">
+</parameter>
+</method>
+<method name="onGroupDragStarted"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
 <parameter name="groupPosition" type="int">
 </parameter>
 </method>
@@ -6646,6 +6870,113 @@
 >
 </field>
 </interface>
+<class name="ExpandableItemState"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ExpandableItemState"
+ type="com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getFlags"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="hasExpandedStateChanged"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isChild"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isExpanded"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isGroup"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isSwiping"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isUpdated"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setFlags"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="flags" type="int">
+</parameter>
+</method>
+</class>
 <interface name="ExpandableItemViewHolder"
  abstract="true"
  static="false"
@@ -6653,6 +6984,17 @@
  deprecated="not deprecated"
  visibility="public"
 >
+<method name="getExpandState"
+ return="com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getExpandStateFlags"
  return="int"
  abstract="true"
@@ -6775,7 +7117,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="collapseAll"
@@ -6818,7 +7160,7 @@
 </parameter>
 </method>
 <method name="createWrappedAdapter"
- return="android.support.v7.widget.RecyclerView.Adapter"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  native="false"
  synchronized="false"
@@ -6827,7 +7169,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 </method>
 <method name="expandAll"
@@ -7852,7 +8194,7 @@
 >
 </constructor>
 <method name="getFooterAdapter"
- return="android.support.v7.widget.RecyclerView.Adapter"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  native="false"
  synchronized="false"
@@ -7911,7 +8253,7 @@
 >
 </method>
 <method name="getHeaderAdapter"
- return="android.support.v7.widget.RecyclerView.Adapter"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  native="false"
  synchronized="false"
@@ -7970,7 +8312,7 @@
 >
 </method>
 <method name="getWrappedAdapter"
- return="android.support.v7.widget.RecyclerView.Adapter"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  native="false"
  synchronized="false"
@@ -8056,7 +8398,7 @@
 </parameter>
 </method>
 <method name="onCreateFooterAdapter"
- return="android.support.v7.widget.RecyclerView.Adapter"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  native="false"
  synchronized="false"
@@ -8082,7 +8424,7 @@
 </parameter>
 </method>
 <method name="onCreateHeaderAdapter"
- return="android.support.v7.widget.RecyclerView.Adapter"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  native="false"
  synchronized="false"
@@ -8117,7 +8459,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter&lt;? extends android.support.v7.widget.RecyclerView.ViewHolder&gt;">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter&lt;? extends androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;">
 </parameter>
 </method>
 <field name="SEGMENT_TYPE_FOOTER"
@@ -8155,7 +8497,7 @@
 </field>
 </class>
 <class name="AbstractHeaderFooterWrapperAdapter.BaseFooterAdapter"
- extends="android.support.v7.widget.RecyclerView.Adapter"
+ extends="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  static="true"
  final="false"
@@ -8193,7 +8535,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -8208,7 +8550,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -8216,7 +8558,7 @@
 </parameter>
 </method>
 <method name="onCreateViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -8242,7 +8584,7 @@
 </field>
 </class>
 <class name="AbstractHeaderFooterWrapperAdapter.BaseHeaderAdapter"
- extends="android.support.v7.widget.RecyclerView.Adapter"
+ extends="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  static="true"
  final="false"
@@ -8280,7 +8622,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -8295,7 +8637,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -8303,7 +8645,7 @@
 </parameter>
 </method>
 <method name="onCreateViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -8346,7 +8688,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemWrapperAdapter&lt;android.support.v7.widget.RecyclerView.ViewHolder&gt;">
+<parameter name="adapter" type="com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemWrapperAdapter&lt;androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;">
 </parameter>
 </constructor>
 <method name="endAnimation"
@@ -8359,7 +8701,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="endAnimations"
@@ -8383,7 +8725,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="horizontal" type="boolean">
 </parameter>
@@ -8406,7 +8748,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="dir" type="int">
 </parameter>
@@ -8440,7 +8782,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getSwipeContainerViewTranslationY"
@@ -8453,7 +8795,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="isRunning"
@@ -8466,7 +8808,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="isRunning"
@@ -8503,7 +8845,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="horizontal" type="boolean">
 </parameter>
@@ -8522,7 +8864,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="dir" type="int">
 </parameter>
@@ -8541,7 +8883,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="amount" type="float">
 </parameter>
@@ -8627,7 +8969,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="cancelSwipe"
@@ -8642,7 +8984,7 @@
 >
 </method>
 <method name="createWrappedAdapter"
- return="android.support.v7.widget.RecyclerView.Adapter"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  native="false"
  synchronized="false"
@@ -8651,7 +8993,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 </method>
 <method name="getMoveToOutsideWindowAnimationDuration"
@@ -8741,7 +9083,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="result" type="int">
 </parameter>
@@ -8934,6 +9276,21 @@
 <parameter name="result" type="int">
 </parameter>
 </method>
+<method name="onSwipeItemStarted"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="holder" type="T">
+</parameter>
+<parameter name="position" type="int">
+</parameter>
+</method>
 </interface>
 <interface name="SwipeableItemConstants"
  abstract="true"
@@ -9107,17 +9464,6 @@
  visibility="public"
 >
 </field>
-<field name="REACTION_CAN_NOT_SWIPE_BOTH"
- type="int"
- transient="false"
- volatile="false"
- value="0"
- static="true"
- final="true"
- deprecated="deprecated"
- visibility="public"
->
-</field>
 <field name="REACTION_CAN_NOT_SWIPE_BOTH_H"
  type="int"
  transient="false"
@@ -9159,17 +9505,6 @@
  static="true"
  final="true"
  deprecated="not deprecated"
- visibility="public"
->
-</field>
-<field name="REACTION_CAN_NOT_SWIPE_BOTH_WITH_RUBBER_BAND_EFFECT"
- type="int"
- transient="false"
- volatile="false"
- value="4097"
- static="true"
- final="true"
- deprecated="deprecated"
  visibility="public"
 >
 </field>
@@ -9258,17 +9593,6 @@
  static="true"
  final="true"
  deprecated="not deprecated"
- visibility="public"
->
-</field>
-<field name="REACTION_CAN_SWIPE_BOTH"
- type="int"
- transient="false"
- volatile="false"
- value="8194"
- static="true"
- final="true"
- deprecated="deprecated"
  visibility="public"
 >
 </field>
@@ -9493,6 +9817,80 @@
 >
 </field>
 </interface>
+<class name="SwipeableItemState"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="SwipeableItemState"
+ type="com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemState"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getFlags"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isActive"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isSwiping"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isUpdated"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setFlags"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="flags" type="int">
+</parameter>
+</method>
+</class>
 <interface name="SwipeableItemViewHolder"
  abstract="true"
  static="false"
@@ -9579,6 +9977,17 @@
 </method>
 <method name="getSwipeResult"
  return="int"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getSwipeState"
+ return="com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemState"
  abstract="true"
  native="false"
  synchronized="false"
@@ -10029,7 +10438,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="isEnabled"
@@ -10107,7 +10516,7 @@
 <package name="com.h6ah4i.android.widget.advrecyclerview.utils"
 >
 <class name="AbstractDraggableItemViewHolder"
- extends="android.support.v7.widget.RecyclerView.ViewHolder"
+ extends="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="true"
  static="false"
  final="false"
@@ -10126,6 +10535,17 @@
 <parameter name="itemView" type="android.view.View">
 </parameter>
 </constructor>
+<method name="getDragState"
+ return="com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getDragStateFlags"
  return="int"
  abstract="false"
@@ -10171,6 +10591,17 @@
 <parameter name="itemView" type="android.view.View">
 </parameter>
 </constructor>
+<method name="getDragState"
+ return="com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemState"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getDragStateFlags"
  return="int"
  abstract="false"
@@ -10197,7 +10628,7 @@
 </method>
 </class>
 <class name="AbstractExpandableItemAdapter"
- extends="android.support.v7.widget.RecyclerView.Adapter"
+ extends="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="true"
  static="false"
  final="false"
@@ -10342,13 +10773,13 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
 </method>
 <method name="onCreateViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -10428,7 +10859,7 @@
 </method>
 </class>
 <class name="AbstractExpandableItemViewHolder"
- extends="android.support.v7.widget.RecyclerView.ViewHolder"
+ extends="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="true"
  static="false"
  final="false"
@@ -10447,6 +10878,17 @@
 <parameter name="itemView" type="android.view.View">
 </parameter>
 </constructor>
+<method name="getExpandState"
+ return="com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableItemState"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
 <method name="getExpandStateFlags"
  return="int"
  abstract="false"
@@ -10473,7 +10915,7 @@
 </method>
 </class>
 <class name="AbstractSwipeableItemViewHolder"
- extends="android.support.v7.widget.RecyclerView.ViewHolder"
+ extends="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="true"
  static="false"
  final="false"
@@ -10571,6 +11013,17 @@
 </method>
 <method name="getSwipeResult"
  return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getSwipeState"
+ return="com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemState"
  abstract="false"
  native="false"
  synchronized="false"
@@ -10761,25 +11214,6 @@
 </parameter>
 </method>
 </class>
-<class name="BaseWrapperAdapter"
- extends="com.h6ah4i.android.widget.advrecyclerview.adapter.SimpleWrapperAdapter"
- abstract="false"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<constructor name="BaseWrapperAdapter"
- type="com.h6ah4i.android.widget.advrecyclerview.utils.BaseWrapperAdapter"
- static="false"
- final="false"
- deprecated="not deprecated"
- visibility="public"
->
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter&lt;VH&gt;">
-</parameter>
-</constructor>
-</class>
 <class name="CustomRecyclerViewUtils"
  extends="java.lang.Object"
  abstract="false"
@@ -10810,7 +11244,7 @@
 </parameter>
 </method>
 <method name="findChildViewHolderUnderWithTranslation"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -10819,7 +11253,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 <parameter name="x" type="float">
 </parameter>
@@ -10827,7 +11261,7 @@
 </parameter>
 </method>
 <method name="findChildViewHolderUnderWithoutTranslation"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -10836,7 +11270,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 <parameter name="x" type="float">
 </parameter>
@@ -10853,7 +11287,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="findFirstVisibleItemPosition"
@@ -10866,7 +11300,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 <parameter name="includesPadding" type="boolean">
 </parameter>
@@ -10881,7 +11315,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="findLastVisibleItemPosition"
@@ -10894,7 +11328,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 <parameter name="includesPadding" type="boolean">
 </parameter>
@@ -10909,7 +11343,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="layoutManager" type="android.support.v7.widget.RecyclerView.LayoutManager">
+<parameter name="layoutManager" type="androidx.recyclerview.widget.RecyclerView.LayoutManager">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -10924,7 +11358,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="layoutManager" type="android.support.v7.widget.RecyclerView.LayoutManager">
+<parameter name="layoutManager" type="androidx.recyclerview.widget.RecyclerView.LayoutManager">
 </parameter>
 <parameter name="view" type="android.view.View">
 </parameter>
@@ -10956,7 +11390,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="getLayoutType"
@@ -10969,7 +11403,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="layoutManager" type="android.support.v7.widget.RecyclerView.LayoutManager">
+<parameter name="layoutManager" type="androidx.recyclerview.widget.RecyclerView.LayoutManager">
 </parameter>
 </method>
 <method name="getOrientation"
@@ -10982,7 +11416,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="getOrientation"
@@ -10995,7 +11429,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="layoutManager" type="android.support.v7.widget.RecyclerView.LayoutManager">
+<parameter name="layoutManager" type="androidx.recyclerview.widget.RecyclerView.LayoutManager">
 </parameter>
 </method>
 <method name="getSpanCount"
@@ -11008,7 +11442,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="rv" type="android.support.v7.widget.RecyclerView">
+<parameter name="rv" type="androidx.recyclerview.widget.RecyclerView">
 </parameter>
 </method>
 <method name="getSpanIndex"
@@ -11021,7 +11455,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getSpanSize"
@@ -11034,7 +11468,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getSynchronizedPosition"
@@ -11047,7 +11481,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="getViewBounds"
@@ -11075,7 +11509,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="isGridLayout"
@@ -11127,7 +11561,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <method name="safeGetLayoutPosition"
@@ -11140,7 +11574,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 </method>
 <field name="INVALID_SPAN_COUNT"
@@ -11291,7 +11725,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 </constructor>
 <method name="getSettingFlags"
@@ -11361,7 +11795,7 @@
  visibility="public"
 >
 <method name="getParentRecyclerView"
- return="android.support.v7.widget.RecyclerView"
+ return="androidx.recyclerview.widget.RecyclerView"
  abstract="false"
  native="false"
  synchronized="false"
@@ -11387,7 +11821,7 @@
 </parameter>
 </method>
 <method name="getViewHolder"
- return="android.support.v7.widget.RecyclerView.ViewHolder"
+ return="androidx.recyclerview.widget.RecyclerView.ViewHolder"
  abstract="false"
  native="false"
  synchronized="false"
@@ -11418,9 +11852,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="viewType" type="int">
 </parameter>
@@ -11435,9 +11869,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="viewType" type="int">
 </parameter>
@@ -11452,9 +11886,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="viewType" type="int">
 </parameter>
@@ -11469,9 +11903,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
-<parameter name="holder" type="android.support.v7.widget.RecyclerView.ViewHolder">
+<parameter name="holder" type="androidx.recyclerview.widget.RecyclerView.ViewHolder">
 </parameter>
 <parameter name="viewType" type="int">
 </parameter>
@@ -11495,7 +11929,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="clazz" type="java.lang.Class&lt;T&gt;">
 </parameter>
@@ -11510,7 +11944,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="originAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="originAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="clazz" type="java.lang.Class&lt;T&gt;">
 </parameter>
@@ -11518,7 +11952,7 @@
 </parameter>
 </method>
 <method name="releaseAll"
- return="android.support.v7.widget.RecyclerView.Adapter"
+ return="androidx.recyclerview.widget.RecyclerView.Adapter"
  abstract="false"
  native="false"
  synchronized="false"
@@ -11527,7 +11961,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="adapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="adapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 </method>
 <method name="unwrapPosition"
@@ -11540,7 +11974,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="originAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="originAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -11555,9 +11989,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="originAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="originAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
-<parameter name="targetAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="targetAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="position" type="int">
 </parameter>
@@ -11572,9 +12006,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="originAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="originAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
-<parameter name="targetAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="targetAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="targetAdapterTag" type="java.lang.Object">
 </parameter>
@@ -11591,7 +12025,7 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="originAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="originAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="targetAdapterPathSegment" type="com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPathSegment">
 </parameter>
@@ -11610,9 +12044,9 @@
  deprecated="not deprecated"
  visibility="public"
 >
-<parameter name="originAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="originAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
-<parameter name="targetAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="targetAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="targetAdapterTag" type="java.lang.Object">
 </parameter>
@@ -11633,9 +12067,9 @@
 >
 <parameter name="path" type="com.h6ah4i.android.widget.advrecyclerview.adapter.AdapterPath">
 </parameter>
-<parameter name="originAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="originAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
-<parameter name="targetAdapter" type="android.support.v7.widget.RecyclerView.Adapter">
+<parameter name="targetAdapter" type="androidx.recyclerview.widget.RecyclerView.Adapter">
 </parameter>
 <parameter name="position" type="int">
 </parameter>

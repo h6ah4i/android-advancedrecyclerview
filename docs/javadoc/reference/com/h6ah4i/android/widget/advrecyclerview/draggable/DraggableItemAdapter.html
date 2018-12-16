@@ -188,6 +188,7 @@
     <li><h2>Classes</h2>
       <ul>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/BasicSwapTargetTranslationInterpolator.html">BasicSwapTargetTranslationInterpolator</a></li>
+          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemState.html">DraggableItemState</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggingItemInfo.html">DraggingItemInfo</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/ItemDraggableRange.html">ItemDraggableRange</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/RecyclerViewDragDropManager.html">RecyclerViewDragDropManager</a></li>
@@ -282,7 +283,7 @@
 
     <tr>
          	
-        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter&lt;T&nbsp;extends&nbsp;android.support.v7.widget.RecyclerView.ViewHolder&gt;</td>
+        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.draggable.DraggableItemAdapter&lt;T&nbsp;extends&nbsp;androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</td>
     </tr>
     
 
@@ -403,7 +404,43 @@
         <td class="jd-linkcol" width="100%">
         <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.html#onGetItemDraggableRange(T, int)">onGetItemDraggableRange</a></span>(T holder, int position)
         
-        <div class="jd-descrdiv">Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.html#onCheckCanStartDrag(T, int, int, int)">onCheckCanStartDrag(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)</a></code> method returned true.</div>
+        <div class="jd-descrdiv">Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.html#onCheckCanStartDrag(T, int, int, int)">onCheckCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int)</a></code> method returned true.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class=" api apilevel-" >
+        <td class="jd-typecol">
+            abstract
+            
+            
+            
+            
+            void
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.html#onItemDragFinished(int, int, boolean)">onItemDragFinished</a></span>(int fromPosition, int toPosition, boolean result)
+        
+        <div class="jd-descrdiv">Callback method to be invoked when finished dragging an item.</div>
+  
+  </td></tr>
+
+
+	 
+    <tr class="alt-color api apilevel-" >
+        <td class="jd-typecol">
+            abstract
+            
+            
+            
+            
+            void
+        </td>
+        <td class="jd-linkcol" width="100%">
+        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.html#onItemDragStarted(int)">onItemDragStarted</a></span>(int position)
+        
+        <div class="jd-descrdiv">Callback method to be invoked when started dragging an item.</div>
   
   </td></tr>
 
@@ -607,7 +644,7 @@
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.html#onCheckCanStartDrag(T, int, int, int)">onCheckCanStartDrag(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)</a></code> method returned true.</p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/DraggableItemAdapter.html#onCheckCanStartDrag(T, int, int, int)">onCheckCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int)</a></code> method returned true.</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Parameters</h5>
       <table class="jd-tagtable">
@@ -626,6 +663,100 @@
       <ul class="nolist"><li>null: no constraints (= new ItemDraggableRange(0, getItemCount() - 1)),
          otherwise: the range specified item can be drag-sortable.
 </li></ul>
+  </div>
+
+    </div>
+</div>
+
+
+<a id="onItemDragFinished(int, int, boolean)"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        void
+      </span>
+      <span class="sympad">onItemDragFinished</span>
+      <span class="normal">(int fromPosition, int toPosition, boolean result)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Callback method to be invoked when finished dragging an item.
+
+ Call the <code><a href="null#notifyDataSetChanged()">notifyDataSetChanged()</a></code> method in this callback to get the same behavior with v0.10.x or before.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>fromPosition</th>
+          <td>Previous position of the item.</td>
+        </tr>
+        <tr>
+          <th>toPosition</th>
+          <td>New position of the item.</td>
+        </tr>
+        <tr>
+          <th>result</th>
+          <td>Indicates whether the dragging operation was succeeded.
+</td>
+        </tr>
+      </table>
+  </div>
+
+    </div>
+</div>
+
+
+<a id="onItemDragStarted(int)"></a>
+
+<div class="jd-details api apilevel-"> 
+    <h4 class="jd-details-title">
+      <span class="normal">
+        public 
+         
+         
+        abstract 
+         
+        void
+      </span>
+      <span class="sympad">onItemDragStarted</span>
+      <span class="normal">(int position)</span>
+    </h4>
+      <div class="api-level">
+        <div>
+
+</div>
+        
+  
+
+      </div>
+    <div class="jd-details-descr">
+      
+  <div class="jd-tagdata jd-tagdescr"><p>Callback method to be invoked when started dragging an item.
+
+ Call the <code><a href="null#notifyDataSetChanged()">notifyDataSetChanged()</a></code> method in this callback to get the same behavior with v0.10.x or before.</p></div>
+  <div class="jd-tagdata">
+      <h5 class="jd-tagtitle">Parameters</h5>
+      <table class="jd-tagtable">
+        <tr>
+          <th>position</th>
+          <td>The position of the item.
+</td>
+        </tr>
+      </table>
   </div>
 
     </div>
