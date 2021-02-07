@@ -5,8 +5,7 @@ This RecyclerView extension library provides Google's Inbox app like swiping, Pl
 
 **Documentation site**: https://advancedrecyclerview.h6ah4i.com/
 
-
-[ ![Download](https://api.bintray.com/packages/h6ah4i/maven/android-advancedrecyclerview/images/download.svg) ](https://bintray.com/h6ah4i/maven/android-advancedrecyclerview/_latestVersion)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.h6ah4i.android.widget.verticalseekbar/verticalseekbar/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.h6ah4i.android.widget.advrecyclerview/advrecyclerview)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Advanced%20RecyclerView-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/1432)
 
 ---
@@ -57,11 +56,15 @@ Latest version
 Getting started
 ---
 
-This library is published on jCenter. Just add these lines to `build.gradle`.
+This library is published on Maven Central. Just add these lines to `build.gradle`.
 
-```gradle
+```diff
+repositories {
++     mavenCentral()
+}
+
 dependencies {
-    implementation 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0'
++     implementation 'com.h6ah4i.android.widget.advrecyclerview:advrecyclerview:1.0.0'
 }
 ```
 
