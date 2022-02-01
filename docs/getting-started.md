@@ -10,11 +10,11 @@ dependencies {
 ```
 
 **NOTE:**
-This library is served on [jCenter](https://bintray.com/h6ah4i/maven/android-advancedrecyclerview/). If the above gradle setting not getting work, try adding the following lines.
+This library is served on [mavenCentral](https://search.maven.org/artifact/com.h6ah4i.android.widget.advrecyclerview/advrecyclerview). If the above gradle setting doesn't work, try adding the following lines.
 
 ```groovy
 repositories {
-    jcenter()
+    mavenCentral()
 }
 ```
 
