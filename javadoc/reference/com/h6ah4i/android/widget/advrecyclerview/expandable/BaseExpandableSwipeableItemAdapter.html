@@ -192,7 +192,6 @@
     <li><h2>Classes</h2>
       <ul>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ChildPositionItemDraggableRange.html">ChildPositionItemDraggableRange</a></li>
-          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html">ExpandableItemState</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/GroupPositionItemDraggableRange.html">GroupPositionItemDraggableRange</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.html">RecyclerViewExpandableItemManager</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.SavedState.html">RecyclerViewExpandableItemManager.SavedState</a></li>
@@ -301,7 +300,7 @@ Summary:
 
     <tr>
          	
-        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.expandable.BaseExpandableSwipeableItemAdapter&lt;GVH&nbsp;extends&nbsp;androidx.recyclerview.widget.RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</td>
+        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.expandable.BaseExpandableSwipeableItemAdapter&lt;GVH&nbsp;extends&nbsp;android.support.v7.widget.RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;android.support.v7.widget.RecyclerView.ViewHolder&gt;</td>
     </tr>
     
 
@@ -472,42 +471,6 @@ Summary:
         <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/BaseExpandableSwipeableItemAdapter.html#onSetGroupItemSwipeBackground(GVH, int, int)">onSetGroupItemSwipeBackground</a></span>(GVH holder, int groupPosition, int type)
         
         <div class="jd-descrdiv">Called when sets background of the swiping group item.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/BaseExpandableSwipeableItemAdapter.html#onSwipeChildItemStarted(CVH, int, int)">onSwipeChildItemStarted</a></span>(CVH holder, int groupPosition, int childPosition)
-        
-        <div class="jd-descrdiv">Called when started swiping a child item.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/BaseExpandableSwipeableItemAdapter.html#onSwipeGroupItemStarted(GVH, int)">onSwipeGroupItemStarted</a></span>(GVH holder, int groupPosition)
-        
-        <div class="jd-descrdiv">Called when started swiping a group item.</div>
   
   </td></tr>
 
@@ -805,104 +768,6 @@ Summary:
           <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemConstants.html#DRAWABLE_SWIPE_UP_BACKGROUND">DRAWABLE_SWIPE_UP_BACKGROUND</a></code>,
           <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemConstants.html#DRAWABLE_SWIPE_RIGHT_BACKGROUND">DRAWABLE_SWIPE_RIGHT_BACKGROUND</a></code> or
           <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemConstants.html#DRAWABLE_SWIPE_DOWN_BACKGROUND">DRAWABLE_SWIPE_DOWN_BACKGROUND</a></code>.
-</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
-<a id="onSwipeChildItemStarted(CVH, int, int)"></a>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-        abstract 
-         
-        void
-      </span>
-      <span class="sympad">onSwipeChildItemStarted</span>
-      <span class="normal">(CVH holder, int groupPosition, int childPosition)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p>Called when started swiping a child item.
-
- Call the <code><a href="null#notifyDataSetChanged()">notifyDataSetChanged()</a></code> method in this callback to get the same behavior with v0.10.x or before.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>holder</th>
-          <td>The ViewHolder that is associated the swiped item.</td>
-        </tr>
-        <tr>
-          <th>groupPosition</th>
-          <td>Group position.</td>
-        </tr>
-        <tr>
-          <th>childPosition</th>
-          <td>Child position.
-</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
-<a id="onSwipeGroupItemStarted(GVH, int)"></a>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-        abstract 
-         
-        void
-      </span>
-      <span class="sympad">onSwipeGroupItemStarted</span>
-      <span class="normal">(GVH holder, int groupPosition)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p>Called when started swiping a group item.
-
- Call the <code><a href="null#notifyDataSetChanged()">notifyDataSetChanged()</a></code> method in this callback to get the same behavior with v0.10.x or before.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>holder</th>
-          <td>The ViewHolder that is associated the swiped item.</td>
-        </tr>
-        <tr>
-          <th>groupPosition</th>
-          <td>Group position.
 </td>
         </tr>
       </table>

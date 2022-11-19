@@ -189,7 +189,6 @@
       <ul>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/ItemSlidingAnimator.html">ItemSlidingAnimator</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/RecyclerViewSwipeManager.html">RecyclerViewSwipeManager</a></li>
-          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemState.html">SwipeableItemState</a></li>
       </ul>
     </li>
               
@@ -276,7 +275,7 @@
 
     <tr>
          	
-        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter&lt;T&nbsp;extends&nbsp;androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</td>
+        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter&lt;T&nbsp;extends&nbsp;android.support.v7.widget.RecyclerView.ViewHolder&gt;</td>
     </tr>
     
 
@@ -361,7 +360,7 @@
         <td class="jd-linkcol" width="100%">
         <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemAdapter.html#onGetSwipeReactionType(T, int, int, int)">onGetSwipeReactionType</a></span>(T holder, int position, int x, int y)
         
-        <div class="jd-descrdiv">Called when the user is attempt to swipe an item.</div>
+        <div class="jd-descrdiv">Called when user is attempt to swipe the item.</div>
   
   </td></tr>
 
@@ -397,25 +396,7 @@
         <td class="jd-linkcol" width="100%">
         <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemAdapter.html#onSwipeItem(T, int, int)">onSwipeItem</a></span>(T holder, int position, int result)
         
-        <div class="jd-descrdiv">Called when an item is swiped.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/SwipeableItemAdapter.html#onSwipeItemStarted(T, int)">onSwipeItemStarted</a></span>(T holder, int position)
-        
-        <div class="jd-descrdiv">Called when started swiping an item.</div>
+        <div class="jd-descrdiv">Called when item is swiped.</div>
   
   </td></tr>
 
@@ -493,7 +474,7 @@
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Called when the user is attempt to swipe an item.</p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Called when user is attempt to swipe the item.</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Parameters</h5>
       <table class="jd-tagtable">
@@ -616,7 +597,7 @@
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Called when an item is swiped.
+  <div class="jd-tagdata jd-tagdescr"><p>Called when item is swiped.
 
  *Note that do not change the data set and do not call notifyDataXXX() methods inside of this method.*</p></div>
   <div class="jd-tagdata">
@@ -645,53 +626,6 @@
       <h5 class="jd-tagtitle">Returns</h5>
       <ul class="nolist"><li><code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/swipeable/action/SwipeResultAction.html">SwipeResultAction</a></code> object.
 </li></ul>
-  </div>
-
-    </div>
-</div>
-
-
-<a id="onSwipeItemStarted(T, int)"></a>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-        abstract 
-         
-        void
-      </span>
-      <span class="sympad">onSwipeItemStarted</span>
-      <span class="normal">(T holder, int position)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p>Called when started swiping an item.
-
- Call the <code><a href="null#notifyDataSetChanged()">notifyDataSetChanged()</a></code> method in this callback to get the same behavior with v0.10.x or before.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>holder</th>
-          <td>The ViewHolder that is associated the swiped item.</td>
-        </tr>
-        <tr>
-          <th>position</th>
-          <td>The position of the item within the adapter's data set.
-</td>
-        </tr>
-      </table>
   </div>
 
     </div>

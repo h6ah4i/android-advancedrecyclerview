@@ -192,7 +192,6 @@
     <li><h2>Classes</h2>
       <ul>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ChildPositionItemDraggableRange.html">ChildPositionItemDraggableRange</a></li>
-          <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableItemState.html">ExpandableItemState</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/GroupPositionItemDraggableRange.html">GroupPositionItemDraggableRange</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.html">RecyclerViewExpandableItemManager</a></li>
           <li class="api apilevel-"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/RecyclerViewExpandableItemManager.SavedState.html">RecyclerViewExpandableItemManager.SavedState</a></li>
@@ -282,7 +281,7 @@
 
     <tr>
          	
-        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter&lt;GVH&nbsp;extends&nbsp;androidx.recyclerview.widget.RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;androidx.recyclerview.widget.RecyclerView.ViewHolder&gt;</td>
+        <td colspan="1" class="jd-inheritance-class-cell">com.h6ah4i.android.widget.advrecyclerview.expandable.ExpandableDraggableItemAdapter&lt;GVH&nbsp;extends&nbsp;android.support.v7.widget.RecyclerView.ViewHolder,&nbsp;CVH&nbsp;extends&nbsp;android.support.v7.widget.RecyclerView.ViewHolder&gt;</td>
     </tr>
     
 
@@ -434,48 +433,12 @@
             
             
             
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onChildDragFinished(int, int, int, int, boolean)">onChildDragFinished</a></span>(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition, boolean result)
-        
-        <div class="jd-descrdiv">Callback method to be invoked when finished dragging a child item.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onChildDragStarted(int, int)">onChildDragStarted</a></span>(int groupPosition, int childPosition)
-        
-        <div class="jd-descrdiv">Callback method to be invoked when started dragging a child item.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
             <a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/draggable/ItemDraggableRange.html">ItemDraggableRange</a>
         </td>
         <td class="jd-linkcol" width="100%">
         <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onGetChildItemDraggableRange(CVH, int, int)">onGetChildItemDraggableRange</a></span>(CVH holder, int groupPosition, int childPosition)
         
-        <div class="jd-descrdiv">Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onCheckChildCanStartDrag(CVH, int, int, int, int)">onCheckChildCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int, int)</a></code> method returned true.</div>
+        <div class="jd-descrdiv">Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onCheckChildCanStartDrag(CVH, int, int, int, int)">onCheckChildCanStartDrag(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int, int)</a></code> method returned true.</div>
   
   </td></tr>
 
@@ -493,43 +456,7 @@
         <td class="jd-linkcol" width="100%">
         <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onGetGroupItemDraggableRange(GVH, int)">onGetGroupItemDraggableRange</a></span>(GVH holder, int groupPosition)
         
-        <div class="jd-descrdiv">Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onCheckGroupCanStartDrag(GVH, int, int, int)">onCheckGroupCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int)</a></code> method returned true.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class="alt-color api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onGroupDragFinished(int, int, boolean)">onGroupDragFinished</a></span>(int fromGroupPosition, int toGroupPosition, boolean result)
-        
-        <div class="jd-descrdiv">Callback method to be invoked when finished dragging a group item.</div>
-  
-  </td></tr>
-
-
-	 
-    <tr class=" api apilevel-" >
-        <td class="jd-typecol">
-            abstract
-            
-            
-            
-            
-            void
-        </td>
-        <td class="jd-linkcol" width="100%">
-        <span class="sympad"><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onGroupDragStarted(int)">onGroupDragStarted</a></span>(int groupPosition)
-        
-        <div class="jd-descrdiv">Callback method to be invoked when started dragging a group item.</div>
+        <div class="jd-descrdiv">Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onCheckGroupCanStartDrag(GVH, int, int, int)">onCheckGroupCanStartDrag(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)</a></code> method returned true.</div>
   
   </td></tr>
 
@@ -846,112 +773,6 @@
 </div>
 
 
-<a id="onChildDragFinished(int, int, int, int, boolean)"></a>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-        abstract 
-         
-        void
-      </span>
-      <span class="sympad">onChildDragFinished</span>
-      <span class="normal">(int fromGroupPosition, int fromChildPosition, int toGroupPosition, int toChildPosition, boolean result)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p>Callback method to be invoked when finished dragging a child item.
-
- Call the <code><a href="null#notifyDataSetChanged()">notifyDataSetChanged()</a></code> method in this callback to get the same behavior with v0.10.x or before.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>fromGroupPosition</th>
-          <td>Previous group position of the item.</td>
-        </tr>
-        <tr>
-          <th>fromChildPosition</th>
-          <td>Previous child position of the item.</td>
-        </tr>
-        <tr>
-          <th>toGroupPosition</th>
-          <td>New group position of the item.</td>
-        </tr>
-        <tr>
-          <th>toChildPosition</th>
-          <td>New child position of the item.</td>
-        </tr>
-        <tr>
-          <th>result</th>
-          <td>Indicates whether the dragging operation was succeeded.
-</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
-<a id="onChildDragStarted(int, int)"></a>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-        abstract 
-         
-        void
-      </span>
-      <span class="sympad">onChildDragStarted</span>
-      <span class="normal">(int groupPosition, int childPosition)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p>Callback method to be invoked when started dragging a child item.
-
- Call the <code><a href="null#notifyDataSetChanged()">notifyDataSetChanged()</a></code> method in this callback to get the same behavior with v0.10.x or before.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>groupPosition</th>
-          <td>The group position of the item.</td>
-        </tr>
-        <tr>
-          <th>childPosition</th>
-          <td>The child position of the item.
-</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
 <a id="onGetChildItemDraggableRange(CVH, int, int)"></a>
 
 <div class="jd-details api apilevel-"> 
@@ -977,7 +798,7 @@
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onCheckChildCanStartDrag(CVH, int, int, int, int)">onCheckChildCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int, int)</a></code> method returned true.</p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onCheckChildCanStartDrag(CVH, int, int, int, int)">onCheckChildCanStartDrag(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int, int)</a></code> method returned true.</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Parameters</h5>
       <table class="jd-tagtable">
@@ -1031,7 +852,7 @@
       </div>
     <div class="jd-details-descr">
       
-  <div class="jd-tagdata jd-tagdescr"><p>Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onCheckGroupCanStartDrag(GVH, int, int, int)">onCheckGroupCanStartDrag(androidx.recyclerview.widget.RecyclerView.ViewHolder, int, int, int)</a></code> method returned true.</p></div>
+  <div class="jd-tagdata jd-tagdescr"><p>Called after the <code><a href="../../../../../../com/h6ah4i/android/widget/advrecyclerview/expandable/ExpandableDraggableItemAdapter.html#onCheckGroupCanStartDrag(GVH, int, int, int)">onCheckGroupCanStartDrag(android.support.v7.widget.RecyclerView.ViewHolder, int, int, int)</a></code> method returned true.</p></div>
   <div class="jd-tagdata">
       <h5 class="jd-tagtitle">Parameters</h5>
       <table class="jd-tagtable">
@@ -1050,100 +871,6 @@
       <ul class="nolist"><li>null: no constraints (= new ItemDraggableRange(0, getGroupCount() - 1)),
          otherwise: the range specified item can be drag-sortable.
 </li></ul>
-  </div>
-
-    </div>
-</div>
-
-
-<a id="onGroupDragFinished(int, int, boolean)"></a>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-        abstract 
-         
-        void
-      </span>
-      <span class="sympad">onGroupDragFinished</span>
-      <span class="normal">(int fromGroupPosition, int toGroupPosition, boolean result)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p>Callback method to be invoked when finished dragging a group item.
-
- Call the <code><a href="null#notifyDataSetChanged()">notifyDataSetChanged()</a></code> method in this callback to get the same behavior with v0.10.x or before.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>fromGroupPosition</th>
-          <td>Previous position of the group item.</td>
-        </tr>
-        <tr>
-          <th>toGroupPosition</th>
-          <td>New position of the group item.</td>
-        </tr>
-        <tr>
-          <th>result</th>
-          <td>Indicates whether the dragging operation was succeeded.
-</td>
-        </tr>
-      </table>
-  </div>
-
-    </div>
-</div>
-
-
-<a id="onGroupDragStarted(int)"></a>
-
-<div class="jd-details api apilevel-"> 
-    <h4 class="jd-details-title">
-      <span class="normal">
-        public 
-         
-         
-        abstract 
-         
-        void
-      </span>
-      <span class="sympad">onGroupDragStarted</span>
-      <span class="normal">(int groupPosition)</span>
-    </h4>
-      <div class="api-level">
-        <div>
-
-</div>
-        
-  
-
-      </div>
-    <div class="jd-details-descr">
-      
-  <div class="jd-tagdata jd-tagdescr"><p>Callback method to be invoked when started dragging a group item.
-
- Call the <code><a href="null#notifyDataSetChanged()">notifyDataSetChanged()</a></code> method in this callback to get the same behavior with v0.10.x or before.</p></div>
-  <div class="jd-tagdata">
-      <h5 class="jd-tagtitle">Parameters</h5>
-      <table class="jd-tagtable">
-        <tr>
-          <th>groupPosition</th>
-          <td>The position of the group item.
-</td>
-        </tr>
-      </table>
   </div>
 
     </div>

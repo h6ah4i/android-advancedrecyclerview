@@ -1,123 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/getting-started/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/faq/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/migration/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/getting-started/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/license/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/composed-adapter/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/advanced-examples/draggable-swipeable/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/headers-footers/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/advanced-examples/expandable-draggable-section/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/insertion-filtering/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/advanced-examples/expandable-draggable-swipeable/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/migrate-to-wrapped-adapter/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/draggable/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/examples/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/draggable/examples/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/draggable/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/draggable/tutorial/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/draggable/tutorial/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/expandable/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/draggable/examples/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/expandable/examples/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/swipeable/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/expandable/tutorial/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/swipeable/tutorial/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/javadoc/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/swipeable/examples/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/swipeable/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/expandable/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/swipeable/examples/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/expandable/tutorial/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/swipeable/tutorial/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/expandable/examples/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/advanced-examples/draggable-swipeable/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/composed-adapter/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/advanced-examples/expandable-draggable-swipeable/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/examples/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/advanced-examples/expandable-draggable-section/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/headers-footers/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/faq/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/insertion-filtering/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/license/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-    <url>
-     <loc>https://advancedrecyclerview.h6ah4i.com/javadoc/</loc>
-     <lastmod>2018-12-16</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://advancedrecyclerview.h6ah4i.com/wrapper-adapter/migrate-to-wrapped-adapter/</loc>
+         <lastmod>2022-11-19</lastmod>
+         <changefreq>daily</changefreq>
     </url>
 </urlset>
