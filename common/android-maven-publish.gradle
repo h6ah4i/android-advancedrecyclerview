@@ -14,115 +14,79 @@
  *    limitations under the License.
  */
 
-apply plugin: 'maven'
+// [Usage]]
+// - publish to build directory
+//   ./gradlew library:publishReleasePublicationToBuildDir
+// - publish to sonatype maven repository
+//   ./gradlew library:publishReleasePublicationToSonatypeRepository
+// - publish to local maven repository
+//   ./gradlew library:publishToMavenLocal
+
+apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 // Declare these properties in project's extension
 // - ext.mavenPublishDestDir = [path to destination directory]
 // - ext.mavenPublishDataFile = [path to data properties file]
-// - ext.mavenPublishSigningSetting = [path to signing info properties file] (optional)
 
-def repoDir = project.mavenPublishDestDir
 def dataProps = new Properties()
 dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
+def libraryVersionName = dataProps.VERSION_NAME
 
-def optUseDoclava = project.useDoclava
-
-task cleanDocsOutDir(type: Delete) {
-    delete project.docsDir
-}
-
-task androidJavadocs(
-        type: Javadoc,
-        dependsOn: [ cleanDocsOutDir ]) {
-
-    source = android.sourceSets.main.java.srcDirs
-    excludes += '**/BuildConfig.java'
-    excludes += '**/R.java'
-    options.encoding "utf-8"
-
-    if (optUseDoclava) {
-        title = ""  // This is required to avoid Doclava error: "javadoc: error - invalid flag: -doctitle"
-
-        options.bootClasspath new File(System.getenv('JAVA_HOME') + "/jre/lib/rt.jar")
-        options.docletpath = [ project.rootProject.file('./doclava/doclava-1.0.6.jar') ]
-        options.doclet 'com.google.doclava.Doclava'
-        options.addStringOption 'hdf project.name', 'Advanced RecyclerView'
-        options.addStringOption 'templatedir', project.rootProject.file('./doclava/template').absolutePath
+android {
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
     }
 }
 
 afterEvaluate {
-    androidJavadocs.classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    androidJavadocs.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
-}
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
 
-task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-    classifier = 'javadoc'
-    from androidJavadocs.destinationDir
-}
+                groupId = 'com.h6ah4i.android.widget.advrecyclerview'
+                artifactId = 'advrecyclerview'
+                version = libraryVersionName
 
-task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
-
-signing {
-    // load 'keyId', 'password' and 'secretKeyRingFile'
-    def propsFile = project.file(project.mavenPublishSigningSetting)
-
-    if (propsFile.exists()) {
-        def props = new Properties()
-        props.load(propsFile.newDataInputStream())
-
-        if (props.keyId != null &&
-            props.password != null &&
-            props.secretKeyRingFile != null) {
-            project.ext.keyId = props.keyId
-            project.ext.password  = props.password
-            project.ext.secretKeyRingFile = props.secretKeyRingFile
-        }
-    }
-
-    required { gradle.taskGraph.hasTask("uploadArchives") }
-    sign configurations.archives
-}
-
-uploadArchives {
-    repositories.mavenDeployer {
-        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-        repository(url: "file://${repoDir}")
-
-        pom.groupId = dataProps.POM_GROUP_ID
-        pom.artifactId = dataProps.POM_ARTIFACT_ID
-        pom.version = dataProps.VERSION_NAME
-        pom.project {
-            licenses {
-                license {
-                    name dataProps.POM_APACHE_V2_LICENCE_NAME
-                    url dataProps.POM_APACHE_V2_LICENCE_URL
-                    distribution dataProps.POM_APACHE_V2_LICENCE_DIST
-                }
-            }
-            scm {
-                url dataProps.POM_SCM_URL
-                connection dataProps.POM_SCM_CONNECTION
-                developerConnection dataProps.POM_SCM_DEVELOPER_CONNECTION
-            }
-            developers {
-                developer {
-                    id dataProps.POM_DEVELOPER_ID
-                    name dataProps.POM_DEVELOPER_NAME
+                pom {
+                    name = 'Advanced RecyclerView'
+                    description = 'RecyclerView extension library which provides advanced features. (ex. swiping, drag and drop sorting, expandable items, etc...)'
+                    url = 'https://github.com/h6ah4i/android-advancedrecyclerview'
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'h6ah4i'
+                            name = 'Haruki Hasegawa'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:https://github.com/h6ah4i/android-advancedrecyclerview.git'
+                        developerConnection = 'scm:git:https://github.com/h6ah4i/android-advancedrecyclerview.git'
+                        url = 'https://github.com/h6ah4i/android-advancedrecyclerview'
+                    }
                 }
             }
         }
-    }
-}
 
-artifacts {
-    archives androidSourcesJar
-    if (System.getenv("JITPACK") != "true") {
-        archives androidJavadocsJar
+        repositories {
+            maven {
+                name = "BuildDir"
+                url = project.mavenPublishDestDir
+            }
+        }
+    }
+
+    signing {
+        useGpgCmd()
+        sign publishing.publications.release
     }
 }

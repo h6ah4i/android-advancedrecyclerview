@@ -20,14 +20,10 @@ ext {
     // required for 'android-maven-publish.gradle'
     mavenPublishDestDir = new File(rootDir, "repository").absolutePath
     mavenPublishDataFile = file('./library-data.properties').absolutePath
-    mavenPublishSigningSetting =  file('../signing/library-maven-publish-signing.properties').absolutePath
-
-    useDoclava = true
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
@@ -35,8 +31,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdk rootProject.ext.minSdkVersion
+        targetSdk rootProject.ext.targetSdkVersion
 
         def dataProps = new Properties()
         dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
@@ -69,7 +65,7 @@ android {
 }
 
 dependencies {
-    implementation "androidx.recyclerview:recyclerview:${rootProject.ext.recyclerViewVersion}"
+    api "androidx.recyclerview:recyclerview:${rootProject.ext.recyclerViewVersion}"
 
     testImplementation 'junit:junit:4.12'
     testImplementation 'androidx.test:rules:1.1.0'
